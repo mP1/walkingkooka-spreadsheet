@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -101,6 +102,20 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
                 cellsOrLabel,
                 this.spreadsheetEngineContext()
             );
+    }
+
+    @Override
+    public Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.spreadsheetContext.storeRepository()
+            .cells()
+            .addStoreWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.spreadsheetContext.storeRepository()
+            .cells()
+            .addStoreWatcherOnce(watcher);
     }
 
     // forms............................................................................................................

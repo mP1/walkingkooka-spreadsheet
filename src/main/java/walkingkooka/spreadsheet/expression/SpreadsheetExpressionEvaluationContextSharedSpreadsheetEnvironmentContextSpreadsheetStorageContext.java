@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -113,6 +114,26 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                     cellsOrLabel,
                     context
                 ).cells()
+        );
+    }
+
+    @Override
+    public Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                context.storeRepository()
+                    .cells()
+                    .addStoreWatcher(watcher)
+        );
+    }
+
+    @Override
+    public Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                context.storeRepository()
+                    .cells()
+                    .addStoreWatcherOnce(watcher)
         );
     }
 

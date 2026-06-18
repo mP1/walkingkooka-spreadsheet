@@ -65,6 +65,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -276,6 +277,182 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             cell.reference()
         );
     }
+
+    // addCellStoreWatcher..............................................................................................
+
+    @Test
+    @Override
+    public void testAddCellStoreWatcherWithNullWatcherFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () ->
+                context.addCellStoreWatcher(null)
+        );
+    }
+
+    @Test
+    public void testAddCellStoreWatcherAndSaveCells() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("Hello World")
+            )
+        );
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        final SpreadsheetCell savedCell = cell.setFormula(
+            cell.formula()
+                .setError(
+                    Optional.of(
+                        SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
+                    )
+                )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text("#ERROR")
+            )
+        );
+
+        context.addCellStoreWatcher(
+            new StoreWatcher<SpreadsheetCell>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedCell),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.fired = false;
+
+        this.saveCellsAndCheck(
+            context,
+            Sets.of(cell),
+            Sets.of(savedCell)
+        );
+
+        this.checkEquals(
+            true,
+            this.fired
+        );
+    }
+
+    // addCellStoreWatcherOnce..........................................................................................
+
+    @Test
+    @Override
+    public void testAddCellStoreWatcherOnceWithNullWatcherFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () ->
+                context.addCellStoreWatcherOnce(null)
+        );
+    }
+
+    @Test
+    public void testAddCellStoreWatcherOnceAndSaveCells() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("Hello World")
+            )
+        );
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        final SpreadsheetCell savedCell = cell.setFormula(
+            cell.formula()
+                .setError(
+                    Optional.of(
+                        SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
+                    )
+                )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text("#ERROR")
+            )
+        );
+
+        context.addCellStoreWatcherOnce(
+            new StoreWatcher<SpreadsheetCell>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedCell),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.fired = false;
+
+        this.saveCellsAndCheck(
+            context,
+            Sets.of(cell),
+            Sets.of(savedCell)
+        );
+
+        this.checkEquals(
+            true,
+            this.fired
+        );
+
+        context.saveCells(
+            Sets.of(
+                SpreadsheetSelection.A1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("Different value not seen by cell StoreWatcher")
+                    )
+                )
+            )
+        );
+    }
+
+    private boolean fired;
 
     // loadForm........................................................................................................
 

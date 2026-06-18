@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -65,6 +66,16 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
 
     @Override
     public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
         throw new UnsupportedOperationException();
     }
 

@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -43,6 +44,10 @@ public interface SpreadsheetStorageContext extends StorageContext,
     Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells);
 
     void deleteCells(final SpreadsheetExpressionReference cellsOrLabel);
+
+    Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher);
+
+    Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher);
 
     // forms............................................................................................................
 
