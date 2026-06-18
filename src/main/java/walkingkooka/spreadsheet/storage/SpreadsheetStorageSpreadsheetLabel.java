@@ -38,7 +38,8 @@ import java.util.Optional;
 /**
  * A {@link Storage} that maps {@link SpreadsheetLabelMapping} to a {@link Storage}, for the current spreadsheet.
  * <pre>
- * /label/SpreadsheetLabelName
+ * /SpreadsheetLabelName
+ * /Label123
  * </pre>
  * for the {@link StorageValue}.
  */
