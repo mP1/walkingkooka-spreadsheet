@@ -75,6 +75,10 @@ public interface SpreadsheetStorageContext extends StorageContext,
                                                final int offset,
                                                final int count);
 
+    Runnable addLabelStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher);
+
+    Runnable addLabelStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher);
+
     // SpreadsheetEnvironmentContext....................................................................................
 
     @Override
