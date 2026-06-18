@@ -29,6 +29,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -210,13 +211,44 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addFormStoreWatcher(
+            this.formStoreWatcher(watcher)
+        );
     }
 
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addFormStoreWatcherOnce(
+            this.formStoreWatcher(watcher)
+        );
+    }
+
+    private StoreWatcher<Form<SpreadsheetValidationReference>> formStoreWatcher(final StorageWatcher watcher) {
+        return new StoreWatcher<>() {
+            @Override
+            public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
+                                      final Optional<Form<SpreadsheetValidationReference>> newValue) {
+                watcher.onValueChange(
+                    toStorageValue(oldValue),
+                    toStorageValue(newValue)
+                );
+            }
+        };
+    }
+
+    private static Optional<StorageValue> toStorageValue(final Optional<Form<SpreadsheetValidationReference>> form) {
+        return form.map(
+            (Form<SpreadsheetValidationReference> f) -> StorageValue.with(
+                StoragePath.parse(
+                    StoragePath.SEPARATOR.string() +
+                        f.name()
+                            .text()
+                )
+            ).setValue(
+                Optional.of(f)
+            ).setContentType(MEDIA_TYPE)
+        );
     }
 
     // helper...........................................................................................................
