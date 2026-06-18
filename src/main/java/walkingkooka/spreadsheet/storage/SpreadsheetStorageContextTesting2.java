@@ -97,6 +97,80 @@ public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageC
         );
     }
 
+    // loadForm.........................................................................................................
+
+    @Test
+    default void testLoadFormWithNullFormOrLabelsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .loadForm(null)
+        );
+    }
+
+    // saveForm.........................................................................................................
+
+    @Test
+    default void testSaveFormWithNullFormOrLabelsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .saveForm(null)
+        );
+    }
+
+    // deleteForm.......................................................................................................
+
+    @Test
+    default void testDeleteFormWithNullFormOrLabelsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .deleteForm(null)
+        );
+    }
+
+    // findFormsByName..................................................................................................
+
+    @Test
+    default void testFindFormsByNameWithNullTextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .findFormsByName(
+                    null,
+                    0, // offset
+                    0 // count,
+                )
+        );
+    }
+
+    @Test
+    default void testFindFormsByNameWithNegativeOffsetFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .findFormsByName(
+                    "",
+                    -1, // offset
+                    0 // count,
+                )
+        );
+    }
+
+    @Test
+    default void testFindFormsByNameWithNegativeCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .findFormsByName(
+                    "",
+                    0, // offset
+                    -1 // count,
+                )
+        );
+    }
+    
     // addFormStoreWatcher..............................................................................................
 
     @Test
