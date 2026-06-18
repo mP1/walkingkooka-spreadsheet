@@ -97,6 +97,28 @@ public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageC
         );
     }
 
+    // addFormStoreWatcher..............................................................................................
+
+    @Test
+    default void testAddFormStoreWatcherWithNullWatcherFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .addFormStoreWatcher(null)
+        );
+    }
+
+    // addFormStoreWatcherOnce..........................................................................................
+
+    @Test
+    default void testAddFormStoreWatcherOnceWithNullWatcherFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .addFormStoreWatcherOnce(null)
+        );
+    }
+    
     // loadLabel........................................................................................................
 
     @Test
