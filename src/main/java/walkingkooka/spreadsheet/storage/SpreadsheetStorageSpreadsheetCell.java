@@ -195,10 +195,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
         return context.addCellStoreWatcher(
-            this.cellStoreWatcher(
-                watcher,
-                context
-            )
+            this.cellStoreWatcher(watcher)
         );
     }
 
@@ -206,15 +203,11 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
         return context.addCellStoreWatcherOnce(
-            this.cellStoreWatcher(
-                watcher,
-                context
-            )
+            this.cellStoreWatcher(watcher)
         );
     }
 
-    private StoreWatcher<SpreadsheetCell> cellStoreWatcher(final StorageWatcher watcher,
-                                                           final SpreadsheetStorageContext context) {
+    private StoreWatcher<SpreadsheetCell> cellStoreWatcher(final StorageWatcher watcher) {
         return new StoreWatcher<>() {
             @Override
             public void onValueChange(final Optional<SpreadsheetCell> oldValue,
