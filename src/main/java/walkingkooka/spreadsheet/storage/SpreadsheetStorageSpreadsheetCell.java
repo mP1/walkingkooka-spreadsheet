@@ -224,12 +224,13 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
         return cell.map(
             (SpreadsheetCell c) -> StorageValue.with(
                 StoragePath.parse(
-                    c.reference()
-                        .text()
+                    StoragePath.SEPARATOR +
+                        c.reference()
+                            .text()
                 )
             ).setValue(
                 Optional.of(c)
-            )
+            ).setContentType(MEDIA_TYPE)
         );
     }
 
