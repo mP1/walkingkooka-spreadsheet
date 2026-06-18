@@ -62,14 +62,17 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.InvalidStoragePathException;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -497,6 +500,164 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             )
         );
     }
+
+    @Test
+    public void testAddStorageWatcherAndSave() {
+        final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
+        final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("'Hello")
+        );
+
+        final StoragePath path = StoragePath.ROOT;
+
+        final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
+
+        final SpreadsheetCell savedCell = cell.setFormula(
+            cell.formula()
+                .setValue(
+                    Optional.of(
+                        SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
+                    )
+                )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text("#VALUE!")
+            )
+        );
+
+        this.fired = false;
+
+        storageContext.addCellStoreWatcher(
+            new StoreWatcher<SpreadsheetCell>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedCell),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageSpreadsheetCellTest.this.fired = true;
+                }
+            }
+        );
+
+        final StorageValue savedStorageValue = StorageValue.with(path)
+            .setValue(
+                Optional.of(savedCell)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+            );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(cell)
+                ),
+            storageContext,
+            savedStorageValue
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddStorageWatcherOnceAndSave() {
+        final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
+        final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("'Hello")
+        );
+
+        final StoragePath path = StoragePath.ROOT;
+
+        final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
+
+        final SpreadsheetCell savedCell = cell.setFormula(
+            cell.formula()
+                .setValue(
+                    Optional.of(
+                        SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
+                    )
+                )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text("#VALUE!")
+            )
+        );
+
+        this.fired = false;
+
+        storageContext.addCellStoreWatcherOnce(
+            new StoreWatcher<SpreadsheetCell>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedCell),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageSpreadsheetCellTest.this.fired = true;
+                }
+            }
+        );
+
+        final StorageValue savedStorageValue = StorageValue.with(path)
+            .setValue(
+                Optional.of(savedCell)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+            );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(cell)
+                ),
+            storageContext,
+            savedStorageValue
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        storage.save(
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(cell.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("Different should not be seen by StoreWatcher<SpreadsheetCell>")
+                    ))
+                ),
+            storageContext
+        );
+    }
+
+    private boolean fired;
 
     @Override
     public SpreadsheetStorageSpreadsheetCell createStorage() {

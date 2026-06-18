@@ -31,6 +31,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -193,13 +194,50 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addCellStoreWatcher(
+            this.cellStoreWatcher(
+                watcher,
+                context
+            )
+        );
     }
 
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addCellStoreWatcherOnce(
+            this.cellStoreWatcher(
+                watcher,
+                context
+            )
+        );
+    }
+
+    private StoreWatcher<SpreadsheetCell> cellStoreWatcher(final StorageWatcher watcher,
+                                                           final SpreadsheetStorageContext context) {
+        return new StoreWatcher<>() {
+            @Override
+            public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                      final Optional<SpreadsheetCell> newValue) {
+                watcher.onValueChange(
+                    toStorageValue(oldValue),
+                    toStorageValue(newValue)
+                );
+            }
+        };
+    }
+
+    private static Optional<StorageValue> toStorageValue(final Optional<SpreadsheetCell> cell) {
+        return cell.map(
+            (SpreadsheetCell c) -> StorageValue.with(
+                StoragePath.parse(
+                    c.reference()
+                        .text()
+                )
+            ).setValue(
+                Optional.of(c)
+            )
+        );
     }
 
     // helper...........................................................................................................
