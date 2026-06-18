@@ -58,6 +58,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -413,6 +414,126 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             INFO2
         );
     }
+
+    @Test
+    public void testAddWatcherAndSave() {
+        final SpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageForm storage = this.createStorage();
+
+        final StoragePath path = StoragePath.parse("/" + FORM_NAME1);
+
+        final StorageValue savedStorageValue = StorageValue.with(path)
+            .setValue(
+                Optional.of(FORM1)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+            );
+
+        this.fired = false;
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedStorageValue),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageFormTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM1)
+                ),
+            context,
+            savedStorageValue
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSave() {
+        final SpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageForm storage = this.createStorage();
+
+        final StoragePath path = StoragePath.parse("/" + FORM_NAME1);
+
+        final StorageValue savedStorageValue = StorageValue.with(path)
+            .setValue(
+                Optional.of(FORM1)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+            );
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedStorageValue),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageFormTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM1)
+                ),
+            context,
+            savedStorageValue
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        storage.save(
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM2)
+                ),
+            context
+        );
+    }
+
+    private boolean fired;
 
     @Override
     public SpreadsheetStorageForm createStorage() {
