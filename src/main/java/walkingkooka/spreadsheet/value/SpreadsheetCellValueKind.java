@@ -132,7 +132,7 @@ public enum SpreadsheetCellValueKind {
     };
 
     SpreadsheetCellValueKind() {
-        this.fileExtension = FileExtension.with(
+        this.fileExtension = FileExtension.parse(
             CaseKind.SNAKE.change(
                 this.name(),
                 CaseKind.KEBAB
