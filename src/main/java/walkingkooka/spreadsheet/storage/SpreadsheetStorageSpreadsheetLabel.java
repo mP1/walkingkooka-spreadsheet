@@ -30,6 +30,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -197,15 +198,46 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addLabelStoreWatcher(
+            this.labelStoreWatcher(watcher)
+        );
     }
 
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addLabelStoreWatcherOnce(
+            this.labelStoreWatcher(watcher)
+        );
     }
 
+    private StoreWatcher<SpreadsheetLabelMapping> labelStoreWatcher(final StorageWatcher watcher) {
+        return new StoreWatcher<>() {
+            @Override
+            public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
+                                      final Optional<SpreadsheetLabelMapping> newValue) {
+                watcher.onValueChange(
+                    toStorageValue(oldValue),
+                    toStorageValue(newValue)
+                );
+            }
+        };
+    }
+
+    private static Optional<StorageValue> toStorageValue(final Optional<SpreadsheetLabelMapping> label) {
+        return label.map(
+            (SpreadsheetLabelMapping l) -> StorageValue.with(
+                StoragePath.parse(
+                    StoragePath.SEPARATOR.string() +
+                        l.label()
+                            .text()
+                )
+            ).setValue(
+                Optional.of(l)
+            ).setContentType(MEDIA_TYPE)
+        );
+    }
+    
     // helper...........................................................................................................
 
     private static SpreadsheetLabelName parseLabel(final StorageName name) {
