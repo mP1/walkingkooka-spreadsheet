@@ -40,7 +40,8 @@ import java.util.Set;
 /**
  * A {@link Storage} that maps cells to a {@link Storage}, for the current spreadsheet.
  * <pre>
- * /cell/SpreadsheetExpressionReference
+ * /SpreadsheetExpressionReference
+ * /A1
  * </pre>
  * for the {@link StorageValue}.
  */
