@@ -289,6 +289,26 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         );
     }
 
+    @Override
+    public Runnable addLabelStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                context.storeRepository()
+                    .labels()
+                    .addStoreWatcher(watcher)
+        );
+    }
+
+    @Override
+    public Runnable addLabelStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                context.storeRepository()
+                    .labels()
+                    .addStoreWatcherOnce(watcher)
+        );
+    }
+
     private <T> T executeWithSpreadsheetEngineContextOrElse(final BiFunction<SpreadsheetEngine, SpreadsheetEngineContext, T> function,
                                                             final T whenMissingSpreadsheetId) {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.context;

@@ -452,8 +452,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    private boolean fired;
-
     // loadForm........................................................................................................
 
     @Test
@@ -846,6 +844,138 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             labelName2
         );
     }
+
+    // addLabelStoreWatcher.............................................................................................
+
+    @Test
+    @Override
+    public void testAddLabelStoreWatcherWithNullWatcherFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () -> context.addLabelStoreWatcher(null)
+        );
+    }
+
+    @Test
+    public void testAddLabelStoreWatcherAndSaveLabel() {
+        ;
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
+
+        this.fired = false;
+
+        context.addLabelStoreWatcher(
+            new StoreWatcher<SpreadsheetLabelMapping>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
+                                          final Optional<SpreadsheetLabelMapping> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(mapping),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.saveLabelAndCheck(
+            context,
+            mapping,
+            mapping
+        );
+
+        this.checkEquals(
+            true,
+            fired,
+            "fired"
+        );
+    }
+
+    // addLabelStoreWatcherOnce.........................................................................................
+
+    @Test
+    @Override
+    public void testAddLabelStoreWatcherOnceWithNullWatcherFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () -> context.addLabelStoreWatcherOnce(null)
+        );
+    }
+
+    @Test
+    public void testAddLabelStoreWatcherOnceAndSaveLabel() {
+        ;
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
+
+        this.fired = false;
+
+        context.addLabelStoreWatcherOnce(
+            new StoreWatcher<SpreadsheetLabelMapping>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
+                                          final Optional<SpreadsheetLabelMapping> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(mapping),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.saveLabelAndCheck(
+            context,
+            mapping,
+            mapping
+        );
+
+        this.checkEquals(
+            true,
+            fired,
+            "fired"
+        );
+
+        context.saveLabel(
+            mapping.setLabel(
+                SpreadsheetSelection.labelName("DifferentLabel")
+            )
+        );
+    }
+
+    private boolean fired;
 
     // currentWorkingDirectory..........................................................................................
 

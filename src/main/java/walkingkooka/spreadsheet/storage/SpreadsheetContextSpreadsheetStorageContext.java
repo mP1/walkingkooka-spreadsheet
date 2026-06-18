@@ -228,6 +228,20 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
             .collect(ImmutableSortedSet.collector(Comparator.naturalOrder()));
     }
 
+    @Override
+    public Runnable addLabelStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.spreadsheetContext.storeRepository()
+            .labels()
+            .addStoreWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addLabelStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.spreadsheetContext.storeRepository()
+            .labels()
+            .addStoreWatcherOnce(watcher);
+    }
+    
     private SpreadsheetEngine spreadsheetEngine() {
         return this.spreadsheetContext.spreadsheetEngine();
     }

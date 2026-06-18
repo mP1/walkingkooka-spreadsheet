@@ -318,8 +318,6 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         );
     }
 
-    private boolean fired;
-
     // forms............................................................................................................
 
     @Test
@@ -510,6 +508,116 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             label2
         );
     }
+
+    @Test
+    public void testAddLabelStoreWatcherSaveLabel() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
+            SpreadsheetSelection.A1
+        );
+
+        this.fired = false;
+
+        context.addLabelStoreWatcher(
+            new StoreWatcher<SpreadsheetLabelMapping>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
+                                          final Optional<SpreadsheetLabelMapping> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(mapping),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.saveLabelAndCheck(
+            context,
+            mapping,
+            mapping
+        );
+
+        this.checkEquals(
+            true,
+            fired,
+            "fired"
+        );
+
+        this.loadLabelAndCheck(
+            context,
+            label,
+            mapping
+        );
+    }
+
+    @Test
+    public void testAddLabelStoreWatcherOnceSaveLabel() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
+            SpreadsheetSelection.A1
+        );
+
+        this.fired = false;
+
+        context.addLabelStoreWatcherOnce(
+            new StoreWatcher<SpreadsheetLabelMapping>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
+                                          final Optional<SpreadsheetLabelMapping> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(mapping),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.saveLabelAndCheck(
+            context,
+            mapping,
+            mapping
+        );
+
+        this.checkEquals(
+            true,
+            fired,
+            "fired"
+        );
+
+        this.loadLabelAndCheck(
+            context,
+            label,
+            mapping
+        );
+
+        context.saveLabel(
+            mapping.setLabel(
+                SpreadsheetSelection.labelName("DifferentLabel")
+            )
+        );
+    }
+
+    private boolean fired;
 
     // converter........................................................................................................
 
