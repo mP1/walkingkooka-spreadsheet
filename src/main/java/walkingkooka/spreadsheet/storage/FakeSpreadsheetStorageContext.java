@@ -103,6 +103,16 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Runnable addFormStoreWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addFormStoreWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        throw new UnsupportedOperationException();
+    }
+    
     // labels...........................................................................................................
 
     @Override

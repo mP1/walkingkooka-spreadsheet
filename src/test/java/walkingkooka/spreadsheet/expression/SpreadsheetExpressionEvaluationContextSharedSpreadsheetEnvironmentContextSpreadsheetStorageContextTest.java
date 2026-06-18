@@ -673,7 +673,141 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             form2
         );
     }
-    
+
+    // addFormStoreWatcher..............................................................................................
+
+    @Test
+    @Override
+    public void testAddFormStoreWatcherWithNullWatcherFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () -> context.addFormStoreWatcher(null)
+        );
+    }
+
+    @Test
+    public void testAddFormStoreWatcherAndSaveForm() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
+
+        this.fired = true;
+        context.addFormStoreWatcher(
+            new StoreWatcher<Form<SpreadsheetValidationReference>>() {
+                @Override
+                public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
+                                          final Optional<Form<SpreadsheetValidationReference>> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(form),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.saveFormAndCheck(
+            context,
+            form,
+            form
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    // addFormStoreWatcherOnce..........................................................................................
+
+    @Test
+    @Override
+    public void testAddFormStoreWatcherOnceWithNullWatcherFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        assertThrows(
+            NullPointerException.class,
+            () -> context.addFormStoreWatcherOnce(null)
+        );
+    }
+
+    @Test
+    public void testAddFormStoreWatcherOnceAndSaveForm() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
+
+        this.fired = true;
+        context.addFormStoreWatcherOnce(
+            new StoreWatcher<Form<SpreadsheetValidationReference>>() {
+                @Override
+                public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
+                                          final Optional<Form<SpreadsheetValidationReference>> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(form),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.saveFormAndCheck(
+            context,
+            form,
+            form
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.saveForm(
+            form.setName(
+                FormName.with("DifferentForm222")
+            )
+        );
+    }
+
     // loadLabel........................................................................................................
 
     @Test

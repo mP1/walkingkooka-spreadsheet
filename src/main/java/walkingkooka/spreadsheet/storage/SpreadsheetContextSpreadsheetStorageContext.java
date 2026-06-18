@@ -174,6 +174,20 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
             ).forms();
     }
 
+    @Override
+    public Runnable addFormStoreWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        return this.spreadsheetContext.storeRepository()
+            .forms()
+            .addStoreWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addFormStoreWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        return this.spreadsheetContext.storeRepository()
+            .forms()
+            .addStoreWatcherOnce(watcher);
+    }
+    
     // labels...........................................................................................................
 
     @Override

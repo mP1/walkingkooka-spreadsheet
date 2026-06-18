@@ -63,6 +63,10 @@ public interface SpreadsheetStorageContext extends StorageContext,
                                                               final int offset,
                                                               final int count);
 
+    Runnable addFormStoreWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher);
+
+    Runnable addFormStoreWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher);
+
     // labels...........................................................................................................
 
     Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName);

@@ -207,6 +207,26 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         );
     }
 
+    @Override
+    public Runnable addFormStoreWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                context.storeRepository()
+                    .forms()
+                    .addStoreWatcher(watcher)
+        );
+    }
+
+    @Override
+    public Runnable addFormStoreWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                context.storeRepository()
+                    .forms()
+                    .addStoreWatcherOnce(watcher)
+        );
+    }
+    
     // labels...........................................................................................................
 
     @Override

@@ -348,6 +348,20 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             throw new UnsupportedOperationException();
         }
 
+        @Override
+        public Runnable addFormStoreWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addFormStoreWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+
+            throw new UnsupportedOperationException();
+        }
+
         // labels.......................................................................................................
 
         @Override

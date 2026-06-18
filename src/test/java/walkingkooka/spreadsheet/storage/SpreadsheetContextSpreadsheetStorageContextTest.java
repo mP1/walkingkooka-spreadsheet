@@ -422,7 +422,111 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             form2
         );
     }
-    
+
+    @Test
+    public void testAddFormStoreWatcherAndSaveForm() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final FormName formName = FormName.with("Form123");
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
+
+        context.addFormStoreWatcher(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
+                                          final Optional<Form<SpreadsheetValidationReference>> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(form),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.fired = false;
+
+        this.saveFormAndCheck(
+            context,
+            form,
+            form
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        this.loadFormAndCheck(
+            context,
+            formName,
+            form
+        );
+    }
+
+    @Test
+    public void testAddFormStoreWatcherOnceAndSaveForm() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final FormName formName = FormName.with("Form123");
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
+
+        context.addFormStoreWatcherOnce(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
+                                          final Optional<Form<SpreadsheetValidationReference>> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(form),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.fired = false;
+
+        this.saveFormAndCheck(
+            context,
+            form,
+            form
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        this.loadFormAndCheck(
+            context,
+            formName,
+            form
+        );
+
+        context.saveForm(
+            form.setName(
+                FormName.with("DifferentForm222")
+            )
+        );
+    }
+
     // labels...........................................................................................................
 
     @Test
