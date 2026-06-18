@@ -37,8 +37,8 @@ import java.util.Optional;
 /**
  * A {@link Storage} that supports CRUD operations for {@link SpreadsheetMetadata}.
  * <pre>
- *  /spreadsheet/SpreadsheetId
- *  /spreadsheet/123
+ *  /SpreadsheetId
+ *  /123
  * </pre>
  */
 final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
