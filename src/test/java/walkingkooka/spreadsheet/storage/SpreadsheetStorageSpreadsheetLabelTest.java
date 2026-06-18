@@ -59,6 +59,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -419,6 +420,130 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             INFO2
         );
     }
+
+    @Test
+    public void testAddWatcherAndSave() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        final SpreadsheetStorageSpreadsheetLabel storage = this.createStorage();
+
+        this.fired = false;
+
+        final StoragePath path = StoragePath.parse("/" + LABEL1);
+
+        final StorageValue savedStorageValue = StorageValue.with(
+            path
+        ).setValue(
+            Optional.of(MAPPING1)
+        ).setContentType(
+            Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+        );
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedStorageValue),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageSpreadsheetLabelTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING1)
+                ),
+            context,
+            savedStorageValue
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSave() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        final SpreadsheetStorageSpreadsheetLabel storage = this.createStorage();
+
+        this.fired = false;
+
+        final StoragePath path = StoragePath.parse("/" + LABEL1);
+
+        final StorageValue savedStorageValue = StorageValue.with(
+            path
+        ).setValue(
+            Optional.of(MAPPING1)
+        ).setContentType(
+            Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+        );
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(savedStorageValue),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageSpreadsheetLabelTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING1)
+                ),
+            context,
+            savedStorageValue
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        storage.save(
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING2)
+                ),
+            context
+        );
+    }
+
+    private boolean fired;
 
     @Override
     public SpreadsheetStorageSpreadsheetLabel createStorage() {
