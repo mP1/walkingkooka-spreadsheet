@@ -208,7 +208,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public Runnable addFormStoreWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+    public Runnable addFormWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
         return this.executeWithSpreadsheetEngineContextOrFail(
             (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
                 context.storeRepository()
@@ -218,7 +218,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public Runnable addFormStoreWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+    public Runnable addFormWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
         return this.executeWithSpreadsheetEngineContextOrFail(
             (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
                 context.storeRepository()
