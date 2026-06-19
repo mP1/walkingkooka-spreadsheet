@@ -1397,6 +1397,17 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
+                        StoragePath.parse("/formula.expression.txt"),
+                        Binary.with(
+                            "1+2-3".getBytes(charset)
+                        )
+                    ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION
+                );
+
+                verifier.addIfConversionFail(
+                    StorageBinary.with(
                         StoragePath.parse("/file1.file2.txt"),
                         Binary.with(
                             text.getBytes(charset)
