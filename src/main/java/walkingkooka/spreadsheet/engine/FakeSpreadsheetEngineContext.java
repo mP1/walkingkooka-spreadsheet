@@ -35,13 +35,13 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -50,7 +50,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.store.StoreWatcher;
 import walkingkooka.test.Fake;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -63,13 +62,12 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implements SpreadsheetEngineContext, Fake {
+public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext implements SpreadsheetEngineContext, Fake {
 
     @Override
     public MediaType detect(final String filename,
@@ -181,51 +179,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     @Override
     public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                final Optional<SpreadsheetFormatterSelector> formatter) {
-        throw new UnsupportedOperationException();
-    }
-
-    // SpreadsheetContext...............................................................................................
-
-    @Override
-    public Optional<SpreadsheetId> spreadsheetId() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                              final Optional<Locale> locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void deleteMetadata(final SpreadsheetId id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
-                                                                   final int offset,
-                                                                   final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
         throw new UnsupportedOperationException();
     }
 
