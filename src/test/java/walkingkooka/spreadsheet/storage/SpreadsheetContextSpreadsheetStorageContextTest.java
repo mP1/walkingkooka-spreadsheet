@@ -197,7 +197,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     }
 
     @Test
-    public void testAddCellStoreWatcher() {
+    public void testAddCellWatcher() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValue(
                 Optional.of("Hello")
@@ -206,7 +206,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
-        context.addCellStoreWatcher(
+        context.addCellWatcher(
             new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetCell> oldValue,
@@ -253,7 +253,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     }
 
     @Test
-    public void testAddCellStoreWatcherOnce() {
+    public void testAddCellWatcherOnce() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValue(
                 Optional.of("Hello111")
@@ -262,7 +262,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
-        context.addCellStoreWatcherOnce(
+        context.addCellWatcherOnce(
             new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetCell> oldValue,

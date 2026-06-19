@@ -105,14 +105,14 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
     }
 
     @Override
-    public Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+    public Runnable addCellWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
         return this.spreadsheetContext.storeRepository()
             .cells()
             .addStoreWatcher(watcher);
     }
 
     @Override
-    public Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+    public Runnable addCellWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
         return this.spreadsheetContext.storeRepository()
             .cells()
             .addStoreWatcherOnce(watcher);

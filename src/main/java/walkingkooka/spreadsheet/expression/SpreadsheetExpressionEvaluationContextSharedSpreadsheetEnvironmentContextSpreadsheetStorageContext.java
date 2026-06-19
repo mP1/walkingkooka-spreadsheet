@@ -118,7 +118,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+    public Runnable addCellWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
         return this.executeWithSpreadsheetEngineContextOrFail(
             (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
                 context.storeRepository()
@@ -128,7 +128,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+    public Runnable addCellWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
         return this.executeWithSpreadsheetEngineContextOrFail(
             (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
                 context.storeRepository()
