@@ -36,6 +36,8 @@ import walkingkooka.storage.InvalidStoragePathException;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
+import walkingkooka.store.StoreWatcher;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -403,6 +405,126 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
         );
     }
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    @Test
+    public void testAddWatcherAndSaveMetadata() {
+        final SpreadsheetStorageSpreadsheetMetadata storage = this.createStorage();
+
+        final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
+
+        this.fired = false;
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse(
+                                    "/" + SPREADSHEET_ID
+                                )
+                            ).setValue(
+                                Optional.of(
+                                    METADATA_EN_AU.set(
+                                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                                        SPREADSHEET_ID
+                                    )
+                                )
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageSpreadsheetMetadataTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        context.spreadsheetContext.storeRepository()
+            .metadatas()
+            .save(METADATA_EN_AU);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSaveMetadata() {
+        final SpreadsheetStorageSpreadsheetMetadata storage = this.createStorage();
+
+        final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse(
+                                    "/" + SPREADSHEET_ID
+                                )
+                            ).setValue(
+                                Optional.of(
+                                    METADATA_EN_AU.set(
+                                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                                        SPREADSHEET_ID
+                                    )
+                                )
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageSpreadsheetMetadataTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        context.spreadsheetContext.storeRepository()
+            .metadatas()
+            .save(METADATA_EN_AU);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.spreadsheetContext.storeRepository()
+            .metadatas()
+            .delete(SPREADSHEET_ID);
+    }
+
+    private boolean fired;
+
     @Override
     public SpreadsheetStorageSpreadsheetMetadata createStorage() {
         return SpreadsheetStorageSpreadsheetMetadata.INSTANCE;
@@ -450,6 +572,16 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             );
         }
 
+        @Override
+        public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            return this.spreadsheetContext.addMetadataWatcher(watcher);
+        }
+
+        @Override
+        public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            return this.spreadsheetContext.addMetadataWatcherOnce(watcher);
+        }
+
         {
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
             spreadsheetEnvironmentContext.setSpreadsheetId(
@@ -475,7 +607,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             );
         }
 
-        private final SpreadsheetContext spreadsheetContext;
+        final SpreadsheetContext spreadsheetContext;
 
         @Override
         public LocalDateTime now() {

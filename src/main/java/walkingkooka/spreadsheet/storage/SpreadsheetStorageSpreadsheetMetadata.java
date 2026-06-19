@@ -30,6 +30,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -214,13 +215,45 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addMetadataWatcher(
+            this.metadataStoreWatcher(watcher)
+        );
     }
 
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return context.addMetadataWatcherOnce(
+            this.metadataStoreWatcher(watcher)
+        );
+    }
+
+    private StoreWatcher<SpreadsheetMetadata> metadataStoreWatcher(final StorageWatcher watcher) {
+        return new StoreWatcher<>() {
+            @Override
+            public void onValueChange(final Optional<SpreadsheetMetadata> oldValue,
+                                      final Optional<SpreadsheetMetadata> newValue) {
+                watcher.onValueChange(
+                    toStorageValue(oldValue),
+                    toStorageValue(newValue)
+                );
+            }
+        };
+    }
+
+    private static Optional<StorageValue> toStorageValue(final Optional<SpreadsheetMetadata> cell) {
+        return cell.map(
+            (SpreadsheetMetadata c) -> StorageValue.with(
+                StoragePath.parse(
+                    StoragePath.SEPARATOR +
+                        c.id()
+                            .get()
+                            .text()
+                )
+            ).setValue(
+                Optional.of(c)
+            ).setContentType(MEDIA_TYPE)
+        );
     }
 
     // helper...........................................................................................................
