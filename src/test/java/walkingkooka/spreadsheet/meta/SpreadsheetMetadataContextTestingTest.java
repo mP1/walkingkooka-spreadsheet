@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTestingTest.TestSpreadsheetMetadataContext;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +72,20 @@ public final class SpreadsheetMetadataContextTestingTest implements SpreadsheetM
                                                                        final int count) {
             Objects.requireNonNull(name, "name");
             Store.checkOffsetAndCount(offset, count);
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
 
             throw new UnsupportedOperationException();
         }

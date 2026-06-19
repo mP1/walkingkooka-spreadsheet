@@ -23,6 +23,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.store.StoreWatcher;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -106,6 +107,39 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
             "createdBy"
         );
     }
+
+    @Test
+    public void testAddWatcherAndSave() {
+        final BasicSpreadsheetMetadataContext context = this.createContext();
+
+        this.fired = true;
+
+        context.addMetadataWatcher(
+            new StoreWatcher<SpreadsheetMetadata>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetMetadata> oldValue,
+                                          final Optional<SpreadsheetMetadata> newValue) {
+                    BasicSpreadsheetMetadataContextTest.this.fired = true;
+                }
+            }
+        );
+
+        final EmailAddress user = EmailAddress.parse("user@example.com");
+        final Optional<Locale> locale = Optional.of(Locale.FRENCH);
+
+        context.createMetadata(
+            user,
+            locale
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    private boolean fired;
 
     @Override
     public BasicSpreadsheetMetadataContext createContext() {

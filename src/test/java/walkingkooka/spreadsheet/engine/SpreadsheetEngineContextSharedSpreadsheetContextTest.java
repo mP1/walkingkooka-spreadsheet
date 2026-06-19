@@ -85,6 +85,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
@@ -933,6 +934,20 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                                                                        final int count) {
             Objects.requireNonNull(name, "name");
             Store.checkOffsetAndCount(offset, count);
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
 
             throw new UnsupportedOperationException();
         }

@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -396,6 +397,16 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             offset,
             count
         );
+    }
+
+    @Override
+    public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetContext.addMetadataWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetContext.addMetadataWatcherOnce(watcher);
     }
 
     // setSpreadsheetMetadataMode.......................................................................................
