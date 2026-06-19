@@ -195,7 +195,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        return context.addCellStoreWatcher(
+        return context.addCellWatcher(
             this.cellStoreWatcher(watcher)
         );
     }
@@ -203,7 +203,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        return context.addCellStoreWatcherOnce(
+        return context.addCellWatcherOnce(
             this.cellStoreWatcher(watcher)
         );
     }

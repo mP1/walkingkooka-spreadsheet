@@ -70,12 +70,12 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     }
 
     @Override
-    public Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+    public Runnable addCellWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+    public Runnable addCellWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
         throw new UnsupportedOperationException();
     }
 

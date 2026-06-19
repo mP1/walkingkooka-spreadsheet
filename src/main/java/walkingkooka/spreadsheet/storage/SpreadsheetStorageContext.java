@@ -45,9 +45,9 @@ public interface SpreadsheetStorageContext extends StorageContext,
 
     void deleteCells(final SpreadsheetExpressionReference cellsOrLabel);
 
-    Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher);
+    Runnable addCellWatcher(final StoreWatcher<SpreadsheetCell> watcher);
 
-    Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher);
+    Runnable addCellWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher);
 
     // forms............................................................................................................
 

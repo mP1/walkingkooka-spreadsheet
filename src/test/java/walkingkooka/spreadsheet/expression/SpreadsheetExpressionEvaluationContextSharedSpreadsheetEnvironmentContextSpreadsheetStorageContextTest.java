@@ -278,11 +278,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // addCellStoreWatcher..............................................................................................
+    // addCellWatcher...................................................................................................
 
     @Test
-    @Override
-    public void testAddCellStoreWatcherWithNullWatcherFails() {
+    public void testAddCellWatcherWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -291,12 +290,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () ->
-                context.addCellStoreWatcher(null)
+                context.addCellWatcher(null)
         );
     }
 
     @Test
-    public void testAddCellStoreWatcherAndSaveCells() {
+    public void testAddCellWatcherAndSaveCells() {
         final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
             SpreadsheetMetadataStores.treeMap()
         );
@@ -325,7 +324,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
-        context.addCellStoreWatcher(
+        context.addCellWatcher(
             new StoreWatcher<SpreadsheetCell>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetCell> oldValue,
@@ -360,11 +359,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // addCellStoreWatcherOnce..........................................................................................
+    // addCellWatcherOnce...............................................................................................
 
     @Test
-    @Override
-    public void testAddCellStoreWatcherOnceWithNullWatcherFails() {
+    public void testAddCellWatcherOnceWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -373,12 +371,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () ->
-                context.addCellStoreWatcherOnce(null)
+                context.addCellWatcherOnce(null)
         );
     }
 
     @Test
-    public void testAddCellStoreWatcherOnceAndSaveCells() {
+    public void testAddCellWatcherOnceAndSaveCells() {
         final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
             SpreadsheetMetadataStores.treeMap()
         );
@@ -407,7 +405,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
-        context.addCellStoreWatcherOnce(
+        context.addCellWatcherOnce(
             new StoreWatcher<SpreadsheetCell>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetCell> oldValue,
