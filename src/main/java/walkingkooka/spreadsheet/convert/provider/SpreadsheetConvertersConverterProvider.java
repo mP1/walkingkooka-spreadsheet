@@ -379,6 +379,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.storage();
                 break;
+            case STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.storageBinaryToStorageValueExpression();
+                break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_JSON_STRING:
                 noParameterCheck(copy);
 
@@ -1023,6 +1028,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName STORAGE = ConverterName.with(STORAGE_STRING);
 
+    private final static String STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION_STRING = "storage-binary-to-storage-value-expression";
+
+    final static ConverterName STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION = ConverterName.with(STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION_STRING);
+
     private final static String STORAGE_BINARY_TO_STORAGE_VALUE_JSON_STRING = "storage-binary-to-storage-value-json";
 
     final static ConverterName STORAGE_BINARY_TO_STORAGE_VALUE_JSON = ConverterName.with(STORAGE_BINARY_TO_STORAGE_VALUE_JSON_STRING);
@@ -1393,6 +1402,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SPREADSHEET_SELECTION_TO_TEXT),
             converterInfo(SPREADSHEET_VALUE),
             converterInfo(STORAGE),
+            converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION),
             converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_JSON),
             converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES),
             converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_TXT),

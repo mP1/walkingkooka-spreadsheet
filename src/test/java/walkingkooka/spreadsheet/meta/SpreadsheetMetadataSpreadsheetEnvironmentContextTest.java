@@ -688,6 +688,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    spreadsheet-selection-to-text\n" +
                 "    spreadsheet-value\n" +
                 "    storage\n" +
+                "    storage-binary-to-storage-value-expression\n" +
                 "    storage-binary-to-storage-value-json\n" +
                 "    storage-binary-to-storage-value-properties\n" +
                 "    storage-binary-to-storage-value-txt\n" +
