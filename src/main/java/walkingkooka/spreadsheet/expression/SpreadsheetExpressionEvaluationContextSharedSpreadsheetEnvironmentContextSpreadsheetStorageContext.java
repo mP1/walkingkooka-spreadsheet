@@ -310,7 +310,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public Runnable addLabelStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+    public Runnable addLabelWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
         return this.executeWithSpreadsheetEngineContextOrFail(
             (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
                 context.storeRepository()
@@ -320,7 +320,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public Runnable addLabelStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+    public Runnable addLabelWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
         return this.executeWithSpreadsheetEngineContextOrFail(
             (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
                 context.storeRepository()

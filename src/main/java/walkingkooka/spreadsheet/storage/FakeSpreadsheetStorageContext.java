@@ -138,12 +138,12 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     }
 
     @Override
-    public Runnable addLabelStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+    public Runnable addLabelWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addLabelStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+    public Runnable addLabelWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
         throw new UnsupportedOperationException();
     }
 

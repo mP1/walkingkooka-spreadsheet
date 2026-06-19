@@ -614,7 +614,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     }
 
     @Test
-    public void testAddLabelStoreWatcherSaveLabel() {
+    public void testAddLabelWatcherSaveLabel() {
         final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
@@ -624,7 +624,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         this.fired = false;
 
-        context.addLabelStoreWatcher(
+        context.addLabelWatcher(
             new StoreWatcher<SpreadsheetLabelMapping>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
@@ -665,7 +665,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     }
 
     @Test
-    public void testAddLabelStoreWatcherOnceSaveLabel() {
+    public void testAddLabelWatcherOnceSaveLabel() {
         final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
@@ -675,7 +675,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         this.fired = false;
 
-        context.addLabelStoreWatcherOnce(
+        context.addLabelWatcherOnce(
             new StoreWatcher<SpreadsheetLabelMapping>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,

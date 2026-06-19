@@ -243,14 +243,14 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
     }
 
     @Override
-    public Runnable addLabelStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+    public Runnable addLabelWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
         return this.spreadsheetContext.storeRepository()
             .labels()
             .addStoreWatcher(watcher);
     }
 
     @Override
-    public Runnable addLabelStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+    public Runnable addLabelWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
         return this.spreadsheetContext.storeRepository()
             .labels()
             .addStoreWatcherOnce(watcher);
