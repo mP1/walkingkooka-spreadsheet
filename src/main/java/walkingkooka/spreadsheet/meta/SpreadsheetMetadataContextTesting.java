@@ -214,6 +214,28 @@ public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadata
         );
     }
 
+    // addMetadataWatcher...............................................................................................
+
+    @Test
+    default void testAddMetadataWatcherWithNullWatcherFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .addMetadataWatcher(null)
+        );
+    }
+
+    // addMetadataWatcherOnce...........................................................................................
+
+    @Test
+    default void testAddMetadataWatcherOnceWithNullWatcherFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .addMetadataWatcherOnce(null)
+        );
+    }
+    
     // class............................................................................................................
 
     @Override

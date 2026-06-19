@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
@@ -347,6 +348,20 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
                                                                            final int count) {
                 Objects.requireNonNull(name, "name");
                 Store.checkOffsetAndCount(offset, count);
+
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+                Objects.requireNonNull(watcher, "watcher");
+
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+                Objects.requireNonNull(watcher, "watcher");
 
                 throw new UnsupportedOperationException();
             }

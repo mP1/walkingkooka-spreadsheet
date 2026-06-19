@@ -51,6 +51,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -350,6 +351,16 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             offset,
             count
         );
+    }
+
+    @Override
+    public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetMetadataContext.addMetadataWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetMetadataContext.addMetadataWatcherOnce(watcher);
     }
 
     private final SpreadsheetMetadataContext spreadsheetMetadataContext;

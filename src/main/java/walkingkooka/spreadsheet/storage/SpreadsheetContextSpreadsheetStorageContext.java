@@ -316,6 +316,16 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
         );
     }
 
+    @Override
+    public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetContext.addMetadataWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetContext.addMetadataWatcherOnce(watcher);
+    }
+
     // Storage....Context...............................................................................................
 
     @Override

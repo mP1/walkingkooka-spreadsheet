@@ -716,6 +716,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
+        public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public CurrencyContext currencyContext() {
             return CURRENCY_CONTEXT;
         }

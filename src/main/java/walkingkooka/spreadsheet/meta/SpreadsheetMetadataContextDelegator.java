@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Locale;
@@ -63,6 +64,18 @@ public interface SpreadsheetMetadataContextDelegator extends SpreadsheetMetadata
                 offset,
                 count
             );
+    }
+
+    @Override
+    default Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetMetadataContext()
+            .addMetadataWatcher(watcher);
+    }
+
+    @Override
+    default Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.spreadsheetMetadataContext()
+            .addMetadataWatcherOnce(watcher);
     }
 
     SpreadsheetMetadataContext spreadsheetMetadataContext();

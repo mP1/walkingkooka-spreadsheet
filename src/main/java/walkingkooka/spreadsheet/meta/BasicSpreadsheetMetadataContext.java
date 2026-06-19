@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Locale;
@@ -91,6 +92,16 @@ final class BasicSpreadsheetMetadataContext implements SpreadsheetMetadataContex
             offset,
             count
         );
+    }
+
+    @Override
+    public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.store.addStoreWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
     }
 
     private final SpreadsheetMetadataStore store;

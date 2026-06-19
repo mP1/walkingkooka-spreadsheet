@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Context;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.store.MissingStoreException;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Locale;
@@ -66,4 +67,8 @@ public interface SpreadsheetMetadataContext extends Context {
     List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
                                                             final int offset,
                                                             final int count);
+
+    Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher);
+
+    Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher);
 }

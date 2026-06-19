@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
@@ -361,6 +362,16 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
                                                                    final int offset,
                                                                    final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
         throw new UnsupportedOperationException();
     }
 
