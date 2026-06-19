@@ -672,11 +672,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // addFormStoreWatcher..............................................................................................
+    // addFormWatcher...................................................................................................
 
     @Test
     @Override
-    public void testAddFormStoreWatcherWithNullWatcherFails() {
+    public void testAddFormWatcherWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -684,12 +684,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         assertThrows(
             NullPointerException.class,
-            () -> context.addFormStoreWatcher(null)
+            () -> context.addFormWatcher(null)
         );
     }
 
     @Test
-    public void testAddFormStoreWatcherAndSaveForm() {
+    public void testAddFormWatcherAndSaveForm() {
         final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
             SpreadsheetMetadataStores.treeMap()
         );
@@ -702,7 +702,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
         this.fired = true;
-        context.addFormStoreWatcher(
+        context.addFormWatcher(
             new StoreWatcher<Form<SpreadsheetValidationReference>>() {
                 @Override
                 public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
@@ -736,11 +736,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // addFormStoreWatcherOnce..........................................................................................
+    // addFormWatcherOnce...............................................................................................
 
     @Test
     @Override
-    public void testAddFormStoreWatcherOnceWithNullWatcherFails() {
+    public void testAddFormWatcherOnceWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -748,12 +748,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         assertThrows(
             NullPointerException.class,
-            () -> context.addFormStoreWatcherOnce(null)
+            () -> context.addFormWatcherOnce(null)
         );
     }
 
     @Test
-    public void testAddFormStoreWatcherOnceAndSaveForm() {
+    public void testAddFormWatcherOnceAndSaveForm() {
         final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
             SpreadsheetMetadataStores.treeMap()
         );
@@ -766,7 +766,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
         this.fired = true;
-        context.addFormStoreWatcherOnce(
+        context.addFormWatcherOnce(
             new StoreWatcher<Form<SpreadsheetValidationReference>>() {
                 @Override
                 public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,

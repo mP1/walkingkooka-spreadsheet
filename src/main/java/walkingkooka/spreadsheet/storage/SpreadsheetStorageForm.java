@@ -211,7 +211,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        return context.addFormStoreWatcher(
+        return context.addFormWatcher(
             this.formStoreWatcher(watcher)
         );
     }
@@ -219,7 +219,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        return context.addFormStoreWatcherOnce(
+        return context.addFormWatcherOnce(
             this.formStoreWatcher(watcher)
         );
     }

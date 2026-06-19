@@ -424,13 +424,13 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     }
 
     @Test
-    public void testAddFormStoreWatcherAndSaveForm() {
+    public void testAddFormWatcherAndSaveForm() {
         final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final FormName formName = FormName.with("Form123");
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
 
-        context.addFormStoreWatcher(
+        context.addFormWatcher(
             new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
@@ -473,13 +473,13 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     }
 
     @Test
-    public void testAddFormStoreWatcherOnceAndSaveForm() {
+    public void testAddFormWatcherOnceAndSaveForm() {
         final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final FormName formName = FormName.with("Form123");
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
 
-        context.addFormStoreWatcherOnce(
+        context.addFormWatcherOnce(
             new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
