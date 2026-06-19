@@ -977,11 +977,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // addLabelStoreWatcher.............................................................................................
+    // addLabelWatcher..................................................................................................
 
     @Test
     @Override
-    public void testAddLabelStoreWatcherWithNullWatcherFails() {
+    public void testAddLabelWatcherWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -989,12 +989,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         assertThrows(
             NullPointerException.class,
-            () -> context.addLabelStoreWatcher(null)
+            () -> context.addLabelWatcher(null)
         );
     }
 
     @Test
-    public void testAddLabelStoreWatcherAndSaveLabel() {
+    public void testAddLabelWatcherAndSaveLabel() {
         ;
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
@@ -1005,7 +1005,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         this.fired = false;
 
-        context.addLabelStoreWatcher(
+        context.addLabelWatcher(
             new StoreWatcher<SpreadsheetLabelMapping>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
@@ -1039,11 +1039,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // addLabelStoreWatcherOnce.........................................................................................
+    // addLabelWatcherOnce..............................................................................................
 
     @Test
     @Override
-    public void testAddLabelStoreWatcherOnceWithNullWatcherFails() {
+    public void testAddLabelWatcherOnceWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -1051,12 +1051,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         assertThrows(
             NullPointerException.class,
-            () -> context.addLabelStoreWatcherOnce(null)
+            () -> context.addLabelWatcherOnce(null)
         );
     }
 
     @Test
-    public void testAddLabelStoreWatcherOnceAndSaveLabel() {
+    public void testAddLabelWatcherOnceAndSaveLabel() {
         ;
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
@@ -1067,7 +1067,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         this.fired = false;
 
-        context.addLabelStoreWatcherOnce(
+        context.addLabelWatcherOnce(
             new StoreWatcher<SpreadsheetLabelMapping>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,

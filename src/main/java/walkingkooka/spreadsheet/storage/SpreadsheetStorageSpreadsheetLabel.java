@@ -199,7 +199,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        return context.addLabelStoreWatcher(
+        return context.addLabelWatcher(
             this.labelStoreWatcher(watcher)
         );
     }
@@ -207,7 +207,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        return context.addLabelStoreWatcherOnce(
+        return context.addLabelWatcherOnce(
             this.labelStoreWatcher(watcher)
         );
     }
