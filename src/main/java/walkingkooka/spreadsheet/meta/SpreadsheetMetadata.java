@@ -51,6 +51,8 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.naming.HasOptionalName;
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginSelectorLike;
@@ -171,6 +173,7 @@ import java.util.function.Function;
  * Cell specific data such as individual format patterns are not stored here but on the {@link SpreadsheetCell}.
  */
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
+    HasContentType,
     HasExpressionNumberKind,
     HasLocale,
     HasMathContext,
@@ -1876,6 +1879,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             printer.outdent();
         }
     }
+
+    // HasContentType...................................................................................................
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return Optional.of(CONTENT_TYPE);
+    }
+
+    public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetMetadata.class);
 
     // HasMissingCellNumberValue........................................................................................
 
