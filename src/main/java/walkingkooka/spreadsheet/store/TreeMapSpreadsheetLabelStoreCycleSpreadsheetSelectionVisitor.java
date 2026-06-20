@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -43,9 +44,12 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
         visitor.accept(
             mapping.label()
         );
-        visitor.accept(
-            mapping.reference()
-        );
+
+        // without this test, a cycle will be incorrectly detected if the same LabelMapping is saved AGAIN
+        final SpreadsheetExpressionReference reference = mapping.reference();
+        if(false == visitor.visited.contains(reference)) {
+            visitor.accept(reference);
+        }
     }
 
     // @VisibleForTesting
