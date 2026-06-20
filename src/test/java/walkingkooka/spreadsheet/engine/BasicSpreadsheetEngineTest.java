@@ -20740,6 +20740,49 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveLabelWithMissingLabelTwice() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+            SpreadsheetSelection.labelName("LABELA1"),
+            SpreadsheetSelection.labelName("UnknownLabel2")
+        );
+
+        this.saveLabelAndCheck(
+            engine,
+            mapping,
+            context,
+            SpreadsheetDelta.EMPTY.setLabels(
+                Sets.of(mapping)
+            ).setColumnCount(
+                OptionalInt.of(0)
+            ).setRowCount(
+                OptionalInt.of(0)
+            )
+        );
+
+        this.saveLabelAndCheck(
+            engine,
+            mapping,
+            context,
+            SpreadsheetDelta.EMPTY.setLabels(
+                Sets.of(mapping)
+            ).setColumnCount(
+                OptionalInt.of(0)
+            ).setRowCount(
+                OptionalInt.of(0)
+            )
+        );
+
+        this.loadLabelAndCheck(
+            context.storeRepository().labels(),
+            mapping.label(),
+            mapping
+        );
+    }
+
+    @Test
     public void testSaveLabelAndUnrelatedSaveCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
