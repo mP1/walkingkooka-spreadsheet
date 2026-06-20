@@ -84,6 +84,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
     private final static SpreadsheetId SPREADSHEET_ID2 = SpreadsheetId.with(0x222);
 
+    private final static SpreadsheetId SPREADSHEET_ID3 = SpreadsheetId.with(0x333);
+
     private final static SpreadsheetMetadata METADATA1 = METADATA_EN_AU.set(
         SpreadsheetMetadataPropertyName.LOCALE,
         LOCALE
@@ -792,11 +794,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     public void testSaveWithSpreadsheetIdAndMissingSpreadsheetEnvironmentContextSpreadsheetIdFails() {
         final SpreadsheetStorageContext context = this.createContext();
 
-        final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x333);
-
         final SpreadsheetMetadata metadata = METADATA1.set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-            spreadsheetId
+            SPREADSHEET_ID3
         ).set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
             SpreadsheetName.with("Spreadsheet333")
@@ -829,11 +829,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             Optional.of(SPREADSHEET_ID1)
         );
 
-        final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x333);
-
         final SpreadsheetMetadata metadata = METADATA1.set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-            spreadsheetId
+            SPREADSHEET_ID3
         ).set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
             SpreadsheetName.with("Spreadsheet333")
@@ -860,7 +858,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.checkEquals(
             Optional.of(metadata),
-            context.loadMetadata(spreadsheetId)
+            context.loadMetadata(SPREADSHEET_ID3)
         );
     }
 
