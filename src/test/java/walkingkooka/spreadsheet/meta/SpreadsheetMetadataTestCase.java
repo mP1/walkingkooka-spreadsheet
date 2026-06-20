@@ -37,6 +37,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -85,6 +86,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
     ClassTesting2<SpreadsheetMetadata>,
     ConverterTesting,
+    HasContentTypeTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
     HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
@@ -1196,6 +1198,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             Sets.of(missing),
             metadata.missingRequiredProperties(),
             () -> "" + metadata
+        );
+    }
+
+    // HasContentType...................................................................................................
+
+    @Test
+    public final void testContentType() {
+        this.contentTypeAndCheck(
+            this.createHateosResource(),
+            "application/json+walkingkooka.spreadsheet.meta.SpreadsheetMetadata"
         );
     }
 
