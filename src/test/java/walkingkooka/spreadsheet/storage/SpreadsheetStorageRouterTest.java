@@ -18,9 +18,11 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.convert.Converters;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.email.EmailAddress;
@@ -63,6 +65,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextNode;
@@ -846,7 +849,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             ),
             context,
             StorageValue.with(
-                StoragePath.parse("/spreadsheet/333")
+                SPREADSHEET_333_PATH
             ).setValue(
                 Optional.of(
                     metadata
@@ -1870,6 +1873,1016 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             )
         );
     }
+
+    // addWatcher.......................................................................................................
+
+    @Test
+    public void testAddWatcherAndSaveReplaceCell() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final StorageValue value1 = storage.save(
+            StorageValue.with(
+                StoragePath.parse("/cell")
+            ).setValue(
+                Optional.of(CELL1)
+            ),
+            context
+        );
+
+        final SpreadsheetCell cell2 = CELL1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("different111")
+            )
+        );
+        final StorageValue value2 = StorageValue.with(
+            StoragePath.parse("/cell/")
+        ).setValue(
+            Optional.of(cell2)
+        );
+
+        this.fired = false;
+
+        final StoragePath path2 = StoragePath.parse("/cell/A1");
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            value1.setPath(path2)
+                                .setValue(
+                                    Optional.of(
+                                        CELL1.setFormattedValue(
+                                            Optional.of(
+                                                TextNode.text("111.")
+                                            )
+                                        )
+                                    )
+                                ).setContentType(
+                                    Optional.of(
+                                        SpreadsheetMediaTypes.MEMORY_CELL
+                                    )
+                                )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            value2.setPath(path2)
+                                .setValue(
+                                    Optional.of(
+                                        cell2.setFormattedValue(
+                                            Optional.of(
+                                                TextNode.text("different111")
+                                            )
+                                        )
+                                    )
+                                ).setContentType(
+                                    Optional.of(
+                                        SpreadsheetMediaTypes.MEMORY_CELL
+                                    )
+                                )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            value2,
+            context,
+            value2.setPath(
+                StoragePath.parse("/cell")
+            ).setValue(
+                Optional.of(
+                    cell2.setFormattedValue(
+                        Optional.of(
+                            TextNode.text("different111")
+                        )
+                    )
+                )
+            ).setContentType(
+                Optional.of(
+                    SpreadsheetMediaTypes.MEMORY_CELL
+                )
+            )
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSaveReplaceCell() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final StorageValue value1 = storage.save(
+            StorageValue.with(
+                StoragePath.parse("/cell")
+            ).setValue(
+                Optional.of(CELL1)
+            ),
+            context
+        );
+
+        final StoragePath path2 = StoragePath.parse("/cell/A1");
+
+        final SpreadsheetCell cell2 = CELL1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("different111")
+            )
+        );
+        final StorageValue value2 = StorageValue.with(
+            StoragePath.parse("/cell/")
+        ).setValue(
+            Optional.of(cell2)
+        );
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            value1.setPath(path2)
+                                .setValue(
+                                    Optional.of(
+                                        CELL1.setFormattedValue(
+                                            Optional.of(
+                                                TextNode.text("111.")
+                                            )
+                                        )
+                                    )
+                                ).setContentType(
+                                    Optional.of(
+                                        SpreadsheetMediaTypes.MEMORY_CELL
+                                    )
+                                )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            value2.setPath(path2)
+                                .setValue(
+                                    Optional.of(
+                                        cell2.setFormattedValue(
+                                            Optional.of(
+                                                TextNode.text("different111")
+                                            )
+                                        )
+                                    )
+                                ).setContentType(
+                                    Optional.of(
+                                        SpreadsheetMediaTypes.MEMORY_CELL
+                                    )
+                                )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            value2,
+            context,
+            value2.setPath(
+                StoragePath.parse("/cell")
+            ).setValue(
+                Optional.of(
+                    cell2.setFormattedValue(
+                        Optional.of(
+                            TextNode.text("different111")
+                        )
+                    )
+                )
+            ).setContentType(
+                Optional.of(
+                    SpreadsheetMediaTypes.MEMORY_CELL
+                )
+            )
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        storage.delete(
+            path2,
+            context
+        );
+
+        this.loadCellsAndCheck(
+            context,
+            SpreadsheetSelection.A1
+        );
+    }
+
+    private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with(
+        "Hello",
+        String.class
+    );
+
+    private final static String OLD_HELLO_VALUE = "OldHelloWorld111";
+    private final static String NEW_HELLO_VALUE = "NewHelloWorld111";
+
+    @Test
+    public void testAddWatcherAndSetEnvironmentValue() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        context.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            OLD_HELLO_VALUE
+        );
+
+        this.fired = false;
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/env/Hello")
+                            ).setValue(
+                                Optional.of(OLD_HELLO_VALUE)
+                            )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/env/Hello")
+                            ).setValue(
+                                Optional.of(NEW_HELLO_VALUE)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        context.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            NEW_HELLO_VALUE
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSetEnvironmentValue() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        context.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            OLD_HELLO_VALUE
+        );
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/env/Hello")
+                            ).setValue(
+                                Optional.of(OLD_HELLO_VALUE)
+                            )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/env/Hello")
+                            ).setValue(
+                                Optional.of(NEW_HELLO_VALUE)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        context.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            NEW_HELLO_VALUE
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            "differentHelloWorld"
+        );
+    }
+
+    @Test
+    public void testAddWatcherAndSaveForm() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final Storage<SpreadsheetStorageContext> storage = this.createStorage();
+
+        context.saveForm(FORM1);
+
+        final Form<SpreadsheetValidationReference> differentForm1 = FORM1.setFields(
+            Lists.of(
+                SpreadsheetForms.field(SpreadsheetSelection.A1)
+                    .setLabel("Different")
+            )
+        );
+
+        this.fired = false;
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/form/" + FORM1.name())
+                            ).setValue(
+                                Optional.of(FORM1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                            )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/form/" + FORM1.name())
+                            ).setValue(
+                                Optional.of(differentForm1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            }.setFilter(
+                (p) -> p.value().startsWith(SpreadsheetStorageRouter.FORM.value())
+            ),
+            context
+        );
+
+        context.saveForm(differentForm1);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSaveForm() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final Storage<SpreadsheetStorageContext> storage = this.createStorage();
+
+        context.saveForm(FORM1);
+
+        final Form<SpreadsheetValidationReference> differentForm1 = FORM1.setFields(
+            Lists.of(
+                SpreadsheetForms.field(SpreadsheetSelection.A1)
+                    .setLabel("Different")
+            )
+        );
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/form/" + FORM1.name())
+                            ).setValue(
+                                Optional.of(FORM1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                            )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/form/" + FORM1.name())
+                            ).setValue(
+                                Optional.of(differentForm1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            }.setFilter(
+                (p) -> p.value().startsWith(SpreadsheetStorageRouter.FORM.value())
+            ),
+            context
+        );
+
+        context.saveForm(differentForm1);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        // shouldnt fire watcher
+        context.deleteForm(
+            differentForm1.name()
+        );
+    }
+
+    @Test
+    public void testAddWatcherAndSaveLabel() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final Storage<SpreadsheetStorageContext> storage = this.createStorage();
+
+        context.saveLabel(MAPPING1);
+
+        final SpreadsheetLabelMapping differentMapping1 = MAPPING1.setReference(
+            SpreadsheetSelection.parseCell("B2")
+        );
+
+        this.checkNotEquals(
+            MAPPING1,
+            differentMapping1
+        );
+
+        this.fired = false;
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/label/" + MAPPING1.label())
+                            ).setValue(
+                                Optional.of(MAPPING1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+                            )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/label/" + differentMapping1.label())
+                            ).setValue(
+                                Optional.of(differentMapping1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            }.setFilter(
+                (p) -> p.value().startsWith(SpreadsheetStorageRouter.LABEL.value())
+            ),
+            context
+        );
+
+        context.saveLabel(differentMapping1);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSaveLabel() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final Storage<SpreadsheetStorageContext> storage = this.createStorage();
+
+        context.saveLabel(MAPPING1);
+
+        final SpreadsheetLabelMapping differentMapping1 = MAPPING1.setReference(
+            SpreadsheetSelection.parseCell("B2")
+        );
+
+        this.checkNotEquals(
+            MAPPING1,
+            differentMapping1
+        );
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/label/" + MAPPING1.label())
+                            ).setValue(
+                                Optional.of(MAPPING1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+                            )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(
+                                StoragePath.parse("/label/" + differentMapping1.label())
+                            ).setValue(
+                                Optional.of(differentMapping1)
+                            ).setContentType(
+                                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            }.setFilter(
+                (p) -> p.value().startsWith(SpreadsheetStorageRouter.LABEL.value())
+            ),
+            context
+        );
+
+        context.saveLabel(differentMapping1);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.deleteLabel(
+            differentMapping1.label()
+        );
+    }
+
+    private static final StoragePath SPREADSHEET_333_PATH = StoragePath.parse("/spreadsheet/333");
+
+    @Test
+    public void testAddWatcherAndSaveMetadata() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final SpreadsheetMetadata value1 = METADATA1.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SPREADSHEET_ID3
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("BeforeSpreadsheetName333")
+        );
+
+        storage.save(
+            StorageValue.with(
+                StoragePath.parse("/spreadsheet")
+            ).setValue(
+                Optional.of(value1)
+            ),
+            context
+        );
+
+        final SpreadsheetMetadata value2 = value1.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("AfterSpreadsheetName333")
+        );
+
+        this.checkNotEquals(
+            value1,
+            value2
+        );
+
+        this.fired = false;
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(SPREADSHEET_333_PATH)
+                                .setValue(
+                                    Optional.of(value1)
+                                ).setContentType(
+                                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                                )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(SPREADSHEET_333_PATH)
+                                .setValue(
+                                    Optional.of(value2)
+                                ).setContentType(
+                                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                                )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(
+                StoragePath.parse("/spreadsheet")
+            ).setValue(
+                Optional.of(value2)
+            ),
+            context,
+            StorageValue.with(
+                SPREADSHEET_333_PATH
+            ).setValue(
+                Optional.of(value2)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            )
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSaveMetadata() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final SpreadsheetMetadata value1 = METADATA1.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SPREADSHEET_ID3
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("BeforeSpreadsheetName333")
+        );
+
+        storage.save(
+            StorageValue.with(
+                StoragePath.parse("/spreadsheet")
+            ).setValue(
+                Optional.of(value1)
+            ),
+            context
+        );
+
+        final SpreadsheetMetadata value2 = value1.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("AfterSpreadsheetName333")
+        );
+
+        this.checkNotEquals(
+            value1,
+            value2
+        );
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(SPREADSHEET_333_PATH)
+                                .setValue(
+                                    Optional.of(value1)
+                                ).setContentType(
+                                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                                )
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            StorageValue.with(SPREADSHEET_333_PATH)
+                                .setValue(
+                                    Optional.of(value2)
+                                ).setContentType(
+                                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                                )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(
+                StoragePath.parse("/spreadsheet")
+            ).setValue(
+                Optional.of(value2)
+            ),
+            context,
+            StorageValue.with(
+                SPREADSHEET_333_PATH
+            ).setValue(
+                Optional.of(value2)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            )
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        storage.delete(
+            SPREADSHEET_333_PATH,
+            context
+        );
+    }
+
+    @Test
+    public void testAddWatcherAndSaveDefaultStorage() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final StoragePath path = StoragePath.parse("/other/value1");
+
+        final StorageValue value1 = StorageValue.with(path)
+            .setValue(
+                Optional.of("Value111")
+            );
+
+        storage.save(
+            value1,
+            context
+        );
+
+        final StorageValue value2 = StorageValue.with(path)
+            .setValue(
+                Optional.of("DifferentValue111")
+            );
+
+        this.fired = false;
+
+        storage.addWatcher(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(value1),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(value2),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        storage.save(
+            value2,
+            context
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddWatcherOnceAndSaveDefaultStorage() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final StoragePath path = StoragePath.parse("/other/value1");
+
+        final StorageValue value1 = StorageValue.with(path)
+            .setValue(
+                Optional.of("Value111")
+            );
+
+        storage.save(
+            value1,
+            context
+        );
+
+        final StorageValue value2 = StorageValue.with(path)
+            .setValue(
+                Optional.of("DifferentValue111")
+            );
+
+        this.fired = false;
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
+                @Override
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
+                    checkEquals(
+                        Optional.of(value1),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(value2),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetStorageRouterTest.this.fired = true;
+                }
+            },
+            context
+        );
+
+        storage.save(
+            value2,
+            context
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        storage.delete(
+            path,
+            context
+        );
+    }
+
+    private boolean fired;
 
     @Override
     public SpreadsheetStorageRouter createStorage() {

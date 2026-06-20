@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -27,6 +28,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
+import walkingkooka.watch.Watchers;
 
 import java.util.List;
 import java.util.Objects;
@@ -175,13 +177,77 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     @Override
     Runnable addWatcher0(final StorageWatcher watcher,
                          final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return this.addAllWatchers(
+            watcher,
+            (Storage<SpreadsheetStorageContext> s, StorageWatcher w) -> s.addWatcher(w, context)
+        );
     }
 
     @Override
     Runnable addWatcherOnce0(final StorageWatcher watcher,
                              final SpreadsheetStorageContext context) {
-        throw new UnsupportedOperationException();
+        return this.addAllWatchers(
+            watcher,
+            (Storage<SpreadsheetStorageContext> s, StorageWatcher w) -> s.addWatcherOnce(w, context)
+        );
+    }
+
+    private Runnable addAllWatchers(final StorageWatcher watcher,
+                                    final BiFunction<Storage<SpreadsheetStorageContext>, StorageWatcher, Runnable> addWatcher) {
+        final List<Runnable> removers = Lists.array();
+
+        removers.add(
+            this.storageAddWatcher(
+                this.cells,
+                watcher,
+                addWatcher
+            )
+        );
+        removers.add(
+            this.storageAddWatcher(
+                this.environment,
+                watcher,
+                addWatcher
+            )
+        );
+        removers.add(
+            this.storageAddWatcher(
+                this.forms,
+                watcher,
+                addWatcher
+            )
+        );
+        removers.add(
+            this.storageAddWatcher(
+                this.labels,
+                watcher,
+                addWatcher
+            )
+        );
+        removers.add(
+            this.storageAddWatcher(
+                this.metadatas,
+                watcher,
+                addWatcher
+            )
+        );
+        removers.add(
+            addWatcher.apply(
+                this.root,
+                watcher
+            )
+        );
+
+        return Watchers.runnableCollection(removers);
+    }
+
+    private Runnable storageAddWatcher(final Storage<SpreadsheetStorageContext> storage,
+                                       final StorageWatcher watcher,
+                                       final BiFunction<Storage<SpreadsheetStorageContext>, StorageWatcher, Runnable> addWatcher) {
+        return addWatcher.apply(
+            storage,
+            watcher
+        );
     }
 
     // helper...........................................................................................................
