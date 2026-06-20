@@ -142,6 +142,11 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             Optional.of(111)
         )
     );
+    private static final SpreadsheetCell FORMATTED_CELL1 = CELL1.setFormattedValue(
+        Optional.of(
+            TextNode.text("111.")
+        )
+    );
 
     private final static SpreadsheetCell CELL2 = SpreadsheetSelection.parseCell("b2")
         .setFormula(
@@ -149,7 +154,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 Optional.of(222)
             )
         );
-    
+    private static final SpreadsheetCell FORMATTED_CELL2 = CELL2.setFormattedValue(
+        Optional.of(
+            TextNode.text("222.")
+        )
+    );
+
     private final static FormName FORM_NAME1 = FormName.with("FormName111");
     
     private final static Form<SpreadsheetValidationReference> FORM1 = SpreadsheetForms.form(FORM_NAME1);
@@ -400,13 +410,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             context,
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(
-                        CELL1.setFormattedValue(
-                            Optional.of(
-                                TextNode.text("111.")
-                            )
-                        )
-                    )
+                    Optional.of(FORMATTED_CELL1)
                 ).setContentType(
                     Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
@@ -429,13 +433,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             context,
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(
-                        CELL1.setFormattedValue(
-                            Optional.of(
-                                TextNode.text("111.")
-                            )
-                        )
-                    )
+                    Optional.of(FORMATTED_CELL1)
                 ).setContentType(
                     Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
@@ -458,13 +456,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             context,
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(
-                        CELL1.setFormattedValue(
-                            Optional.of(
-                                TextNode.text("111.")
-                            )
-                        )
-                    )
+                    Optional.of(FORMATTED_CELL1)
                 ).setContentType(
                     Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
@@ -680,13 +672,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createContext(),
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(
-                        CELL1.setFormattedValue(
-                            Optional.of(
-                                TextNode.text("111.")
-                            )
-                        )
-                    )
+                    Optional.of(FORMATTED_CELL1)
                 ).setContentType(
                     Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
@@ -703,13 +689,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createContext(),
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(
-                        CELL2.setFormattedValue(
-                            Optional.of(
-                                TextNode.text("222.")
-                            )
-                        )
-                    )
+                    Optional.of(FORMATTED_CELL2)
                 ).setContentType(
                     Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
@@ -727,13 +707,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             StorageValue.with(
                 path
             ).setValue(
-                Optional.of(
-                    CELL2.setFormattedValue(
-                        Optional.of(
-                            TextNode.text("222.")
-                        )
-                    )
-                )
+                Optional.of(FORMATTED_CELL2)
             ).setContentType(
                 Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
             )
