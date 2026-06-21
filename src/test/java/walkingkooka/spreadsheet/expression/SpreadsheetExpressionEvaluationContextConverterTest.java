@@ -56,6 +56,9 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
+import walkingkooka.store.StoreWatchers;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
@@ -569,6 +572,27 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                                             null
                                     );
                                 }
+
+                                @Override
+                                public List<SpreadsheetMetadata> findByName(final String name,
+                                                                            final int offset,
+                                                                            final int count) {
+                                    Objects.requireNonNull(name, "name");
+                                    Store.checkOffsetAndCount(offset, count);
+                                    throw new UnsupportedOperationException();
+                                }
+
+                                @Override
+                                public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+                                    return this.watchers.add(watcher);
+                                }
+
+                                @Override
+                                public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+                                    return this.watchers.addOnce(watcher);
+                                }
+
+                                private final StoreWatchers<SpreadsheetMetadata> watchers = StoreWatchers.empty();
                             };
                         }
                     },

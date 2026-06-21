@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -82,6 +83,7 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
     JsonNodeExpressionEvaluationContext,
     SpreadsheetConverterContext,
     SpreadsheetEnvironmentContext,
+    SpreadsheetMetadataContext,
     StorageExpressionEvaluationContext,
     TerminalExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetValidationReference> {

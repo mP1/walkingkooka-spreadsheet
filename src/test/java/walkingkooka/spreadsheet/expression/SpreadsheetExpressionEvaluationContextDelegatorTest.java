@@ -45,6 +45,9 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
+import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
+import walkingkooka.store.StoreWatchers;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -250,6 +253,27 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                                             null
                                     );
                                 }
+
+                                @Override
+                                public List<SpreadsheetMetadata> findByName(final String name,
+                                                                            final int offset,
+                                                                            final int count) {
+                                    Objects.requireNonNull(name, "name");
+                                    Store.checkOffsetAndCount(offset, count);
+                                    throw new UnsupportedOperationException();
+                                }
+
+                                @Override
+                                public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+                                    return this.watchers.add(watcher);
+                                }
+
+                                @Override
+                                public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+                                    return this.watchers.addOnce(watcher);
+                                }
+
+                                private final StoreWatchers<SpreadsheetMetadata> watchers = StoreWatchers.empty();
                             };
                         }
                     },

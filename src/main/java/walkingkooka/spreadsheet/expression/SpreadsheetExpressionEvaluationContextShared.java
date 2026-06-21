@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -69,6 +70,7 @@ import java.util.Set;
 abstract class SpreadsheetExpressionEvaluationContextShared implements SpreadsheetExpressionEvaluationContext,
     SpreadsheetEnvironmentContextDelegator,
     SpreadsheetConverterContextDelegator,
+    SpreadsheetMetadataContextDelegator,
     LocaleContextDelegator,
     TerminalContextDelegator {
 
