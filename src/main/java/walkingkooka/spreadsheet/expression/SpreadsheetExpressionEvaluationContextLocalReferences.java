@@ -98,9 +98,8 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     TerminalContextDelegator,
     UsesToStringBuilder {
 
-    static SpreadsheetExpressionEvaluationContextLocalReferences with(
-        final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
-        final SpreadsheetExpressionEvaluationContext context) {
+    static SpreadsheetExpressionEvaluationContextLocalReferences with(final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
+                                                                      final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(localReferenceToValues, "localReferenceToValues");
         Objects.requireNonNull(context, "context");
 
