@@ -41,14 +41,12 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1280,35 +1278,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             spreadsheetContextSupplier,
             CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
-            new FakeSpreadsheetMetadataContext() {
-                @Override
-                public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-                    return this.store.load(id);
-                }
-
-                @Override
-                public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
-                    return this.store.save(metadata);
-                }
-
-                @Override
-                public void deleteMetadata(final SpreadsheetId id) {
-                    this.store.delete(id);
-                }
-
-                @Override
-                public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
-                                                                               final int offset,
-                                                                               final int count) {
-                    return this.store.findByName(
-                        name,
-                        offset,
-                        count
-                    );
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-            },
+            SpreadsheetMetadataContexts.basic(
+                (e, l) -> SpreadsheetMetadata.EMPTY,
+                SpreadsheetMetadataStores.treeMap()
+            ),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
