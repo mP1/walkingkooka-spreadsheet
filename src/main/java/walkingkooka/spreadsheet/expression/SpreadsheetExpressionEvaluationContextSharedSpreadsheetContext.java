@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -506,6 +507,13 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
     @Override
     public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        return this.spreadsheetContext;
+    }
+
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    public SpreadsheetMetadataContext spreadsheetMetadataContext() {
         return this.spreadsheetContext;
     }
 

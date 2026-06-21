@@ -40,6 +40,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -101,6 +103,7 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator,
+    SpreadsheetMetadataContextDelegator,
     TerminalContextDelegator {
 
     static SpreadsheetExpressionEvaluationContextConverter with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
@@ -684,6 +687,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     @Override
     public Storage<SpreadsheetStorageContext> storage() {
         return this.context.storage();
+    }
+
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    public SpreadsheetMetadataContext spreadsheetMetadataContext() {
+        return this.context;
     }
 
     // Object...........................................................................................................

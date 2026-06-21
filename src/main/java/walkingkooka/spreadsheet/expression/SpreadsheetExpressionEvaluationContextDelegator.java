@@ -31,6 +31,8 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegat
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -75,6 +77,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     FormHandlerExpressionEvaluationContextDelegator<SpreadsheetValidationReference, SpreadsheetDelta>,
     ValidatorExpressionEvaluationContextDelegator<SpreadsheetValidationReference>,
     SpreadsheetEnvironmentContextDelegator,
+    SpreadsheetMetadataContextDelegator,
     StorageExpressionEvaluationContextDelegator,
     TerminalContextDelegator {
 
@@ -202,6 +205,13 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
+
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    default SpreadsheetMetadataContext spreadsheetMetadataContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
 
     // StorageExpressionEvaluationContextDelegator......................................................................
 

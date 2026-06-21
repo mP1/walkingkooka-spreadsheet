@@ -39,6 +39,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -92,6 +94,7 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     FormHandlerContextDelegator<SpreadsheetValidationReference, SpreadsheetDelta>,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator,
+    SpreadsheetMetadataContextDelegator,
     TerminalContextDelegator,
     UsesToStringBuilder {
 
@@ -542,6 +545,13 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
 
     @Override
     public EnvironmentContext environmentContext() {
+        return this.context;
+    }
+
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    public SpreadsheetMetadataContext spreadsheetMetadataContext() {
         return this.context;
     }
 

@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -56,6 +57,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     JsonNodeExpressionEvaluationContextTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting<C>,
+    SpreadsheetMetadataContextTesting<C>,
     StorageExpressionEvaluationContextTesting2<C>,
     ValidatorExpressionEvaluationContextTesting<SpreadsheetValidationReference, C>,
     SpreadsheetProviderContextTesting<C> {

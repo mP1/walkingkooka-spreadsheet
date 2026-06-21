@@ -477,6 +477,13 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     private final SpreadsheetStorageContext spreadsheetStorageContext;
 
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    public SpreadsheetMetadataContext spreadsheetMetadataContext() {
+        return this.spreadsheetMetadataContext;
+    }
+
     // SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext
     final SpreadsheetMetadataContext spreadsheetMetadataContext;
 
