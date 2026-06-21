@@ -76,13 +76,13 @@ import java.util.function.Function;
  * <li>A {@link Validator} which may return zero or more {@link ValidationError}</li>
  * </ul>
  */
-public interface SpreadsheetExpressionEvaluationContext extends StorageExpressionEvaluationContext,
-    SpreadsheetConverterContext,
+public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpressionEvaluationContext<SpreadsheetValidationReference, SpreadsheetDelta>,
     HasSpreadsheetCell,
     HasSpreadsheetMetadata,
-    FormHandlerExpressionEvaluationContext<SpreadsheetValidationReference, SpreadsheetDelta>,
     JsonNodeExpressionEvaluationContext,
+    SpreadsheetConverterContext,
     SpreadsheetEnvironmentContext,
+    StorageExpressionEvaluationContext,
     TerminalExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetValidationReference> {
 
