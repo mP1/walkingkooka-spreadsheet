@@ -28,7 +28,6 @@ import walkingkooka.store.StoreWatcher;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -44,7 +43,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
         59
     );
 
-    private final static BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> CREATE_METADATA =
+    private final static SpreadsheetMetadataCreator CREATE_METADATA =
         (e, dl) ->
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
