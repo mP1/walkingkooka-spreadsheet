@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1057,6 +1058,69 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             ),
             label,
             cell
+        );
+    }
+
+    // SpreadsheetMetadataContext.......................................................................................
+
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
+
+    @Test
+    public void testSaveMetadataAndLoadMetadata() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(metadata);
+
+        this.loadMetadataAndCheck(
+            context,
+            saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
+            saved
+        );
+    }
+
+    @Test
+    public void testDeleteMetadata() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(metadata);
+
+        final SpreadsheetId spreadsheetId = saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+
+        context.deleteMetadata(spreadsheetId);
+
+        this.loadMetadataAndCheck(
+            context,
+            spreadsheetId
+        );
+    }
+
+    @Test
+    public void testSaveMetadataAndFindMetadataBySpreadsheetName() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        final String name = "SpreadsheetName111";
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with(name)
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(metadata);
+
+        this.findMetadataBySpreadsheetNameAndCheck(
+            context,
+            name,
+            0,
+            2,
+            saved
         );
     }
 
