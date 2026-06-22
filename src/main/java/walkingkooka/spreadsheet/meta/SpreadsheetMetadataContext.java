@@ -18,31 +18,16 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Context;
-import walkingkooka.store.MissingStoreException;
 import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * A context that provides CRUD operations for {@link SpreadsheetMetadata}.
  */
 public interface SpreadsheetMetadataContext extends Context,
-    SpreadsheetMetadataCreator{
-
-    /**
-     * Loads the {@link SpreadsheetMetadata} for the given {@link SpreadsheetId}
-     */
-    Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id);
-
-    /**
-     * Attempts to load the {@link SpreadsheetMetadata} with the given {@link SpreadsheetId}, throwing
-     * {@link MissingSpreadsheetException} which is a sub-class of {@link MissingStoreException} if not found.
-     */
-    default SpreadsheetMetadata loadMetadataOrFail(final SpreadsheetId id) {
-        return this.loadMetadata(id)
-            .orElseThrow(id::missingSpreadsheetException);
-    }
+    SpreadsheetMetadataCreator,
+    SpreadsheetMetadataLoader {
 
     /**
      * Updates the given {@link SpreadsheetMetadata}

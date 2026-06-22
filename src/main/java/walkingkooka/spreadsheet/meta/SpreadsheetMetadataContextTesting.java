@@ -23,52 +23,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadataContext> extends ContextTesting<C>,
-    SpreadsheetMetadataCreatorTesting<C>{
-
-    // loadMetadata.....................................................................................................
-
-    @Test
-    default void testLoadMetadataWithNullIdFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .loadMetadata(null)
-        );
-    }
-
-    default void loadMetadataAndCheck(final C context,
-                                      final SpreadsheetId id) {
-        this.loadMetadataAndCheck(
-            context,
-            id,
-            Optional.empty()
-        );
-    }
-
-    default void loadMetadataAndCheck(final C context,
-                                      final SpreadsheetId id,
-                                      final SpreadsheetMetadata expected) {
-        this.loadMetadataAndCheck(
-            context,
-            id,
-            Optional.of(expected)
-        );
-    }
-
-    default void loadMetadataAndCheck(final C context,
-                                      final SpreadsheetId id,
-                                      final Optional<SpreadsheetMetadata> expected) {
-        this.checkEquals(
-            expected,
-            context.loadMetadata(id),
-            () -> "loadMetadata " + id
-        );
-    }
+    SpreadsheetMetadataCreatorTesting<C>,
+    SpreadsheetMetadataLoaderTesting<C> {
 
     // saveMetadata.....................................................................................................
 
@@ -199,6 +159,13 @@ public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadata
 
     @Override
     default C createSpreadsheetMetadataCreator() {
+        return this.createContext();
+    }
+
+    // SpreadsheetMetadataLoader........................................................................................
+
+    @Override
+    default C createSpreadsheetMetadataLoader() {
         return this.createContext();
     }
 
