@@ -26,11 +26,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 final class BasicSpreadsheetMetadataContext implements SpreadsheetMetadataContext {
 
-    static BasicSpreadsheetMetadataContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+    static BasicSpreadsheetMetadataContext with(final SpreadsheetMetadataCreator createMetadata,
                                                 final SpreadsheetMetadataStore store) {
         return new BasicSpreadsheetMetadataContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
@@ -38,7 +37,7 @@ final class BasicSpreadsheetMetadataContext implements SpreadsheetMetadataContex
         );
     }
 
-    private BasicSpreadsheetMetadataContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+    private BasicSpreadsheetMetadataContext(final SpreadsheetMetadataCreator createMetadata,
                                             final SpreadsheetMetadataStore store) {
         super();
 
@@ -53,14 +52,14 @@ final class BasicSpreadsheetMetadataContext implements SpreadsheetMetadataContex
         Objects.requireNonNull(locale, "locale");
 
         return this.saveMetadata(
-            this.createMetadata.apply(
+            this.createMetadata.createMetadata(
                 user,
                 locale
             )
         );
     }
 
-    private final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata;
+    private final SpreadsheetMetadataCreator createMetadata;
 
     @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {

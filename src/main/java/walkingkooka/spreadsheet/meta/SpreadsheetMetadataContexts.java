@@ -17,20 +17,15 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-
-import java.util.Locale;
-import java.util.Optional;
-import java.util.function.BiFunction;
 
 public final class SpreadsheetMetadataContexts implements PublicStaticHelper {
 
     /**
      * {@see BasicSpreadsheetMetadataContext}
      */
-    public static SpreadsheetMetadataContext basic(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+    public static SpreadsheetMetadataContext basic(final SpreadsheetMetadataCreator createMetadata,
                                                    final SpreadsheetMetadataStore store) {
         return BasicSpreadsheetMetadataContext.with(
             createMetadata,
