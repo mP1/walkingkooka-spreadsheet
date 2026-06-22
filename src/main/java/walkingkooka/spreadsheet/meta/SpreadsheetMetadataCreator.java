@@ -32,6 +32,4 @@ public interface SpreadsheetMetadataCreator {
      */
     SpreadsheetMetadata createMetadata(final EmailAddress user,
                                        final Optional<Locale> locale);
-
-
 }
