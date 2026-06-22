@@ -25,6 +25,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetMetadataLoaders implements PublicStaticHelper {
 
     /**
+     * {@see EmptySpreadsheetMetadataLoader}
+     */
+    public static SpreadsheetMetadataLoader empty() {
+        return EmptySpreadsheetMetadataLoader.INSTANCE;
+    }
+
+    /**
      * {@see FakeSpreadsheetMetadataLoader}
      */
     public static FakeSpreadsheetMetadataLoader fake() {
