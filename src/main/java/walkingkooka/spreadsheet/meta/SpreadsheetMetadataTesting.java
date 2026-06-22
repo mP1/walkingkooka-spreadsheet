@@ -557,6 +557,11 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             }
             return metadata;
         }
+
+        @Override
+        public String toString() {
+            return SpreadsheetMetadataTesting.class.getSimpleName() + "$" + SpreadsheetMetadataCreator.class.getSimpleName();
+        }
     };
 
     BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
