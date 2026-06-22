@@ -66,6 +66,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -380,6 +381,7 @@ public class J2clTest {
                             LABEL_NAME_RESOLVER,
                             lineEnding,
                             BinaryNumberConverterFunctions.fake(),
+                            SpreadsheetMetadataLoaders.fake(),
                             converterProvider,
                             currencyContext.setLocaleContext(this.localeContext),
                             providerContext
@@ -438,6 +440,7 @@ public class J2clTest {
                         LABEL_NAME_RESOLVER,
                         lineEnding,
                         BinaryNumberConverterFunctions.fake(),
+                        SpreadsheetMetadataLoaders.fake(),
                         currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
                             converterProvider,

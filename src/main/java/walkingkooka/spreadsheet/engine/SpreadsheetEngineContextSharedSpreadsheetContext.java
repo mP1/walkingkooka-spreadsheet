@@ -140,6 +140,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
                     spreadsheetContext.multiplier(),
+                    spreadsheetContext, // SpreadsheetMetadataLoader
                     spreadsheetContext, // CurrencyLocaleContext
                     spreadsheetContext, // SpreadsheetProvider
                     spreadsheetContext.providerContext()
@@ -322,6 +323,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                 this, // SpreadsheetLabelNameResolver,
                 this.lineEnding(),
                 context.multiplier(),
+                context, // SpreadsheetMetadataContext
                 context, // CurrencyLocaleContext
                 context, // spreadsheetProvider,
                 context.providerContext() // ProviderContext

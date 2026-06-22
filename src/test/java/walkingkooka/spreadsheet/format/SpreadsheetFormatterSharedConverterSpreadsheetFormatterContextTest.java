@@ -37,6 +37,10 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
@@ -114,6 +118,13 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
@@ -121,6 +132,18 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
         SpreadsheetConverters.system(),
         BinaryNumberConverterFunctions.multiply(), // multiplier
         SpreadsheetLabelNameResolvers.empty(),
+        new SpreadsheetMetadataLoader() {
+            @Override
+            public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+                Objects.requireNonNull(id, "id");
+
+                return Optional.ofNullable(
+                    SPREADSHEET_ID.equals(id) ?
+                        SPREADSHEET_METADATA :
+                        null
+                );
+            }
+        },
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
@@ -230,6 +253,15 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                     LocalDateTime.class,
                     CONVERTER_CONTEXT
                 )
+        );
+    }
+
+    @Test
+    public void testLoadMetadata() {
+        this.loadMetadataAndCheck(
+            this.createContext(),
+            SPREADSHEET_ID,
+            SPREADSHEET_METADATA
         );
     }
 

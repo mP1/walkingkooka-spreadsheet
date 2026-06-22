@@ -538,6 +538,8 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
+    SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.empty();
+
     SpreadsheetMetadataCreator SPREADSHEET_METADATA_CREATOR = new SpreadsheetMetadataCreator() {
         @Override
         public SpreadsheetMetadata createMetadata(final EmailAddress user,
@@ -673,6 +675,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
         MULTIPLIER,
+        SPREADSHEET_METADATA_LOADER,
         CONVERTER_PROVIDER,
         CURRENCY_LOCALE_CONTEXT,
         PROVIDER_CONTEXT
@@ -711,6 +714,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
         MULTIPLIER,
+        SPREADSHEET_METADATA_LOADER,
         CURRENCY_LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
@@ -725,6 +729,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
         MULTIPLIER,
+        SPREADSHEET_METADATA_LOADER,
         CURRENCY_LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT

@@ -135,6 +135,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
+    final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.fake();
+
     final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
         Locale.forLanguageTag("EN-AU")
     );
@@ -807,6 +809,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -829,6 +832,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -851,6 +855,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -873,6 +878,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -895,6 +901,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -917,6 +924,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -939,6 +947,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     null,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -961,6 +970,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     null,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -982,6 +992,30 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    null,
+                    SPREADSHEET_METADATA_LOADER,
+                    CONVERTER_PROVIDER,
+                    CURRENCY_LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithSpreadsheetMetadataLoaderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    CHARSET,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    HAS_USER_DIRECTORIES,
+                    INDENTATION,
+                    LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
+                    MULTIPLIER,
                     null,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
@@ -1005,6 +1039,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     null,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -1027,6 +1062,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     null,
                     PROVIDER_CONTEXT
@@ -1049,6 +1085,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     null

@@ -156,6 +156,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 },
                 MULTIPLIER,
                 LABEL_NAME_RESOLVER,
+                SpreadsheetMetadataLoaders.empty(),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),

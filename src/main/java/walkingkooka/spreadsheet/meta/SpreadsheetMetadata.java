@@ -1000,6 +1000,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                                final LineEnding lineEnding,
                                                                                final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                               final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                                final SpreadsheetProvider spreadsheetProvider,
                                                                                final CurrencyLocaleContext currencyLocaleContext,
                                                                                final ProviderContext providerContext) {
@@ -1012,6 +1013,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 indentation,
                 lineEnding,
                 multiplier,
+                spreadsheetMetadataLoader,
                 currencyLocaleContext,
                 providerContext // ProviderContext
             )
@@ -1028,6 +1030,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                         final Indentation indentation,
                                                                         final LineEnding lineEnding,
                                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                        final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                         final CurrencyLocaleContext currencyLocaleContext,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
@@ -1040,6 +1043,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             labelNameResolver,
             lineEnding,
             multiplier,
+            spreadsheetMetadataLoader,
             converterProvider,
             currencyLocaleContext,
             providerContext
@@ -1071,6 +1075,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                         final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final ProviderContext providerContext) {
@@ -1083,6 +1088,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(multiplier, "multiplier");
+        Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -1155,6 +1161,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             converter,
             multiplier,
             labelNameResolver,
+            spreadsheetMetadataLoader,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
@@ -1242,6 +1249,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                         final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
@@ -1253,6 +1261,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(multiplier, "multiplier");
+        Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -1282,6 +1291,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 lineEnding,
                 multiplier,
+                spreadsheetMetadataLoader,
                 spreadsheetProvider,
                 currencyLocaleContext,
                 providerContext
@@ -1321,6 +1331,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final LineEnding lineEnding,
                                                                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                                                       final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                                        final ProviderContext providerContext) {
@@ -1334,6 +1345,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 lineEnding,
                 multiplier,
+                spreadsheetMetadataLoader,
                 currencyLocaleContext,
                 spreadsheetProvider,
                 providerContext
@@ -1440,6 +1452,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                         final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final ProviderContext providerContext) {
@@ -1452,6 +1465,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(multiplier, "multiplier");
+        Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -1470,6 +1484,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 lineEnding,
                 multiplier,
+                spreadsheetMetadataLoader,
                 converterProvider,
                 currencyLocaleContext,
                 providerContext

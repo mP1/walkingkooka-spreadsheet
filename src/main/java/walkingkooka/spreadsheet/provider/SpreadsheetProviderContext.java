@@ -37,6 +37,7 @@ import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
@@ -137,6 +138,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             converter,
             multiplier,
             SpreadsheetLabelNameResolvers.empty(),
+            SpreadsheetMetadataLoaders.empty(), // dont support loading SpreadsheetMetadata from a ProviderContext
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),

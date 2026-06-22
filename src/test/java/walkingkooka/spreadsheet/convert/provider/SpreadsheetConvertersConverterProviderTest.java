@@ -39,6 +39,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
@@ -232,6 +233,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SpreadsheetConverters.system(),
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetLabelNameResolvers.fake(),
+                SpreadsheetMetadataLoaders.fake(),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),

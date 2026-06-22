@@ -25,7 +25,9 @@ import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -53,6 +55,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                                  final Converter<SpreadsheetConverterContext> converter,
                                                  final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                 final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
                                                  final LocaleContext localeContext) {
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
@@ -61,6 +64,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
+        Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(jsonNodeConverterContext, "jsonNodeConverterContext");
         Objects.requireNonNull(localeContext, "localeContext");
 
@@ -71,6 +75,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
             converter,
             multiplier,
             spreadsheetLabelNameResolver,
+            spreadsheetMetadataLoader,
             jsonNodeConverterContext,
             localeContext
         );
@@ -82,6 +87,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                              final Converter<SpreadsheetConverterContext> converter,
                                              final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                             final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                              final JsonNodeConverterContext jsonNodeConverterContext,
                                              final LocaleContext localeContext) {
         this.hasUserDirectories = hasUserDirectories;
@@ -90,6 +96,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         this.converter = converter;
         this.multiplier = multiplier;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
+        this.spreadsheetMetadataLoader = spreadsheetMetadataLoader;
         this.jsonNodeConverterContext = jsonNodeConverterContext;
         this.localeContext = localeContext;
     }
@@ -107,6 +114,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                 this.converter,
                 this.multiplier,
                 this.spreadsheetLabelNameResolver,
+                this.spreadsheetMetadataLoader,
                 after,
                 this.localeContext
             );
@@ -125,6 +133,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                 this.converter,
                 this.multiplier,
                 this.spreadsheetLabelNameResolver,
+                this.spreadsheetMetadataLoader,
                 after,
                 this.localeContext
             );
@@ -138,6 +147,15 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     }
 
     private final Optional<SpreadsheetMetadata> spreadsheetMetadata;
+
+    // SpreadsheetMetadataLoader........................................................................................
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        return this.spreadsheetMetadataLoader.loadMetadata(id);
+    }
+
+    private final SpreadsheetMetadataLoader spreadsheetMetadataLoader;
 
     // ValidationReference..............................................................................................
 

@@ -209,6 +209,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetMetadataContextDelegator..............................................................................
 
     @Override
+    default Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        return SpreadsheetMetadataContextDelegator.super.loadMetadata(id);
+    }
+
+    @Override
     default SpreadsheetMetadataContext spreadsheetMetadataContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }

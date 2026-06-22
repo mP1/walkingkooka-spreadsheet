@@ -43,6 +43,10 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -261,6 +265,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         LocaleContexts.jre(LOCALE)
     );
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
@@ -276,6 +287,18 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         ),
         BinaryNumberConverterFunctions.multiply(), // multiplier
         LABEL_NAME_RESOLVER,
+        new SpreadsheetMetadataLoader() {
+            @Override
+            public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+                Objects.requireNonNull(id, "id");
+
+                return Optional.ofNullable(
+                    SPREADSHEET_ID.equals(id) ?
+                        SPREADSHEET_METADATA :
+                        null
+                );
+            }
+        },
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
@@ -558,6 +581,15 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         this.localeAndCheck(
             this.createContext(),
             LOCALE
+        );
+    }
+
+    @Test
+    public void testLoadMetadata() {
+        this.loadMetadataAndCheck(
+            this.createContext(),
+            SPREADSHEET_ID,
+            SPREADSHEET_METADATA
         );
     }
 

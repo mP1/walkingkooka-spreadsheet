@@ -31,6 +31,10 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
@@ -198,6 +202,26 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
         throw new UnsupportedOperationException();
     }
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
+    private final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = new SpreadsheetMetadataLoader() {
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId spreadsheetId) {
+            Objects.requireNonNull(spreadsheetId, "spreadsheetId");
+
+            return Optional.ofNullable(
+                SPREADSHEET_ID.equals(spreadsheetId) ?
+                    SPREADSHEET_METADATA :
+                    null
+            );
+        }
+    };
+
     @Override
     public SpreadsheetConverterNumberToTextSpreadsheetConverterContext createContext() {
         final Locale locale = Locale.ENGLISH;
@@ -212,6 +236,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                 Converters.fake(),
                 BinaryNumberConverterFunctions.multiply(), // multiplier
                 SpreadsheetLabelNameResolvers.empty(),
+                SPREADSHEET_METADATA_LOADER,
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),

@@ -108,6 +108,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
             MULTIPLIER,
+            SPREADSHEET_METADATA_LOADER,
             CONVERTER_PROVIDER,
             CURRENCY_LOCALE_CONTEXT,
             PROVIDER_CONTEXT
@@ -303,6 +304,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             },
             LINE_ENDING,
             MULTIPLIER,
+            SPREADSHEET_METADATA_LOADER,
             CURRENCY_LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

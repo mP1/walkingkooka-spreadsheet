@@ -24,6 +24,7 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -169,6 +170,13 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
     }
 
     private final SpreadsheetConverterContext context;
+
+    // SpreadsheetMetadataLoader........................................................................................
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        return this.context.loadMetadata(id);
+    }
 
     // Object...........................................................................................................
 

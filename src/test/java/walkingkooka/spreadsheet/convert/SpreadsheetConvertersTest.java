@@ -71,6 +71,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
@@ -4094,6 +4095,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverters.textToText(), // not used
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
+            SpreadsheetMetadataLoaders.fake(),
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
@@ -4458,6 +4460,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverters.textToText(), // not used
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
+            SpreadsheetMetadataLoaders.fake(),
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used

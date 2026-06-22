@@ -26,6 +26,7 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegateTest.TestSpreadsheetEnvironmentContextFactoryDelegate;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
@@ -106,6 +107,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(
                 BinaryNumberConverterFunctions.fake(), // multiplier
+                SpreadsheetMetadataLoaders.fake(),
                 CurrencyContexts.fake()
                     .setLocaleContext(
                         LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE)
