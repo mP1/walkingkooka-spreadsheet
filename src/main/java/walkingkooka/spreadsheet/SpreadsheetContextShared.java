@@ -55,7 +55,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetProviderDelegator {
 
     SpreadsheetContextShared(final MediaTypeDetector mediaTypeDetector,
-                             BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                             final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                              final SpreadsheetEngine spreadsheetEngine,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
                              final CurrencyLocaleContext currencyLocaleContext,
