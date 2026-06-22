@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegat
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.store.MissingStoreException;
@@ -55,6 +56,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetProviderDelegator {
 
     SpreadsheetContextShared(final MediaTypeDetector mediaTypeDetector,
+                             final SpreadsheetMetadataCreator metadataCreator,
                              final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                              final SpreadsheetEngine spreadsheetEngine,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
@@ -65,6 +67,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         super();
 
         this.mediaTypeDetector = mediaTypeDetector;
+
+        this.metadataCreator = metadataCreator;
 
         this.multiplier = multiplier;
 
@@ -151,11 +155,15 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     @Override
     public final SpreadsheetMetadata createMetadata(final EmailAddress user,
                                                     final Optional<Locale> locale) {
-        return SpreadsheetContext.super.createMetadata(
-            user,
-            locale
+        return this.saveMetadata(
+            this.metadataCreator.createMetadata(
+                user,
+                locale
+            )
         );
     }
+
+    final SpreadsheetMetadataCreator metadataCreator;
 
     // SpreadsheetEngineContext.........................................................................................
 

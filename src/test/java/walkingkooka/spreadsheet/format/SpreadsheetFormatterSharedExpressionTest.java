@@ -249,6 +249,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                     SpreadsheetLabelNameResolvers.fake(),
                     SpreadsheetContexts.fixedSpreadsheetId(
                         MEDIA_TYPE_DETECTOR,
+                        SPREADSHEET_METADATA_CREATOR,
                         MULTIPLIER,
                         SpreadsheetEngines.basic(),
                         new FakeSpreadsheetStoreRepository() {

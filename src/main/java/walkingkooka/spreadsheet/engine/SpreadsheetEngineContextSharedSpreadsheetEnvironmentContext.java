@@ -24,6 +24,7 @@ import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
@@ -58,6 +59,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -324,6 +326,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     public SpreadsheetMetadata spreadsheetMetadata() {
         return this.loadMetadataOrFail(
             this.spreadsheetIdOrFail()
+        );
+    }
+
+    @Override
+    public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                              final Optional<Locale> locale) {
+        return this.spreadsheetMetadataContext.createMetadata(
+            user,
+            locale
         );
     }
 

@@ -70,6 +70,26 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 null,
+                SPREADSHEET_METADATA_CREATOR,
+                MULTIPLIER,
+                SPREADSHEET_ENGINE,
+                REPO,
+                HTTP_ROUTER_FACTORY,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetMetadataCreatorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
+                null,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 REPO,
@@ -88,6 +108,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 null,
                 SPREADSHEET_ENGINE,
                 REPO,
@@ -106,6 +127,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 null,
                 REPO,
@@ -124,6 +146,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 null,
@@ -142,6 +165,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 REPO,
@@ -155,6 +179,28 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     }
 
     // saveMetadata.....................................................................................................
+
+    @Test
+    public void testCreateMetadata() {
+        final SpreadsheetContextSharedFixedSpreadsheetId context = this.createContext();
+
+        final SpreadsheetMetadata spreadsheetMetadata = context.createMetadata(
+            CREATOR,
+            Optional.of(DIFFERENT_LOCALE)
+        );
+
+        this.checkEquals(
+            CREATOR,
+            spreadsheetMetadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                .createdBy(),
+            "createdBy"
+        );
+
+        this.localeAndCheck(
+            spreadsheetMetadata,
+            DIFFERENT_LOCALE
+        );
+    }
 
     @Test
     public void testSaveMetadataWithSameId() {
@@ -444,6 +490,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
             MEDIA_TYPE_DETECTOR,
+            SPREADSHEET_METADATA_CREATOR,
             MULTIPLIER,
             SPREADSHEET_ENGINE,
             new FakeSpreadsheetStoreRepository() {

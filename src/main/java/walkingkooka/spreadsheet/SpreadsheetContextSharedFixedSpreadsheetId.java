@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
@@ -46,6 +47,7 @@ import java.util.function.Function;
 final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContextShared {
 
     static SpreadsheetContextSharedFixedSpreadsheetId with(final MediaTypeDetector mediaTypeDetector,
+                                                           final SpreadsheetMetadataCreator metadataCreator,
                                                            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                            final SpreadsheetEngine spreadsheetEngine,
                                                            final SpreadsheetStoreRepository storeRepository,
@@ -55,6 +57,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                            final SpreadsheetProvider spreadsheetProvider,
                                                            final ProviderContext providerContext) {
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
+        Objects.requireNonNull(metadataCreator, "metadataCreator");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -66,6 +69,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
 
         return new SpreadsheetContextSharedFixedSpreadsheetId(
             mediaTypeDetector,
+            metadataCreator,
             multiplier,
             spreadsheetEngine,
             storeRepository,
@@ -81,6 +85,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
     }
 
     private SpreadsheetContextSharedFixedSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
+                                                       final SpreadsheetMetadataCreator metadataCreator,
                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                        final SpreadsheetEngine spreadsheetEngine,
                                                        final SpreadsheetStoreRepository storeRepository,
@@ -94,6 +99,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                        final ProviderContext providerContext) {
         super(
             mediaTypeDetector,
+            metadataCreator,
             multiplier,
             spreadsheetEngine,
             spreadsheetEngineContext,
@@ -173,6 +179,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedFixedSpreadsheetId(
             this.mediaTypeDetector,
+            this.metadataCreator,
             this.multiplier,
             this.spreadsheetEngine,
             this.storeRepository, // keep

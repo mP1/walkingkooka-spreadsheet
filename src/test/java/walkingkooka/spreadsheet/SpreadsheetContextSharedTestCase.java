@@ -53,6 +53,9 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
@@ -105,12 +108,37 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
+    final static Locale DIFFERENT_LOCALE = Locale.forLanguageTag("en-NZ");
+
+    final static EmailAddress CREATOR = EmailAddress.parse("creator@example.com");
+
     final static AuditInfo AUDIT_INFO = AuditInfo.create(
-        EmailAddress.parse("creator@example.com"),
+        CREATOR,
         LocalDateTime.MIN
     );
 
     final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
+
+    final static SpreadsheetMetadataCreator SPREADSHEET_METADATA_CREATOR = new SpreadsheetMetadataCreator() {
+        @Override
+        public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                  final Optional<Locale> locale) {
+            SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    user,
+                    HAS_NOW.now()
+                )
+            );
+            if (locale.isPresent()) {
+                metadata = metadata.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    locale.get()
+                );
+            }
+            return metadata;
+        }
+    };
 
     private static EnvironmentContext spreadsheetEnvironmentContextEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(

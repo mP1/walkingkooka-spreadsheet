@@ -538,6 +538,27 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
+    SpreadsheetMetadataCreator SPREADSHEET_METADATA_CREATOR = new SpreadsheetMetadataCreator() {
+        @Override
+        public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                  final Optional<Locale> locale) {
+            SpreadsheetMetadata metadata = METADATA_EN_AU.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    user,
+                    HAS_NOW.now()
+                )
+            );
+            if (locale.isPresent()) {
+                metadata = metadata.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    locale.get()
+                );
+            }
+            return metadata;
+        }
+    };
+
     BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(

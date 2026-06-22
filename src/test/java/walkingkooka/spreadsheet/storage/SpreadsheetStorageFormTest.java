@@ -601,6 +601,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
 
         return SpreadsheetContexts.fixedSpreadsheetId(
             MEDIA_TYPE_DETECTOR,
+            SPREADSHEET_METADATA_CREATOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(metadataStore),

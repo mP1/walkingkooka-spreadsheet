@@ -626,6 +626,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetContexts.fixedSpreadsheetId(
                     MEDIA_TYPE_DETECTOR,
+                    SPREADSHEET_METADATA_CREATOR,
                     MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     new FakeSpreadsheetStoreRepository() {

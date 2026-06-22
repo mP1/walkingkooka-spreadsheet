@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
@@ -41,6 +42,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      * {@see SpreadsheetContextSharedFixedSpreadsheetId}
      */
     public static SpreadsheetContext fixedSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
+                                                        final SpreadsheetMetadataCreator metadataCreator,
                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                         final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
@@ -51,6 +53,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                         final ProviderContext providerContext) {
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
             mediaTypeDetector,
+            metadataCreator,
             multiplier,
             spreadsheetEngine,
             storeRepository,
@@ -73,6 +76,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      * {@see SpreadsheetContextSharedMutableSpreadsheetId}
      */
     public static SpreadsheetContext mutableSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
+                                                          final SpreadsheetMetadataCreator metadataCreator,
                                                           final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                           final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
@@ -83,6 +87,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
             mediaTypeDetector,
+            metadataCreator,
             multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,

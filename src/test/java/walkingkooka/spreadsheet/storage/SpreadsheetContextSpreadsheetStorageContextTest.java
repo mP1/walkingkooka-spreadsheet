@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataCreator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -951,6 +952,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         return SpreadsheetContextSpreadsheetStorageContext.with(
             SpreadsheetContexts.fixedSpreadsheetId(
                 MediaTypeDetectors.binary(),
+                new FakeSpreadsheetMetadataCreator(),
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(metadataStore),

@@ -1206,6 +1206,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         return Optional.of(
                             SpreadsheetContexts.fixedSpreadsheetId(
                                 mediaTypeDetector,
+                                SPREADSHEET_METADATA_CREATOR,
                                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                                 SpreadsheetEngines.basic(),
                                 repo,

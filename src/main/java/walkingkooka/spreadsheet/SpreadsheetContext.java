@@ -21,7 +21,6 @@ import walkingkooka.Context;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -33,15 +32,10 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * A {@link Context} holding state including {@link EnvironmentContext} for a single user and the spreadsheet they are
@@ -55,16 +49,6 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     CurrencyLocaleContext,
     MediaTypeDetector,
     SpreadsheetMetadataContext {
-
-    // SpreadsheetMetadataContext.......................................................................................
-
-    @Override
-    default SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                               final Optional<Locale> locale) {
-        Objects.requireNonNull(user, "user");
-        Objects.requireNonNull(locale, "locale");
-        throw new UnsupportedOperationException();
-    }
 
     // SpreadsheetContext...............................................................................................
 
