@@ -60,10 +60,10 @@ public interface SpreadsheetMetadataCreatorTesting<C extends SpreadsheetMetadata
         );
     }
 
-    default void createMetadataAndCheck(final C context,
-                                        final EmailAddress user,
-                                        final Optional<Locale> locale,
-                                        final SpreadsheetMetadata expected) {
+    default void createSpreadsheetMetadataAndCheck(final C context,
+                                                   final EmailAddress user,
+                                                   final Optional<Locale> locale,
+                                                   final SpreadsheetMetadata expected) {
         this.checkEquals(
             expected,
             context.createMetadata(
