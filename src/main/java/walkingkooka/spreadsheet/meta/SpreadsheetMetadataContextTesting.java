@@ -20,56 +20,15 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadataContext> extends ContextTesting<C> {
-
-    // createMetadata...................................................................................................
-
-    @Test
-    default void testCreateMetadataWithNullUserFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .createMetadata(
-                    null,
-                    Optional.empty()
-                )
-        );
-    }
-
-    @Test
-    default void testCreateMetadataWithNullLocaleFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .createMetadata(
-                    EmailAddress.parse("user@example.com"),
-                    null // locale
-                )
-        );
-    }
-
-    default void createMetadataAndCheck(final C context,
-                                        final EmailAddress user,
-                                        final Optional<Locale> locale,
-                                        final SpreadsheetMetadata expected) {
-        this.checkEquals(
-            expected,
-            context.createMetadata(
-                user,
-                locale
-            ),
-            "createMetadata " + user + " " + locale.orElse(null)
-        );
-    }
+public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadataContext> extends ContextTesting<C>,
+    SpreadsheetMetadataCreatorTesting<C>{
 
     // loadMetadata.....................................................................................................
 
@@ -235,7 +194,14 @@ public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadata
                 .addMetadataWatcherOnce(null)
         );
     }
-    
+
+    // SpreadsheetMetadataCreator.......................................................................................
+
+    @Override
+    default C createSpreadsheetMetadataCreator() {
+        return this.createContext();
+    }
+
     // class............................................................................................................
 
     @Override

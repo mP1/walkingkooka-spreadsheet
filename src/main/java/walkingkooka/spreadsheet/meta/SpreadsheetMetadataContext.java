@@ -18,24 +18,17 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Context;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.store.MissingStoreException;
 import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 /**
  * A context that provides CRUD operations for {@link SpreadsheetMetadata}.
  */
-public interface SpreadsheetMetadataContext extends Context {
-
-    /**
-     * Creates a new {@link SpreadsheetMetadata}
-     */
-    SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                       final Optional<Locale> locale);
+public interface SpreadsheetMetadataContext extends Context,
+    SpreadsheetMetadataCreator{
 
     /**
      * Loads the {@link SpreadsheetMetadata} for the given {@link SpreadsheetId}
