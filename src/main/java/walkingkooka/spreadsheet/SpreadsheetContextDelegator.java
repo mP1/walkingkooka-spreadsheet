@@ -23,7 +23,6 @@ import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -184,15 +183,8 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
         return this.spreadsheetContext();
     }
 
-    @Override
-    default SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                               final Optional<Locale> locale) {
-        return SpreadsheetContext.super.createMetadata(
-            user,
-            locale
-        );
-    }
-    
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
     @Override
     default SpreadsheetMetadataContext spreadsheetMetadataContext() {
         return this.spreadsheetContext();

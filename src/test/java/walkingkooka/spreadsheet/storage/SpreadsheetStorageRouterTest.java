@@ -3016,6 +3016,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             return Optional.of(
                 SpreadsheetContexts.fixedSpreadsheetId(
                     MEDIA_TYPE_DETECTOR,
+                    SPREADSHEET_METADATA_CREATOR,
                     MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     repo,
@@ -3042,6 +3043,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetContexts.mutableSpreadsheetId(
             MEDIA_TYPE_DETECTOR,
+            SPREADSHEET_METADATA_CREATOR,
             MULTIPLIER,
             SpreadsheetEngines.basic(),
             spreadsheetContextSupplier,

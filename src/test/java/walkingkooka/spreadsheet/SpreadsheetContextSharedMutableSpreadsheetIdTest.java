@@ -26,6 +26,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -76,6 +77,26 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 null,
+                SPREADSHEET_METADATA_CREATOR,
+                MULTIPLIER,
+                SPREADSHEET_ENGINE,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                SPREADSHEET_METADATA_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetMetadataCreatorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
+                null,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -94,6 +115,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 null,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -112,6 +134,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -130,6 +153,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 null,
@@ -148,6 +172,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
+                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -264,6 +289,63 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         this.checkEquals(
             SPREADSHEET_ID,
             metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+        );
+    }
+
+    // createdSpreadsheet...............................................................................................
+
+    @Test
+    public void testCreateSpreadsheet() {
+        final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
+
+        final EmailAddress user = EmailAddress.parse("different@example.com");
+        this.checkNotEquals(
+            CREATOR,
+            user,
+            "user"
+        );
+
+        final Locale locale = Locale.forLanguageTag("FR");
+        this.checkNotEquals(
+            LOCALE,
+            locale,
+            "locale"
+        );
+
+        final SpreadsheetMetadata metadata = context.createMetadata(
+            user,
+            Optional.of(locale)
+        );
+
+        this.checkNotEquals(
+            null,
+            metadata
+        );
+
+        final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+
+        this.checkNotEquals(
+            null,
+            spreadsheetId,
+            "spreadsheetId"
+        );
+
+        this.localeAndCheck(
+            metadata,
+            locale
+        );
+
+        this.checkEquals(
+            user,
+            metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                .createdBy(),
+            "createdBy"
+        );
+
+        this.loadMetadataAndCheck(
+            context,
+            spreadsheetId,
+            metadata
         );
     }
 
@@ -525,6 +607,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
 
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
             MEDIA_TYPE_DETECTOR,
+            SPREADSHEET_METADATA_CREATOR,
             MULTIPLIER,
             SPREADSHEET_ENGINE,
             (SpreadsheetId id) -> {

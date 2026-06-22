@@ -250,6 +250,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SpreadsheetContexts.fixedSpreadsheetId(
                     MEDIA_TYPE_DETECTOR,
+                    SPREADSHEET_METADATA_CREATOR,
                     MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     new FakeSpreadsheetStoreRepository() {

@@ -779,6 +779,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         return SpreadsheetContexts.fixedSpreadsheetId(
             MEDIA_TYPE_DETECTOR,
+            SPREADSHEET_METADATA_CREATOR,
             MULTIPLIER,
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(

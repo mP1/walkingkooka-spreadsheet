@@ -910,6 +910,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                          final ProviderContext providerContext) {
         return SpreadsheetContexts.fixedSpreadsheetId(
             MEDIA_TYPE_DETECTOR,
+            SPREADSHEET_METADATA_CREATOR,
             MULTIPLIER,
             SpreadsheetEngines.fake(),
             storeRepository,

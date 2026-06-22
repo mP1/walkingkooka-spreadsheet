@@ -1362,6 +1362,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         spreadsheetId.equals(id) ?
                             SpreadsheetContexts.fixedSpreadsheetId(
                                 MEDIA_TYPE_DETECTOR,
+                                SPREADSHEET_METADATA_CREATOR,
                                 MULTIPLIER,
                                 SpreadsheetEngines.fake(),
                                 this.repo, // SpreadsheetStoreRepository

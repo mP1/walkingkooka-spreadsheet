@@ -30,6 +30,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -66,6 +67,7 @@ import walkingkooka.tree.expression.Expression;
 
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -295,7 +297,26 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         );
     }
 
-    private final static SpreadsheetMetadataCreator CREATE_METADATA = (e, l) -> METADATA_EN_AU;
+    private final static SpreadsheetMetadataCreator CREATE_METADATA = (e, l) -> {
+        SpreadsheetMetadata created = METADATA_EN_AU;
+
+        created = created.set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            created.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                .setCreatedBy(e)
+        );
+
+        if (l.isPresent()) {
+            created = created.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                l.get()
+            );
+        }
+        ;
+
+
+        return created;
+    };
 
     @Test
     public void testSaveMetadata() {
@@ -321,6 +342,61 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             context,
             SPREADSHEET_ID,
             saved
+        );
+    }
+
+    @Test
+    public void testCreateSpreadsheet() {
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        final EmailAddress user = EmailAddress.parse("different@example.com");
+        this.checkNotEquals(
+            USER,
+            user,
+            "user"
+        );
+
+        final Locale locale = Locale.forLanguageTag("FR");
+        this.checkNotEquals(
+            LOCALE,
+            locale,
+            "locale"
+        );
+
+        final SpreadsheetMetadata metadata = context.createMetadata(
+            user,
+            Optional.of(locale)
+        );
+
+        this.checkNotEquals(
+            null,
+            metadata
+        );
+
+        final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+
+        this.checkNotEquals(
+            null,
+            spreadsheetId,
+            "spreadsheetId"
+        );
+
+        this.localeAndCheck(
+            metadata,
+            locale
+        );
+
+        this.checkEquals(
+            user,
+            metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                .createdBy(),
+            "createdBy"
+        );
+
+        this.loadMetadataAndCheck(
+            context,
+            spreadsheetId,
+            metadata
         );
     }
 

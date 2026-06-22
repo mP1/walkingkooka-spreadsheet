@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -60,6 +61,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -361,6 +363,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
      * Will be updated whenever a new metadata is saved.
      */
     private transient SpreadsheetMetadata spreadsheetMetadata;
+
+    @Override
+    public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                              final Optional<Locale> locale) {
+        return this.spreadsheetContext.createMetadata(
+            user,
+            locale
+        );
+    }
 
     @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {

@@ -28,6 +28,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentContexts;
@@ -664,6 +665,61 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     }
 
     @Test
+    public void testCreateSpreadsheet() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        final EmailAddress user = EmailAddress.parse("different@example.com");
+        this.checkNotEquals(
+            USER,
+            user,
+            "user"
+        );
+
+        final Locale locale = Locale.forLanguageTag("FR");
+        this.checkNotEquals(
+            LOCALE,
+            locale,
+            "locale"
+        );
+
+        final SpreadsheetMetadata metadata = context.createMetadata(
+            user,
+            Optional.of(locale)
+        );
+
+        this.checkNotEquals(
+            null,
+            metadata
+        );
+
+        final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+
+        this.checkNotEquals(
+            null,
+            spreadsheetId,
+            "spreadsheetId"
+        );
+
+        this.localeAndCheck(
+            metadata,
+            locale
+        );
+
+        this.checkEquals(
+            user,
+            metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                .createdBy(),
+            "createdBy"
+        );
+
+        this.loadMetadataAndCheck(
+            context,
+            spreadsheetId,
+            metadata
+        );
+    }
+
+    @Test
     public void testSpreadsheetEngine() {
         this.spreadsheetEngineAndCheck(
             this.createContext(),
@@ -897,7 +953,20 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             Objects.requireNonNull(user, "user");
             Objects.requireNonNull(locale, "locale");
 
-            throw new UnsupportedOperationException();
+            SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    user,
+                    HAS_NOW.now()
+                )
+            );
+            if (locale.isPresent()) {
+                metadata = metadata.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    locale.get()
+                );
+            }
+            return this.saveMetadata(metadata);
         }
 
         @Override
@@ -915,8 +984,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
             Objects.requireNonNull(metadata, "metadata");
 
-            this.metadata = metadata;
-            return metadata;
+            SpreadsheetMetadata saved = metadata;
+            if (metadata.id().isEmpty()) {
+                saved = metadata.set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
+                );
+            }
+
+            this.metadata = saved;
+            return saved;
         }
 
         private SpreadsheetMetadata metadata;
