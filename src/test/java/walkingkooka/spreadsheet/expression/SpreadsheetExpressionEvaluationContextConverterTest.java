@@ -27,6 +27,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -49,16 +50,14 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.meta.store.FakeSpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
-import walkingkooka.store.Store;
-import walkingkooka.store.StoreWatcher;
-import walkingkooka.store.StoreWatchers;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
@@ -119,7 +118,13 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
         .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("$#.##").spreadsheetFormatterSelector())
-        .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SPREADSHEET_ID);
+        .set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.create(
+                USER,
+                HAS_NOW.now()
+            )
+        );
 
     /**
      * Concats all the given parameters.
@@ -296,6 +301,69 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
 
         assertSame(converter, doubleWrapped.converter, "converter");
         assertSame(context, doubleWrapped.context, "context");
+    }
+
+    // SpreadsheetMetadataContext.......................................................................................
+
+    //private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
+
+    @Test
+    public void testSaveMetadataAndLoadMetadata() {
+        final SpreadsheetExpressionEvaluationContextConverter context = this.createContext();
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(metadata);
+
+        this.loadMetadataAndCheck(
+            context,
+            saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
+            saved
+        );
+    }
+
+    @Test
+    public void testDeleteMetadata() {
+        final SpreadsheetExpressionEvaluationContextConverter context = this.createContext();
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(metadata);
+
+        final SpreadsheetId spreadsheetId = saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+
+        context.deleteMetadata(spreadsheetId);
+
+        this.loadMetadataAndCheck(
+            context,
+            spreadsheetId
+        );
+    }
+
+    @Test
+    public void testSaveMetadataAndFindMetadataBySpreadsheetName() {
+        final SpreadsheetExpressionEvaluationContextConverter context = this.createContext();
+
+        final String name = "SpreadsheetName111";
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with(name)
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(metadata);
+
+        this.findMetadataBySpreadsheetNameAndCheck(
+            context,
+            name,
+            0,
+            2,
+            saved
+        );
     }
 
     // evaluate.........................................................................................................
@@ -563,38 +631,15 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                     new FakeSpreadsheetStoreRepository() {
                         @Override
                         public SpreadsheetMetadataStore metadatas() {
-                            return new FakeSpreadsheetMetadataStore() {
-                                @Override
-                                public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
-                                    return Optional.ofNullable(
-                                        id.equals(SPREADSHEET_ID) ?
-                                            METADATA :
-                                            null
-                                    );
-                                }
-
-                                @Override
-                                public List<SpreadsheetMetadata> findByName(final String name,
-                                                                            final int offset,
-                                                                            final int count) {
-                                    Objects.requireNonNull(name, "name");
-                                    Store.checkOffsetAndCount(offset, count);
-                                    throw new UnsupportedOperationException();
-                                }
-
-                                @Override
-                                public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
-                                    return this.watchers.add(watcher);
-                                }
-
-                                @Override
-                                public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
-                                    return this.watchers.addOnce(watcher);
-                                }
-
-                                private final StoreWatchers<SpreadsheetMetadata> watchers = StoreWatchers.empty();
-                            };
+                            return this.metadataStore;
                         }
+
+                        {
+                            this.metadataStore = SpreadsheetMetadataStores.treeMap();
+                            this.metadataStore.save(METADATA);
+                        }
+
+                        private final SpreadsheetMetadataStore metadataStore;
                     },
                     (c) -> {
                         throw new UnsupportedOperationException();
