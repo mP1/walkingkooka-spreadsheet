@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Creates but does not save a {@link SpreadsheetMetadata} using the given parameters.
+ * Creates a {@link SpreadsheetMetadata} using the given parameters.
  */
 public interface SpreadsheetMetadataCreator {
 
