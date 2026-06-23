@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -55,7 +56,9 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -231,6 +234,33 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         }
     };
 
+    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = new FakeCurrencyContext() {
+
+        @Override
+        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                     final Optional<LocalDateTime> dateTime) {
+            Objects.requireNonNull(currencyExchange, "currencyExchange");
+            Objects.requireNonNull(dateTime, "dateTime");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
+            Objects.requireNonNull(currencyCode, "currencyCode");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<Currency> currencyForLocale(final Locale locale) {
+            return Optional.of(
+                Currency.getInstance(locale)
+            );
+        }
+    }.setLocaleContext(
+        LocaleContexts.jre(LOCALE)
+    );
+
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
@@ -259,38 +289,20 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                     ',', // valueSeparator
                     Converters.fake(),
                     BinaryNumberConverterFunctions.fake(), // multiplier
-                    new FakeCurrencyContext() {
-
-                        @Override
-                        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                                     final Optional<LocalDateTime> dateTime) {
-                            Objects.requireNonNull(currencyExchange, "currencyExchange");
-                            Objects.requireNonNull(dateTime, "dateTime");
-
-                            throw new UnsupportedOperationException();
-                        }
-
-                        @Override
-                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                            Objects.requireNonNull(currencyCode, "currencyCode");
-                            throw new UnsupportedOperationException();
-                        }
-
-                        @Override
-                        public Optional<Currency> currencyForLocale(final Locale locale) {
-                            return Optional.of(
-                                Currency.getInstance(locale)
-                            );
-                        }
-                    }.setLocaleContext(
-                        LocaleContexts.jre(LOCALE)
-                    ),
+                    CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT
                 ),
                 EXPRESSION_NUMBER_KIND
             ),
-            JsonNodeMarshallUnmarshallContexts.fake()
+            JsonNodeMarshallUnmarshallContexts.basic(
+                JsonNodeMarshallContexts.basic(),
+                JsonNodeUnmarshallContexts.basic(
+                    EXPRESSION_NUMBER_KIND,
+                    CURRENCY_LOCALE_CONTEXT,
+                    DECIMAL_NUMBER_CONTEXT.mathContext()
+                )
+            )
         ),
         LocaleContexts.jre(LOCALE)
     );
