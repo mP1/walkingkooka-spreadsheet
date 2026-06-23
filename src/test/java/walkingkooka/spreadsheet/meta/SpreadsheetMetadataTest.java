@@ -1385,13 +1385,25 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final JsonNodeMarshallContext marshallContext2 = JsonNodeMarshallContexts.basic();
 
         final BigDecimal bigDecimal = BigDecimal.valueOf(1.25);
-        this.checkEquals(marshallContext.marshall(bigDecimal), marshallContext2.marshall(bigDecimal), () -> "" + bigDecimal);
+        this.checkEquals(
+            marshallContext.marshall(bigDecimal),
+            marshallContext2.marshall(bigDecimal),
+            () -> "" + bigDecimal
+        );
 
         final LocalDateTime localDateTime = LocalDateTime.now();
 
-        this.checkEquals(marshallContext.marshall(localDateTime), marshallContext2.marshall(localDateTime), () -> "" + localDateTime);
+        this.checkEquals(
+            marshallContext.marshall(localDateTime),
+            marshallContext2.marshall(localDateTime),
+            () -> "" + localDateTime
+        );
 
-        this.checkEquals(marshallContext.marshall(metadata), marshallContext2.marshall(metadata), () -> "" + metadata);
+        this.checkEquals(
+            marshallContext.marshall(metadata),
+            marshallContext2.marshall(metadata),
+            () -> "" + metadata
+        );
     }
 
     // toString.........................................................................................................
@@ -1621,6 +1633,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             },
             MathContext.UNLIMITED
         );
+    }
+
+    private JsonNode marshall(final Object value) {
+        return JsonNodeMarshallContexts.basic()
+            .marshall(value);
     }
 
     // urlFragment......................................................................................................
@@ -2120,11 +2137,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     // helper...........................................................................................................
-
-    private JsonNode marshall(final Object value) {
-        return JsonNodeMarshallContexts.basic()
-            .marshall(value);
-    }
 
     private static SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
         return SpreadsheetFormatterProviders.spreadsheetFormatters();
