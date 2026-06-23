@@ -208,16 +208,16 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
         Objects.requireNonNull(movedCells, "movedCells");
         Objects.requireNonNull(context, "context");
 
-        return sort0(
+        return this.sort0(
             SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
             movedCells,
             context
         );
     }
 
-    public SpreadsheetCellRange sort0(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
-                                      final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCellsConsumer,
-                                      final SpreadsheetComparatorContext context) {
+    private SpreadsheetCellRange sort0(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
+                                       final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCellsConsumer,
+                                       final SpreadsheetComparatorContext context) {
         final SpreadsheetColumnOrRowReferenceKind widthKind = comparators.get(0)
             .columnOrRow()
             .columnOrRowReferenceKind();
