@@ -205,6 +205,17 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     );
 
     /**
+     * Tests if the {@link Class} is {@link SpreadsheetMetadata} or one of its package private classes.
+     */
+    public static boolean isClass(final Class<?> klass) {
+        return null != klass && (
+            SpreadsheetMetadata.class == klass ||
+                SpreadsheetMetadataEmpty.class == klass ||
+                SpreadsheetMetadataNonEmpty.class == klass
+        );
+    }
+
+    /**
      * Private ctor to limit subclasses.
      */
     SpreadsheetMetadata(final SpreadsheetMetadata defaults) {
