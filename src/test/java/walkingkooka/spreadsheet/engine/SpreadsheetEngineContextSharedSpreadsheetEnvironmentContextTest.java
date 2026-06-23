@@ -312,7 +312,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                 l.get()
             );
         }
-        ;
 
 
         return created;
