@@ -426,6 +426,7 @@ public class TestGwtTest extends GWTTestCase {
                         LABEL_NAME_RESOLVER,
                         lineEnding,
                         BinaryNumberConverterFunctions.fake(),
+                        SpreadsheetMetadataLoaders.empty(),
                         currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
                             converterProvider,

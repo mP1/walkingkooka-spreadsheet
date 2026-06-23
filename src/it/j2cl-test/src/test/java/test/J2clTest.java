@@ -441,6 +441,7 @@ public class J2clTest {
                         lineEnding,
                         BinaryNumberConverterFunctions.fake(),
                         SpreadsheetMetadataLoaders.fake(),
+                        SpreadsheetMetadataLoaders.empty(),
                         currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
                             converterProvider,
