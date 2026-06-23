@@ -31,6 +31,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverDelegator;
@@ -239,6 +240,13 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     @Override
     public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
         return this.spreadsheetConverterContext;
+    }
+
+    // SpreadsheetMetadataLoader........................................................................................
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        return this.spreadsheetConverterContext.loadMetadata(id);
     }
 
     // SpreadsheetLabelNameResolverDelegator............................................................................

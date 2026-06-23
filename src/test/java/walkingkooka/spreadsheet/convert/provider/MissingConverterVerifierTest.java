@@ -40,6 +40,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -400,6 +401,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
             return LOCALE_CONTEXT.localeForLanguageTag(languageTag);
+        }
+
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+            throw new UnsupportedOperationException();
         }
     }
 

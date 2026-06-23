@@ -111,6 +111,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
                 multiplier,
+                spreadsheetMetadataContext, // SpreadsheetMetadataLoader
                 currencyLocaleContext,
                 spreadsheetEnvironmentContext,
                 spreadsheetProvider,

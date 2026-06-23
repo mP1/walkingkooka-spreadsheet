@@ -34,6 +34,10 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -79,6 +83,35 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         );
     }
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
+    private final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = new SpreadsheetMetadataLoader() {
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+            Objects.requireNonNull(id, "id");
+
+            return Optional.ofNullable(
+                SPREADSHEET_ID.equals(id) ?
+                    SPREADSHEET_METADATA :
+                    null
+            );
+        }
+    };
+
+    @Test
+    public void testLoadMetadata() {
+        this.loadMetadataAndCheck(
+            this.createContext(),
+            SPREADSHEET_ID,
+            SPREADSHEET_METADATA
+        );
+    }
+
     @Test
     public void testToString() {
         final SpreadsheetConverterContext SpreadsheetConverterContext = SpreadsheetConverterContexts.fake();
@@ -111,6 +144,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
             Objects.requireNonNull(label, "label");
             throw new UnsupportedOperationException();
         },
+        SPREADSHEET_METADATA_LOADER,
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),

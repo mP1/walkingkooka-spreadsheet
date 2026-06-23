@@ -42,6 +42,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -164,6 +165,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
 
     public static SpreadsheetEnvironmentContextFactory with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                            final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                             final CurrencyLocaleContext currencyLocaleContext,
                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                             final SpreadsheetProvider spreadsheetProvider,
@@ -171,6 +173,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return new SpreadsheetEnvironmentContextFactory(
             null, // Converter
             Objects.requireNonNull(multiplier, "multiplier"),
+            Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader"),
             Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
             null, // SpreadsheetConverterContext
             null, // DateTimeContext
@@ -189,6 +192,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     private SpreadsheetEnvironmentContextFactory(final Converter<SpreadsheetConverterContext> converter,
                                                  final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                 final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                  final CurrencyLocaleContext currencyLocaleContext,
                                                  final SpreadsheetConverterContext spreadsheetConverterContext,
                                                  final DateTimeContext dateTimeContext,
@@ -207,6 +211,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         this.converter = converter;
 
         this.multiplier = multiplier;
+
+        this.spreadsheetMetadataLoader = spreadsheetMetadataLoader;
 
         this.spreadsheetConverterContext = spreadsheetConverterContext;
 
@@ -321,6 +327,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 converter,
                 this.multiplier,
                 SpreadsheetLabelNameResolvers.empty(),
+                this.spreadsheetMetadataLoader,
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
@@ -350,6 +357,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         }
         return this.spreadsheetConverterContext;
     }
+
+    private final SpreadsheetMetadataLoader spreadsheetMetadataLoader;
 
     private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
@@ -606,6 +615,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return new SpreadsheetEnvironmentContextFactory(
             this.converter,
             this.multiplier,
+            this.spreadsheetMetadataLoader,
             this.currencyLocaleContext,
             spreadsheetConverterContext,
             this.dateTimeContext, //
@@ -761,6 +771,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             this :
             with(
                 this.multiplier,
+                this.spreadsheetMetadataLoader,
                 this.currencyLocaleContext,
                 after,
                 this.spreadsheetProvider,
@@ -781,6 +792,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     public int hashCode() {
         return Objects.hash(
             this.multiplier,
+            this.spreadsheetMetadataLoader,
             this.currencyLocaleContext,
             this.spreadsheetEnvironmentContext,
             this.spreadsheetProvider,
@@ -799,6 +811,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
             Objects.equals(this.jsonNodeUnmarshallContextPreProcessor, other.jsonNodeUnmarshallContextPreProcessor) &&
             this.multiplier.equals(other.multiplier) &&
+            this.spreadsheetMetadataLoader.equals(other.spreadsheetMetadataLoader) &&
             this.currencyLocaleContext.equals(other.currencyLocaleContext) &&
             this.spreadsheetEnvironmentContext.equals(other.spreadsheetEnvironmentContext) &&
             this.spreadsheetProvider.equals(other.spreadsheetProvider) &&

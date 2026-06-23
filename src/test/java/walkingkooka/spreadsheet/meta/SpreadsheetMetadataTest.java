@@ -176,6 +176,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
+    private final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.empty();
+
     private final static CurrencyContext CURRENCY_CONTEXT = new FakeCurrencyContext() {
 
         @Override
@@ -880,6 +882,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -901,6 +904,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -922,6 +926,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -943,6 +948,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -964,6 +970,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -985,6 +992,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -1006,6 +1014,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 null,
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -1027,6 +1036,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 null,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -1047,6 +1057,29 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
+                null,
+                SPREADSHEET_METADATA_LOADER,
+                ConverterProviders.fake(),
+                CURRENCY_LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullSpreadsheetMetadataLoaderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                CHARSET,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                HAS_USER_DIRECTORIES,
+                INDENTATION,
+                SpreadsheetLabelNameResolvers.fake(),
+                LINE_ENDING,
+                MULTIPLIER,
                 null,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
@@ -1069,6 +1102,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -1090,6 +1124,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 null,
                 PROVIDER_CONTEXT
@@ -1111,6 +1146,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 null
@@ -1132,6 +1168,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -1213,6 +1250,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             SpreadsheetLabelNameResolvers.fake(),
             LINE_ENDING,
             MULTIPLIER,
+            SPREADSHEET_METADATA_LOADER,
             ConverterProviders.converters(),
             CURRENCY_LOCALE_CONTEXT,
             PROVIDER_CONTEXT

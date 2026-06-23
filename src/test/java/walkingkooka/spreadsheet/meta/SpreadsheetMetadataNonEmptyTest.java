@@ -1423,6 +1423,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 converter,
                 MULTIPLIER,
                 LABEL_NAME_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
@@ -2061,6 +2062,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2110,6 +2112,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2448,6 +2451,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.converters(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT

@@ -270,6 +270,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
                     spreadsheetContext.multiplier(),
+                    spreadsheetContext, // SpreadsheetMetadataLoader
                     spreadsheetContext, // SpreadsheetProvider, // SpreadsheetConverterProvider
                     spreadsheetContext, // CurrencyLocaleContext
                     spreadsheetContext.providerContext()
@@ -350,6 +351,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                 this.spreadsheetLabelNameResolver,
                 this.lineEnding(),
                 spreadsheetContext.multiplier(),
+                spreadsheetContext, // SpreadsheetMetadataLoader
                 spreadsheetContext, // CurrencyLocaleContext
                 spreadsheetContext, // SpreadsheetProvider
                 spreadsheetContext.providerContext() // ProviderContext

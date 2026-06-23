@@ -23,6 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
@@ -45,6 +46,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final Converter<SpreadsheetConverterContext> converter,
                                                     final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                    final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                     final JsonNodeConverterContext jsonNodeConverterContext,
                                                     final LocaleContext localeContext) {
         return BasicSpreadsheetConverterContext.with(
@@ -54,6 +56,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
             converter,
             multiplier,
             spreadsheetLabelNameResolver,
+            spreadsheetMetadataLoader,
             jsonNodeConverterContext,
             localeContext
         );

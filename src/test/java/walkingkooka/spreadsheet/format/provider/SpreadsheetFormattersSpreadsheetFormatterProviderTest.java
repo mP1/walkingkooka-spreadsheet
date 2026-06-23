@@ -157,6 +157,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -4760,6 +4761,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
             MULTIPLIER,
+            SPREADSHEET_METADATA_LOADER,
             CURRENCY_LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

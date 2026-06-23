@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.TextLiteralSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.WhitespaceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.YearSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -871,6 +872,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
             Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(),
+            SpreadsheetMetadataLoaders.fake(),
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),

@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -216,6 +217,22 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
                 null,
+                SPREADSHEET_METADATA_LOADER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetMetadataLoaderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
+                null,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -230,6 +247,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -244,6 +262,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 null,
                 SPREADSHEET_PROVIDER,
@@ -259,6 +278,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
@@ -273,6 +293,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -727,6 +748,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
                                                                final ProviderContext providerContext) {
         return SpreadsheetEnvironmentContextFactory.with(
             MULTIPLIER,
+            SPREADSHEET_METADATA_LOADER,
             CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
             SPREADSHEET_PROVIDER,
@@ -817,6 +839,21 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
                 BinaryNumberConverterFunctions.fake(),
+                SPREADSHEET_METADATA_LOADER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetMetadataLoader() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
+                SpreadsheetMetadataLoaders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -830,6 +867,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CurrencyLocaleContexts.fake(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -852,6 +890,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 spreadsheetEnvironmentContext,
                 SPREADSHEET_PROVIDER,
@@ -865,6 +904,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 SpreadsheetProviders.fake(),
@@ -878,6 +918,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
                 MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 SPREADSHEET_PROVIDER,

@@ -36,6 +36,10 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
@@ -95,6 +99,26 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
+    private final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = new SpreadsheetMetadataLoader() {
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId spreadsheetId) {
+            Objects.requireNonNull(spreadsheetId, "spreadsheetId");
+
+            return Optional.ofNullable(
+                SPREADSHEET_ID.equals(spreadsheetId) ?
+                    SPREADSHEET_METADATA :
+                    null
+            );
+        }
+    };
+
     // with.............................................................................................................
 
     @Test
@@ -108,6 +132,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 CONVERTER,
                 MULTIPLIER,
                 LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -125,6 +150,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 CONVERTER,
                 MULTIPLIER,
                 LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -142,6 +168,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 null,
                 MULTIPLIER,
                 LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -159,6 +186,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 CONVERTER,
                 null,
                 LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -175,6 +203,25 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 VALIDATION_REFERENCE,
                 CONVERTER,
                 MULTIPLIER,
+                null,
+                SPREADSHEET_METADATA_LOADER,
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetMetadataLoaderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                HAS_USER_DIRECTORIES,
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                MULTIPLIER,
+                LABEL_RESOLVER,
                 null,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
@@ -193,6 +240,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 CONVERTER,
                 MULTIPLIER,
                 LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
                 null,
                 LOCALE_CONTEXT
             )
@@ -210,6 +258,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 CONVERTER,
                 MULTIPLIER,
                 LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 null
             )
@@ -290,6 +339,17 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         );
     }
 
+    // SpreadsheetMetadataLoader........................................................................................
+
+    @Test
+    public void testLoadMetadata() {
+        this.loadMetadataAndCheck(
+            this.createContext(),
+            SPREADSHEET_ID,
+            SPREADSHEET_METADATA
+        );
+    }
+
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
@@ -299,6 +359,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             CONVERTER,
             MULTIPLIER,
             LABEL_RESOLVER,
+            SPREADSHEET_METADATA_LOADER,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
