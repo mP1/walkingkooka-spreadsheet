@@ -73,6 +73,13 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     ClassTesting<MissingConverterVerifier>,
     SpreadsheetMetadataTesting {
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(0x1234);
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = METADATA_EN_AU.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
     @Test
     public void testVerifyAndCheckWithNullConverterFails() {
         assertThrows(
@@ -380,7 +387,16 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
-            return METADATA_EN_AU;
+            return SPREADSHEET_METADATA;
+        }
+
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+            return Optional.ofNullable(
+                SPREADSHEET_ID.equals(id) ?
+                    SPREADSHEET_METADATA :
+                    null
+            );
         }
 
         @Override
@@ -403,10 +419,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             return LOCALE_CONTEXT.localeForLanguageTag(languageTag);
         }
 
-        @Override
-        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-            throw new UnsupportedOperationException();
-        }
     }
 
     private void verifyAndCheck(final Converter<SpreadsheetConverterContext> converter,

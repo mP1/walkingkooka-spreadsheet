@@ -999,6 +999,17 @@ final class MissingConverterVerifier {
 
         // spreadsheetMetadata..........................................................................................
         {
+            // spreadsheet-id-to-spreadsheet-metadata...................................................................
+            if (scripting) {
+                final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+
+                verifier.addIfConversionFail(
+                    metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
+                    SpreadsheetMetadata.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA //
+                );
+            }
+
             // text-to-spreadsheet-id...................................................................................
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
 
