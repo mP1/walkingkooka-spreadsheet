@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -63,7 +64,17 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         throw new UnsupportedOperationException();
     };
 
-    private final static SpreadsheetMetadataContext SPREADSHEET_METADATA_CONTEXT = SpreadsheetMetadataContexts.fake();
+    private final static SpreadsheetMetadataContext SPREADSHEET_METADATA_CONTEXT = new FakeSpreadsheetMetadataContext() {
+
+        @Override
+        public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                  final Optional<Locale> locale) {
+            return SPREADSHEET_METADATA_CREATOR.createMetadata(
+                user,
+                locale
+            );
+        }
+    };
 
     private final static SpreadsheetId OTHER_SPREADSHEET_ID = SpreadsheetId.with(999);
 
@@ -76,26 +87,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
-                null,
-                SPREADSHEET_METADATA_CREATOR,
-                MULTIPLIER,
-                SPREADSHEET_ENGINE,
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                SPREADSHEET_METADATA_CONTEXT,
-                CURRENCY_LOCALE_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetMetadataCreatorFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
-                MEDIA_TYPE_DETECTOR,
                 null,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
@@ -115,7 +106,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
-                SPREADSHEET_METADATA_CREATOR,
                 null,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -134,7 +124,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
-                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -153,7 +142,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
-                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 null,
@@ -172,7 +160,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 MEDIA_TYPE_DETECTOR,
-                SPREADSHEET_METADATA_CREATOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -607,7 +594,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
 
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
             MEDIA_TYPE_DETECTOR,
-            SPREADSHEET_METADATA_CREATOR,
             MULTIPLIER,
             SPREADSHEET_ENGINE,
             (SpreadsheetId id) -> {
@@ -625,9 +611,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 );
             },
             SpreadsheetMetadataContexts.basic(
-                (u, dl) -> {
-                    throw new UnsupportedOperationException();
-                },
+                SPREADSHEET_METADATA_CREATOR,
                 store
             ),
             currencyLocaleContext,

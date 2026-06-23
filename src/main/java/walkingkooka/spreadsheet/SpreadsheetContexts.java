@@ -76,7 +76,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      * {@see SpreadsheetContextSharedMutableSpreadsheetId}
      */
     public static SpreadsheetContext mutableSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
-                                                          final SpreadsheetMetadataCreator metadataCreator,
                                                           final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                           final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
@@ -87,7 +86,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
             mediaTypeDetector,
-            metadataCreator,
             multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,
