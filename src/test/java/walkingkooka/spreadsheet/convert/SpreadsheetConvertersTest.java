@@ -2125,7 +2125,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetMetadataConvertStringToSpreadsheetMetadata() {
+    public void testSpreadsheetMetadataConvertStringWithSpreadsheetMetadataToSpreadsheetMetadata() {
         this.spreadsheetMetadataConvertAndCheck(
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(SPREADSHEET_METADATA)
                 .toString(),
@@ -2150,6 +2150,23 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.spreadsheetMetadataConvertAndCheck(
             name.toString(),
             name
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataConvertStringWithSpreadsheetIdToSpreadsheetMetadata() {
+        this.spreadsheetMetadataConvertAndCheck(
+            SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                .toString(),
+            SPREADSHEET_METADATA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataConvertSpreadsheetIdToSpreadsheetMetadata() {
+        this.spreadsheetMetadataConvertAndCheck(
+            SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
+            SPREADSHEET_METADATA
         );
     }
 
@@ -2199,7 +2216,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             Lists.of(
                 SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text(),
-                SpreadsheetConverters.json()
+                SpreadsheetConverters.json(),
+                SpreadsheetConverters.textToSpreadsheetId()
             )
         );
 

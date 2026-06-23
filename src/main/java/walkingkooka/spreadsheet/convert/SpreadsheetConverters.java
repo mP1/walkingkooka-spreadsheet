@@ -657,7 +657,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToSpreadsheetMetadata(),
         textToSpreadsheetMetadataPropertyName(),
         textToSpreadsheetName(),
-        propertiesToSpreadsheetMetadata()
+        propertiesToSpreadsheetMetadata(),
+        spreadsheetIdToSpreadsheetMetadata()
     );
 
     /**
