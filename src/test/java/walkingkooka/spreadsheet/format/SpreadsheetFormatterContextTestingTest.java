@@ -40,6 +40,26 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 123;
 
     @Override
+    public void testSetObjectPostProcessor() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetObjectPostProcessorSame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetPreProcessor() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetPreProcessorSame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public TestSpreadsheetFormatterContext createContext() {
         return new TestSpreadsheetFormatterContext();
     }
@@ -169,11 +189,13 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
 
         @Override
         public SpreadsheetFormatterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+            Objects.requireNonNull(processor, "processor");
             throw new UnsupportedOperationException();
         }
 
         @Override
         public SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+            Objects.requireNonNull(processor, "processor");
             throw new UnsupportedOperationException();
         }
 

@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -36,12 +37,15 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -81,70 +85,72 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
         MathContext.UNLIMITED
     );
 
-    static {
-        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
+    private final static LocaleContext LOCALE_CONTEXT =  LocaleContexts.jre(LOCALE);
 
-        CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-            HasUserDirectorieses.fake(),
-            SpreadsheetConverterContexts.NO_METADATA,
-            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-            SpreadsheetConverters.system(),
-            BinaryNumberConverterFunctions.multiply(), // multiplier
-            (s) -> {
-                throw new UnsupportedOperationException();
-            },
-            JsonNodeConverterContexts.basic(
-                ExpressionNumberConverterContexts.basic(
+    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = new FakeCurrencyContext() {
+
+        @Override
+        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                     final Optional<LocalDateTime> dateTime) {
+            Objects.requireNonNull(currencyExchange, "currencyExchange");
+            Objects.requireNonNull(dateTime, "dateTime");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
+            Objects.requireNonNull(currencyCode, "currencyCode");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<Currency> currencyForLocale(final Locale locale) {
+            return Optional.of(
+                Currency.getInstance(locale)
+            );
+        }
+    }.setLocaleContext(LOCALE_CONTEXT);
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
+    private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+        HasUserDirectorieses.fake(),
+        SpreadsheetConverterContexts.NO_METADATA,
+        SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+        SpreadsheetConverters.system(),
+        BinaryNumberConverterFunctions.multiply(), // multiplier
+        SpreadsheetLabelNameResolvers.empty(),
+        JsonNodeConverterContexts.basic(
+            ExpressionNumberConverterContexts.basic(
+                Converters.fake(),
+                BinaryNumberConverterFunctions.multiply(), // multiplier
+                ConverterContexts.basic(
+                    false, // canNumbersHaveGroupSeparator
+                    StandardCharsets.UTF_8,
+                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    INDENTATION,
+                    LineEnding.NL,
+                    ',', // valueSeparator
                     Converters.fake(),
-                    BinaryNumberConverterFunctions.multiply(), // multiplier
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        StandardCharsets.UTF_8,
-                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
-                        LineEnding.NL,
-                        ',', // valueSeparator
-                        Converters.fake(),
-                        BinaryNumberConverterFunctions.fake(), // multiplier
-                        new FakeCurrencyContext() {
-
-                            @Override
-                            public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                                         final Optional<LocalDateTime> dateTime) {
-                                Objects.requireNonNull(currencyExchange, "currencyExchange");
-                                Objects.requireNonNull(dateTime, "dateTime");
-
-                                throw new UnsupportedOperationException();
-                            }
-
-                            @Override
-                            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                                return Optional.of(
-                                    Currency.getInstance(
-                                        currencyCode.value()
-                                    )
-                                );
-                            }
-
-                            @Override
-                            public Optional<Currency> currencyForLocale(final Locale locale) {
-                                return Optional.of(
-                                    Currency.getInstance(locale)
-                                );
-                            }
-                        }.setLocaleContext(localeContext),
-                        DATE_TIME_CONTEXT,
-                        DECIMAL_NUMBER_CONTEXT
-                    ),
-                    ExpressionNumberKind.DEFAULT
+                    BinaryNumberConverterFunctions.fake(), // multiplier
+                    CURRENCY_LOCALE_CONTEXT,
+                    DATE_TIME_CONTEXT,
+                    DECIMAL_NUMBER_CONTEXT
                 ),
-                JsonNodeMarshallUnmarshallContexts.fake()
+                EXPRESSION_NUMBER_KIND
             ),
-            localeContext
-        );
-    }
-
-    private final static SpreadsheetConverterContext CONVERTER_CONTEXT;
+            JsonNodeMarshallUnmarshallContexts.basic(
+                JsonNodeMarshallContexts.basic(),
+                JsonNodeUnmarshallContexts.basic(
+                    EXPRESSION_NUMBER_KIND,
+                    CURRENCY_LOCALE_CONTEXT,
+                    DECIMAL_NUMBER_CONTEXT.mathContext()
+                )
+            )
+        ),
+        LOCALE_CONTEXT
+    );
 
     @Test
     public void testConvertSameType() {
