@@ -354,6 +354,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetCellSet();
                 break;
+            case SPREADSHEET_ID_TO_SPREADSHEET_METADATA_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.spreadsheetIdToSpreadsheetMetadata();
+                break;
             case SPREADSHEET_METADATA_STRING:
                 noParameterCheck(copy);
 
@@ -1008,6 +1013,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_CELL_SET = ConverterName.with(SPREADSHEET_CELL_SET_STRING);
 
+    private final static String SPREADSHEET_ID_TO_SPREADSHEET_METADATA_STRING = "spreadsheet-id-to-spreadsheet-metadata";
+
+    final static ConverterName SPREADSHEET_ID_TO_SPREADSHEET_METADATA = ConverterName.with(SPREADSHEET_ID_TO_SPREADSHEET_METADATA_STRING);
+
     private final static String SPREADSHEET_METADATA_STRING = "spreadsheet-metadata";
 
     final static ConverterName SPREADSHEET_METADATA = ConverterName.with(SPREADSHEET_METADATA_STRING);
@@ -1397,6 +1406,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(PROPERTIES_TO_SPREADSHEET_METADATA),
             converterInfo(PROPERTIES_TO_TEXT_STYLE),
             converterInfo(SPREADSHEET_CELL_SET),
+            converterInfo(SPREADSHEET_ID_TO_SPREADSHEET_METADATA),
             converterInfo(SPREADSHEET_METADATA),
             converterInfo(SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION),
             converterInfo(SPREADSHEET_SELECTION_TO_TEXT),

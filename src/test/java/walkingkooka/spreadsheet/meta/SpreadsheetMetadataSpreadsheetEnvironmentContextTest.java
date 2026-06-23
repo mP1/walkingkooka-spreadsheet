@@ -683,6 +683,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    properties-to-spreadsheet-metadata\n" +
                 "    properties-to-text-style\n" +
                 "    spreadsheet-cell-set\n" +
+                "    spreadsheet-id-to-spreadsheet-metadata\n" +
                 "    spreadsheet-metadata\n" +
                 "    spreadsheet-selection-to-spreadsheet-selection\n" +
                 "    spreadsheet-selection-to-text\n" +

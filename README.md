@@ -158,6 +158,7 @@ eg
 - [properties-to-spreadsheet-metadata](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterPropertiesToSpreadsheetMetadata.java)
 - [properties-to-text-style](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TreeTextConverterPropertiesToTextStyle.java)
 - [spreadsheet-cell-set](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetCellSet.java)
+- [spreadsheet-id-to-spreadsheet-metadata](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata.java)
 - [spreadsheet-metadata](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 - [spreadsheet-selection-to-spreadsheet-selection](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection.java)
 - [spreadsheet-selection-to-text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetSelectionToText.java)
