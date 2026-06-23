@@ -599,6 +599,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithSpreadsheetIdToSpreadsheetMetadata() {
+        this.converterAndCheck(
+            "spreadsheet-id-to-spreadsheet-metadata",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetIdToSpreadsheetMetadata()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithSpreadsheetMetadata() {
         this.converterAndCheck(
             "spreadsheet-metadata",
