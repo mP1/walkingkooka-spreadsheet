@@ -2221,6 +2221,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 type
             );
         }
+
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+            return Optional.ofNullable(
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                    .equals(id) ?
+                    SPREADSHEET_METADATA :
+                    null
+            );
+        }
     };
 
     // spreadsheetValue.................................................................................................

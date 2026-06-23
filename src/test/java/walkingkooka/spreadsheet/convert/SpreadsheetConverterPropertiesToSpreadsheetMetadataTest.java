@@ -27,6 +27,8 @@ import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.props.Properties;
+import walkingkooka.props.PropertiesPath;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
@@ -57,6 +59,17 @@ public final class SpreadsheetConverterPropertiesToSpreadsheetMetadataTest exten
             metadata.properties(),
             SpreadsheetMetadata.class,
             metadata
+        );
+    }
+
+    @Test
+    public void testConvertInvalidPropertiesToSpreadsheetMetadataFails() {
+        this.convertFails(
+            Properties.EMPTY.set(
+                PropertiesPath.parse("hello"),
+                "world"
+            ),
+            SpreadsheetMetadata.class
         );
     }
 
