@@ -626,7 +626,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         this.fired = false;
 
         context.addLabelWatcher(
-            new StoreWatcher<SpreadsheetLabelMapping>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
                                           final Optional<SpreadsheetLabelMapping> newValue) {
@@ -677,7 +677,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         this.fired = false;
 
         context.addLabelWatcherOnce(
-            new StoreWatcher<SpreadsheetLabelMapping>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
                                           final Optional<SpreadsheetLabelMapping> newValue) {

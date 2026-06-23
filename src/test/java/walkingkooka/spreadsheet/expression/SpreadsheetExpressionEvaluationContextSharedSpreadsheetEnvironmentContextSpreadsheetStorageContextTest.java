@@ -325,7 +325,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         context.addCellWatcher(
-            new StoreWatcher<SpreadsheetCell>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetCell> oldValue,
                                           final Optional<SpreadsheetCell> newValue) {
@@ -406,7 +406,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         context.addCellWatcherOnce(
-            new StoreWatcher<SpreadsheetCell>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetCell> oldValue,
                                           final Optional<SpreadsheetCell> newValue) {
@@ -703,7 +703,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         this.fired = true;
         context.addFormWatcher(
-            new StoreWatcher<Form<SpreadsheetValidationReference>>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
                                           final Optional<Form<SpreadsheetValidationReference>> newValue) {
@@ -767,7 +767,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         this.fired = true;
         context.addFormWatcherOnce(
-            new StoreWatcher<Form<SpreadsheetValidationReference>>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
                                           final Optional<Form<SpreadsheetValidationReference>> newValue) {
@@ -1005,7 +1005,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         this.fired = false;
 
         context.addLabelWatcher(
-            new StoreWatcher<SpreadsheetLabelMapping>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
                                           final Optional<SpreadsheetLabelMapping> newValue) {
@@ -1066,7 +1066,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         this.fired = false;
 
         context.addLabelWatcherOnce(
-            new StoreWatcher<SpreadsheetLabelMapping>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
                                           final Optional<SpreadsheetLabelMapping> newValue) {
