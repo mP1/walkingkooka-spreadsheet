@@ -114,7 +114,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
         this.fired = true;
 
         context.addMetadataWatcher(
-            new StoreWatcher<SpreadsheetMetadata>() {
+            new StoreWatcher<>() {
                 @Override
                 public void onValueChange(final Optional<SpreadsheetMetadata> oldValue,
                                           final Optional<SpreadsheetMetadata> newValue) {
