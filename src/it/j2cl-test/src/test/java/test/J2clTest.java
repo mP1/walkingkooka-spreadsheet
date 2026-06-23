@@ -19,7 +19,6 @@ package test;
 import com.google.j2cl.junit.apt.J2clTestInput;
 import org.junit.Assert;
 import org.junit.Test;
-
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
@@ -44,7 +43,6 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -128,13 +126,13 @@ public class J2clTest {
     @Test
     public void testCellSpreadsheetExpressionEvaluationContext() {
         SpreadsheetExpressionEvaluationContexts.cell(
-                Optional.empty(),
-                new FakeSpreadsheetExpressionEvaluationContext() {
-                    @Override
-                    public Optional<SpreadsheetCell> cell() {
-                        return Optional.empty();
-                    }
+            Optional.empty(),
+            new FakeSpreadsheetExpressionEvaluationContext() {
+                @Override
+                public Optional<SpreadsheetCell> cell() {
+                    return Optional.empty();
                 }
+            }
         );
     }
 
@@ -144,66 +142,66 @@ public class J2clTest {
         final SpreadsheetEngineContext engineContext = engineContext();
 
         final SpreadsheetCell unsaved = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("=12")
+            SpreadsheetFormula.EMPTY.setText("=12")
         );
 
         final SpreadsheetDelta delta = engine.saveCell(
-                unsaved,
-                engineContext
+            unsaved,
+            engineContext
         );
 
         // a1=12
         checkEquals(
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        unsaved.setFormula(
-                                                unsaved.formula()
-                                                        .setToken(
-                                                                Optional.of(
-                                                                        SpreadsheetFormulaParserToken.expression(
-                                                                                Lists.of(
-                                                                                        SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
-                                                                                        SpreadsheetFormulaParserToken.number(
-                                                                                                Lists.of(
-                                                                                                        SpreadsheetFormulaParserToken.digits("12", "12")
-                                                                                                ),
-                                                                                                "12"
-                                                                                        )
-                                                                                ),
-                                                                                "=12"
-                                                                        )
-                                                                )
-                                                        ).setExpression(
-                                                                Optional.of(
-                                                                        Expression.value(
-                                                                                EXPRESSION_NUMBER_KIND.create(12)
-                                                                        )
-                                                                )
-                                                        ).setValue(
-                                                                Optional.of(
-                                                                        EXPRESSION_NUMBER_KIND.create(12)
-                                                                )
-                                                        )
-                                        ).setFormattedValue(
-                                                Optional.of(
-                                                        TextNode.text("12.0")
+            SpreadsheetDelta.EMPTY.setCells(
+                    Sets.of(
+                        unsaved.setFormula(
+                            unsaved.formula()
+                                .setToken(
+                                    Optional.of(
+                                        SpreadsheetFormulaParserToken.expression(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                                SpreadsheetFormulaParserToken.number(
+                                                    Lists.of(
+                                                        SpreadsheetFormulaParserToken.digits("12", "12")
+                                                    ),
+                                                    "12"
                                                 )
+                                            ),
+                                            "=12"
                                         )
+                                    )
+                                ).setExpression(
+                                    Optional.of(
+                                        Expression.value(
+                                            EXPRESSION_NUMBER_KIND.create(12)
+                                        )
+                                    )
+                                ).setValue(
+                                    Optional.of(
+                                        EXPRESSION_NUMBER_KIND.create(12)
+                                    )
                                 )
-                        ).setColumnWidths(
-                                Maps.of(
-                                        SpreadsheetSelection.A1.column(),
-                                        50.0
-                                )
-                        ).setRowHeights(
-                                Maps.of(
-                                        SpreadsheetSelection.A1.row(),
-                                        50.0
-                                )
-                        ).setColumnCount(OptionalInt.of(1))
-                        .setRowCount(OptionalInt.of(1)),
-                delta,
-                "saved A1=12"
+                        ).setFormattedValue(
+                            Optional.of(
+                                TextNode.text("12.0")
+                            )
+                        )
+                    )
+                ).setColumnWidths(
+                    Maps.of(
+                        SpreadsheetSelection.A1.column(),
+                        50.0
+                    )
+                ).setRowHeights(
+                    Maps.of(
+                        SpreadsheetSelection.A1.row(),
+                        50.0
+                    )
+                ).setColumnCount(OptionalInt.of(1))
+                .setRowCount(OptionalInt.of(1)),
+            delta,
+            "saved A1=12"
         );
     }
 
@@ -211,9 +209,9 @@ public class J2clTest {
                                     final Object actual,
                                     final String message) {
         Assert.assertEquals(
-                message,
-                expected,
-                actual
+            message,
+            expected,
+            actual
         );
     }
 
@@ -535,8 +533,8 @@ public class J2clTest {
         @Override
         public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
             return SpreadsheetExpressionEvaluationContexts.cell(
-                    cell,
-                    this
+                cell,
+                this
             );
         }
 
