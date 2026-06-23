@@ -207,6 +207,65 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
+    // isClass..........................................................................................................
+
+    @Test
+    public void testIsClassWithNull() {
+        this.isClassAndCheck(
+            null,
+            false
+        );
+    }
+
+    @Test
+    public void testIsClassWithObject() {
+        this.isClassAndCheck(
+            Object.class,
+            false
+        );
+    }
+
+    @Test
+    public void testIsClassWithSpreadsheetMetadata() {
+        this.isClassAndCheck(
+            SpreadsheetMetadata.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsClassWithSpreadsheetMetadataEmpty() {
+        this.isClassAndCheck(
+            SpreadsheetMetadataEmpty.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsClassWithSpreadsheetMetadataNonEmpty() {
+        this.isClassAndCheck(
+            SpreadsheetMetadataNonEmpty.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsClassWithNotSpreadsheetMetadata() {
+        this.isClassAndCheck(
+            this.getClass(),
+            false
+        );
+    }
+
+    private void isClassAndCheck(final Class<?> type,
+                                 final boolean expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetMetadata.isClass(type),
+            () -> null != type ? type.getSimpleName() : "null"
+        );
+    }
+
     // NON_LOCALE_DEFAULTS..............................................................................................
 
     @Test
