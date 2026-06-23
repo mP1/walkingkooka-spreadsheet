@@ -158,7 +158,7 @@ public final class SpreadsheetText implements HasText,
     }
 
     @Override
-    public void buildToString(ToStringBuilder builder) {
+    public void buildToString(final ToStringBuilder builder) {
         builder.separator(" ");
         builder.value(this.color);
 
