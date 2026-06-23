@@ -638,6 +638,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata}
+     */
+    public static Converter<SpreadsheetConverterContext> spreadsheetIdToSpreadsheetMetadata() {
+        return SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata.INSTANCE;
+    }
+
+    /**
      * A converter that involves {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} data types.
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetMetadata() {
