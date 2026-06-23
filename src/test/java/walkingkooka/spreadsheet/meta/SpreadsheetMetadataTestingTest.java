@@ -299,9 +299,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             },
             HAS_USER_DIRECTORIES,
             Indentation.SPACES2,
-            (label) -> {
-                throw new UnsupportedOperationException();
-            },
+            SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
