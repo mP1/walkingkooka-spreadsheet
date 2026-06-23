@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.ShortCircuitingConverter;
 import walkingkooka.props.Properties;
@@ -55,16 +56,33 @@ final class SpreadsheetConverterPropertiesToSpreadsheetMetadata extends Spreadsh
     public <T> Either<T, String> doConvert(final Object value,
                                            final Class<T> type,
                                            final SpreadsheetConverterContext context) {
-        return this.successfulConversion(
-            SpreadsheetMetadata.fromProperties(
-                context.convertOrFail(
-                    value,
-                    Properties.class
-                ),
-                context
-            ),
-            type
+        Either<T, String> result;
+
+        final Either<Properties, String> properties = context.convert(
+            value,
+            Properties.class
         );
+        if (properties.isRight()) {
+            result = Cast.to(properties);
+        } else {
+            try {
+                result = this.successfulConversion(
+                    SpreadsheetMetadata.fromProperties(
+                        properties.leftValue(),
+                        context
+                    ),
+                    type
+                );
+            } catch (final RuntimeException cause) {
+                result = this.failConversion(
+                    value,
+                    type,
+                    cause
+                );
+            }
+        }
+
+        return result;
     }
 
     @Override
