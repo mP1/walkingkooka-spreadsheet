@@ -995,7 +995,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testAddLabelWatcherAndSaveLabel() {
-        ;
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -1057,7 +1056,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testAddLabelWatcherOnceAndSaveLabel() {
-        ;
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
