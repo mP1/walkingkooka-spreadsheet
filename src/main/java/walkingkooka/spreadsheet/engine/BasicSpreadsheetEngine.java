@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -1849,7 +1848,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     cell,
                     validatorSelector,
                     spreadsheetExpressionReferenceLoader, // SpreadsheetExpressionReferenceLoader
-                    context, // SpreadsheetMetadataLoader
                     context // context
                 );
             } catch (final UnsupportedOperationException rethrow) {
@@ -1869,7 +1867,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static SpreadsheetCell validateWithValidator(final SpreadsheetCell cell,
                                                          final ValidatorSelector validatorSelector,
                                                          final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                         final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                          final SpreadsheetEngineContext context) {
         final ProviderContext providerContext = context.providerContext();
         final Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext> validator = context.validator(
@@ -1906,7 +1903,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 context, // SpreadsheetLabelNameResolver
                                 context.lineEnding(),
                                 context.multiplier(), // multiplier
-                                spreadsheetMetadataLoader,
+                                context, // SpreadsheetMetadataLoader,
                                 context, // ConverterProvider
                                 context, // CurrencyLocaleContext
                                 providerContext // ProviderContext
