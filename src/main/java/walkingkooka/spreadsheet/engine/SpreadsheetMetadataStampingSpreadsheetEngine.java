@@ -166,15 +166,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
 
     @Override
-    public SpreadsheetDelta findCells(final SpreadsheetCellRangeReference cellRange,
-                                      final SpreadsheetCellRangeReferencePath path,
-                                      final int offset,
-                                      final int count,
-                                      final ValueType valueType,
-                                      final Expression expression,
-                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                      final SpreadsheetEngineContext context) {
-        return this.engine.findCells(
+    public SpreadsheetDelta queryCells(final SpreadsheetCellRangeReference cellRange,
+                                       final SpreadsheetCellRangeReferencePath path,
+                                       final int offset,
+                                       final int count,
+                                       final ValueType valueType,
+                                       final Expression expression,
+                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                       final SpreadsheetEngineContext context) {
+        return this.engine.queryCells(
             cellRange,
             path,
             offset,

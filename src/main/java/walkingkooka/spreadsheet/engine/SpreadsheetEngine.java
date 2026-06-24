@@ -138,24 +138,6 @@ public interface SpreadsheetEngine {
                                      final SpreadsheetEngineContext context);
 
     /**
-     * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
-     * the given {@link Expression}.
-     * <br>
-     * Note that the {@link Expression} can only execute {@link walkingkooka.tree.expression.function.ExpressionFunction}
-     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#QUERY_FUNCTIONS}.
-     * <br>
-     * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
-     */
-    SpreadsheetDelta findCells(final SpreadsheetCellRangeReference cellRange,
-                               final SpreadsheetCellRangeReferencePath path,
-                               final int offset,
-                               final int count,
-                               final ValueType valueType,
-                               final Expression expression,
-                               final Set<SpreadsheetDeltaProperties> deltaProperties,
-                               final SpreadsheetEngineContext context);
-
-    /**
      * Finds all the {@link SpreadsheetCellReference references} for the given {@link SpreadsheetExpressionReference}.
      * Note the {@link SpreadsheetDelta#cells()} should not include the {@link SpreadsheetCellReference} unless its formula
      * contains a cycle.
@@ -175,6 +157,24 @@ public interface SpreadsheetEngine {
                                            final int count,
                                            final Set<SpreadsheetDeltaProperties> properties,
                                            final SpreadsheetEngineContext context);
+
+    /**
+     * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
+     * the given {@link Expression}.
+     * <br>
+     * Note that the {@link Expression} can only execute {@link walkingkooka.tree.expression.function.ExpressionFunction}
+     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#QUERY_FUNCTIONS}.
+     * <br>
+     * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
+     */
+    SpreadsheetDelta queryCells(final SpreadsheetCellRangeReference cellRange,
+                                final SpreadsheetCellRangeReferencePath path,
+                                final int offset,
+                                final int count,
+                                final ValueType valueType,
+                                final Expression expression,
+                                final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                final SpreadsheetEngineContext context);
 
     /**
      * Sorts the selection of cells using the provided {@link walkingkooka.spreadsheet.compare.SpreadsheetComparator comparators}.
