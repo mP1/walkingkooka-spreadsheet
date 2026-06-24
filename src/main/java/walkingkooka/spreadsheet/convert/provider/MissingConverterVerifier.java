@@ -1004,6 +1004,13 @@ final class MissingConverterVerifier {
                 final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
 
                 verifier.addIfConversionFail(
+                    metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                        .toString(),
+                    SpreadsheetMetadata.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA //
+                );
+
+                verifier.addIfConversionFail(
                     metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
                     SpreadsheetMetadata.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA //
