@@ -974,179 +974,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // findCells........................................................................................................
-
-    @Test
-    default void testFindCellsWithNullCellsFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    null, // range
-                    SpreadsheetCellRangeReferencePath.LRTD, // path
-                    0, // offset
-                    100, // count
-                    SpreadsheetValueType.ANY,
-                    Expression.value(true), // expression
-                    SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
-                )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithNullPathFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    SpreadsheetSelection.ALL_CELLS, // range
-                    null, // path
-                    0, // offset
-                    100, // count
-                    SpreadsheetValueType.ANY,
-                    Expression.value(true), // expression
-                    SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
-                )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithInvalidOffsetFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    SpreadsheetSelection.ALL_CELLS, // range
-                    SpreadsheetCellRangeReferencePath.LRTD, // path
-                    -1, // offset
-                    0,  // count
-                    SpreadsheetValueType.ANY,
-                    Expression.value(true), // expression
-                    SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
-                )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithInvalidCountFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    SpreadsheetSelection.ALL_CELLS, // range
-                    SpreadsheetCellRangeReferencePath.LRTD, // path
-                    0, // offset
-                    -1, // count
-                    SpreadsheetValueType.ANY,
-                    Expression.value(true), // expression
-                    SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
-                )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithNullValueTypeFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    SpreadsheetSelection.ALL_CELLS, // range
-                    SpreadsheetCellRangeReferencePath.LRTD, // path
-                    0, // offset
-                    100, // count
-                    null, // valueType
-                    Expression.value(true), // expression
-                    SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
-                )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithNullExpressionFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    SpreadsheetSelection.ALL_CELLS, // range
-                    SpreadsheetCellRangeReferencePath.LRTD, // path
-                    0, // offset
-                    100, // count
-                    SpreadsheetValueType.ANY,
-                    null, // expression
-                    SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
-                )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithNullDeltaPropertiesFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    SpreadsheetSelection.ALL_CELLS, // range
-                    SpreadsheetCellRangeReferencePath.LRTD, // path
-                    0, // offset
-                    100, // count
-                    SpreadsheetValueType.ANY,
-                    Expression.value(true), // expression
-                    null,
-                    SpreadsheetEngineContexts.fake() // context
-                )
-        );
-    }
-
-    @Test
-    default void testFindCellsWithNullContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetEngine()
-                .findCells(
-                    SpreadsheetSelection.ALL_CELLS, // range
-                    SpreadsheetCellRangeReferencePath.LRTD, // path
-                    0, // offset
-                    100, // count
-                    SpreadsheetValueType.ANY,
-                    Expression.value(true), // expression
-                    SpreadsheetDeltaProperties.ALL,
-                    null // context
-                )
-        );
-    }
-
-    default void findCellsAndCheck(
-        final SpreadsheetEngine engine,
-        final SpreadsheetCellRangeReference range,
-        final SpreadsheetCellRangeReferencePath path,
-        final int offset,
-        final int count,
-        final ValueType valueType,
-        final Expression expression,
-        final Set<SpreadsheetDeltaProperties> deltaProperties,
-        final SpreadsheetEngineContext context,
-        final SpreadsheetDelta expected) {
-        this.checkEquals(
-            expected,
-            engine.findCells(
-                range,
-                path,
-                offset,
-                count,
-                valueType,
-                expression,
-                deltaProperties,
-                context
-            ),
-            () -> "findCells range=" + range + " path=" + path + " offset=" + offset + " count=" + count + " valueType=" + valueType + " expression=" + expression + " deltaProperties=" + deltaProperties
-        );
-    }
-
     // findCellsWithReference..........................................................................................
 
     @Test
@@ -1317,6 +1144,179 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
             ),
             () -> "findFormulaReferences cell=" + cell + ", offset=" + offset + ", count=" + count + ", properties=" + properties
+        );
+    }
+
+    // queryCells.......................................................................................................
+
+    @Test
+    default void testQueryCellsWithNullCellsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    null, // range
+                    SpreadsheetCellRangeReferencePath.LRTD, // path
+                    0, // offset
+                    100, // count
+                    SpreadsheetValueType.ANY,
+                    Expression.value(true), // expression
+                    SpreadsheetDeltaProperties.ALL,
+                    SpreadsheetEngineContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    default void testQueryCellsWithNullPathFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    null, // path
+                    0, // offset
+                    100, // count
+                    SpreadsheetValueType.ANY,
+                    Expression.value(true), // expression
+                    SpreadsheetDeltaProperties.ALL,
+                    SpreadsheetEngineContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    default void testQueryCellsWithInvalidOffsetFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD, // path
+                    -1, // offset
+                    0,  // count
+                    SpreadsheetValueType.ANY,
+                    Expression.value(true), // expression
+                    SpreadsheetDeltaProperties.ALL,
+                    SpreadsheetEngineContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    default void testQueryCellsWithInvalidCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD, // path
+                    0, // offset
+                    -1, // count
+                    SpreadsheetValueType.ANY,
+                    Expression.value(true), // expression
+                    SpreadsheetDeltaProperties.ALL,
+                    SpreadsheetEngineContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    default void testQueryCellsWithNullValueTypeFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD, // path
+                    0, // offset
+                    100, // count
+                    null, // valueType
+                    Expression.value(true), // expression
+                    SpreadsheetDeltaProperties.ALL,
+                    SpreadsheetEngineContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    default void testQueryCellsWithNullExpressionFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD, // path
+                    0, // offset
+                    100, // count
+                    SpreadsheetValueType.ANY,
+                    null, // expression
+                    SpreadsheetDeltaProperties.ALL,
+                    SpreadsheetEngineContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    default void testQueryCellsWithNullDeltaPropertiesFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD, // path
+                    0, // offset
+                    100, // count
+                    SpreadsheetValueType.ANY,
+                    Expression.value(true), // expression
+                    null,
+                    SpreadsheetEngineContexts.fake() // context
+                )
+        );
+    }
+
+    @Test
+    default void testQueryCellsWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .queryCells(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD, // path
+                    0, // offset
+                    100, // count
+                    SpreadsheetValueType.ANY,
+                    Expression.value(true), // expression
+                    SpreadsheetDeltaProperties.ALL,
+                    null // context
+                )
+        );
+    }
+
+    default void queryCellsAndCheck(
+        final SpreadsheetEngine engine,
+        final SpreadsheetCellRangeReference range,
+        final SpreadsheetCellRangeReferencePath path,
+        final int offset,
+        final int count,
+        final ValueType valueType,
+        final Expression expression,
+        final Set<SpreadsheetDeltaProperties> deltaProperties,
+        final SpreadsheetEngineContext context,
+        final SpreadsheetDelta expected) {
+        this.checkEquals(
+            expected,
+            engine.queryCells(
+                range,
+                path,
+                offset,
+                count,
+                valueType,
+                expression,
+                deltaProperties,
+                context
+            ),
+            () -> "queryCells range=" + range + " path=" + path + " offset=" + offset + " count=" + count + " valueType=" + valueType + " expression=" + expression + " deltaProperties=" + deltaProperties
         );
     }
 

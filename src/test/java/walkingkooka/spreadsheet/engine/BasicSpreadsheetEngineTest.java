@@ -18234,10 +18234,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // findCells........................................................................................................
+    // queryCells.......................................................................................................
 
     @Test
-    public void testFindCells() {
+    public void testQueryCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18290,7 +18290,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18320,7 +18320,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsSkipsMissingCells() {
+    public void testQueryCellsSkipsMissingCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18343,7 +18343,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A1:C2"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18367,7 +18367,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsSkipsEmptyCells() {
+    public void testQueryCellsSkipsEmptyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18390,7 +18390,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A1:C2"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18413,7 +18413,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithLabels() {
+    public void testQueryCellsWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18458,7 +18458,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A1:C2"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18517,7 +18517,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A1:C2"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18543,7 +18543,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithLabelsAndReferences() {
+    public void testQueryCellsWithLabelsAndReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18588,7 +18588,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A1:C2"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18627,7 +18627,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithCount() {
+    public void testQueryCellsWithCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18680,7 +18680,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18704,7 +18704,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithValueTypeFiltering() {
+    public void testQueryCellsWithValueTypeFiltering() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18787,7 +18787,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18815,7 +18815,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithValueTypeFilteringAndCount() {
+    public void testQueryCellsWithValueTypeFilteringAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -18898,7 +18898,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -18922,7 +18922,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithValueTypeFilteringAndCount2() {
+    public void testQueryCellsWithValueTypeFilteringAndCount2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19005,7 +19005,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.LRTD,
@@ -19029,7 +19029,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithPathRlbuValueTypeFilteringAndCount2() {
+    public void testQueryCellsWithPathRlbuValueTypeFilteringAndCount2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19093,7 +19093,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.RLBU,
@@ -19117,7 +19117,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithPathRlbuValueTypeFilteringOffsetAndCount() {
+    public void testQueryCellsWithPathRlbuValueTypeFilteringOffsetAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19181,7 +19181,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.RLBU,
@@ -19203,7 +19203,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setRowCount(OptionalInt.of(4))
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.RLBU,
@@ -19224,7 +19224,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setRowCount(OptionalInt.of(4))
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.RLBU,
@@ -19244,7 +19244,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setRowCount(OptionalInt.of(4))
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A2:C4"),
             SpreadsheetCellRangeReferencePath.RLBU,
@@ -19260,7 +19260,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithFunction() {
+    public void testQueryCellsWithFunction() {
         final String functionName = "TestFindFunction";
 
         final SpreadsheetMetadata metadata = METADATA.set(
@@ -19347,7 +19347,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.findCellsAndCheck(
+        this.queryCellsAndCheck(
             engine,
             SpreadsheetSelection.parseCellRange("A1:C3"),
             SpreadsheetCellRangeReferencePath.RLBU,

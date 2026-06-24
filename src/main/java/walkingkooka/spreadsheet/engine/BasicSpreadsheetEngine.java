@@ -486,104 +486,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    // FIND CELLS.......................................................................................................
-
-    @Override
-    public SpreadsheetDelta findCells(final SpreadsheetCellRangeReference cellRange,
-                                      final SpreadsheetCellRangeReferencePath path,
-                                      final int offset,
-                                      final int count,
-                                      final ValueType valueType,
-                                      final Expression expression,
-                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                      final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cellRange, "cellRange");
-        Objects.requireNonNull(path, "path");
-        SpreadsheetEngine.checkOffsetAndCount(
-            offset,
-            count
-        );
-        Objects.requireNonNull(valueType, "valueType");
-        Objects.requireNonNull(expression, "expression");
-        Objects.requireNonNull(deltaProperties, "deltaProperties");
-        Objects.requireNonNull(context, "context");
-
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
-            this,
-            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-            deltaProperties,
-            context
-        );
-
-        try {
-            // this will be used to filter individual cells matching the find range and type.
-            final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterCellsPredicate.with(
-                valueType,
-                expression,
-                context.setSpreadsheetMetadataMode(
-                    SpreadsheetMetadataMode.QUERY
-                ),
-                changes
-            );
-
-            final Set<SpreadsheetCell> found = SortedSets.tree(
-                SpreadsheetCellReference.cellComparator(
-                    path.comparator()
-                )
-            );
-
-            final SpreadsheetCellStore store = context.storeRepository()
-                .cells();
-            int loadOffset = 0;
-            int skipOffset = 0;
-
-            for (; ; ) {
-                final int maxLeft = count - found.size();
-                if (maxLeft <= 0) {
-                    break;
-                }
-
-                final Collection<SpreadsheetCell> loaded = store.loadCellRange(
-                    cellRange,
-                    path,
-                    loadOffset,
-                    maxLeft
-                );
-                if (loaded.isEmpty()) {
-                    break;
-                }
-
-                for (final SpreadsheetCell possible : loaded) {
-                    loadOffset++;
-
-                    final SpreadsheetCell loadedAndEval = this.evaluateValidateFormatAndStyle(
-                        possible,
-                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                        changes, // SpreadsheetExpressionReferenceLoader
-                        context
-                    );
-
-                    if (filterPredicate.test(loadedAndEval)) {
-                        if (skipOffset >= offset) {
-                            found.add(loadedAndEval);
-                            changes.onCellLoading(loadedAndEval);
-                        }
-                        skipOffset++;
-                    }
-                }
-            }
-
-            changes.commit();
-
-            return this.prepareResponse(
-                changes,
-                context
-            );
-        } finally {
-            changes.close();
-        }
-    }
-
     // FIND CELLS WITH REFERENCE........................................................................................
 
     @Override
@@ -699,6 +601,104 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
 
                 loadedCount++;
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // QUERY CELLS......................................................................................................
+
+    @Override
+    public SpreadsheetDelta queryCells(final SpreadsheetCellRangeReference cellRange,
+                                       final SpreadsheetCellRangeReferencePath path,
+                                       final int offset,
+                                       final int count,
+                                       final ValueType valueType,
+                                       final Expression expression,
+                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cellRange, "cellRange");
+        Objects.requireNonNull(path, "path");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(valueType, "valueType");
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+            this,
+            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+            deltaProperties,
+            context
+        );
+
+        try {
+            // this will be used to filter individual cells matching the find range and type.
+            final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterCellsPredicate.with(
+                valueType,
+                expression,
+                context.setSpreadsheetMetadataMode(
+                    SpreadsheetMetadataMode.QUERY
+                ),
+                changes
+            );
+
+            final Set<SpreadsheetCell> found = SortedSets.tree(
+                SpreadsheetCellReference.cellComparator(
+                    path.comparator()
+                )
+            );
+
+            final SpreadsheetCellStore store = context.storeRepository()
+                .cells();
+            int loadOffset = 0;
+            int skipOffset = 0;
+
+            for (; ; ) {
+                final int maxLeft = count - found.size();
+                if (maxLeft <= 0) {
+                    break;
+                }
+
+                final Collection<SpreadsheetCell> loaded = store.loadCellRange(
+                    cellRange,
+                    path,
+                    loadOffset,
+                    maxLeft
+                );
+                if (loaded.isEmpty()) {
+                    break;
+                }
+
+                for (final SpreadsheetCell possible : loaded) {
+                    loadOffset++;
+
+                    final SpreadsheetCell loadedAndEval = this.evaluateValidateFormatAndStyle(
+                        possible,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        changes, // SpreadsheetExpressionReferenceLoader
+                        context
+                    );
+
+                    if (filterPredicate.test(loadedAndEval)) {
+                        if (skipOffset >= offset) {
+                            found.add(loadedAndEval);
+                            changes.onCellLoading(loadedAndEval);
+                        }
+                        skipOffset++;
+                    }
+                }
             }
 
             changes.commit();
