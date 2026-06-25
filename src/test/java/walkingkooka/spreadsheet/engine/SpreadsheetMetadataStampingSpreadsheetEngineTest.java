@@ -114,14 +114,39 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     private final static String FORMULA_VALUE = "Hello";
     private final static String FORMULA_TEXT = "'" + FORMULA_VALUE;
 
+    private final static SpreadsheetCell CELL = SpreadsheetSelection.A1
+        .setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText(FORMULA_TEXT)
+                .setExpression(
+                    Optional.of(
+                        Expression.value(FORMULA_VALUE)
+                    )
+                ).setValue(
+                    Optional.of(FORMULA_VALUE)
+                )
+        );
+
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataStampingSpreadsheetEngine.with(null, Function.identity()));
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadataStampingSpreadsheetEngine.with(
+                null,
+                Function.identity()
+            )
+        );
     }
 
     @Test
     public void testWithNullStamperFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataStampingSpreadsheetEngine.with(SpreadsheetEngines.fake(), null));
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadataStampingSpreadsheetEngine.with(
+                SpreadsheetEngines.fake(),
+                null
+            )
+        );
     }
 
     @Test
@@ -138,7 +163,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             )
         );
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -146,12 +171,12 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell cell = this.cell();
-
-        context.storeRepository().cells().save(cell);
+        context.storeRepository()
+            .cells()
+            .save(CELL);
 
         final SpreadsheetDelta delta = engine.loadCells(
-            cell.reference(),
+            CELL.reference(),
             SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
             SpreadsheetDeltaProperties.ALL,
             context
@@ -164,7 +189,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 .errorOrValue()
         );
 
-        this.checkMetadataUpdated(context);
+        this.loadMetadataAndCheckUpdated(context);
     }
 
     @Override
@@ -187,11 +212,13 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell cell = this.cell();
-        final SpreadsheetDelta saved = engine.saveCell(cell, context);
+        final SpreadsheetDelta saved = engine.saveCell(
+            CELL,
+            context
+        );
         assertNotNull(saved);
 
-        this.checkMetadataUpdated(context);
+        this.loadMetadataAndCheckUpdated(context);
     }
 
     @Test
@@ -201,7 +228,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         engine.deleteCells(SpreadsheetSelection.A1, context);
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -209,15 +236,20 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell cell = this.cell();
-        final SpreadsheetDelta saved = engine.saveCell(cell, context);
+        final SpreadsheetDelta saved = engine.saveCell(
+            CELL,
+            context
+        );
         assertNotNull(saved);
 
         context.storeRepository().metadatas().save(BEFORE);
 
-        engine.deleteCells(cell.reference(), context);
+        engine.deleteCells(
+            CELL.reference(),
+            context
+        );
 
-        this.checkMetadataUpdated(context);
+        this.loadMetadataAndCheckUpdated(context);
     }
 
     @Override
@@ -242,7 +274,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         engine.deleteColumns(SpreadsheetSelection.parseColumn("Z"), 1, context);
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -250,15 +282,23 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell cell = this.cell();
-        final SpreadsheetDelta saved = engine.saveCell(cell, context);
+        final SpreadsheetDelta saved = engine.saveCell(
+            CELL,
+            context
+        );
         assertNotNull(saved);
 
         context.storeRepository().metadatas().save(BEFORE);
 
-        engine.deleteColumns(cell.reference().column().add(1), 1, context);
+        engine.deleteColumns(
+            CELL.reference()
+                .column()
+                .add(1),
+            1,
+            context
+        );
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -266,15 +306,22 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell cell = this.cell();
-        final SpreadsheetDelta saved = engine.saveCell(cell, context);
+        final SpreadsheetDelta saved = engine.saveCell(
+            CELL,
+            context
+        );
         assertNotNull(saved);
 
         context.storeRepository().metadatas().save(BEFORE);
 
-        engine.deleteColumns(cell.reference().column(), 1, context);
+        engine.deleteColumns(
+            CELL.reference()
+                .column(),
+            1,
+            context
+        );
 
-        this.checkMetadataUpdated(context);
+        this.loadMetadataAndCheckUpdated(context);
     }
 
     @Test
@@ -284,7 +331,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         engine.insertColumns(SpreadsheetSelection.parseColumn("Z"), 0, context);
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -294,7 +341,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         engine.insertColumns(SpreadsheetSelection.parseColumn("B"), 1, context);
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -304,7 +351,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         engine.deleteRows(SpreadsheetSelection.parseRow("99"), 1, context);
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -312,15 +359,23 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell cell = this.cell();
-        final SpreadsheetDelta saved = engine.saveCell(cell, context);
+        final SpreadsheetDelta saved = engine.saveCell(
+            CELL,
+            context
+        );
         assertNotNull(saved);
 
         context.storeRepository().metadatas().save(BEFORE);
 
-        engine.deleteRows(cell.reference().row().add(1), 1, context);
+        engine.deleteRows(
+            CELL.reference()
+                .row()
+                .add(1),
+            1,
+            context
+        );
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -328,15 +383,22 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell cell = this.cell();
-        final SpreadsheetDelta saved = engine.saveCell(cell, context);
+        final SpreadsheetDelta saved = engine.saveCell(
+            CELL,
+            context
+        );
         assertNotNull(saved);
 
         context.storeRepository().metadatas().save(BEFORE);
 
-        engine.deleteRows(cell.reference().row(), 1, context);
+        engine.deleteRows(
+            CELL.reference()
+                .row(),
+            1,
+            context
+        );
 
-        this.checkMetadataUpdated(context);
+        this.loadMetadataAndCheckUpdated(context);
     }
 
     @Test
@@ -346,7 +408,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         engine.insertRows(SpreadsheetSelection.parseRow("99"), 0, context);
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Test
@@ -356,7 +418,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
         engine.insertRows(SpreadsheetSelection.parseRow("99"), 1, context);
 
-        this.checkMetadataNotUpdated(context);
+        this.loadMetadataAndCheckNotUpdated(context);
     }
 
     @Override
@@ -364,33 +426,29 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         // nop context created below hardcoded to return "Hello" ignoring Expression
     }
 
-    private SpreadsheetCell cell() {
-        return SpreadsheetSelection.A1
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText(FORMULA_TEXT)
-                    .setExpression(
-                        Optional.of(
-                            Expression.value(FORMULA_VALUE)
-                        )
-                    ).setValue(
-                        Optional.of(FORMULA_VALUE)
-                    )
-            );
+    private void loadMetadataAndCheckUpdated(final SpreadsheetEngineContext context) {
+        this.loadMetadataAndCheck(
+            context,
+            this.stamper()
+                .apply(BEFORE)
+        );
     }
 
-    private void checkMetadataUpdated(final SpreadsheetEngineContext context) {
-        checkMetadata(context, this.stamper().apply(BEFORE));
+    private void loadMetadataAndCheckNotUpdated(final SpreadsheetEngineContext context) {
+        this.loadMetadataAndCheck(
+            context,
+            BEFORE
+        );
     }
 
-    private void checkMetadataNotUpdated(final SpreadsheetEngineContext context) {
-        this.checkMetadata(context, BEFORE);
-    }
-
-    private void checkMetadata(final SpreadsheetEngineContext context, final SpreadsheetMetadata metadata) {
+    private void loadMetadataAndCheck(final SpreadsheetEngineContext context,
+                                      final SpreadsheetMetadata metadata) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetMetadataStore store = repository.metadatas();
-        this.checkEquals(metadata, store.loadOrFail(ID));
+        this.checkEquals(
+            metadata,
+            store.loadOrFail(ID)
+        );
     }
 
     @Test
