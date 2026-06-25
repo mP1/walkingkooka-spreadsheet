@@ -164,6 +164,20 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
         );
     }
 
+    @Override
+    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference reference,
+                                                  final int offset,
+                                                  final int count,
+                                                  final Set<SpreadsheetDeltaProperties> properties,
+                                                  final SpreadsheetEngineContext context) {
+        return this.engine.findFormulaReferences(
+            reference,
+            offset,
+            count,
+            properties,
+            context
+        );
+    }
 
     @Override
     public SpreadsheetDelta queryCells(final SpreadsheetCellRangeReference cellRange,
@@ -198,21 +212,6 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                 deltaProperties,
                 context
             ),
-            context
-        );
-    }
-
-    @Override
-    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference reference,
-                                                  final int offset,
-                                                  final int count,
-                                                  final Set<SpreadsheetDeltaProperties> properties,
-                                                  final SpreadsheetEngineContext context) {
-        return this.engine.findFormulaReferences(
-            reference,
-            offset,
-            count,
-            properties,
             context
         );
     }
