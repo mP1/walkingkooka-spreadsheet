@@ -104,6 +104,15 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference cell,
+                                                  final int offset,
+                                                  final int count,
+                                                  final Set<SpreadsheetDeltaProperties> properties,
+                                                  final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta queryCells(final SpreadsheetCellRangeReference cellRange,
                                        final SpreadsheetCellRangeReferencePath path,
                                        final int offset,
@@ -120,15 +129,6 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
                                       final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference cell,
-                                                  final int offset,
-                                                  final int count,
-                                                  final Set<SpreadsheetDeltaProperties> properties,
-                                                  final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
