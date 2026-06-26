@@ -30,13 +30,11 @@ import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -51,6 +49,8 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -65,6 +65,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -84,7 +85,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalContexts;
@@ -102,6 +102,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends SpreadsheetEngineContextSharedTestCase<SpreadsheetEngineContextSharedSpreadsheetContext> {
@@ -109,6 +110,17 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     private final static SpreadsheetContext SPREADSHEET_CONTEXT = new TestSpreadsheetContext();
 
     private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
+
+    static {
+        final SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        context.setSpreadsheetId(
+                Optional.of(SPREADSHEET_ID)
+            );
+
+        SPREADSHEET_ENVIRONMENT_CONTEXT = context;
+    }
+
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
 
     // with.............................................................................................................
 
@@ -145,6 +157,21 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 SPREADSHEET_CONTEXT,
                 null
             )
+        );
+    }
+
+    // setEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testSetEnvironmentContextWithEqualEnvironmentContext() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext before = this.createContext();
+
+        final EnvironmentContext after = before.setEnvironmentContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
+
+        assertNotSame(
+            before,
+            after
         );
     }
 
@@ -731,6 +758,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     
     @Override
     SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
         return this.createContext(
             METADATA,
             spreadsheetEnvironmentContext,
@@ -860,11 +891,15 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetEngineContextSharedSpreadsheetContextTest.SERVER_URL
         );
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
+        );
         return context;
     }
 
     private final static class TestSpreadsheetContext implements SpreadsheetContext,
-        EnvironmentContextDelegator,
+        SpreadsheetEnvironmentContextDelegator,
         CurrencyContextDelegator,
         LocaleContextDelegator,
         SpreadsheetProviderDelegator {
@@ -1041,53 +1076,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
-        public Optional<StoragePath> currentWorkingDirectory() {
-            return this.environmentValue(CURRENT_WORKING_DIRECTORY);
-        }
-
-        @Override
-        public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
-            this.setOrRemoveEnvironmentValue(
-                CURRENT_WORKING_DIRECTORY,
-                currentWorkingDirectory
-            );
-        }
-
-        @Override
-        public Optional<StoragePath> homeDirectory() {
-            return this.environmentValue(HOME_DIRECTORY);
-        }
-
-        @Override
-        public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
-            this.setOrRemoveEnvironmentValue(
-                HOME_DIRECTORY,
-                homeDirectory
-            );
-        }
-        
-        @Override
-        public AbsoluteUrl serverUrl() {
-            return SpreadsheetEngineContextSharedSpreadsheetContextTest.SERVER_URL;
-        }
-
-        @Override
-        public Optional<SpreadsheetId> spreadsheetId() {
-            return Optional.of(
-                SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
-            );
-        }
-
-        @Override
-        public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
-            Objects.requireNonNull(id, "id");
-
-            if (false == this.spreadsheetId().equals(id)) {
-                throw new UnsupportedOperationException();
-            }
-        }
-
-        @Override
         public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 
@@ -1161,6 +1149,14 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         @Override
         public Storage<SpreadsheetStorageContext> storage() {
             return STORAGE;
+        }
+
+        @Override
+        public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+            return SpreadsheetEnvironmentContexts.basic(
+                STORAGE,
+                this.environmentContext
+            );
         }
 
         @Override
@@ -1258,6 +1254,23 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     @Test
     public void testEqualsDifferentSpreadsheetContext() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                CHARSET,
+                CURRENCY,
+                INDENTATION,
+                LineEnding.CRNL,
+                Locale.FRANCE,
+                LocalDateTime::now,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
@@ -1267,17 +1280,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             SpreadsheetEngineContextSharedSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 new TestSpreadsheetContext(
-                    EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            CHARSET,
-                            CURRENCY,
-                            INDENTATION,
-                            LineEnding.CRNL,
-                            Locale.FRANCE,
-                            LocalDateTime::now,
-                            EnvironmentContext.ANONYMOUS
-                        )
-                    )
+                    environmentContext
                 ),
                 TERMINAL_CONTEXT
             )
