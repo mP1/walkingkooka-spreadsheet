@@ -41,14 +41,14 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
  * A {@link Context} holding state including {@link EnvironmentContext} for a single user and the spreadsheet they are
  * viewing/editing.
  */
-public interface SpreadsheetContext extends SpreadsheetProvider,
-    SpreadsheetEnvironmentContext,
+public interface SpreadsheetContext extends CurrencyLocaleContext,
     HasProviderContext,
     HasSpreadsheetMetadata,
     HasSpreadsheetServerUrl,
-    CurrencyLocaleContext,
     MediaTypeDetector,
-    SpreadsheetMetadataContext {
+    SpreadsheetEnvironmentContext,
+    SpreadsheetMetadataContext,
+    SpreadsheetProvider {
 
     // SpreadsheetContext...............................................................................................
 
