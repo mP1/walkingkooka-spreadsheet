@@ -54,6 +54,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -1791,10 +1792,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
                                                                                  final Function<String, T> parser) {
-        return (columnOrRow) -> CharacterConstant.COMMA.parse(
+        final Set<T> spreadsheetColumnOrRows = Sets.ordered();
+
+        CharacterConstant.COMMA.parse(
             columnOrRows,
-            parser
-        ).contains(columnOrRow);
+            (String element) -> spreadsheetColumnOrRows.add(
+                parser.apply(element)
+            )
+        );
+
+        return spreadsheetColumnOrRows::contains;
     }
 
     private Function<SpreadsheetColumnReference, Double> columnToWidth(final Map<String, Double> columnToWidths) {

@@ -314,10 +314,16 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
 
     private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
                                                                                  final Function<String, T> parser) {
-        return (columnOrRow) -> CharacterConstant.COMMA.parse(
+        final List<T> selections = Lists.array();
+
+        CharacterConstant.COMMA.parse(
             columnOrRows,
-            parser
-        ).contains(columnOrRow);
+            (String cr) -> selections.add(
+                parser.apply(cr)
+            )
+        );
+
+        return selections::contains;
     }
 
     abstract T createSpreadsheetViewportNavigation();

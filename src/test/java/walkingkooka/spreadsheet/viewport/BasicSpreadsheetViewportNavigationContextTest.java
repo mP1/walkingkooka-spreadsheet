@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.viewport;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting;
@@ -31,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharacterConstant;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -1213,10 +1215,15 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
                                                                                  final Function<String, T> parser) {
-        return (columnOrRow) -> CharacterConstant.COMMA.parse(
+        final List<T> spreadsheetColumnOrRows = Lists.array();
+        CharacterConstant.COMMA.parse(
             columnOrRows,
-            parser
-        ).contains(columnOrRow);
+            (String cr) -> spreadsheetColumnOrRows.add(
+                parser.apply(cr)
+            )
+        );
+
+        return spreadsheetColumnOrRows::contains;
     }
 
     private Function<SpreadsheetColumnReference, Double> columnToWidth(final Map<String, Double> columnToWidths) {

@@ -72,15 +72,19 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     public static SpreadsheetViewportWindows parse(final String windows) {
         Objects.requireNonNull(windows, "windows");
 
+        final Set<SpreadsheetCellRangeReference> ranges = Sets.ordered();
+
+        SEPARATOR.parse(
+            windows,
+            (String element) -> ranges.add(
+                SpreadsheetSelection.parseCellRange(element)
+            )
+        );
+
         return windows.isEmpty() ?
             EMPTY :
             new SpreadsheetViewportWindows(
-                copy(
-                    SEPARATOR.parse(
-                        windows,
-                        SpreadsheetSelection::parseCellRange
-                    )
-                )
+                copy(ranges)
             );
     }
 
