@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
-import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
@@ -44,7 +43,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 public interface SpreadsheetContext extends CurrencyLocaleContext,
     HasProviderContext,
     HasSpreadsheetMetadata,
-    HasSpreadsheetServerUrl,
     MediaTypeDetector,
     SpreadsheetEnvironmentContext,
     SpreadsheetMetadataContext,
