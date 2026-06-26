@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
-import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 
 import java.util.Currency;
 
@@ -34,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends SpreadsheetEnvironmentContextTesting2<C>,
     HasProviderContextTesting,
     HasSpreadsheetMetadataTesting,
-    HasSpreadsheetServerUrlTesting,
     CurrencyLocaleContextTesting2<C>,
     MediaTypeDetectorTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
