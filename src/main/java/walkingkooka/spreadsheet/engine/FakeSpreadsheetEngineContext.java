@@ -69,6 +69,10 @@ import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext implements SpreadsheetEngineContext, Fake {
 
+    public FakeSpreadsheetEngineContext() {
+        super();
+    }
+
     @Override
     public MediaType detect(final String filename,
                             final Binary content) {
