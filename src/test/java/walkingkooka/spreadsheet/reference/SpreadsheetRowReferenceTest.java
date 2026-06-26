@@ -1143,7 +1143,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.moveLeftColumnAndCheck(
             "2",
             SpreadsheetViewportAnchor.NONE,
-            "2",
+            "A",
             NO_HIDDEN_ROWS,
             "2"
         );
