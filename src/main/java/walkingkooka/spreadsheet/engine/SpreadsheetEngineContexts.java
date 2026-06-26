@@ -35,7 +35,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see FakeSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext fake() {
+    public static FakeSpreadsheetEngineContext fake() {
         return new FakeSpreadsheetEngineContext();
     }
 
