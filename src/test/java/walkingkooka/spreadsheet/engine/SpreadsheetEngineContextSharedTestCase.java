@@ -739,6 +739,11 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetEnvironmentContextWithDifferent() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
         final EnvironmentContext differentEnvironmentContext = spreadsheetEnvironmentContext.cloneEnvironment();
         differentEnvironmentContext.setLineEnding(LineEnding.CRNL);
 
