@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -327,16 +326,6 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
     @Override
     public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
         return this.spreadsheetContext.addMetadataWatcherOnce(watcher);
-    }
-
-    // Storage....Context...............................................................................................
-
-    @Override
-    public StoragePath parseStoragePath(final String text) {
-        return StoragePath.parseSpecial(
-            text,
-            this // HasUserDirectories
-        );
     }
 
     // SpreadsheetEnvironmentContextDelegator...........................................................................

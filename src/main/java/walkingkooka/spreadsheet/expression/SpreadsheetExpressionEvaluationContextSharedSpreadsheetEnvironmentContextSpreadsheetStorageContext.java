@@ -40,7 +40,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -326,16 +325,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                 context.storeRepository()
                     .labels()
                     .addStoreWatcherOnce(watcher)
-        );
-    }
-
-    // StorageContext...................................................................................................
-
-    @Override
-    public StoragePath parseStoragePath(final String text) {
-        return StoragePath.parseSpecial(
-            text,
-            this // HasUserDirectories
         );
     }
 

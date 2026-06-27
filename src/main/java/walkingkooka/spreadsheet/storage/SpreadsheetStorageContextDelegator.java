@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StorageContextDelegator;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -66,6 +67,11 @@ public interface SpreadsheetStorageContextDelegator extends SpreadsheetStorageCo
     }
 
     // SpreadsheetStorageContextDelegator...............................................................................
+
+    @Override
+    default StoragePath parseStoragePath(final String text) {
+        return SpreadsheetStorageContext.super.parseStoragePath(text);
+    }
 
     @Override
     default Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
