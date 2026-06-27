@@ -281,6 +281,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // addCellWatcher...................................................................................................
 
     @Test
+    @Override
     public void testAddCellWatcherWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
@@ -362,6 +363,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // addCellWatcherOnce...............................................................................................
 
     @Test
+    @Override
     public void testAddCellWatcherOnceWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
         context.setSpreadsheetId(
