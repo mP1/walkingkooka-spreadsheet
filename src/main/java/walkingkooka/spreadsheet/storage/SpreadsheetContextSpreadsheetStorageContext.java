@@ -286,7 +286,10 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
     @Override
     public SpreadsheetMetadata createMetadata(final EmailAddress user,
                                               final Optional<Locale> locale) {
-        throw new UnsupportedOperationException();
+        return this.spreadsheetContext.createMetadata(
+            user,
+            locale
+        );
     }
 
     @Override
