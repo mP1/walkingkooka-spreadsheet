@@ -446,6 +446,64 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
     }
 
+    @Test
+    public void testEvaluateFunction() {
+        final ExpressionFunctionName functionName = ExpressionFunctionName.with("HelloFunction");
+        final Object functionValue = "Hello World 123!";
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(
+            new FakeExpressionFunctionProvider<>() {
+
+                @Override
+                public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                        final List<?> values,
+                                                                                                        final ProviderContext context) {
+                    return new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(functionName);
+                        }
+
+                        @Override
+                        public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                            return Lists.empty();
+                        }
+
+                        @Override
+                        public Object apply(final List<Object> parameters,
+                                            final SpreadsheetExpressionEvaluationContext context) {
+                            this.checkParameterCount(parameters);
+                            return functionValue;
+                        }
+                    };
+                }
+
+                @Override
+                public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                    return SpreadsheetExpressionFunctions.parseInfoSet("https://example.com/HelloFunction HelloFunction");
+                }
+
+                @Override
+                public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                    return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
+                }
+            }
+        );
+
+        final ExpressionFunction<?, ExpressionEvaluationContext> function = context.expressionFunction(
+            functionName
+        );
+
+        this.evaluateFunctionAndCheck(
+            context,
+            Cast.to(
+                function
+            ),
+            Lists.empty(), // parameters
+            functionValue
+        );
+    }
+
     // environmentContext...............................................................................................
 
     @Test
