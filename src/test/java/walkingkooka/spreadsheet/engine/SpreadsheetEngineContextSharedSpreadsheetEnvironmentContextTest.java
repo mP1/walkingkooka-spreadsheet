@@ -125,6 +125,17 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     private final static SpreadsheetMetadataContext SPREADSHEET_METADATA_CONTEXT = SpreadsheetMetadataContexts.fake();
 
+    private final static SpreadsheetMetadata SAVED_METADATA = METADATA.set(
+        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+        AuditInfo.create(
+            USER,
+            HAS_NOW.now()
+        )
+    ).set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
     // with.............................................................................................................
 
     @Test
@@ -420,35 +431,9 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     @Test
     public void testSpreadsheetMetadata() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
-
-        this.environmentValueAndCheck(
-            spreadsheetEnvironmentContext,
-            SpreadsheetEngineContext.SPREADSHEET_ID,
-            SPREADSHEET_ID
-        );
-
-        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
-
-        final SpreadsheetMetadata metadata = METADATA.set(
-            SpreadsheetMetadataPropertyName.AUDIT_INFO,
-            AuditInfo.create(
-                USER,
-                HAS_NOW.now()
-            )
-        ).set(
-            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-            SPREADSHEET_ID
-        );
-
-        context.saveMetadata(metadata);
-
         this.spreadsheetMetadataAndCheck(
-            context,
-            metadata
+            this.createContextWithSpreadsheetId(),
+            SAVED_METADATA
         );
     }
 
@@ -656,6 +641,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
     }
+
+    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContextWithSpreadsheetId() {
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+        context.saveMetadata(SAVED_METADATA);
+        return context;
+    }
+
 
     // hashCode/equals..................................................................................................
 
