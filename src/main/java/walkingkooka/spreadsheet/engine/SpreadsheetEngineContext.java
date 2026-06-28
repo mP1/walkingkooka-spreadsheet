@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.cursor.TextCursor;
@@ -49,6 +50,7 @@ public interface SpreadsheetEngineContext extends Context,
     ExpressionPurityContext,
     SpreadsheetContext,
     SpreadsheetLabelNameResolver,
+    SpreadsheetStorageContext,
     HasMissingCellNumberValue {
 
     /**
