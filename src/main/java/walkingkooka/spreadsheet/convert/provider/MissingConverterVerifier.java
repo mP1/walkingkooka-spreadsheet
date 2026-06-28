@@ -1623,7 +1623,7 @@ final class MissingConverterVerifier {
 
             // text-to-csv-string-list..............................................................................
             verifier.addIfConversionFail(
-                "apple, banana, \"333 444\"",
+                "apple,banana,\"333 444\"",
                 CsvStringList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST
             );
