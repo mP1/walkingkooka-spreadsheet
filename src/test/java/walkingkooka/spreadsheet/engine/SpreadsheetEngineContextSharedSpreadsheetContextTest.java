@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
@@ -71,6 +72,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
@@ -82,6 +84,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
@@ -93,6 +97,8 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -109,7 +115,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     private final static SpreadsheetContext SPREADSHEET_CONTEXT = new TestSpreadsheetContext();
 
-    private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
+    private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
     static {
         final SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
@@ -754,6 +760,402 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         );
     }
 
+    // SpreadsheetStorageContext........................................................................................
+
+    private final static SpreadsheetCell UNSAVED_CELL = SpreadsheetSelection.A1.setFormula(
+        SpreadsheetFormula.EMPTY.setValue(
+            Optional.of("Hello World")
+        )
+    );
+
+    private final static SpreadsheetCell SAVED_CELL = UNSAVED_CELL.setFormattedValue(
+        Optional.of(
+            TextNode.text("Hello World")
+        )
+    );
+
+    @Test
+    public void testLoadCells() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.loadCellsAndCheck(
+            context,
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testSaveCellsAndLoadCells() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        context.saveCells(
+            Sets.of(UNSAVED_CELL)
+        );
+
+        this.loadCellsAndCheck(
+            context,
+            SpreadsheetSelection.A1,
+            SAVED_CELL
+        );
+    }
+
+    @Test
+    public void testDeleteCells() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of("Hello World B2")
+                )
+            );
+
+        context.saveCells(
+            Sets.of(
+                UNSAVED_CELL,
+                b2
+            )
+        );
+
+        context.deleteCells(SpreadsheetSelection.A1);
+
+        this.loadCellsAndCheck(
+            context,
+            b2.reference(),
+            b2.setFormattedValue(
+                Optional.of(
+                    TextNode.text("Hello World B2")
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testAddCellWatcher() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.fired = false;
+
+        context.addCellWatcher(
+            new StoreWatcher<SpreadsheetCell>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(SAVED_CELL),
+                        newValue,
+                        "newValue"
+                    );
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.this.fired = true;
+                }
+            }
+        );
+
+        context.saveCells(
+            Sets.of(UNSAVED_CELL)
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddCellWatcherOnce() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.fired = false;
+
+        context.addCellWatcherOnce(
+            new StoreWatcher<SpreadsheetCell>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(SAVED_CELL),
+                        newValue,
+                        "newValue"
+                    );
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.this.fired = true;
+                }
+            }
+        );
+
+        context.saveCells(
+            Sets.of(UNSAVED_CELL)
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.saveCells(
+            Sets.of(UNSAVED_CELL)
+        );
+    }
+
+    private final static Form<SpreadsheetValidationReference> FORM = SpreadsheetForms.form(
+        FormName.with("FormName111")
+    ).setFields(
+        Lists.of(
+            SpreadsheetForms.field(SpreadsheetSelection.A1)
+        )
+    );
+
+    private final static Form<SpreadsheetValidationReference> FORM2 = SpreadsheetForms.form(
+        FormName.with("FormName222")
+    ).setFields(
+        Lists.of(
+            SpreadsheetForms.field(SpreadsheetSelection.A1)
+        )
+    );
+
+    @Test
+    public void testLoadForm() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.loadFormAndCheck(
+            context,
+            FORM.name()
+        );
+    }
+
+    @Test
+    public void testSaveFormAndLoadForms() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        context.saveForm(FORM);
+
+        this.loadFormAndCheck(
+            context,
+            FORM.name(),
+            FORM
+        );
+    }
+
+    @Test
+    public void testDeleteForm() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        context.saveForm(FORM);
+        context.deleteForm(FORM.name());
+
+        this.loadFormAndCheck(
+            context,
+            FORM.name()
+        );
+    }
+
+    @Test
+    public void testAddFormWatcher() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.fired = false;
+
+        context.addFormWatcher(
+            new StoreWatcher<Form<SpreadsheetValidationReference>>() {
+                @Override
+                public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
+                                          final Optional<Form<SpreadsheetValidationReference>> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(FORM),
+                        newValue,
+                        "newValue"
+                    );
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.this.fired = true;
+                }
+            }
+        );
+
+        context.saveForm(FORM);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddFormWatcherOnce() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.fired = false;
+
+        context.addFormWatcherOnce(
+            new StoreWatcher<Form<SpreadsheetValidationReference>>() {
+                @Override
+                public void onValueChange(final Optional<Form<SpreadsheetValidationReference>> oldValue,
+                                          final Optional<Form<SpreadsheetValidationReference>> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(FORM),
+                        newValue,
+                        "newValue"
+                    );
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.this.fired = true;
+                }
+            }
+        );
+
+        context.saveForm(FORM);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.saveForm(FORM2);
+    }
+
+    private final static SpreadsheetLabelMapping MAPPING1 = SpreadsheetSelection.labelName("Label111")
+        .setLabelMappingReference(SpreadsheetSelection.A1);
+
+    private final static SpreadsheetLabelMapping MAPPING2 = SpreadsheetSelection.labelName("Label222")
+        .setLabelMappingReference(SpreadsheetSelection.A1);
+
+    @Test
+    public void testLoadLabel() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.loadLabelAndCheck(
+            context,
+            MAPPING1.label()
+        );
+    }
+
+    @Test
+    public void testSaveLabelAndLoadLabel() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        context.saveLabel(MAPPING1);
+
+        this.loadLabelAndCheck(
+            context,
+            MAPPING1.label(),
+            MAPPING1
+        );
+    }
+
+    @Test
+    public void testDeleteLabel() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        context.saveLabel(MAPPING1);
+        context.deleteLabel(MAPPING1.label());
+
+        context.saveLabel(MAPPING2);
+
+        this.loadLabelAndCheck(
+            context,
+            MAPPING1.label()
+        );
+        this.loadLabelAndCheck(
+            context,
+            MAPPING2.label(),
+            MAPPING2
+        );
+
+    }
+
+    @Test
+    public void testAddLabelWatcher() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.fired = false;
+
+        context.addLabelWatcher(
+            new StoreWatcher<SpreadsheetLabelMapping>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
+                                          final Optional<SpreadsheetLabelMapping> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(MAPPING1),
+                        newValue,
+                        "newValue"
+                    );
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.this.fired = true;
+                }
+            }
+        );
+
+        context.saveLabel(MAPPING1);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddLabelWatcherOnce() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        this.fired = false;
+
+        context.addLabelWatcherOnce(
+            new StoreWatcher<SpreadsheetLabelMapping>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetLabelMapping> oldValue,
+                                          final Optional<SpreadsheetLabelMapping> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(MAPPING1),
+                        newValue,
+                        "newValue"
+                    );
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.this.fired = true;
+                }
+            }
+        );
+
+        context.saveLabel(MAPPING1);
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.saveLabel(MAPPING2);
+    }
+
+    private boolean fired;
+
     // createContext....................................................................................................
     
     @Override
@@ -969,7 +1371,25 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
         @Override
         public SpreadsheetEngineContext spreadsheetEngineContext() {
-            throw new UnsupportedOperationException();
+            return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                (SpreadsheetId spreadsheetId) -> Optional.ofNullable(
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID.equals(spreadsheetId) ?
+                        this :
+                        null
+                ), // SpreadsheetContextSupplier
+                this.currencyContext()
+                    .setLocaleContext(this.localeContext()),
+                SpreadsheetEnvironmentContexts.basic(
+                    this.storage(),
+                    this.environmentContext
+                ),
+                this, // SpreadsheetMetadataContext
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                this.providerContext
+            );
         }
 
         @Override

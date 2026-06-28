@@ -42,14 +42,18 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.test.Fake;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -57,11 +61,14 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -136,6 +143,156 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext impleme
     }
 
     // SpreadsheetEngineContext.........................................................................................
+
+    // cells............................................................................................................
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addCellWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addCellWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    // forms............................................................................................................
+
+    @Override
+    public Optional<Form<SpreadsheetValidationReference>> loadForm(final FormName formName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Form<SpreadsheetValidationReference> saveForm(final Form<SpreadsheetValidationReference> form) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteForm(final FormName formName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Form<SpreadsheetValidationReference>> findFormsByName(final String formName,
+                                                                     final int offset,
+                                                                     final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addFormWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addFormWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    // labels...........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetLabelMapping saveLabel(final SpreadsheetLabelMapping label) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteLabel(final SpreadsheetLabelName labelName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetLabelName> findLabelsByName(final String labelName,
+                                                      final int offset,
+                                                      final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addLabelWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addLabelWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+//    @Override
+//    public boolean canConvert(final Object value,
+//                              final Class<?> type) {
+//        throw new UnsupportedOperationException();
+//    }
+//
+//    @Override
+//    public <T> Either<T, String> convert(final Object value,
+//                                         final Class<T> target) {
+//        throw new UnsupportedOperationException();
+//    }
+
+    @Override
+    public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                              final Optional<Locale> locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                   final int offset,
+                                                                   final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addMetadataWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public StoragePath parseStoragePath(final String text) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {

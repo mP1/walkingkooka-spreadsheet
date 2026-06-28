@@ -27,11 +27,11 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextDelegator;
 import walkingkooka.storage.Storage;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -44,11 +44,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContext,
-    SpreadsheetEnvironmentContextDelegator,
     CurrencyContextDelegator,
     LocaleContextDelegator,
     ConverterLikeDelegator,
-    SpreadsheetProviderDelegator {
+    SpreadsheetProviderDelegator,
+    SpreadsheetStorageContextDelegator {
 
     SpreadsheetEngineContextShared() {
         super();
