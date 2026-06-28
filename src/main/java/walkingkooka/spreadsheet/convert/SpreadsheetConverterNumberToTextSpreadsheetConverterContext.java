@@ -174,11 +174,6 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
-    public StoragePath parseStoragePath(final String text) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public char valueSeparator() {
         throw new UnsupportedOperationException();
     }

@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.CaseSensitivity;
@@ -252,6 +253,13 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
      * Creates a {@link SpreadsheetFormatterContext} which can be used by a function to format a value.
      */
     SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell);
+
+    // StorageContext...................................................................................................
+
+    @Override
+    default StoragePath parseStoragePath(final String path) {
+        return SpreadsheetConverterContext.super.parseStoragePath(path);
+    }
 
     // EnvironmentContext...............................................................................................
 
