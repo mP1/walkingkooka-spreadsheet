@@ -1122,7 +1122,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testFormAndValidationConvertStringToValidationCheckbox() {
         this.formAndValidationConvertAndCheck(
-            "111, 222",
+            "111,222",
             ValidationCheckbox.with(
                 Optional.of("111"),
                 Optional.of("222")
@@ -2802,7 +2802,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testSpreadsheetValueConvertStringToCsvStringList() {
         this.spreadsheetValueConvertAndCheck(
-            "Apple, Banana, \"333 444\"",
+            "Apple,Banana,\"333 444\"",
             CsvStringList.EMPTY.setElements(
                 Lists.of(
                     "Apple",
