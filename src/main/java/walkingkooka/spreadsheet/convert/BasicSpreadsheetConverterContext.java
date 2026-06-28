@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectoriesDelegator;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -261,16 +260,6 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     }
 
     private final HasUserDirectories hasUserDirectories;
-
-    // StorageConverterContext..........................................................................................
-
-    @Override
-    public StoragePath parseStoragePath(final String text) {
-        return StoragePath.parseSpecial(
-            text,
-            this // HasUserDirectories
-        );
-    }
 
     // toString.........................................................................................................
 

@@ -137,11 +137,6 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
-    public StoragePath parseStoragePath(final String text) {
-        return this.context.parseStoragePath(text);
-    }
-
-    @Override
     public CaseSensitivity stringEqualsCaseSensitivity() {
         return this.context.stringEqualsCaseSensitivity();
     }

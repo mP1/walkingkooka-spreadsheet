@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.convert.StorageConverterContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
@@ -46,6 +47,14 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
     default ExpressionNumber missingCellNumberValue() {
         return this.expressionNumberKind()
             .zero();
+    }
+
+    @Override
+    default StoragePath parseStoragePath(final String path) {
+        return StoragePath.parseSpecial(
+            path,
+            this
+        );
     }
 
     /**

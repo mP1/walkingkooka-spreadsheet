@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectoriesDelegator;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 
@@ -68,12 +67,6 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     default SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetConverterContext()
             .spreadsheetMetadata();
-    }
-
-    @Override
-    default StoragePath parseStoragePath(final String text) {
-        return this.spreadsheetConverterContext()
-            .parseStoragePath(text);
     }
 
     @Override
