@@ -27,8 +27,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -699,7 +697,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 ).set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.create(
-                        EmailAddress.parse("user@example.com"),
+                        USER,
                         LocalDateTime.MIN
                     )
                 ).set(
@@ -763,9 +761,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 LineEnding.NL,
                 LOCALE,
                 () -> LocalDateTime.MIN,
-                Optional.of(
-                    EmailAddress.parse("user@example.com")
-                )
+                Optional.of(USER)
             )
         );
         environmentContext.setEnvironmentValue(
@@ -774,7 +770,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
-            Url.parseAbsolute("https://example.com")
+            SERVER_URL
         );
 
         return SpreadsheetContexts.fixedSpreadsheetId(
