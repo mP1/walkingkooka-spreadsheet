@@ -791,6 +791,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToCsvStringSet() {
+        this.converterAndCheck(
+            "text-to-csv-string-set",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToCsvStringSet()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToCharset() {
         this.converterAndCheck(
             "text-to-charset",

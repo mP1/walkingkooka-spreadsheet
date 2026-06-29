@@ -179,6 +179,7 @@ eg
 - [text-to-charset](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCharset.java)
 - [text-to-color](https://github.com/mP1/walkingkooka-color/blob/master/src/main/java/walkingkooka/color/convert/TextToColorConverter.java)
 - [text-to-csv-string-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionListCsvStringList.java)
+- [text-to-csv-string-set](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionSetCsvStringSet.java)
 - [text-to-currency](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCurrency.java)
 - [text-to-currency-code](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCurrencyCode.java)
 - [text-to-currency-value](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCurrencyValue.java)
