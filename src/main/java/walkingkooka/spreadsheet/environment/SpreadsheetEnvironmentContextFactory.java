@@ -238,7 +238,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
     /**
-     * If one of the core component {@link EnvironmentValueName} changes clear the cached properties so that component will be re-created.
+     * If one of the core component {@link EnvironmentValueName} changes clear the cached properties such as
+     * {@link Converter}, the field will be cleared forcing it and others to be recreated.
      */
     private void onEnvironmentValueName(final Optional<EnvironmentValueNameAndValue<?>> oldValue,
                                         final Optional<EnvironmentValueNameAndValue<?>> newValue) {
