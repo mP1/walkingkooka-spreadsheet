@@ -894,6 +894,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToCsvStringSet()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToCsvStringSet() {
+        return Converters.textToCsvStringSet();
+    }
+
+    /**
      * {@see Converters#textToCurrency()}
      */
     public static Converter<SpreadsheetConverterContext> textToCurrency() {
