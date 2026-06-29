@@ -17,23 +17,30 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.convert.ConverterLike;
+import walkingkooka.Binary;
 import walkingkooka.convert.ConverterLikeDelegator;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextDelegator;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Currency;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -42,7 +49,8 @@ import java.util.Optional;
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
     ConverterLikeDelegator,
-    SpreadsheetContextDelegator {
+    SpreadsheetContextDelegator,
+    SpreadsheetStorageContextDelegator {
 
     @Override
     default AbsoluteUrl serverUrl() {
@@ -117,14 +125,59 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default ConverterLike converterLike() {
-        return this.spreadsheetEngineContext();
+    default void setCurrency(final Currency currency) {
+        this.spreadsheetEngineContext()
+            .setCurrency(currency);
     }
+    
+    @Override
+    default void setLocale(final Locale locale) {
+        this.spreadsheetEngineContext()
+            .setLocale(locale);
+    }
+
+    // MediaTypeDetectorDelegator.......................................................................................
+
+    @Override
+    default MediaType detect(final String filename,
+                             final Binary content) {
+        return this.spreadsheetEngineContext()
+            .detect(
+                filename,
+                content
+            );
+    }
+
+
+    // SpreadsheetContextDelegator......................................................................................
 
     @Override
     default SpreadsheetContext spreadsheetContext() {
         return this.spreadsheetEngineContext();
     }
+
+    // SpreadsheetEnvironmentContextDelegator...........................................................................
+
+    @Override
+    default SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        return this.spreadsheetEngineContext();
+    }
+
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    default SpreadsheetMetadataContext spreadsheetMetadataContext() {
+        return this.spreadsheetContext();
+    }
+
+    // SpreadsheetStorageContextDelegator...............................................................................
+
+    @Override
+    default SpreadsheetStorageContext spreadsheetStorageContext() {
+        return this.spreadsheetEngineContext();
+    }
+
+    // SpreadsheetEngineContextDelegator................................................................................
 
     @Override
     SpreadsheetEngineContext spreadsheetEngineContext();

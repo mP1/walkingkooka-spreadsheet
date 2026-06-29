@@ -633,6 +633,38 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         );
     }
 
+    // SpreadsheetStorageContext........................................................................................
+
+    @Override
+    public void testAddCellWatcherWithNullWatcherFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddCellWatcherOnceWithNullWatcherFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddFormWatcherWithNullWatcherFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddFormWatcherOnceWithNullWatcherFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddLabelWatcherWithNullWatcherFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddLabelWatcherOnceWithNullWatcherFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // createContext....................................................................................................
 
     @Override
@@ -643,7 +675,17 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     }
 
     private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContextWithSpreadsheetId() {
-        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+        this.context = null;
+
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(
+            (SpreadsheetId spreadsheetId) -> Optional.ofNullable(
+                SPREADSHEET_ID.equals(spreadsheetId) ?
+                    this.context :
+                    null
+            ),
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
+        this.context = context;
         context.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
         );
@@ -651,6 +693,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         return context;
     }
 
+    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context;
 
     // hashCode/equals..................................................................................................
 

@@ -49,6 +49,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContexts;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
@@ -114,6 +116,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.converterLike = converterLike;
         this.spreadsheetContext = spreadsheetContext;
+        this.spreadsheetStorageContext = SpreadsheetStorageContexts.spreadsheetContext(spreadsheetContext);
         this.terminalContext = terminalContext;
     }
 
@@ -504,6 +507,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         return this.spreadsheetContext;
     }
+
+    // SpreadsheetStorageContextDelegator...............................................................................
+
+    @Override
+    public SpreadsheetStorageContext spreadsheetStorageContext() {
+        return this.spreadsheetStorageContext;
+    }
+
+    private final SpreadsheetStorageContext spreadsheetStorageContext;
 
     // Object...........................................................................................................
 

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Binary;
+import walkingkooka.Either;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
@@ -50,8 +51,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContexts;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StorageContexts;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.cursor.TextCursor;
@@ -122,6 +126,45 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         this.spreadsheetEnvironmentContextFactory = spreadsheetEnvironmentContextFactory;
         this.spreadsheetMetadataContext = spreadsheetMetadataContext;
         this.terminalContext = terminalContext;
+
+        this.spreadsheetStorageContext = SpreadsheetStorageContexts.basic(
+            SpreadsheetEngines.basic(),
+            spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(), // SpreadsheetEnvironmentContext
+            (SpreadsheetId spreadsheetId) -> spreadsheetContextSupplier.spreadsheetContext(spreadsheetId)
+                .map(SpreadsheetContext::spreadsheetEngineContext), // SpreadsheetId -> Optional<SpreadsheetEngineContext>
+            spreadsheetMetadataContext,
+            StorageContexts.basic(
+                new ConverterLike() {
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type) {
+                        return spreadsheetEnvironmentContextFactory.spreadsheetConverterContext()
+                            .canConvert(
+                                value,
+                                type
+                            );
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> type) {
+                        return spreadsheetEnvironmentContextFactory.spreadsheetConverterContext()
+                            .convert(
+                                value,
+                                type
+                            );
+                    }
+
+                    @Override
+                    public String toString() {
+                        return spreadsheetEnvironmentContextFactory.spreadsheetConverterContext()
+                            .toString();
+                    }
+                }, // ConverterLike
+                mediaTypeDetector,
+                spreadsheetEnvironmentContextFactory.environmentContext() // EnvironmentContext
+            )
+        );
     }
 
     private final TerminalContext terminalContext;
@@ -442,6 +485,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
+
+    // SpreadsheetStorageContextDelegator..............................................................................
+
+    @Override
+    public SpreadsheetStorageContext spreadsheetStorageContext() {
+        return this.spreadsheetStorageContext;
+    }
+
+    private final SpreadsheetStorageContext spreadsheetStorageContext;
 
     // Object...........................................................................................................
 
