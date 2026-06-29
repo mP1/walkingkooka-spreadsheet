@@ -28,6 +28,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
@@ -2633,6 +2634,18 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             cell,
             SpreadsheetCellReference.class,
             cell.reference()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToTsvStringSet() {
+        final TsvStringSet set = TsvStringSet.EMPTY.concat("abc")
+            .concat("def")
+            .concat("gh\t i");
+
+        this.spreadsheetValueConvertAndCheck(
+            set.text(),
+            set
         );
     }
 
