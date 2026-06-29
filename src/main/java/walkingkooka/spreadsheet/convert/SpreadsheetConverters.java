@@ -1240,6 +1240,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToTsvStringList()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToTsvStringList() {
+        return Converters.textToTsvStringList();
+    }
+
+    /**
      * {@see NetConverters#textToUrl()}
      */
     public static Converter<SpreadsheetConverterContext> textToUrl() {
