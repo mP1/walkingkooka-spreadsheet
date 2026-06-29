@@ -705,6 +705,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-charset\n" +
                 "    text-to-color\n" +
                 "    text-to-csv-string-list\n" +
+                "    text-to-csv-string-set\n" +
                 "    text-to-currency\n" +
                 "    text-to-currency-code\n" +
                 "    text-to-currency-value\n" +
