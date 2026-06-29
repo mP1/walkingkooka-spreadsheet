@@ -1248,6 +1248,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToTsvStringSet()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToTsvStringSet() {
+        return Converters.textToTsvStringSet();
+    }
+
+    /**
      * {@see NetConverters#textToUrl()}
      */
     public static Converter<SpreadsheetConverterContext> textToUrl() {
