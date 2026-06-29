@@ -133,6 +133,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             this.mediaTypeDetector,
             this.multiplier,
+            this.spreadsheetEngine,
             this.spreadsheetContextSupplier,
             this.currencyContext()
                 .setLocaleContext(

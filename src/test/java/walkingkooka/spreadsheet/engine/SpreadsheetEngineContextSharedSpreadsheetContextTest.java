@@ -1374,6 +1374,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 (SpreadsheetId spreadsheetId) -> Optional.ofNullable(
                     SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID.equals(spreadsheetId) ?
                         this :

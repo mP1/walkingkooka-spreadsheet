@@ -1195,6 +1195,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         final SpreadsheetEngineContext spreadsheetEngineContext = SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             mediaTypeDetector,
             BinaryNumberConverterFunctions.fake(),
+            SPREADSHEET_ENGINE,
             new SpreadsheetContextSupplier() {
                 @Override
                 public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
