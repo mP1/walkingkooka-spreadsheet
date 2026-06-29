@@ -1355,6 +1355,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
+            SPREADSHEET_ENGINE,
             new SpreadsheetContextSupplier() {
                 @Override
                 public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {

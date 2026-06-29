@@ -57,6 +57,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      */
     public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                         final SpreadsheetEngine spreadsheetEngine,
                                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -67,6 +68,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
             mediaTypeDetector,
             multiplier,
+            spreadsheetEngine,
             spreadsheetContextSupplier,
             currencyLocaleContext,
             spreadsheetEnvironmentContext,

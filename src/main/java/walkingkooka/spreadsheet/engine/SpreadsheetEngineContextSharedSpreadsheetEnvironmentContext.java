@@ -72,6 +72,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final MediaTypeDetector mediaTypeDetector,
                                                                             final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                            final SpreadsheetEngine spreadsheetEngine,
                                                                             final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                             final CurrencyLocaleContext currencyLocaleContext,
                                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -81,6 +82,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
                                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
+        Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
@@ -92,6 +94,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
             mediaTypeDetector,
             multiplier,
+            spreadsheetEngine,
             spreadsheetContextSupplier,
             currencyLocaleContext, // CurrencyContext
             SpreadsheetEnvironmentContextFactory.with(
@@ -109,6 +112,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final MediaTypeDetector mediaTypeDetector,
                                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                        final SpreadsheetEngine spreadsheetEngine,
                                                                         final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                         final CurrencyContext currencyContext,
                                                                         final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
@@ -120,6 +124,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
         this.multiplier = multiplier;
 
+        this.spreadsheetEngine = spreadsheetEngine;
+
         this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
         this.currencyContext = currencyContext;
@@ -128,7 +134,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         this.terminalContext = terminalContext;
 
         this.spreadsheetStorageContext = SpreadsheetStorageContexts.basic(
-            SpreadsheetEngines.basic(),
+            spreadsheetEngine,
             spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(), // SpreadsheetEnvironmentContext
             (SpreadsheetId spreadsheetId) -> spreadsheetContextSupplier.spreadsheetContext(spreadsheetId)
                 .map(SpreadsheetContext::spreadsheetEngineContext), // SpreadsheetId -> Optional<SpreadsheetEngineContext>
@@ -357,6 +363,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
+    private final SpreadsheetEngine spreadsheetEngine;
+
     // SpreadsheetContextDelegator......................................................................................
 
     @Override
@@ -451,6 +459,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
                 this.mediaTypeDetector,
                 this.multiplier,
+                this.spreadsheetEngine,
                 this.spreadsheetContextSupplier,
                 this.currencyContext,
                 after,
@@ -501,6 +510,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     public int hashCode() {
         return Objects.hash(
             this.multiplier,
+            this.spreadsheetEngine,
             this.spreadsheetContextSupplier,
             this.spreadsheetEnvironmentContextFactory,
             this.spreadsheetMetadataContext,
@@ -518,6 +528,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     private boolean equals0(final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext other) {
         return
             this.multiplier.equals(other.multiplier) &&
+            this.spreadsheetEngine.equals(other.spreadsheetEngine) &&
             this.spreadsheetContextSupplier.equals(other.spreadsheetContextSupplier) &&
             this.spreadsheetEnvironmentContextFactory.equals(other.spreadsheetEnvironmentContextFactory) &&
             this.spreadsheetMetadataContext.equals(other.spreadsheetMetadataContext) &&

@@ -145,6 +145,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 null,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -162,6 +163,26 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
+                null,
+                SPREADSHEET_ENGINE,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetEngineFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -181,6 +202,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -199,6 +221,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -217,6 +240,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 null,
@@ -235,6 +259,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -253,6 +278,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -271,6 +297,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -295,6 +322,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
+            SPREADSHEET_ENGINE,
             spreadsheetContextSupplier,
             CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
@@ -703,6 +731,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MediaTypeDetectors.fake(),
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -720,6 +749,25 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.fake(),
+                SPREADSHEET_ENGINE,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetEngine() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -737,6 +785,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SpreadsheetContextSuppliers.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -754,6 +803,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CurrencyLocaleContexts.fake(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -780,6 +830,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 spreadsheetEnvironmentContext,
@@ -797,6 +848,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -814,6 +866,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -831,6 +884,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -848,6 +902,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
+                SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
