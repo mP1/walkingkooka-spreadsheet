@@ -708,6 +708,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToLineEnding(),
         textToNumberList(),
         textToTimeList(),
+        textToTsvStringList(),
         textToStringList(),
         hasBinaryToString(),
         Converters.objectToString()
