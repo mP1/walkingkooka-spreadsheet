@@ -35,6 +35,10 @@ import walkingkooka.validation.form.FormName;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * A {@link StorageContext} that adds a few extra methods to help map {@link SpreadsheetCell}, {@link Form} and
+ * {@link SpreadsheetLabelMapping}.
+ */
 public interface SpreadsheetStorageContext extends StorageContext,
     SpreadsheetEnvironmentContext,
     SpreadsheetMetadataContext,
