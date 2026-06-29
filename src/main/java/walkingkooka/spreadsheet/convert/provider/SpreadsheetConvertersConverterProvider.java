@@ -679,6 +679,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToTsvStringList();
                 break;
+            case TEXT_TO_TSV_STRING_SET_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToTsvStringSet();
+                break;
             case TEXT_TO_URL_FRAGMENT_STRING:
                 noParameterCheck(copy);
 
@@ -1283,6 +1288,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_TSV_STRING_LIST = ConverterName.with(TEXT_TO_TSV_STRING_LIST_STRING);
 
+    private final static String TEXT_TO_TSV_STRING_SET_STRING = "text-to-tsv-string-set";
+
+    final static ConverterName TEXT_TO_TSV_STRING_SET = ConverterName.with(TEXT_TO_TSV_STRING_SET_STRING);
+
     private final static String TEXT_TO_URL_FRAGMENT_STRING = "text-to-url-fragment";
 
     final static ConverterName TEXT_TO_URL_FRAGMENT = ConverterName.with(TEXT_TO_URL_FRAGMENT_STRING);
@@ -1489,6 +1498,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_TEXT_STYLE_PROPERTY_NAME),
             converterInfo(TEXT_TO_TIME_LIST),
             converterInfo(TEXT_TO_TSV_STRING_LIST),
+            converterInfo(TEXT_TO_TSV_STRING_SET),
             converterInfo(TEXT_TO_URL),
             converterInfo(TEXT_TO_URL_FRAGMENT),
             converterInfo(TEXT_TO_URL_QUERY_STRING),

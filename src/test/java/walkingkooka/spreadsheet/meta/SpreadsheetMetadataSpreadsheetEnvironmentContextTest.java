@@ -748,6 +748,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-text-style-property-name\n" +
                 "    text-to-time-list\n" +
                 "    text-to-tsv-string-list\n" +
+                "    text-to-tsv-string-set\n" +
                 "    text-to-url\n" +
                 "    text-to-url-fragment\n" +
                 "    text-to-url-query-string\n" +

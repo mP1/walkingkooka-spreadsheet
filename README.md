@@ -223,6 +223,7 @@ eg
 - [text-to-text-style-property-name](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TreeTextConverterTextToTextStylePropertyName.java)
 - [text-to-time-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionListLocalTimeList.java)
 - [text-to-tsv-string-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionListTsvStringList.java)
+- [text-to-tsv-string-set](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionSetTsvStringSet.java)
 - [text-to-url](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToUrl.java)
 - [text-to-url-fragment](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToUrlFragment.java)
 - [text-to-url-query-string](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToUrlQueryString.java)
