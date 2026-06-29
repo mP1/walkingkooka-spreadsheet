@@ -702,6 +702,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         collectionToList(),
         textToBooleanList(),
         textToCsvStringList(),
+        textToCsvStringSet(),
         textToDateList(),
         textToDateTimeList(),
         textToLineEnding(),

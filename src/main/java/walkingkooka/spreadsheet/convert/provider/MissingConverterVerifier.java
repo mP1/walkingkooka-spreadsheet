@@ -23,6 +23,7 @@ import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.HslColor;
@@ -1626,6 +1627,13 @@ final class MissingConverterVerifier {
                 "apple,banana,\"333 444\"",
                 CsvStringList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST
+            );
+
+            // text-to-csv-string-set..............................................................................
+            verifier.addIfConversionFail(
+                "apple,banana,\"333 444\"",
+                CsvStringSet.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_SET
             );
 
             // text-to-date-list....................................................................................
