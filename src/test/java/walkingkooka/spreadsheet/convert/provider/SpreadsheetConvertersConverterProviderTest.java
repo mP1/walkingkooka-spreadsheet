@@ -1099,6 +1099,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToTsvStringList() {
+        this.converterAndCheck(
+             "text-to-tsv-string-list",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToTsvStringList()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToUrl() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_URL,
