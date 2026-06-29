@@ -26,6 +26,7 @@ import walkingkooka.collect.list.BooleanList;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
+import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
@@ -2805,6 +2806,20 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "Apple,Banana,\"333 444\"",
             CsvStringList.EMPTY.setElements(
                 Lists.of(
+                    "Apple",
+                    "Banana",
+                    "333 444"
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToCsvStringSet() {
+        this.spreadsheetValueConvertAndCheck(
+            "Apple,Banana,\"333 444\"",
+            CsvStringSet.EMPTY.setElements(
+                Sets.of(
                     "Apple",
                     "Banana",
                     "333 444"
