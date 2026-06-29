@@ -22,6 +22,7 @@ import walkingkooka.collect.list.BooleanList;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
+import walkingkooka.collect.list.TsvStringList;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
@@ -1686,6 +1687,13 @@ final class MissingConverterVerifier {
                 "12:58:59",
                 LocalTimeList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST
+            );
+
+            // text-to-tsv-string-list..............................................................................
+            verifier.addIfConversionFail(
+                "apple\tbanana\t\"333 444\"",
+                TsvStringList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_LIST
             );
         }
 
