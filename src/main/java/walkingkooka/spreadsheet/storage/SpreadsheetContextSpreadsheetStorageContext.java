@@ -51,6 +51,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * A {@link SpreadsheetStorageContext} that delegates most methods to the given {@link SpreadsheetContext},
+ * reading the {@link SpreadsheetEnvironmentContext#spreadsheetId()} to get the {@link SpreadsheetEngineContext} and execute
+ * where necessary.
+ */
 final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetStorageContext,
     SpreadsheetEnvironmentContextDelegator {
 
