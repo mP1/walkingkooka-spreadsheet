@@ -26,6 +26,7 @@ import walkingkooka.collect.list.TsvStringList;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
 import walkingkooka.color.HslColor;
 import walkingkooka.color.HsvColor;
@@ -1694,6 +1695,13 @@ final class MissingConverterVerifier {
                 "apple\tbanana\t\"333 444\"",
                 TsvStringList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_LIST
+            );
+
+            // text-to-tsv-string-set..............................................................................
+            verifier.addIfConversionFail(
+                "apple\tbanana\t\"333 444\"",
+                TsvStringSet.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_SET
             );
         }
 
