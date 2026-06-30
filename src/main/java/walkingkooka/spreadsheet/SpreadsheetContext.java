@@ -23,6 +23,7 @@ import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.route.Router;
@@ -68,7 +69,7 @@ public interface SpreadsheetContext extends CurrencyLocaleContext,
     /**
      * Returns the {@link Router} for this spreadsheet.
      */
-    Router<HttpRequestAttribute<?>, HttpHandler> httpRouter();
+    Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter();
 
     /**
      * Getter that returns the {@link SpreadsheetConverterContext} multiplier.

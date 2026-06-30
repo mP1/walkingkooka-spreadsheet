@@ -21,6 +21,7 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -46,7 +47,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                         final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
-                                                        final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
+                                                        final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> httpRouterFactory,
                                                         final CurrencyLocaleContext currencyLocaleContext,
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                         final SpreadsheetProvider spreadsheetProvider,

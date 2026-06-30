@@ -21,6 +21,7 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
@@ -51,7 +52,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                            final SpreadsheetEngine spreadsheetEngine,
                                                            final SpreadsheetStoreRepository storeRepository,
-                                                           final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
+                                                           final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> httpRouterFactory,
                                                            final CurrencyLocaleContext currencyLocaleContext,
                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                            final SpreadsheetProvider spreadsheetProvider,
@@ -91,8 +92,8 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                        final SpreadsheetStoreRepository storeRepository,
                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                        final SpreadsheetEngineContext spreadsheetEngineContext,
-                                                       final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
-                                                       final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter,
+                                                       final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> httpRouterFactory,
+                                                       final Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter,
                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                        final SpreadsheetProvider spreadsheetProvider,
@@ -155,7 +156,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
     // httpRouter......................................................................................................
 
     @Override
-    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+    public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
         if (null == this.httpRouter) {
             this.httpRouter = this.httpRouterFactory.apply(this.spreadsheetEngineContext());
         }
@@ -165,9 +166,9 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
     /**
      * The lazy cached router for this spreadsheet.
      */
-    private Router<HttpRequestAttribute<?>, HttpHandler> httpRouter;
+    private Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter;
 
-    private final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory;
+    private final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> httpRouterFactory;
 
     // EnvironmentContext...............................................................................................
 

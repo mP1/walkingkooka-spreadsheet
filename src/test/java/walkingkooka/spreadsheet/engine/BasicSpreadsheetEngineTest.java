@@ -56,6 +56,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ThrowableTesting;
@@ -648,7 +649,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+        public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
             throw new UnsupportedOperationException();
         }
 

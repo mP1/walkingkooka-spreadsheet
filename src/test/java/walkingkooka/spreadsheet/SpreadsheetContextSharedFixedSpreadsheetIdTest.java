@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
@@ -60,7 +61,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
     private final static SpreadsheetStoreRepository REPO = SpreadsheetStoreRepositories.fake();
 
-    final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> HTTP_ROUTER_FACTORY = (SpreadsheetEngineContext c) -> {
+    final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> HTTP_ROUTER_FACTORY = (SpreadsheetEngineContext c) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -502,7 +503,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             },
             (c) -> new Router<>() {
                 @Override
-                public Optional<HttpHandler> route(final Map<HttpRequestAttribute<?>, Object> attributes) {
+                public Optional<HttpHandler<HttpHandlerContext>> route(final Map<HttpRequestAttribute<?>, Object> attributes) {
                     throw new UnsupportedOperationException();
                 }
             },
