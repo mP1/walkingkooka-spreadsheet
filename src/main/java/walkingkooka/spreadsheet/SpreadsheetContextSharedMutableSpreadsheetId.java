@@ -21,6 +21,7 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
@@ -150,7 +151,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     // httpRouter.......................................................................................................
 
     @Override
-    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+    public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
         throw new UnsupportedOperationException();
     }
 

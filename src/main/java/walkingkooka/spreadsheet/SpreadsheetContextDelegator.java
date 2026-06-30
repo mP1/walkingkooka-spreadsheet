@@ -25,6 +25,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
@@ -76,7 +77,7 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     }
 
     @Override
-    default Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+    default Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
         return this.spreadsheetContext()
             .httpRouter();
     }

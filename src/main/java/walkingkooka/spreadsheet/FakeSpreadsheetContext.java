@@ -31,6 +31,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
@@ -121,7 +122,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
-    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+    public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
         throw new UnsupportedOperationException();
     }
 

@@ -24,6 +24,7 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -60,7 +61,7 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     }
 
     @Override
-    public final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+    public final Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
         throw new UnsupportedOperationException();
     }
 
