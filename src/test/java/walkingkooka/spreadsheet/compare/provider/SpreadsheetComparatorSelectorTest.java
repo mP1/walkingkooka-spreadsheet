@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
@@ -25,6 +26,19 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetComparatorSelectorTest implements PluginSelectorLikeTesting<SpreadsheetComparatorSelector, SpreadsheetComparatorName> {
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+            "hello(\"World1\", \"World2\")",
+            SpreadsheetComparatorSelector.with(
+                SpreadsheetComparatorName.with("hello"),
+                ""
+            ).setValues(
+                Lists.of("World1", "World2")
+            )
+        );
+    }
 
     // HasContentType...................................................................................................
 
