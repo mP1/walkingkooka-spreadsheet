@@ -119,6 +119,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithTextWithNumbers() {
+        this.spreadsheetComparatorAndCheck(
+            "text-with-numbers",
+            ProviderContexts.fake(),
+            SpreadsheetComparators.textWithNumbers()
+        );
+    }
+
+    @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
@@ -136,6 +145,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\n"
         );
@@ -159,6 +169,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\"\n" +
                     "]"
