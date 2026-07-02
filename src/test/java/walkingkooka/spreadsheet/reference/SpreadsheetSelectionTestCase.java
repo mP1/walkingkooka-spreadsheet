@@ -478,7 +478,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // toRowOrRowRange..................................................................................................
 
     final void toRowOrRowRangeAndCheck(final S selection,
-                                       final SpreadsheetSelection expected) {
+                                       final SpreadsheetRowReferenceOrRange expected) {
         this.checkEquals(
             expected,
             selection.toRowOrRowRange()
