@@ -230,6 +230,16 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     }
 
     @Test
+    public void testTextWithNumbers() {
+        this.compareAndCheckLess(
+            SpreadsheetComparators.textWithNumbers(),
+            String.class,
+            "ABC 00001 DEF",
+            "ABC 23 DEF"
+        );
+    }
+
+    @Test
     public void testStringCaseInsensitive2() {
         this.compareAndCheckLess(
             SpreadsheetComparators.textCaseInsensitive(),
