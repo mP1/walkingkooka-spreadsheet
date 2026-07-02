@@ -265,6 +265,7 @@ which is identical to a `java.util.Comparator`. These may be enabled to supporti
 - Text
 - Text case-insensitive
 - [text-with-numbers](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseSensitive.java)
+- [text-with-numbers-case-insensitive](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseInsensitive.java)
 - Time
 - Year
 

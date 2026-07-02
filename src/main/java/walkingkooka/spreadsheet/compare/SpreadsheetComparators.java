@@ -289,6 +289,19 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         SpreadsheetComparatorName.TEXT_WITH_NUMBERS
     );
 
+    /**
+     * {@link Comparators#textWithNumbersComparatorCaseInsensitive()}
+     */
+    public static SpreadsheetComparator<String> textWithNumbersCaseInsensitive() {
+        return TEXT_WITH_NUMBERS_CASE_INSENSITIVE;
+    }
+
+    private final static SpreadsheetComparator<String> TEXT_WITH_NUMBERS_CASE_INSENSITIVE = basic(
+        String.class,
+        Comparators.textWithNumbersComparatorCaseSensitive(),
+        SpreadsheetComparatorName.TEXT_WITH_NUMBERS_CASE_INSENSITIVE
+    );
+
     public static SpreadsheetComparator<LocalTime> time() {
         return TIME;
     }
