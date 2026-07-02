@@ -100,6 +100,37 @@ A wide variety of items are stored for each spreadsheet including but not limite
 There are many internal components that contribute to the core functionality of a spreadsheet. Eventually each of
 these will be a plugin where users can contribute an alternative or supplementary choice.
 
+### [SpreadsheetComparators](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java)
+
+All sorting is performed by using a selected [SpreadsheetComparator](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java),
+which is identical to a `java.util.Comparator`. These may be enabled to supporting sorting one or more column/row/cell-range.
+
+- Date
+- DateTime
+- Day of Month
+- Day of Week
+- Hour of AMPM
+- Hour of Day
+- Month of Year
+- Nano of Second
+- Number
+- Second of Minute
+- Text
+- Text case-insensitive
+- [text-with-numbers](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseSensitive.java)
+- [text-with-numbers-case-insensitive](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseInsensitive.java)
+- Time
+- Year
+
+Examples of combining multiple `SpreadsheetComparators` for a column range might include.
+
+- `day-of-month` then `month-of-year` then `year`
+- `seconds-of-minute` then `minute-of-day` then `hour-of-day`
+
+When sorting a cell-range/column/rows it is possible to sort each column/row with different `SpreadsheetComparator(s)`.
+
+The plugin architecture allows authoring/installing custom comparators.
+
 ### [SpreadsheetConverters](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 
 These `Converters` along with a few others belonging to other repos are used to convert values from one type to another.
@@ -246,37 +277,6 @@ eg
 - [url](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 - [url-to-hyperlink](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TreeTextConverterUrlToHyperlink.java)
 - [url-to-image](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TreeTextConverterUrlToImage.java)
-
-### [SpreadsheetComparators](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java)
-
-All sorting is performed by using a selected [SpreadsheetComparator](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java),
-which is identical to a `java.util.Comparator`. These may be enabled to supporting sorting one or more column/row/cell-range.
-
-- Date
-- DateTime
-- Day of Month
-- Day of Week
-- Hour of AMPM
-- Hour of Day
-- Month of Year
-- Nano of Second
-- Number
-- Second of Minute
-- Text
-- Text case-insensitive
-- [text-with-numbers](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseSensitive.java)
-- [text-with-numbers-case-insensitive](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseInsensitive.java)
-- Time
-- Year
-
-Examples of combining multiple `SpreadsheetComparators` for a column range might include.
-
-- `day-of-month` then `month-of-year` then `year`
-- `seconds-of-minute` then `minute-of-day` then `hour-of-day`
-
-When sorting a cell-range/column/rows it is possible to sort each column/row with different `SpreadsheetComparator(s)`.
-
-The plugin architecture allows authoring/installing custom comparators.
 
 ### [ExpressionFunction](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/function/ExpressionFunction.java)
 
