@@ -118,6 +118,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                 SpreadsheetComparators.text(),
                 SpreadsheetComparators.textCaseInsensitive(),
                 SpreadsheetComparators.textWithNumbers(),
+                SpreadsheetComparators.textWithNumbersCaseInsensitive(),
                 SpreadsheetComparators.time(),
                 SpreadsheetComparators.year()
             ).stream()

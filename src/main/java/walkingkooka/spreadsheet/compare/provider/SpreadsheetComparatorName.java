@@ -115,6 +115,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName TEXT_WITH_NUMBERS = registerConstant(TEXT_WITH_NUMBERS_STRING);
 
+    private final static String TEXT_WITH_NUMBERS_CASE_INSENSITIVE_STRING = "text-with-numbers-case-insensitive";
+
+    public final static SpreadsheetComparatorName TEXT_WITH_NUMBERS_CASE_INSENSITIVE = registerConstant(TEXT_WITH_NUMBERS_CASE_INSENSITIVE_STRING);
+
     private final static String TIME_STRING = "time";
 
     public final static SpreadsheetComparatorName TIME = registerConstant(TIME_STRING);
@@ -179,6 +183,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case TEXT_WITH_NUMBERS_STRING:
                 spreadsheetComparatorName = TEXT_WITH_NUMBERS;
+                break;
+            case TEXT_WITH_NUMBERS_CASE_INSENSITIVE_STRING:
+                spreadsheetComparatorName = TEXT_WITH_NUMBERS_CASE_INSENSITIVE;
                 break;
             case TIME_STRING:
                 spreadsheetComparatorName = TIME;
