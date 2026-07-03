@@ -614,6 +614,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  colorWhite\n" +
                 "    2\n" +
                 "  comparators\n" +
+                "    custom-list\n" +
                 "    date\n" +
                 "    date-time\n" +
                 "    day-of-month\n" +
