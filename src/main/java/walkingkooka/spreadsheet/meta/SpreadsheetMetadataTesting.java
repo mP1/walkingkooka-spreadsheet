@@ -398,7 +398,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             true
         ).set(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
-            SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
+            SpreadsheetComparatorNameList.parse("custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
         ).set(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
             ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, locale)")
