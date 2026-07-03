@@ -117,8 +117,24 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
             Arrays.stream(SpreadsheetComparators.class.getMethods())
                 .filter(MethodAttributes.STATIC::is)
                 .filter(m -> SpreadsheetComparator.class.equals(m.getReturnType()))
-                .filter(m -> m.getParameterTypes().length == 0)
-                .map(m -> CaseKind.CAMEL.change(
+                .filter(m -> {
+                        final String name = m.getName();
+
+                        final boolean filter;
+                        switch (name) {
+                            case "basic":
+                            case "nullAfter":
+                            case "nullBefore":
+                            case "reverse":
+                                filter = false;
+                                break;
+                            default:
+                                filter = true;
+                                break;
+                        }
+                        return filter;
+                    }
+                ).map(m -> CaseKind.CAMEL.change(
                         m.getName(),
                         CaseKind.KEBAB
                     ).toString()
@@ -156,6 +172,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
         this.treePrintAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
             "SpreadsheetComparatorInfoSet\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month\n" +
@@ -181,6 +198,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
         this.checkEquals(
             JsonNode.parse(
                 "[\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month\",\n" +

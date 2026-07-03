@@ -116,6 +116,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
 
     private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(
         Lists.of(
+                SpreadsheetComparators.customList(Lists.empty()),
                 SpreadsheetComparators.date(),
                 SpreadsheetComparators.dateTime(),
                 SpreadsheetComparators.dayOfMonth(),
