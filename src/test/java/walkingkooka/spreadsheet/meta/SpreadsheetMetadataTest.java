@@ -1901,7 +1901,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         "showFormulas=false\n" +
                         "showGridLines=true\n" +
                         "showHeadings=true\n" +
-                        "sortComparators=date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\n" +
+                        "sortComparators=custom-list,custom-list-case-insensitive,date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\n" +
                         "sortConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, locale)\n" +
                         "spreadsheetId=1\n" +
                         "style.height=50px\n" +
@@ -2079,7 +2079,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "showFormulas=false\n" +
                 "showGridLines=true\n" +
                 "showHeadings=true\n" +
-                "sortComparators=date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\n" +
+                "sortComparators=custom-list, custom-list-case-insensitive, date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\n" +
                 "sortConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, locale)\n" +
                 "spreadsheetId=1\n" +
                 "style.height=50px\n" +
