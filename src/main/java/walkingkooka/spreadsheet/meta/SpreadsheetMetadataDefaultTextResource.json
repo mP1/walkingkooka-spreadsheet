@@ -95,7 +95,7 @@
   "showFormulas": false,
   "showGridLines": true,
   "showHeadings": true,
-  "sortComparators": "custom-list, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, text-with-numbers, text-with-numbers-case-insensitive, time, year",
+  "sortComparators": "custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, text-with-numbers, text-with-numbers-case-insensitive, time, year",
   "sortConverter": "collection(text, boolean, number, date-time, basic, spreadsheet-value, locale, url)",
   "style": {
     "background-color": "#ffffff",

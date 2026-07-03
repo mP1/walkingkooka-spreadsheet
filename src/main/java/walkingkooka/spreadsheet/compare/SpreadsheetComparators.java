@@ -62,6 +62,17 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         );
     }
 
+    /**
+     * {@link Comparators#customListCaseInsensitive(List)}
+     */
+    public static SpreadsheetComparator<CharSequence> customListCaseInsensitive(final List<CharSequence> customList) {
+        return basic(
+            CharSequence.class,
+            Comparators.customListCaseInsensitive(customList),
+            SpreadsheetComparatorName.CUSTOM_LIST_CASE_INSENSITIVE
+        );
+    }
+
     public static SpreadsheetComparator<LocalDate> date() {
         return DATE;
     }

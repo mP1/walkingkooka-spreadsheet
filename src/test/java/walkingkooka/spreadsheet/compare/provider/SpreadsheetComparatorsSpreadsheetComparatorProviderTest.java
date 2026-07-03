@@ -111,6 +111,21 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithCustomListCaseInsensitive() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("custom-list-case-insensitive(\"Hi\", \"Med\", \"Lo\")"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.customListCaseInsensitive(
+                Lists.of(
+                    "Hi",
+                    "Med",
+                    "Lo"
+                )
+            )
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorInfos() {
         this.spreadsheetComparatorInfosAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE,
@@ -173,6 +188,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
             "SpreadsheetComparatorInfoSet\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list-case-insensitive custom-list-case-insensitive\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month\n" +
@@ -199,6 +215,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
             JsonNode.parse(
                 "[\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list-case-insensitive custom-list-case-insensitive\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month\",\n" +
