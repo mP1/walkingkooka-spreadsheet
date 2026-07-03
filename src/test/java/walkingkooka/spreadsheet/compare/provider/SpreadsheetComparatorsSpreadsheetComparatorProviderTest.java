@@ -96,6 +96,21 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithCustomList() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("custom-list(\"Hi\", \"Med\", \"Lo\")"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.customList(
+                Lists.of(
+                    "Hi",
+                    "Med",
+                    "Lo"
+                )
+            )
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorInfos() {
         this.spreadsheetComparatorInfosAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE,
