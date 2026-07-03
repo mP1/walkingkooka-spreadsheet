@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare.provider;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.SortedSets;
@@ -69,19 +70,30 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetComparator<?> comparator = NAME_TO_COMPARATOR.get(name);
-        if (null == comparator) {
-            comparator = NAME_TO_COMPARATOR.get(
-                name.unreversed()
-            );
-            if (null == comparator) {
-                throw new IllegalArgumentException("Unknown comparator " + name);
-            }
-            comparator = comparator.reversed();
+        SpreadsheetComparator<?> comparator;
+
+        switch (name.value().toLowerCase()) {
+            case SpreadsheetComparatorName.CUSTOM_LIST_STRING:
+                comparator = SpreadsheetComparators.customList(
+                    Cast.to(values)
+                );
+                break;
+            default:
+                comparator = NAME_TO_COMPARATOR.get(name);
+                if (null == comparator) {
+                    comparator = NAME_TO_COMPARATOR.get(
+                        name.unreversed()
+                    );
+                    if (null == comparator) {
+                        throw new IllegalArgumentException("Unknown comparator " + name);
+                    }
+                    comparator = comparator.reversed();
+                }
+                if (false == values.isEmpty()) {
+                    throw new IllegalArgumentException("Got " + values + " expected none");
+                }
         }
-        if (false == values.isEmpty()) {
-            throw new IllegalArgumentException("Got " + values + " expected none");
-        }
+
         return comparator;
     }
 

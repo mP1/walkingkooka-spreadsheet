@@ -59,6 +59,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     // constants........................................................................................................
 
+    final static String CUSTOM_LIST_STRING = "custom-list";
+
+    public final static SpreadsheetComparatorName CUSTOM_LIST = registerConstant(CUSTOM_LIST_STRING);
+
     private final static String DATE_STRING = "date";
 
     public final static SpreadsheetComparatorName DATE = registerConstant(DATE_STRING);
@@ -142,6 +146,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
         final SpreadsheetComparatorName spreadsheetComparatorName;
 
         switch (name) {
+            case CUSTOM_LIST_STRING:
+                spreadsheetComparatorName = CUSTOM_LIST;
+                break;
             case DATE_STRING:
                 spreadsheetComparatorName = DATE;
                 break;
