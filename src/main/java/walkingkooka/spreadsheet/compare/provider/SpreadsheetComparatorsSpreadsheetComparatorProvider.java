@@ -78,6 +78,11 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                     Cast.to(values)
                 );
                 break;
+            case SpreadsheetComparatorName.CUSTOM_LIST_CASE_INSENSITIVE_STRING:
+                comparator = SpreadsheetComparators.customListCaseInsensitive(
+                    Cast.to(values)
+                );
+                break;
             default:
                 comparator = NAME_TO_COMPARATOR.get(name);
                 if (null == comparator) {
@@ -117,6 +122,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
     private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(
         Lists.of(
                 SpreadsheetComparators.customList(Lists.empty()),
+                SpreadsheetComparators.customListCaseInsensitive(Lists.empty()),
                 SpreadsheetComparators.date(),
                 SpreadsheetComparators.dateTime(),
                 SpreadsheetComparators.dayOfMonth(),

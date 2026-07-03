@@ -615,6 +615,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    2\n" +
                 "  comparators\n" +
                 "    custom-list\n" +
+                "    custom-list-case-insensitive\n" +
                 "    date\n" +
                 "    date-time\n" +
                 "    day-of-month\n" +

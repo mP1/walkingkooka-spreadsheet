@@ -106,6 +106,7 @@ All sorting is performed by using a selected [SpreadsheetComparator](https://git
 which is identical to a `java.util.Comparator`. These may be enabled to supporting sorting one or more column/row/cell-range.
 
 - [custom-list](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/CustomListComparatorCaseSensitive.java)
+- [custom-list-case-insensitive](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/CustomListComparatorCaseInsensitive.java)
 - Date
 - DateTime
 - Day of Month
