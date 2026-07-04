@@ -40,6 +40,7 @@ import walkingkooka.validation.provider.ValidatorProviderDelegator;
 public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
     ConverterProviderDelegator,
     ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
+    HasSpreadsheetProvider,
     SpreadsheetComparatorProviderDelegator,
     SpreadsheetExporterProviderDelegator,
     SpreadsheetFormatterProviderDelegator,
@@ -93,5 +94,6 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
         return this.spreadsheetProvider();
     }
 
+    @Override
     SpreadsheetProvider spreadsheetProvider();
 }
