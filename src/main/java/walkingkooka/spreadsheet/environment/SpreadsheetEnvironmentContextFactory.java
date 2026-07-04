@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.provider.HasSpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -77,7 +78,8 @@ import java.util.Set;
  * Wraps a {@link SpreadsheetEnvironmentContext} with numerous factory methods that cache various components built from the given {@link EnvironmentValueName}.
  */
 public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEnvironmentContextDelegator,
-    HasProviderContext {
+    HasProviderContext,
+    HasSpreadsheetProvider {
 
     public final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.registerConstant(
         "converter",
@@ -739,6 +741,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     // constants........................................................................................................
 
+    @Override
     public SpreadsheetProvider spreadsheetProvider() {
         return this.spreadsheetProvider;
     }
