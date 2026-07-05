@@ -43,6 +43,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.CharsetName;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.PluginNameSet;
@@ -138,6 +139,8 @@ import java.util.function.Function;
 public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     Charset CHARSET = StandardCharsets.UTF_8;
+
+    CharsetName CHARSET_NAME = CharsetName.UTF_8;
 
     int DECIMAL_NUMBER_DIGIT_COUNT = 8;
 
