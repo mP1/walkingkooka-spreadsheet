@@ -108,7 +108,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         super();
 
         final SpreadsheetMetadata metadata = spreadsheetContext.spreadsheetMetadata();
-        this.spreadsheetMetadata = metadata;
         this.mode = mode;
 
         spreadsheetContext.setLocale(metadata.locale());
@@ -357,17 +356,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        if (null == this.spreadsheetMetadata) {
-            this.spreadsheetMetadata = this.spreadsheetContext.spreadsheetMetadata();
-        }
-
-        return this.spreadsheetMetadata;
+        return this.spreadsheetContext.spreadsheetMetadata();
     }
-
-    /**
-     * Will be updated whenever a new metadata is saved.
-     */
-    private transient SpreadsheetMetadata spreadsheetMetadata;
 
     @Override
     public SpreadsheetMetadata createMetadata(final EmailAddress user,
@@ -386,9 +376,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
         final SpreadsheetMetadata saved = this.spreadsheetContext.saveMetadata(metadata);
-        if (this.spreadsheetId().equals(saved.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
-            this.spreadsheetMetadata = saved;
 
+        if (this.spreadsheetId().equals(saved.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
             // necessary because new SpreadsheetMetadata may have changed requiring a new ExpressionFunctionProvider, ConverterLike
             this.converterLike = null;
         }
@@ -399,7 +388,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     public void deleteMetadata(final SpreadsheetId id) {
         this.spreadsheetContext.deleteMetadata(id);
         if (id.equals(this.spreadsheetId().orElse(null))) {
-            this.spreadsheetMetadata = null;
             this.converterLike = null;
         }
     }
@@ -548,8 +536,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             .valueLength(Integer.MAX_VALUE)
             .label("mode")
             .value(this.mode)
-            .label("metadata")
-            .value(this.spreadsheetMetadata)
             .build();
     }
 }
