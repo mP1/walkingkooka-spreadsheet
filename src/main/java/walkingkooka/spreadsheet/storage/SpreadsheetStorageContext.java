@@ -44,6 +44,8 @@ public interface SpreadsheetStorageContext extends StorageContext,
     SpreadsheetMetadataContext,
     ConverterLike {
 
+    // cells............................................................................................................
+
     Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel);
 
     Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells);
