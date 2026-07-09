@@ -52,8 +52,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContexts;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CaseSensitivity;
@@ -355,8 +353,6 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         SPREADSHEET_PARSER_PROVIDER,
         VALIDATOR_PROVIDER
     );
-
-    final static SpreadsheetStorageContext SPREADSHEET_STORAGE_CONTEXT = SpreadsheetStorageContexts.fake();
 
     SpreadsheetEngineContextSharedTestCase() {
         super();
