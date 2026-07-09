@@ -698,7 +698,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // storage..........................................................................................................
 
     @Test
-    public final void testStorage() {
+    public void testStorage() {
         this.storageAndCheck(
             this.createContext(),
             STORAGE
