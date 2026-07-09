@@ -1009,11 +1009,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                final MediaTypeDetector mediaTypeDetector,
                                                                                final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                                                               final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
                                                                                final SpreadsheetProvider spreadsheetProvider,
                                                                                final BinaryTextContext binaryTextContext,
                                                                                final CurrencyLocaleContext currencyLocaleContext,
                                                                                final ProviderContext providerContext) {
         return this.spreadsheetComparatorContext(
+            spreadsheetExpressionEvaluationContextFactory,
             this.sortSpreadsheetConverterContext(
                 resolveIfLabel,
                 spreadsheetProvider, // ConverterProvider
@@ -1061,8 +1063,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetComparatorContext}
      */
-    private SpreadsheetComparatorContext spreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
+    private SpreadsheetComparatorContext spreadsheetComparatorContext(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
+                                                                      final SpreadsheetConverterContext converterContext) {
         return SpreadsheetComparatorContexts.basic(
+            spreadsheetExpressionEvaluationContextFactory,
             converterContext
         );
     }

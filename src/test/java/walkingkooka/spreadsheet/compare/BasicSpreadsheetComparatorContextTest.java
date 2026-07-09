@@ -21,60 +21,33 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.time.LocalDate;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting<BasicSpreadsheetComparatorContext>,
     DecimalNumberContextDelegator,
     LocaleContextTesting {
-
-    @Test
-    public void testWithNullConverterContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetComparatorContext.with(
-                null
-            )
-        );
-    }
-
-    @Test
-    public void testConvert() {
-        this.convertAndCheck(
-            this.createContext(),
-            LocalDate.of(1999, 12, 31),
-            String.class,
-            "1999-12-31"
-        );
-    }
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -96,44 +69,19 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         }
     };
 
-    @Test
-    public void testLoadMetadata() {
-        this.loadMetadataAndCheck(
-            this.createContext(),
-            SPREADSHEET_ID,
-            SPREADSHEET_METADATA
-        );
-    }
+    private final static BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY = (final Object left,
+                                                                                                                                                 final Object right) -> {
+        throw new UnsupportedOperationException();
+    };
 
-    @Test
-    public void testToString() {
-        final SpreadsheetConverterContext SpreadsheetConverterContext = SpreadsheetConverterContexts.fake();
-        this.toStringAndCheck(
-            BasicSpreadsheetComparatorContext.with(
-                SpreadsheetConverterContext
-            ),
-            SpreadsheetConverterContext.toString()
-        );
-    }
-
-    @Override
-    public BasicSpreadsheetComparatorContext createContext() {
-        return BasicSpreadsheetComparatorContext.with(
-            CONVERTER_CONTEXT
-        );
-    }
-
-    private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+    private final static SpreadsheetConverterContext CONTEXT = SpreadsheetConverterContexts.basic(
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.objectToString(),
-        MediaTypeDetectors.binary(),
+        MEDIA_TYPE_DETECTOR,
         BinaryNumberConverterFunctions.multiply(), // multiplier
-        (label) -> {
-            Objects.requireNonNull(label, "label");
-            throw new UnsupportedOperationException();
-        },
+        SpreadsheetLabelNameResolvers.empty(),
         SPREADSHEET_METADATA_LOADER,
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
@@ -150,53 +98,88 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT
                 ),
-                ExpressionNumberKind.BIG_DECIMAL
+                EXPRESSION_NUMBER_KIND
             ),
-            JsonNodeMarshallUnmarshallContexts.basic(
-                JsonNodeMarshallContexts.basic(),
-                JsonNodeUnmarshallContexts.basic(
-                    ExpressionNumberKind.BIG_DECIMAL,
-                    new CurrencyCodeLanguageTagContext() {
-                        @Override
-                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                            return Optional.ofNullable(
-                                Currency.getInstance(
-                                    currencyCode.value()
-                                )
-                            );
-                        }
-
-                        @Override
-                        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                            return Optional.of(
-                                Locale.forLanguageTag(
-                                    languageTag.value()
-                                )
-                            );
-                        }
-                    },
-                    MathContext.DECIMAL32
-                )
-            )
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         ),
         LOCALE_CONTEXT
     );
 
+    @Test
+    public void testWithNullSpreadsheetExpressionEvaluationContextFactoryFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetComparatorContext.with(
+                null,
+                CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullConverterContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetComparatorContext.with(
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testConvert() {
+        this.convertAndCheck(
+            this.createContext(),
+            LocalDate.of(1999, 12, 31),
+            String.class,
+            "1999-12-31"
+        );
+    }
+
+    @Test
+    public void testLoadMetadata() {
+        this.loadMetadataAndCheck(
+            this.createContext(),
+            SPREADSHEET_ID,
+            SPREADSHEET_METADATA
+        );
+    }
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            BasicSpreadsheetComparatorContext.with(
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
+                CONTEXT
+            ),
+            CONTEXT.toString()
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetComparatorContext createContext() {
+        return BasicSpreadsheetComparatorContext.with(
+            SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
+            CONTEXT
+        );
+    }
+
     @Override
     public int decimalNumberDigitCount() {
-        return CONVERTER_CONTEXT.decimalNumberDigitCount();
+        return CONTEXT.decimalNumberDigitCount();
     }
 
     @Override
     public MathContext mathContext() {
-        return CONVERTER_CONTEXT.mathContext();
+        return CONTEXT.mathContext();
     }
 
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
-        return CONVERTER_CONTEXT;
+        return CONTEXT;
     }
 
     // class............................................................................................................
