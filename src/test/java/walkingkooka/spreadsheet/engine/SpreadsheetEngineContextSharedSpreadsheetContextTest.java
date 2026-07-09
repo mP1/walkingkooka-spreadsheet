@@ -1158,7 +1158,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     // storage..........................................................................................................
 
     @Test
-    public final void testStorage() {
+    public void testStorage() {
         this.storageAndCheck(
             this.createContext(),
             Storages.treeMapStore()
