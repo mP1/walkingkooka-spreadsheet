@@ -1619,10 +1619,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-//            return SpreadsheetEnvironmentContexts.basic(
-//                STORAGE,
-//                this.spreadsheetEnvironmentContext
-//            );
             return this.spreadsheetEnvironmentContext;
         }
 
