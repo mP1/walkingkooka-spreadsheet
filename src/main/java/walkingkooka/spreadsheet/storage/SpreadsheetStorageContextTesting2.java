@@ -19,10 +19,17 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterLikeTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.storage.StorageContextTesting;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -289,6 +296,165 @@ public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageC
         );
     }
 
+    // loadStorage......................................................................................................
+
+    @Test
+    default void testLoadStorageWithNullPathFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .loadStorage(null)
+        );
+    }
+
+    // saveStorage......................................................................................................
+
+    @Test
+    default void testSaveStorageWithNullValueFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .saveStorage(null)
+        );
+    }
+
+    // deleteStorage....................................................................................................
+
+    @Test
+    default void testDeleteStorageWithNullPathFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .deleteStorage(null)
+        );
+    }
+
+    // listStorage......................................................................................................
+
+    @Test
+    default void testListStorageWithNullParentFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .listStorage(
+                    null,
+                    0,
+                    0
+                )
+        );
+    }
+
+    @Test
+    default void testListStorageWithNegativeOffsetFails() {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .listStorage(
+                    StoragePath.ROOT,
+                    -1,
+                    1
+                )
+        );
+
+        this.checkEquals(
+            "Invalid offset -1 < 0",
+            thrown.getMessage()
+        );
+    }
+
+    @Test
+    default void testListStorageWithNegativeCountFails() {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .listStorage(
+                    StoragePath.ROOT,
+                    0,
+                    -1
+                )
+        );
+
+        this.checkEquals(
+            "Invalid count -1 < 0",
+            thrown.getMessage()
+        );
+    }
+
+    // loadStorage......................................................................................................
+
+    default void loadStorageAndCheck(final C context,
+                                     final StoragePath path) {
+        this.loadStorageAndCheck(
+            context,
+            path,
+            Optional.empty()
+        );
+    }
+
+    default void loadStorageAndCheck(final C context,
+                                     final StoragePath path,
+                                     final StorageValue expected) {
+        this.loadStorageAndCheck(
+            context,
+            path,
+            Optional.of(expected)
+        );
+    }
+
+    default void loadStorageAndCheck(final C context,
+                                     final StoragePath path,
+                                     final Optional<StorageValue> expected) {
+        this.checkEquals(
+            expected,
+            context.loadStorage(path),
+            () -> " loadStorage " + path
+        );
+    }
+
+    // saveStorage......................................................................................................
+
+    default void saveStorageAndCheck(final C context,
+                                     final StorageValue value,
+                                     final StorageValue expected) {
+        this.checkEquals(
+            expected,
+            context.saveStorage(value),
+            () -> " saveStorage " + value
+        );
+    }
+
+    // listStorage......................................................................................................
+
+    default void listStorageAndCheck(final C context,
+                                     final StoragePath parent,
+                                     final int offset,
+                                     final int count,
+                                     final StorageValueInfo... expected) {
+        this.listStorageAndCheck(
+            context,
+            parent,
+            offset,
+            count,
+            Lists.of(expected)
+        );
+    }
+
+    default void listStorageAndCheck(final C context,
+                                     final StoragePath parent,
+                                     final int offset,
+                                     final int count,
+                                     final List<StorageValueInfo> expected) {
+        this.checkEquals(
+            expected,
+            context.listStorage(
+                parent,
+                offset,
+                count
+            ),
+            () -> "listStorage parent=" + parent + " offset=" + offset + " count=" + count
+        );
+    }
+    
     // ConverterLike....................................................................................................
 
     @Override

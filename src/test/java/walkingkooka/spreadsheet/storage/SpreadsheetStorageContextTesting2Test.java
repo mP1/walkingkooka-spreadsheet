@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2Test.TestSpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
@@ -404,7 +405,12 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
 
             throw new UnsupportedOperationException();
         }
-        
+
+        @Override
+        public Storage<SpreadsheetStorageContext> storage() {
+            return Storages.empty();
+        }
+
         // Object.......................................................................................................
 
         @Override
