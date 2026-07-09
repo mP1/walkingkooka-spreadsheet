@@ -71,6 +71,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContexts;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.LineEnding;
@@ -1114,6 +1115,29 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     }
 
     private boolean fired;
+
+    // Storage..........................................................................................................
+
+    @Test
+    public void testSaveStorageAndLoadStorage() {
+        final BasicSpreadsheetStorageContext context = this.createContext();
+
+        final StoragePath path = StoragePath.parse("/path1/to2/value3");
+        final String value = "Hello456";
+
+        final StorageValue storageValue = StorageValue.with(path)
+            .setValue(
+                Optional.of(value)
+            );
+
+        context.saveStorage(storageValue);
+
+        this.loadStorageAndCheck(
+            context,
+            path,
+            storageValue
+        );
+    }
 
     @Override
     public BasicSpreadsheetStorageContext createContext() {

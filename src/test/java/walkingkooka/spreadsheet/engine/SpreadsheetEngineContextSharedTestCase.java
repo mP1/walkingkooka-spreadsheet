@@ -915,16 +915,6 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
     }
 
-    // storage..........................................................................................................
-
-    @Test
-    public final void testStorage() {
-        this.storageAndCheck(
-            this.createContext(),
-            STORAGE
-        );
-    }
-
     // createContext....................................................................................................
 
     final C createContext(final EnvironmentContext environmentContext) {

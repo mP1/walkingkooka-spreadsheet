@@ -60,6 +60,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -693,6 +695,40 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         throw new UnsupportedOperationException();
     }
 
+    // storage..........................................................................................................
+
+    @Test
+    public final void testStorage() {
+        this.storageAndCheck(
+            this.createContext(),
+            STORAGE
+        );
+    }
+
+    @Test
+    public void testSaveStorageAndLoadStorage() {
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContextWithSpreadsheetId();
+
+        final StoragePath path = StoragePath.parse("/path1/file2");
+
+        final StorageValue value = StorageValue.with(path)
+            .setValue(
+                Optional.of(111)
+            );
+
+        this.saveStorageAndCheck(
+            context,
+            value,
+            value
+        );
+
+        this.loadStorageAndCheck(
+            context,
+            path,
+            value
+        );
+    }
+
     // createContext....................................................................................................
 
     @Override
@@ -711,7 +747,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                     this.context :
                     null
             ),
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            SpreadsheetEnvironmentContexts.basic(
+                Storages.treeMapStore(),
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            )
         );
         this.context = context;
         context.setSpreadsheetId(

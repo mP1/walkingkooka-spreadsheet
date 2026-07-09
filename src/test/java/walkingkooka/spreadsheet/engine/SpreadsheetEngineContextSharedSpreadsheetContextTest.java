@@ -90,6 +90,8 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
@@ -1153,6 +1155,40 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     private boolean fired;
 
+    // storage..........................................................................................................
+
+    @Test
+    public final void testStorage() {
+        this.storageAndCheck(
+            this.createContext(),
+            Storages.treeMapStore()
+        );
+    }
+
+    @Test
+    public void testSaveStorageAndLoadStorage() {
+        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
+
+        final StoragePath path = StoragePath.parse("/path1/file2");
+
+        final StorageValue value = StorageValue.with(path)
+            .setValue(
+                Optional.of(111)
+            );
+
+        this.saveStorageAndCheck(
+            context,
+            value,
+            value
+        );
+
+        this.loadStorageAndCheck(
+            context,
+            path,
+            value
+        );
+    }
+
     // createContext....................................................................................................
     
     @Override
@@ -1241,7 +1277,13 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     @Override
     public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            Storages.treeMapStore(),
+            SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
 
         spreadsheetEnvironmentContext.setCurrentWorkingDirectory(
             Optional.of(CURRENT_WORKING_DIRECTORY)
