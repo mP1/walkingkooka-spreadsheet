@@ -90,6 +90,7 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalContexts;
@@ -1217,7 +1218,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
                                                                            final SpreadsheetCellStore cellStore,
                                                                            final SpreadsheetLabelStore labelStore,
-                                                                           final EnvironmentContext environmentContext) {
+                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
             metadata,
             new FakeSpreadsheetStoreRepository() {
@@ -1232,7 +1233,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                     return labelStore;
                 }
             },
-            environmentContext
+            spreadsheetEnvironmentContext
         );
     }
 
@@ -1255,13 +1256,13 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
                                                                            final SpreadsheetStoreRepository storeRepository,
-                                                                           final EnvironmentContext environmentContext) {
+                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetEngineContextSharedSpreadsheetContext.with(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 storeRepository,
-                environmentContext,
+                spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             ),
@@ -1269,7 +1270,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         );
     }
 
-    private static EnvironmentContext environmentContext() {
+    private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
                 CHARSET,
@@ -1293,7 +1294,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
         );
-        return context;
+        return SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
+            context
+        );
     }
 
     private final static class TestSpreadsheetContext implements SpreadsheetContext,
@@ -1313,22 +1317,22 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
         TestSpreadsheetContext() {
             this(
-                SpreadsheetEngineContextSharedSpreadsheetContextTest.environmentContext()
+                SpreadsheetEngineContextSharedSpreadsheetContextTest.spreadsheetEnvironmentContext()
             );
         }
 
-        TestSpreadsheetContext(final EnvironmentContext environmentContext) {
+        TestSpreadsheetContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
             this.metadata = METADATA;
             this.storeRepository = REPO;
 
-            this.environmentContext = environmentContext;
+            this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
             this.localeContext = LOCALE_CONTEXT;
             this.providerContext = PROVIDER_CONTEXT;
         }
 
         TestSpreadsheetContext(final SpreadsheetMetadata metadata,
                                final SpreadsheetStoreRepository storeRepository,
-                               final EnvironmentContext environmentContext,
+                               final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                final LocaleContext localeContext,
                                final ProviderContext providerContext) {
             final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
@@ -1338,7 +1342,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             this.metadata = metadata;
             this.storeRepository = storeRepository;
 
-            this.environmentContext = environmentContext;
+            this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
             this.localeContext = localeContext;
             this.providerContext = providerContext;
         }
@@ -1380,7 +1384,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                     .setLocaleContext(this.localeContext()),
                 SpreadsheetEnvironmentContexts.basic(
                     this.storage(),
-                    this.environmentContext
+                    this.spreadsheetEnvironmentContext
                 ),
                 this, // SpreadsheetMetadataContext
                 TERMINAL_CONTEXT,
@@ -1486,7 +1490,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             return new TestSpreadsheetContext(
                 this.metadata,
                 this.storeRepository,
-                this.environmentContext.cloneEnvironment(),
+                this.spreadsheetEnvironmentContext.cloneEnvironment(),
                 this.localeContext,
                 this.providerContext
             );
@@ -1496,12 +1500,15 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 
-            return this.environmentContext.equals(environmentContext) ?
+            final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
+            final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
+
+            return before == after ?
                 this :
                 new TestSpreadsheetContext(
                     this.metadata,
                     this.storeRepository,
-                    environmentContext,
+                    after,
                     this.localeContext,
                     this.providerContext
                 );
@@ -1510,7 +1517,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         @Override
         public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                             final T value) {
-            this.environmentContext.setEnvironmentValue(
+            this.spreadsheetEnvironmentContext.setEnvironmentValue(
                 name,
                 value
             );
@@ -1518,62 +1525,63 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
         @Override
         public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            this.environmentContext.removeEnvironmentValue(name);
+            this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
         }
 
         @Override
         public Currency currency() {
-            return this.environmentContext.currency();
+            return this.spreadsheetEnvironmentContext.currency();
         }
 
         @Override
         public void setCurrency(final Currency currency) {
-            this.environmentContext.setCurrency(currency);
+            this.spreadsheetEnvironmentContext.setCurrency(currency);
         }
         
         @Override
         public LineEnding lineEnding() {
-            return this.environmentContext.lineEnding();
+            return this.spreadsheetEnvironmentContext.lineEnding();
         }
 
         @Override
         public void setLineEnding(final LineEnding lineEnding) {
-            this.environmentContext.setLineEnding(lineEnding);
+            this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
         }
 
         @Override
         public Locale locale() {
-            return this.environmentContext.locale();
+            return this.spreadsheetEnvironmentContext.locale();
         }
 
         @Override
         public void setLocale(final Locale locale) {
-            this.environmentContext.setLocale(locale);
+            this.spreadsheetEnvironmentContext.setLocale(locale);
         }
 
         @Override
         public void setUser(final Optional<EmailAddress> user) {
-            this.environmentContext.setUser(user);
+            this.spreadsheetEnvironmentContext.setUser(user);
         }
 
         @Override
         public EnvironmentContext environmentContext() {
-            return this.environmentContext;
+            return this.spreadsheetEnvironmentContext;
         }
-
-        private final EnvironmentContext environmentContext;
 
         @Override
         public Storage<SpreadsheetStorageContext> storage() {
-            return STORAGE;
+            return this.spreadsheetEnvironmentContext.storage();
         }
+
+        private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-            return SpreadsheetEnvironmentContexts.basic(
-                STORAGE,
-                this.environmentContext
-            );
+//            return SpreadsheetEnvironmentContexts.basic(
+//                STORAGE,
+//                this.spreadsheetEnvironmentContext
+//            );
+            return this.spreadsheetEnvironmentContext;
         }
 
         @Override
@@ -1612,7 +1620,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             return Objects.hash(
                 this.metadata,
                 this.storeRepository,
-                this.environmentContext,
+                this.spreadsheetEnvironmentContext,
                 this.localeContext,
                 this.providerContext
             );
@@ -1628,7 +1636,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         private boolean equals0(final TestSpreadsheetContext other) {
             return this.metadata.equals(other.metadata) &&
                 this.storeRepository.equals(other.storeRepository) &&
-                this.environmentContext.equals(other.environmentContext) &&
+                this.spreadsheetEnvironmentContext.equals(other.spreadsheetEnvironmentContext) &&
                 this.localeContext.equals(other.localeContext) &&
                 this.providerContext.equals(other.providerContext);
         }
@@ -1671,21 +1679,34 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     @Test
     public void testEqualsDifferentSpreadsheetContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LineEnding.CRNL,
-                Locale.FRANCE,
-                LocalDateTime::now,
-                EnvironmentContext.ANONYMOUS
+//        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+//            EnvironmentContexts.empty(
+//                CHARSET,
+//                CURRENCY,
+//                INDENTATION,
+//                LineEnding.CRNL,
+//                Locale.FRANCE,
+//                LocalDateTime::now,
+//                EnvironmentContext.ANONYMOUS
+//            )
+//        );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    CHARSET,
+                    CURRENCY,
+                    INDENTATION,
+                    LineEnding.CRNL,
+                    Locale.FRANCE,
+                    LocalDateTime::now,
+                    EnvironmentContext.ANONYMOUS
+                )
             )
         );
 
-        environmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-            SPREADSHEET_ID
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
         );
 
         this.checkNotEquals(
@@ -1697,7 +1718,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             SpreadsheetEngineContextSharedSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 new TestSpreadsheetContext(
-                    environmentContext
+                    spreadsheetEnvironmentContext
                 ),
                 TERMINAL_CONTEXT
             )
