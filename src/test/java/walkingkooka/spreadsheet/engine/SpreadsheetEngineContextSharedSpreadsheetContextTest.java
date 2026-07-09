@@ -1679,17 +1679,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     @Test
     public void testEqualsDifferentSpreadsheetContext() {
-//        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-//            EnvironmentContexts.empty(
-//                CHARSET,
-//                CURRENCY,
-//                INDENTATION,
-//                LineEnding.CRNL,
-//                Locale.FRANCE,
-//                LocalDateTime::now,
-//                EnvironmentContext.ANONYMOUS
-//            )
-//        );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.map(
