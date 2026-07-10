@@ -45,6 +45,7 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.route.Router;
+import walkingkooka.route.Routers;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
@@ -113,9 +114,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends SpreadsheetEngineContextSharedTestCase<SpreadsheetEngineContextSharedSpreadsheetContext> {
+
+    private final static Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> HTTP_ROUTER = Routers.fake();
 
     private final static SpreadsheetContext SPREADSHEET_CONTEXT = new TestSpreadsheetContext();
 
@@ -167,6 +171,17 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 SPREADSHEET_CONTEXT,
                 null
             )
+        );
+    }
+
+    // httpRouter.......................................................................................................
+
+    @Test
+    public void testHttpRouter() {
+        assertSame(
+            HTTP_ROUTER,
+            this.createContext()
+                .httpRouter()
         );
     }
 
@@ -1437,7 +1452,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
         @Override
         public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
-            throw new UnsupportedOperationException();
+            return HTTP_ROUTER;
         }
 
         @Override

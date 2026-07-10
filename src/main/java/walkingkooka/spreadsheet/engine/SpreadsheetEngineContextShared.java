@@ -23,10 +23,6 @@ import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.net.http.server.HttpHandler;
-import walkingkooka.net.http.server.HttpHandlerContext;
-import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
@@ -58,11 +54,6 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     @Override
     public final SpreadsheetEngineContext spreadsheetEngineContext() {
         return this;
-    }
-
-    @Override
-    public final Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

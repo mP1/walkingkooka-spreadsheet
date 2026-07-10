@@ -28,7 +28,11 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -174,6 +178,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     private final TerminalContext terminalContext;
+
+    @Override
+    public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
+        throw new UnsupportedOperationException();
+    }
 
     // MediaTypeDetector................................................................................................
 
