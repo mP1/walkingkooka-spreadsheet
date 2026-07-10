@@ -771,9 +771,7 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     context.marshall(spreadsheetCell)
                         .toString(),
-                    Lists.of(
-                        SpreadsheetCell.class
-                    ),
+                    SpreadsheetCell.class,
                     SpreadsheetConvertersConverterProvider.JSON // textToObject
                 );
             }
