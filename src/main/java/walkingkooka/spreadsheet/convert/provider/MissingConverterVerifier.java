@@ -2009,7 +2009,7 @@ final class MissingConverterVerifier {
             throw rethrow;
         } catch (final SpreadsheetErrorException ignore) {
             failed = !expectedSpreadsheetErrorException;
-        } catch (final Exception cause) {
+        } catch (final RuntimeException cause) {
             cause.printStackTrace(); // KEEP!
             failed = true;
         }
