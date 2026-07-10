@@ -26,7 +26,11 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpHandlerContext;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -122,6 +126,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public SpreadsheetEngine spreadsheetEngine() {
         return this.spreadsheetContext.spreadsheetEngine();
+    }
+
+    @Override
+    public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> httpRouter() {
+        return this.spreadsheetContext.httpRouter();
     }
 
     // ConverterLikeDelegator...........................................................................................

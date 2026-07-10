@@ -358,6 +358,17 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         return created;
     };
 
+    // httpRouter.......................................................................................................
+
+    @Test
+    public void testHttpRouter() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createContext()
+                .httpRouter()
+        );
+    }
+
     @Test
     public void testSaveMetadata() {
         final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext();
