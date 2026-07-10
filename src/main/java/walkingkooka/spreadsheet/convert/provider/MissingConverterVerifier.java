@@ -526,12 +526,25 @@ final class MissingConverterVerifier {
                 final RgbColor rgb = Color.parseRgb("#12345678");
 
                 verifier.addIfConversionFail(
-                    Lists.of(
-                        rgb.alpha(),
-                        rgb.red(),
-                        rgb.green(),
-                        rgb.blue()
-                    ),
+                    rgb.alpha(),
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                );
+
+                verifier.addIfConversionFail(
+                    rgb.red(),
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                );
+
+                verifier.addIfConversionFail(
+                    rgb.green(),
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                );
+
+                verifier.addIfConversionFail(
+                    rgb.blue(),
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
                 );
@@ -574,23 +587,36 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    Lists.of(
-                        CurrencyValue.with(
-                            1,
-                            currencyCode
-                        ),
-                        CurrencyValue.with(
-                            2L,
-                            currencyCode
-                        ),
-                        CurrencyValue.with(
-                            3.0f,
-                            currencyCode
-                        ),
-                        CurrencyValue.with(
-                            4.0f,
-                            currencyCode
-                        )
+                    CurrencyValue.with(
+                        1,
+                        currencyCode
+                    ),
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                );
+
+                verifier.addIfConversionFail(
+                    CurrencyValue.with(
+                        2L,
+                        currencyCode
+                    ),
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                );
+
+                verifier.addIfConversionFail(
+                    CurrencyValue.with(
+                        3.0f,
+                        currencyCode
+                    ),
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                );
+
+                verifier.addIfConversionFail(
+                    CurrencyValue.with(
+                        4.0f,
+                        currencyCode
                     ),
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
@@ -868,14 +894,20 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    Lists.of(
-                        absoluteUrl.text(),
-                        emailAddress.text(),
-                        mailToUrl.text()
-                    ),
-                    Lists.of(
-                        HasHostAddress.class
-                    ),
+                    absoluteUrl.text(),
+                    HasHostAddress.class,
+                    SpreadsheetConvertersConverterProvider.NET
+                );
+
+                verifier.addIfConversionFail(
+                    emailAddress.text(),
+                    HasHostAddress.class,
+                    SpreadsheetConvertersConverterProvider.NET
+                );
+
+                verifier.addIfConversionFail(
+                    mailToUrl.text(),
+                    HasHostAddress.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
             }
@@ -1925,20 +1957,6 @@ final class MissingConverterVerifier {
         this.context = context;
 
         this.missing = Maps.sorted();
-    }
-
-    private void addIfConversionFail(final List<Object> values,
-                                     final List<Class<?>> types,
-                                     final ConverterName name) {
-        for (final Object value : values) {
-            for (final Class<?> type : types) {
-                this.addIfConversionFail(
-                    value,
-                    type,
-                    name
-                );
-            }
-        }
     }
 
     private void addIfConversionFail(final List<Object> values,
