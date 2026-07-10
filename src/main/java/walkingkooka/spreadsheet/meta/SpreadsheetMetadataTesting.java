@@ -46,6 +46,8 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.CharsetName;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
+import walkingkooka.net.http.server.hateos.HateosHandlerContext;
+import walkingkooka.net.http.server.hateos.HateosHandlerContexts;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -528,6 +530,12 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
         JSON_NODE_MARSHALL_CONTEXT,
         JSON_NODE_UNMARSHALL_CONTEXT
+    );
+
+    HateosHandlerContext HATEOS_HANDLER_CONTEXT = HateosHandlerContexts.basic(
+        INDENTATION,
+        EOL,
+        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
     );
 
     private static SpreadsheetEnvironmentContext providerContextSpreadsheetEnvironmentContext() {
