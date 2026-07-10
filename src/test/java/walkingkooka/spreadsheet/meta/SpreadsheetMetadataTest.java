@@ -790,7 +790,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.toStringAndCheck(
             converter,
-            "formulaConverter: collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, properties, template, net)"
+            "formulaConverter: collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, properties, template, net, basic)"
         );
     }
 
@@ -822,7 +822,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.toStringAndCheck(
             converter,
-            "formattingConverter: collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net)"
+            "formattingConverter: collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net, basic)"
         );
     }
 
@@ -1880,9 +1880,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         "expressionNumberKind=BIG_DECIMAL\n" +
                         "formHandlers=\n" +
                         "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-                        "formattingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, style, text-node, template, net)\n" +
+                        "formattingConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, style, text-node, template, net, basic)\n" +
                         "formattingFunctions=\n" +
-                        "formulaConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, properties, template, net, json)\n" +
+                        "formulaConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, properties, template, net, json, basic)\n" +
                         "formulaFunctions=\n" +
                         "functions=\n" +
                         "importers=collection, empty, json\n" +
@@ -1892,17 +1892,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         "parsers=date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\n" +
                         "plugins=\n" +
                         "precision=7\n" +
-                        "queryConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\n" +
+                        "queryConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net, basic)\n" +
                         "queryFunctions=\n" +
                         "roundingMode=HALF_UP\n" +
-                        "scriptingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net)\n" +
+                        "scriptingConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
                         "scriptingFunctions=\n" +
                         "showFormulaEditor=true\n" +
                         "showFormulas=false\n" +
                         "showGridLines=true\n" +
                         "showHeadings=true\n" +
                         "sortComparators=custom-list,custom-list-case-insensitive,date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\n" +
-                        "sortConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, locale)\n" +
+                        "sortConverter=collection(text, boolean, number, date-time, spreadsheet-value, locale, basic)\n" +
                         "spreadsheetId=1\n" +
                         "style.height=50px\n" +
                         "style.width=100px\n" +
@@ -1910,7 +1910,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         "timeFormatter=time hh:mm:ss\n" +
                         "timeParser=time hh:mm:ss\n" +
                         "twoDigitYear=50\n" +
-                        "validationConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json)\n" +
+                        "validationConverter=collection(text, boolean, number, date-time, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
                         "validationFunctions=\n" +
                         "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
                         "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
@@ -2058,9 +2058,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "expressionNumberKind=BIG_DECIMAL\n" +
                 "formHandlers=\n" +
                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-                "formattingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, style, text-node, template, net)\n" +
+                "formattingConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, style, text-node, template, net, basic)\n" +
                 "formattingFunctions=\n" +
-                "formulaConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, properties, template, net, json)\n" +
+                "formulaConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, properties, template, net, json, basic)\n" +
                 "formulaFunctions=\n" +
                 "functions=\n" +
                 "importers=collection, empty, json\n" +
@@ -2070,17 +2070,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "parsers=date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\n" +
                 "plugins=\n" +
                 "precision=7\n" +
-                "queryConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\n" +
+                "queryConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net, basic)\n" +
                 "queryFunctions=\n" +
                 "roundingMode=HALF_UP\n" +
-                "scriptingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net)\n" +
+                "scriptingConverter=collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
                 "scriptingFunctions=\n" +
                 "showFormulaEditor=true\n" +
                 "showFormulas=false\n" +
                 "showGridLines=true\n" +
                 "showHeadings=true\n" +
                 "sortComparators=custom-list, custom-list-case-insensitive, date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\n" +
-                "sortConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, locale)\n" +
+                "sortConverter=collection(text, boolean, number, date-time, spreadsheet-value, locale, basic)\n" +
                 "spreadsheetId=1\n" +
                 "style.height=50px\n" +
                 "style.width=100px\n" +
@@ -2088,7 +2088,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "timeFormatter=time hh:mm:ss\n" +
                 "timeParser=time hh:mm:ss\n" +
                 "twoDigitYear=50\n" +
-                "validationConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json)\n" +
+                "validationConverter=collection(text, boolean, number, date-time, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
                 "validationFunctions=\n" +
                 "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
                 "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
