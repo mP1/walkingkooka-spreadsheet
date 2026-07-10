@@ -76,7 +76,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
-import walkingkooka.spreadsheet.value.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.storage.StorageBinary;
@@ -759,8 +758,7 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 error,
                 ExpressionNumber.class,
-                SpreadsheetConvertersConverterProvider.ERROR_THROWING,
-                true
+                SpreadsheetConvertersConverterProvider.ERROR_THROWING
             );
         }
 
@@ -1986,19 +1984,8 @@ final class MissingConverterVerifier {
     private void addIfConversionFail(final Object value,
                                      final Class<?> type,
                                      final ConverterName name) {
-        this.addIfConversionFail(
-            value,
-            type,
-            name,
-            false // expectedSpreadsheetErrorException
-        );
-    }
+        boolean failed;
 
-    private void addIfConversionFail(final Object value,
-                                     final Class<?> type,
-                                     final ConverterName name,
-                                     final boolean expectedSpreadsheetErrorException) {
-        boolean failed = false;
         try {
             failed = this.converter.convert(
                 value,
@@ -2007,8 +1994,6 @@ final class MissingConverterVerifier {
             ).isRight();
         } catch (final UnsupportedOperationException rethrow) {
             throw rethrow;
-        } catch (final SpreadsheetErrorException ignore) {
-            failed = !expectedSpreadsheetErrorException;
         } catch (final RuntimeException cause) {
             cause.printStackTrace(); // KEEP!
             failed = true;
