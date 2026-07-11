@@ -226,6 +226,43 @@ final class MissingConverterVerifier {
 
     private static final List<Class<?>> TIME_TO_TYPES;
 
+    // value constants..................................................................................................
+
+    private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
+    private final static SpreadsheetCellRangeReference CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
+    private final static SpreadsheetColumnReference COLUMN = SpreadsheetSelection.parseColumn("A");
+    private final static SpreadsheetColumnRangeReference COLUMN_RANGE = SpreadsheetSelection.parseColumnRange("B:C");
+    private final static SpreadsheetRowReference ROW = SpreadsheetSelection.parseRow("1");
+    private final static SpreadsheetRowRangeReference ROW_RANGE = SpreadsheetSelection.parseRowRange("2:3");
+
+    private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("Label123");
+    private final static SpreadsheetError ERROR = SpreadsheetError.referenceNotFound(CELL);
+
+    private final static SpreadsheetFormatterSelector FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("test-formatter");
+    private final static SpreadsheetParserSelector PARSER_SELECTOR = SpreadsheetParserSelector.parse("test-parser");
+    private final static ValidatorSelector VALIDATOR_SELECTOR = ValidatorSelector.parse("test-validator");
+
+    private final static TextStyle STYLE = TextStyle.EMPTY.set(
+        TextStylePropertyName.COLOR,
+        Color.BLACK
+    );
+
+    private final static LocaleLanguageTag LANGUAGE_TAG = LocaleLanguageTag.parse("en-AU");
+
+    private final static AbsoluteUrl ABSOLUTE_URL = Url.parseAbsolute("https://example.com/123");
+    private final static EmailAddress EMAIL_ADDRESS = EmailAddress.parse("user@example.com");
+    private final static MailToUrl MAIL_TO_URL = Url.parseMailTo("mailto:user@example.com");
+    private final static MediaType MEDIA_TYPE = MediaType.TEXT_PLAIN.setCharset(CharsetName.UTF_8);
+    private final static RelativeUrl RELATIVE_URL = Url.parseRelative("/path1/path2?k1=v1#fragment111");
+
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SpreadsheetId.with(1)
+    ).set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+        SpreadsheetName.with("Spreadsheet111")
+    );
+
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
      * does not support the {@link CharSequence} interface types like {@link StringBuilder} etc.
@@ -251,47 +288,21 @@ final class MissingConverterVerifier {
 
         final Charset charset = context.charset();
 
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final SpreadsheetCellRangeReference cellRange = SpreadsheetSelection.parseCellRange("B2:C3");
-        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("A");
-        final SpreadsheetColumnRangeReference columnRange = SpreadsheetSelection.parseColumnRange("B:C");
-        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("1");
-        final SpreadsheetRowRangeReference rowRange = SpreadsheetSelection.parseRowRange("2:3");
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final ExpressionNumberKind kind = context.expressionNumberKind();
-        final SpreadsheetError error = SpreadsheetError.referenceNotFound(cell);
 
-        final SpreadsheetFormatterSelector formatterSelector = SpreadsheetFormatterSelector.parse("test-formatter");
-        final SpreadsheetParserSelector parserSelector = SpreadsheetParserSelector.parse("test-parser");
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator");
-
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
-
-        final LocaleLanguageTag languageTag = LocaleLanguageTag.parse("en-AU");
-
-        final Locale locale = context.localeForLanguageTagOrFail(languageTag);
+        final Locale locale = context.localeForLanguageTagOrFail(LANGUAGE_TAG);
 
         final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2+3")
         ).setFormatter(
-            Optional.of(formatterSelector)
+            Optional.of(FORMATTER_SELECTOR)
         ).setParser(
-            Optional.of(parserSelector)
+            Optional.of(PARSER_SELECTOR)
         ).setValidator(
-            Optional.of(validatorSelector)
+            Optional.of(VALIDATOR_SELECTOR)
         ).setLocale(
             Optional.of(locale)
-        ).setStyle(style);
-
-        final AbsoluteUrl absoluteUrl = Url.parseAbsolute("https://example.com/123");
-        final EmailAddress emailAddress = EmailAddress.parse("user@example.com");
-        final MailToUrl mailToUrl = Url.parseMailTo("mailto:user@example.com");
-        final MediaType mediaType = MediaType.TEXT_PLAIN.setCharset(CharsetName.UTF_8);
-        final RelativeUrl relativeUrl = Url.parseRelative("/path1/path2?k1=v1#fragment111");
+        ).setStyle(STYLE);
 
         // basic........................................................................................................
         verifier.addIfConversionFail(
@@ -353,11 +364,7 @@ final class MissingConverterVerifier {
                 (Object)
                     Lists.of(
                         DATE,
-                        LocalDate.of(
-                            2000,
-                            2,
-                            2
-                        ),
+                        DATE,
                         null
                     ),
                 LocalDateList.class,
@@ -368,14 +375,7 @@ final class MissingConverterVerifier {
                 (Object)
                     Lists.of(
                         DATE_TIME,
-                        LocalDateTime.of(
-                            2000,
-                            2,
-                            2,
-                            2,
-                            22,
-                            22
-                        ),
+                        DATE_TIME,
                         null
                     ),
                 LocalDateTimeList.class,
@@ -386,11 +386,7 @@ final class MissingConverterVerifier {
                 (Object)
                     Lists.of(
                         TIME,
-                        LocalTime.of(
-                            2,
-                            22,
-                            22
-                        ),
+                        TIME,
                         null
                     ),
                 LocalDateTimeList.class,
@@ -744,7 +740,7 @@ final class MissingConverterVerifier {
         {
             if (scripting) {
                 verifier.addIfConversionFail(
-                    error,
+                    ERROR,
                     SpreadsheetError.class,
                     SpreadsheetConvertersConverterProvider.ENVIRONMENT // TEXT_TO_ENVIRONMENT_VALUE_NAME
                 );
@@ -754,7 +750,7 @@ final class MissingConverterVerifier {
         // error-throwing...............................................................................................
         if (formula) {
             verifier.addIfConversionFail(
-                error,
+                ERROR,
                 ExpressionNumber.class,
                 SpreadsheetConvertersConverterProvider.ERROR_THROWING
             );
@@ -869,40 +865,40 @@ final class MissingConverterVerifier {
             if (query | formula | scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
-                        absoluteUrl.text(),
-                        mailToUrl.text(),
-                        relativeUrl.text()
+                        ABSOLUTE_URL.text(),
+                        MAIL_TO_URL.text(),
+                        RELATIVE_URL.text()
                     ),
                     Url.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
                 verifier.addIfConversionFail(
-                    emailAddress.text(),
+                    EMAIL_ADDRESS.text(),
                     EmailAddress.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
                 verifier.addIfConversionFail(
-                    mediaType.toString(),
+                    MEDIA_TYPE.toString(),
                     MediaType.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
                 verifier.addIfConversionFail(
-                    absoluteUrl.text(),
+                    ABSOLUTE_URL.text(),
                     HasHostAddress.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
                 verifier.addIfConversionFail(
-                    emailAddress.text(),
+                    EMAIL_ADDRESS.text(),
                     HasHostAddress.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
                 verifier.addIfConversionFail(
-                    mailToUrl.text(),
+                    MAIL_TO_URL.text(),
                     HasHostAddress.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
@@ -993,7 +989,7 @@ final class MissingConverterVerifier {
         {
             if (scripting || validation) {
                 verifier.addIfConversionFail(
-                    formatterSelector.text(),
+                    FORMATTER_SELECTOR.text(),
                     SpreadsheetFormatterSelector.class,
                     SpreadsheetConvertersConverterProvider.PLUGINS // SPREADSHEET_VALUE
                 );
@@ -1002,7 +998,7 @@ final class MissingConverterVerifier {
             // text-to-validation-selector..............................................................................
             if (scripting || validation) {
                 verifier.addIfConversionFail(
-                    validatorSelector.text(),
+                    VALIDATOR_SELECTOR.text(),
                     ValidatorSelector.class,
                     SpreadsheetConvertersConverterProvider.PLUGINS // TEXT_TO_VALIDATOR_SELECTOR
                 );
@@ -1011,16 +1007,8 @@ final class MissingConverterVerifier {
 
         // properties...................................................................................................
         if (query || formatting || formula || scripting || validation) {
-            final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SpreadsheetId.with(1)
-            ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                SpreadsheetName.with("Spreadsheet111")
-            );
-
             verifier.addIfConversionFail(
-                metadata,
+                METADATA,
                 Properties.class,
                 SpreadsheetConvertersConverterProvider.PROPERTIES
             );
@@ -1111,7 +1099,7 @@ final class MissingConverterVerifier {
             // error-to-error...........................................................................................
             if (formula) {
                 verifier.addIfConversionFail(
-                    error,
+                    ERROR,
                     SpreadsheetError.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // ERROR_TO_ERROR
                 );
@@ -1120,7 +1108,7 @@ final class MissingConverterVerifier {
             // error-to-number..........................................................................................
             if (formula) {
                 verifier.addIfConversionFail(
-                    error,
+                    ERROR,
                     ExpressionNumber.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // ERROR_TO_NUMBER
                 );
@@ -1165,8 +1153,8 @@ final class MissingConverterVerifier {
             if (formula) {
                 verifier.addIfConversionFail(
                     Lists.of(
-                        cell,
-                        cellRange
+                        CELL,
+                        CELL_RANGE
                     ),
                     SpreadsheetCellReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
@@ -1174,42 +1162,42 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     Lists.of(
-                        cell,
-                        cellRange,
-                        column,
-                        columnRange,
-                        row,
-                        rowRange
+                        CELL,
+                        CELL_RANGE,
+                        COLUMN,
+                        COLUMN_RANGE,
+                        ROW,
+                        ROW_RANGE
                     ),
                     SpreadsheetCellRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
-                    column,
+                    COLUMN,
                     SpreadsheetColumnReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
                     Lists.of(
-                        column,
-                        columnRange
+                        COLUMN,
+                        COLUMN_RANGE
                     ),
                     SpreadsheetColumnRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
-                    row,
+                    ROW,
                     SpreadsheetRowReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
                     Lists.of(
-                        row,
-                        rowRange
+                        ROW,
+                        ROW_RANGE
                     ),
                     SpreadsheetRowRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
@@ -1221,13 +1209,13 @@ final class MissingConverterVerifier {
             if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
                     Lists.of(
-                        cell,
-                        cellRange,
-                        column,
-                        columnRange,
-                        row,
-                        rowRange,
-                        label
+                        CELL,
+                        CELL_RANGE,
+                        COLUMN,
+                        COLUMN_RANGE,
+                        ROW,
+                        ROW_RANGE,
+                        LABEL
                     ),
                     String.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
@@ -1239,7 +1227,7 @@ final class MissingConverterVerifier {
             if (formula || scripting || validation) {
                 final StoragePath storagePath = StoragePath.parse("/path1/file2.txt");
                 final AuditInfo auditInfo = AuditInfo.create(
-                    emailAddress,
+                    EMAIL_ADDRESS,
                     DATE_TIME
                 );
 
@@ -1247,7 +1235,7 @@ final class MissingConverterVerifier {
                     Lists.of(
                         auditInfo,
                         spreadsheetCell,
-                        error,
+                        ERROR,
                         SpreadsheetId.with(1),
                         storagePath,
                         StorageValue.with(
@@ -1259,7 +1247,7 @@ final class MissingConverterVerifier {
                             storagePath,
                             auditInfo
                         ),
-                        style,
+                        STYLE,
                         ZoneOffset.UTC
                     ),
                     String.class,
@@ -1270,7 +1258,7 @@ final class MissingConverterVerifier {
             // text-to-error............................................................................................
             if (validation) {
                 verifier.addIfConversionFail(
-                    error.text(),
+                    ERROR.text(),
                     SpreadsheetError.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_ERROR
                 );
@@ -1326,11 +1314,11 @@ final class MissingConverterVerifier {
             // text-to-spreadsheet-selection............................................................................
             if (formula || scripting || validation) {
                 for (final SpreadsheetSelection selection : Lists.of(
-                    cell,
-                    cellRange,
-                    column,
-                    columnRange,
-                    label
+                    CELL,
+                    CELL_RANGE,
+                    COLUMN,
+                    COLUMN_RANGE,
+                    LABEL
                 )) {
                     verifier.addIfConversionFail(
                         selection.toString(),
@@ -1340,7 +1328,7 @@ final class MissingConverterVerifier {
                 }
 
                 verifier.addIfConversionFail(
-                    cell.toString(),
+                    CELL.toString(),
                     Lists.of(
                         SpreadsheetCellReference.class,
                         SpreadsheetCellRangeReference.class
@@ -1349,19 +1337,19 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    cellRange.toString(),
+                    CELL_RANGE.toString(),
                     SpreadsheetCellRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
-                    label.toString(),
+                    LABEL.toString(),
                     SpreadsheetLabelName.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
-                    column.toString(),
+                    COLUMN.toString(),
                     Lists.of(
                         SpreadsheetColumnReference.class,
                         SpreadsheetColumnRangeReference.class
@@ -1370,19 +1358,19 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    column.toString(),
+                    COLUMN.toString(),
                     SpreadsheetColumnReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
-                    columnRange.toString(),
+                    COLUMN_RANGE.toString(),
                     SpreadsheetColumnRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
-                    row.toString(),
+                    ROW.toString(),
                     Lists.of(
                         SpreadsheetRowReference.class,
                         SpreadsheetRowRangeReference.class
@@ -1391,13 +1379,13 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    row.toString(),
+                    ROW.toString(),
                     SpreadsheetRowReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
                 verifier.addIfConversionFail(
-                    rowRange.toString(),
+                    ROW_RANGE.toString(),
                     SpreadsheetRowRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
@@ -1494,7 +1482,7 @@ final class MissingConverterVerifier {
                         StorageValueInfo.with(
                             StoragePath.parse("/path1/file2.txt"),
                             AuditInfo.create(
-                                emailAddress,
+                                EMAIL_ADDRESS,
                                 LocalDateTime.of(
                                     1999,
                                     12,
@@ -1523,9 +1511,9 @@ final class MissingConverterVerifier {
             if (formatting || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
-                        style,
+                        STYLE,
                         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                            .setStyle(style)
+                            .setStyle(STYLE)
                     ),
                     TextStyle.class,
                     SpreadsheetConvertersConverterProvider.STYLE // HAS_STYLE
@@ -1604,7 +1592,7 @@ final class MissingConverterVerifier {
 
                 // text-to-textStyle....................................................................................
                 verifier.addIfConversionFail(
-                    style.text(),
+                    STYLE.text(),
                     TextStyle.class,
                     SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_TEXT_STYLE
                 );
@@ -1744,14 +1732,14 @@ final class MissingConverterVerifier {
 
                 // url-to-hyperlink.....................................................................................
                 verifier.addIfConversionFail(
-                    absoluteUrl.text(),
+                    ABSOLUTE_URL.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
                 verifier.addIfConversionFail(
-                    absoluteUrl.text(),
+                    ABSOLUTE_URL.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
                 );
@@ -1761,7 +1749,7 @@ final class MissingConverterVerifier {
             if (formatting || scripting) {
                 if (formatting) {
                     verifier.addIfConversionFail(
-                        absoluteUrl.text(),
+                        ABSOLUTE_URL.text(),
                         String.class,
                         SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_URL
                     );
@@ -1769,14 +1757,14 @@ final class MissingConverterVerifier {
 
                 // url-to-hyperlink.....................................................................................
                 verifier.addIfConversionFail(
-                    absoluteUrl.text(),
+                    ABSOLUTE_URL.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
                 verifier.addIfConversionFail(
-                    absoluteUrl.text(),
+                    ABSOLUTE_URL.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
                 );
@@ -1823,14 +1811,14 @@ final class MissingConverterVerifier {
 
                 // url-to-hyperlink.....................................................................................
                 verifier.addIfConversionFail(
-                    absoluteUrl.text(),
+                    ABSOLUTE_URL.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
                 verifier.addIfConversionFail(
-                    absoluteUrl.text(),
+                    ABSOLUTE_URL.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
                 );
@@ -1850,7 +1838,7 @@ final class MissingConverterVerifier {
 
                         // text-to-validation-error.....................................................................
                         verifier.addIfConversionFail(
-                            SpreadsheetForms.error(cell)
+                            SpreadsheetForms.error(CELL)
                                 .setMessage("Error message 123")
                                 .text(),
                             ValidationError.class,
