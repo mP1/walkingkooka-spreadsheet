@@ -263,6 +263,12 @@ final class MissingConverterVerifier {
         SpreadsheetName.with("Spreadsheet111")
     );
 
+    private final static StoragePath STORAGE_PATH = StoragePath.parse("/path1/file2.txt");
+    private final static AuditInfo AUDIT_INFO = AuditInfo.create(
+        EMAIL_ADDRESS,
+        DATE_TIME
+    );
+
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
      * does not support the {@link CharSequence} interface types like {@link StringBuilder} etc.
@@ -1225,27 +1231,21 @@ final class MissingConverterVerifier {
             // spreadsheet-values to text...............................................................................
 
             if (formula || scripting || validation) {
-                final StoragePath storagePath = StoragePath.parse("/path1/file2.txt");
-                final AuditInfo auditInfo = AuditInfo.create(
-                    EMAIL_ADDRESS,
-                    DATE_TIME
-                );
-
                 verifier.addIfConversionFail(
                     Lists.of(
-                        auditInfo,
+                        AUDIT_INFO,
                         spreadsheetCell,
                         ERROR,
                         SpreadsheetId.with(1),
-                        storagePath,
+                        STORAGE_PATH,
                         StorageValue.with(
-                            storagePath
+                            STORAGE_PATH
                         ).setValue(
                             Optional.of("StorageValue123")
                         ),
                         StorageValueInfo.with(
-                            storagePath,
-                            auditInfo
+                            STORAGE_PATH,
+                            AUDIT_INFO
                         ),
                         STYLE,
                         ZoneOffset.UTC
