@@ -246,6 +246,22 @@ final class MissingConverterVerifier {
         TextStylePropertyName.COLOR,
         Color.BLACK
     );
+    private final static Border BORDER = Border.parse("BLACK SOLID 1.0px");
+
+    private final static Margin MARGIN = TextStyle.EMPTY.setMargin(
+        Optional.of(
+            Margin.parse("1px")
+        )
+    ).margin(BoxEdge.ALL);
+
+    private final static Padding PADDING = TextStyle.EMPTY.setPadding(
+        Optional.of(
+            Padding.parse("1px")
+        )
+    ).padding(BoxEdge.ALL);
+
+    private final static  SpreadsheetText SPREADSHEET_TEXT = SpreadsheetText.with("Text123");
+
 
     private final static LocaleLanguageTag LANGUAGE_TAG = LocaleLanguageTag.parse("en-AU");
 
@@ -1523,16 +1539,14 @@ final class MissingConverterVerifier {
             // properties-to-text-style.................................................................................
 
             if (formatting || scripting) {
-                final TextStyle textStyle = TextStyle.parse("color: black; text-align: left;");
-
                 verifier.addIfConversionFail(
-                    textStyle.properties(),
+                    STYLE.properties(),
                     TextStyle.class,
                     SpreadsheetConvertersConverterProvider.STYLE // PROPERTIES_TO_TEXT_STYLE
                 );
 
                 verifier.addIfConversionFail(
-                    textStyle.properties()
+                    STYLE.properties()
                         .toString(),
                     TextStyle.class,
                     SpreadsheetConvertersConverterProvider.STYLE // PROPERTIES_TO_TEXT_STYLE
@@ -1541,10 +1555,8 @@ final class MissingConverterVerifier {
 
             // text-to-border.................................................................................
             if (formatting || scripting) {
-                final Border border = Border.parse("BLACK SOLID 1.0px");
-                
                 verifier.addIfConversionFail(
-                    border.text(),
+                    BORDER.text(),
                     Border.class,
                     SpreadsheetConvertersConverterProvider.STYLE // text-to-border
                 );
@@ -1552,14 +1564,8 @@ final class MissingConverterVerifier {
 
             // text-to-margin.................................................................................
             if (formatting || scripting) {
-                final Margin margin = TextStyle.EMPTY.setMargin(
-                    Optional.of(
-                        Margin.parse("1px")
-                    )
-                ).margin(BoxEdge.ALL);
-
                 verifier.addIfConversionFail(
-                    margin.text(),
+                    MARGIN.text(),
                     Margin.class,
                     SpreadsheetConvertersConverterProvider.STYLE // text-to-margin
                 );
@@ -1567,25 +1573,17 @@ final class MissingConverterVerifier {
 
             // text-to-padding.................................................................................
             if (formatting || scripting) {
-                final Padding padding = TextStyle.EMPTY.setPadding(
-                    Optional.of(
-                        Padding.parse("1px")
-                    )
-                ).padding(BoxEdge.ALL);
-
                 verifier.addIfConversionFail(
-                    padding.text(),
+                    PADDING.text(),
                     Padding.class,
                     SpreadsheetConvertersConverterProvider.STYLE // text-to-padding
                 );
             }
             
             // text-to-spreadsheet-text.................................................................................
-            final SpreadsheetText spreadsheetText = SpreadsheetText.with("Text123");
-
             if (formatting || scripting) {
                 verifier.addIfConversionFail(
-                    spreadsheetText.text(),
+                    SPREADSHEET_TEXT.text(),
                     SpreadsheetText.class,
                     SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_SPREADSHEET_TEXT
                 );
