@@ -76,7 +76,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
-import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.storage.StorageBinary;
 import walkingkooka.storage.StoragePath;
@@ -262,7 +261,6 @@ final class MissingConverterVerifier {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final ExpressionNumberKind kind = context.expressionNumberKind();
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(cell);
-        SpreadsheetErrorKind.NAME.setMessage("Value");
 
         final SpreadsheetFormatterSelector formatterSelector = SpreadsheetFormatterSelector.parse("test-formatter");
         final SpreadsheetParserSelector parserSelector = SpreadsheetParserSelector.parse("test-parser");
