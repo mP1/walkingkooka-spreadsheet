@@ -469,7 +469,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * A converter that involves {@link Locale}, {@link walkingkooka.locale.LocaleLanguageTag} as a source or destination
+     * A converter that involves {@link Locale}, {@link walkingkooka.locale.LocaleLanguageTag} as a source or destination.
+     * In any {@link Converter} declarations it should appear before {@link #spreadsheetValue()}, otherwise
+     * converting {@link Locale} to {@link String} will be incorrect returning {@link Locale#toString()} rather than
+     * {@link Locale#toLanguageTag()}.
      */
     public static Converter<SpreadsheetConverterContext> locale() {
         return LOCALE;
@@ -820,7 +823,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     // @VisibleForTesting
     public final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
-        "collection(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)"
+        "collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)"
     );
 
     private final static Converter<SpreadsheetConverterContext> SYSTEM_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(

@@ -908,12 +908,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    time\n" +
                 "  formattingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, plugins, properties, style, text-node, template, net, basic)\"\n" +
                 "  formattingFunctions\n" +
                 "  formHandlers\n" +
                 "  formulaConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, properties, template, net, json, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, properties, template, net, json, basic)\"\n" +
                 "  formulaFunctions\n" +
                 "  functions\n" +
                 "  importers\n" +
@@ -958,13 +958,13 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    7\n" +
                 "  queryConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, basic)\"\n" +
                 "  queryFunctions\n" +
                 "  roundingMode\n" +
                 "    HALF_UP\n" +
                 "  scriptingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
                 "  scriptingFunctions\n" +
                 "  serverUrl\n" +
                 "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
@@ -980,7 +980,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    [custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year]\n" +
                 "  sortConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, spreadsheet-value, locale, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, basic)\"\n" +
                 "  spreadsheetId\n" +
                 "    1\n" +
                 "  style\n" +
