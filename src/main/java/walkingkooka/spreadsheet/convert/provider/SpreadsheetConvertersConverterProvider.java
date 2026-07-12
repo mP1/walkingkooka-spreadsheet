@@ -729,6 +729,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toDateTimeSymbols();
                 break;
+            case TO_DECIMAL_NUMBER_SYMBOLS_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toDecimalNumberSymbols();
+                break;
             case TO_JSON_NODE_STRING:
                 noParameterCheck(copy);
 
@@ -1342,7 +1347,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TO_DATE_TIME_SYMBOLS_STRING = "to-date-time-symbols";
 
     final static ConverterName TO_DATE_TIME_SYMBOLS = ConverterName.with(TO_DATE_TIME_SYMBOLS_STRING);
-    
+
+    private final static String TO_DECIMAL_NUMBER_SYMBOLS_STRING = "to-decimal-number-symbols";
+
+    final static ConverterName TO_DECIMAL_NUMBER_SYMBOLS = ConverterName.with(TO_DECIMAL_NUMBER_SYMBOLS_STRING);
+
     private final static String TO_JSON_NODE_STRING = "to-json-node";
 
     final static ConverterName TO_JSON_NODE = ConverterName.with(TO_JSON_NODE_STRING);
@@ -1535,6 +1544,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_ZONE_OFFSET),
             converterInfo(TO_BOOLEAN),
             converterInfo(TO_DATE_TIME_SYMBOLS),
+            converterInfo(TO_DECIMAL_NUMBER_SYMBOLS),
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_JSON_TEXT),
             converterInfo(TO_LOCALE),
