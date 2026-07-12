@@ -1086,7 +1086,10 @@ final class MissingConverterVerifier {
 
             if (formula || query || scripting) {
                 verifier.addIfConversionFail(
-                    locale,
+                    Lists.of(
+                        locale,
+                        spreadsheetCell
+                    ),
                     LocaleLanguageTag.class,
                     SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
                     LocaleLanguageTag.fromLocale(locale)
