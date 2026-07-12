@@ -764,6 +764,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-json-node\n" +
                 "    to-json-text\n" +
                 "    to-locale\n" +
+                "    to-locale-language-tag\n" +
                 "    to-number\n" +
                 "    to-string\n" +
                 "    to-styleable\n" +
