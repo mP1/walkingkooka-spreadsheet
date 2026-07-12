@@ -761,6 +761,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-value-type\n" +
                 "    text-to-zone-offset\n" +
                 "    to-boolean\n" +
+                "    to-date-time-symbols\n" +
                 "    to-json-node\n" +
                 "    to-json-text\n" +
                 "    to-locale\n" +

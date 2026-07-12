@@ -1185,6 +1185,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToDateTimeSymbols() {
+        this.converterAndCheck(
+            "to-date-time-symbols",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toDateTimeSymbols()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToJsonNode() {
         this.converterAndCheck(
             "to-json-node",
