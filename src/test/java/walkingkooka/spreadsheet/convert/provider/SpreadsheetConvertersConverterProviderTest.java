@@ -1194,6 +1194,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToDecimalNumberSymbols() {
+        this.converterAndCheck(
+            "to-decimal-number-symbols",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toDecimalNumberSymbols()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToJsonNode() {
         this.converterAndCheck(
             "to-json-node",
