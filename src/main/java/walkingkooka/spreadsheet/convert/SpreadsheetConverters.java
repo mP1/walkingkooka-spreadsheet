@@ -482,6 +482,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "locale",
         localeToText(),
         toLocale(),
+        toLocaleLanguageTag(),
         dateTimeSymbols(),
         decimalNumberSymbols(),
         textToLocaleLanguageTag()

@@ -1631,6 +1631,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testLocaleConvertStringToLocaleLanguageTag() {
+        this.localeConvertAndCheck(
+            LOCALE.toLanguageTag(),
+            LocaleLanguageTag.fromLocale(LOCALE)
+        );
+    }
+
     private void localeConvertAndCheck(final Object value,
                                        final Object expected) {
         this.localeConvertAndCheck(
