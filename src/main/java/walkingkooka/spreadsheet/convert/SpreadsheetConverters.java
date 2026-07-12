@@ -300,6 +300,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> decimalNumberSymbols() {
         return collection(
             Lists.of(
+                SpreadsheetConverters.toDecimalNumberSymbols(),
                 Converters.localeToDecimalNumberSymbols(),
                 SpreadsheetConverters.propertiesToDecimalNumberSymbols()
             )

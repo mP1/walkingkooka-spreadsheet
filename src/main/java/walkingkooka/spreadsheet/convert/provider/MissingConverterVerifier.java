@@ -494,6 +494,10 @@ final class MissingConverterVerifier {
             Optional.of(
                 context.dateTimeSymbols()
             )
+        ).setDecimalNumberSymbols(
+            Optional.of(
+                context.decimalNumberSymbols()
+            )
         ).setFormatter(
             Optional.of(FORMATTER_SELECTOR)
         ).setParser(
@@ -953,6 +957,14 @@ final class MissingConverterVerifier {
                 new DecimalFormatSymbols(
                     locale
                 )
+            );
+
+            verifier.addIfConversionFail(
+                spreadsheetCell,
+                DecimalNumberSymbols.class,
+                SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS, // DECIMAL_NUMBER_SYMBOLS
+                spreadsheetCell.decimalNumberSymbols()
+                    .get()
             );
 
             verifier.addIfConversionFail(
