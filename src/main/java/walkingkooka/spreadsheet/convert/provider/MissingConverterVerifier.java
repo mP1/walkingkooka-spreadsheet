@@ -1085,10 +1085,6 @@ final class MissingConverterVerifier {
             }
 
             if (formula || query || scripting) {
-                System.out.println(
-                    new Locale("en", "AU").toLanguageTag()
-                );
-
                 verifier.addIfConversionFail(
                     locale,
                     LocaleLanguageTag.class,
