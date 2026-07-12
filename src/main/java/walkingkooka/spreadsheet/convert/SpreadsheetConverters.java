@@ -1336,6 +1336,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ConverterLocaleToLocaleLanguageTag}
+     */
+    public static Converter<SpreadsheetConverterContext> toLocaleLanguageTag() {
+        return Converters.toLocaleLanguageTag();
+    }
+
+    /**
      * A {@link Converter} that handles converting from or to a {@link Number} values
      */
     public static Converter<SpreadsheetConverterContext> toNumber() {
