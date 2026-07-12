@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.Binary;
+import walkingkooka.Either;
 import walkingkooka.collect.list.BooleanList;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
@@ -52,6 +53,7 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.CharsetName;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.props.Properties;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
@@ -83,6 +85,7 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageValueInfoList;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -102,7 +105,6 @@ import walkingkooka.tree.text.Image;
 import walkingkooka.tree.text.Margin;
 import walkingkooka.tree.text.Padding;
 import walkingkooka.tree.text.Styleable;
-import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -115,6 +117,7 @@ import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import javax.swing.text.Style;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -124,7 +127,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -132,6 +135,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Helper that may be used to validate a submitted {@link Converter} is able to convert required types.
@@ -189,9 +193,9 @@ final class MissingConverterVerifier {
         1999,
         12,
         31,
-        0,
-        0,
-        0
+        12,
+        58,
+        0 // formatting patterns often dont include seconds.
     );
 
     static {
@@ -219,6 +223,7 @@ final class MissingConverterVerifier {
         types.addAll(NUMBER_TYPES);
         types.remove(Byte.class);
         types.remove(Short.class);
+        types.remove(BigInteger.class); // time -> BigInteger doesnt work
         types.add(String.class);
 
         TIME_TO_TYPES = types;
@@ -228,6 +233,69 @@ final class MissingConverterVerifier {
 
     // value constants..................................................................................................
 
+    private final static BooleanList BOOLEAN_LIST = BooleanList.EMPTY.setElements(
+        Lists.of(
+            true,
+            false
+        )
+    );
+
+    private final static CsvStringList CSV_STRING_LIST = CsvStringList.EMPTY.setElements(
+        Lists.of(
+            "Apple 1",
+            "Banana 2"
+        )
+    );
+
+    private final static CsvStringSet CSV_STRING_SET = CsvStringSet.EMPTY.setElements(
+        Sets.of(
+            "Apple 1",
+            "Banana 2"
+        )
+    );
+
+    private final static LocalDateList LOCAL_DATE_LIST = LocalDateList.EMPTY.setElements(
+        Lists.of(
+            DATE,
+            null
+        )
+    );
+
+    private final static LocalDateTimeList LOCAL_DATE_TIME_LIST = LocalDateTimeList.EMPTY.setElements(
+        Lists.of(
+            DATE_TIME,
+            null
+        )
+    );
+
+    private final static LocalTimeList LOCAL_TIME_LIST = LocalTimeList.EMPTY.setElements(
+        Lists.of(
+            TIME,
+            null
+        )
+    );
+
+    private final static StringList STRING_LIST = StringList.EMPTY.setElements(
+        Lists.of(
+            "Apple 1",
+            "Banana 2"
+        )
+    );
+
+    private final static TsvStringList TSV_STRING_LIST = TsvStringList.EMPTY.setElements(
+        Lists.of(
+            "Apple 1",
+            "Banana 2"
+        )
+    );
+
+    private final static TsvStringSet TSV_STRING_SET = TsvStringSet.EMPTY.setElements(
+        Sets.of(
+            "Apple 1",
+            "Banana 2"
+        )
+    );
+    
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
     private final static SpreadsheetCellRangeReference CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
     private final static SpreadsheetColumnReference COLUMN = SpreadsheetSelection.parseColumn("A");
@@ -241,6 +309,12 @@ final class MissingConverterVerifier {
     private final static SpreadsheetFormatterSelector FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("test-formatter");
     private final static SpreadsheetParserSelector PARSER_SELECTOR = SpreadsheetParserSelector.parse("test-parser");
     private final static ValidatorSelector VALIDATOR_SELECTOR = ValidatorSelector.parse("test-validator");
+
+    private final static AbsoluteUrl ABSOLUTE_URL = Url.parseAbsolute("https://example.com/123");
+    private final static EmailAddress EMAIL_ADDRESS = EmailAddress.parse("user@example.com");
+    private final static MailToUrl MAIL_TO_URL = Url.parseMailTo("mailto:user@example.com");
+    private final static MediaType MEDIA_TYPE = MediaType.TEXT_PLAIN.setCharset(CharsetName.UTF_8);
+    private final static RelativeUrl RELATIVE_URL = Url.parseRelative("/path1/path2?k1=v1#fragment111");
 
     private final static TextStyle STYLE = TextStyle.EMPTY.set(
         TextStylePropertyName.COLOR,
@@ -262,14 +336,11 @@ final class MissingConverterVerifier {
 
     private final static  SpreadsheetText SPREADSHEET_TEXT = SpreadsheetText.with("Text123");
 
+    private final static Hyperlink HYPERLINK = Hyperlink.hyperlink(ABSOLUTE_URL);
+    private final static Image IMAGE = Image.image(ABSOLUTE_URL);
+
 
     private final static LocaleLanguageTag LANGUAGE_TAG = LocaleLanguageTag.parse("en-AU");
-
-    private final static AbsoluteUrl ABSOLUTE_URL = Url.parseAbsolute("https://example.com/123");
-    private final static EmailAddress EMAIL_ADDRESS = EmailAddress.parse("user@example.com");
-    private final static MailToUrl MAIL_TO_URL = Url.parseMailTo("mailto:user@example.com");
-    private final static MediaType MEDIA_TYPE = MediaType.TEXT_PLAIN.setCharset(CharsetName.UTF_8);
-    private final static RelativeUrl RELATIVE_URL = Url.parseRelative("/path1/path2?k1=v1#fragment111");
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
@@ -285,6 +356,110 @@ final class MissingConverterVerifier {
         DATE_TIME
     );
 
+    private final static Predicate<Object> IS_ABSOLUTE_URL = v -> v instanceof AbsoluteUrl;
+
+    private final static Predicate<Object> IS_BINARY = v -> v instanceof Binary;
+
+    private final static Predicate<Object> IS_BOOLEAN_LIST = v -> v instanceof BooleanList;
+
+    private final static Predicate<Object> IS_CELL_REFERENCE = v -> v instanceof SpreadsheetCellReference;
+
+    private final static Predicate<Object> IS_CELL_RANGE_REFERENCE = v -> v instanceof SpreadsheetCellRangeReference;
+
+    private final static Predicate<Object> IS_COLOR = v -> v instanceof Color;
+
+    private final static Predicate<Object> IS_COLUMN_REFERENCE = v -> v instanceof SpreadsheetColumnReference;
+
+    private final static Predicate<Object> IS_COLUMN_RANGE_REFERENCE = v -> v instanceof SpreadsheetColumnRangeReference;
+
+    private final static Predicate<Object> IS_CSV_STRING_LIST = v -> v instanceof CsvStringList;
+
+    private final static Predicate<Object> IS_CSV_STRING_SET = v -> v instanceof CsvStringSet;
+
+    private final static Predicate<Object> IS_CURRENCY = v -> v instanceof Currency;
+
+    private final static Predicate<Object> IS_CURRENCY_CODE = v -> v instanceof CurrencyCode;
+
+    private final static Predicate<Object> IS_CURRENCY_VALUE = v -> v instanceof CurrencyValue;
+
+    private final static Predicate<Object> IS_DATE = v -> v instanceof LocalDate;
+
+    private final static Predicate<Object> IS_DATE_TIME = v -> v instanceof LocalDateTime;
+
+    private final static Predicate<Object> IS_DATE_TIME_SYMBOLS = v -> v instanceof DateTimeSymbols;
+
+    private final static Predicate<Object> IS_DECIMAL_NUMBER_SYMBOLS = v -> v instanceof DecimalNumberSymbols;
+
+    private final static Predicate<Object> IS_EMAIL_ADDRESS = v -> v instanceof EmailAddress;
+
+    private final static Predicate<Object> IS_ERROR = v -> v instanceof SpreadsheetError;
+
+    private final static Predicate<Object> IS_EXPRESSION = v -> v instanceof Expression;
+
+    private final static Predicate<Object> IS_FORM_NAME = v -> v instanceof FormName;
+
+    private final static Predicate<Object> IS_HYPERLINK = v -> v instanceof Hyperlink;
+
+    private final static Predicate<Object> IS_IMAGE = v -> v instanceof Image;
+
+    private final static Predicate<Object> IS_INDENTATION = v -> v instanceof Indentation;
+
+    private final static Predicate<Object> IS_JSON = v -> v instanceof JsonNode;
+    ;
+    private final static Predicate<Object> IS_LOCAL_DATE_LIST = v -> v instanceof LocalDateList;
+
+    private final static Predicate<Object> IS_LOCAL_DATE_TIME_LIST = v -> v instanceof LocalDateTimeList;
+
+    private final static Predicate<Object> IS_LOCAL_TIME_LIST = v -> v instanceof LocalTimeList;
+
+    private final static Predicate<Object> IS_LINE_ENDING = v -> v instanceof LineEnding;
+
+    private final static Predicate<Object> IS_MAIL_TO_URL = v -> v instanceof MailToUrl;
+
+    private final static Predicate<Object> IS_MEDIA_TYPE = v -> v instanceof MediaType;
+
+    private final static Predicate<Object> IS_NOT_NULL = v -> null != v;
+
+    private final static Predicate<Object> IS_NULL = v -> null == v;
+
+    private final static Predicate<Object> IS_NUMBER = v -> v instanceof Number;
+
+    private final static Predicate<Object> IS_NUMBER_LIST = v -> v instanceof NumberList;
+
+    private final static Predicate<Object> IS_ROW_RANGE_REFERENCE = v -> v instanceof SpreadsheetRowRangeReference;
+
+    private final static Predicate<Object> IS_SPREADSHEET_COLOR_NAME = v -> v instanceof SpreadsheetColorName;
+
+    private final static Predicate<Object> IS_STORAGE_PATH = v -> v instanceof StoragePath;
+
+    private final static Predicate<Object> IS_STORAGE_VALUE = v -> v instanceof StorageValue;
+
+    private final static Predicate<Object> IS_STRING = v -> v instanceof String;
+
+    private final static Predicate<Object> IS_STRING_LIST = v -> v instanceof StringList;
+
+    private final static Predicate<Object> IS_STYLE = v -> v instanceof Style;
+
+    private final static Predicate<Object> IS_TEXT_NODE = v -> v instanceof TextNode;
+
+    private final static Predicate<Object> IS_TIME = v -> v instanceof LocalTime;
+
+    private final static Predicate<Object> IS_TSV_STRING_LIST = v -> v instanceof TsvStringList;
+
+    private final static Predicate<Object> IS_TSV_STRING_SET = v -> v instanceof TsvStringSet;
+
+    private final static Predicate<Object> IS_URL = v -> v instanceof Url;
+
+    private final static Predicate<Object> IS_VALIDATION_CHECKBOX = v -> v instanceof ValidationCheckbox;
+
+    private final static Predicate<Object> IS_VALIDATION_CHOICE = v -> v instanceof ValidationChoice;
+
+    private final static Predicate<Object> IS_VALIDATION_CHOICE_LIST = v -> v instanceof ValidationChoiceList;
+
+    private final static Predicate<Object> IS_VALIDATION_ERROR = v -> v instanceof ValidationError;
+
+    private final static Predicate<Object> IS_VALIDATION_ERROR_LIST = v -> v instanceof ValidationErrorList;
+        
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
      * does not support the {@link CharSequence} interface types like {@link StringBuilder} etc.
@@ -328,10 +503,19 @@ final class MissingConverterVerifier {
 
         // basic........................................................................................................
         verifier.addIfConversionFail(
-            Lists.of(
-                null,
-                spreadsheetCell
-            ),
+             null,
+            Object.class,
+            SpreadsheetConvertersConverterProvider.BASIC
+        );
+
+        verifier.addIfConversionFail(
+                1,
+            Object.class,
+            SpreadsheetConvertersConverterProvider.BASIC
+        );
+
+        verifier.addIfConversionFail(
+            spreadsheetCell,
             Object.class,
             SpreadsheetConvertersConverterProvider.BASIC
         );
@@ -340,14 +524,23 @@ final class MissingConverterVerifier {
         verifier.addIfConversionFail(
             Lists.of(
                 0,
-                1,
                 kind.zero(),
-                kind.one(),
-                SpreadsheetStrings.BOOLEAN_TRUE,
                 SpreadsheetStrings.BOOLEAN_FALSE
             ),
             Boolean.class,
-            SpreadsheetConvertersConverterProvider.BOOLEAN
+            SpreadsheetConvertersConverterProvider.BOOLEAN,
+            false
+        );
+
+        verifier.addIfConversionFail(
+            Lists.of(
+                1,
+                kind.one(),
+                SpreadsheetStrings.BOOLEAN_TRUE
+            ),
+            Boolean.class,
+            SpreadsheetConvertersConverterProvider.BOOLEAN,
+            true
         );
 
         verifier.addIfConversionFail(
@@ -356,86 +549,73 @@ final class MissingConverterVerifier {
                 SpreadsheetStrings.BOOLEAN_FALSE
             ),
             String.class,
-            SpreadsheetConvertersConverterProvider.BOOLEAN
+            SpreadsheetConvertersConverterProvider.BOOLEAN,
+            IS_STRING
         );
 
         // collection-to-list...........................................................................................
         {
-            // The List is the value not a List of values.
             verifier.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        true,
-                        false
-                    ),
+                    new ArrayList<>(BOOLEAN_LIST),
                 BooleanList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
+                BOOLEAN_LIST
             );
 
             verifier.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        "Apple 1",
-                        "Banana 2"
-                    ),
+                    new ArrayList<>(CSV_STRING_LIST),
                 CsvStringList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
+                CSV_STRING_LIST
             );
 
             verifier.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        DATE,
-                        DATE,
-                        null
-                    ),
+                    new ArrayList<>(LOCAL_DATE_LIST),
                 LocalDateList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
+                LOCAL_DATE_LIST
             );
 
             verifier.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        DATE_TIME,
-                        DATE_TIME,
-                        null
-                    ),
+                    new ArrayList<>(LOCAL_DATE_TIME_LIST),
                 LocalDateTimeList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
+                LOCAL_DATE_TIME_LIST
             );
 
             verifier.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        TIME,
-                        TIME,
-                        null
-                    ),
-                LocalDateTimeList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+                    new ArrayList<>(LOCAL_TIME_LIST),
+                LocalTimeList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
+                LOCAL_TIME_LIST
             );
+
+            {
+                final List<Number> numberList = Lists.of(
+                    kind.create(1),
+                    kind.create(22),
+                    kind.create(333.5),
+                    null
+                );
+                verifier.addIfConversionFail(
+                    numberList,
+                    NumberList.class,
+                    SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
+                    IS_NUMBER_LIST
+                );
+            }
 
             verifier.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        kind.create(1),
-                        kind.create(22),
-                        kind.create(333.5),
-                        null
-                    ),
-                NumberList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
-            );
-
-            verifier.addIfConversionFail(
-                (Object)
-                    Lists.of(
-                        "Apple",
-                        "Banana",
-                        null
-                    ),
+                    new ArrayList<>(STRING_LIST),
                 StringList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
+                STRING_LIST
             );
         }
 
@@ -443,75 +623,66 @@ final class MissingConverterVerifier {
         {
             verifier.addIfConversionFail(
                 (Object)
-                    Arrays.asList(
-                        (Object) null
+                    Lists.of(
+                    false
                     ),
                 Boolean.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO, // COLLECTION_TO
+                false
             );
 
             verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
-                        false
+                    true
                     ),
                 Boolean.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO, // COLLECTION_TO
+                true
             );
 
             verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
-                        true
-                    ),
-                Boolean.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
-            );
-
-            verifier.addIfConversionFail(
-                (Object)
-                    Lists.of(
-                        123
+                    123
                     ),
                 NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO, // COLLECTION_TO
+                IS_NUMBER
             );
 
             verifier.addIfConversionFail(
                 (Object)
                     Lists.of(DATE),
                 LocalDate.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO, // COLLECTION_TO
+                DATE
             );
 
             verifier.addIfConversionFail(
                 (Object)
                     Lists.of(DATE_TIME),
                 LocalDateTime.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
-            );
-
-            verifier.addIfConversionFail(
-                (Object)
-                    Lists.of(DATE_TIME),
-                LocalDateTimeList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO, // COLLECTION_TO
+                DATE_TIME
             );
 
             verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
-                        "Hello"
+                    "Hello"
                     ),
                 String.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO, // COLLECTION_TO
+                "[Hello]"
             );
 
             verifier.addIfConversionFail(
                 (Object)
                     Lists.of(TIME),
                 LocalTime.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO, // COLLECTION_TO
+                TIME
             );
         }
 
@@ -526,7 +697,8 @@ final class MissingConverterVerifier {
                         HsvColor.class,
                         RgbColor.class
                     ),
-                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_COLOR
+                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_COLOR
+                    IS_COLOR
                 );
             }
 
@@ -535,7 +707,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     Color.BLACK,
                     NUMBER_TYPES_WITHOUT_BYTE_SHORT,
-                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                    IS_NUMBER
                 );
 
                 final RgbColor rgb = Color.parseRgb("#12345678");
@@ -543,25 +716,29 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     rgb.alpha(),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                    IS_NUMBER
                 );
 
                 verifier.addIfConversionFail(
                     rgb.red(),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                    IS_NUMBER
                 );
 
                 verifier.addIfConversionFail(
                     rgb.green(),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                    IS_NUMBER
                 );
 
                 verifier.addIfConversionFail(
                     rgb.blue(),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
+                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                    IS_NUMBER
                 );
             }
 
@@ -570,7 +747,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     "#123456",
                     Color.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR,
+                    IS_COLOR
                 );
             }
 
@@ -579,7 +757,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     SpreadsheetColorName.BLACK.value(),
                     SpreadsheetColorName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME,
+                    IS_SPREADSHEET_COLOR_NAME
                 );
             }
         }
@@ -592,13 +771,15 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     currencyCode.value(),
                     Currency.class,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // text-to-currency
+                    IS_CURRENCY
                 );
 
                 verifier.addIfConversionFail(
                     currencyCode.value(),
                     CurrencyCode.class,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency-code
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // text-to-currency-code
+                    IS_CURRENCY_CODE
                 );
 
                 verifier.addIfConversionFail(
@@ -607,7 +788,8 @@ final class MissingConverterVerifier {
                         currencyCode
                     ),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // currency-value-to-number
+                    IS_NUMBER
                 );
 
                 verifier.addIfConversionFail(
@@ -616,7 +798,8 @@ final class MissingConverterVerifier {
                         currencyCode
                     ),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // currency-value-to-number
+                    IS_NUMBER
                 );
 
                 verifier.addIfConversionFail(
@@ -625,7 +808,8 @@ final class MissingConverterVerifier {
                         currencyCode
                     ),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // currency-value-to-number
+                    IS_NUMBER
                 );
 
                 verifier.addIfConversionFail(
@@ -634,7 +818,8 @@ final class MissingConverterVerifier {
                         currencyCode
                     ),
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // currency-value-to-number
+                    IS_NUMBER
                 );
 
                 verifier.addIfConversionFail(
@@ -644,13 +829,15 @@ final class MissingConverterVerifier {
                         "1.5"
                     ),
                     CurrencyValue.class,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency-value
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // text-to-currency-value
+                    IS_CURRENCY_VALUE
                 );
 
                 verifier.addIfConversionFail(
                     currencyCode,
                     Currency.class,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-code-to-currency
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // currency-code-to-currency
+                    IS_CURRENCY
                 );
 
                 verifier.addIfConversionFail(
@@ -660,7 +847,8 @@ final class MissingConverterVerifier {
                         ExpressionNumberKind.DEFAULT.create(2.75)
                     ),
                     CurrencyValue.class,
-                    SpreadsheetConvertersConverterProvider.CURRENCY // number-to-currency-value
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // number-to-currency-value
+                    IS_CURRENCY_VALUE
                 );
             }
         }
@@ -671,49 +859,59 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 DATE, // date
                 DATE_TO_TYPES,
-                SpreadsheetConvertersConverterProvider.DATE_TIME
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_NOT_NULL
             );
 
             // datetime ->
             verifier.addIfConversionFail(
-                DATE_TIME, // date
+                LocalDateTime.of(
+                    DATE,
+                    LocalTime.MIDNIGHT
+                ), // date
                 DATE_TIME_TO_TYPES,
-                SpreadsheetConvertersConverterProvider.DATE_TIME
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_NOT_NULL
             );
 
             // time ->
             verifier.addIfConversionFail(
                 TIME,
                 TIME_TO_TYPES,
-                SpreadsheetConvertersConverterProvider.DATE_TIME
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_NOT_NULL
             );
 
             // text -> number
             verifier.addIfConversionFail(
                 "123",
                 NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.DATE_TIME
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_NUMBER
             );
 
             // text -> date
             verifier.addIfConversionFail(
                 "1999/12/31",
                 LocalDate.class,
-                SpreadsheetConvertersConverterProvider.DATE_TIME
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_DATE
             );
 
             // text -> dateTime
             verifier.addIfConversionFail(
                 "1999/12/31 12:58",
                 LocalDateTime.class,
-                SpreadsheetConvertersConverterProvider.DATE_TIME
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                DATE_TIME
             );
 
             // text -> time
             verifier.addIfConversionFail(
-                "12:58:59",
+                "12:58:59", // "12:58" fails
                 LocalTime.class,
-                SpreadsheetConvertersConverterProvider.DATE_TIME
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_TIME
             );
         }
 
@@ -726,13 +924,15 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 locale,
                 DateTimeSymbols.class,
-                SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS // DATE_TIME_SYMBOLS
+                SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS, // DATE_TIME_SYMBOLS
+                IS_DATE_TIME_SYMBOLS
             );
 
             verifier.addIfConversionFail(
                 dateTimeSymbols.properties(),
                 DateTimeSymbols.class,
-                SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS // DATE_TIME_SYMBOLS
+                SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS, // DATE_TIME_SYMBOLS
+                IS_DATE_TIME_SYMBOLS
             );
         }
 
@@ -748,13 +948,15 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 locale,
                 DecimalNumberSymbols.class,
-                SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS // DECIMAL_NUMBER_SYMBOLS
+                SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS, // DECIMAL_NUMBER_SYMBOLS
+                IS_DECIMAL_NUMBER_SYMBOLS
             );
 
             verifier.addIfConversionFail(
                 decimalNumberSymbols.properties(),
                 DecimalNumberSymbols.class,
-                SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS // DECIMAL_NUMBER_SYMBOLS
+                SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS, // DECIMAL_NUMBER_SYMBOLS
+                IS_DECIMAL_NUMBER_SYMBOLS
             );
         }
 
@@ -774,7 +976,9 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 ERROR,
                 ExpressionNumber.class,
-                SpreadsheetConvertersConverterProvider.ERROR_THROWING
+                SpreadsheetConvertersConverterProvider.ERROR_THROWING,
+                context.expressionNumberKind()
+                    .zero()
             );
         }
 
@@ -784,7 +988,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     "1+sum(2)",
                     Expression.class,
-                    SpreadsheetConvertersConverterProvider.EXPRESSION
+                    SpreadsheetConvertersConverterProvider.EXPRESSION,
+                    IS_EXPRESSION
                 );
             }
         }
@@ -803,7 +1008,8 @@ final class MissingConverterVerifier {
                         JsonString.class,
                         JsonObject.class
                     ),
-                    SpreadsheetConvertersConverterProvider.JSON // TO_JSON
+                    SpreadsheetConvertersConverterProvider.JSON, // TO_JSON,
+                    IS_JSON
                 );
             }
 
@@ -812,7 +1018,8 @@ final class MissingConverterVerifier {
                     context.marshall(spreadsheetCell)
                         .toString(),
                     SpreadsheetCell.class,
-                    SpreadsheetConvertersConverterProvider.JSON // textToObject
+                    SpreadsheetConvertersConverterProvider.JSON, // textToObject
+                    spreadsheetCell
                 );
             }
         }
@@ -826,7 +1033,8 @@ final class MissingConverterVerifier {
                         locale
                     ),
                     DateTimeSymbols.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE // DATE_TIME_SYMBOLS
+                    SpreadsheetConvertersConverterProvider.LOCALE, // DATE_TIME_SYMBOLS
+                    IS_DATE_TIME_SYMBOLS
                 );
             }
 
@@ -837,7 +1045,8 @@ final class MissingConverterVerifier {
                         locale
                     ),
                     DecimalNumberSymbols.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE // DECIMAL_NUMBER_SYMBOLS
+                    SpreadsheetConvertersConverterProvider.LOCALE, // DECIMAL_NUMBER_SYMBOLS
+                    IS_DECIMAL_NUMBER_SYMBOLS
                 );
             }
 
@@ -846,7 +1055,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     locale.toLanguageTag(),
                     Locale.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE // TEXT_TO_LOCALE
+                    SpreadsheetConvertersConverterProvider.LOCALE, // TEXT_TO_LOCALE
+                    locale
                 );
             }
 
@@ -857,24 +1067,33 @@ final class MissingConverterVerifier {
                         spreadsheetCell
                     ),
                     Locale.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE // TEXT_TO_LOCALE
+                    SpreadsheetConvertersConverterProvider.LOCALE, // TEXT_TO_LOCALE
+                    locale
                 );
             }
 
             // text-to-locale-language-tag..............................................................................
             if (formula || query || scripting) {
+                final String languageTag = locale.toLanguageTag();
+
                 verifier.addIfConversionFail(
-                    locale.toLanguageTag(),
+                    languageTag,
                     LocaleLanguageTag.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE // text-to-locale-language-tag
+                    SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
+                    LocaleLanguageTag.parse(languageTag)
                 );
             }
 
             if (formula || query || scripting) {
+                System.out.println(
+                    new Locale("en", "AU").toLanguageTag()
+                );
+
                 verifier.addIfConversionFail(
                     locale,
                     LocaleLanguageTag.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE // text-to-locale-language-tag
+                    SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
+                    LocaleLanguageTag.fromLocale(locale)
                 );
             }
         }
@@ -889,37 +1108,43 @@ final class MissingConverterVerifier {
                         RELATIVE_URL.text()
                     ),
                     Url.class,
-                    SpreadsheetConvertersConverterProvider.NET
+                    SpreadsheetConvertersConverterProvider.NET,
+                    IS_URL
                 );
 
                 verifier.addIfConversionFail(
                     EMAIL_ADDRESS.text(),
                     EmailAddress.class,
-                    SpreadsheetConvertersConverterProvider.NET
+                    SpreadsheetConvertersConverterProvider.NET,
+                    IS_EMAIL_ADDRESS
                 );
 
                 verifier.addIfConversionFail(
                     MEDIA_TYPE.toString(),
                     MediaType.class,
-                    SpreadsheetConvertersConverterProvider.NET
+                    SpreadsheetConvertersConverterProvider.NET,
+                    IS_MEDIA_TYPE
                 );
 
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     HasHostAddress.class,
-                    SpreadsheetConvertersConverterProvider.NET
+                    SpreadsheetConvertersConverterProvider.NET,
+                    IS_ABSOLUTE_URL
                 );
 
                 verifier.addIfConversionFail(
                     EMAIL_ADDRESS.text(),
                     HasHostAddress.class,
-                    SpreadsheetConvertersConverterProvider.NET
+                    SpreadsheetConvertersConverterProvider.NET,
+                    IS_EMAIL_ADDRESS
                 );
 
                 verifier.addIfConversionFail(
                     MAIL_TO_URL.text(),
                     HasHostAddress.class,
-                    SpreadsheetConvertersConverterProvider.NET
+                    SpreadsheetConvertersConverterProvider.NET,
+                    IS_MAIL_TO_URL
                 );
             }
         }
@@ -931,7 +1156,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     (Object) null, // dont want List overload
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.NUMBER
+                    SpreadsheetConvertersConverterProvider.NUMBER,
+                    IS_NUMBER
                 );
             }
 
@@ -939,7 +1165,8 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 1,
                 NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.NUMBER
+                SpreadsheetConvertersConverterProvider.NUMBER,
+                IS_NUMBER
             );
         }
 
@@ -948,19 +1175,22 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 Optional.empty(),
                 Boolean.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                (Object)null
             );
 
             verifier.addIfConversionFail(
                 Optional.of(false),
                 Boolean.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                false
             );
 
             verifier.addIfConversionFail(
                 Optional.of(true),
                 Boolean.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                true
             );
 
             verifier.addIfConversionFail(
@@ -968,25 +1198,29 @@ final class MissingConverterVerifier {
                     123
                 ),
                 NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                IS_NUMBER
             );
 
             verifier.addIfConversionFail(
                 Optional.of(DATE),
                 LocalDate.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                DATE
             );
 
             verifier.addIfConversionFail(
                 Optional.of(DATE_TIME),
                 LocalDateTime.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO,// OPTIONAL_TO
+                DATE_TIME
             );
 
             verifier.addIfConversionFail(
                 Optional.of(DATE_TIME),
                 LocalDateTimeList.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                LocalDateTimeList.EMPTY.concat(DATE_TIME)
             );
 
             verifier.addIfConversionFail(
@@ -994,13 +1228,15 @@ final class MissingConverterVerifier {
                     "Hello"
                 ),
                 String.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                "Optional[Hello]"
             );
 
             verifier.addIfConversionFail(
                 Optional.of(TIME),
                 LocalTime.class,
-                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO, // OPTIONAL_TO
+                TIME
             );
         }
         
@@ -1010,7 +1246,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     FORMATTER_SELECTOR.text(),
                     SpreadsheetFormatterSelector.class,
-                    SpreadsheetConvertersConverterProvider.PLUGINS // SPREADSHEET_VALUE
+                    SpreadsheetConvertersConverterProvider.PLUGINS, // SPREADSHEET_VALUE
+                    FORMATTER_SELECTOR
                 );
             }
 
@@ -1019,7 +1256,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     VALIDATOR_SELECTOR.text(),
                     ValidatorSelector.class,
-                    SpreadsheetConvertersConverterProvider.PLUGINS // TEXT_TO_VALIDATOR_SELECTOR
+                    SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_VALIDATOR_SELECTOR
+                    VALIDATOR_SELECTOR
                 );
             }
         }
@@ -1029,7 +1267,8 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 METADATA,
                 Properties.class,
-                SpreadsheetConvertersConverterProvider.PROPERTIES
+                SpreadsheetConvertersConverterProvider.PROPERTIES,
+                METADATA.properties()
             );
         }
 
@@ -1043,13 +1282,15 @@ final class MissingConverterVerifier {
                     metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
                         .toString(),
                     SpreadsheetMetadata.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA //
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, //
+                    metadata
                 );
 
                 verifier.addIfConversionFail(
                     metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
                     SpreadsheetMetadata.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA //
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, //
+                    metadata
                 );
             }
 
@@ -1061,7 +1302,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     spreadsheetId.toString(),
                     SpreadsheetId.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_ID
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, // TEXT_TO_SPREADSHEET_ID
+                    spreadsheetId
                 );
             }
 
@@ -1076,7 +1318,8 @@ final class MissingConverterVerifier {
                     context.marshall(metadata)
                         .toString(),
                     SpreadsheetMetadata.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_METADATA
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, // TEXT_TO_SPREADSHEET_METADATA
+                    metadata
                 );
             }
 
@@ -1087,7 +1330,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     spreadsheetName.text(),
                     SpreadsheetName.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_NAME
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, // TEXT_TO_SPREADSHEET_NAME
+                    spreadsheetName
                 );
             }
 
@@ -1098,7 +1342,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     spreadsheetMetadataPropertyName.value(),
                     SpreadsheetMetadataPropertyName.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, // TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
+                    spreadsheetMetadataPropertyName
                 );
             }
 
@@ -1108,7 +1353,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     metadata.properties(),
                     SpreadsheetMetadata.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // text-to-spreadsheet-metadata
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, // text-to-spreadsheet-metadata
+                    metadata
                 );
             }
         }
@@ -1129,15 +1375,17 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     ERROR,
                     ExpressionNumber.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // ERROR_TO_NUMBER
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // ERROR_TO_NUMBER
+                    IS_NUMBER
                 );
             }
 
             if (formatting || scripting) {
                 verifier.addIfConversionFail(
-                    (Object) null, // dont want List overload
+                    null, // dont want List overload
                     NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // NULL_TO_NUMBER
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // NULL_TO_NUMBER
+                    IS_NUMBER
                 );
             }
 
@@ -1146,16 +1394,20 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     spreadsheetCell,
                     SpreadsheetFormatterSelector.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
+                    spreadsheetCell.formatterSelector()
+                        .orElse(null)
                 );
             }
 
-            // has-spreadsheet-parser-selector.......................................................................
+            // has-spreadsheet-parser-selector..........................................................................
             if (scripting || validation) {
                 verifier.addIfConversionFail(
                     spreadsheetCell,
                     SpreadsheetParserSelector.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
+                    spreadsheetCell.parserSelector()
+                        .orElse(null)
                 );
             }
 
@@ -1164,7 +1416,9 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     spreadsheetCell,
                     ValidatorSelector.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
+                    spreadsheetCell.validator()
+                        .orElse(null)
                 );
             }
 
@@ -1176,7 +1430,8 @@ final class MissingConverterVerifier {
                         CELL_RANGE
                     ),
                     SpreadsheetCellReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    IS_CELL_REFERENCE
                 );
 
                 verifier.addIfConversionFail(
@@ -1189,7 +1444,8 @@ final class MissingConverterVerifier {
                         ROW_RANGE
                     ),
                     SpreadsheetCellRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    IS_CELL_RANGE_REFERENCE
                 );
 
                 verifier.addIfConversionFail(
@@ -1199,10 +1455,14 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    Lists.of(
-                        COLUMN,
-                        COLUMN_RANGE
-                    ),
+                    COLUMN,
+                    SpreadsheetColumnRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    COLUMN.toColumnRange()
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN_RANGE,
                     SpreadsheetColumnRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
@@ -1214,10 +1474,7 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    Lists.of(
-                        ROW,
-                        ROW_RANGE
-                    ),
+                    ROW_RANGE,
                     SpreadsheetRowRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
@@ -1237,7 +1494,8 @@ final class MissingConverterVerifier {
                         LABEL
                     ),
                     String.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
+                    IS_STRING
                 );
             }
 
@@ -1264,7 +1522,8 @@ final class MissingConverterVerifier {
                         ZoneOffset.UTC
                     ),
                     String.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
+                    IS_STRING
                 );
             }
 
@@ -1273,7 +1532,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     ERROR.text(),
                     SpreadsheetError.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_ERROR
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_ERROR
+                    IS_ERROR
                 );
             }
 
@@ -1284,7 +1544,8 @@ final class MissingConverterVerifier {
                     Character.class,
                     String.class
                 ),
-                SpreadsheetConvertersConverterProvider.TEXT // TEXT
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_NOT_NULL
             );
 
             verifier.addIfConversionFail(
@@ -1293,19 +1554,22 @@ final class MissingConverterVerifier {
                     Character.class,
                     String.class
                 ),
-                SpreadsheetConvertersConverterProvider.TEXT // TEXT
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_NOT_NULL
             );
 
             verifier.addIfConversionFail(
                 charset.toString(),
                 Charset.class,
-                SpreadsheetConvertersConverterProvider.TEXT
+                SpreadsheetConvertersConverterProvider.TEXT,
+                charset
             );
 
             verifier.addIfConversionFail(
                 "   ",
                 Indentation.class,
-                SpreadsheetConvertersConverterProvider.TEXT // TEXT
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_INDENTATION
             );
 
             verifier.addIfConversionFail(
@@ -1314,14 +1578,16 @@ final class MissingConverterVerifier {
                     "crnl"
                 ),
                 LineEnding.class,
-                SpreadsheetConvertersConverterProvider.TEXT // TEXT
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_LINE_ENDING
             );
 
             // text-to-lineEnding.......................................................................................
             verifier.addIfConversionFail(
                 LineEnding.NL.text(),
                 LineEnding.class,
-                SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_LINE_ENDING
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_LINE_ENDING
+                IS_LINE_ENDING
             );
 
             // text-to-spreadsheet-selection............................................................................
@@ -1336,71 +1602,93 @@ final class MissingConverterVerifier {
                     verifier.addIfConversionFail(
                         selection.toString(),
                         selection.getClass(),
-                        SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                        SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                        selection // expected
                     );
                 }
 
                 verifier.addIfConversionFail(
                     CELL.toString(),
-                    Lists.of(
-                        SpreadsheetCellReference.class,
-                        SpreadsheetCellRangeReference.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                    SpreadsheetCellReference.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    CELL
+                );
+
+                verifier.addIfConversionFail(
+                    CELL.toString(),
+                    SpreadsheetCellRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    CELL.toCellRange()
                 );
 
                 verifier.addIfConversionFail(
                     CELL_RANGE.toString(),
                     SpreadsheetCellRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    CELL_RANGE
                 );
 
                 verifier.addIfConversionFail(
                     LABEL.toString(),
                     SpreadsheetLabelName.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN.toString(),
-                    Lists.of(
-                        SpreadsheetColumnReference.class,
-                        SpreadsheetColumnRangeReference.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    LABEL
                 );
 
                 verifier.addIfConversionFail(
                     COLUMN.toString(),
                     SpreadsheetColumnReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN.toString(),
+                    SpreadsheetColumnRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN.toColumnRange()
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN.toString(),
+                    SpreadsheetColumnReference.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN
                 );
 
                 verifier.addIfConversionFail(
                     COLUMN_RANGE.toString(),
                     SpreadsheetColumnRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
-                );
-
-                verifier.addIfConversionFail(
-                    ROW.toString(),
-                    Lists.of(
-                        SpreadsheetRowReference.class,
-                        SpreadsheetRowRangeReference.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN_RANGE
                 );
 
                 verifier.addIfConversionFail(
                     ROW.toString(),
                     SpreadsheetRowReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW
+                );
+
+                verifier.addIfConversionFail(
+                    ROW.toString(),
+                    SpreadsheetRowRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW.toRowRange()
+                );
+
+                verifier.addIfConversionFail(
+                    ROW.toString(),
+                    SpreadsheetRowReference.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW
                 );
 
                 verifier.addIfConversionFail(
                     ROW_RANGE.toString(),
                     SpreadsheetRowRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW_RANGE
                 );
             }
 
@@ -1409,17 +1697,20 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     SpreadsheetValueType.TEXT.value(),
                     ValueType.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_VALUE_TYPE
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_VALUE_TYPE
+                    SpreadsheetValueType.TEXT
                 );
             }
 
             // text-to-zone-offset......................................................................................
             if (scripting) {
+                final ZoneOffset zoneOffset = ZoneOffset.ofHoursMinutes(12, 59);
+
                 verifier.addIfConversionFail(
-                    ZoneOffset.ofHoursMinutes(12, 59)
-                        .toString(),
+                    zoneOffset.toString(),
                     ZoneOffset.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_ZONE_OFFSET
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_ZONE_OFFSET
+                    zoneOffset
                 );
             }
         }
@@ -1432,7 +1723,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     text,
                     Binary.class,
-                    SpreadsheetConvertersConverterProvider.BINARY
+                    SpreadsheetConvertersConverterProvider.BINARY,
+                    IS_BINARY
                 );
 
                 verifier.addIfConversionFail(
@@ -1440,7 +1732,8 @@ final class MissingConverterVerifier {
                         text.getBytes(charset)
                     ),
                     String.class,
-                    SpreadsheetConvertersConverterProvider.BINARY
+                    SpreadsheetConvertersConverterProvider.BINARY,
+                    text
                 );
 
                 verifier.addIfConversionFail(
@@ -1451,7 +1744,8 @@ final class MissingConverterVerifier {
                         )
                     ),
                     StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION,
+                    IS_STORAGE_VALUE
                 );
 
                 verifier.addIfConversionFail(
@@ -1462,7 +1756,8 @@ final class MissingConverterVerifier {
                         )
                     ),
                     StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT,
+                    IS_STORAGE_VALUE
                 );
 
                 verifier.addIfConversionFail(
@@ -1474,7 +1769,8 @@ final class MissingConverterVerifier {
                         )
                     ),
                     StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON,
+                    IS_STORAGE_VALUE
                 );
 
                 verifier.addIfConversionFail(
@@ -1487,7 +1783,8 @@ final class MissingConverterVerifier {
                         )
                     ),
                     StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES,
+                    IS_STORAGE_VALUE
                 );
 
                 verifier.addIfConversionFail(
@@ -1507,13 +1804,15 @@ final class MissingConverterVerifier {
                         )
                     ),
                     String.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT
+                    SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT,
+                    IS_STRING
                 );
 
                 verifier.addIfConversionFail(
                     "/path1/file2.txt",
                     StoragePath.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH,
+                    IS_STORAGE_PATH
                 );
             }
         }
@@ -1529,7 +1828,8 @@ final class MissingConverterVerifier {
                             .setStyle(STYLE)
                     ),
                     TextStyle.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // HAS_STYLE
+                    SpreadsheetConvertersConverterProvider.STYLE, // HAS_STYLE
+                    STYLE
                 );
             }
 
@@ -1539,14 +1839,16 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     STYLE.properties(),
                     TextStyle.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // PROPERTIES_TO_TEXT_STYLE
+                    SpreadsheetConvertersConverterProvider.STYLE, // PROPERTIES_TO_TEXT_STYLE
+                    STYLE
                 );
 
                 verifier.addIfConversionFail(
                     STYLE.properties()
                         .toString(),
                     TextStyle.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // PROPERTIES_TO_TEXT_STYLE
+                    SpreadsheetConvertersConverterProvider.STYLE, // PROPERTIES_TO_TEXT_STYLE
+                    STYLE
                 );
             }
 
@@ -1555,7 +1857,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     BORDER.text(),
                     Border.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // text-to-border
+                    SpreadsheetConvertersConverterProvider.STYLE, // text-to-border
+                    BORDER
                 );
             }
 
@@ -1564,7 +1867,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     MARGIN.text(),
                     Margin.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // text-to-margin
+                    SpreadsheetConvertersConverterProvider.STYLE, // text-to-margin
+                    MARGIN
                 );
             }
 
@@ -1573,7 +1877,8 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     PADDING.text(),
                     Padding.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // text-to-padding
+                    SpreadsheetConvertersConverterProvider.STYLE, // text-to-padding
+                    PADDING
                 );
             }
             
@@ -1582,21 +1887,24 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     SPREADSHEET_TEXT.text(),
                     SpreadsheetText.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_SPREADSHEET_TEXT
+                    SpreadsheetConvertersConverterProvider.STYLE, // TEXT_TO_SPREADSHEET_TEXT
+                    SPREADSHEET_TEXT
                 );
 
                 // text-to-textStyle....................................................................................
                 verifier.addIfConversionFail(
                     STYLE.text(),
                     TextStyle.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_TEXT_STYLE
+                    SpreadsheetConvertersConverterProvider.STYLE, // TEXT_TO_TEXT_STYLE
+                    STYLE
                 );
 
                 // text-to-text-style-property-name.....................................................................
                 verifier.addIfConversionFail(
                     TextStylePropertyName.BACKGROUND_COLOR.text(),
                     TextStylePropertyName.class,
-                    SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_TEXT_STYLE_PROPERTY_NAME
+                    SpreadsheetConvertersConverterProvider.STYLE, // TEXT_TO_TEXT_STYLE_PROPERTY_NAME
+                    TextStylePropertyName.BACKGROUND_COLOR
                 );
             }
         }
@@ -1623,42 +1931,48 @@ final class MissingConverterVerifier {
                     spreadsheetCell.formula()
                 ),
                 String.class,
-                SpreadsheetConvertersConverterProvider.TEXT
+                SpreadsheetConvertersConverterProvider.TEXT,
+                IS_STRING
             );
 
             // text-to-boolean-list.................................................................................
             verifier.addIfConversionFail(
                 "TRUE, FALSE, true",
                 BooleanList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_BOOLEAN_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_BOOLEAN_LIST,
+                IS_BOOLEAN_LIST
             );
 
             // text-to-csv-string-list..............................................................................
             verifier.addIfConversionFail(
                 "apple,banana,\"333 444\"",
                 CsvStringList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST,
+                IS_CSV_STRING_LIST
             );
 
             // text-to-csv-string-set..............................................................................
             verifier.addIfConversionFail(
                 "apple,banana,\"333 444\"",
                 CsvStringSet.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_SET
+                SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_SET,
+                IS_CSV_STRING_SET
             );
 
             // text-to-date-list....................................................................................
             verifier.addIfConversionFail(
                 "1999/12/31",
                 LocalDateList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST,
+                LocalDateList.EMPTY.concat(DATE)
             );
 
             // text-to-date-time-list...............................................................................
             verifier.addIfConversionFail(
                 "1999/12/31 12:58",
                 LocalDateTimeList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST,
+                IS_LOCAL_DATE_TIME_LIST
             );
 
             if (formatting) {
@@ -1674,7 +1988,8 @@ final class MissingConverterVerifier {
                         "NL"
                     ),
                     LineEnding.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_LINE_ENDING
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_LINE_ENDING,
+                    IS_LINE_ENDING
                 );
             }
 
@@ -1682,35 +1997,42 @@ final class MissingConverterVerifier {
             verifier.addIfConversionFail(
                 "1, 22, 333.5",
                 NumberList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST,
+                IS_NUMBER_LIST
             );
 
             // text-to-string-list..................................................................................
             verifier.addIfConversionFail(
                 "apple, banana, 333",
                 StringList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST,
+                IS_STRING_LIST
             );
 
             // text-to-time-list....................................................................................
             verifier.addIfConversionFail(
-                "12:58:59",
+                "12:58:59", // "12:58" without seconds fails
                 LocalTimeList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST,
+                LocalTimeList.EMPTY.concat(
+                    TIME.withSecond(59)
+                )
             );
 
             // text-to-tsv-string-list..............................................................................
             verifier.addIfConversionFail(
                 "apple\tbanana\t\"333 444\"",
                 TsvStringList.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_LIST
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_LIST,
+                IS_TSV_STRING_LIST
             );
 
             // text-to-tsv-string-set..............................................................................
             verifier.addIfConversionFail(
                 "apple\tbanana\t\"333 444\"",
                 TsvStringSet.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_SET
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_SET,
+                IS_TSV_STRING_SET
             );
         }
 
@@ -1722,21 +2044,24 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     "AU",
                     Flag.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_FLAG // TEXT_TO_FLAG
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_FLAG, // TEXT_TO_FLAG
+                    TextNode.flag("AU")
                 );
 
                 // url-to-hyperlink.....................................................................................
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     Hyperlink.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_HYPERLINK
+                    IS_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     Image.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_IMAGE
+                    IS_IMAGE
                 );
             }
 
@@ -1754,32 +2079,34 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     Hyperlink.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_HYPERLINK
+                    HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     Image.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_IMAGE
+                    IMAGE
                 );
             }
 
             if (formatting || scripting) {
                 // has-text-node........................................................................................
                 verifier.addIfConversionFail(
-                    Lists.of(
-                        TextNode.text("Text123").setTextStyle(
-                            TextStyle.EMPTY.set(
-                                TextStylePropertyName.COLOR,
-                                Color.BLACK
-                            )
-                        ),
+                    TextNode.text("Text123").setTextStyle(
                         TextStyle.EMPTY.set(
-                            TextStylePropertyName.TEXT_ALIGN,
-                            TextAlign.CENTER
+                            TextStylePropertyName.COLOR,
+                            Color.BLACK
                         )
                     ),
+                    Styleable.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // TO_STYLEABLE
+                );
+
+                verifier.addIfConversionFail(
+                    STYLE,
                     Styleable.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // TO_STYLEABLE
                 );
@@ -1791,7 +2118,8 @@ final class MissingConverterVerifier {
                         TextNode.text("Text123")
                     ),
                     TextNode.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // HAS_TEXT_NODE
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // HAS_TEXT_NODE
+                    IS_TEXT_NODE
                 );
 
                 // text-to-textNode.....................................................................................
@@ -1801,21 +2129,24 @@ final class MissingConverterVerifier {
                         "Text"
                     ),
                     TextNode.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_TEXT_NODE
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // TEXT_TO_TEXT_NODE
+                    IS_TEXT_NODE
                 );
 
                 // url-to-hyperlink.....................................................................................
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     Hyperlink.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_HYPERLINK
+                    HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     Image.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_IMAGE
+                    IMAGE
                 );
             }
         }
@@ -1828,7 +2159,8 @@ final class MissingConverterVerifier {
                         verifier.addIfConversionFail(
                             "Form123",
                             FormName.class,
-                            SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TEXT_TO_FORM_NAME
+                            SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TEXT_TO_FORM_NAME
+                            IS_FORM_NAME
                         );
 
                         // text-to-validation-error.....................................................................
@@ -1837,7 +2169,8 @@ final class MissingConverterVerifier {
                                 .setMessage("Error message 123")
                                 .text(),
                             ValidationError.class,
-                            SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TEXT_TO_VALIDATION_ERROR
+                            SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TEXT_TO_VALIDATION_ERROR
+                            IS_VALIDATION_ERROR
                         );
                     }
                 }
@@ -1858,7 +2191,8 @@ final class MissingConverterVerifier {
                             )
                         ),
                         ValidationCheckbox.class,
-                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
+                        IS_VALIDATION_CHECKBOX
                     );
 
                     // to-validation-choice.............................................................................
@@ -1868,7 +2202,8 @@ final class MissingConverterVerifier {
                             "Choice1"
                         ),
                         ValidationChoice.class,
-                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
+                        IS_VALIDATION_CHOICE
                     );
 
                     // to-validation-choice-list........................................................................
@@ -1908,7 +2243,8 @@ final class MissingConverterVerifier {
                             )
                         ),
                         ValidationChoiceList.class,
-                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
+                        IS_VALIDATION_CHOICE_LIST
                     );
 
                     // to-validation-error-list.........................................................................
@@ -1919,7 +2255,8 @@ final class MissingConverterVerifier {
                                 .setMessage("Validation error message2")
                         ),
                         ValidationErrorList.class,
-                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
+                        IS_VALIDATION_ERROR_LIST
                     );
                 }
             }
@@ -1940,24 +2277,42 @@ final class MissingConverterVerifier {
 
     private void addIfConversionFail(final List<Object> values,
                                      final Class<?> type,
-                                     final ConverterName name) {
+                                     final ConverterName name,
+                                     final Object expected) {
         for (final Object value : values) {
             this.addIfConversionFail(
                 value,
                 type,
-                name
+                name,
+                expected
+            );
+        }
+    }
+
+    private void addIfConversionFail(final List<Object> values,
+                                     final Class<?> type,
+                                     final ConverterName name,
+                                     final Predicate<Object> answerChecker) {
+        for (final Object value : values) {
+            this.addIfConversionFail(
+                value,
+                type,
+                name,
+                answerChecker
             );
         }
     }
 
     private void addIfConversionFail(final Object value,
                                      final List<Class<?>> types,
-                                     final ConverterName name) {
+                                     final ConverterName name,
+                                     final Predicate<Object> answerChecker) {
         for (final Class<?> type : types) {
             this.addIfConversionFail(
                 value,
                 type,
-                name
+                name,
+                answerChecker
             );
         }
     }
@@ -1965,14 +2320,49 @@ final class MissingConverterVerifier {
     private void addIfConversionFail(final Object value,
                                      final Class<?> type,
                                      final ConverterName name) {
+        this.addIfConversionFail(
+            value,
+            type,
+            name,
+            value
+        );
+    }
+
+    private void addIfConversionFail(final Object value,
+                                     final Class<?> type,
+                                     final ConverterName name,
+                                     final Object expected) {
+        this.addIfConversionFail(
+            value,
+            type,
+            name,
+            Predicates.is(expected)
+        );
+    }
+
+    private void addIfConversionFail(final Object value,
+                                     final Class<?> type,
+                                     final ConverterName name,
+                                     final Predicate<Object> answerChecker) {
         boolean failed;
 
         try {
-            failed = this.converter.convert(
+            final Either<?, String> converted = this.converter.convert(
                 value,
                 type,
                 this.context
-            ).isRight();
+            );
+            failed = converted.isRight();
+
+            if(false == failed) {
+                failed = false == answerChecker.test(
+                    converted.leftValue()
+                );
+                if(failed) {
+                    System.out.println("\t\t" + CharSequences.quoteIfChars(value) + " ->>> " + type.getSimpleName() + " ---> " + CharSequences.quoteIfChars(converted.leftValue()));
+                }
+            }
+
         } catch (final UnsupportedOperationException rethrow) {
             throw rethrow;
         } catch (final RuntimeException cause) {
