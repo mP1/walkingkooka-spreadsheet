@@ -490,6 +490,10 @@ final class MissingConverterVerifier {
 
         final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2+3")
+        ).setDateTimeSymbols(
+            Optional.of(
+                context.dateTimeSymbols()
+            )
         ).setFormatter(
             Optional.of(FORMATTER_SELECTOR)
         ).setParser(
@@ -922,6 +926,13 @@ final class MissingConverterVerifier {
 
             verifier.addIfConversionFail(
                 locale,
+                DateTimeSymbols.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS, // DATE_TIME_SYMBOLS
+                IS_DATE_TIME_SYMBOLS
+            );
+
+            verifier.addIfConversionFail(
+                spreadsheetCell,
                 DateTimeSymbols.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS, // DATE_TIME_SYMBOLS
                 IS_DATE_TIME_SYMBOLS
