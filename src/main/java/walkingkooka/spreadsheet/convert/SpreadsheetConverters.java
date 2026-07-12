@@ -1323,6 +1323,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ConverterToDecimalNumberSymbols}
+     */
+    public static Converter<SpreadsheetConverterContext> toDecimalNumberSymbols() {
+        return Converters.toDecimalNumberSymbols();
+    }
+
+    /**
      * {@see JsonNodeConverters#toJsonNode}
      */
     public static Converter<SpreadsheetConverterContext> toJsonNode() {
