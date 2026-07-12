@@ -734,6 +734,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toJsonText();
                 break;
+            case TO_LOCALE_LANGUAGE_TAG_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toLocaleLanguageTag();
+                break;
             case TO_LOCALE_STRING:
                 noParameterCheck(copy);
 
@@ -1340,6 +1345,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TO_LOCALE_STRING = "to-locale";
 
     final static ConverterName TO_LOCALE = ConverterName.with(TO_LOCALE_STRING);
+
+    private final static String TO_LOCALE_LANGUAGE_TAG_STRING = "to-locale-language-tag";
+
+    final static ConverterName TO_LOCALE_LANGUAGE_TAG = ConverterName.with(TO_LOCALE_LANGUAGE_TAG_STRING);
     
     private final static String TO_NUMBER_STRING = "to-number";
 
@@ -1519,6 +1528,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_JSON_TEXT),
             converterInfo(TO_LOCALE),
+            converterInfo(TO_LOCALE_LANGUAGE_TAG),
             converterInfo(TO_NUMBER),
             converterInfo(TO_STRING),
             converterInfo(TO_STYLEABLE),

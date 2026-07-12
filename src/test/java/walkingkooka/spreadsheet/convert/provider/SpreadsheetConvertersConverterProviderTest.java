@@ -1212,6 +1212,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToLocaleLanguageTag() {
+        this.converterAndCheck(
+            "to-locale-language-tag",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toLocaleLanguageTag()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToNumber() {
         this.converterAndCheck(
             "to-number",
