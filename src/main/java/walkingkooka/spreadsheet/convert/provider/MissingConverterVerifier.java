@@ -117,7 +117,6 @@ import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
-import javax.swing.text.Style;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -438,7 +437,7 @@ final class MissingConverterVerifier {
 
     private final static Predicate<Object> IS_STRING_LIST = v -> v instanceof StringList;
 
-    private final static Predicate<Object> IS_STYLE = v -> v instanceof Style;
+    private final static Predicate<Object> IS_STYLE = v -> v instanceof TextStyle;
 
     private final static Predicate<Object> IS_TEXT_NODE = v -> v instanceof TextNode;
 
