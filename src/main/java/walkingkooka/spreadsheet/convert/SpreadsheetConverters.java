@@ -287,6 +287,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> dateTimeSymbols() {
         return collection(
             Lists.of(
+                SpreadsheetConverters.toDateTimeSymbols(),
                 Converters.localeToDateTimeSymbols(),
                 SpreadsheetConverters.propertiesToDateTimeSymbols()
             )

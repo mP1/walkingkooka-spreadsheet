@@ -716,6 +716,21 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // dateTimeSymbols..................................................................................................
 
     @Test
+    public void testDateTimeSymbolsConvertSpreadsheetCellToDateTimeSymbols() {
+        this.convertAndCheck(
+            SpreadsheetConverters.dateTimeSymbols(),
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+            ).setDateTimeSymbols(
+                Optional.of(DATE_TIME_SYMBOLS)
+            ),
+            DateTimeSymbols.class,
+            DATE_TIME_SYMBOLS_CONTEXT,
+            DATE_TIME_SYMBOLS
+        );
+    }
+
+    @Test
     public void testDateTimeSymbolsConvertStringToDateTimeSymbols() {
         this.convertAndCheck(
             SpreadsheetConverters.dateTimeSymbols(),
