@@ -795,6 +795,21 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // decimalNumberSymbols.............................................................................................
 
     @Test
+    public void testDecimalNumberSymbolsConvertSpreadsheetCellToDecimalNumberSymbols() {
+        this.convertAndCheck(
+            SpreadsheetConverters.decimalNumberSymbols(),
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+            ).setDecimalNumberSymbols(
+                Optional.of(DECIMAL_NUMBER_SYMBOLS)
+            ),
+            DecimalNumberSymbols.class,
+            DECIMAL_NUMBER_SYMBOLS_CONTEXT,
+            DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
     public void testDecimalNumberSymbolsConvertStringToDecimalNumberSymbols() {
         this.convertAndCheck(
             SpreadsheetConverters.decimalNumberSymbols(),
