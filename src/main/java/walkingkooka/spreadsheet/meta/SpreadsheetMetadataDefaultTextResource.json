@@ -78,7 +78,7 @@
   "expressionNumberKind": "BIG_DECIMAL",
   "formattingConverter": "collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net, basic)",
   "formHandlers": "basic",
-  "formulaConverter": "collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, properties, template, net, basic)",
+  "formulaConverter": "collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)",
   "formulaFunctions": "@",
   "functions": "@",
   "hideZeroValues": false,

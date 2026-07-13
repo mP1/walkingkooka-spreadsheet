@@ -695,7 +695,7 @@ final class MissingConverterVerifier {
         // color........................................................................................................
         {
             // color-to-color...........................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     Color.BLACK,
                     Lists.of(
@@ -709,7 +709,7 @@ final class MissingConverterVerifier {
             }
 
             // color-to-number..........................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     Color.BLACK,
                     NUMBER_TYPES_WITHOUT_BYTE_SHORT,
@@ -749,7 +749,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-color............................................................................................
-            if (formula || formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     "#123456",
                     Color.class,
@@ -759,7 +759,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-spreadsheet-color-name...........................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     SpreadsheetColorName.BLACK.value(),
                     SpreadsheetColorName.class,
@@ -771,7 +771,7 @@ final class MissingConverterVerifier {
 
         // currency.....................................................................................................
         {
-            if (formula || formatting || scripting) {
+            if (formatting || formula || scripting) {
                 final CurrencyCode currencyCode = context.currencyCode();
 
                 verifier.addIfConversionFail(
@@ -983,7 +983,7 @@ final class MissingConverterVerifier {
 
         // environment..................................................................................................
         {
-            if (scripting) {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     ERROR,
                     SpreadsheetError.class,
@@ -1034,7 +1034,7 @@ final class MissingConverterVerifier {
                 );
             }
 
-            if (scripting) {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     context.marshall(spreadsheetCell)
                         .toString(),
@@ -1047,7 +1047,7 @@ final class MissingConverterVerifier {
 
         // locale.......................................................................................................
         {
-            if (formula || query || formatting || scripting) {
+            if (formatting || formula || query || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         locale.toLanguageTag(),
@@ -1059,7 +1059,7 @@ final class MissingConverterVerifier {
                 );
             }
 
-            if (formula || query || formatting || scripting) {
+            if (formatting || formula || query || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         locale.toLanguageTag(),
@@ -1120,7 +1120,7 @@ final class MissingConverterVerifier {
 
         // net..........................................................................................................
         {
-            if (query | formula | scripting) {
+            if (formula | query | scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         ABSOLUTE_URL.text(),
@@ -1172,7 +1172,7 @@ final class MissingConverterVerifier {
         // number.......................................................................................................
         {
             // null-to-number...........................................................................................
-            if (formatting || scripting) {
+            if (formula || formatting || scripting) {
                 verifier.addIfConversionFail(
                     (Object) null, // dont want List overload
                     NUMBER_TYPES,
@@ -1262,7 +1262,7 @@ final class MissingConverterVerifier {
         
         // plugins......................................................................................................
         {
-            if (scripting || validation) {
+            if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
                     FORMATTER_SELECTOR.text(),
                     SpreadsheetFormatterSelector.class,
@@ -1272,7 +1272,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-validation-selector..............................................................................
-            if (scripting || validation) {
+            if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
                     VALIDATOR_SELECTOR.text(),
                     ValidatorSelector.class,
@@ -1295,7 +1295,7 @@ final class MissingConverterVerifier {
         // spreadsheetMetadata..........................................................................................
         {
             // spreadsheet-id-to-spreadsheet-metadata...................................................................
-            if (scripting) {
+            if (formula || scripting) {
                 final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
 
                 verifier.addIfConversionFail(
@@ -1318,7 +1318,7 @@ final class MissingConverterVerifier {
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
 
             // will be enabled by terminal
-            if (scripting) {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     spreadsheetId.toString(),
                     SpreadsheetId.class,
@@ -1333,7 +1333,7 @@ final class MissingConverterVerifier {
                 spreadsheetId
             );
 
-            if (scripting) {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     context.marshall(metadata)
                         .toString(),
@@ -1346,7 +1346,7 @@ final class MissingConverterVerifier {
             // text-to-spreadsheet-name.................................................................................
             final SpreadsheetName spreadsheetName = SpreadsheetName.with("SpreadsheetName123");
 
-            if (scripting) {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     spreadsheetName.text(),
                     SpreadsheetName.class,
@@ -1358,7 +1358,7 @@ final class MissingConverterVerifier {
             // text-to-spreadsheet-property-name........................................................................
             final SpreadsheetMetadataPropertyName<SpreadsheetName> spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
 
-            if (scripting) {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     spreadsheetMetadataPropertyName.value(),
                     SpreadsheetMetadataPropertyName.class,
@@ -1369,7 +1369,7 @@ final class MissingConverterVerifier {
 
             // properties-to-spreadsheet-metadata.......................................................................
 
-            if (scripting) {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     metadata.properties(),
                     SpreadsheetMetadata.class,
@@ -1400,7 +1400,7 @@ final class MissingConverterVerifier {
                 );
             }
 
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     null, // dont want List overload
                     NUMBER_TYPES,
@@ -1410,7 +1410,7 @@ final class MissingConverterVerifier {
             }
 
             // has-spreadsheet-formatter-selector.......................................................................
-            if (scripting || validation) {
+            if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
                     spreadsheetCell,
                     SpreadsheetFormatterSelector.class,
@@ -1421,7 +1421,7 @@ final class MissingConverterVerifier {
             }
 
             // has-spreadsheet-parser-selector..........................................................................
-            if (scripting || validation) {
+            if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
                     spreadsheetCell,
                     SpreadsheetParserSelector.class,
@@ -1432,7 +1432,7 @@ final class MissingConverterVerifier {
             }
 
             // has-validation-selector..................................................................................
-            if (scripting || validation) {
+            if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
                     spreadsheetCell,
                     ValidatorSelector.class,
@@ -1723,7 +1723,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-zone-offset......................................................................................
-            if (scripting) {
+            if (formula || scripting) {
                 final ZoneOffset zoneOffset = ZoneOffset.ofHoursMinutes(12, 59);
 
                 verifier.addIfConversionFail(
@@ -1737,7 +1737,7 @@ final class MissingConverterVerifier {
 
         // storage......................................................................................................
         {
-            if (scripting) {
+            if (formula || scripting) {
                 final String text = "BinaryTextContent123";
 
                 verifier.addIfConversionFail(
@@ -1840,7 +1840,7 @@ final class MissingConverterVerifier {
         // style-.......................................................................................................
         {
             // has-style-...............................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         STYLE,
@@ -1855,7 +1855,7 @@ final class MissingConverterVerifier {
 
             // properties-to-text-style.................................................................................
 
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     STYLE.properties(),
                     TextStyle.class,
@@ -1873,7 +1873,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-border.................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     BORDER.text(),
                     Border.class,
@@ -1883,7 +1883,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-margin.................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     MARGIN.text(),
                     Margin.class,
@@ -1893,7 +1893,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-padding.................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     PADDING.text(),
                     Padding.class,
@@ -1903,7 +1903,7 @@ final class MissingConverterVerifier {
             }
             
             // text-to-spreadsheet-text.................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     SPREADSHEET_TEXT.text(),
                     SpreadsheetText.class,
@@ -2059,7 +2059,7 @@ final class MissingConverterVerifier {
         // text-node....................................................................................................
         {
             // text-to-line-ending......................................................................................
-            if (scripting) {
+            if (formula || scripting) {
                 // text-to-flag.........................................................................................
                 verifier.addIfConversionFail(
                     "AU",
@@ -2086,7 +2086,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-url..............................................................................................
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 if (formatting) {
                     verifier.addIfConversionFail(
                         ABSOLUTE_URL.text(),
@@ -2112,7 +2112,7 @@ final class MissingConverterVerifier {
                 );
             }
 
-            if (formatting || scripting) {
+            if (formatting || formula || scripting) {
                 // has-text-node........................................................................................
                 verifier.addIfConversionFail(
                     TextNode.text("Text123").setTextStyle(
@@ -2174,7 +2174,7 @@ final class MissingConverterVerifier {
         {
             // validation...............................................................................................
             {
-                if (scripting || validation) {
+                if (formula || scripting || validation) {
                     if (validation) {
                         verifier.addIfConversionFail(
                             "Form123",
