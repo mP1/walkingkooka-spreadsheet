@@ -22,9 +22,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.storage.StorageTesting;
+import walkingkooka.storage.StorageTesting2;
 
-public abstract class SpreadsheetStorageTestCase<T extends SpreadsheetStorage> implements StorageTesting<T, SpreadsheetStorageContext>,
+public abstract class SpreadsheetStorageTestCase<T extends SpreadsheetStorage> implements StorageTesting2<T, SpreadsheetStorageContext>,
     TypeNameTesting<T>,
     ToStringTesting<T>,
     SpreadsheetMetadataTesting,

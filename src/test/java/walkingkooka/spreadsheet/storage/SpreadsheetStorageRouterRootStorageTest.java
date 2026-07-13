@@ -24,7 +24,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.StorageTesting;
+import walkingkooka.storage.StorageTesting2;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
@@ -32,7 +32,7 @@ import walkingkooka.storage.Storages;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public final class SpreadsheetStorageRouterRootStorageTest implements StorageTesting<SpreadsheetStorageRouterRootStorage, SpreadsheetStorageContext>,
+public final class SpreadsheetStorageRouterRootStorageTest implements StorageTesting2<SpreadsheetStorageRouterRootStorage, SpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
 
     private final static AuditInfo AUDIT_INFO = SPREADSHEET_ENVIRONMENT_CONTEXT.createdAuditInfo();
