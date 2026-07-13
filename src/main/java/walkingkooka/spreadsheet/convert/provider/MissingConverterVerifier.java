@@ -85,7 +85,6 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageValueInfoList;
 import walkingkooka.template.TemplateValueName;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -2379,9 +2378,6 @@ final class MissingConverterVerifier {
                 failed = false == answerChecker.test(
                     converted.leftValue()
                 );
-                if(failed) {
-                    System.out.println("\t\t" + CharSequences.quoteIfChars(value) + " ->>> " + type.getSimpleName() + " ---> " + CharSequences.quoteIfChars(converted.leftValue()));
-                }
             }
 
         } catch (final UnsupportedOperationException rethrow) {
