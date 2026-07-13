@@ -38,6 +38,8 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -116,6 +118,8 @@ public class J2clTest {
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.fake();
 
     @Test
     public void testMetadataNonLocaleDefaults() {
@@ -378,6 +382,7 @@ public class J2clTest {
                             Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,
+                            MEDIA_TYPE_DETECTOR,
                             BinaryNumberConverterFunctions.fake(),
                             SpreadsheetMetadataLoaders.fake(),
                             converterProvider,
@@ -437,6 +442,7 @@ public class J2clTest {
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
+                        MEDIA_TYPE_DETECTOR,
                         BinaryNumberConverterFunctions.fake(),
                         SpreadsheetMetadataLoaders.fake(),
                         SpreadsheetMetadataLoaders.empty(),

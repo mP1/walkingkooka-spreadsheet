@@ -31,6 +31,7 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -234,6 +235,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(),
+                MediaTypeDetectors.binary(),
                 BinaryNumberConverterFunctions.multiply(), // multiplier
                 SpreadsheetLabelNameResolvers.empty(),
                 SPREADSHEET_METADATA_LOADER,

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.provider;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -31,12 +32,14 @@ public final class SpreadsheetProviderContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetProviderContext}
      */
-    public static ProviderContext spreadsheet(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static ProviderContext spreadsheet(final MediaTypeDetector mediaTypeDetector,
+                                              final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                               final PluginStore pluginStore,
                                               final CurrencyLocaleContext currencyLocaleContext,
                                               final EnvironmentContext environmentContext,
                                               final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return SpreadsheetProviderContext.with(
+            mediaTypeDetector,
             multiplier,
             pluginStore,
             currencyLocaleContext,

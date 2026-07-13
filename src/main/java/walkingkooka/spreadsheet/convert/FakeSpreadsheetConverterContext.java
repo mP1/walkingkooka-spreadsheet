@@ -17,8 +17,10 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Binary;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -40,6 +42,12 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConverterContext implements SpreadsheetConverterContext {
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public Optional<StoragePath> currentWorkingDirectory() {

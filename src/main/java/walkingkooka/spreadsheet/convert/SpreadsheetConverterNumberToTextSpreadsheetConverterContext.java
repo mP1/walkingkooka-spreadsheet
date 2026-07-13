@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
@@ -31,6 +32,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -92,6 +94,15 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
         return this.spreadsheetConverterContext.convert(
             value,
             target
+        );
+    }
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.spreadsheetConverterContext.detect(
+            filename,
+            content
         );
     }
 

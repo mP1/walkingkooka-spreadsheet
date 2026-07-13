@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
@@ -25,6 +26,8 @@ import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -52,6 +55,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                                  final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetValidationReference > validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
+                                                 final MediaTypeDetector mediaTypeDetector,
                                                  final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
@@ -61,6 +65,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
@@ -72,6 +77,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
             spreadsheetMetadata,
             validationReference,
             converter,
+            mediaTypeDetector,
             multiplier,
             spreadsheetLabelNameResolver,
             spreadsheetMetadataLoader,
@@ -84,6 +90,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                              final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetValidationReference > validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
+                                             final MediaTypeDetector mediaTypeDetector,
                                              final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
@@ -93,6 +100,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
+        this.mediaTypeDetector = mediaTypeDetector;
         this.multiplier = multiplier;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.spreadsheetMetadataLoader = spreadsheetMetadataLoader;
@@ -111,6 +119,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
+                this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetLabelNameResolver,
                 this.spreadsheetMetadataLoader,
@@ -130,6 +139,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
+                this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetLabelNameResolver,
                 this.spreadsheetMetadataLoader,
@@ -195,6 +205,19 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     }
 
     private final Converter<SpreadsheetConverterContext> converter;
+
+    // MediaTypeDetector................................................................................................
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.mediaTypeDetector.detect(
+            filename,
+            content
+        );
+    }
+
+    private final MediaTypeDetector mediaTypeDetector;
 
     // SpreadsheetLabelNameResolver.....................................................................................
 
@@ -273,6 +296,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.converter);
+        builder.value(this.mediaTypeDetector);
         builder.value(this.spreadsheetLabelNameResolver);
         builder.value(this.jsonNodeConverterContext);
         builder.value(this.localeContext);

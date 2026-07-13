@@ -17,7 +17,9 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Binary;
 import walkingkooka.convert.Converter;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -44,6 +46,16 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     default Locale locale() {
         return this.spreadsheetConverterContext()
             .locale();
+    }
+
+    @Override
+    default MediaType detect(final String filename,
+                             final Binary content) {
+        return this.spreadsheetConverterContext()
+            .detect(
+                filename,
+                content
+            );
     }
 
     @Override

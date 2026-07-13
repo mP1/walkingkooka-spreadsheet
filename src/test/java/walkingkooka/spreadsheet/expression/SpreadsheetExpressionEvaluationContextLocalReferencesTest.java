@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Binary;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
@@ -40,6 +41,8 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -532,6 +535,16 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
         TestSpreadsheetExpressionEvaluationContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
             this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
+        }
+
+        @Override
+        public MediaType detect(final String filename,
+                                final Binary content) {
+            return MediaTypeDetectors.binary()
+                .detect(
+                    filename,
+                    content
+                );
         }
 
         @Override

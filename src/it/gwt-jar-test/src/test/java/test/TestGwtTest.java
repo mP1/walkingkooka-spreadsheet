@@ -20,6 +20,8 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -122,6 +124,8 @@ public class TestGwtTest extends GWTTestCase {
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.fake();
 
     public void testFormula() {
         final SpreadsheetEngine engine = engine();
@@ -364,6 +368,7 @@ public class TestGwtTest extends GWTTestCase {
                             Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,
+                            MEDIA_TYPE_DETECTOR,
                             BinaryNumberConverterFunctions.fake(),
                             SpreadsheetMetadataLoaders.fake(),
                             converterProvider,
@@ -423,6 +428,7 @@ public class TestGwtTest extends GWTTestCase {
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
+                        MEDIA_TYPE_DETECTOR,
                         BinaryNumberConverterFunctions.fake(),
                         SpreadsheetMetadataLoaders.empty(),
                         currencyContext.setLocaleContext(this.localeContext),

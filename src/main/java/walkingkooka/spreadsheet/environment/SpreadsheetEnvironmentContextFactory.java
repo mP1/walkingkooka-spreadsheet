@@ -37,6 +37,7 @@ import walkingkooka.environment.MissingEnvironmentValuesException;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -166,7 +167,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
 
-    public static SpreadsheetEnvironmentContextFactory with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetEnvironmentContextFactory with(final MediaTypeDetector mediaTypeDetector,
+                                                            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                             final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                             final CurrencyLocaleContext currencyLocaleContext,
                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -174,6 +176,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                             final ProviderContext providerContext) {
         return new SpreadsheetEnvironmentContextFactory(
             null, // Converter
+            Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector"),
             Objects.requireNonNull(multiplier, "multiplier"),
             Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader"),
             Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
@@ -193,6 +196,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
     private SpreadsheetEnvironmentContextFactory(final Converter<SpreadsheetConverterContext> converter,
+                                                 final MediaTypeDetector mediaTypeDetector,
                                                  final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                  final CurrencyLocaleContext currencyLocaleContext,
@@ -211,6 +215,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         super();
 
         this.converter = converter;
+
+        this.mediaTypeDetector = mediaTypeDetector;
 
         this.multiplier = multiplier;
 
@@ -328,6 +334,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 converter,
+                this.mediaTypeDetector,
                 this.multiplier,
                 SpreadsheetLabelNameResolvers.empty(),
                 this.spreadsheetMetadataLoader,
@@ -362,6 +369,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
     private final SpreadsheetMetadataLoader spreadsheetMetadataLoader;
+
+    private final MediaTypeDetector mediaTypeDetector;
 
     private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
@@ -617,6 +626,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                                                 final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new SpreadsheetEnvironmentContextFactory(
             this.converter,
+            this.mediaTypeDetector,
             this.multiplier,
             this.spreadsheetMetadataLoader,
             this.currencyLocaleContext,
@@ -774,6 +784,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return before == after ?
             this :
             with(
+                this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetMetadataLoader,
                 this.currencyLocaleContext,
@@ -795,6 +806,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     @Override
     public int hashCode() {
         return Objects.hash(
+            this.mediaTypeDetector,
             this.multiplier,
             this.spreadsheetMetadataLoader,
             this.currencyLocaleContext,
@@ -814,6 +826,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     private boolean equals0(final SpreadsheetEnvironmentContextFactory other) {
         return Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
             Objects.equals(this.jsonNodeUnmarshallContextPreProcessor, other.jsonNodeUnmarshallContextPreProcessor) &&
+            this.mediaTypeDetector.equals(other.mediaTypeDetector) &&
             this.multiplier.equals(other.multiplier) &&
             this.spreadsheetMetadataLoader.equals(other.spreadsheetMetadataLoader) &&
             this.currencyLocaleContext.equals(other.currencyLocaleContext) &&

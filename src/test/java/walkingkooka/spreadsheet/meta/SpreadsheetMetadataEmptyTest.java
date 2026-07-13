@@ -263,6 +263,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,

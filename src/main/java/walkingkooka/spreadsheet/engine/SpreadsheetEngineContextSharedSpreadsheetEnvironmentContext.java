@@ -102,6 +102,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             spreadsheetContextSupplier,
             currencyLocaleContext, // CurrencyContext
             SpreadsheetEnvironmentContextFactory.with(
+                mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataContext, // SpreadsheetMetadataLoader
                 currencyLocaleContext,

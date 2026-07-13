@@ -187,6 +187,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                     }
                 )
             ), // not used
+            MEDIA_TYPE_DETECTOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),

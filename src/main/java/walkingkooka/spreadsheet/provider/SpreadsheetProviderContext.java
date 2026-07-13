@@ -32,6 +32,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -61,12 +62,14 @@ final class SpreadsheetProviderContext implements ProviderContext,
     EnvironmentContextDelegator,
     ConverterContextDelegator {
 
-    static SpreadsheetProviderContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetProviderContext with(final MediaTypeDetector mediaTypeDetector,
+                                           final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                            final PluginStore pluginStore,
                                            final CurrencyLocaleContext currencyLocaleContext,
                                            final EnvironmentContext environmentContext,
                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return new SpreadsheetProviderContext(
+            Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector"),
             Objects.requireNonNull(multiplier, "multiplier"),
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
@@ -76,13 +79,16 @@ final class SpreadsheetProviderContext implements ProviderContext,
         );
     }
 
-    private SpreadsheetProviderContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    private SpreadsheetProviderContext(final MediaTypeDetector mediaTypeDetector,
+                                       final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                        final PluginStore pluginStore,
                                        final ConverterContext converterContext,
                                        final CurrencyLocaleContext currencyLocaleContext,
                                        final EnvironmentContext environmentContext,
                                        final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         super();
+
+        this.mediaTypeDetector = mediaTypeDetector;
 
         this.multiplier = multiplier;
         
@@ -136,6 +142,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             converter,
+            this.mediaTypeDetector,
             multiplier,
             SpreadsheetLabelNameResolvers.empty(),
             SpreadsheetMetadataLoaders.empty(), // dont support loading SpreadsheetMetadata from a ProviderContext
@@ -195,6 +202,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         return before == environmentContext ?
             this :
             new SpreadsheetProviderContext(
+                this.mediaTypeDetector,
                 this.multiplier,
                 this.pluginStore,
                 null, // recreate because environmentContext changed.
@@ -207,6 +215,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
     private final CurrencyLocaleContext currencyLocaleContext;
 
     private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
+
+    private final MediaTypeDetector mediaTypeDetector;
 
     // EnvironmentContextDelegator......................................................................................
 
@@ -264,6 +274,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
     @Override
     public int hashCode() {
         return Objects.hash(
+            this.mediaTypeDetector,
             this.pluginStore,
             this.environmentContext
         );
@@ -277,7 +288,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     private boolean equals0(final SpreadsheetProviderContext other) {
-        return this.multiplier.equals(other.multiplier) &&
+        return this.mediaTypeDetector.equals(other.mediaTypeDetector) &&
+            this.multiplier.equals(other.multiplier) &&
             this.pluginStore.equals(other.pluginStore) &&
             this.environmentContext.equals(other.environmentContext);
     }
@@ -285,6 +297,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
     @Override
     public String toString() {
         return ToStringBuilder.empty()
+            .label("mediaTypeDetector")
+            .value(this.mediaTypeDetector)
             .label("multiplier")
             .value(this.multiplier)
             .label("pluginStore")
