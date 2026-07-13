@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -130,6 +131,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         SpreadsheetConverters.system(),
+        MediaTypeDetectors.binary(),
         BinaryNumberConverterFunctions.multiply(), // multiplier
         SpreadsheetLabelNameResolvers.empty(),
         new SpreadsheetMetadataLoader() {

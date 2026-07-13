@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -44,6 +45,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                     final Optional<SpreadsheetValidationReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
+                                                    final MediaTypeDetector mediaTypeDetector,
                                                     final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                     final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
@@ -54,6 +56,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
             spreadsheetMetadata,
             validationReference,
             converter,
+            mediaTypeDetector,
             multiplier,
             spreadsheetLabelNameResolver,
             spreadsheetMetadataLoader,

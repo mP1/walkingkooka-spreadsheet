@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Binary;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -329,5 +331,18 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         return this.spreadsheetExpressionEvaluationContext()
             .validatorContext(reference);
+    }
+
+    // MediaTypeDetector................................................................................................
+
+    @Override
+    default MediaType detect(final String filename,
+                             final Binary content) {
+        // should be equivalent to StorageConverterContext#detect
+        return this.spreadsheetExpressionEvaluationContext()
+            .detect(
+                filename,
+                content
+            );
     }
 }

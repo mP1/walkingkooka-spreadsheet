@@ -36,6 +36,8 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -91,6 +93,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static SpreadsheetLabelNameResolver LABEL_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
+    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
+
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     private final static JsonNodeConverterContext JSON_NODE_CONVERTER_CONTEXT = JsonNodeConverterContexts.fake();
@@ -130,6 +134,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
@@ -148,6 +153,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 null,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
@@ -165,6 +171,26 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
+                null,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                HAS_USER_DIRECTORIES,
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
                 null,
                 MULTIPLIER,
                 LABEL_RESOLVER,
@@ -184,6 +210,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MEDIA_TYPE_DETECTOR,
                 null,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
@@ -202,6 +229,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 SPREADSHEET_METADATA_LOADER,
@@ -220,6 +248,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 null,
@@ -238,6 +267,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
@@ -256,6 +286,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
@@ -357,6 +388,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             SpreadsheetConverterContexts.NO_METADATA,
             VALIDATION_REFERENCE,
             CONVERTER,
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             LABEL_RESOLVER,
             SPREADSHEET_METADATA_LOADER,

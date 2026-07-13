@@ -27,6 +27,7 @@ import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -141,6 +142,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.system(),
+            MediaTypeDetectors.binary(),
             ExpressionNumberBinaryNumberConverterFunctions.multiply(),
             SpreadsheetLabelNameResolvers.empty(),
             SpreadsheetMetadataLoaders.fake(),

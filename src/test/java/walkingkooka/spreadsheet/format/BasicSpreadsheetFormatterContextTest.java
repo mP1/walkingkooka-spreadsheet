@@ -34,6 +34,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -285,6 +286,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 )
             )
         ),
+        MediaTypeDetectors.binary(),
         BinaryNumberConverterFunctions.multiply(), // multiplier
         LABEL_NAME_RESOLVER,
         new SpreadsheetMetadataLoader() {

@@ -110,6 +110,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
             mediaTypeDetector,
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
+                mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataContext, // SpreadsheetMetadataLoader
                 currencyLocaleContext,

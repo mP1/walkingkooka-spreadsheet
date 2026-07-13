@@ -47,6 +47,8 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.props.HasPropertiesTesting;
@@ -177,6 +179,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     private static final SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
@@ -946,6 +950,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -968,6 +973,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -990,6 +996,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 null,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1012,6 +1019,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1034,6 +1042,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1056,6 +1065,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1078,6 +1088,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 null,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1099,6 +1110,30 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
+                null,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
+                CONVERTER_PROVIDER,
+                CURRENCY_LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                CHARSET,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                HAS_USER_DIRECTORIES,
+                INDENTATION,
+                LABEL_NAME_RESOLVER,
+                LINE_ENDING,
                 null,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -1122,6 +1157,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1144,6 +1180,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 CONVERTER_PROVIDER,
@@ -1166,6 +1203,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 null,
@@ -1188,6 +1226,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1210,6 +1249,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1232,6 +1272,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
@@ -1314,6 +1355,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             INDENTATION,
             LABEL_NAME_RESOLVER,
             LINE_ENDING,
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
             ConverterProviders.converters(),

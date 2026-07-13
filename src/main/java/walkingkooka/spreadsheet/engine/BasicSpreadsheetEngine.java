@@ -828,6 +828,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context.indentation(),
                 context, // ConverterProvider
                 context.lineEnding(),
+                context, // mediaTypeDetector
                 context.multiplier(), // multiplier
                 context, // SpreadsheetLabelNameResolver
                 context, // SpreadsheetMetadataLoader
@@ -1902,6 +1903,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 context.indentation(),
                                 context, // SpreadsheetLabelNameResolver
                                 context.lineEnding(),
+                                context, // MediaTypeDetector
                                 context.multiplier(), // multiplier
                                 context, // SpreadsheetMetadataLoader,
                                 context, // ConverterProvider

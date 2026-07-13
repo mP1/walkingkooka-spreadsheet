@@ -26,6 +26,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
@@ -93,6 +94,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.system(),
+                MediaTypeDetectors.binary(),
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetMetadataLoaders.fake(),

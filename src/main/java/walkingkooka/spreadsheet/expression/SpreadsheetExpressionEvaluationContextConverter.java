@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
@@ -34,6 +35,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -135,6 +137,17 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
                                                             final SpreadsheetExpressionEvaluationContext context) {
         this.converter = converter;
         this.context = context;
+    }
+
+    // MediaTypeDetector................................................................................................
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.context.detect(
+            filename,
+            content
+        );
     }
 
     // Converter........................................................................................................

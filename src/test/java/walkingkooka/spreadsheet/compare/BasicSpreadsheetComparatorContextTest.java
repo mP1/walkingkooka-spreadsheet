@@ -32,6 +32,7 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -139,6 +140,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.objectToString(),
+        MediaTypeDetectors.binary(),
         BinaryNumberConverterFunctions.multiply(), // multiplier
         (label) -> {
             Objects.requireNonNull(label, "label");

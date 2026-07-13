@@ -53,6 +53,7 @@ import walkingkooka.math.HasMathContext;
 import walkingkooka.naming.HasOptionalName;
 import walkingkooka.net.header.HasContentType;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginSelectorLike;
@@ -1010,6 +1011,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                final Indentation indentation,
                                                                                final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                                final LineEnding lineEnding,
+                                                                               final MediaTypeDetector mediaTypeDetector,
                                                                                final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                                final SpreadsheetProvider spreadsheetProvider,
@@ -1023,6 +1025,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 hasUserDirectories,
                 indentation,
                 lineEnding,
+                mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 currencyLocaleContext,
@@ -1040,6 +1043,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                         final HasUserDirectories hasUserDirectories,
                                                                         final Indentation indentation,
                                                                         final LineEnding lineEnding,
+                                                                        final MediaTypeDetector mediaTypeDetector,
                                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                         final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                         final CurrencyLocaleContext currencyLocaleContext,
@@ -1053,6 +1057,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             indentation,
             labelNameResolver,
             lineEnding,
+            mediaTypeDetector,
             multiplier,
             spreadsheetMetadataLoader,
             converterProvider,
@@ -1085,6 +1090,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
+                                                                         final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
@@ -1098,6 +1104,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
@@ -1170,6 +1177,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             Optional.of(this),
             validationReference,
             converter,
+            mediaTypeDetector,
             multiplier,
             labelNameResolver,
             spreadsheetMetadataLoader,
@@ -1259,6 +1267,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
+                                                                         final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
@@ -1271,6 +1280,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
@@ -1301,6 +1311,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 indentation,
                 labelNameResolver,
                 lineEnding,
+                mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 spreadsheetProvider,
@@ -1341,6 +1352,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final Indentation indentation,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final LineEnding lineEnding,
+                                                                                                       final MediaTypeDetector mediaTypeDetector,
                                                                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                                        final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                                                        final CurrencyLocaleContext currencyLocaleContext,
@@ -1355,6 +1367,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 indentation,
                 labelNameResolver,
                 lineEnding,
+                mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 currencyLocaleContext,
@@ -1462,6 +1475,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
+                                                                         final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
@@ -1475,6 +1489,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
@@ -1494,6 +1509,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 indentation,
                 labelNameResolver,
                 lineEnding,
+                mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 converterProvider,

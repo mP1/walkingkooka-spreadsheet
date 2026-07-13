@@ -150,6 +150,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     this.indentation(),
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
+                    spreadsheetContext, // MediaTypeDetector
                     spreadsheetContext.multiplier(),
                     spreadsheetContext, // SpreadsheetMetadataLoader
                     spreadsheetContext, // CurrencyLocaleContext
@@ -333,6 +334,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                 this.indentation(),
                 this, // SpreadsheetLabelNameResolver,
                 this.lineEnding(),
+                context, // MediaTypeDetector
                 context.multiplier(),
                 context, // SpreadsheetMetadataContext
                 context, // CurrencyLocaleContext

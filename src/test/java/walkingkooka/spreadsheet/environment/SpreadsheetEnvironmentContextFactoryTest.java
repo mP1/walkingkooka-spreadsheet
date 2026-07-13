@@ -29,6 +29,7 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
@@ -212,10 +213,27 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // with.............................................................................................................
 
     @Test
+    public void testWithNullMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                null,
+                MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -231,6 +249,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
@@ -246,6 +265,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 null,
@@ -261,6 +281,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -277,6 +298,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -292,6 +314,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -747,6 +770,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     private SpreadsheetEnvironmentContextFactory createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                final ProviderContext providerContext) {
         return SpreadsheetEnvironmentContextFactory.with(
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
             CURRENCY_LOCALE_CONTEXT,
@@ -835,9 +859,25 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentMediaTypeDetector() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                MediaTypeDetectors.fake(),
+                MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentMultiplier() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.fake(),
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -852,6 +892,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentSpreadsheetMetadataLoader() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SpreadsheetMetadataLoaders.fake(),
                 CURRENCY_LOCALE_CONTEXT,
@@ -866,6 +907,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CurrencyLocaleContexts.fake(),
@@ -889,6 +931,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -903,6 +946,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentSpreadsheetProvider() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -917,6 +961,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentProviderContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CURRENCY_LOCALE_CONTEXT,

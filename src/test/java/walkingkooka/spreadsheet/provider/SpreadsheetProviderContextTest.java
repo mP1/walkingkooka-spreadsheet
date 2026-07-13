@@ -34,6 +34,8 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.plugin.store.PluginStores;
@@ -63,6 +65,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext> {
 
     private final static Charset CHARSET = StandardCharsets.UTF_8;
+
+    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
 
@@ -133,10 +137,26 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     // with.............................................................................................................
 
     @Test
+    public void testWithNullMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetProviderContext.with(
+                null,
+                MULTIPLIER,
+                PLUGIN_STORE,
+                CURRENCY_LOCALE_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 null,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -151,6 +171,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
@@ -165,6 +186,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 null,
@@ -179,6 +201,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -193,6 +216,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -330,6 +354,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     private SpreadsheetProviderContext createContext(final EnvironmentContext environmentContext) {
         return SpreadsheetProviderContext.with(
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             PLUGIN_STORE,
             CURRENCY_LOCALE_CONTEXT,
@@ -363,9 +388,24 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentMediaTypeDetector() {
+        this.checkNotEquals(
+            SpreadsheetProviderContext.with(
+                MediaTypeDetectors.fake(),
+                MULTIPLIER,
+                PLUGIN_STORE,
+                CURRENCY_LOCALE_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentBinaryNumberConverterFunction() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.fake(),
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -379,6 +419,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentPluginStore() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PluginStores.fake(),
                 CURRENCY_LOCALE_CONTEXT,
@@ -392,6 +433,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CurrencyContexts.fake()
@@ -411,6 +453,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -424,6 +467,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentJsonNodeMarshallUnmarshallContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,

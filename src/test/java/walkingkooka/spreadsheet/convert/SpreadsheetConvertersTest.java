@@ -61,6 +61,8 @@ import walkingkooka.math.HasOptionalDecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -153,6 +155,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
+
+    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.fake();
 
     // basic............................................................................................................
 
@@ -4187,6 +4191,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used
+            MEDIA_TYPE_DETECTOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),
@@ -4552,6 +4557,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used
+            MEDIA_TYPE_DETECTOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),

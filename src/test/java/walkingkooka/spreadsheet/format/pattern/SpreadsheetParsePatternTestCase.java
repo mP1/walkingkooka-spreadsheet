@@ -30,6 +30,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.FakeDecimalNumberContext;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -870,6 +871,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+            MediaTypeDetectors.fake(),
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(),
             SpreadsheetMetadataLoaders.fake(),

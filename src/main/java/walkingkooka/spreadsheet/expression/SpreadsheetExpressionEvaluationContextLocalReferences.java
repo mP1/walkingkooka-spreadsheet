@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Binary;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
@@ -33,6 +34,7 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -114,6 +116,15 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
         super();
         this.localReferenceToValues = localReferenceToValues;
         this.context = context;
+    }
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.context.detect(
+            filename,
+            content
+        );
     }
 
     @Override

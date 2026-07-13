@@ -38,6 +38,8 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.HasContentTypeTesting;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -132,6 +134,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     final static LineEnding LINE_ENDING = LineEnding.NL;
+
+    final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
@@ -808,6 +812,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -831,6 +836,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -854,6 +860,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -877,6 +884,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -900,6 +908,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -923,6 +932,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     null,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -946,6 +956,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     null,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -968,6 +979,31 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
+                    null,
+                    MEDIA_TYPE_DETECTOR,
+                    MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
+                    CONVERTER_PROVIDER,
+                    CURRENCY_LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    CHARSET,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    HAS_USER_DIRECTORIES,
+                    INDENTATION,
+                    LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     null,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
@@ -992,6 +1028,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     null,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -1015,6 +1052,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     null,
                     CONVERTER_PROVIDER,
@@ -1038,6 +1076,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     null,
@@ -1061,6 +1100,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
@@ -1084,6 +1124,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,

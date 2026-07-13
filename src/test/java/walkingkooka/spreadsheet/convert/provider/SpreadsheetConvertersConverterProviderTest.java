@@ -231,6 +231,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.system(),
+                MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetMetadataLoaders.fake(),

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
@@ -34,6 +35,8 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -204,6 +207,16 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         TestSpreadsheetConverterContext(final Converter<SpreadsheetConverterContext> converter) {
             this.converter = converter;
+        }
+
+        @Override
+        public MediaType detect(final String filename,
+                                final Binary content) {
+            return MediaTypeDetectors.binary()
+                .detect(
+                    filename,
+                    content
+                );
         }
 
         @Override
