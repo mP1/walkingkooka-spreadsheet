@@ -36,6 +36,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.naming.HasOptionalNameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.header.MediaTypeDetector;
@@ -89,6 +90,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     ClassTesting2<SpreadsheetMetadata>,
     ConverterTesting,
     HasContentTypeTesting,
+    HasOptionalNameTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
     HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,

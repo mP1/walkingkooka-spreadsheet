@@ -182,10 +182,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 name
             )
         );
-        this.checkEquals(
-            Optional.of(name),
-            metadata.name(),
-            "name"
+        this.nameAndCheck(
+            metadata,
+            name
         );
     }
 
