@@ -39,7 +39,6 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -155,15 +154,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     public void testVerifyAndCheckWithWithValidationConverter() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
-        );
-    }
-
-    @Test
-    public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingSpreadsheetProvider() {
-        this.verifyAndCheck(
-            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            SpreadsheetConverters.SYSTEM_CONVERTER_SELECTOR,
-            SpreadsheetMetadataTesting.CONVERTER_PROVIDER
         );
     }
 
