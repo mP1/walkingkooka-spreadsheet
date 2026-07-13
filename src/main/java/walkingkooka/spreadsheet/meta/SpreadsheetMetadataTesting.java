@@ -346,7 +346,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             FormHandlerAliasSet.EMPTY
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, properties, template, net, json, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET

@@ -790,7 +790,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.toStringAndCheck(
             converter,
-            "formulaConverter: collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, properties, template, net, basic)"
+            "formulaConverter: collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)"
         );
     }
 
@@ -1882,7 +1882,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
                         "formattingConverter=collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, plugins, properties, style, text-node, template, net, basic)\n" +
                         "formattingFunctions=\n" +
-                        "formulaConverter=collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, properties, template, net, json, basic)\n" +
+                        "formulaConverter=collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n\n" +
                         "formulaFunctions=\n" +
                         "functions=\n" +
                         "importers=collection, empty, json\n" +
@@ -2060,7 +2060,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
                 "formattingConverter=collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, plugins, properties, style, text-node, template, net, basic)\n" +
                 "formattingFunctions=\n" +
-                "formulaConverter=collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, properties, template, net, json, basic)\n" +
+                "formulaConverter=collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
                 "formulaFunctions=\n" +
                 "functions=\n" +
                 "importers=collection, empty, json\n" +

@@ -917,7 +917,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  formHandlers\n" +
                 "  formulaConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, properties, template, net, json, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
                 "  formulaFunctions\n" +
                 "  functions\n" +
                 "  importers\n" +
