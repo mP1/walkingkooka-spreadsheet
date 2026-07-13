@@ -19,17 +19,11 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterLikeTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.storage.StorageContextTesting;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.StorageValue;
-import walkingkooka.storage.StorageValueInfo;
-
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -380,81 +374,6 @@ public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageC
         );
     }
 
-    // loadStorage......................................................................................................
-
-    default void loadStorageAndCheck(final C context,
-                                     final StoragePath path) {
-        this.loadStorageAndCheck(
-            context,
-            path,
-            Optional.empty()
-        );
-    }
-
-    default void loadStorageAndCheck(final C context,
-                                     final StoragePath path,
-                                     final StorageValue expected) {
-        this.loadStorageAndCheck(
-            context,
-            path,
-            Optional.of(expected)
-        );
-    }
-
-    default void loadStorageAndCheck(final C context,
-                                     final StoragePath path,
-                                     final Optional<StorageValue> expected) {
-        this.checkEquals(
-            expected,
-            context.loadStorage(path),
-            () -> " loadStorage " + path
-        );
-    }
-
-    // saveStorage......................................................................................................
-
-    default void saveStorageAndCheck(final C context,
-                                     final StorageValue value,
-                                     final StorageValue expected) {
-        this.checkEquals(
-            expected,
-            context.saveStorage(value),
-            () -> " saveStorage " + value
-        );
-    }
-
-    // listStorage......................................................................................................
-
-    default void listStorageAndCheck(final C context,
-                                     final StoragePath parent,
-                                     final int offset,
-                                     final int count,
-                                     final StorageValueInfo... expected) {
-        this.listStorageAndCheck(
-            context,
-            parent,
-            offset,
-            count,
-            Lists.of(expected)
-        );
-    }
-
-    default void listStorageAndCheck(final C context,
-                                     final StoragePath parent,
-                                     final int offset,
-                                     final int count,
-                                     final List<StorageValueInfo> expected) {
-        this.checkEquals(
-            expected,
-            context.listStorage(
-                parent,
-                offset,
-                count
-            ),
-            () -> "listStorage parent=" + parent + " offset=" + offset + " count=" + count
-        );
-    }
-    
     // ConverterLike....................................................................................................
 
     @Override
