@@ -238,7 +238,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testFromEnvironmentValueNameWithRoundingMode() {
-        System.out.println(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         this.fromEnvironmentValueNameAndCheck(
             SpreadsheetMetadataPropertyName.ROUNDING_MODE
         );
