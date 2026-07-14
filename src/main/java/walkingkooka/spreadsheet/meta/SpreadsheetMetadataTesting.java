@@ -101,7 +101,7 @@ import walkingkooka.terminal.server.FakeTerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContext;
 import walkingkooka.text.BinaryTextContext;
 import walkingkooka.text.BinaryTextPrinting;
-import walkingkooka.text.LineEnding;
+import walkingkooka.text.HasLineEndingTesting;
 import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.Printers;
@@ -141,6 +141,7 @@ import java.util.function.Function;
  */
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends HasCharsetTesting,
+    HasLineEndingTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -479,8 +480,6 @@ public interface SpreadsheetMetadataTesting extends HasCharsetTesting,
             return HOME_DIRECTORY;
         }
     };
-
-    LineEnding LINE_ENDING = EOL;
 
     TextPrinting TEXT_CONTEXT = TextPrinting.with(
         INDENTATION,

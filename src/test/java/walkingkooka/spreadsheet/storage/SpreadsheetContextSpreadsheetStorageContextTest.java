@@ -69,7 +69,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -928,7 +927,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 LOCALE,
                 () -> LocalDateTime.MIN,
                 EnvironmentContext.ANONYMOUS

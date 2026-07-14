@@ -511,6 +511,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
 
         final LineEnding lineEnding = LineEnding.CRNL;
+        this.checkNotEquals(
+            LINE_ENDING,
+            lineEnding,
+            "different LineEnding"
+        );
 
         this.checkNotEquals(
             LINE_ENDING,

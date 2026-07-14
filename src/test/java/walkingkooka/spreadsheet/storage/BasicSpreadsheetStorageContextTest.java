@@ -74,7 +74,6 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.Form;
@@ -1165,7 +1164,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 locale,
                 () -> LocalDateTime.MIN,
                 Optional.of(

@@ -498,7 +498,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
                 StandardCharsets.UTF_8,
                 Currency.getInstance("AUD"),
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 LOCALE_CONTEXT.locale(),
                 HAS_NOW,
                 Optional.of(

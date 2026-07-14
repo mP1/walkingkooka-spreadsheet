@@ -101,8 +101,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
 
-    private final static LineEnding LINE_ENDING = LineEnding.NL;
-
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
     private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;

@@ -650,7 +650,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
                                     @Override
                                     public LineEnding lineEnding() {
-                                        return LineEnding.NL;
+                                        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest.LINE_ENDING;
                                     }
 
                                     @Override

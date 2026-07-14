@@ -47,7 +47,6 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
@@ -77,8 +76,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     };
 
     private final static SpreadsheetId OTHER_SPREADSHEET_ID = SpreadsheetId.with(999);
-
-    private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     private final static Locale OTHER_SPREADSHEET_LOCALE = Locale.FRANCE;
 

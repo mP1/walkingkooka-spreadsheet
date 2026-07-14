@@ -47,7 +47,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -401,7 +400,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         TextPrinting.with(
                             INDENTATION,
-                            LineEnding.NL
+                            LINE_ENDING
                         ).setCharset(CHARSET),
                         new FakeCurrencyContext() {
 

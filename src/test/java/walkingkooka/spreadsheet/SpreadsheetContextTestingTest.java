@@ -302,7 +302,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
         @Override
         public LineEnding lineEnding() {
-            return LineEnding.NL;
+            return SpreadsheetContextTestingTest.LINE_ENDING;
         }
 
         @Override

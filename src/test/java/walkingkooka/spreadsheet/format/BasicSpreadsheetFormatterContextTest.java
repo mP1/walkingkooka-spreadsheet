@@ -55,7 +55,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -313,7 +312,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     TextPrinting.with(
                         INDENTATION,
-                        LineEnding.NL
+                        LINE_ENDING
                     ).setCharset(CHARSET),
                     CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,

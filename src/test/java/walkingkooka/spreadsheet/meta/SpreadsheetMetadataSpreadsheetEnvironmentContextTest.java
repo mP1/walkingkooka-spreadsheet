@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -69,7 +68,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 Locale.FRENCH,
                 () -> NOW,
                 Optional.of(USER)
@@ -243,7 +242,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                         CHARSET,
                         CURRENCY,
                         INDENTATION,
-                        LineEnding.NL,
+                        LINE_ENDING,
                         Locale.FRENCH,
                         () -> NOW,
                         Optional.of(USER)
@@ -275,7 +274,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                         CHARSET,
                         CURRENCY,
                         INDENTATION,
-                        LineEnding.NL,
+                        LINE_ENDING,
                         Locale.FRENCH,
                         () -> NOW,
                         Optional.of(USER)

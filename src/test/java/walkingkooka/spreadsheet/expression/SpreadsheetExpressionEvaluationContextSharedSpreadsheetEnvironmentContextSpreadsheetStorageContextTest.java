@@ -66,7 +66,6 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
@@ -1145,7 +1144,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 locale,
                 () -> LocalDateTime.MIN,
                 Optional.of(
