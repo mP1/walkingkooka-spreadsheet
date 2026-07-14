@@ -40,8 +40,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -156,10 +154,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     ',', // valueSeparator
                     Converters.objectToString(),
                     BinaryNumberConverterFunctions.fake(), // multiplier
-                    TextPrinting.with(
-                        Indentation.SPACES2,
-                        LINE_ENDING
-                    ).setCharset(CHARSET),
+                    BINARY_TEXT_CONTEXT,
                     new FakeCurrencyContext() {
 
                         @Override
