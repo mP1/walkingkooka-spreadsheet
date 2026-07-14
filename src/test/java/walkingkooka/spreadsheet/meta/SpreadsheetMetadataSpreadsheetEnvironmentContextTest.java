@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
@@ -49,8 +48,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
-
-    private final static Indentation INDENTATION = Indentation.SPACES4;
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -578,7 +575,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
+            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
         );
     }
 
@@ -921,7 +918,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    empty\n" +
                 "    json\n" +
                 "  indentation\n" +
-                "    \"    \" (walkingkooka.text.Indentation)\n" +
+                "    \"  \" (walkingkooka.text.Indentation)\n" +
                 "  lineEnding\n" +
                 "    \"\\n\"\n" +
                 "  locale\n" +
