@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -251,7 +250,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                             BinaryNumberConverterFunctions.fake(), // multiplier
                             TextPrinting.with(
                                 INDENTATION,
-                                LineEnding.NL
+                                LINE_ENDING
                             ).setCharset(CHARSET),
                             new FakeCurrencyContext() {
 

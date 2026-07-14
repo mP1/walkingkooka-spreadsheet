@@ -49,7 +49,6 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
-    private final static LineEnding LINE_ENDING = LineEnding.NL;
     private final static Locale LOCALE = Locale.GERMAN;
     private final static LocalDateTime NOW = LocalDateTime.MIN;
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
@@ -130,7 +129,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 Locale.FRENCH,
                 () -> LocalDateTime.MIN,
                 Optional.of(
@@ -158,7 +157,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 Locale.FRENCH,
                 hasNow,
                 Optional.of(

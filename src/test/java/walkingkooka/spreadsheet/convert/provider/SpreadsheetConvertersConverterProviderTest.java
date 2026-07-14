@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -247,7 +246,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                             BinaryNumberConverterFunctions.fake(), // multiplier
                             TextPrinting.with(
                                 INDENTATION,
-                                LineEnding.NL
+                                LINE_ENDING
                             ).setCharset(CHARSET),
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(

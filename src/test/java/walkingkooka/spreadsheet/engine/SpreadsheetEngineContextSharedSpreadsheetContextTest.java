@@ -1333,7 +1333,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 Locale.forLanguageTag("en-AU"),
                 LocalDateTime::now,
                 EnvironmentContext.ANONYMOUS

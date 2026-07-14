@@ -203,7 +203,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         
         @Override
         public LineEnding lineEnding() {
-            return LineEnding.NL;
+            return SpreadsheetContextDelegatorTest.LINE_ENDING;
         }
 
         @Override

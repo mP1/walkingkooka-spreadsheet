@@ -44,7 +44,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -158,7 +157,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     TextPrinting.with(
                         INDENTATION,
-                        LineEnding.NL
+                        LINE_ENDING
                     ).setCharset(CHARSET),
                     CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,

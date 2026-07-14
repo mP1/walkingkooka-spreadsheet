@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegat
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -117,7 +116,7 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
                     StandardCharsets.UTF_8,
                     Currency.getInstance("AUD"),
                     Indentation.SPACES4,
-                    LineEnding.NL,
+                    SpreadsheetEnvironmentContextDelegatorTest.LINE_ENDING,
                     Locale.ENGLISH,
                     () -> LocalDateTime.MIN,
                     EnvironmentContext.ANONYMOUS

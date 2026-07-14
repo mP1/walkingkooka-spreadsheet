@@ -62,7 +62,6 @@ import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -590,7 +589,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 CHARSET,
                 Currency.getInstance("AUD"),
                 Indentation.SPACES4,
-                LineEnding.NL,
+                LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
                 Optional.of(

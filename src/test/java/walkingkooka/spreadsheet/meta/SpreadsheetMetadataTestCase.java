@@ -61,7 +61,6 @@ import walkingkooka.storage.FakeHasUserDirectories;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.json.JsonNode;
@@ -130,8 +129,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     };
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
-
-    final static LineEnding LINE_ENDING = LineEnding.NL;
 
     final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 

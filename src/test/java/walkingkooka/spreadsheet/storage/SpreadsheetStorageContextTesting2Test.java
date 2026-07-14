@@ -225,7 +225,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
                     StandardCharsets.UTF_8,
                     Currency.getInstance("AUD"),
                     Indentation.SPACES4,
-                    LineEnding.NL,
+                    SpreadsheetStorageContextTesting2Test.LINE_ENDING,
                     Locale.ENGLISH,
                     () -> LocalDateTime.MIN,
                     EnvironmentContext.ANONYMOUS

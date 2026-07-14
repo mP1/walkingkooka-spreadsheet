@@ -68,7 +68,6 @@ import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -758,7 +757,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 CHARSET,
                 Currency.getInstance("AUD"),
                 Indentation.SPACES4,
-                LineEnding.NL,
+                LINE_ENDING,
                 LOCALE,
                 () -> LocalDateTime.MIN,
                 Optional.of(USER)

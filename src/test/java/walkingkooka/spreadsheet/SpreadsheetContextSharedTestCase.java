@@ -63,7 +63,6 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -96,8 +95,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final static Currency CURRENCY = Currency.getInstance("AUD");
 
     final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
-
-    final static LineEnding LINE_ENDING = LineEnding.NL;
 
     final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
@@ -316,7 +313,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 Locale.ENGLISH,
                 HAS_NOW,
                 EnvironmentContext.ANONYMOUS
@@ -345,7 +342,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
                 CHARSET,
                 CURRENCY,
                 INDENTATION,
-                LineEnding.NL,
+                LINE_ENDING,
                 Locale.ENGLISH,
                 HAS_NOW,
                 EnvironmentContext.ANONYMOUS

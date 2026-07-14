@@ -596,7 +596,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                         StandardCharsets.UTF_8,
                         Currency.getInstance("AUD"),
                         Indentation.SPACES4,
-                        LineEnding.NL,
+                        BasicSpreadsheetFormHandlerContextTest.LINE_ENDING,
                         Locale.ENGLISH,
                         () -> LocalDateTime.MIN,
                         EnvironmentContext.ANONYMOUS
