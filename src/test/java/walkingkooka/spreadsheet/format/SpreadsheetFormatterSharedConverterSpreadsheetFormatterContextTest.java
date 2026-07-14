@@ -55,7 +55,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -160,7 +159,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                     TextPrinting.with(
                         INDENTATION,
                         LineEnding.NL
-                    ).setCharset(StandardCharsets.UTF_8),
+                    ).setCharset(CHARSET),
                     CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT

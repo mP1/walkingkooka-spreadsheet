@@ -100,7 +100,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
         final SpreadsheetConverterContext converterContext = METADATA_EN_AU.spreadsheetConverterContext(
             SpreadsheetMetadata.NO_CELL,
-            CHARSET,
+            SpreadsheetMetadataTestingTest.CHARSET,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             HasUserDirectorieses.empty(), // no current working directory

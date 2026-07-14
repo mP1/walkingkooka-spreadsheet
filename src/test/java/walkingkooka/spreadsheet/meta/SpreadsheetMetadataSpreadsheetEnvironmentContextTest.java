@@ -36,8 +36,6 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -49,8 +47,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
-
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
 

@@ -575,7 +575,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
-                    CHARSET,
+                    SpreadsheetEnvironmentContextFactoryTest.CHARSET,
                     CURRENCY,
                     INDENTATION,
                     LINE_ENDING,

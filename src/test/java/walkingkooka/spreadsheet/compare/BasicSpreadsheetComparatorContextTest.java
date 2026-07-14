@@ -52,7 +52,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -161,7 +160,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     TextPrinting.with(
                         Indentation.SPACES2,
                         LineEnding.NL
-                    ).setCharset(StandardCharsets.UTF_8),
+                    ).setCharset(CHARSET),
                     new FakeCurrencyContext() {
 
                         @Override

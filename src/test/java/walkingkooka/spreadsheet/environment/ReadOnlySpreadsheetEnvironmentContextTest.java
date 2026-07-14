@@ -35,8 +35,6 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -50,7 +48,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<ReadOnlySpreadsheetEnvironmentContext>,
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
     private final static Currency CURRENCY = Currency.getInstance("AUD");
     private final static LineEnding LINE_ENDING = LineEnding.NL;
     private final static Locale LOCALE = Locale.GERMAN;
