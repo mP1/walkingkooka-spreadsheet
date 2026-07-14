@@ -344,13 +344,11 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
-                            this.charset(),
                             dateOffset,
-                            spreadsheetEnvironmentContext.indentation(),
-                            spreadsheetEnvironmentContext.lineEnding(),
                             valueSeparator, // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
+                            spreadsheetEnvironmentContext, // BinaryTextContext
                             currencyLocaleContext,
                             dateTimeContext,
                             decimalNumberContext

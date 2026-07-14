@@ -43,8 +43,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -241,13 +241,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
-                            CHARSET,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            Indentation.SPACES2,
-                            LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
+                            TextPrinting.with(
+                                INDENTATION,
+                                LineEnding.NL
+                            ).setCharset(CHARSET),
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(
                                 LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)

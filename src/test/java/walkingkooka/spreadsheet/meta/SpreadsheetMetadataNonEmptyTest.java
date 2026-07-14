@@ -88,6 +88,7 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -1430,13 +1431,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
-                            CHARSET,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            Indentation.SPACES2,
-                            LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
+                            TextPrinting.with(
+                                INDENTATION,
+                                LINE_ENDING
+                            ).setCharset(CHARSET),
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(
                                 DateTimeSymbols.fromDateFormatSymbols(

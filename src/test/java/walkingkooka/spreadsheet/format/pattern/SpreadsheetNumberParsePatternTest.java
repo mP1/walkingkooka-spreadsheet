@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -1267,13 +1268,14 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        StandardCharsets.UTF_8,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
-                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
+                        TextPrinting.with(
+                            INDENTATION,
+                            LineEnding.NL
+                        ).setCharset(StandardCharsets.UTF_8),
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // DateTimeContext unused
                         this.decimalNumberContext()

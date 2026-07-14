@@ -152,13 +152,11 @@ final class SpreadsheetProviderContext implements ProviderContext,
                     Cast.to(multiplier), // ExpressionNumberConverterContext
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        this.charset(),
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
-                        environmentContext.indentation(),
-                        environmentContext.lineEnding(),
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
                         Cast.to(multiplier),
+                        environmentContext, // BinaryTextContext
                         this.currencyLocaleContext,
                         DateTimeContexts.basic(
                             currencyLocaleContext.dateTimeSymbolsForLocale(locale)

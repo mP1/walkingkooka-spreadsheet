@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -398,13 +399,14 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                     ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        CHARSET,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
-                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
+                        TextPrinting.with(
+                            INDENTATION,
+                            LineEnding.NL
+                        ).setCharset(CHARSET),
                         new FakeCurrencyContext() {
 
                             @Override

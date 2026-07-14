@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -152,13 +153,14 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                     ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        StandardCharsets.UTF_8,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
-                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(),
+                        TextPrinting.with(
+                            INDENTATION,
+                            LineEnding.NL
+                        ).setCharset(StandardCharsets.UTF_8),
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.american(MathContext.UNLIMITED)

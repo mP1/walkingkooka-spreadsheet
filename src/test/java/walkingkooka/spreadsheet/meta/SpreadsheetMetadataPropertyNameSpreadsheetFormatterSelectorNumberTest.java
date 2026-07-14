@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -165,13 +166,14 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
-                            StandardCharsets.UTF_8,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            Indentation.SPACES2,
-                            lineEnding,
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(),
+                            TextPrinting.with(
+                                Indentation.SPACES2,
+                                lineEnding
+                            ).setCharset(StandardCharsets.UTF_8),
                             new FakeCurrencyContext() {
                                 @Override
                                 public Optional<Currency> currencyForLocale(final Locale locale) {
