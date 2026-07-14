@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.Indentation;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -104,13 +104,14 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
-                            SpreadsheetMetadataTesting.CHARSET,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            Indentation.SPACES2,
-                            SpreadsheetMetadataTesting.LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
+                            TextPrinting.with(
+                                SpreadsheetMetadataTesting.INDENTATION,
+                                SpreadsheetMetadataTesting.LINE_ENDING
+                            ).setCharset(SpreadsheetMetadataTesting.CHARSET),
                             CurrencyContexts.fake()
                                 .setLocaleContext(
                                     LocaleContexts.jre(locale)

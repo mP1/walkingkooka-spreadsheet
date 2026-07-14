@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -3049,13 +3050,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             BinaryNumberConverterFunctions.multiply(),
             ConverterContexts.basic(
                 false, // canNumbersHaveGroupSeparator
-                StandardCharsets.UTF_8,
                 Converters.JAVA_EPOCH_OFFSET,
-                INDENTATION,
-                LineEnding.NL,
                 ',', // valueSeparator
                 Converters.fake(),
                 BinaryNumberConverterFunctions.fake(), // multiplier
+                TextPrinting.with(
+                    INDENTATION,
+                    LineEnding.NL
+                ).setCharset(StandardCharsets.UTF_8),
                 new FakeCurrencyContext() {
                     @Override
                     public Optional<Currency> currencyForLocale(final Locale locale) {

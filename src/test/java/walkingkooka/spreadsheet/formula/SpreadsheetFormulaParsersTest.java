@@ -88,6 +88,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
@@ -4266,13 +4267,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
-                            StandardCharsets.UTF_8,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            Indentation.SPACES2,
-                            LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
+                            TextPrinting.with(
+                                Indentation.SPACES2,
+                                LineEnding.NL
+                            ).setCharset(StandardCharsets.UTF_8),
                             CurrencyLocaleContexts.fake(),
                             dateTimeContext(),
                             decimalNumberContext()

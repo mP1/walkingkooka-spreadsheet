@@ -65,7 +65,7 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.Indentation;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -197,13 +197,14 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        CHARSET,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        Indentation.SPACES2,
-                        LINE_ENDING,
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
+                        TextPrinting.with(
+                            INDENTATION,
+                            LINE_ENDING
+                        ).setCharset(CHARSET),
                         CurrencyLocaleContexts.fake()
                             .setLocaleContext(
                                 LocaleContexts.jre(locale)

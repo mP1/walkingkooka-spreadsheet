@@ -99,6 +99,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.HasText;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -4201,13 +4202,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        CHARSET,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
-                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
+                        TextPrinting.with(
+                            INDENTATION,
+                            LineEnding.NL
+                        ).setCharset(CHARSET),
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.basic(
                             DateTimeSymbols.fromDateFormatSymbols(
@@ -4567,13 +4569,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        CHARSET,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
-                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
+                        TextPrinting.with(
+                            INDENTATION,
+                            LineEnding.NL
+                        ).setCharset(CHARSET),
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers
                         DecimalNumberContexts.american(MathContext.DECIMAL32)

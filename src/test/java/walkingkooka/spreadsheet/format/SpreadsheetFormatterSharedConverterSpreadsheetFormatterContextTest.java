@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -152,13 +153,14 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                 BinaryNumberConverterFunctions.multiply(), // multiplier
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
-                    StandardCharsets.UTF_8,
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                    INDENTATION,
-                    LineEnding.NL,
                     ',', // valueSeparator
                     Converters.fake(),
                     BinaryNumberConverterFunctions.fake(), // multiplier
+                    TextPrinting.with(
+                        INDENTATION,
+                        LineEnding.NL
+                    ).setCharset(StandardCharsets.UTF_8),
                     CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT

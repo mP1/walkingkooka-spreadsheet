@@ -111,6 +111,7 @@ import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.text.HasText;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -1187,13 +1188,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     BinaryNumberConverterFunctions.fake(),
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        charset,
                         dateOffset,
-                        indentation,
-                        lineEnding,
                         valueSeparator, // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(),
+                        TextPrinting.with(
+                            indentation,
+                            lineEnding
+                        ).setCharset(charset),
                         currencyLocaleContext,
                         dateTimeContext,
                         decimalNumberContext
