@@ -70,8 +70,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -85,8 +83,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetContextShared> implements SpreadsheetContextTesting<C>,
     ToStringTesting<C>,
     ThrowableTesting {
-
-    final static Charset CHARSET = StandardCharsets.UTF_8;
 
     final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 

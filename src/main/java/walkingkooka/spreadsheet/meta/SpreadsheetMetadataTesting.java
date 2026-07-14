@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.HasCharsetTesting;
 import walkingkooka.color.Color;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converters;
@@ -125,8 +126,6 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -141,9 +140,8 @@ import java.util.function.Function;
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
  */
 @GwtIncompatible
-public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
-
-    Charset CHARSET = StandardCharsets.UTF_8;
+public interface SpreadsheetMetadataTesting extends HasCharsetTesting,
+    TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
 

@@ -62,8 +62,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -74,8 +72,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext>,
     DecimalNumberContextDelegator {
-
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static HasUserDirectories HAS_USER_DIRECTORIES = HasUserDirectorieses.fake();
 

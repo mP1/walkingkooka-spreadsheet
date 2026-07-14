@@ -80,8 +80,6 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -90,8 +88,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext> {
-
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
 

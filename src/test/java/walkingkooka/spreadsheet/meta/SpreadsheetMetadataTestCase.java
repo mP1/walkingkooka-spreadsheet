@@ -73,8 +73,6 @@ import walkingkooka.tree.text.WordWrap;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.provider.ValidatorSelector;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -98,8 +96,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     ToStringTesting<SpreadsheetMetadata>,
     TreePrintableTesting,
     SpreadsheetEnvironmentContextTesting {
-
-    final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {
         throw new UnsupportedOperationException();

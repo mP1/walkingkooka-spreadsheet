@@ -69,7 +69,6 @@ import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -315,7 +314,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                     TextPrinting.with(
                         INDENTATION,
                         LineEnding.NL
-                    ).setCharset(StandardCharsets.UTF_8),
+                    ).setCharset(CHARSET),
                     CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT
