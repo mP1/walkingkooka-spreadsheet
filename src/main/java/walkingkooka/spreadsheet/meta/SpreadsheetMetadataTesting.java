@@ -98,7 +98,10 @@ import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.terminal.server.FakeTerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContext;
+import walkingkooka.text.BinaryTextContext;
+import walkingkooka.text.BinaryTextPrinting;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -480,6 +483,16 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     };
 
     LineEnding LINE_ENDING = EOL;
+
+    TextPrinting TEXT_CONTEXT = TextPrinting.with(
+        INDENTATION,
+        LINE_ENDING
+    );
+
+    BinaryTextContext BINARY_TEXT_CONTEXT = BinaryTextPrinting.with(
+        CHARSET,
+        TEXT_CONTEXT
+    );
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
