@@ -65,7 +65,6 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -201,10 +200,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        TextPrinting.with(
-                            INDENTATION,
-                            LINE_ENDING
-                        ).setCharset(CHARSET),
+                        BINARY_TEXT_CONTEXT,
                         CurrencyLocaleContexts.fake()
                             .setLocaleContext(
                                 LocaleContexts.jre(locale)

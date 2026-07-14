@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
-import walkingkooka.HasCharsetTesting;
 import walkingkooka.color.Color;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converters;
@@ -99,10 +98,7 @@ import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.terminal.server.FakeTerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContext;
-import walkingkooka.text.BinaryTextContext;
-import walkingkooka.text.BinaryTextPrinting;
-import walkingkooka.text.HasLineEndingTesting;
-import walkingkooka.text.TextPrinting;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -140,8 +136,7 @@ import java.util.function.Function;
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
  */
 @GwtIncompatible
-public interface SpreadsheetMetadataTesting extends HasCharsetTesting,
-    HasLineEndingTesting,
+public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -480,16 +475,6 @@ public interface SpreadsheetMetadataTesting extends HasCharsetTesting,
             return HOME_DIRECTORY;
         }
     };
-
-    TextPrinting TEXT_CONTEXT = TextPrinting.with(
-        INDENTATION,
-        LINE_ENDING
-    );
-
-    BinaryTextContext BINARY_TEXT_CONTEXT = BinaryTextPrinting.with(
-        CHARSET,
-        TEXT_CONTEXT
-    );
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 

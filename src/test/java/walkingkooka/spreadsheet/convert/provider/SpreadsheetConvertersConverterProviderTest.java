@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -244,10 +243,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
-                            TextPrinting.with(
-                                INDENTATION,
-                                LINE_ENDING
-                            ).setCharset(CHARSET),
+                            BINARY_TEXT_CONTEXT,
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(
                                 LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
