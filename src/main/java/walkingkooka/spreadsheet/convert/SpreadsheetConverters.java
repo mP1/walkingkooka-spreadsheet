@@ -742,7 +742,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * {see StorageConverterStorageBinaryToStorageValueExpression}
      */
     public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueExpression() {
-        return StorageConverters.storageBinaryToStorageValueJson();
+        return StorageConverters.storageBinaryToStorageValueExpression();
     }
 
     /**
