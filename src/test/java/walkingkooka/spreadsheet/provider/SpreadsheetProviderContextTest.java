@@ -99,8 +99,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         )
     );
 
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
     private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");

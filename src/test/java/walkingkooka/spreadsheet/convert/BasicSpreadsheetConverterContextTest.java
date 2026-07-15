@@ -94,8 +94,6 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static JsonNodeConverterContext JSON_NODE_CONVERTER_CONTEXT = JsonNodeConverterContexts.fake();
 
-    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
-
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);

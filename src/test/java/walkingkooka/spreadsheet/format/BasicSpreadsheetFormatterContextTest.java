@@ -113,7 +113,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     };
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-    private final static Locale LOCALE = Locale.FRANCE;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = new FakeSpreadsheetLabelNameResolver() {
 

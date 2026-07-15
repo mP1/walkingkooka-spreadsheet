@@ -94,10 +94,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
-    final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
-    final static Locale DIFFERENT_LOCALE = Locale.forLanguageTag("en-NZ");
-
     final static EmailAddress CREATOR = EmailAddress.parse("creator@example.com");
 
     final static AuditInfo AUDIT_INFO = AuditInfo.create(

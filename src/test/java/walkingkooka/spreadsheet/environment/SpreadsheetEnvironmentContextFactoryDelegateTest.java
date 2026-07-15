@@ -35,13 +35,10 @@ import walkingkooka.text.Indentation;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContextFactoryDelegate> {
-
-    private final static Locale LOCALE = Locale.ENGLISH;
 
     @Override
     public TestSpreadsheetEnvironmentContextFactoryDelegate createContext() {
