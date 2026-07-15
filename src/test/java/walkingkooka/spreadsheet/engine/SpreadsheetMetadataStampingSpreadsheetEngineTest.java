@@ -20,9 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.currency.CurrencyContexts;
-import walkingkooka.currency.FakeCurrencyExchangeRater;
+import walkingkooka.currency.CurrencyContextTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -68,7 +66,6 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -78,16 +75,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements SpreadsheetEngineTesting<SpreadsheetMetadataStampingSpreadsheetEngine>,
+    CurrencyContextTesting,
     LocaleContextTesting,
     ToStringTesting<SpreadsheetMetadataStampingSpreadsheetEngine> {
 
     private final static SpreadsheetId ID = SpreadsheetId.parse("123");
-
-    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
-        Currency.getInstance(LOCALE),
-        new FakeCurrencyExchangeRater(),
-        LOCALE_CONTEXT
-    );
 
     private final static SpreadsheetMetadata BEFORE = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)

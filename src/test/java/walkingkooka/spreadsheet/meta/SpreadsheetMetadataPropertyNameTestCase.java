@@ -25,10 +25,8 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyContextTesting;
 import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleContexts;
@@ -62,17 +60,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
     TypeNameTesting<N>,
+    CurrencyContextTesting,
     HasNameTesting,
     HasValueTesting,
     LocaleContextTesting,
     ToStringTesting<N>,
     ThrowableTesting {
-
-    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
-        Currency.getInstance(LOCALE),
-        new FakeCurrencyExchangeRater(),
-        LOCALE_CONTEXT
-    );
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 

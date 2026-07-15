@@ -21,18 +21,11 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.provider.ConverterProviders;
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.currency.CurrencyContexts;
-import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.currency.CurrencyLocaleContexts;
-import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
@@ -67,10 +60,8 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -158,36 +149,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         )
     );
 
-    static {
-        final LocaleContext localeContext = LocaleContexts.readOnly(
-            LocaleContexts.jre(Locale.ENGLISH)
-        );
-
-        final CurrencyContext currencyContext = CurrencyContexts.jre(
-            Currency.getInstance("AUD"),
-            new FakeCurrencyExchangeRater() {
-
-                @Override
-                public Optional<Number> currencyExchangeRate(CurrencyExchange currencyExchange,
-                                                             final Optional<LocalDateTime> dateTime) {
-                    Objects.requireNonNull(currencyExchange, "currencyExchange");
-                    Objects.requireNonNull(dateTime, "dateTime");
-
-                    throw new UnsupportedOperationException();
-                }
-            },
-            localeContext
-        );
-
-        CURRENCY_CONTEXT = currencyContext;
-        CURRENCY_LOCALE_CONTEXT = CurrencyLocaleContexts.readOnly(
-            currencyContext.setLocaleContext(localeContext)
-        );
-    }
-
-    final static CurrencyContext CURRENCY_CONTEXT;
-
-    final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT;
+    final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
     final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         ConverterProviders.empty(),
