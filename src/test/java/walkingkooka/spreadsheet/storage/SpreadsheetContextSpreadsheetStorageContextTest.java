@@ -29,7 +29,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -862,7 +861,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             ).set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
-                    EmailAddress.parse("user@example.com"),
+                    USER,
                     LocalDateTime.MIN
                 )
             ).set(

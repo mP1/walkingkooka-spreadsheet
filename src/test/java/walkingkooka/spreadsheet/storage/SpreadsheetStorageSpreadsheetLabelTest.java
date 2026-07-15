@@ -28,7 +28,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -576,7 +575,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 ).set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.create(
-                        EmailAddress.parse("user@example.com"),
+                        USER,
                         LocalDateTime.MIN
                     )
                 ).setDefaults(
@@ -592,9 +591,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
-                Optional.of(
-                    EmailAddress.parse("user@example.com")
-                )
+                OPTIONAL_USER
             )
         );
         environmentContext.setEnvironmentValue(

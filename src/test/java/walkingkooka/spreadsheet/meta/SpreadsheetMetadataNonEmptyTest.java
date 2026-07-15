@@ -2921,9 +2921,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    auditInfo: \n" +
                 "      AuditInfo\n" +
                 "        created\n" +
-                "          user@example.com -999999999-01-01T00:00\n" +
+                "          user123@example.com -999999999-01-01T00:00\n" +
                 "        modified\n" +
-                "          user@example.com -999999999-01-01T00:00\n" +
+                "          user123@example.com -999999999-01-01T00:00\n" +
                 "    autoHideScrollbars: false\n" +
                 "    cellCharacterWidth: 1\n" +
                 "    color1: black\n" +
@@ -3160,9 +3160,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    auditInfo: \n" +
                 "      AuditInfo\n" +
                 "        created\n" +
-                "          user@example.com -999999999-01-01T00:00\n" +
+                "          user123@example.com -999999999-01-01T00:00\n" +
                 "        modified\n" +
-                "          user@example.com -999999999-01-01T00:00\n" +
+                "          user123@example.com -999999999-01-01T00:00\n" +
                 "    autoHideScrollbars: false\n" +
                 "    cellCharacterWidth: 1\n" +
                 "    color1: black\n" +
@@ -3397,9 +3397,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  auditInfo: \n" +
                 "    AuditInfo\n" +
                 "      created\n" +
-                "        user@example.com -999999999-01-01T00:00\n" +
+                "        user123@example.com -999999999-01-01T00:00\n" +
                 "      modified\n" +
-                "        user@example.com -999999999-01-01T00:00\n" +
+                "        user123@example.com -999999999-01-01T00:00\n" +
                 "  autoHideScrollbars: false\n" +
                 "  cellCharacterWidth: 1\n" +
                 "  color1: black\n" +
@@ -3644,7 +3644,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ).set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.create(
-                        EmailAddress.parse("user@example.com"),
+                        USER,
                         LocalDateTime.MIN
                     )
                 ).set(

@@ -429,9 +429,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testSetUser() {
         final BasicSpreadsheetEnvironmentContext context = this.createContext();
 
-        final Optional<EmailAddress> user = Optional.of(
-            EmailAddress.parse("different@example.com")
-        );
+        final Optional<EmailAddress> user = Optional.of(DIFFERENT_USER);
         this.checkNotEquals(
             USER,
             user
@@ -526,7 +524,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
+            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -560,7 +558,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                 "      timeOffset\n" +
                 "        Z (java.time.ZoneOffset)\n" +
                 "      user\n" +
-                "        user@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "        user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  storage\n" +
                 "    FakeStorage (walkingkooka.spreadsheet.environment.BasicSpreadsheetEnvironmentContextTest$1)\n"
         );

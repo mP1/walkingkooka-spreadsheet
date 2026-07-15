@@ -24,7 +24,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
@@ -35,7 +34,6 @@ import walkingkooka.storage.Storages;
 
 import java.math.RoundingMode;
 import java.util.Locale;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -45,8 +43,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
-
-    private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
@@ -59,7 +55,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 LINE_ENDING,
                 Locale.FRENCH,
                 () -> NOW,
-                Optional.of(USER)
+                OPTIONAL_USER
             )
         );
         context.setEnvironmentValue(
@@ -233,7 +229,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                         LINE_ENDING,
                         Locale.FRENCH,
                         () -> NOW,
-                        Optional.of(USER)
+                        OPTIONAL_USER
                     )
                 )
             ),
@@ -265,7 +261,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                         LINE_ENDING,
                         Locale.FRENCH,
                         () -> NOW,
-                        Optional.of(USER)
+                        OPTIONAL_USER
                     )
                 )
             ),
@@ -562,7 +558,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
+            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -576,9 +572,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  auditInfo\n" +
                 "    AuditInfo\n" +
                 "      created\n" +
-                "        user@example.com 1999-12-31T12:58:59\n" +
+                "        user123@example.com 1999-12-31T12:58:59\n" +
                 "      modified\n" +
-                "        user@example.com 1999-12-31T12:58:59\n" +
+                "        user123@example.com 1999-12-31T12:58:59\n" +
                 "  autoHideScrollbars\n" +
                 "    false\n" +
                 "  cellCharacterWidth\n" +
@@ -985,7 +981,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  twoDigitYear\n" +
                 "    50\n" +
                 "  user\n" +
-                "    user@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "    user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  validationConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\"\n" +

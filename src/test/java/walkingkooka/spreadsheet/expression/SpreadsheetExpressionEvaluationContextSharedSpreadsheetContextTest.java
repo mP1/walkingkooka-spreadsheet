@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -654,16 +653,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     @Test
     public void testUser() {
-        final EmailAddress user = EmailAddress.parse("user123@example.com");
-
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setUser(
-            Optional.of(user)
-        );
+        spreadsheetEnvironmentContext.setUser(OPTIONAL_USER);
 
         this.userAndCheck(
             this.createContext(spreadsheetEnvironmentContext),
-            user
+            USER
         );
     }
 

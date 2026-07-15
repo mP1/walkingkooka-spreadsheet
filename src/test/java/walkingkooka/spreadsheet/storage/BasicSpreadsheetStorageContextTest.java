@@ -26,7 +26,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
@@ -1167,9 +1166,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
                 LINE_ENDING,
                 locale,
                 () -> LocalDateTime.MIN,
-                Optional.of(
-                    EmailAddress.parse("user@example.com")
-                )
+                OPTIONAL_USER
             )
         );
 

@@ -760,7 +760,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 LINE_ENDING,
                 LOCALE,
                 () -> LocalDateTime.MIN,
-                Optional.of(USER)
+                OPTIONAL_USER
             )
         );
         environmentContext.setEnvironmentValue(

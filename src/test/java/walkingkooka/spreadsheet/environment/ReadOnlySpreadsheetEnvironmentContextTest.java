@@ -26,7 +26,6 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
@@ -50,7 +49,6 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     private final static Locale LOCALE = Locale.GERMAN;
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
-    private final static EmailAddress USER = EmailAddress.parse("user123@example.com");
 
     private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
@@ -129,9 +127,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 LINE_ENDING,
                 Locale.FRENCH,
                 () -> LocalDateTime.MIN,
-                Optional.of(
-                    EmailAddress.parse("user123@example.com")
-                )
+                OPTIONAL_USER
             )
         );
         final ReadOnlySpreadsheetEnvironmentContext readOnly = ReadOnlySpreadsheetEnvironmentContext.with(empty);
@@ -157,9 +153,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 LINE_ENDING,
                 Locale.FRENCH,
                 hasNow,
-                Optional.of(
-                    EmailAddress.parse("user123@example.com")
-                )
+                OPTIONAL_USER
             )
         );
         final ReadOnlySpreadsheetEnvironmentContext readOnly = ReadOnlySpreadsheetEnvironmentContext.with(empty);
@@ -173,9 +167,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 LineEnding.CRNL,
                 Locale.GERMAN,
                 hasNow,
-                Optional.of(
-                    EmailAddress.parse("user123@example.com")
-                )
+                OPTIONAL_USER
             )
         );
 
@@ -394,7 +386,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
                 .setUser(
-                    Optional.of(USER)
+                    OPTIONAL_USER
                 )
         );
     }
@@ -446,7 +438,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 LINE_ENDING,
                 Locale.FRANCE,
                 () -> NOW,
-                Optional.of(USER)
+                OPTIONAL_USER
             )
         );
 
