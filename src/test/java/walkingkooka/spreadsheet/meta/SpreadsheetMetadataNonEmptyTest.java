@@ -157,8 +157,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT - 1;
 
-    private final static Locale LOCALE = Locale.ENGLISH;
-
     private final static HasNow NOW = LocalDateTime::now;
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
@@ -2584,7 +2582,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  },\n" +
                 "  \"hideZeroValues\": true,\n" +
                 "  \"_defaults\": {\n" +
-                "    \"locale\": \"en\"\n" +
+                "    \"locale\": \"en-AU\"\n" +
                 "  }\n" +
                 "}"
         );
@@ -2660,7 +2658,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"dateTimeParser\": \"date-time-pattern DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
                 "  \"defaultYear\": 1901,\n" +
                 "  \"hideZeroValues\": true,\n" +
-                "  \"locale\": \"en\",\n" +
+                "  \"locale\": \"en-AU\",\n" +
                 "  \"numberFormatter\": \"number #0.0\",\n" +
                 "  \"numberParser\": \"number #0.0;$#0.00\",\n" +
                 "  \"precision\": 123,\n" +
@@ -2938,6 +2936,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      converter1\n" +
                 "      converter2\n" +
                 "      converter3\n" +
+                "    currency: AUD (java.util.Currency)\n" +
                 "    dateFormatter: \n" +
                 "      date\n" +
                 "        \"yyyy/mm/dd\"\n" +
@@ -2946,16 +2945,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        \"yyyy/mm/dd\"\n" +
                 "    dateTimeFormatter: \n" +
                 "      date-time\n" +
-                "        \"dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
+                "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
                 "    dateTimeOffset: -25569L\n" +
                 "    dateTimeParser: \n" +
                 "      date-time\n" +
-                "        \"dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\\\a\\\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\\\a\\\\t h:mm:ss;dddd, mmmm d, yy \\\\a\\\\t h:mm AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss.0;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss;dddd, mmmm d, yyyy \\\\a\\\\t h:mm AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss;dddd, mmmm d, yy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;dddd, mmmm d, yy, h:mm;mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM;mmmm d, yy \\\\a\\\\t h:mm:ss AM/PM;mmmm d, yy \\\\a\\\\t h:mm:ss;mmmm d, yy \\\\a\\\\t h:mm AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm:ss.0;mmmm d, yyyy \\\\a\\\\t h:mm:ss;mmmm d, yyyy \\\\a\\\\t h:mm AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss;mmmm d, yy, h:mm AM/PM;mmmm d, yyyy, h:mm:ss.0 AM/PM;mmmm d, yyyy, h:mm:ss.0;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmmm d, yy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss;mmm d, yy, h:mm AM/PM;mmm d, yyyy, h:mm:ss.0 AM/PM;mmm d, yyyy, h:mm:ss.0;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;mmm d, yy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yyyy, h:mm:ss AM/PM;m/d/yyyy, h:mm:ss.0 AM/PM;m/d/yyyy, h:mm:ss.0;m/d/yyyy, h:mm:ss;m/d/yyyy, h:mm AM/PM;m/d/yy, h:mm:ss.0;m/d/yy, h:mm;m/d/yyyy, h:mm\"\n" +
+                "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +
                 "    dateTimeSymbols: \n" +
                 "      DateTimeSymbols\n" +
                 "        ampms\n" +
-                "          AM\n" +
-                "          PM\n" +
+                "          am\n" +
+                "          pm\n" +
                 "        monthNames\n" +
                 "          January\n" +
                 "          February\n" +
@@ -2970,18 +2969,18 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          November\n" +
                 "          December\n" +
                 "        monthNameAbbreviations\n" +
-                "          Jan\n" +
-                "          Feb\n" +
-                "          Mar\n" +
-                "          Apr\n" +
+                "          Jan.\n" +
+                "          Feb.\n" +
+                "          Mar.\n" +
+                "          Apr.\n" +
                 "          May\n" +
-                "          Jun\n" +
-                "          Jul\n" +
-                "          Aug\n" +
-                "          Sep\n" +
-                "          Oct\n" +
-                "          Nov\n" +
-                "          Dec\n" +
+                "          Jun.\n" +
+                "          Jul.\n" +
+                "          Aug.\n" +
+                "          Sep.\n" +
+                "          Oct.\n" +
+                "          Nov.\n" +
+                "          Dec.\n" +
                 "        weekDayNames\n" +
                 "          Sunday\n" +
                 "          Monday\n" +
@@ -2991,13 +2990,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          Friday\n" +
                 "          Saturday\n" +
                 "        weekDayNameAbbreviations\n" +
-                "          Sun\n" +
-                "          Mon\n" +
-                "          Tue\n" +
-                "          Wed\n" +
-                "          Thu\n" +
-                "          Fri\n" +
-                "          Sat\n" +
+                "          Sun.\n" +
+                "          Mon.\n" +
+                "          Tue.\n" +
+                "          Wed.\n" +
+                "          Thu.\n" +
+                "          Fri.\n" +
+                "          Sat.\n" +
                 "    decimalNumberDigitCount: 8\n" +
                 "    decimalNumberSymbols: \n" +
                 "      DecimalNumberSymbols\n" +
@@ -3081,7 +3080,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      importer1\n" +
                 "      importer2\n" +
                 "      importer3\n" +
-                "    locale: en (java.util.Locale)\n" +
+                "    locale: en_AU (java.util.Locale)\n" +
                 "    numberFormatter: \n" +
                 "      number\n" +
                 "        \"0.#;0.#;0\"\n" +
@@ -3177,6 +3176,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      converter1\n" +
                 "      converter2\n" +
                 "      converter3\n" +
+                "    currency: AUD (java.util.Currency)\n" +
                 "    dateFormatter: \n" +
                 "      date\n" +
                 "        \"yyyy/mm/dd\"\n" +
@@ -3185,16 +3185,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        \"yyyy/mm/dd\"\n" +
                 "    dateTimeFormatter: \n" +
                 "      date-time\n" +
-                "        \"dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
+                "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
                 "    dateTimeOffset: -25569L\n" +
                 "    dateTimeParser: \n" +
                 "      date-time\n" +
-                "        \"dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\\\a\\\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\\\a\\\\t h:mm:ss;dddd, mmmm d, yy \\\\a\\\\t h:mm AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss.0;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss;dddd, mmmm d, yyyy \\\\a\\\\t h:mm AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss;dddd, mmmm d, yy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;dddd, mmmm d, yy, h:mm;mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM;mmmm d, yy \\\\a\\\\t h:mm:ss AM/PM;mmmm d, yy \\\\a\\\\t h:mm:ss;mmmm d, yy \\\\a\\\\t h:mm AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm:ss.0;mmmm d, yyyy \\\\a\\\\t h:mm:ss;mmmm d, yyyy \\\\a\\\\t h:mm AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss;mmmm d, yy, h:mm AM/PM;mmmm d, yyyy, h:mm:ss.0 AM/PM;mmmm d, yyyy, h:mm:ss.0;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmmm d, yy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss;mmm d, yy, h:mm AM/PM;mmm d, yyyy, h:mm:ss.0 AM/PM;mmm d, yyyy, h:mm:ss.0;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;mmm d, yy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yyyy, h:mm:ss AM/PM;m/d/yyyy, h:mm:ss.0 AM/PM;m/d/yyyy, h:mm:ss.0;m/d/yyyy, h:mm:ss;m/d/yyyy, h:mm AM/PM;m/d/yy, h:mm:ss.0;m/d/yy, h:mm;m/d/yyyy, h:mm\"\n" +
+                "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +
                 "    dateTimeSymbols: \n" +
                 "      DateTimeSymbols\n" +
                 "        ampms\n" +
-                "          AM\n" +
-                "          PM\n" +
+                "          am\n" +
+                "          pm\n" +
                 "        monthNames\n" +
                 "          January\n" +
                 "          February\n" +
@@ -3209,18 +3209,18 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          November\n" +
                 "          December\n" +
                 "        monthNameAbbreviations\n" +
-                "          Jan\n" +
-                "          Feb\n" +
-                "          Mar\n" +
-                "          Apr\n" +
+                "          Jan.\n" +
+                "          Feb.\n" +
+                "          Mar.\n" +
+                "          Apr.\n" +
                 "          May\n" +
-                "          Jun\n" +
-                "          Jul\n" +
-                "          Aug\n" +
-                "          Sep\n" +
-                "          Oct\n" +
-                "          Nov\n" +
-                "          Dec\n" +
+                "          Jun.\n" +
+                "          Jul.\n" +
+                "          Aug.\n" +
+                "          Sep.\n" +
+                "          Oct.\n" +
+                "          Nov.\n" +
+                "          Dec.\n" +
                 "        weekDayNames\n" +
                 "          Sunday\n" +
                 "          Monday\n" +
@@ -3230,13 +3230,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          Friday\n" +
                 "          Saturday\n" +
                 "        weekDayNameAbbreviations\n" +
-                "          Sun\n" +
-                "          Mon\n" +
-                "          Tue\n" +
-                "          Wed\n" +
-                "          Thu\n" +
-                "          Fri\n" +
-                "          Sat\n" +
+                "          Sun.\n" +
+                "          Mon.\n" +
+                "          Tue.\n" +
+                "          Wed.\n" +
+                "          Thu.\n" +
+                "          Fri.\n" +
+                "          Sat.\n" +
                 "    decimalNumberDigitCount: 8\n" +
                 "    decimalNumberSymbols: \n" +
                 "      DecimalNumberSymbols\n" +
@@ -3320,7 +3320,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      importer1\n" +
                 "      importer2\n" +
                 "      importer3\n" +
-                "    locale: en (java.util.Locale)\n" +
+                "    locale: en_AU (java.util.Locale)\n" +
                 "    numberFormatter: \n" +
                 "      number\n" +
                 "        \"0.#;0.#;0\"\n" +
@@ -3414,6 +3414,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    converter1\n" +
                 "    converter2\n" +
                 "    converter3\n" +
+                "  currency: AUD (java.util.Currency)\n" +
                 "  dateFormatter: \n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
@@ -3422,16 +3423,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      \"yyyy/mm/dd\"\n" +
                 "  dateTimeFormatter: \n" +
                 "    date-time\n" +
-                "      \"dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
                 "  dateTimeOffset: -25569L\n" +
                 "  dateTimeParser: \n" +
                 "    date-time\n" +
-                "      \"dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\\\a\\\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\\\a\\\\t h:mm:ss;dddd, mmmm d, yy \\\\a\\\\t h:mm AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss.0;dddd, mmmm d, yyyy \\\\a\\\\t h:mm:ss;dddd, mmmm d, yyyy \\\\a\\\\t h:mm AM/PM;dddd, mmmm d, yyyy \\\\a\\\\t h:mm;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss;dddd, mmmm d, yy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;dddd, mmmm d, yy, h:mm;mmmm d, yyyy \\\\a\\\\t h:mm:ss AM/PM;mmmm d, yy \\\\a\\\\t h:mm:ss AM/PM;mmmm d, yy \\\\a\\\\t h:mm:ss;mmmm d, yy \\\\a\\\\t h:mm AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm:ss.0;mmmm d, yyyy \\\\a\\\\t h:mm:ss;mmmm d, yyyy \\\\a\\\\t h:mm AM/PM;mmmm d, yyyy \\\\a\\\\t h:mm;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss;mmmm d, yy, h:mm AM/PM;mmmm d, yyyy, h:mm:ss.0 AM/PM;mmmm d, yyyy, h:mm:ss.0;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmmm d, yy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss;mmm d, yy, h:mm AM/PM;mmm d, yyyy, h:mm:ss.0 AM/PM;mmm d, yyyy, h:mm:ss.0;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;mmm d, yy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yyyy, h:mm:ss AM/PM;m/d/yyyy, h:mm:ss.0 AM/PM;m/d/yyyy, h:mm:ss.0;m/d/yyyy, h:mm:ss;m/d/yyyy, h:mm AM/PM;m/d/yy, h:mm:ss.0;m/d/yy, h:mm;m/d/yyyy, h:mm\"\n" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +
                 "  dateTimeSymbols: \n" +
                 "    DateTimeSymbols\n" +
                 "      ampms\n" +
-                "        AM\n" +
-                "        PM\n" +
+                "        am\n" +
+                "        pm\n" +
                 "      monthNames\n" +
                 "        January\n" +
                 "        February\n" +
@@ -3446,18 +3447,18 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        November\n" +
                 "        December\n" +
                 "      monthNameAbbreviations\n" +
-                "        Jan\n" +
-                "        Feb\n" +
-                "        Mar\n" +
-                "        Apr\n" +
+                "        Jan.\n" +
+                "        Feb.\n" +
+                "        Mar.\n" +
+                "        Apr.\n" +
                 "        May\n" +
-                "        Jun\n" +
-                "        Jul\n" +
-                "        Aug\n" +
-                "        Sep\n" +
-                "        Oct\n" +
-                "        Nov\n" +
-                "        Dec\n" +
+                "        Jun.\n" +
+                "        Jul.\n" +
+                "        Aug.\n" +
+                "        Sep.\n" +
+                "        Oct.\n" +
+                "        Nov.\n" +
+                "        Dec.\n" +
                 "      weekDayNames\n" +
                 "        Sunday\n" +
                 "        Monday\n" +
@@ -3467,13 +3468,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        Friday\n" +
                 "        Saturday\n" +
                 "      weekDayNameAbbreviations\n" +
-                "        Sun\n" +
-                "        Mon\n" +
-                "        Tue\n" +
-                "        Wed\n" +
-                "        Thu\n" +
-                "        Fri\n" +
-                "        Sat\n" +
+                "        Sun.\n" +
+                "        Mon.\n" +
+                "        Tue.\n" +
+                "        Wed.\n" +
+                "        Thu.\n" +
+                "        Fri.\n" +
+                "        Sat.\n" +
                 "  decimalNumberDigitCount: 8\n" +
                 "  decimalNumberSymbols: \n" +
                 "    DecimalNumberSymbols\n" +
@@ -3557,7 +3558,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    importer1\n" +
                 "    importer2\n" +
                 "    importer3\n" +
-                "  locale: en (java.util.Locale)\n" +
+                "  locale: en_AU (java.util.Locale)\n" +
                 "  numberFormatter: \n" +
                 "    number\n" +
                 "      \"0.#;0.#;0\"\n" +

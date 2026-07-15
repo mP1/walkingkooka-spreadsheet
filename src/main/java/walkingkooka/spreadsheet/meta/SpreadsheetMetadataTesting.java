@@ -39,8 +39,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUser;
 import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -145,6 +144,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasLocaleTesting,
     HasNowTesting,
     HasUserTesting,
+    LocaleContextTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -202,10 +202,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     };
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
-
-    LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
-        LocaleContexts.jre(LOCALE)
-    );
 
     CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
         CurrencyContexts.jre(
