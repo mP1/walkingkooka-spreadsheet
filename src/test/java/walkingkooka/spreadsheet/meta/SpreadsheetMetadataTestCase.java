@@ -785,41 +785,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     null,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
-                    CURRENCY_LOCALE_CONTEXT,
-                    PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public final void testSpreadsheetValidatorContextWithNullCharsetFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createObject()
-                .spreadsheetValidatorContext(
-                    SpreadsheetSelection.A1,
-                    null,
-                    VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                    HAS_USER_DIRECTORIES,
-                    INDENTATION,
-                    LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
-                    MEDIA_TYPE_DETECTOR,
-                    MULTIPLIER,
-                    SPREADSHEET_METADATA_LOADER,
-                    CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -833,17 +807,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     null,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -857,17 +829,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     null,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -881,41 +851,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     null,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
-                    CURRENCY_LOCALE_CONTEXT,
-                    PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public final void testSpreadsheetValidatorContextWithNullIndentationFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createObject()
-                .spreadsheetValidatorContext(
-                    SpreadsheetSelection.A1,
-                    CHARSET,
-                    VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                    HAS_USER_DIRECTORIES,
-                    null,
-                    LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
-                    MEDIA_TYPE_DETECTOR,
-                    MULTIPLIER,
-                    SPREADSHEET_METADATA_LOADER,
-                    CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -929,41 +873,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
-                    null,
-                    LINE_ENDING,
-                    MEDIA_TYPE_DETECTOR,
-                    MULTIPLIER,
-                    SPREADSHEET_METADATA_LOADER,
-                    CONVERTER_PROVIDER,
-                    CURRENCY_LOCALE_CONTEXT,
-                    PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public final void testSpreadsheetValidatorContextWithLineEndingFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createObject()
-                .spreadsheetValidatorContext(
-                    SpreadsheetSelection.A1,
-                    CHARSET,
-                    VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                    HAS_USER_DIRECTORIES,
-                    INDENTATION,
-                    LABEL_NAME_RESOLVER,
                     null,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -977,17 +895,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     null,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -1001,17 +917,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     null,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -1025,17 +939,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     null,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 )
@@ -1049,16 +961,36 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
+                    null,
+                    BINARY_TEXT_CONTEXT,
+                    CURRENCY_LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithBinaryTextContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    HAS_USER_DIRECTORIES,
+                    LABEL_NAME_RESOLVER,
+                    MEDIA_TYPE_DETECTOR,
+                    MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
+                    CONVERTER_PROVIDER,
                     null,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -1073,17 +1005,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     null,
                     PROVIDER_CONTEXT
                 )
@@ -1097,17 +1027,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
-                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
-                    INDENTATION,
                     LABEL_NAME_RESOLVER,
-                    LINE_ENDING,
                     MEDIA_TYPE_DETECTOR,
                     MULTIPLIER,
                     SPREADSHEET_METADATA_LOADER,
                     CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
                     CURRENCY_LOCALE_CONTEXT,
                     null
                 )

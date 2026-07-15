@@ -930,63 +930,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 null,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                CURRENCY_LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullCharsetFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                null, // charset
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                HAS_USER_DIRECTORIES,
-                INDENTATION,
-                LABEL_NAME_RESOLVER,
-                LINE_ENDING,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                SPREADSHEET_METADATA_LOADER,
-                CONVERTER_PROVIDER,
-                CURRENCY_LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullIndentationFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                CHARSET,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                HAS_USER_DIRECTORIES,
-                null,
-                LABEL_NAME_RESOLVER,
-                LINE_ENDING,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                SPREADSHEET_METADATA_LOADER,
-                CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -999,17 +951,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 null,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1022,17 +972,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 null,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1045,17 +993,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 null,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1068,40 +1014,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
-                null,
-                LINE_ENDING,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                SPREADSHEET_METADATA_LOADER,
-                CONVERTER_PROVIDER,
-                CURRENCY_LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullLineEndingFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                CHARSET,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                HAS_USER_DIRECTORIES,
-                INDENTATION,
-                LABEL_NAME_RESOLVER,
                 null,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1114,17 +1035,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 null,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1137,17 +1056,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1160,17 +1077,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1183,16 +1098,35 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
+                null,
+                BINARY_TEXT_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullBinaryTextContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                HAS_USER_DIRECTORIES,
+                LABEL_NAME_RESOLVER,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
+                CONVERTER_PROVIDER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -1206,17 +1140,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
             )
@@ -1229,17 +1161,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 null
             )
@@ -1252,17 +1182,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             IllegalStateException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
@@ -1335,17 +1263,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         final SpreadsheetConverterContext context = metadata.spreadsheetConverterContext(
             Optional.of(cell),
-            CHARSET,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             HAS_USER_DIRECTORIES,
-            INDENTATION,
             LABEL_NAME_RESOLVER,
-            LINE_ENDING,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
             ConverterProviders.converters(),
+            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
             PROVIDER_CONTEXT
         );

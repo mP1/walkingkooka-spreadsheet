@@ -823,15 +823,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             comparators,
             movedFromTo, // moved cells
             metadata.sortSpreadsheetComparatorContext(
-                context.charset(),
                 context, // HasUserDirectories
-                context.indentation(),
                 context, // ConverterProvider
-                context.lineEnding(),
                 context, // mediaTypeDetector
                 context.multiplier(), // multiplier
                 context, // SpreadsheetLabelNameResolver
                 context, // SpreadsheetMetadataLoader
+                context, // BinaryTextContext
                 context, // CurrencyLocaleContext
                 providerContext// ProviderContext
             )
@@ -1886,7 +1884,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context.spreadsheetMetadata()
                             .spreadsheetValidatorContext(
                                 cell.reference(), // reference
-                                context.charset(),
                                 (final ValidatorSelector v) -> context.validator(
                                     v,
                                     providerContext
@@ -1900,13 +1897,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     Optional.ofNullable(value)
                                 ),
                                 context, // HasUserDirectories
-                                context.indentation(),
                                 context, // SpreadsheetLabelNameResolver
-                                context.lineEnding(),
                                 context, // MediaTypeDetector
                                 context.multiplier(), // multiplier
                                 context, // SpreadsheetMetadataLoader,
                                 context, // ConverterProvider
+                                context, // BinaryTextContext
                                 context, // CurrencyLocaleContext
                                 providerContext // ProviderContext
                             )

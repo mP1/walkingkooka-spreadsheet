@@ -251,7 +251,6 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             IllegalStateException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetValidatorContext(
                 SpreadsheetSelection.A1,
-                CHARSET,
                 (final ValidatorSelector validatorSelector) -> {
                     throw new UnsupportedOperationException();
                 },
@@ -260,13 +259,12 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                     throw new UnsupportedOperationException();
                 },
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )

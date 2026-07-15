@@ -45,7 +45,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.text.Indentation;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -113,7 +112,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
             METADATA_EN_AU.spreadsheetFormatterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetMetadata.NO_CELL,
@@ -153,12 +151,11 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     TERMINAL_CONTEXT
                 ),
                 HAS_USER_DIRECTORIES,
-                Indentation.SPACES2,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -4755,15 +4752,13 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     SpreadsheetFormula.EMPTY.setValue(value)
                 )
             ),
-            CHARSET,
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             HAS_USER_DIRECTORIES,
-            Indentation.SPACES2,
             SPREADSHEET_LABEL_NAME_RESOLVER,
-            LINE_ENDING,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
+            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

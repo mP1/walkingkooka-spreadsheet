@@ -85,6 +85,7 @@ import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -375,17 +376,18 @@ public class J2clTest {
                         CaseSensitivity.INSENSITIVE,
                         metadata.spreadsheetConverterContext(
                             SpreadsheetMetadata.NO_CELL,
-                            StandardCharsets.UTF_8,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                             HasUserDirectorieses.empty(),
-                            Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
-                            lineEnding,
                             MEDIA_TYPE_DETECTOR,
                             BinaryNumberConverterFunctions.fake(),
                             SpreadsheetMetadataLoaders.fake(),
                             converterProvider,
+                            TextPrinting.with(
+                                Indentation.SPACES2,
+                                lineEnding
+                            ).setCharset(StandardCharsets.UTF_8),
                             currencyContext.setLocaleContext(this.localeContext),
                             providerContext
                         ),
@@ -434,18 +436,18 @@ public class J2clTest {
                     value,
                     metadata.spreadsheetFormatterContext(
                         Optional.of(cell),
-                        StandardCharsets.UTF_8,
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
                         HasUserDirectorieses.empty(),
-                        Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
-                        lineEnding,
                         MEDIA_TYPE_DETECTOR,
                         BinaryNumberConverterFunctions.fake(),
                         SpreadsheetMetadataLoaders.fake(),
-                        SpreadsheetMetadataLoaders.empty(),
+                        TextPrinting.with(
+                            Indentation.SPACES2,
+                            lineEnding
+                        ).setCharset(StandardCharsets.UTF_8),
                         currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
                             converterProvider,

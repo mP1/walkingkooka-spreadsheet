@@ -143,16 +143,14 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             this.converterLike = this.spreadsheetMetadata()
                 .spreadsheetConverterContext(
                     SpreadsheetMetadata.NO_CELL,
-                    spreadsheetContext.charset(),
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this, // HasUserDirectories
-                    this.indentation(),
                     this.spreadsheetLabelNameResolver,
-                    this.lineEnding(),
                     spreadsheetContext, // MediaTypeDetector
                     spreadsheetContext.multiplier(),
                     spreadsheetContext, // SpreadsheetMetadataLoader
+                    spreadsheetContext, // BinaryTextContext
                     spreadsheetContext, // CurrencyLocaleContext
                     spreadsheetContext, // SpreadsheetProvider
                     spreadsheetContext.providerContext()
@@ -320,7 +318,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         return this.spreadsheetMetadata()
             .spreadsheetFormatterContext(
                 cell,
-                context.charset(),
                 (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).spreadsheetExpressionEvaluationContext(
@@ -331,12 +328,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     v
                 ),
                 this, // HasUserDirectories
-                this.indentation(),
                 this, // SpreadsheetLabelNameResolver,
-                this.lineEnding(),
                 context, // MediaTypeDetector
                 context.multiplier(),
                 context, // SpreadsheetMetadataContext
+                context, // BinaryTextContext
                 context, // CurrencyLocaleContext
                 context, // spreadsheetProvider,
                 context.providerContext() // ProviderContext
