@@ -26,7 +26,7 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContexts;
-import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -59,7 +59,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext>,
+    CurrencyLocaleContextTesting {
 
     private final static Charset CHARSET = StandardCharsets.UTF_8;
 
@@ -100,11 +101,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         "Hello",
         String.class
     );
-
-    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CurrencyContexts.fake()
-        .setLocaleContext(
-            LocaleContexts.jre(LOCALE)
-        );
 
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
