@@ -30,7 +30,6 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
@@ -175,7 +174,7 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
                     Indentation.SPACES4,
                     SpreadsheetEnvironmentContextTesting2Test.LINE_ENDING,
                     Locale.ENGLISH,
-                    () -> LocalDateTime.MIN,
+                    HAS_NOW,
                     EnvironmentContext.ANONYMOUS
                 )
             );

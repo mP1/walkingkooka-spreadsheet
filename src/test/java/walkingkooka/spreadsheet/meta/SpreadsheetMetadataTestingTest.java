@@ -38,7 +38,6 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -325,7 +324,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             .spreadsheetParserContext(
                 SpreadsheetMetadata.NO_CELL,
                 LOCALE_CONTEXT,
-                () -> LocalDateTime.MIN
+                HAS_NOW
             );
     }
 

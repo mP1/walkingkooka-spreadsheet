@@ -33,7 +33,6 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Objects;
 import java.util.Optional;
@@ -81,7 +80,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
                     Indentation.SPACES4,
                     SpreadsheetEnvironmentContextFactoryDelegateTest.LINE_ENDING,
                     SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE,
-                    () -> LocalDateTime.MIN,
+                    HAS_NOW,
                     EnvironmentContext.ANONYMOUS
                 )
             );

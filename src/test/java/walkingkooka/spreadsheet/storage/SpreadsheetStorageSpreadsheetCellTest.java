@@ -759,7 +759,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 Indentation.SPACES4,
                 LINE_ENDING,
                 LOCALE,
-                () -> LocalDateTime.MIN,
+                HAS_NOW,
                 OPTIONAL_USER
             )
         );

@@ -924,7 +924,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
-                () -> LocalDateTime.MIN,
+                HAS_NOW,
                 EnvironmentContext.ANONYMOUS
             )
         );
