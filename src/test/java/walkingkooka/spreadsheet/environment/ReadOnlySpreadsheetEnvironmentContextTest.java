@@ -34,7 +34,6 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.Optional;
@@ -126,7 +125,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 INDENTATION,
                 LINE_ENDING,
                 Locale.FRENCH,
-                () -> LocalDateTime.MIN,
+                HAS_NOW,
                 OPTIONAL_USER
             )
         );

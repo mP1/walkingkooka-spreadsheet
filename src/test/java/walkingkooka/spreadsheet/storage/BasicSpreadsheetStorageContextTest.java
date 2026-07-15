@@ -80,7 +80,6 @@ import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -1165,7 +1164,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
                 INDENTATION,
                 LINE_ENDING,
                 locale,
-                () -> LocalDateTime.MIN,
+                HAS_NOW,
                 OPTIONAL_USER
             )
         );

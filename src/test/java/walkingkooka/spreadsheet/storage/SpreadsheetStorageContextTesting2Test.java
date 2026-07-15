@@ -227,7 +227,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
                     Indentation.SPACES4,
                     SpreadsheetStorageContextTesting2Test.LINE_ENDING,
                     Locale.ENGLISH,
-                    () -> LocalDateTime.MIN,
+                    HAS_NOW,
                     EnvironmentContext.ANONYMOUS
                 )
             );

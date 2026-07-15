@@ -26,7 +26,6 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
@@ -118,7 +117,7 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
                     Indentation.SPACES4,
                     SpreadsheetEnvironmentContextDelegatorTest.LINE_ENDING,
                     Locale.ENGLISH,
-                    () -> LocalDateTime.MIN,
+                    HAS_NOW,
                     EnvironmentContext.ANONYMOUS
                 )
             );

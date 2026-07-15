@@ -598,7 +598,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                         Indentation.SPACES4,
                         BasicSpreadsheetFormHandlerContextTest.LINE_ENDING,
                         Locale.ENGLISH,
-                        () -> LocalDateTime.MIN,
+                        HAS_NOW,
                         EnvironmentContext.ANONYMOUS
                     )
                 );
