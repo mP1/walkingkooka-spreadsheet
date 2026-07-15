@@ -27,7 +27,6 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -52,7 +51,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import java.math.MathContext;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -98,8 +96,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             MathContext.DECIMAL32
         )
     );
-
-    private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 

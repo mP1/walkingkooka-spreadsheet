@@ -1895,9 +1895,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                     SpreadsheetId.with(1)
                 ),
                         "auditInfo.createdBy=user@example.com\n" +
-                        "auditInfo.createdTimestamp=1999-12-31T12:58\n" +
+                        "auditInfo.createdTimestamp=1999-12-31T12:58:59\n" +
                         "auditInfo.modifiedBy=user@example.com\n" +
-                        "auditInfo.modifiedTimestamp=1999-12-31T12:58\n" +
+                        "auditInfo.modifiedTimestamp=1999-12-31T12:58:59\n" +
                         "autoHideScrollbars=false\n" +
                         "cellCharacterWidth=1\n" +
                         "color1=black\n" +
@@ -2073,9 +2073,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testFromPropertiesAllProperties() {
         this.fromPropertiesAndCheck(
                 "auditInfo.createdBy=user@example.com\n" +
-                "auditInfo.createdTimestamp=1999-12-31T12:58\n" +
+                "auditInfo.createdTimestamp=1999-12-31T12:58:59\n" +
                 "auditInfo.modifiedBy=user@example.com\n" +
-                "auditInfo.modifiedTimestamp=1999-12-31T12:58\n" +
+                "auditInfo.modifiedTimestamp=1999-12-31T12:58:59\n" +
                 "autoHideScrollbars=false\n" +
                 "cellCharacterWidth=1\n" +
                 "color1=black\n" +

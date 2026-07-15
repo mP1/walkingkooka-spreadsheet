@@ -34,7 +34,6 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -44,14 +43,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
-
-    private final static LocalDateTime NOW = LocalDateTime.of(
-        1999,
-        12,
-        31,
-        12,
-        58
-    );
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -571,7 +562,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
+            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
         );
     }
 
@@ -585,9 +576,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  auditInfo\n" +
                 "    AuditInfo\n" +
                 "      created\n" +
-                "        user@example.com 1999-12-31T12:58\n" +
+                "        user@example.com 1999-12-31T12:58:59\n" +
                 "      modified\n" +
-                "        user@example.com 1999-12-31T12:58\n" +
+                "        user@example.com 1999-12-31T12:58:59\n" +
                 "  autoHideScrollbars\n" +
                 "    false\n" +
                 "  cellCharacterWidth\n" +
@@ -920,7 +911,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  locale\n" +
                 "    fr (java.util.Locale)\n" +
                 "  now\n" +
-                "    1999-12-31T12:58 (java.time.LocalDateTime)\n" +
+                "    1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
                 "  numberFormatter\n" +
                 "    number\n" +
                 "      \"0.#;0.#;0\"\n" +

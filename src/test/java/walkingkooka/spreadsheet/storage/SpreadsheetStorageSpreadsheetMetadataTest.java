@@ -612,7 +612,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         @Override
         public LocalDateTime now() {
-            return HAS_NOW.now();
+            return SpreadsheetStorageSpreadsheetMetadataTest.NOW;
         }
 
         @Override

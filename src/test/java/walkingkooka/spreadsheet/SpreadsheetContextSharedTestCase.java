@@ -27,7 +27,6 @@ import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.currency.FakeCurrencyExchangeRater;
-import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -98,10 +97,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static AuditInfo AUDIT_INFO = AuditInfo.create(
         CREATOR,
-        LocalDateTime.MIN
+        NOW
     );
-
-    final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
     final static SpreadsheetMetadataCreator SPREADSHEET_METADATA_CREATOR = new SpreadsheetMetadataCreator() {
         @Override
@@ -111,7 +108,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
                     user,
-                    HAS_NOW.now()
+                    NOW
                 )
             );
             if (locale.isPresent()) {
