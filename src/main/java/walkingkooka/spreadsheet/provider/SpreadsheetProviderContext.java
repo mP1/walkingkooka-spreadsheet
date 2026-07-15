@@ -273,6 +273,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
     public int hashCode() {
         return Objects.hash(
             this.mediaTypeDetector,
+            this.multiplier,
             this.pluginStore,
             this.environmentContext
         );
