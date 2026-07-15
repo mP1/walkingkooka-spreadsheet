@@ -121,8 +121,6 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     private final static TemplateValueName TEMPLATE_VALUE_NAME = TemplateValueName.with("TemplateValue");
     private final static String TEMPLATE_LOCAL_VALUE = "TemplateLocalValue123";
 
-    private final static MathContext MATH_CONTEXT = MathContext.DECIMAL128;
-
     private final static String CURRENCY_SYMBOL = "AUD";
     private final static char DECIMAL_SEPARATOR = '/';
     private final static String EXPONENT_SYMBOL = "HELLO";
