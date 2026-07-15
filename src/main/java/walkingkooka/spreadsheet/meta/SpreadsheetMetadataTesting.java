@@ -104,7 +104,7 @@ import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintableTesting;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -141,6 +141,7 @@ import java.util.function.Function;
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasCurrencyTesting,
+    HasExpressionNumberKindTesting,
     HasLocaleTesting,
     HasNowTesting,
     HasUserTesting,
@@ -149,8 +150,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
 
     int DECIMAL_NUMBER_DIGIT_COUNT = 8;
-
-    ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     HasUser HAS_USER = () -> OPTIONAL_USER;
 

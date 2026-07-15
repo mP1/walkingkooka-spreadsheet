@@ -93,8 +93,6 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL128);
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DOUBLE;
-
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
