@@ -35,8 +35,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
+import walkingkooka.text.TextContext;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.validation.form.Form;
 
@@ -542,11 +541,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public String treeToString(final Indentation indentation,
-                               final LineEnding eol) {
-        return super.treeToString(
-            indentation,
-            eol
-        );
+    public String treeToString(final TextContext context) {
+        return super.treeToString(context);
     }
 }
