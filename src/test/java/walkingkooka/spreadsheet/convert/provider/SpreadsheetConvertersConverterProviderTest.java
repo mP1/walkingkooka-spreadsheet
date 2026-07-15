@@ -31,8 +31,6 @@ import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
@@ -52,15 +50,10 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 
 public class SpreadsheetConvertersConverterProviderTest implements ConverterProviderTesting<SpreadsheetConvertersConverterProvider>,
     SpreadsheetMetadataTesting,
     ConverterTesting {
-
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
-        Locale.forLanguageTag("EN-AU")
-    );
 
     @Test
     public void testConverterSelectorWithBasic() {

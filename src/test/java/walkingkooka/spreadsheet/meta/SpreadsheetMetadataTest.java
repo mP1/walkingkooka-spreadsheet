@@ -38,7 +38,6 @@ import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
@@ -173,10 +172,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     private final static Indentation INDENTATION = Indentation.SPACES2;
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
-
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     private static final SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 

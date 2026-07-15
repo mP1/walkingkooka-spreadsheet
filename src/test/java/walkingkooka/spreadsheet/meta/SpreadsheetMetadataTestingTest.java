@@ -323,7 +323,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         METADATA_EN_AU
             .spreadsheetParserContext(
                 SpreadsheetMetadata.NO_CELL,
-                LOCALE_CONTEXT,
+                SpreadsheetMetadataTesting.LOCALE_CONTEXT,
                 HAS_NOW
             );
     }

@@ -28,8 +28,7 @@ import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
@@ -64,7 +63,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext>,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    LocaleContextTesting {
 
     private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
         DateTimeSymbols.fromDateFormatSymbols(
@@ -85,8 +85,6 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
         LOCALE,
         MathContext.UNLIMITED
     );
-
-    private final static LocaleContext LOCALE_CONTEXT =  LocaleContexts.jre(LOCALE);
 
     private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = new FakeCurrencyContext() {
 

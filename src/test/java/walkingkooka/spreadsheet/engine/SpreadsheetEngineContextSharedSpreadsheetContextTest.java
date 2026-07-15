@@ -35,7 +35,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -1369,8 +1368,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 return new FakeSpreadsheetLabelStore();
             }
         };
-
-        private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
 
         TestSpreadsheetContext() {
             this(

@@ -30,7 +30,7 @@ import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyValue;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
@@ -69,7 +69,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext>,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    LocaleContextTesting {
 
     private final static HasUserDirectories HAS_USER_DIRECTORIES = HasUserDirectorieses.fake();
 
@@ -93,8 +94,6 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     private final static JsonNodeConverterContext JSON_NODE_CONVERTER_CONTEXT = JsonNodeConverterContexts.fake();
-
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 

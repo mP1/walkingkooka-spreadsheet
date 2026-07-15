@@ -33,8 +33,7 @@ import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.HasOptionalNameTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -90,6 +89,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     HasOptionalNameTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
+    LocaleContextTesting,
     HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetMetadata>,
@@ -135,10 +135,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.fake();
-
-    final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
-        Locale.forLanguageTag("EN-AU")
-    );
 
     final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
         Currency.getInstance("AUD"),

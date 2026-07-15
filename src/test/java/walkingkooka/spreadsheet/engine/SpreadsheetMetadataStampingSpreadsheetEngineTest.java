@@ -24,8 +24,7 @@ import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -70,7 +69,6 @@ import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
 import java.util.Currency;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -80,13 +78,10 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements SpreadsheetEngineTesting<SpreadsheetMetadataStampingSpreadsheetEngine>,
+    LocaleContextTesting,
     ToStringTesting<SpreadsheetMetadataStampingSpreadsheetEngine> {
 
     private final static SpreadsheetId ID = SpreadsheetId.parse("123");
-
-    final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
-    final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
         Currency.getInstance(LOCALE),

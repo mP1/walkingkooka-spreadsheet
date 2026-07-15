@@ -33,8 +33,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
@@ -110,6 +109,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
     HashCodeEqualsDefinedTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
+    LocaleContextTesting,
     ToStringTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
     ThrowableTesting {
 
@@ -168,8 +168,6 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         20,
         LocalDateTime::now
     );
-
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 

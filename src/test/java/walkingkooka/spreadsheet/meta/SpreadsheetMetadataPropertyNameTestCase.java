@@ -30,6 +30,7 @@ import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.naming.HasNameTesting;
@@ -63,12 +64,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     TypeNameTesting<N>,
     HasNameTesting,
     HasValueTesting,
+    LocaleContextTesting,
     ToStringTesting<N>,
     ThrowableTesting {
-
-    final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
-    final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
         Currency.getInstance(LOCALE),
