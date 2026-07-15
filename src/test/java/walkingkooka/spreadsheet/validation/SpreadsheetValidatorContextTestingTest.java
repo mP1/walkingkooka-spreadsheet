@@ -212,7 +212,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
         @Override
         public LocalDateTime now() {
-            return HAS_NOW.now();
+            return SpreadsheetValidatorContextTestingTest.NOW;
         }
 
         @Override

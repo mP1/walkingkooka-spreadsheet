@@ -131,7 +131,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         SpreadsheetMetadataPropertyName.AUDIT_INFO,
         AuditInfo.create(
             USER,
-            HAS_NOW.now()
+            NOW
         )
     ).set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
@@ -383,7 +383,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.create(
                 USER,
-                HAS_NOW.now()
+                NOW
             )
         );
 
@@ -589,7 +589,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
                     USER,
-                    HAS_NOW.now()
+                    NOW
                 )
             )
         );

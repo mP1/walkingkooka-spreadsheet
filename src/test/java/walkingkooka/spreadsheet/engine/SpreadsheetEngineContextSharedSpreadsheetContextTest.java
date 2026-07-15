@@ -1470,7 +1470,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
                     user,
-                    HAS_NOW.now()
+                    SpreadsheetEngineContextSharedSpreadsheetContextTest.NOW
                 )
             );
             if (locale.isPresent()) {

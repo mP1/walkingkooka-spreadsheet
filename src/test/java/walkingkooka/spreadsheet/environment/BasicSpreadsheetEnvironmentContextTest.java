@@ -552,7 +552,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                 "      locale\n" +
                 "        en_AU (java.util.Locale)\n" +
                 "      now\n" +
-                "        1999-12-31T12:58 (java.time.LocalDateTime)\n" +
+                "        1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
                 "      serverUrl\n" +
                 "        https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
                 "      spreadsheetId\n" +

@@ -122,7 +122,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.create(
                 USER,
-                HAS_NOW.now()
+                NOW
             )
         );
 

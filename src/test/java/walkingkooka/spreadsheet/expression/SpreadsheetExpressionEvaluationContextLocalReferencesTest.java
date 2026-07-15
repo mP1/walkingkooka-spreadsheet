@@ -29,7 +29,6 @@ import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -173,8 +172,6 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     );
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
-
-    private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 

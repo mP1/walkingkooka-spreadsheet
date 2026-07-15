@@ -31,7 +31,7 @@ import walkingkooka.currency.CurrencyExchangeRater;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.datetime.HasNow;
+import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -141,6 +141,7 @@ import java.util.function.Function;
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasCurrencyTesting,
     HasLocaleTesting,
+    HasNowTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -155,14 +156,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     EmailAddress USER = EmailAddress.parse("user@example.com");
 
     HasUser HAS_USER = () -> Optional.of(USER);
-
-    HasNow HAS_NOW = () -> LocalDateTime.of(
-        1999,
-        12,
-        31,
-        12,
-        58
-    );
 
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
@@ -203,7 +196,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     StorageContext STORAGE_CONTEXT = new FakeStorageContext() {
         @Override
         public LocalDateTime now() {
-            return HAS_NOW.now();
+            return SpreadsheetMetadataTesting.NOW;
         }
 
         @Override
@@ -270,7 +263,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.create(
                 USER,
-                HAS_NOW.now()
+                NOW
             )
         ).set(
             SpreadsheetMetadataPropertyName.AUTO_HIDE_SCROLLBARS,
@@ -554,7 +547,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
                     user,
-                    HAS_NOW.now()
+                    NOW
                 )
             );
             if (locale.isPresent()) {

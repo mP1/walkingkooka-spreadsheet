@@ -98,7 +98,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         @Override
         public LocalDateTime now() {
-            return HAS_NOW.now();
+            return SpreadsheetFormattersSpreadsheetFormatterProviderTest.NOW;
         }
     };
 
@@ -1611,7 +1611,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     //Medium
     //  date
     //    "d mmm yyyy"
-    //  Text "31 Dec. 1999, 12:58:00 PM"
+    //  Text "31 Dec. 1999, 12:58:59 PM"
     //
     //Long
     //  date
@@ -1694,7 +1694,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -1736,7 +1736,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -1783,7 +1783,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -1874,17 +1874,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     //Medium
     //  date-time
     //    "d mmm yyyy, h:mm:ss AM/PM"
-    //  Text "31 Dec. 1999, 12:58:00 PM"
+    //  Text "31 Dec. 1999, 12:58:59 PM"
     //
     //Long
     //  date-time
     //    "d mmmm yyyy \\a\\t h:mm:ss AM/PM"
-    //  Text "31 December 1999 at 12:58:00 PM"
+    //  Text "31 December 1999 at 12:58:59 PM"
     //
     //Full
     //  date-time
     //    "dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"
-    //  Text "Friday, 31 December 1999 at 12:58:00 PM"
+    //  Text "Friday, 31 December 1999 at 12:58:59 PM"
     @Test
     public void testSpreadsheetFormatterSamplesWithDateTimeSkipSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
@@ -1899,17 +1899,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium",
                 SpreadsheetFormatterName.DATE_TIME.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
-                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+                TextNode.text("31 Dec. 1999, 12:58:59 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
                 SpreadsheetFormatterName.DATE_TIME.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
-                TextNode.text("31 December 1999 at 12:58:00 PM")
+                TextNode.text("31 December 1999 at 12:58:59 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Full",
                 SpreadsheetFormatterName.DATE_TIME.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
-                TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+                TextNode.text("Friday, 31 December 1999 at 12:58:59 PM")
             )
         );
     }
@@ -1928,17 +1928,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium",
                 SpreadsheetFormatterName.DATE_TIME.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
-                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+                TextNode.text("31 Dec. 1999, 12:58:59 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
                 SpreadsheetFormatterName.DATE_TIME.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
-                TextNode.text("31 December 1999 at 12:58:00 PM")
+                TextNode.text("31 December 1999 at 12:58:59 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Full",
                 SpreadsheetFormatterName.DATE_TIME.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
-                TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+                TextNode.text("Friday, 31 December 1999 at 12:58:59 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Sample",
@@ -2161,7 +2161,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -2190,7 +2190,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -2224,7 +2224,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -2281,7 +2281,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Full Date Time",
                 SpreadsheetFormatterSelector.parse("full-date-time"),
-                TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+                TextNode.text("Friday, 31 December 1999 at 12:58:59 PM")
             )
         );
     }
@@ -2297,7 +2297,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Full Date Time",
                 selector,
-                TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+                TextNode.text("Friday, 31 December 1999 at 12:58:59 PM")
             )
         );
     }
@@ -2314,7 +2314,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "date time must be different to now"
         );
 
@@ -2346,7 +2346,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "date time must be different to now"
         );
 
@@ -2383,7 +2383,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "date time must be different to now"
         );
 
@@ -2424,7 +2424,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Full Date Time",
                 selector,
-                TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+                TextNode.text("Friday, 31 December 1999 at 12:58:59 PM")
             )
         );
     }
@@ -2470,7 +2470,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -2499,7 +2499,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -2533,7 +2533,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -2722,7 +2722,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -2751,7 +2751,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -2785,7 +2785,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -2842,7 +2842,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Long Date Time",
                 SpreadsheetFormatterSelector.parse("long-date-time"),
-                TextNode.text("31 December 1999 at 12:58:00 PM")
+                TextNode.text("31 December 1999 at 12:58:59 PM")
             )
         );
     }
@@ -2858,7 +2858,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Long Date Time",
                 selector,
-                TextNode.text("31 December 1999 at 12:58:00 PM")
+                TextNode.text("31 December 1999 at 12:58:59 PM")
             )
         );
     }
@@ -2875,7 +2875,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "dateTime must be different to now"
         );
 
@@ -2907,7 +2907,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "dateTime must be different to now"
         );
 
@@ -2944,7 +2944,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "dateTime must be different to now"
         );
 
@@ -2985,7 +2985,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Long Date Time",
                 selector,
-                TextNode.text("31 December 1999 at 12:58:00 PM")
+                TextNode.text("31 December 1999 at 12:58:59 PM")
             )
         );
     }
@@ -3001,7 +3001,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Long Time",
                 SpreadsheetFormatterSelector.parse("long-time"),
-                TextNode.text("12:58:00 PM")
+                TextNode.text("12:58:59 PM")
             )
         );
     }
@@ -3017,7 +3017,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Long Time",
                 selector,
-                TextNode.text("12:58:00 PM")
+                TextNode.text("12:58:59 PM")
             )
         );
     }
@@ -3031,7 +3031,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -3060,7 +3060,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -3094,7 +3094,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -3135,7 +3135,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Long Time",
                 selector,
-                TextNode.text("12:58:00 PM")
+                TextNode.text("12:58:59 PM")
             )
         );
     }
@@ -3185,7 +3185,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -3214,7 +3214,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -3248,7 +3248,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -3305,7 +3305,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium Date Time",
                 SpreadsheetFormatterSelector.parse("medium-date-time"),
-                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+                TextNode.text("31 Dec. 1999, 12:58:59 PM")
             )
         );
     }
@@ -3321,7 +3321,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium Date Time",
                 selector,
-                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+                TextNode.text("31 Dec. 1999, 12:58:59 PM")
             )
         );
     }
@@ -3338,7 +3338,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "date-time must be different to now"
         );
 
@@ -3370,7 +3370,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "date-time must be different to now"
         );
 
@@ -3407,7 +3407,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            HAS_NOW.now(),
+            NOW,
             "date-time must be different to now"
         );
 
@@ -3448,7 +3448,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium Date Time",
                 selector,
-                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+                TextNode.text("31 Dec. 1999, 12:58:59 PM")
             )
         );
     }
@@ -3464,7 +3464,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium Time",
                 SpreadsheetFormatterSelector.parse("medium-time"),
-                TextNode.text("12:58:00 PM")
+                TextNode.text("12:58:59 PM")
             )
         );
     }
@@ -3480,7 +3480,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium Time",
                 selector,
-                TextNode.text("12:58:00 PM")
+                TextNode.text("12:58:59 PM")
             )
         );
     }
@@ -3494,7 +3494,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -3523,7 +3523,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -3557,7 +3557,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -3598,7 +3598,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Medium Time",
                 selector,
-                TextNode.text("12:58:00 PM")
+                TextNode.text("12:58:59 PM")
             )
         );
     }
@@ -3986,7 +3986,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -4015,7 +4015,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -4049,7 +4049,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -4136,7 +4136,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -4165,7 +4165,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -4199,7 +4199,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            HAS_NOW.now(),
+            NOW,
             "date must be different to now"
         );
 
@@ -4286,7 +4286,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -4315,7 +4315,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -4349,7 +4349,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            HAS_NOW.now(),
+            NOW,
             "time must be different to now"
         );
 
@@ -4514,7 +4514,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     //Long
     //  time
     //    "h:mm:ss AM/PM"
-    //  Text "12:58:00 PM"
+    //  Text "12:58:59 PM"
     @Test
     public void testSpreadsheetFormatterSamplesWithTime() {
         this.spreadsheetFormatterSamplesAndCheck(
@@ -4529,7 +4529,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Long",
                 SpreadsheetFormatterName.TIME.setValueText("h:mm:ss AM/PM"),
-                TextNode.text("12:58:00 PM")
+                TextNode.text("12:58:59 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Sample",
@@ -4548,7 +4548,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            HAS_NOW.now().toLocalTime(),
+            NOW.toLocalTime(),
             "value must be different to now"
         );
 
@@ -4585,7 +4585,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            HAS_NOW.now().toLocalTime(),
+            NOW.toLocalTime(),
             "value must be different to now"
         );
 
@@ -4619,7 +4619,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            HAS_NOW.now().toLocalTime(),
+            NOW.toLocalTime(),
             "value must be different to now"
         );
 

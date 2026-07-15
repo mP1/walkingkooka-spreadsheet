@@ -48,7 +48,6 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
     private final static Locale LOCALE = Locale.GERMAN;
-    private final static LocalDateTime NOW = LocalDateTime.MIN;
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
     private final static EmailAddress USER = EmailAddress.parse("user123@example.com");
@@ -541,7 +540,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "        locale\n" +
                 "          de (java.util.Locale)\n" +
                 "        now\n" +
-                "          -999999999-01-01T00:00 (java.time.LocalDateTime)\n" +
+                "          1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
                 "        serverUrl\n" +
                 "          https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
                 "        spreadsheetId\n" +
