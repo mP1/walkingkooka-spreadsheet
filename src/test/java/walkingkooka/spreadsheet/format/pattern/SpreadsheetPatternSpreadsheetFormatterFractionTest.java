@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.Fraction;
+import walkingkooka.math.HasMathContextTesting;
 import walkingkooka.math.MathTesting;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -46,7 +47,8 @@ import static org.junit.jupiter.api.Assertions.fail;
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
 public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
-    FractionSpreadsheetFormatParserToken> {
+    FractionSpreadsheetFormatParserToken>
+    implements HasMathContextTesting {
 
     // with.............................................................................................................
 
@@ -536,7 +538,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         this.parseFormatAndCheck(
             "0,,/#",
             123456789,
-            "617283945,,/5"
+            "617284000,,/5"
         );
     }
 
@@ -681,8 +683,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
             }
         };
     }
-
-    private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
     // tokens...........................................................................................................
 

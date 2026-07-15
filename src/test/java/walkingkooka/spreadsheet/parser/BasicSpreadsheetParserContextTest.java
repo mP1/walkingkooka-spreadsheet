@@ -64,7 +64,6 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static char POSITIVE = '@';
     private final static char ZERO_DIGIT = '0';
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
-    private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
     private final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(
         EXPRESSION_NUMBER_KIND,
