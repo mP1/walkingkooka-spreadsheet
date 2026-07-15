@@ -23,11 +23,7 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.currency.CurrencyContexts;
-import walkingkooka.currency.CurrencyExchange;
-import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.CurrencyContextTesting;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -127,11 +123,9 @@ import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -139,6 +133,7 @@ import java.util.function.Function;
  */
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
+    CurrencyContextTesting,
     HasCurrencyTesting,
     HasExpressionNumberKindTesting,
     HasLocaleTesting,
@@ -202,43 +197,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     };
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
-
-    CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
-        CurrencyContexts.jre(
-            CURRENCY,
-            new CurrencyExchangeRater() {
-                @Override
-                public Set<CurrencyExchange> currencyExchanges() {
-                    return Set.of(
-                        CurrencyExchange.with(
-                            CurrencyCode.parse("AUD"),
-                            CurrencyCode.parse("NZD")
-                        )
-                    );
-                }
-
-                @Override
-                public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                             final Optional<LocalDateTime> dateTime) {
-                    Objects.requireNonNull(currencyExchange, "currencyExchange");
-                    Objects.requireNonNull(dateTime, "dateTime");
-
-                    return Optional.of(
-                        1.0 *
-                            Currency.getInstance(
-                                currencyExchange.from()
-                                    .value()
-                            ).getDisplayName().length() /
-                            Currency.getInstance(
-                                currencyExchange.to()
-                                    .value()
-                            ).getDisplayName().length()
-                    );
-                }
-            },
-            LOCALE_CONTEXT
-        )
-    );
 
     CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
