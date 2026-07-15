@@ -84,9 +84,8 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.FakeHasUserDirectories;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -122,8 +121,6 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -137,7 +134,8 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetMetadata>,
+public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
+    ClassTesting2<SpreadsheetMetadata>,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     HasPropertiesTesting,
     HasUrlFragmentTesting,
@@ -145,8 +143,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     LocaleContextTesting,
     PatchableTesting<SpreadsheetMetadata>,
     ToStringTesting<SpreadsheetMetadata> {
-
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
         StoragePath.parse("/current1/working2/directory3")
@@ -168,10 +164,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             return HOME_DIRECTORY;
         }
     };
-
-    private final static Indentation INDENTATION = Indentation.SPACES2;
-
-    private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     private static final SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
