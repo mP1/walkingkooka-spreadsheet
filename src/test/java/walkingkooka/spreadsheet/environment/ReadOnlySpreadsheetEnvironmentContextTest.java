@@ -37,7 +37,6 @@ import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -48,7 +47,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<ReadOnlySpreadsheetEnvironmentContext>,
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
-    private final static Currency CURRENCY = Currency.getInstance("AUD");
     private final static Locale LOCALE = Locale.GERMAN;
     private final static LocalDateTime NOW = LocalDateTime.MIN;
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");

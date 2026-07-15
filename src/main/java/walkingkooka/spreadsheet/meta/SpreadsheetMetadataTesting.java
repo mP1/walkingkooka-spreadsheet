@@ -29,6 +29,7 @@ import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyExchangeRater;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
@@ -137,6 +138,7 @@ import java.util.function.Function;
  */
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
+    HasCurrencyTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -211,8 +213,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     };
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
-
-    Currency CURRENCY = Currency.getInstance("AUD");
 
     LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
         LocaleContexts.jre(LOCALE)

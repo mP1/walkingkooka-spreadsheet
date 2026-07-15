@@ -88,8 +88,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext> {
 
-    private final static Currency CURRENCY = Currency.getInstance("AUD");
-
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
     // with.............................................................................................................

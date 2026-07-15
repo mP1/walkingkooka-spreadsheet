@@ -35,7 +35,6 @@ import walkingkooka.storage.Storages;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -45,8 +44,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
-
-    private final static Currency CURRENCY = Currency.getInstance("AUD");
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
