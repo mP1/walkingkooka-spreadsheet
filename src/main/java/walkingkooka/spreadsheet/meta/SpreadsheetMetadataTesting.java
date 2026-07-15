@@ -23,8 +23,7 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.currency.CurrencyContextTesting;
-import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNowTesting;
@@ -133,7 +132,7 @@ import java.util.function.Function;
  */
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
-    CurrencyContextTesting,
+    CurrencyLocaleContextTesting,
     HasCurrencyTesting,
     HasExpressionNumberKindTesting,
     HasLocaleTesting,
@@ -197,8 +196,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     };
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
-
-    CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.

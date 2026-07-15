@@ -28,8 +28,7 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
-import walkingkooka.currency.CurrencyContextTesting;
-import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -82,7 +81,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
     ClassTesting2<SpreadsheetMetadata>,
     ConverterTesting,
-    CurrencyContextTesting,
+    CurrencyLocaleContextTesting,
     HasContentTypeTesting,
     HasOptionalNameTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
@@ -133,8 +132,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.fake();
-
-    final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
     final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 

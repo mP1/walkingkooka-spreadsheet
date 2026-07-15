@@ -149,8 +149,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         )
     );
 
-    final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
-
     final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         ConverterProviders.empty(),
         ExpressionFunctionProviders.empty(
