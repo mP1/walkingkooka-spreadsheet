@@ -47,8 +47,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -57,7 +55,6 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.lang.reflect.Field;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -341,18 +338,11 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetEnvironmentContextWithDifferent() {
         final SpreadsheetEnvironmentContextFactory context = this.createContext();
 
-        final LineEnding lineEnding = LineEnding.CRNL;
-
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
             CHARSET,
             CURRENCY,
             INDENTATION,
-            lineEnding,
+            DIFFERENT_LINE_ENDING,
             LOCALE,
             HAS_NOW,
             EnvironmentContext.ANONYMOUS
@@ -407,18 +397,9 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
 
-        final Currency currency = Currency.getInstance("NZD");
-
-        this.checkNotEquals(
-            CURRENCY,
-            currency
-        );
-
-        context.setCurrency(currency);
-
-        this.currencyAndCheck(
+        this.setCurrencyAndCheck(
             context,
-            currency
+            DIFFERENT_CURRENCY
         );
     }
 
@@ -472,20 +453,9 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             )
         );
 
-        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
-
-        final Indentation indentation = Indentation.EMPTY;
-
-        this.checkNotEquals(
-            INDENTATION,
-            indentation
-        );
-
-        context.setIndentation(indentation);
-
-        this.indentationAndCheck(
-            context,
-            indentation
+        this.setIndentationAndCheck(
+            this.createContext(spreadsheetEnvironmentContext),
+            DIFFERENT_INDENTATION
         );
     }
     
@@ -508,7 +478,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         this.lineEndingAndCheck(
             this.createContext(context),
-            context.lineEnding()
+            LINE_ENDING
         );
     }
 
@@ -529,20 +499,9 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             )
         );
 
-        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
-
-        final LineEnding lineEnding = LineEnding.CRNL;
-
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
-        context.setLineEnding(lineEnding);
-
         this.setLineEndingAndCheck(
-            context,
-            lineEnding
+            this.createContext(spreadsheetEnvironmentContext),
+            DIFFERENT_LINE_ENDING
         );
     }
 
