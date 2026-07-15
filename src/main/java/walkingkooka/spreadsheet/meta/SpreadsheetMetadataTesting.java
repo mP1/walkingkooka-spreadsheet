@@ -250,7 +250,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
         ).loadFromLocale(
-            CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
+            CURRENCY_LOCALE_CONTEXT
         ).set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.create(
