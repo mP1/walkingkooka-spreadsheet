@@ -92,8 +92,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
-    final static Currency CURRENCY = Currency.getInstance("AUD");
-
     final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     final static Locale LOCALE = Locale.forLanguageTag("en-AU");
