@@ -28,7 +28,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -60,7 +59,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Currency;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -677,8 +675,6 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
     @Test
     public void testUser() {
-        final EmailAddress user = EmailAddress.parse("user123@example.com");
-
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
@@ -688,13 +684,13 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
-                Optional.of(user)
+                OPTIONAL_USER
             )
         );
 
         this.userAndCheck(
             this.createContext(spreadsheetEnvironmentContext),
-            user
+            USER
         );
     }
 

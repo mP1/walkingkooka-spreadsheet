@@ -25,7 +25,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.FakeSpreadsheetContext;
@@ -525,8 +524,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testUser() {
-        final EmailAddress user = EmailAddress.parse("user123@example.com");
-
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
@@ -536,13 +533,13 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
-                Optional.of(user)
+                OPTIONAL_USER
             )
         );
 
         this.userAndCheck(
             this.createContext(spreadsheetEnvironmentContext),
-            user
+            USER
         );
     }
 

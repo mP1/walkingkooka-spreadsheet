@@ -37,6 +37,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUser;
+import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -142,6 +143,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasCurrencyTesting,
     HasLocaleTesting,
     HasNowTesting,
+    HasUserTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -150,12 +152,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
-    /**
-     * Hard-coded active user.
-     */
-    EmailAddress USER = EmailAddress.parse("user@example.com");
-
-    HasUser HAS_USER = () -> Optional.of(USER);
+    HasUser HAS_USER = () -> OPTIONAL_USER;
 
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
@@ -484,7 +481,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
-                Optional.of(USER)
+                OPTIONAL_USER
             )
         );
         environmentContext.setEnvironmentValue(

@@ -32,7 +32,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContextTesting;
@@ -97,8 +96,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         )
     );
 
-    private final static EmailAddress USER = EmailAddress.parse("user@example.com");
-
     private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with(
         "Hello",
         String.class
@@ -120,7 +117,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             LINE_ENDING,
             LOCALE,
             HAS_NOW,
-            Optional.of(USER)
+            OPTIONAL_USER
         )
     );
 
@@ -243,13 +240,10 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Test
     public void testCloneEnvironmentContextAndSetUser() {
-        final SpreadsheetProviderContext context = this.createContext();
-
-        final EmailAddress user = EmailAddress.parse("different@example.com");
-
         this.setUserAndCheck(
-            context.cloneEnvironment(),
-            user
+            this.createContext()
+                .cloneEnvironment(),
+            DIFFERENT_USER
         );
     }
 

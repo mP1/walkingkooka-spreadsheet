@@ -1835,13 +1835,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
-                    EmailAddress.parse("user@example.com"),
+                    EmailAddress.parse("user123@example.com"),
                     LocalDateTime.MIN
                 )
             ),
-            "auditInfo.createdBy=user@example.com\r\n" +
+            "auditInfo.createdBy=user123@example.com\r\n" +
                 "auditInfo.createdTimestamp=-999999999-01-01T00:00\r\n" +
-                "auditInfo.modifiedBy=user@example.com\r\n" +
+                "auditInfo.modifiedBy=user123@example.com\r\n" +
                 "auditInfo.modifiedTimestamp=-999999999-01-01T00:00\r\n"
         );
     }
@@ -1894,9 +1894,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SpreadsheetId.with(1)
                 ),
-                        "auditInfo.createdBy=user@example.com\n" +
+                        "auditInfo.createdBy=user123@example.com\n" +
                         "auditInfo.createdTimestamp=1999-12-31T12:58:59\n" +
-                        "auditInfo.modifiedBy=user@example.com\n" +
+                        "auditInfo.modifiedBy=user123@example.com\n" +
                         "auditInfo.modifiedTimestamp=1999-12-31T12:58:59\n" +
                         "autoHideScrollbars=false\n" +
                         "cellCharacterWidth=1\n" +
@@ -2072,9 +2072,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testFromPropertiesAllProperties() {
         this.fromPropertiesAndCheck(
-                "auditInfo.createdBy=user@example.com\n" +
+                "auditInfo.createdBy=user123@example.com\n" +
                 "auditInfo.createdTimestamp=1999-12-31T12:58:59\n" +
-                "auditInfo.modifiedBy=user@example.com\n" +
+                "auditInfo.modifiedBy=user123@example.com\n" +
                 "auditInfo.modifiedTimestamp=1999-12-31T12:58:59\n" +
                 "autoHideScrollbars=false\n" +
                 "cellCharacterWidth=1\n" +

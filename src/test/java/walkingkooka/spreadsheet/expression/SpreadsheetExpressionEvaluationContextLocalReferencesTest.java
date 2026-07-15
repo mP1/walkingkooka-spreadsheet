@@ -496,9 +496,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
                 LINE_ENDING,
                 LOCALE_CONTEXT.locale(),
                 HAS_NOW,
-                Optional.of(
-                    EmailAddress.parse("user@example.com")
-                )
+                OPTIONAL_USER
             )
         );
         environmentContext.setEnvironmentValue(

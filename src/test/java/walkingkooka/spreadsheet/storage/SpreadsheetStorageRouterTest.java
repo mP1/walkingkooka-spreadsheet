@@ -25,7 +25,6 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
@@ -2989,11 +2988,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         );
 
 
-        spreadsheetEnvironmentContext.setUser(
-            Optional.of(
-                EmailAddress.parse("user@example.com")
-            )
-        );
+        spreadsheetEnvironmentContext.setUser(OPTIONAL_USER);
 
         final SpreadsheetMetadataContext spreadsheetMetadataContext = SpreadsheetMetadataContexts.basic(
             (u, dl) -> {
