@@ -59,8 +59,6 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetFormula.EMPTY.setText("=333")
         );
 
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
     private final static Optional<Currency> CURRENCY = java.util.Optional.of(
         Currency.getInstance("AUD")
     );

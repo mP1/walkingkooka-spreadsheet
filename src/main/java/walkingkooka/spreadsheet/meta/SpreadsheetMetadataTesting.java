@@ -114,6 +114,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.util.HasLocaleTesting;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.form.provider.FormHandlerProvider;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -139,6 +140,7 @@ import java.util.function.Function;
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasCurrencyTesting,
+    HasLocaleTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -161,8 +163,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         12,
         58
     );
-
-    Locale LOCALE = Locale.forLanguageTag("EN-AU");
 
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY

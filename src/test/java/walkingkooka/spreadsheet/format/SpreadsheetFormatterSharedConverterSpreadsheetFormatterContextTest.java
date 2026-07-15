@@ -66,8 +66,6 @@ import java.util.Optional;
 public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext>,
     DecimalNumberContextDelegator {
 
-    private final static Locale LOCALE = Locale.FRANCE;
-
     private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
         DateTimeSymbols.fromDateFormatSymbols(
             new DateFormatSymbols(LOCALE)

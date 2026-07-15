@@ -162,8 +162,6 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         );
     };
 
-    private final static Locale LOCALE = Locale.ENGLISH;
-
     private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
         DateTimeSymbols.fromDateFormatSymbols(
             new DateFormatSymbols(LOCALE)
