@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -99,17 +98,15 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
         final SpreadsheetConverterContext converterContext = METADATA_EN_AU.spreadsheetConverterContext(
             SpreadsheetMetadata.NO_CELL,
-            SpreadsheetMetadataTestingTest.CHARSET,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             HasUserDirectorieses.empty(), // no current working directory
-            INDENTATION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
-            LINE_ENDING,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
             CONVERTER_PROVIDER,
+            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
             PROVIDER_CONTEXT
         );
@@ -293,17 +290,15 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testSpreadsheetFormatterContext() {
         METADATA_EN_AU.spreadsheetFormatterContext(
             SpreadsheetMetadata.NO_CELL,
-            CHARSET,
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },
             HAS_USER_DIRECTORIES,
-            Indentation.SPACES2,
             SPREADSHEET_LABEL_NAME_RESOLVER,
-            LINE_ENDING,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
+            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

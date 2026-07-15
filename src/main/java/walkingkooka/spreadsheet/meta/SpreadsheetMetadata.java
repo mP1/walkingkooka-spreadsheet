@@ -108,10 +108,8 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.storage.HasUserDirectories;
+import walkingkooka.text.BinaryTextContext;
 import walkingkooka.text.HasText;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -150,7 +148,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
@@ -1007,28 +1004,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
      */
-    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final Charset charset,
-                                                                               final HasUserDirectories hasUserDirectories,
-                                                                               final Indentation indentation,
+    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final HasUserDirectories hasUserDirectories,
                                                                                final SpreadsheetLabelNameResolver resolveIfLabel,
-                                                                               final LineEnding lineEnding,
                                                                                final MediaTypeDetector mediaTypeDetector,
                                                                                final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                                final SpreadsheetProvider spreadsheetProvider,
+                                                                               final BinaryTextContext binaryTextContext,
                                                                                final CurrencyLocaleContext currencyLocaleContext,
                                                                                final ProviderContext providerContext) {
         return this.spreadsheetComparatorContext(
             this.sortSpreadsheetConverterContext(
-                charset,
                 resolveIfLabel,
                 spreadsheetProvider, // ConverterProvider
                 hasUserDirectories,
-                indentation,
-                lineEnding,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
+                binaryTextContext,
                 currencyLocaleContext,
                 providerContext // ProviderContext
             )
@@ -1038,30 +1031,26 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetConverterContext} to be used when doing a sort.
      */
-    private SpreadsheetConverterContext sortSpreadsheetConverterContext(final Charset charset,
-                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
+    private SpreadsheetConverterContext sortSpreadsheetConverterContext(final SpreadsheetLabelNameResolver labelNameResolver,
                                                                         final ConverterProvider converterProvider,
                                                                         final HasUserDirectories hasUserDirectories,
-                                                                        final Indentation indentation,
-                                                                        final LineEnding lineEnding,
                                                                         final MediaTypeDetector mediaTypeDetector,
                                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                         final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                                                        final BinaryTextContext binaryTextContext,
                                                                         final CurrencyLocaleContext currencyLocaleContext,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
             NO_CELL,
-            charset,
             NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
             hasUserDirectories,
-            indentation,
             labelNameResolver,
-            lineEnding,
             mediaTypeDetector,
             multiplier,
             spreadsheetMetadataLoader,
             converterProvider,
+            binaryTextContext,
             currencyLocaleContext,
             providerContext
         );
@@ -1084,31 +1073,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link SpreadsheetConverterContext}
      */
     public final SpreadsheetConverterContext spreadsheetConverterContext(final Optional<SpreadsheetCell> cell,
-                                                                         final Charset charset,
                                                                          final Optional<SpreadsheetValidationReference> validationReference,
                                                                          final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
                                                                          final HasUserDirectories hasUserDirectories,
-                                                                         final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                         final LineEnding lineEnding,
                                                                          final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
+                                                                         final BinaryTextContext binaryTextContext,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(charset, "charset");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
-        Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
-        Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
+        Objects.requireNonNull(binaryTextContext, "binaryTextContext");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -1192,10 +1177,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         valueSeparator, // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(),
-                        TextPrinting.with(
-                            indentation,
-                            lineEnding
-                        ).setCharset(charset),
+                        binaryTextContext,
                         currencyLocaleContext,
                         dateTimeContext,
                         decimalNumberContext
@@ -1263,28 +1245,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetFormatterContext}.
      */
     public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
-                                                                         final Charset charset,
                                                                          final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                          final HasUserDirectories hasUserDirectories,
-                                                                         final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                         final LineEnding lineEnding,
                                                                          final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                                                         final BinaryTextContext binaryTextContext,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(charset, "charset");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
-        Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
-        Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
+        Objects.requireNonNull(binaryTextContext, "binaryTextContext");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -1306,17 +1284,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         try {
             formatSpreadsheetConverterContext = this.spreadsheetConverterContext(
                 cell,
-                charset,
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                 hasUserDirectories,
-                indentation,
                 labelNameResolver,
-                lineEnding,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 spreadsheetProvider,
+                binaryTextContext,
                 currencyLocaleContext,
                 providerContext
             );
@@ -1348,30 +1324,26 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetFormatterContext}.
      */
     public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Optional<SpreadsheetCell> cell,
-                                                                                                       final Charset charset,
                                                                                                        final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                                                        final HasUserDirectories hasUserDirectories,
-                                                                                                       final Indentation indentation,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                                                       final LineEnding lineEnding,
                                                                                                        final MediaTypeDetector mediaTypeDetector,
                                                                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                                        final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                                                                                       final BinaryTextContext binaryTextContext,
                                                                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
             this.spreadsheetFormatterContext(
                 cell,
-                charset,
                 spreadsheetExpressionEvaluationContext,
                 hasUserDirectories,
-                indentation,
                 labelNameResolver,
-                lineEnding,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
+                binaryTextContext,
                 currencyLocaleContext,
                 spreadsheetProvider,
                 providerContext
@@ -1470,31 +1442,27 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetValidatorContext} with the given {@link SpreadsheetCellReference}.
      */
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetValidationReference cellOrLabel,
-                                                                         final Charset charset,
                                                                          final Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
                                                                          final BiFunction<Object, SpreadsheetValidationReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final HasUserDirectories hasUserDirectories,
-                                                                         final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                         final LineEnding lineEnding,
                                                                          final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
+                                                                         final BinaryTextContext binaryTextContext,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
-        Objects.requireNonNull(charset, "charset");
         Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
         Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
-        Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
-        Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
+        Objects.requireNonNull(binaryTextContext, "binaryTextContext");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -1504,17 +1472,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         try {
             spreadsheetConverterContext = this.spreadsheetConverterContext(
                 NO_CELL,
-                charset,
                 Optional.of(cellOrLabel), // validationReference
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 hasUserDirectories,
-                indentation,
                 labelNameResolver,
-                lineEnding,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 converterProvider,
+                binaryTextContext,
                 currencyLocaleContext,
                 providerContext
             );

@@ -614,17 +614,15 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
         SpreadsheetMetadata.NO_CELL,
-        CHARSET,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
         HAS_USER_DIRECTORIES,
-        INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
-        LINE_ENDING,
         MEDIA_TYPE_DETECTOR,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
         CONVERTER_PROVIDER,
+        BINARY_TEXT_CONTEXT,
         CURRENCY_LOCALE_CONTEXT,
         PROVIDER_CONTEXT
     );
@@ -655,15 +653,13 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
         SpreadsheetMetadata.NO_CELL,
-        CHARSET,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         HAS_USER_DIRECTORIES,
-        INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
-        LINE_ENDING,
         MEDIA_TYPE_DETECTOR,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
+        BINARY_TEXT_CONTEXT,
         CURRENCY_LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
@@ -671,15 +667,13 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
         SpreadsheetMetadata.NO_CELL,
-        CHARSET,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         HAS_USER_DIRECTORIES,
-        INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
-        LINE_ENDING,
         MEDIA_TYPE_DETECTOR,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
+        BINARY_TEXT_CONTEXT,
         CURRENCY_LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT

@@ -262,17 +262,15 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             this.spreadsheetConverterContext = this.spreadsheetMetadata()
                 .spreadsheetConverterContext(
                     this.cell,
-                    spreadsheetContext.charset(),
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this, // HasUserDirectories
-                    this.indentation(),
                     this.spreadsheetLabelNameResolver,
-                    this.lineEnding(),
                     spreadsheetContext, // MediaTypeDetector
                     spreadsheetContext.multiplier(),
                     spreadsheetContext, // SpreadsheetMetadataLoader
                     spreadsheetContext, // SpreadsheetProvider, // SpreadsheetConverterProvider
+                    spreadsheetContext, // BinaryTextContext
                     spreadsheetContext, // CurrencyLocaleContext
                     spreadsheetContext.providerContext()
                 );
@@ -340,7 +338,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         return this.spreadsheetMetadata()
             .spreadsheetFormatterContext(
                 cell,
-                spreadsheetContext.charset(),
                 (final Optional<Object> v) -> this.setMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).addLocalVariable(
@@ -348,12 +345,11 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     v
                 ),
                 this, // HasUserDirectories
-                this.indentation(),
                 this.spreadsheetLabelNameResolver,
-                this.lineEnding(),
                 spreadsheetContext, // MediaTypeDetector
                 spreadsheetContext.multiplier(),
                 spreadsheetContext, // SpreadsheetMetadataLoader
+                spreadsheetContext, // BinaryTextContext
                 spreadsheetContext, // CurrencyLocaleContext
                 spreadsheetContext, // SpreadsheetProvider
                 spreadsheetContext.providerContext() // ProviderContext

@@ -2053,17 +2053,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             null,
             metadata.spreadsheetFormatterContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2104,17 +2102,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             null,
             metadata.spreadsheetFormatterProviderSamplesContext(
                 SpreadsheetMetadata.NO_CELL,
-                CHARSET,
                 (final Optional<Object> v) -> {
                     throw new UnsupportedOperationException();
                 },
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2440,7 +2436,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ','
             ).spreadsheetValidatorContext(
                 cellOrLabel,
-                CHARSET,
                 (final ValidatorSelector validatorSelector) -> {
                     throw new UnsupportedOperationException();
                 },
@@ -2449,13 +2444,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     throw new UnsupportedOperationException();
                 },
                 HAS_USER_DIRECTORIES,
-                INDENTATION,
                 LABEL_NAME_RESOLVER,
-                LINE_ENDING,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.converters(),
+                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             );
