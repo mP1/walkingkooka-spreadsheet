@@ -1131,6 +1131,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToBinary() {
+        this.converterAndCheck(
+            "to-binary",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toBinary()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToBoolean() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TO_BOOLEAN + "",
