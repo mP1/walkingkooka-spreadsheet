@@ -138,6 +138,8 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     SpreadsheetName SPREADSHEET_NAME = SpreadsheetName.with("SpreadsheetName456");
 
+    SpreadsheetName DIFFERENT_SPREADSHEET_NAME = SpreadsheetName.with("DifferentSpreadsheetName789");
+
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
 
     int DECIMAL_NUMBER_DIGIT_COUNT = 8;
