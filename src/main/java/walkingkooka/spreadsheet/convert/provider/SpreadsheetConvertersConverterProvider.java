@@ -234,10 +234,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toStyle();
                 break;
-            case HAS_TEXT_NODE_STRING:
+            case TO_TEXT_NODE_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.hasTextNode();
+                converter = SpreadsheetConverters.toTextNode();
                 break;
             case HAS_VALIDATOR_SELECTOR_STRING:
                 noParameterCheck(copy);
@@ -948,10 +948,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
 
-    private final static String HAS_TEXT_NODE_STRING = "has-text-node";
-
-    final static ConverterName HAS_TEXT_NODE = ConverterName.with(HAS_TEXT_NODE_STRING);
-
     private final static String HAS_VALIDATOR_SELECTOR_STRING = "has-validator-selector";
 
     final static ConverterName HAS_VALIDATOR_SELECTOR = ConverterName.with(HAS_VALIDATOR_SELECTOR_STRING);
@@ -1376,6 +1372,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
 
+    private final static String TO_TEXT_NODE_STRING = "to-text-node";
+
+    final static ConverterName TO_TEXT_NODE = ConverterName.with(TO_TEXT_NODE_STRING);
+
     private final static String TO_VALIDATION_CHECKBOX_STRING = "to-validation-checkbox";
 
     final static ConverterName TO_VALIDATION_CHECKBOX = ConverterName.with(TO_VALIDATION_CHECKBOX_STRING);
@@ -1444,7 +1444,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
-            converterInfo(HAS_TEXT_NODE),
             converterInfo(HAS_VALIDATOR_SELECTOR),
             converterInfo(JSON),
             converterInfo(JSON_TO),
@@ -1551,6 +1550,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_STRING),
             converterInfo(TO_STYLE),
             converterInfo(TO_STYLEABLE),
+            converterInfo(TO_TEXT_NODE),
             converterInfo(TO_VALIDATION_CHECKBOX),
             converterInfo(TO_VALIDATION_CHOICE),
             converterInfo(TO_VALIDATION_CHOICE_LIST),

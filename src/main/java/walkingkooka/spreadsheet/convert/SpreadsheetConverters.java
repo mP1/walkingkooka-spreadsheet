@@ -86,7 +86,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToFlag(),
         textToSpreadsheetText(),
         textToTextNode(),
-        hasTextNode(),
+        toTextNode(),
         urlToHyperlink(),
         urlToImage()
     );
@@ -403,13 +403,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetSelection() {
         return SpreadsheetConverterHasSpreadsheetSelection.INSTANCE;
-    }
-
-    /**
-     * {@see TreeTextConverters#hasTextNode}
-     */
-    public static Converter<SpreadsheetConverterContext> hasTextNode() {
-        return TreeTextConverters.hasTextNode();
     }
 
     /**
@@ -1364,6 +1357,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> toStyleable() {
         return TreeTextConverters.toStyleable();
+    }
+
+    /**
+     * {@see TreeTextConverters#toTextNode}
+     */
+    public static Converter<SpreadsheetConverterContext> toTextNode() {
+        return TreeTextConverters.toTextNode();
     }
 
     /**
