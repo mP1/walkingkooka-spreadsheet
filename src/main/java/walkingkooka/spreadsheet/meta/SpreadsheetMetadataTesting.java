@@ -31,7 +31,6 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.HasUser;
 import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContextTesting;
@@ -144,8 +143,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
 
     int DECIMAL_NUMBER_DIGIT_COUNT = 8;
-
-    HasUser HAS_USER = () -> OPTIONAL_USER;
 
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
