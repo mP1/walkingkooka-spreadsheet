@@ -55,21 +55,13 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
-import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTesting<JsonSpreadsheetImporter>,
     SpreadsheetMetadataTesting,
     ToStringTesting<JsonSpreadsheetImporter>,
     ClassTesting2<JsonSpreadsheetImporter> {
-
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
-    private final static Optional<Currency> CURRENCY = java.util.Optional.of(
-        Currency.getInstance("AUD")
-    );
 
     private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
         DateTimeSymbols.fromDateFormatSymbols(
@@ -86,10 +78,6 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
 
     private final static Optional<SpreadsheetFormatterSelector> FORMATTER = Optional.of(
         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
-    );
-
-    private final static Optional<Locale> OPTIONAL_LOCALE = Optional.of(
-        Locale.forLanguageTag("en-AU")
     );
 
     private final static Optional<SpreadsheetParserSelector> PARSER = Optional.of(
@@ -124,7 +112,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
         .setValue(VALUE); // setValue AFTER setValueType otherwise value gets cleared
 
     private final static SpreadsheetCell CELL_A1 = A1.setFormula(FORMULA_A1)
-        .setCurrency(CURRENCY)
+        .setCurrency(OPTIONAL_CURRENCY)
         .setDateTimeSymbols(DATE_TIME_SYMBOLS)
         .setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS)
         .setFormatter(FORMATTER)
@@ -170,7 +158,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.CURRENCY,
             SpreadsheetImporterCellValue.currency(
                 A1,
-                OptionalCurrency.with(CURRENCY)
+                OptionalCurrency.with(OPTIONAL_CURRENCY)
             ),
             SpreadsheetImporterCellValue.currency(
                 A2,
