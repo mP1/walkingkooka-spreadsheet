@@ -403,9 +403,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                 context.createdAuditInfo()
             )
         );
-    }
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+    };
 
     @Test
     public void testAddWatcherAndSaveMetadata() {

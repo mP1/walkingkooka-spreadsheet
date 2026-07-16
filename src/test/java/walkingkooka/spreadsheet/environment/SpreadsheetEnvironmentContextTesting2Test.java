@@ -23,7 +23,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2Test.TestSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
@@ -36,10 +35,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetEnvironmentContextTesting2Test implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContext> {
-
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     @Test
     public void testServerUrl() {

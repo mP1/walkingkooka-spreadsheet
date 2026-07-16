@@ -40,6 +40,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
@@ -78,7 +79,8 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<BasicSpreadsheetFormatterContext> {
+public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<BasicSpreadsheetFormatterContext>,
+    SpreadsheetEnvironmentContextTesting {
 
     private final static Optional<SpreadsheetCell> CELL = Optional.of(
         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
@@ -262,8 +264,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }.setLocaleContext(
         LocaleContexts.jre(LOCALE)
     );
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,

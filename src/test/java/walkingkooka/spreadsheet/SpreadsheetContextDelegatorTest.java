@@ -28,7 +28,6 @@ import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -142,18 +141,16 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
     final static class TestSpreadsheetContextDelegator implements SpreadsheetContextDelegator {
 
-        private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
-
         @Override
         public Optional<SpreadsheetId> spreadsheetId() {
-            return Optional.of(SPREADSHEET_ID);
+            return Optional.of(SpreadsheetContextDelegatorTest.SPREADSHEET_ID);
         }
 
         @Override
         public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
             Objects.requireNonNull(id, "id");
 
-            if (false == SPREADSHEET_ID.equals(id.orElse(null))) {
+            if (false == SpreadsheetContextDelegatorTest.SPREADSHEET_ID.equals(id.orElse(null))) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -247,7 +244,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
                 return Optional.ofNullable(
                     SPREADSHEET_ID.equals(name) ?
-                        (T) TestSpreadsheetContextDelegator.SPREADSHEET_ID :
+                        (T) SpreadsheetContextDelegatorTest.SPREADSHEET_ID :
                         SERVER_URL.equals(name) ?
                             (T) this.serverUrl() :
                             null
@@ -368,7 +365,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
             @Override
             public AbsoluteUrl serverUrl() {
-                return Url.parseAbsolute("https://example.com");
+                return SpreadsheetContextDelegatorTest.SERVER_URL;
             }
 
             @Override

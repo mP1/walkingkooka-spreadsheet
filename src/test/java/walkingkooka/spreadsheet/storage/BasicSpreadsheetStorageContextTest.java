@@ -88,10 +88,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<BasicSpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
 
-    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
-
     private final static FormName FORM_NAME = FormName.with("Form111");
 
     private final static SpreadsheetLabelName LABEL_NAME = SpreadsheetSelection.labelName("Label123");
@@ -1171,12 +1167,12 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            CURRENT_WORKING_DIRECTORY
+            BasicSpreadsheetStorageContextTest.CURRENT_WORKING_DIRECTORY
         );
 
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
-            SERVER_URL
+            BasicSpreadsheetStorageContextTest.SERVER_URL
         );
 
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();

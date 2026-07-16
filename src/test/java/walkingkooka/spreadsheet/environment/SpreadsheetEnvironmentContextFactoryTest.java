@@ -45,7 +45,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -66,8 +65,6 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     SpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetEnvironmentContextFactory>,
     ClassTesting2<SpreadsheetEnvironmentContextFactory> {
-
-    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 

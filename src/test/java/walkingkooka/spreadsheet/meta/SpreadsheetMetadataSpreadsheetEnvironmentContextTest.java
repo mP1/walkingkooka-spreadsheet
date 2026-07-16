@@ -22,8 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
@@ -41,8 +39,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
-
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
@@ -72,8 +68,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     }
 
     private final static SpreadsheetEnvironmentContext CONTEXT;
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,

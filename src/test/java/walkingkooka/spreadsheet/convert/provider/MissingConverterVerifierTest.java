@@ -75,8 +75,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     ClassTesting<MissingConverterVerifier>,
     SpreadsheetMetadataTesting {
 
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(0x1234);
-
     private final static SpreadsheetMetadata SPREADSHEET_METADATA = METADATA_EN_AU.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
@@ -380,7 +378,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public Optional<StoragePath> homeDirectory() {
-            return HOME_DIRECTORY;
+            return OPTIONAL_HOME_DIRECTORY;
         }
 
         @Override

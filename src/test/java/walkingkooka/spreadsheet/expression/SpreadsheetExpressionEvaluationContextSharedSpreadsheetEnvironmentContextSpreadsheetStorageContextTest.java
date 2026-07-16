@@ -62,7 +62,6 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -80,10 +79,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
-
-    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static FormName FORM_NAME = FormName.with("Form111");
 
