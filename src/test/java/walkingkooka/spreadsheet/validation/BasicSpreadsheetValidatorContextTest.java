@@ -137,7 +137,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
                         throw new UnsupportedOperationException();
                     },
                     SPREADSHEET_FORMATTER_CONTEXT,
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             )
         );

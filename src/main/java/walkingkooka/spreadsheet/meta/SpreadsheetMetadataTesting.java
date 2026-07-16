@@ -28,7 +28,6 @@ import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUserTesting;
@@ -80,13 +79,10 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorageContext;
 import walkingkooka.storage.HasUserDirectories;
-import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
@@ -406,42 +402,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     };
 
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
-
-    EnvironmentContext ENVIRONMENT_CONTEXT = environmentContext();
-
-    private static EnvironmentContext environmentContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                OPTIONAL_USER
-            )
-        );
-        environmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.SERVER_URL,
-            SERVER_URL
-        );
-
-        return EnvironmentContexts.readOnly(
-            Predicates.always(), // all values are read-only
-            environmentContext
-        );
-    }
-
-    Storage<SpreadsheetStorageContext> STORAGE = Storages.empty();
-
-    /**
-     * A {@link SpreadsheetEnvironmentContext} that contains {@link SpreadsheetEnvironmentContext#SERVER_URL} but not
-     * {@link SpreadsheetEnvironmentContext#SPREADSHEET_ID}.
-     */
-    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
-        STORAGE,
-        ENVIRONMENT_CONTEXT
-    );
 
     JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();
 
