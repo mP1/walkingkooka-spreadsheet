@@ -419,9 +419,8 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     );
 
     HateosHandlerContext HATEOS_HANDLER_CONTEXT = HateosHandlerContexts.basic(
-        INDENTATION,
-        EOL,
-        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
+        TEXT_CONTEXT
     );
 
     private static SpreadsheetEnvironmentContext providerContextSpreadsheetEnvironmentContext() {
