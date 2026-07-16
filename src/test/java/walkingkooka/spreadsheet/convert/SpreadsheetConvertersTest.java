@@ -3272,7 +3272,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testStyleConvertHasStyle() {
+    public void testStyleConvertToTextStyle() {
         this.styleConvertAndCheck(
             STYLE,
             STYLE

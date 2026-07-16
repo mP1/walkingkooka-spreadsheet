@@ -1839,7 +1839,7 @@ final class MissingConverterVerifier {
 
         // style-.......................................................................................................
         {
-            // has-style-...............................................................................................
+            // to-style-...............................................................................................
             if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
@@ -1848,7 +1848,7 @@ final class MissingConverterVerifier {
                             .setStyle(STYLE)
                     ),
                     TextStyle.class,
-                    SpreadsheetConvertersConverterProvider.STYLE, // HAS_STYLE
+                    SpreadsheetConvertersConverterProvider.STYLE, // TO_STYLE
                     STYLE
                 );
             }

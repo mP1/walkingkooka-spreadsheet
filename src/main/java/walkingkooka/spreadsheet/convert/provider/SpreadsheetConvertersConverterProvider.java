@@ -229,10 +229,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasSpreadsheetSelection();
                 break;
-            case HAS_STYLE_STRING:
+            case TO_STYLE_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.hasStyle();
+                converter = SpreadsheetConverters.toStyle();
                 break;
             case HAS_TEXT_NODE_STRING:
                 noParameterCheck(copy);
@@ -948,10 +948,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
 
-    private final static String HAS_STYLE_STRING = "has-style";
-
-    final static ConverterName HAS_STYLE = ConverterName.with(HAS_STYLE_STRING);
-
     private final static String HAS_TEXT_NODE_STRING = "has-text-node";
 
     final static ConverterName HAS_TEXT_NODE = ConverterName.with(HAS_TEXT_NODE_STRING);
@@ -1372,6 +1368,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_STRING = ConverterName.with(TO_STRING_STRING);
 
+    private final static String TO_STYLE_STRING = "to-style";
+
+    final static ConverterName TO_STYLE = ConverterName.with(TO_STYLE_STRING);
+
     private final static String TO_STYLEABLE_STRING = "to-styleable";
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
@@ -1444,7 +1444,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
-            converterInfo(HAS_STYLE),
             converterInfo(HAS_TEXT_NODE),
             converterInfo(HAS_VALIDATOR_SELECTOR),
             converterInfo(JSON),
@@ -1550,6 +1549,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_NUMBER),
             converterInfo(TO_PROPERTIES),
             converterInfo(TO_STRING),
+            converterInfo(TO_STYLE),
             converterInfo(TO_STYLEABLE),
             converterInfo(TO_VALIDATION_CHECKBOX),
             converterInfo(TO_VALIDATION_CHOICE),
