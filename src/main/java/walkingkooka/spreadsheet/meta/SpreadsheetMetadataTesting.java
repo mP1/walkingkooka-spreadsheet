@@ -80,9 +80,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.FakeStorageContext;
-import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.StorageContext;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
@@ -392,18 +390,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     );
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
-
-    HasUserDirectories HAS_USER_DIRECTORIES = new HasUserDirectories() {
-        @Override
-        public Optional<StoragePath> currentWorkingDirectory() {
-            return OPTIONAL_CURRENT_WORKING_DIRECTORY;
-        }
-
-        @Override
-        public Optional<StoragePath> homeDirectory() {
-            return OPTIONAL_HOME_DIRECTORY;
-        }
-    };
 
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
