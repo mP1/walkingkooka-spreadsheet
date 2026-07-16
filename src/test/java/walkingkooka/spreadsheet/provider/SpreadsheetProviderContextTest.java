@@ -37,7 +37,6 @@ import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.plugin.store.PluginStores;
-import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -48,8 +47,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -61,8 +58,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext>,
     CurrencyLocaleContextTesting {
-
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
@@ -103,19 +98,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     );
 
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
-
-    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
-        Predicates.always(), // all values are read-only
-        EnvironmentContexts.empty(
-            CHARSET,
-            CURRENCY,
-            INDENTATION,
-            LINE_ENDING,
-            LOCALE,
-            HAS_NOW,
-            OPTIONAL_USER
-        )
-    );
 
     // with.............................................................................................................
 
