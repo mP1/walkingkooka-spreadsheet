@@ -105,9 +105,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Test
     public void testLoadCellsWithUnknownCell() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadCellsAndCheck(
             context,
@@ -140,9 +138,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(cell);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadCellsAndCheck(
             context,
@@ -199,9 +195,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(cell);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.saveCellsAndCheck(
             context,
@@ -243,9 +237,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Test
     public void testDeleteCellsWithUnknownCell() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteCells(SpreadsheetSelection.A1);
     }
@@ -266,9 +258,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(cell);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteCells(SpreadsheetSelection.A1);
 
@@ -284,9 +274,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Override
     public void testAddCellWatcherWithNullWatcherFails() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -308,9 +296,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         );
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetCell savedCell = cell.setFormula(
             cell.formula()
@@ -366,9 +352,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Override
     public void testAddCellWatcherOnceWithNullWatcherFails() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -390,9 +374,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         );
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetCell savedCell = cell.setFormula(
             cell.formula()
@@ -465,9 +447,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Test
     public void testLoadFormMissingForm() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadFormAndCheck(
             context,
@@ -487,9 +467,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(form);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadFormAndCheck(
             context,
@@ -524,9 +502,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         );
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
@@ -566,9 +542,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             );
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteForm(FORM_NAME);
 
@@ -618,9 +592,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(form3);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.findFormsByNameAndCheck(
             context,
@@ -661,9 +633,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(form3);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.findFormsByNameAndCheck(
             context,
@@ -680,9 +650,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Override
     public void testAddFormWatcherWithNullWatcherFails() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -697,9 +665,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         );
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
@@ -744,9 +710,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Override
     public void testAddFormWatcherOnceWithNullWatcherFails() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -761,9 +725,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         );
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
@@ -821,9 +783,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Test
     public void testLoadLabelMissingLabel() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadLabelAndCheck(
             context,
@@ -843,9 +803,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(mapping);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadLabelAndCheck(
             context,
@@ -887,9 +845,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.saveLabelAndCheck(
             context,
@@ -925,9 +881,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             .save(LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1));
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteLabel(LABEL_NAME);
 
@@ -965,9 +919,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
                 labelName2.setLabelMappingReference(SpreadsheetSelection.A1));
 
         final BasicSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.findLabelsByNameAndCheck(
             context,
@@ -985,9 +937,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Override
     public void testAddLabelWatcherWithNullWatcherFails() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -998,9 +948,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Test
     public void testAddLabelWatcherAndSaveLabel() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
 
@@ -1046,9 +994,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Override
     public void testAddLabelWatcherOnceWithNullWatcherFails() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -1059,9 +1005,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     @Test
     public void testAddLabelWatcherOnceAndSaveLabel() {
         final BasicSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
 

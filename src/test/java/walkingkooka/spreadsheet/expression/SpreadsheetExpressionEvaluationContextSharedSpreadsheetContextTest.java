@@ -102,9 +102,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     static {
         final SpreadsheetEnvironmentContext c = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        c.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        c.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
         c.setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY);
         SPREADSHEET_ENVIRONMENT_CONTEXT = c;
     }

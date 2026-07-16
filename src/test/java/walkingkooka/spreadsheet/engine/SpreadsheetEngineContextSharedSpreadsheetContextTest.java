@@ -126,9 +126,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     static {
         final SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        context.setSpreadsheetId(
-                Optional.of(SPREADSHEET_ID)
-            );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         SPREADSHEET_ENVIRONMENT_CONTEXT = context;
     }
@@ -1207,9 +1205,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     
     @Override
     SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
-        spreadsheetEnvironmentContext.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         return this.createContext(
             METADATA,
@@ -1295,14 +1291,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             Storages.treeMapStore(),
             SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        spreadsheetEnvironmentContext.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         spreadsheetEnvironmentContext.setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY);
-        spreadsheetEnvironmentContext.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
 
         return this.createContext(spreadsheetEnvironmentContext);
@@ -1742,9 +1734,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             )
         );
 
-        spreadsheetEnvironmentContext.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetContext.with(

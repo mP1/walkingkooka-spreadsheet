@@ -40,6 +40,8 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
 
     SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(0x123);
 
+    Optional<SpreadsheetId> OPTIONAL_SPREADSHEET_ID = Optional.of(SPREADSHEET_ID);
+
     Storage<SpreadsheetStorageContext> STORAGE = Storages.empty();
 
     /**

@@ -29,7 +29,6 @@ import walkingkooka.storage.Storages;
 
 import java.time.ZoneOffset;
 import java.util.Locale;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -303,9 +302,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         assertThrows(
             ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
-                .setSpreadsheetId(
-                    Optional.of(SPREADSHEET_ID)
-                )
+                .setSpreadsheetId(OPTIONAL_SPREADSHEET_ID)
         );
     }
 
@@ -425,9 +422,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             STORAGE,
             context
         );
-        spreadsheetEnvironmentContext.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         return ReadOnlySpreadsheetEnvironmentContext.with(spreadsheetEnvironmentContext);
     }
