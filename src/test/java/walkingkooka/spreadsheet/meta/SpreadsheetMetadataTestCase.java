@@ -53,9 +53,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.storage.FakeHasUserDirectories;
-import walkingkooka.storage.HasUserDirectories;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -103,27 +100,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     };
 
     final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
-
-    final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
-        StoragePath.parse("/current1/working2/directory3")
-    );
-
-    final static Optional<StoragePath> HOME_DIRECTORY = Optional.of(
-        StoragePath.parse("/home/user")
-    );
-
-    final static HasUserDirectories HAS_USER_DIRECTORIES = new FakeHasUserDirectories() {
-
-        @Override
-        public Optional<StoragePath> currentWorkingDirectory() {
-            return CURRENT_WORKING_DIRECTORY;
-        }
-
-        @Override
-        public Optional<StoragePath> homeDirectory() {
-            return HOME_DIRECTORY;
-        }
-    };
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
