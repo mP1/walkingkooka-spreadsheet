@@ -1274,7 +1274,14 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> textToZoneOffset() {
         return Converters.textToZoneOffset();
     }
-    
+
+    /**
+     * {@link  Converters#toBinary()}
+     */
+    public static Converter<SpreadsheetConverterContext> toBinary() {
+        return Converters.toBinary();
+    }
+
     /**
      * A {@link Converter} that handles converting to a {@link Boolean} value.
      */
