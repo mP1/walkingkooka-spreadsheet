@@ -145,9 +145,16 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> BINARY = namedCollection(
         "Binary",
         SpreadsheetConverters.textToBinary(),
-        SpreadsheetConverters.hasBinaryToString()
+        SpreadsheetConverters.binaryToText()
     );
-    
+
+    /**
+     * {@link  Converters#binaryToString()}
+     */
+    public static Converter<SpreadsheetConverterContext> binaryToText() {
+        return Converters.binaryToString();
+    }
+
     /**
      * A {@link Converter} that handles converting from or to a {@link Boolean} value
      */
@@ -375,13 +382,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> formatPatternToString(final String pattern) {
         return SpreadsheetConverterFormatPatternToString.with(pattern);
-    }
-
-    /**
-     * {@link  Converters#hasBinaryToString()}
-     */
-    public static Converter<SpreadsheetConverterContext> hasBinaryToString() {
-        return Converters.hasBinaryToString();
     }
 
     /**
@@ -717,7 +717,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToTsvStringList(),
         textToTsvStringSet(),
         textToStringList(),
-        hasBinaryToString(),
+        binaryToText(),
         Converters.objectToString()
     );
 
