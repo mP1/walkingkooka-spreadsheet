@@ -146,7 +146,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         MissingConverterSet.EMPTY.concat(
             MissingConverter.with(
-                ConverterName.HAS_TEXT,
+                ConverterName.TO_TEXT,
                 Sets.of(
                     MissingConverterValue.with(
                         "Hello",
