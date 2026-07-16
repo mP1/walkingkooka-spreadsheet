@@ -18,18 +18,32 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContextTesting;
+import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
-    
+
+    StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
+
+    Optional<StoragePath> OPTIONAL_CURRENT_WORKING_DIRECTORY = Optional.of(CURRENT_WORKING_DIRECTORY);
+
+    StoragePath HOME_DIRECTORY = StoragePath.parse("/home/user");
+
+    Optional<StoragePath> OPTIONAL_HOME_DIRECTORY = Optional.of(HOME_DIRECTORY);
+
+    AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
+
+    SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
     // serverUrl........................................................................................................
 
     @Override

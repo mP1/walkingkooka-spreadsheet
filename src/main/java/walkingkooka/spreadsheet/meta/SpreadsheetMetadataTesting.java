@@ -36,8 +36,6 @@ import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.CharsetName;
 import walkingkooka.net.header.MediaTypeDetector;
@@ -59,6 +57,7 @@ import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterP
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -139,6 +138,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasNowTesting,
     HasUserTesting,
     LocaleContextTesting,
+    SpreadsheetEnvironmentContextTesting,
     TreePrintableTesting {
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
@@ -396,27 +396,17 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
-    Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
-        StoragePath.parse("/current1/working2/directory3")
-    );
-
-    Optional<StoragePath> HOME_DIRECTORY = Optional.of(
-        StoragePath.parse("/home/user")
-    );
-
     HasUserDirectories HAS_USER_DIRECTORIES = new HasUserDirectories() {
         @Override
         public Optional<StoragePath> currentWorkingDirectory() {
-            return CURRENT_WORKING_DIRECTORY;
+            return OPTIONAL_CURRENT_WORKING_DIRECTORY;
         }
 
         @Override
         public Optional<StoragePath> homeDirectory() {
-            return HOME_DIRECTORY;
+            return OPTIONAL_HOME_DIRECTORY;
         }
     };
-
-    AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 

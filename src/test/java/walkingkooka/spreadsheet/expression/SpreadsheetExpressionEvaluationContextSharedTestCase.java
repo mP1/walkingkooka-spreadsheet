@@ -38,8 +38,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 
-    final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
-
     final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     SpreadsheetExpressionEvaluationContextSharedTestCase() {

@@ -22,8 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.MissingEnvironmentValueException;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -46,12 +44,6 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     SpreadsheetMetadataTesting,
     TreePrintableTesting,
     ToStringTesting<BasicSpreadsheetEnvironmentContext> {
-    
-    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
-
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
 

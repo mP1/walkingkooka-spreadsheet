@@ -24,13 +24,9 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
@@ -46,10 +42,6 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
     private final static Locale LOCALE = Locale.GERMAN;
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
-
-    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
         @Override
@@ -504,7 +496,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, timeOffset=Z, user=user123@example.com}"
+            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -535,7 +527,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "        serverUrl\n" +
                 "          https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
                 "        spreadsheetId\n" +
-                "          7b\n" +
+                "          1\n" +
                 "        timeOffset\n" +
                 "          Z (java.time.ZoneOffset)\n" +
                 "        user\n" +

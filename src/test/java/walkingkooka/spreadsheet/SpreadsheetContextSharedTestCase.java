@@ -26,8 +26,6 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -44,7 +42,6 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -77,12 +74,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
-
-    final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
-
-    final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
-
-    final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     final static EmailAddress CREATOR = EmailAddress.parse("creator@example.com");
 
@@ -126,7 +117,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            CURRENT_WORKING_DIRECTORY
+            SpreadsheetContextSharedTestCase.CURRENT_WORKING_DIRECTORY
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,

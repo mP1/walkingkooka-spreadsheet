@@ -27,7 +27,6 @@ import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -119,18 +118,16 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
     static class TestSpreadsheetContext extends FakeSpreadsheetContext {
 
-        private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
-
         @Override
         public Optional<SpreadsheetId> spreadsheetId() {
-            return Optional.of(SPREADSHEET_ID);
+            return Optional.of(SpreadsheetContextTestingTest.SPREADSHEET_ID);
         }
 
         @Override
         public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
             Objects.requireNonNull(id, "id");
 
-            if (false == SPREADSHEET_ID.equals(id.orElse(null))) {
+            if (false == SpreadsheetContextTestingTest.SPREADSHEET_ID.equals(id.orElse(null))) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -170,7 +167,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
             return Optional.ofNullable(
                 SpreadsheetContext.SPREADSHEET_ID.equals(name) ?
-                    (T) TestSpreadsheetContext.SPREADSHEET_ID :
+                    (T) SpreadsheetContextTestingTest.SPREADSHEET_ID :
                     SERVER_URL.equals(name) ?
                         (T) this.serverUrl() :
                         null
@@ -307,7 +304,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
         @Override
         public AbsoluteUrl serverUrl() {
-            return Url.parseAbsolute("https://example.com");
+            return SpreadsheetContextTestingTest.SERVER_URL;
         }
 
         @Override

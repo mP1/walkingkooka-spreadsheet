@@ -478,15 +478,15 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            CURRENT_WORKING_DIRECTORY
+            SpreadsheetContextSharedMutableSpreadsheetIdTest.CURRENT_WORKING_DIRECTORY
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
-            SERVER_URL
+            SpreadsheetContextSharedMutableSpreadsheetIdTest.SERVER_URL
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-            SPREADSHEET_ID
+            SpreadsheetContextSharedMutableSpreadsheetIdTest.SPREADSHEET_ID
         );
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
