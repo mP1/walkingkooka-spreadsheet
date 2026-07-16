@@ -399,13 +399,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeTextConverters#hasTextStyle}
-     */
-    public static Converter<SpreadsheetConverterContext> hasStyle() {
-        return TreeTextConverters.hasTextStyle();
-    }
-
-    /**
      * {@see SpreadsheetConverterHasSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetSelection() {
@@ -761,7 +754,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> STYLE = namedCollection(
         "style",
-        hasStyle(),
+        toStyle(),
         textToBorder(),
         textToMargin(),
         textToPadding(),
@@ -1357,6 +1350,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> toProperties() {
         return Converters.toProperties();
+    }
+
+    /**
+     * {@see TreeTextConverters#toTextStyle}
+     */
+    public static Converter<SpreadsheetConverterContext> toStyle() {
+        return TreeTextConverters.toTextStyle();
     }
 
     /**

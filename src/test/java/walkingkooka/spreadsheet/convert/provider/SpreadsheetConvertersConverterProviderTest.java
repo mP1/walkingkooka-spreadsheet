@@ -392,15 +392,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithHasStyleToStyle() {
-        this.converterAndCheck(
-            "has-style",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.hasStyle()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithHasTextNode() {
         this.converterAndCheck(
             "has-text-node",
@@ -1014,6 +1005,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST + "",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToStringList()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithTextStyleToStyle() {
+        this.converterAndCheck(
+            "to-style",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toStyle()
         );
     }
 
