@@ -725,6 +725,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-validator-selector\n" +
                 "    text-to-value-type\n" +
                 "    text-to-zone-offset\n" +
+                "    to-binary\n" +
                 "    to-boolean\n" +
                 "    to-date-time-symbols\n" +
                 "    to-decimal-number-symbols\n" +
