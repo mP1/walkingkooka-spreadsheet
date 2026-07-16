@@ -97,9 +97,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testLoadCellsWithUnknownCell() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadCellsAndCheck(
             context,
@@ -132,9 +130,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(cell);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadCellsAndCheck(
             context,
@@ -191,9 +187,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(cell);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.saveCellsAndCheck(
             context,
@@ -235,9 +229,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testDeleteCellsWithUnknownCell() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteCells(SpreadsheetSelection.A1);
     }
@@ -258,9 +250,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(cell);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteCells(SpreadsheetSelection.A1);
 
@@ -276,9 +266,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public void testAddCellWatcherWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -300,9 +288,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetCell savedCell = cell.setFormula(
             cell.formula()
@@ -358,9 +344,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public void testAddCellWatcherOnceWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -382,9 +366,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetCell savedCell = cell.setFormula(
             cell.formula()
@@ -457,9 +439,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testLoadFormMissingForm() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadFormAndCheck(
             context,
@@ -479,9 +459,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(form);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadFormAndCheck(
             context,
@@ -516,9 +494,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
@@ -558,9 +534,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteForm(FORM_NAME);
 
@@ -610,9 +584,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(form3);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.findFormsByNameAndCheck(
             context,
@@ -653,9 +625,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(form3);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.findFormsByNameAndCheck(
             context,
@@ -672,9 +642,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public void testAddFormWatcherWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -689,9 +657,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
@@ -736,9 +702,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public void testAddFormWatcherOnceWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -753,9 +717,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
 
@@ -813,9 +775,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testLoadLabelMissingLabel() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadLabelAndCheck(
             context,
@@ -835,9 +795,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(mapping);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.loadLabelAndCheck(
             context,
@@ -879,9 +837,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.saveLabelAndCheck(
             context,
@@ -917,9 +873,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             .save(LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1));
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         context.deleteLabel(LABEL_NAME);
 
@@ -957,9 +911,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 labelName2.setLabelMappingReference(SpreadsheetSelection.A1));
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         this.findLabelsByNameAndCheck(
             context,
@@ -977,9 +929,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public void testAddLabelWatcherWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -990,9 +940,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testAddLabelWatcherAndSaveLabel() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
 
@@ -1038,9 +986,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public void testAddLabelWatcherOnceWithNullWatcherFails() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         assertThrows(
             NullPointerException.class,
@@ -1051,9 +997,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testAddLabelWatcherOnceAndSaveLabel() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(
-            Optional.of(SPREADSHEET_ID)
-        );
+        context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
 
