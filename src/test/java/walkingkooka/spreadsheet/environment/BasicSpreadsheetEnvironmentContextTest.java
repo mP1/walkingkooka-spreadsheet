@@ -516,7 +516,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user123@example.com}"
+            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -546,7 +546,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                 "      serverUrl\n" +
                 "        https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
                 "      spreadsheetId\n" +
-                "        1\n" +
+                "        123\n" +
                 "      timeOffset\n" +
                 "        Z (java.time.ZoneOffset)\n" +
                 "      user\n" +

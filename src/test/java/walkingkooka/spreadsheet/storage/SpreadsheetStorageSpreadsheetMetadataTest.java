@@ -148,7 +148,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/1")
+                        StoragePath.parse("/123")
                     ).setValue(
                         Optional.of(METADATA_EN_AU)
                     ),
@@ -158,7 +158,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         this.getMessageAndCheck(
             thrown,
-            "Invalid path, contains SpreadsheetId \"/1\""
+            "Invalid path, contains SpreadsheetId \"/123\""
         );
     }
 
@@ -169,7 +169,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/1")
+                        StoragePath.parse("/123")
                     ).setValue(
                         Optional.of(
                             SpreadsheetMetadata.EMPTY
@@ -181,7 +181,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         this.getMessageAndCheck(
             thrown,
-            "Invalid path, contains SpreadsheetId \"/1\""
+            "Invalid path, contains SpreadsheetId \"/123\""
         );
     }
 
@@ -423,17 +423,20 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                         oldValue,
                         "oldValue"
                     );
+
+                    final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
+
                     checkEquals(
                         Optional.of(
                             StorageValue.with(
                                 StoragePath.parse(
-                                    "/" + SPREADSHEET_ID
+                                    "/" + spreadsheetId
                                 )
                             ).setValue(
                                 Optional.of(
                                     METADATA_EN_AU.set(
                                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                                        SPREADSHEET_ID
+                                        spreadsheetId
                                     )
                                 )
                             ).setContentType(
@@ -479,17 +482,20 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                         oldValue,
                         "oldValue"
                     );
+
+                    final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
+
                     checkEquals(
                         Optional.of(
                             StorageValue.with(
                                 StoragePath.parse(
-                                    "/" + SPREADSHEET_ID
+                                    "/" + spreadsheetId
                                 )
                             ).setValue(
                                 Optional.of(
                                     METADATA_EN_AU.set(
                                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                                        SPREADSHEET_ID
+                                        spreadsheetId
                                     )
                                 )
                             ).setContentType(
@@ -584,7 +590,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
             spreadsheetEnvironmentContext.setSpreadsheetId(
                 Optional.of(
-                    SpreadsheetId.with(1)
+                    SpreadsheetStorageSpreadsheetMetadataTest.SPREADSHEET_ID
                 )
             );
 

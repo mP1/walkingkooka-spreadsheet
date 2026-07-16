@@ -548,11 +548,11 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                    SpreadsheetId.with(1)
+                    SPREADSHEET_ID
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -956,7 +956,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, locale, spreadsheet-value, basic)\"\n" +
                 "  spreadsheetId\n" +
-                "    1\n" +
+                "    123\n" +
                 "  style\n" +
                 "    TextStyle\n" +
                 "      height=50px\n" +
