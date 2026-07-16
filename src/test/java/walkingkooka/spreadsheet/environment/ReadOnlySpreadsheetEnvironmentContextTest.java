@@ -218,9 +218,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         assertThrows(
             ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
-                .setCurrentWorkingDirectory(
-                    Optional.of(CURRENT_WORKING_DIRECTORY)
-                )
+                .setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY)
         );
     }
 

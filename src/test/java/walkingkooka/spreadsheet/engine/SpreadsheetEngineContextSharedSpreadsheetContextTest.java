@@ -1299,9 +1299,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             Optional.of(SPREADSHEET_ID)
         );
 
-        spreadsheetEnvironmentContext.setCurrentWorkingDirectory(
-            Optional.of(CURRENT_WORKING_DIRECTORY)
-        );
+        spreadsheetEnvironmentContext.setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY);
         spreadsheetEnvironmentContext.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
         );

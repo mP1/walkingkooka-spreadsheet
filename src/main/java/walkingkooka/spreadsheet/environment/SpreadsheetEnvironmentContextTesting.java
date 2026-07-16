@@ -37,10 +37,6 @@ import java.util.Optional;
 public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
 
-    StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
-
-    Optional<StoragePath> OPTIONAL_CURRENT_WORKING_DIRECTORY = Optional.of(CURRENT_WORKING_DIRECTORY);
-
     StoragePath HOME_DIRECTORY = StoragePath.parse("/home/user");
 
     Optional<StoragePath> OPTIONAL_HOME_DIRECTORY = Optional.of(HOME_DIRECTORY);
