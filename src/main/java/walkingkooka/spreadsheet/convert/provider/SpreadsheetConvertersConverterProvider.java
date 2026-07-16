@@ -219,11 +219,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
                 break;
-            case HAS_HOST_ADDRESS_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasHostAddress();
-                break;
             case HAS_PARSER_SELECTOR_STRING:
                 noParameterCheck(copy);
 
@@ -724,6 +719,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toDecimalNumberSymbols();
                 break;
+            case TO_HOST_ADDRESS_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toHostAddress();
+                break;
             case TO_JSON_NODE_STRING:
                 noParameterCheck(copy);
 
@@ -939,10 +939,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String HAS_FORMATTER_SELECTOR_STRING = "has-formatter-selector";
 
     final static ConverterName HAS_FORMATTER_SELECTOR = ConverterName.with(HAS_FORMATTER_SELECTOR_STRING);
-
-    private final static String HAS_HOST_ADDRESS_STRING = "has-host-address";
-
-    final static ConverterName HAS_HOST_ADDRESS = ConverterName.with(HAS_HOST_ADDRESS_STRING);
 
     private final static String HAS_PARSER_SELECTOR_STRING = "has-parser-selector";
 
@@ -1344,6 +1340,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_DECIMAL_NUMBER_SYMBOLS = ConverterName.with(TO_DECIMAL_NUMBER_SYMBOLS_STRING);
 
+    private final static String TO_HOST_ADDRESS_STRING = "to-host-address";
+
+    final static ConverterName TO_HOST_ADDRESS = ConverterName.with(TO_HOST_ADDRESS_STRING);
+
     private final static String TO_JSON_NODE_STRING = "to-json-node";
 
     final static ConverterName TO_JSON_NODE = ConverterName.with(TO_JSON_NODE_STRING);
@@ -1442,7 +1442,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
             converterInfo(HAS_FORMATTER_SELECTOR),
-            converterInfo(HAS_HOST_ADDRESS),
             converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
             converterInfo(HAS_STYLE),
@@ -1543,6 +1542,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_BOOLEAN),
             converterInfo(TO_DATE_TIME_SYMBOLS),
             converterInfo(TO_DECIMAL_NUMBER_SYMBOLS),
+            converterInfo(TO_HOST_ADDRESS),
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_JSON_TEXT),
             converterInfo(TO_LOCALE),
