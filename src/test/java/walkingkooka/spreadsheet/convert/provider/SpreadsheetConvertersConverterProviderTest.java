@@ -428,15 +428,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithHasValueTo() {
-        this.converterAndCheck(
-            "has-value-to",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.hasValueTo()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithJson() {
         this.converterAndCheck(
             "json",
@@ -1289,6 +1280,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "to-validation-error-list",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.toValidationErrorList()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithToValue() {
+        this.converterAndCheck(
+            "to-value",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toValue()
         );
     }
 
