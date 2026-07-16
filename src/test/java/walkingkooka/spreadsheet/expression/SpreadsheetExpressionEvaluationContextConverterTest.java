@@ -91,6 +91,9 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
     DecimalNumberContextDelegator,
     SpreadsheetMetadataTesting {
 
+    // must be 1 because TreeStore's first ID is 1
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL128);
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS

@@ -459,7 +459,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
 
         this.getMessageAndCheck(
             expected,
-            "SpreadsheetMetadata 1 deleted"
+            "SpreadsheetMetadata 123 deleted"
         );
     }
 

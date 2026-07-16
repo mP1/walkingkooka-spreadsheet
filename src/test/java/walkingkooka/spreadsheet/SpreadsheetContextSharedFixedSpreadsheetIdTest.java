@@ -391,7 +391,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
         this.getMessageAndCheck(
             expected,
-            "SpreadsheetMetadata 1 deleted"
+            "SpreadsheetMetadata 123 deleted"
         );
     }
 

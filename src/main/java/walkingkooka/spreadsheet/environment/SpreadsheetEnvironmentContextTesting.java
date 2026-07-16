@@ -42,7 +42,7 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
-    SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+    SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(0x123);
 
     // serverUrl........................................................................................................
 
