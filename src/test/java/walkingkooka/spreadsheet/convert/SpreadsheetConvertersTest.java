@@ -1690,12 +1690,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverters.locale(),
             value,
             type,
-            LOCALE_CONTEXT,
+            LOCALE_CONVERTER_CONTEXT,
             expected
         );
     }
 
-    private final static SpreadsheetConverterContext LOCALE_CONTEXT = new FakeSpreadsheetConverterContext() {
+    private final static SpreadsheetConverterContext LOCALE_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
