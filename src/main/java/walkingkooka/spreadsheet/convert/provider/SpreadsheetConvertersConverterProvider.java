@@ -229,11 +229,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasSpreadsheetParserSelector();
                 break;
-            case HAS_PROPERTIES_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasProperties();
-                break;
             case HAS_SPREADSHEET_SELECTION_STRING:
                 noParameterCheck(copy);
 
@@ -759,6 +754,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toNumber();
                 break;
+            case TO_PROPERTIES_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toProperties();
+                break;
             case TO_STRING_STRING:
                 noParameterCheck(copy);
 
@@ -947,11 +947,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String HAS_PARSER_SELECTOR_STRING = "has-parser-selector";
 
     final static ConverterName HAS_PARSER_SELECTOR = ConverterName.with(HAS_PARSER_SELECTOR_STRING);
-
-    private final static String HAS_PROPERTIES_STRING = "has-properties";
-
-    final static ConverterName HAS_PROPERTIES = ConverterName.with(HAS_PROPERTIES_STRING);
-
+    
     private final static String HAS_SPREADSHEET_SELECTION_STRING = "has-spreadsheet-selection";
 
     final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
@@ -1372,6 +1368,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_NUMBER = ConverterName.with(TO_NUMBER_STRING);
 
+    private final static String TO_PROPERTIES_STRING = "to-properties";
+
+    final static ConverterName TO_PROPERTIES = ConverterName.with(TO_PROPERTIES_STRING);
+
     private final static String TO_STRING_STRING = "to-string";
 
     final static ConverterName TO_STRING = ConverterName.with(TO_STRING_STRING);
@@ -1444,7 +1444,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_HOST_ADDRESS),
             converterInfo(HAS_PARSER_SELECTOR),
-            converterInfo(HAS_PROPERTIES),
             converterInfo(HAS_SPREADSHEET_SELECTION),
             converterInfo(HAS_STYLE),
             converterInfo(HAS_TEXT_NODE),
@@ -1550,6 +1549,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_LOCALE),
             converterInfo(TO_LOCALE_LANGUAGE_TAG),
             converterInfo(TO_NUMBER),
+            converterInfo(TO_PROPERTIES),
             converterInfo(TO_STRING),
             converterInfo(TO_STYLEABLE),
             converterInfo(TO_VALIDATION_CHECKBOX),

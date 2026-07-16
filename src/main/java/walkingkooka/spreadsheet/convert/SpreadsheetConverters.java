@@ -392,13 +392,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see Converters#hasProperties}
-     */
-    public static Converter<SpreadsheetConverterContext> hasProperties() {
-        return Converters.hasProperties();
-    }
-
-    /**
      * {@see SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector}
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetFormatterSelector() {
@@ -604,7 +597,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> PROPERTIES = namedCollection(
         "properties",
-        hasProperties(),
+        toProperties(),
         textToProperties()
     );
 
@@ -1364,6 +1357,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> toNumber() {
         return SpreadsheetConverterToNumber.INSTANCE;
+    }
+
+    /**
+     * {@see Converters#toProperties}
+     */
+    public static Converter<SpreadsheetConverterContext> toProperties() {
+        return Converters.toProperties();
     }
 
     /**
