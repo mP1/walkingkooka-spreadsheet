@@ -19,16 +19,13 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
-import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.LineEnding;
 
 import java.time.ZoneOffset;
 import java.util.Locale;
@@ -41,14 +38,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<ReadOnlySpreadsheetEnvironmentContext>,
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
-    private final static Locale LOCALE = Locale.GERMAN;
-
-    private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
-        @Override
-        public String toString() {
-            return FakeStorage.class.getSimpleName();
-        }
-    };
+//    private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
+//        @Override
+//        public String toString() {
+//            return FakeStorage.class.getSimpleName();
+//        }
+//    };
 
     @Test
     public void testWithNullContextFails() {
@@ -116,7 +111,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
-                Locale.FRENCH,
+                DIFFERENT_LOCALE,
                 HAS_NOW,
                 OPTIONAL_USER
             )
@@ -131,35 +126,20 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
 
     @Test
     public void testSetSpreadsheetEnvironmentContext() {
-        final HasNow hasNow = () -> NOW;
-
         final Storage<SpreadsheetStorageContext> storage = Storages.fake();
 
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             storage,
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.FRENCH,
-                hasNow,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         final ReadOnlySpreadsheetEnvironmentContext readOnly = ReadOnlySpreadsheetEnvironmentContext.with(empty);
 
+        final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        differentEnvironmentContext.setLocale(DIFFERENT_LOCALE);
+
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
             storage,
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LineEnding.CRNL,
-                Locale.GERMAN,
-                hasNow,
-                OPTIONAL_USER
-            )
+            differentEnvironmentContext
         );
 
         this.checkNotEquals(
@@ -494,7 +474,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -519,7 +499,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "        lineEnding\n" +
                 "          \"\\n\"\n" +
                 "        locale\n" +
-                "          de (java.util.Locale)\n" +
+                "          en_AU (java.util.Locale)\n" +
                 "        now\n" +
                 "          1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
                 "        serverUrl\n" +
@@ -531,7 +511,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "        user\n" +
                 "          user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "    storage\n" +
-                "      FakeStorage (walkingkooka.spreadsheet.environment.ReadOnlySpreadsheetEnvironmentContextTest$1)\n"
+                "       (walkingkooka.storage.StorageSharedEmpty)\n"
         );
     }
 
