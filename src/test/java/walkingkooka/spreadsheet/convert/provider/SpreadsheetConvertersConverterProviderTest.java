@@ -73,6 +73,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+
+    @Test
+    public void testConverterSelectorWithBinaryToText() {
+        this.converterAndCheck(
+            "binary-to-text",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.binaryToText()
+        );
+    }
+
     @Test
     public void testConverterSelectorWithBoolean() {
         this.converterAndCheck(
@@ -351,15 +361,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION + "",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.formAndValidation()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithHasBinaryToString() {
-        this.converterAndCheck(
-            "has-binary-to-string",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.hasBinaryToString()
         );
     }
 

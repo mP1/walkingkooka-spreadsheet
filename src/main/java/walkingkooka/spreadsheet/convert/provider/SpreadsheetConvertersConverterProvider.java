@@ -99,6 +99,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.binary();
                 break;
+            case BINARY_TO_TEXT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.binaryToText();
+                break;
             case BOOLEAN_STRING:
                 noParameterCheck(copy);
 
@@ -213,11 +218,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
-                break;
-            case HAS_BINARY_TO_STRING_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasBinaryToString();
                 break;
             case HAS_HOST_ADDRESS_STRING:
                 noParameterCheck(copy);
@@ -844,6 +844,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName BINARY = ConverterName.with(BINARY_STRING);
 
+    private final static String BINARY_TO_TEXT_STRING = "binary-to-text";
+
+    final static ConverterName BINARY_TO_TEXT = ConverterName.with(BINARY_TO_TEXT_STRING);
+
     private final static String BOOLEAN_STRING = "boolean";
 
     final static ConverterName BOOLEAN = ConverterName.with(BOOLEAN_STRING);
@@ -931,10 +935,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String FORM_AND_VALIDATION_STRING = "form-and-validation";
 
     final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
-
-    private final static String HAS_BINARY_TO_STRING_STRING = "has-binary-to-string";
-
-    final static ConverterName HAS_BINARY_TO_STRING = ConverterName.with(HAS_BINARY_TO_STRING_STRING);
 
     private final static String HAS_FORMATTER_SELECTOR_STRING = "has-formatter-selector";
 
@@ -1418,6 +1418,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         Sets.of(
             converterInfo(BASIC),
             converterInfo(BINARY),
+            converterInfo(BINARY_TO_TEXT),
             converterInfo(BOOLEAN),
             converterInfo(BOOLEAN_TO_TEXT),
             converterInfo(COLLECTION),
@@ -1440,7 +1441,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(EXPRESSION),
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
-            converterInfo(HAS_BINARY_TO_STRING),
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_HOST_ADDRESS),
             converterInfo(HAS_PARSER_SELECTOR),
