@@ -105,9 +105,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         c.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
         );
-        c.setCurrentWorkingDirectory(
-            Optional.of(CURRENT_WORKING_DIRECTORY)
-        );
+        c.setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY);
         SPREADSHEET_ENVIRONMENT_CONTEXT = c;
     }
 
