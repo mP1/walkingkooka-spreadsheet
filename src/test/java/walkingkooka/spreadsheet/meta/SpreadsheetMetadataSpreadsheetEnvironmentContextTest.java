@@ -632,7 +632,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    has-formatter-selector\n" +
                 "    has-parser-selector\n" +
                 "    has-spreadsheet-selection\n" +
-                "    has-text-node\n" +
                 "    has-validator-selector\n" +
                 "    json\n" +
                 "    json-to\n" +
@@ -739,6 +738,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-string\n" +
                 "    to-style\n" +
                 "    to-styleable\n" +
+                "    to-text-node\n" +
                 "    to-validation-checkbox\n" +
                 "    to-validation-choice\n" +
                 "    to-validation-choice-list\n" +
