@@ -385,13 +385,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link  NetConverters#hasHostAddress()}
-     */
-    public static Converter<SpreadsheetConverterContext> hasHostAddress() {
-        return NetConverters.hasHostAddress();
-    }
-
-    /**
      * {@see SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector}
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetFormatterSelector() {
@@ -1315,6 +1308,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> toDecimalNumberSymbols() {
         return Converters.toDecimalNumberSymbols();
+    }
+
+    /**
+     * {@link  NetConverters#toHostAddress()}
+     */
+    public static Converter<SpreadsheetConverterContext> toHostAddress() {
+        return NetConverters.toHostAddress();
     }
 
     /**

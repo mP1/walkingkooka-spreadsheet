@@ -374,15 +374,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithHasHostAddress() {
-        this.converterAndCheck(
-            "has-host-address",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.hasHostAddress()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithHasParserSelector() {
         this.converterAndCheck(
             "has-parser-selector",
@@ -1172,6 +1163,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "to-decimal-number-symbols",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.toDecimalNumberSymbols()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithToHostAddress() {
+        this.converterAndCheck(
+            "to-host-address",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toHostAddress()
         );
     }
 

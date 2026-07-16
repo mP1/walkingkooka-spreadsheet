@@ -630,7 +630,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    form-and-validation\n" +
                 "    format-pattern-to-string\n" +
                 "    has-formatter-selector\n" +
-                "    has-host-address\n" +
                 "    has-parser-selector\n" +
                 "    has-spreadsheet-selection\n" +
                 "    has-style\n" +
@@ -731,6 +730,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-boolean\n" +
                 "    to-date-time-symbols\n" +
                 "    to-decimal-number-symbols\n" +
+                "    to-host-address\n" +
                 "    to-json-node\n" +
                 "    to-json-text\n" +
                 "    to-locale\n" +
