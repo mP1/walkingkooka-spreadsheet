@@ -434,13 +434,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link Converters#hasValueTo}
-     */
-    public static Converter<SpreadsheetConverterContext> hasValueTo() {
-        return Converters.hasValueTo();
-    }
-
-    /**
      * A converter that involves {@link JsonNode} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> json() {
@@ -1399,6 +1392,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> toValidationErrorList() {
         return ValidationConvertConverters.toValidationErrorList();
+    }
+
+    /**
+     * {@link Converters#toValue}
+     */
+    public static Converter<SpreadsheetConverterContext> toValue() {
+        return Converters.toValue();
     }
 
     /**

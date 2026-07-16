@@ -249,11 +249,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasValidatorSelector();
                 break;
-            case HAS_VALUE_TO_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasValueTo();
-                break;    
             case JSON_STRING:
                 noParameterCheck(copy);
 
@@ -789,6 +784,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toValidationErrorList();
                 break;
+            case TO_VALUE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toValue();
+                break;
             case URL_STRING:
                 noParameterCheck(copy);
 
@@ -963,10 +963,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String HAS_VALIDATOR_SELECTOR_STRING = "has-validator-selector";
 
     final static ConverterName HAS_VALIDATOR_SELECTOR = ConverterName.with(HAS_VALIDATOR_SELECTOR_STRING);
-
-    private final static String HAS_VALUE_TO_STRING = "has-value-to";
-
-    final static ConverterName HAS_VALUE_TO = ConverterName.with(HAS_VALUE_TO_STRING);
 
     private final static String JSON_STRING = "json";
 
@@ -1396,6 +1392,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_VALIDATION_ERROR_LIST = ConverterName.with(TO_VALIDATION_ERROR_LIST_STRING);
 
+    private final static String TO_VALUE_STRING = "to-value";
+
+    final static ConverterName TO_VALUE = ConverterName.with(TO_VALUE_STRING);
+
     private final static String URL_STRING = "url";
 
     final static ConverterName URL = ConverterName.with(URL_STRING);
@@ -1448,7 +1448,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(HAS_STYLE),
             converterInfo(HAS_TEXT_NODE),
             converterInfo(HAS_VALIDATOR_SELECTOR),
-            converterInfo(HAS_VALUE_TO),
             converterInfo(JSON),
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
@@ -1556,6 +1555,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_VALIDATION_CHOICE),
             converterInfo(TO_VALIDATION_CHOICE_LIST),
             converterInfo(TO_VALIDATION_ERROR_LIST),
+            converterInfo(TO_VALUE),
             converterInfo(URL),
             converterInfo(URL_TO_HYPERLINK),
             converterInfo(URL_TO_IMAGE)

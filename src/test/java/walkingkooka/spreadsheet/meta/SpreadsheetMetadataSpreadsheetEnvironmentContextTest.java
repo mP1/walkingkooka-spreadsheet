@@ -636,7 +636,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    has-style\n" +
                 "    has-text-node\n" +
                 "    has-validator-selector\n" +
-                "    has-value-to\n" +
                 "    json\n" +
                 "    json-to\n" +
                 "    locale\n" +
@@ -744,6 +743,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-validation-choice\n" +
                 "    to-validation-choice-list\n" +
                 "    to-validation-error-list\n" +
+                "    to-value\n" +
                 "    url\n" +
                 "    url-to-hyperlink\n" +
                 "    url-to-image\n" +
