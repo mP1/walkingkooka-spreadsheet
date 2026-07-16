@@ -29,17 +29,12 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContextTesting;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
-
-    StoragePath HOME_DIRECTORY = StoragePath.parse("/home/user");
-
-    Optional<StoragePath> OPTIONAL_HOME_DIRECTORY = Optional.of(HOME_DIRECTORY);
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
