@@ -632,7 +632,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    has-formatter-selector\n" +
                 "    has-host-address\n" +
                 "    has-parser-selector\n" +
-                "    has-properties\n" +
                 "    has-spreadsheet-selection\n" +
                 "    has-style\n" +
                 "    has-text-node\n" +
@@ -738,6 +737,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-locale\n" +
                 "    to-locale-language-tag\n" +
                 "    to-number\n" +
+                "    to-properties\n" +
                 "    to-string\n" +
                 "    to-styleable\n" +
                 "    to-validation-checkbox\n" +

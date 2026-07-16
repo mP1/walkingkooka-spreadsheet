@@ -392,15 +392,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithHasProperties() {
-        this.converterAndCheck(
-            "has-properties",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.hasProperties()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithHasSpreadsheetSelection() {
         this.converterAndCheck(
             "has-spreadsheet-selection",
@@ -1235,6 +1226,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "to-number",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.toNumber()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithToProperties() {
+        this.converterAndCheck(
+            "to-properties",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toProperties()
         );
     }
 
