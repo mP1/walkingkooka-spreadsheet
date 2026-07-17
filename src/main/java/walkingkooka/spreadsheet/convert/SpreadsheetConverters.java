@@ -733,6 +733,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {see StorageConverterStorageBinaryToStorageValueSharedTsv}
+     */
+    public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueTsv() {
+        return StorageConverters.storageBinaryToStorageValueTsv();
+    }
+    
+    /**
      * {see StorageConverterStorageBinaryToStorageValueSharedTxt}
      */
     public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueTxt() {
