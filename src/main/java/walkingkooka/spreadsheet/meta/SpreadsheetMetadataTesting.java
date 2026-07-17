@@ -36,8 +36,7 @@ import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.CharsetName;
-import walkingkooka.net.header.MediaTypeDetector;
-import walkingkooka.net.header.MediaTypeDetectors;
+import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.http.server.hateos.HateosHandlerContext;
 import walkingkooka.net.http.server.hateos.HateosHandlerContexts;
 import walkingkooka.plugin.PluginNameSet;
@@ -131,6 +130,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasNowTesting,
     HasUserTesting,
     LocaleContextTesting,
+    MediaTypeDetectorTesting,
     SpreadsheetEnvironmentContextTesting,
     TreePrintableTesting {
 
@@ -417,8 +417,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         );
         return spreadsheeEnvironmentContext;
     }
-
-    MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.empty();
 
