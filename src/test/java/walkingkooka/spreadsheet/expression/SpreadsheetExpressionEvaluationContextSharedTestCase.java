@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.net.header.MediaTypeDetector;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -37,8 +35,6 @@ import java.time.LocalTime;
 public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C extends SpreadsheetExpressionEvaluationContextShared> implements SpreadsheetExpressionEvaluationContextTesting<C>,
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
-
-    final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     SpreadsheetExpressionEvaluationContextSharedTestCase() {
         super();

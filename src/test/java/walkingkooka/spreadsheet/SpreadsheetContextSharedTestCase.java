@@ -27,8 +27,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.net.header.MediaTypeDetector;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ThrowableTesting;
@@ -68,8 +66,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetContextShared> implements SpreadsheetContextTesting<C>,
     ToStringTesting<C>,
     ThrowableTesting {
-
-    final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 

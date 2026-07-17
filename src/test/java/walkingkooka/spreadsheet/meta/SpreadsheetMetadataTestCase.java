@@ -35,8 +35,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.HasOptionalNameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.HasContentTypeTesting;
-import walkingkooka.net.header.MediaTypeDetector;
-import walkingkooka.net.header.MediaTypeDetectors;
+import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -84,6 +83,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
     LocaleContextTesting,
+    MediaTypeDetectorTesting,
     HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetMetadata>,
@@ -102,8 +102,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
-
-    final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 

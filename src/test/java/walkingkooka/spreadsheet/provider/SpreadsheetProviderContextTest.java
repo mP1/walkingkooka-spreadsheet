@@ -32,7 +32,7 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
-import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
@@ -57,9 +57,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext>,
-    CurrencyLocaleContextTesting {
-
-    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
+    CurrencyLocaleContextTesting,
+    MediaTypeDetectorTesting {
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
 
