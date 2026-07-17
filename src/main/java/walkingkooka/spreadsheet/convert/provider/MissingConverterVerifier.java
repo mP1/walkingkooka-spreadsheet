@@ -1770,6 +1770,19 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
+                        StoragePath.parse("/file.csv"),
+                        Binary.with(
+                            CSV_STRING_LIST.text()
+                                .getBytes(charset)
+                        )
+                    ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_CSV,
+                    IS_STORAGE_VALUE
+                );
+                
+                verifier.addIfConversionFail(
+                    StorageBinary.with(
                         StoragePath.parse("/formula.expression.txt"),
                         Binary.with(
                             "1+2-3".getBytes(charset)
@@ -1816,6 +1829,19 @@ final class MissingConverterVerifier {
                     ),
                     StorageValue.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES,
+                    IS_STORAGE_VALUE
+                );
+
+                verifier.addIfConversionFail(
+                    StorageBinary.with(
+                        StoragePath.parse("/file.tsv"),
+                        Binary.with(
+                            TSV_STRING_LIST.text()
+                                .getBytes(charset)
+                        )
+                    ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TSV,
                     IS_STORAGE_VALUE
                 );
 
