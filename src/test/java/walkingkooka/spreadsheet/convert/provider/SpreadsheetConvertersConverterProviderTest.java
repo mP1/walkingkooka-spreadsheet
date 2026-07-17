@@ -708,6 +708,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStorageValueToStorageBinaryProperties() {
+        this.converterAndCheck(
+            "storage-value-to-storage-binary-properties",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storageValueToStorageBinaryProperties()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStyle() {
         this.converterAndCheck(
             "style",
