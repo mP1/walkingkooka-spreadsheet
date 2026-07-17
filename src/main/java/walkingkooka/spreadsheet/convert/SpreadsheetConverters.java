@@ -807,6 +807,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageConverterStorageValueToStorageBinarySharedTxt}
+     */
+    public static <C extends StorageConverterContext> Converter<C> storageValueToStorageBinaryTxt() {
+        return StorageConverters.storageValueToStorageBinaryTxt();
+    }
+
+    /**
      * A converter that involves {@link TextStyle} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> style() {
