@@ -354,6 +354,20 @@ final class MissingConverterVerifier {
     );
 
     private final static StoragePath STORAGE_PATH = StoragePath.parse("/path1/file2.txt");
+
+    private static final StoragePath STORAGE_PATH_CSV = StoragePath.parse("/file.csv");
+
+    private static final StoragePath STORAGE_PATH_EXPRESSION = StoragePath.parse("/formula.expression.txt");
+
+    private static final StoragePath STORAGE_PATH_TXT = StoragePath.parse("/file1.file2.txt");
+
+    private static final StoragePath STORAGE_PATH_JSON = StoragePath.parse("/file1/file2.json");
+
+    private static final StoragePath STORAGE_PATH_PROPERTIES = StoragePath.parse("/file1/file2.properties");
+
+    private static final StoragePath STORAGE_PATH_TSV = StoragePath.parse("/file.tsv");
+
+
     private final static AuditInfo AUDIT_INFO = AuditInfo.create(
         EMAIL_ADDRESS,
         DATE_TIME
@@ -1770,7 +1784,7 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
-                        StoragePath.parse("/file.csv"),
+                        STORAGE_PATH_CSV,
                         Binary.with(
                             CSV_STRING_LIST.text()
                                 .getBytes(charset)
@@ -1783,7 +1797,7 @@ final class MissingConverterVerifier {
                 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
-                        StoragePath.parse("/formula.expression.txt"),
+                        STORAGE_PATH_EXPRESSION,
                         Binary.with(
                             "1+2-3".getBytes(charset)
                         )
@@ -1795,7 +1809,7 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
-                        StoragePath.parse("/file1.file2.txt"),
+                        STORAGE_PATH_TXT,
                         Binary.with(
                             text.getBytes(charset)
                         )
@@ -1807,7 +1821,7 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
-                        StoragePath.parse("/file1/file2.json"),
+                        STORAGE_PATH_JSON,
                         Binary.with(
                             "{ \"hello\": \"world\" }"
                                 .getBytes(charset)
@@ -1820,7 +1834,7 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
-                        StoragePath.parse("/file1/file2.properties"),
+                        STORAGE_PATH_PROPERTIES,
                         Binary.with(
                             Properties.parse("hello=world")
                                 .text()
@@ -1834,7 +1848,7 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
-                        StoragePath.parse("/file.tsv"),
+                        STORAGE_PATH_TSV,
                         Binary.with(
                             TSV_STRING_LIST.text()
                                 .getBytes(charset)
