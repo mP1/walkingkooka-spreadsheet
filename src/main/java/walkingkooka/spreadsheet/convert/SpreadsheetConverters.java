@@ -800,6 +800,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageConverterStorageValueToStorageBinarySharedTsv}
+     */
+    public static <C extends StorageConverterContext> Converter<C> storageValueToStorageBinaryTsv() {
+        return StorageConverters.storageValueToStorageBinaryTsv();
+    }
+
+    /**
      * A converter that involves {@link TextStyle} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> style() {
