@@ -58,7 +58,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithBasic() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.BASIC + "",
+            "basic",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.basic()
         );
@@ -86,7 +86,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithBoolean() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.BOOLEAN + "",
+            "boolean",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.booleans()
         );
@@ -95,7 +95,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithBooleanToText() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.BOOLEAN_TO_TEXT + "",
+            "boolean-to-text",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.booleanToText()
         );
@@ -171,7 +171,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithColorToNumber() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER + "",
+            "color-to-number",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.colorToNumber()
         );
@@ -271,7 +271,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithDateTimeSymbols() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS + "",
+            "date-time-symbols",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.dateTimeSymbols()
         );
@@ -280,25 +280,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithDecimalNumberSymbols() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS + "",
+            "decimal-number-symbols",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.decimalNumberSymbols()
         );
     }
 
     @Test
-    public void testConverterSelectorWithEmailAddress() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_EMAIL_ADDRESS + "",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.textToEmailAddress()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithEnvironment() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.ENVIRONMENT + "",
+            "environment",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.environment()
         );
@@ -307,17 +298,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithErrorToNumber() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER + "",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.errorToNumber()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithErrorToNumber() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER,
-            Lists.empty(),
+            "error-to-number",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.errorToNumber()
         );
@@ -326,7 +307,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithErrorThrowing() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.ERROR_THROWING,
+            ConverterName.with("error-throwing"),
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.errorThrowing()
@@ -336,7 +317,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithErrorThrowing() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.ERROR_THROWING + "",
+            "error-throwing",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.errorThrowing()
         );
@@ -565,7 +546,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithSpreadsheetSelectionToSpreadsheetSelection() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION,
+            "spreadsheet-selection-to-spreadsheet-selection",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetSelectionToSpreadsheetSelection()
@@ -575,7 +556,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithSpreadsheetSelectionToSpreadsheetSelection() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION + "",
+            "spreadsheet-selection-to-spreadsheet-selection",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetSelectionToSpreadsheetSelection()
         );
@@ -584,7 +565,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithSpreadsheetSelectionToText() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_TEXT,
+            "spreadsheet-selection-to-text",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetSelectionToText()
@@ -594,7 +575,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithSpreadsheetSelectionToText() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_TEXT + "",
+            "spreadsheet-selection-to-text",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetSelectionToText()
         );
@@ -655,6 +636,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStorageBinaryToStorageValueTsv() {
+        this.converterAndCheck(
+            "storage-binary-to-storage-value-tsv",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storageBinaryToStorageValueTsv()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStorageBinaryToStorageValueTxt() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-txt",
@@ -684,7 +674,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithSystem() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SYSTEM,
+            "system",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.system()
@@ -694,7 +684,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithSystem() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SYSTEM + "",
+            "system",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.system()
         );
@@ -721,7 +711,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToBorder() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_BORDER + "",
+            "text-to-border",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToBorder()
         );
@@ -730,7 +720,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToColor() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR + "",
+            "text-to-color",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToColor()
         );
@@ -739,7 +729,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToCsvStringList() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST + "",
+            "text-to-csv-string-list",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCsvStringList()
         );
@@ -793,7 +783,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToDateList() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST + "",
+            "text-to-date-list",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToDateList()
         );
@@ -802,16 +792,25 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToDateTimeList() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST + "",
+            "text-to-date-time-list",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToDateTimeList()
         );
     }
 
     @Test
+    public void testConverterSelectorWithTextToEmailAddress() {
+        this.converterAndCheck(
+            "text-to-email-address",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToEmailAddress()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToEnvironmentValueName() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME + "",
+            "text-to-environment-value-name",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToEnvironmentValueName()
         );
@@ -820,7 +819,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToExpression() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION + "",
+            "text-to-expression",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToExpression()
         );
@@ -829,7 +828,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToFlag() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_FLAG + "",
+            "text-to-flag",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToFlag()
         );
@@ -937,7 +936,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadata() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA + "",
+            "text-to-spreadsheet-metadata",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetMetadata()
         );
@@ -946,7 +945,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadataColor() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_COLOR + "",
+            "text-to-spreadsheet-metadata-color",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetMetadataColor()
         );
@@ -955,7 +954,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadataPropertyName() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME + "",
+            "text-to-spreadsheet-metadata-property-name",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetMetadataPropertyName()
         );
@@ -964,7 +963,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithTextToFormName() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME,
+            "text-to-form-name",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToFormName()
@@ -974,7 +973,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToNumberList() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST + "",
+            "text-to-number-list",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToNumberList()
         );
@@ -983,7 +982,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithTextToSpreadsheetSelection() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION,
+            "text-to-spreadsheet-selection",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetSelection()
@@ -993,7 +992,8 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToSpreadsheetSelection() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION + "",
+            "text-to-spreadsheet-selection",
+            Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetSelection()
         );
@@ -1002,7 +1002,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToStringList() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST + "",
+            "text-to-string-list",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToStringList()
         );
@@ -1056,7 +1056,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToTimeList() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST + "",
+             "text-to-time-list",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToTimeList()
         );
@@ -1083,7 +1083,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithTextToUrl() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_URL,
+            "text-to-url",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToUrl()
@@ -1093,7 +1093,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithTextToUrlFragment() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_URL_FRAGMENT,
+            "text-to-url-fragment",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToUrlFragment()
@@ -1103,7 +1103,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithTextToUrlQueryString() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_URL_QUERY_STRING,
+            "text-to-url-query-string",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToUrlQueryString()
@@ -1111,9 +1111,9 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterNameWithTextToValidationSelector() {
+    public void testConverterNameWithTextToValidatorSelector() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATOR_SELECTOR,
+            "text-to-validator-selector",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToValidatorSelector()
@@ -1123,7 +1123,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithTextToValueType() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_VALUE_TYPE,
+            "text-to-value-type",
             Lists.empty(),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToValueType()
@@ -1151,7 +1151,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithToBoolean() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TO_BOOLEAN + "",
+            "to-boolean",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.toBoolean()
         );
