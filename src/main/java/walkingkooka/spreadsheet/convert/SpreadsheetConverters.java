@@ -705,28 +705,28 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * {see StorageConverterStorageBinaryToStorageValueExpression}
+     * {see StorageConverterStorageBinaryToStorageValueSharedExpression}
      */
     public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueExpression() {
         return StorageConverters.storageBinaryToStorageValueExpression();
     }
 
     /**
-     * {see StorageConverterStorageBinaryToStorageValueJson}
+     * {see StorageConverterStorageBinaryToStorageSharedValueJson}
      */
     public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueJson() {
         return StorageConverters.storageBinaryToStorageValueJson();
     }
 
     /**
-     * {see StorageConverterStorageBinaryToStorageValueProperties}
+     * {see StorageConverterStorageBinaryToStorageValueSharedProperties}
      */
     public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueProperties() {
         return StorageConverters.storageBinaryToStorageValueProperties();
     }
 
     /**
-     * {see StorageConverterStorageBinaryToStorageValueTxt}
+     * {see StorageConverterStorageBinaryToStorageValueSharedTxt}
      */
     public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueTxt() {
         return StorageConverters.storageBinaryToStorageValueTxt();
