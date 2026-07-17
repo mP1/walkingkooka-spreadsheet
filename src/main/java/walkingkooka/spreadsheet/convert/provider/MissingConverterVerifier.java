@@ -119,6 +119,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -292,6 +293,10 @@ final class MissingConverterVerifier {
             "Apple 1",
             "Banana 2"
         )
+    );
+
+    private final static Binary BINARY = Binary.with(
+        "Hello World Binary".getBytes(StandardCharsets.UTF_8)
     );
     
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
@@ -1739,6 +1744,13 @@ final class MissingConverterVerifier {
         {
             if (formula || scripting) {
                 final String text = "BinaryTextContent123";
+
+                verifier.addIfConversionFail(
+                    BINARY,
+                    Binary.class,
+                    SpreadsheetConvertersConverterProvider.BINARY,
+                    BINARY
+                );
 
                 verifier.addIfConversionFail(
                     text,

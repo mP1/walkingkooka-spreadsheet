@@ -145,6 +145,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> BINARY = namedCollection(
         "Binary",
         SpreadsheetConverters.textToBinary(),
+        SpreadsheetConverters.toBinary(),
         SpreadsheetConverters.binaryToText()
     );
 
