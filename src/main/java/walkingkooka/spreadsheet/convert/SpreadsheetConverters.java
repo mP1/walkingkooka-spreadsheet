@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.storage.convert.StorageConverterContext;
 import walkingkooka.storage.convert.StorageConverters;
 import walkingkooka.template.convert.TemplateConverters;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -761,6 +762,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> storageValueInfoListToText() {
         return StorageConverters.storageValueInfoListToText();
+    }
+
+    /**
+     * {@see StorageConverterStorageValueToStorageBinarySharedCsv}
+     */
+    public static <C extends StorageConverterContext> Converter<C> storageValueToStorageBinaryCsv() {
+        return StorageConverters.storageValueToStorageBinaryCsv();
     }
 
     /**
