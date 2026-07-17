@@ -681,6 +681,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStorageValueToStorageBinaryCsv() {
+        this.converterAndCheck(
+            "storage-value-to-storage-binary-csv",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storageValueToStorageBinaryCsv()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStyle() {
         this.converterAndCheck(
             "style",
