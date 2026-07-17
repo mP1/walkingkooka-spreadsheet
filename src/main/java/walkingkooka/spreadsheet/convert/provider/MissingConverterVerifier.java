@@ -300,6 +300,14 @@ final class MissingConverterVerifier {
         "Hello World Binary".getBytes(StandardCharsets.UTF_8)
     );
 
+    private final static Binary UNKNOWN_BINARY_FILE = Binary.with(
+        new byte[] {
+            0,
+            1,
+            2
+        }
+    );
+
     private final static String EXPRESSION_TEXT = "1+2";
 
     private final static JsonObject JSON_OBJECT = JsonNode.object()
@@ -365,6 +373,8 @@ final class MissingConverterVerifier {
     );
 
     private final static StoragePath STORAGE_PATH = StoragePath.parse("/path1/file2.txt");
+
+    private static final StoragePath STORAGE_PATH_BINARY = StoragePath.parse("/file.bin");
 
     private static final StoragePath STORAGE_PATH_CSV = StoragePath.parse("/file.csv");
 
@@ -1791,6 +1801,27 @@ final class MissingConverterVerifier {
                     String.class,
                     SpreadsheetConvertersConverterProvider.BINARY,
                     text
+                );
+
+                verifier.addIfConversionFail(
+                    StorageBinary.with(
+                        STORAGE_PATH_BINARY,
+                        UNKNOWN_BINARY_FILE
+                    ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_BINARY,
+                    StorageValue.with(
+                        STORAGE_PATH_BINARY
+                    ).setValue(
+                        Optional.of(UNKNOWN_BINARY_FILE)
+                    ).setContentType(
+                        Optional.of(
+                            context.detect(
+                                STORAGE_PATH_BINARY.value(),
+                                UNKNOWN_BINARY_FILE
+                            )
+                        )
+                    )
                 );
 
                 verifier.addIfConversionFail(
