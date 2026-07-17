@@ -95,6 +95,7 @@ import walkingkooka.tree.json.JsonBoolean;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNumber;
 import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.text.Border;
 import walkingkooka.tree.text.BoxEdge;
@@ -298,6 +299,16 @@ final class MissingConverterVerifier {
     private final static Binary BINARY = Binary.with(
         "Hello World Binary".getBytes(StandardCharsets.UTF_8)
     );
+
+    private final static String EXPRESSION_TEXT = "1+2";
+
+    private final static JsonObject JSON_OBJECT = JsonNode.object()
+        .set(
+            JsonPropertyName.with("hello"),
+            "world"
+        );
+
+    private final static Properties PROPERTIES = Properties.parse("hello=world");
     
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
     private final static SpreadsheetCellRangeReference CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
@@ -1792,14 +1803,18 @@ final class MissingConverterVerifier {
                     ),
                     StorageValue.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_CSV,
-                    IS_STORAGE_VALUE
+                    StorageValue.with(
+                        STORAGE_PATH_CSV
+                    ).setValue(
+                        Optional.of(CSV_STRING_LIST)
+                    )
                 );
-                
+
                 verifier.addIfConversionFail(
                     StorageBinary.with(
                         STORAGE_PATH_EXPRESSION,
                         Binary.with(
-                            "1+2-3".getBytes(charset)
+                            EXPRESSION_TEXT.getBytes(charset)
                         )
                     ),
                     StorageValue.class,
@@ -1816,34 +1831,43 @@ final class MissingConverterVerifier {
                     ),
                     StorageValue.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT,
-                    IS_STORAGE_VALUE
+                    StorageValue.with(STORAGE_PATH_TXT)
+                        .setValue(
+                            Optional.of(text)
+                        )
                 );
 
-                verifier.addIfConversionFail(
-                    StorageBinary.with(
-                        STORAGE_PATH_JSON,
-                        Binary.with(
-                            "{ \"hello\": \"world\" }"
-                                .getBytes(charset)
-                        )
-                    ),
-                    StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON,
-                    IS_STORAGE_VALUE
-                );
+                {
+                    verifier.addIfConversionFail(
+                        StorageBinary.with(
+                            STORAGE_PATH_JSON,
+                            Binary.with(
+                                JSON_OBJECT.toString().getBytes(charset)
+                            )
+                        ),
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON,
+                        StorageValue.with(STORAGE_PATH_JSON)
+                            .setValue(
+                                Optional.of(JSON_OBJECT)
+                            )
+                    );
+                }
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
                         STORAGE_PATH_PROPERTIES,
                         Binary.with(
-                            Properties.parse("hello=world")
-                                .text()
+                            PROPERTIES.text()
                                 .getBytes(charset)
                         )
                     ),
                     StorageValue.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES,
-                    IS_STORAGE_VALUE
+                    StorageValue.with(STORAGE_PATH_PROPERTIES)
+                        .setValue(
+                            Optional.of(PROPERTIES)
+                        )
                 );
 
                 verifier.addIfConversionFail(
@@ -1856,7 +1880,10 @@ final class MissingConverterVerifier {
                     ),
                     StorageValue.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TSV,
-                    IS_STORAGE_VALUE
+                    StorageValue.with(STORAGE_PATH_TSV)
+                        .setValue(
+                            Optional.of(TSV_STRING_LIST)
+                        )
                 );
 
                 verifier.addIfConversionFail(
