@@ -388,6 +388,15 @@ final class MissingConverterVerifier {
 
     private static final StoragePath STORAGE_PATH_TSV = StoragePath.parse("/file.tsv");
 
+    private static final StorageValue STORAGE_VALUE_BINARY = StorageValue.with(STORAGE_PATH_BINARY)
+        .setValue(
+            Optional.of(BINARY)
+        );
+
+    private static final StorageBinary STORAGE_BINARY_BINARY = StorageBinary.with(
+        STORAGE_PATH_BINARY,
+        BINARY
+    );
 
     private final static AuditInfo AUDIT_INFO = AuditInfo.create(
         EMAIL_ADDRESS,
@@ -1918,16 +1927,10 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    StorageValue.with(STORAGE_PATH_BINARY)
-                        .setValue(
-                            Optional.of(BINARY)
-                        ),
+                    STORAGE_VALUE_BINARY,
                     StorageValue.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_BINARY,
-                    StorageBinary.with(
-                        STORAGE_PATH_BINARY,
-                        BINARY
-                    )
+                    STORAGE_BINARY_BINARY
                 );
 
                 verifier.addIfConversionFail(
