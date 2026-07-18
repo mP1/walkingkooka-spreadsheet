@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.HasCharsetTesting;
 import walkingkooka.collect.list.BooleanList;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
@@ -61,8 +62,7 @@ import walkingkooka.math.HasOptionalDecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.net.header.MediaTypeDetector;
-import walkingkooka.net.header.MediaTypeDetectors;
+import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -110,9 +110,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -151,15 +150,11 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
-    PublicStaticHelperTesting<SpreadsheetConverters>,
     ConverterTesting,
-    JsonNodeMarshallContextTesting {
-
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
-
-    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.fake();
+    HasCharsetTesting,
+    JsonNodeMarshallUnmarshallContextTesting,
+    MediaTypeDetectorTesting,
+    PublicStaticHelperTesting<SpreadsheetConverters> {
 
     // basic............................................................................................................
 
@@ -1329,33 +1324,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             JSON_CONVERTER_CONTEXT
         );
     }
-
-    private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
-        JSON_NODE_MARSHALL_CONTEXT,
-        JsonNodeUnmarshallContexts.basic(
-            EXPRESSION_NUMBER_KIND,
-            new CurrencyCodeLanguageTagContext() {
-                @Override
-                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                    return Optional.ofNullable(
-                        Currency.getInstance(
-                            currencyCode.value()
-                        )
-                    );
-                }
-
-                @Override
-                public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                    return Optional.of(
-                        Locale.forLanguageTag(
-                            languageTag.value()
-                        )
-                    );
-                }
-            },
-            MathContext.DECIMAL32
-        )
-    );
 
     @Test
     public void testJsonConvertExpressionNumberToJsonNode() {
