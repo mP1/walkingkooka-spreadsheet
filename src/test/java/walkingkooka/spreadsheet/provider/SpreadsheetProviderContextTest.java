@@ -41,7 +41,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -58,6 +58,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext>,
     CurrencyLocaleContextTesting,
+    JsonNodeMarshallContextTesting,
     MediaTypeDetectorTesting {
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
@@ -65,7 +66,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     private final static PluginStore PLUGIN_STORE = PluginStores.fake();
 
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
-        JsonNodeMarshallContexts.basic(),
+        JSON_NODE_MARSHALL_CONTEXT,
         JsonNodeUnmarshallContexts.basic(
             ExpressionNumberKind.BIG_DECIMAL,
             new CurrencyCodeLanguageTagContext() {

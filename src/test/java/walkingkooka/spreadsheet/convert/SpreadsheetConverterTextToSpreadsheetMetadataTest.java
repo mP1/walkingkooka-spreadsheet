@@ -33,6 +33,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.convert.JsonNodeConverters;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -43,16 +44,17 @@ import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadata> {
+public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadata>
+    implements JsonNodeMarshallContextTesting {
 
-    private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
+    private final static JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
 
     @Test
     public void testConvertStringToSpreadsheetMetadata() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY;
 
         this.convertAndCheck(
-            MARSHALL_CONTEXT.marshall(metadata)
+            JSON_NODE_MARSHALL_CONTEXT.marshall(metadata)
                 .toString(),
             SpreadsheetMetadata.class,
             metadata
@@ -64,7 +66,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY;
 
         this.convertAndCheck(
-            MARSHALL_CONTEXT.marshall(metadata)
+            JSON_NODE_MARSHALL_CONTEXT.marshall(metadata)
                 .toString(),
             metadata
         );
@@ -81,7 +83,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
         );
 
         this.convertAndCheck(
-            MARSHALL_CONTEXT.marshall(metadata)
+            JSON_NODE_MARSHALL_CONTEXT.marshall(metadata)
                 .toString(),
             metadata
         );
@@ -99,7 +101,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
 
         this.convertAndCheck(
             new StringBuilder(
-                MARSHALL_CONTEXT.marshall(metadata)
+                JSON_NODE_MARSHALL_CONTEXT.marshall(metadata)
                     .toString()
             ),
             metadata
