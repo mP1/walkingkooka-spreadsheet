@@ -1918,6 +1918,19 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
+                    StorageValue.with(STORAGE_PATH_BINARY)
+                        .setValue(
+                            Optional.of(BINARY)
+                        ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_BINARY,
+                    StorageBinary.with(
+                        STORAGE_PATH_BINARY,
+                        BINARY
+                    )
+                );
+
+                verifier.addIfConversionFail(
                     StorageValueInfoList.EMPTY.concat(
                         StorageValueInfo.with(
                             StoragePath.parse("/path1/file2.txt"),
