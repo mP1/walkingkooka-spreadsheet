@@ -19,46 +19,13 @@ package walkingkooka.spreadsheet.importer;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.locale.LocaleLanguageTag;
-import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
-
-import java.math.MathContext;
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Optional;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImporterContextTesting<BasicSpreadsheetImporterContext>,
+    JsonNodeUnmarshallContextTesting,
     ToStringTesting<BasicSpreadsheetImporterContext> {
-
-    private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
-        ExpressionNumberKind.BIG_DECIMAL,
-        new CurrencyCodeLanguageTagContext() {
-            @Override
-            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                return Optional.ofNullable(
-                    Currency.getInstance(
-                        currencyCode.value()
-                    )
-                );
-            }
-
-            @Override
-            public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                return Optional.of(
-                    Locale.forLanguageTag(
-                        languageTag.value()
-                    )
-                );
-            }
-        },
-        MathContext.DECIMAL64
-    );
 
     @Test
     public void testWithNullJsonNodeUnmarshallContextFails() {
@@ -70,7 +37,7 @@ public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImp
 
     @Override
     public BasicSpreadsheetImporterContext createContext() {
-        return BasicSpreadsheetImporterContext.with(UNMARSHALL_CONTEXT);
+        return BasicSpreadsheetImporterContext.with(JSON_NODE_UNMARSHALL_CONTEXT);
     }
 
     // toString.........................................................................................................
@@ -79,7 +46,7 @@ public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImp
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            UNMARSHALL_CONTEXT.toString()
+            JSON_NODE_UNMARSHALL_CONTEXT.toString()
         );
     }
 
