@@ -70,7 +70,7 @@ import java.util.function.Function;
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> TEMPLATE = namedCollection(
-        "template",
+        "TEMPLATE",
         TemplateConverters.textToTemplateValueName()
     );
 
@@ -83,7 +83,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     private final static Converter<SpreadsheetConverterContext> TEXT_NODE = namedCollection(
-        "textNode",
+        "TEXTNODE",
         textToFlag(),
         textToSpreadsheetText(),
         textToTextNode(),
@@ -130,7 +130,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> BASIC = namedCollection(
-        "basic",
+        "BASIC",
         Converters.simple(),
         SpreadsheetConverters.collectionTo(),
         SpreadsheetConverters.optionalTo()
@@ -144,7 +144,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> BINARY = namedCollection(
-        "Binary",
+        "BINARY",
         SpreadsheetConverters.textToBinary(),
         SpreadsheetConverters.toBinary(),
         SpreadsheetConverters.binaryToText()
@@ -165,7 +165,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> BOOLEAN = namedCollection(
-        "boolean",
+        "BOOLEAN",
         SpreadsheetConverters.toBoolean(),
         SpreadsheetConverters.booleanToText()
     );
@@ -208,7 +208,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> COLOR = namedCollection(
-        "color",
+        "COLOR",
         text(),
         colorToColor(),
         textToColor(),
@@ -240,7 +240,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> CURRENCY = namedCollection(
-        "currency",
+        "CURRENCY",
         currencyCodeToCurrency(),
         currencyValueToNumber(),
         currencyValueTo(),
@@ -325,7 +325,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> ENVIRONMENT = namedCollection(
-        "environment",
+        "ENVIRONMENT",
         EnvironmentConverters.textToEnvironmentValueName()
     );
 
@@ -358,7 +358,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> EXPRESSION = namedCollection(
-        "expression",
+        "EXPRESSION",
         textToExpression()
     );
 
@@ -370,7 +370,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> FORM_AND_VALIDATION = namedCollection(
-        "form-and-validation",
+        "FORM-AND-VALIDATION",
         textToFormName(),
         textToValidationError(),
         toValidationCheckbox(),
@@ -422,7 +422,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> JSON = namedCollection(
-        "json",
+        "JSON",
         jsonTo(),
         textToObject(),
         toJsonNode(),
@@ -448,7 +448,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> LOCALE = namedCollection(
-        "locale",
+        "LOCALE",
         localeToText(),
         toLocale(),
         toLocaleLanguageTag(),
@@ -486,7 +486,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> NUMBER = namedCollection(
-        "number",
+        "NUMBER",
         nullToNumber(),
         numberToNumber(),
         toNumber(),
@@ -557,7 +557,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> PLUGINS = namedCollection(
-        "plugins",
+        "PLUGINS",
         textToSpreadsheetFormatterSelector(),
         textToValidatorSelector()
     );
@@ -570,7 +570,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> PROPERTIES = namedCollection(
-        "properties",
+        "PROPERTIES",
         toProperties(),
         textToProperties()
     );
@@ -625,7 +625,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> SPREADSHEET_METADATA = namedCollection(
-        "spreadsheetMetadata",
+        "SPREADSHEET METADATA",
         textToSpreadsheetId(),
         textToSpreadsheetMetadata(),
         textToSpreadsheetMetadataPropertyName(),
@@ -657,7 +657,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> SPREADSHEET_VALUE = namedCollection(
-        "spreadsheetValue",
+        "SPREADSHEET VALUE",
         errorToNumber(),
         nullToNumber(),
         spreadsheetSelectionToSpreadsheetSelection(),
@@ -696,7 +696,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> STORAGE = namedCollection(
-        "storage",
+        "STORAGE",
         textToStoragePath(),
         storageBinaryToStorageValueCsv(),
         storageBinaryToStorageValueExpression(),
@@ -824,7 +824,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> STYLE = namedCollection(
-        "style",
+        "STYLE",
         toStyle(),
         textToBorder(),
         textToMargin(),
@@ -1494,7 +1494,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> URL = namedCollection(
-        "url",
+        "URL",
         textToUrl(),
         urlToHyperlink(),
         urlToImage()
