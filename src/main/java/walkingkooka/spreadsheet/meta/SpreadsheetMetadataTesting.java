@@ -93,7 +93,7 @@ import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -129,6 +129,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasLocaleTesting,
     HasNowTesting,
     HasUserTesting,
+    JsonNodeMarshallContextTesting,
     LocaleContextTesting,
     MediaTypeDetectorTesting,
     SpreadsheetEnvironmentContextTesting,
@@ -392,8 +393,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
-
-    JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();
 
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext(
         CURRENCY_LOCALE_CONTEXT // CurrencyCodeLanguageTagContext

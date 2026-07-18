@@ -53,7 +53,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -78,6 +78,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
+    JsonNodeMarshallContextTesting,
     PatchableTesting<SpreadsheetDelta>,
     TreePrintableTesting,
     ThrowableTesting {
@@ -371,7 +372,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -461,7 +462,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                     final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsPatch(
             cells,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -484,7 +485,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsDateTimeSymbolsPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -594,7 +595,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                                    final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsDateTimeSymbolsPatch(
             cellToDateTimeSymbols,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -638,7 +639,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -751,7 +752,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                                         final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
             cellToDecimalNumberSymbols,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -875,7 +876,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsFormatterPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1007,7 +1008,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                              final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsFormatterPatch(
             cellToFormatter,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -1055,7 +1056,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsLocalePatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1159,7 +1160,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                           final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsLocalePatch(
             cellToLocale,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -1203,7 +1204,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsParserPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1333,7 +1334,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                           final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsParserPatch(
             cellToParser,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -1382,7 +1383,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsStylePatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1485,7 +1486,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                          final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsStylePatch(
             cellToStyles,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -1531,7 +1532,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsValidatorPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1668,7 +1669,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                              final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsValidatorPatch(
             cellToValidator,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -1771,7 +1772,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                          final String expected) {
         final JsonNode patch = SpreadsheetDelta.cellsValuePatch(
             cellToValues,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -1868,7 +1869,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                              final String expected) {
         final JsonNode patch = SpreadsheetDelta.cellsValueTypePatch(
             cellToValueTypes,
-            MARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -1914,7 +1915,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.dateTimeSymbolsPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1946,12 +1947,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             JsonNode.object()
                 .set(
                     SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
-                    MARSHALL_CONTEXT.marshallOptional(symbols)
+                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
             ,
             SpreadsheetDelta.dateTimeSymbolsPatch(
                 symbols,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1964,12 +1965,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             JsonNode.object()
                 .set(
                     SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
-                    MARSHALL_CONTEXT.marshallOptional(symbols)
+                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
             ,
             SpreadsheetDelta.dateTimeSymbolsPatch(
                 symbols,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -1982,7 +1983,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2016,12 +2017,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             JsonNode.object()
                 .set(
                     SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                    MARSHALL_CONTEXT.marshallOptional(symbols)
+                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
             ,
             SpreadsheetDelta.decimalNumberSymbolsPatch(
                 symbols,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2034,12 +2035,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             JsonNode.object()
                 .set(
                     SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                    MARSHALL_CONTEXT.marshallOptional(symbols)
+                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
             ,
             SpreadsheetDelta.decimalNumberSymbolsPatch(
                 symbols,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2059,7 +2060,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
 
         final JsonNode patch = SpreadsheetDelta.formulaPatch(
-            MARSHALL_CONTEXT.marshall(formula)
+            JSON_NODE_MARSHALL_CONTEXT.marshall(formula)
         );
 
         this.checkEquals(
@@ -2114,7 +2115,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.formatterPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2147,7 +2148,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.formatterPatch(
                 Optional.of(formatter),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2162,7 +2163,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.formatterPatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2175,7 +2176,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.localePatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2206,7 +2207,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.localePatch(
                 Optional.of(locale),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2221,7 +2222,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.localePatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2234,7 +2235,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.parserPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2267,7 +2268,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.parserPatch(
                 Optional.of(parserSelector),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2282,7 +2283,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.parserPatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2416,7 +2417,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.validatorPatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2447,7 +2448,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.validatorPatch(
                 Optional.of(validatorSelector),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2462,7 +2463,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetDelta.validatorPatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2475,7 +2476,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.valuePatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2510,7 +2511,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ),
             SpreadsheetDelta.valuePatch(
                 value,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2523,7 +2524,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.valueTypePatch(
                 null,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2555,7 +2556,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ),
             SpreadsheetDelta.valueTypePatch(
                 valueType,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2937,7 +2938,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             before,
             SpreadsheetDelta.currencyPatch(
                 currency,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -2982,7 +2983,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             before,
             SpreadsheetDelta.dateTimeSymbolsPatch(
                 symbols,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -3029,7 +3030,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             before,
             SpreadsheetDelta.decimalNumberSymbolsPatch(
                 symbols,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -3061,7 +3062,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 ),
             SpreadsheetDelta.formatterPatch(
                 formatter,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             SpreadsheetDelta.EMPTY
                 .setCells(
@@ -3104,7 +3105,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             before,
             SpreadsheetDelta.localePatch(
                 locale,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -3136,7 +3137,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 ),
             SpreadsheetDelta.parserPatch(
                 parser,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             SpreadsheetDelta.EMPTY
                 .setCells(
@@ -3221,7 +3222,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             before,
             SpreadsheetDelta.validatorPatch(
                 validator,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -3268,7 +3269,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             before,
             SpreadsheetDelta.valuePatch(
                 value,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -3305,7 +3306,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 ),
             SpreadsheetDelta.valueTypePatch(
                 valueType,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             SpreadsheetDelta.EMPTY
                 .setCells(
@@ -3351,12 +3352,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final JsonNode patch = SpreadsheetDelta.formatterPatch(
                 formatter,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ).objectOrFail()
             .merge(
                 SpreadsheetDelta.parserPatch(
                     parser,
-                    MARSHALL_CONTEXT
+                    JSON_NODE_MARSHALL_CONTEXT
                 ).objectOrFail()
             );
 
@@ -3789,7 +3790,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetPattern.parseTextFormatPattern("@")
                             .spreadsheetFormatterSelector()
                     ),
-                    MARSHALL_CONTEXT
+                    JSON_NODE_MARSHALL_CONTEXT
                 ).objectOrFail()
             );
 
@@ -3822,7 +3823,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
                             .spreadsheetParserSelector()
                     ),
-                    MARSHALL_CONTEXT
+                    JSON_NODE_MARSHALL_CONTEXT
                 ).objectOrFail()
             );
 
@@ -3877,7 +3878,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             before,
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.formulaPatch(
-                MARSHALL_CONTEXT.marshall(patched)
+                JSON_NODE_MARSHALL_CONTEXT.marshall(patched)
             ),
             after
         );
@@ -3934,7 +3935,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetDelta.formulaPatch(
                 SpreadsheetFormula.valuePatch(
                     value,
-                    MARSHALL_CONTEXT
+                    JSON_NODE_MARSHALL_CONTEXT
                 )
             ),
             after
@@ -3994,7 +3995,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetDelta.formulaPatch(
                 SpreadsheetFormula.valueTypePatch(
                     typeName,
-                    MARSHALL_CONTEXT
+                    JSON_NODE_MARSHALL_CONTEXT
                 )
             ),
             after
@@ -4051,7 +4052,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     SpreadsheetSelection.parseCell("A2"),
                     symbols2
                 ),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4110,7 +4111,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     SpreadsheetSelection.parseCell("A2"),
                     symbols2
                 ),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4149,7 +4150,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.formatterPatch(
                 Optional.of(patchFormatter),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4189,7 +4190,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.formatterPatch(
                 Optional.of(patchedFormatter),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4226,7 +4227,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.formatterPatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4262,7 +4263,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.formatterPatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4304,7 +4305,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.formatterPatch(
                 Optional.of(patchedFormatter),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4345,7 +4346,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A3"),
             SpreadsheetDelta.localePatch(
                 locale,
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4385,7 +4386,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.parserPatch(
                 Optional.of(parser),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4422,7 +4423,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.parserPatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4458,7 +4459,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetSelection.parseCellRange("A1:A2"),
             SpreadsheetDelta.parserPatch(
                 Optional.empty(),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -4813,7 +4814,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     SpreadsheetSelection.parseCell("A2"),
                     validator2
                 ),
-                MARSHALL_CONTEXT
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
@@ -5478,10 +5479,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     private JsonNode marshall(final Object object) {
-        return MARSHALL_CONTEXT.marshall(object);
+        return JSON_NODE_MARSHALL_CONTEXT.marshall(object);
     }
-
-    private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
         ExpressionNumberKind.BIG_DECIMAL,

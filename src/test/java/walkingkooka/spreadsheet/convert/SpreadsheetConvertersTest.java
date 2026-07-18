@@ -110,6 +110,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
@@ -151,7 +152,8 @@ import java.util.Optional;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
     PublicStaticHelperTesting<SpreadsheetConverters>,
-    ConverterTesting {
+    ConverterTesting,
+    JsonNodeMarshallContextTesting {
 
     private final static Charset CHARSET = StandardCharsets.UTF_8;
 
@@ -1329,7 +1331,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
-        JsonNodeMarshallContexts.basic(),
+        JSON_NODE_MARSHALL_CONTEXT,
         JsonNodeUnmarshallContexts.basic(
             EXPRESSION_NUMBER_KIND,
             new CurrencyCodeLanguageTagContext() {
