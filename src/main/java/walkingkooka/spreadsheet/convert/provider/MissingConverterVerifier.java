@@ -375,6 +375,10 @@ final class MissingConverterVerifier {
     private final static StoragePath STORAGE_PATH = StoragePath.parse("/path1/file2.txt");
 
     private static final StoragePath STORAGE_PATH_BINARY = StoragePath.parse("/file.bin");
+    private static final StorageBinary STORAGE_BINARY_UNKNOWN_BINARY = StorageBinary.with(
+        STORAGE_PATH_BINARY,
+        UNKNOWN_BINARY_FILE
+    );
 
     private static final StoragePath STORAGE_PATH_CSV = StoragePath.parse("/file.csv");
 
@@ -1812,14 +1816,8 @@ final class MissingConverterVerifier {
                     text
                 );
 
-                verifier.addIfConversionFail(
-                    StorageBinary.with(
-                        STORAGE_PATH_BINARY,
-                        UNKNOWN_BINARY_FILE
-                    ),
-                    StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_BINARY,
-                    StorageValue.with(
+                {
+                    final StorageValue storageValueUnknownBinary = StorageValue.with(
                         STORAGE_PATH_BINARY
                     ).setValue(
                         Optional.of(UNKNOWN_BINARY_FILE)
@@ -1830,8 +1828,24 @@ final class MissingConverterVerifier {
                                 UNKNOWN_BINARY_FILE
                             )
                         )
-                    )
-                );
+                    );
+
+                    verifier.addIfConversionFail(
+                        STORAGE_BINARY_UNKNOWN_BINARY,
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_BINARY,
+                        storageValueUnknownBinary
+                    );
+
+                    verifier.addIfConversionFail(
+                        storageValueUnknownBinary.setContentType(
+                            Optional.empty()
+                        ),
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_BINARY,
+                        STORAGE_BINARY_UNKNOWN_BINARY
+                    );
+                }
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
