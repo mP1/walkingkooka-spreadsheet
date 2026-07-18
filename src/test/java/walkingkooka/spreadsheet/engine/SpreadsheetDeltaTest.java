@@ -56,6 +56,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.FontStyle;
@@ -79,6 +80,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
     JsonNodeMarshallContextTesting,
+    JsonNodeUnmarshallContextTesting,
     PatchableTesting<SpreadsheetDelta>,
     TreePrintableTesting,
     ThrowableTesting {
@@ -1736,7 +1738,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsValuePatch() {
         final Optional<Object> value1 = Optional.of(
-            UNMARSHALL_CONTEXT.expressionNumberKind()
+            JSON_NODE_UNMARSHALL_CONTEXT.expressionNumberKind()
                 .create(12.5)
         );
         final Optional<Object> value2 = Optional.empty();
@@ -5481,30 +5483,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private JsonNode marshall(final Object object) {
         return JSON_NODE_MARSHALL_CONTEXT.marshall(object);
     }
-
-    private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
-        ExpressionNumberKind.BIG_DECIMAL,
-        new CurrencyCodeLanguageTagContext() {
-            @Override
-            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                return Optional.ofNullable(
-                    Currency.getInstance(
-                        currencyCode.value()
-                    )
-                );
-            }
-
-            @Override
-            public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                return Optional.of(
-                    Locale.forLanguageTag(
-                        languageTag.value()
-                    )
-                );
-            }
-        },
-        MathContext.DECIMAL32
-    );
 
     @Override
     public SpreadsheetDelta createPatchable() {
