@@ -481,6 +481,8 @@ final class MissingConverterVerifier {
 
     private final static Predicate<Object> IS_SPREADSHEET_COLOR_NAME = v -> v instanceof SpreadsheetColorName;
 
+    private final static Predicate<Object> IS_STORAGE_BINARY = v -> v instanceof StorageBinary;
+
     private final static Predicate<Object> IS_STORAGE_PATH = v -> v instanceof StoragePath;
 
     private final static Predicate<Object> IS_STORAGE_VALUE = v -> v instanceof StorageValue;
@@ -1877,17 +1879,30 @@ final class MissingConverterVerifier {
                     );
                 }
 
-                verifier.addIfConversionFail(
-                    StorageBinary.with(
-                        STORAGE_PATH_EXPRESSION,
-                        Binary.with(
-                            EXPRESSION_TEXT.getBytes(charset)
-                        )
-                    ),
-                    StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION,
-                    IS_STORAGE_VALUE
-                );
+                {
+                    verifier.addIfConversionFail(
+                        StorageValue.with(
+                            STORAGE_PATH_EXPRESSION
+                        ).setValue(
+                            Optional.of(EXPRESSION_TEXT)
+                        ),
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_EXPRESSION,
+                        IS_STORAGE_BINARY
+                    );
+
+                    verifier.addIfConversionFail(
+                        StorageBinary.with(
+                            STORAGE_PATH_EXPRESSION,
+                            Binary.with(
+                                EXPRESSION_TEXT.getBytes(charset)
+                            )
+                        ),
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION,
+                        IS_STORAGE_VALUE
+                    );
+                }
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
