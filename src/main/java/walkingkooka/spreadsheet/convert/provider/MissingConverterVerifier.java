@@ -1847,22 +1847,35 @@ final class MissingConverterVerifier {
                     );
                 }
 
-                verifier.addIfConversionFail(
-                    StorageBinary.with(
+                {
+                    final StorageBinary storageBinaryCsv = StorageBinary.with(
                         STORAGE_PATH_CSV,
                         Binary.with(
                             CSV_STRING_LIST.text()
                                 .getBytes(charset)
                         )
-                    ),
-                    StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_CSV,
-                    StorageValue.with(
+                    );
+
+                    final StorageValue storageValueCsv = StorageValue.with(
                         STORAGE_PATH_CSV
                     ).setValue(
                         Optional.of(CSV_STRING_LIST)
-                    )
-                );
+                    );
+
+                    verifier.addIfConversionFail(
+                        storageBinaryCsv,
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_CSV,
+                        storageValueCsv
+                    );
+
+                    verifier.addIfConversionFail(
+                        storageValueCsv,
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_CSV,
+                        storageBinaryCsv
+                    );
+                }
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
