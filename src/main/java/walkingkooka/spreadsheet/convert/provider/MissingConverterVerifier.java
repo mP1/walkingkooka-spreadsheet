@@ -296,6 +296,8 @@ final class MissingConverterVerifier {
         )
     );
 
+    private final static String TEXT = "Hello World Text 123";
+
     private final static Binary BINARY = Binary.with(
         "Hello World Binary".getBytes(StandardCharsets.UTF_8)
     );
@@ -1991,20 +1993,33 @@ final class MissingConverterVerifier {
                     );
                 }
 
-                verifier.addIfConversionFail(
-                    StorageBinary.with(
+                {
+                    final StorageBinary storageBinaryTxt = StorageBinary.with(
                         STORAGE_PATH_TXT,
                         Binary.with(
-                            text.getBytes(charset)
+                            TEXT.getBytes(charset)
                         )
-                    ),
-                    StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT,
-                    StorageValue.with(STORAGE_PATH_TXT)
+                    );
+
+                    final StorageValue storageValueTxt = StorageValue.with(STORAGE_PATH_TXT)
                         .setValue(
-                            Optional.of(text)
-                        )
-                );
+                            Optional.of(TEXT)
+                        );
+
+                    verifier.addIfConversionFail(
+                        storageBinaryTxt,
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT,
+                        storageValueTxt
+                    );
+
+                    verifier.addIfConversionFail(
+                        storageValueTxt,
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_TXT,
+                        storageBinaryTxt
+                    );
+                }
 
                 verifier.addIfConversionFail(
                     STORAGE_VALUE_BINARY,
