@@ -1933,6 +1933,35 @@ final class MissingConverterVerifier {
                     );
                 }
 
+                {
+                    final StorageBinary storageBinaryProperties = StorageBinary.with(
+                        STORAGE_PATH_PROPERTIES,
+                        Binary.with(
+                            PROPERTIES.toString()
+                                .getBytes(charset)
+                        )
+                    );
+
+                    final StorageValue storageValueProperties = StorageValue.with(STORAGE_PATH_PROPERTIES)
+                        .setValue(
+                            Optional.of(PROPERTIES)
+                        );
+
+                    verifier.addIfConversionFail(
+                        storageBinaryProperties,
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES,
+                        storageValueProperties
+                    );
+
+                    verifier.addIfConversionFail(
+                        storageValueProperties,
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_PROPERTIES,
+                        storageBinaryProperties
+                    );
+                }
+
                 verifier.addIfConversionFail(
                     StorageBinary.with(
                         STORAGE_PATH_TXT,
@@ -1945,22 +1974,6 @@ final class MissingConverterVerifier {
                     StorageValue.with(STORAGE_PATH_TXT)
                         .setValue(
                             Optional.of(text)
-                        )
-                );
-
-                verifier.addIfConversionFail(
-                    StorageBinary.with(
-                        STORAGE_PATH_PROPERTIES,
-                        Binary.with(
-                            PROPERTIES.text()
-                                .getBytes(charset)
-                        )
-                    ),
-                    StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES,
-                    StorageValue.with(STORAGE_PATH_PROPERTIES)
-                        .setValue(
-                            Optional.of(PROPERTIES)
                         )
                 );
 
