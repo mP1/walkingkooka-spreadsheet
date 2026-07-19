@@ -20,8 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
@@ -43,12 +42,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
     SpreadsheetParserContextTesting<BasicSpreadsheetParserContext>,
+    DateTimeContextTesting,
     DecimalNumberContextDelegator,
     ToStringTesting<BasicSpreadsheetParserContext> {
 
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY = InvalidCharacterExceptionFactory.POSITION;
-
-    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.fake();
 
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = ':';

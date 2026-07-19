@@ -28,9 +28,6 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
@@ -68,7 +65,6 @@ import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -145,16 +141,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             return BasicSpreadsheetFormatterContextTest.class.getSimpleName() + ".formatter()";
         }
     };
-
-    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
-        DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(LOCALE)
-        ),
-        LOCALE,
-        1900,
-        50,
-        LocalDateTime::now
-    );
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = new FakeDecimalNumberContext() {
         @Override
