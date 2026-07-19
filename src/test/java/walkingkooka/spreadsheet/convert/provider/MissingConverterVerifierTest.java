@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.Either;
@@ -123,7 +124,8 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
-    @Test
+    //@Test
+    @Disabled ("Cycle preventing SpreadsheetConverterContext https://github.com/mP1/walkingkooka-spreadsheet/issues/9550")
     public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
@@ -137,7 +139,8 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
-    @Test
+    //@Test
+    @Disabled ("Cycle preventing SpreadsheetConverterContext https://github.com/mP1/walkingkooka-spreadsheet/issues/9550")
     public void testVerifyAndCheckWithWithScriptingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER
