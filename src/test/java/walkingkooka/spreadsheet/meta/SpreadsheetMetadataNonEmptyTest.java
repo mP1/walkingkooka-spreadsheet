@@ -37,9 +37,9 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
@@ -85,9 +85,8 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -96,6 +95,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
@@ -123,8 +123,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -144,20 +142,15 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTestCase<SpreadsheetMetadataNonEmpty>
-    implements ConverterTesting,
+    implements BinaryTextContextTesting,
+    ConverterTesting,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
+    EnvironmentContextTesting,
+    HasExpressionNumberKindTesting,
     SpreadsheetFormatterTesting {
 
-    private final static Charset CHARSET = StandardCharsets.UTF_8;
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-
-    private final static int DEFAULT_YEAR = 1900;
-
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT - 1;
-
-    private final static HasNow NOW = LocalDateTime::now;
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
@@ -1444,8 +1437,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 ),
                                 locale,
                                 DEFAULT_YEAR,
-                                20,
-                                NOW
+                                TWO_DIGIT_YEAR,
+                                HAS_NOW
                             ),
                             DecimalNumberContexts.american(MathContext.DECIMAL32)
                         ),
@@ -1518,7 +1511,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
                     final DateTimeContext context = metadata.dateTimeContext(
                         SpreadsheetMetadata.NO_CELL,
-                        NOW,
+                        HAS_NOW,
                         LOCALE_CONTEXT
                     );
                     this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
@@ -1548,7 +1541,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final DateTimeContext context = metadata.dateTimeContext(
             SpreadsheetMetadata.NO_CELL,
-            NOW,
+            HAS_NOW,
             LOCALE_CONTEXT
         );
 
@@ -1585,7 +1578,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         Optional.of(dateTimeSymbols)
                     )
             ),
-            NOW,
+            HAS_NOW,
             LOCALE_CONTEXT
         );
 
@@ -1626,7 +1619,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         )
                     )
             ),
-            NOW,
+            HAS_NOW,
             LOCALE_CONTEXT
         );
 
@@ -1663,7 +1656,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         Optional.of(locale)
                     )
             ),
-            NOW,
+            HAS_NOW,
             LOCALE_CONTEXT
         );
 
@@ -1902,11 +1895,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         EnvironmentContexts.map(
                             EnvironmentContexts.empty(
                                 CHARSET,
-                                Currency.getInstance("AUD"),
-                                Indentation.SPACES2,
-                                LineEnding.NL,
+                                CURRENCY,
+                                INDENTATION,
+                                LINE_ENDING,
                                 LOCALE_CONTEXT.locale(),
-                                NOW,
+                                HAS_NOW,
                                 EnvironmentContext.ANONYMOUS
                             )
                         )
@@ -2324,7 +2317,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     .spreadsheetParserContext(
                         SpreadsheetMetadata.NO_CELL,
                         LOCALE_CONTEXT,
-                        NOW
+                        HAS_NOW
                     )
             ).orElseThrow(() -> new AssertionError("parser failed"));
         this.checkEquals(true, cursor.isEmpty(), () -> cursor + " is not empty");
@@ -2355,7 +2348,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             metadata.spreadsheetParserContext(
                 SpreadsheetMetadata.NO_CELL,
                 LOCALE_CONTEXT,
-                NOW
+                HAS_NOW
             )
         );
     }
@@ -3021,7 +3014,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      exporter1\n" +
                 "      exporter2\n" +
                 "      exporter3\n" +
-                "    expressionNumberKind: DOUBLE\n" +
+                "    expressionNumberKind: BIG_DECIMAL\n" +
                 "    formHandlers: \n" +
                 "      handler1\n" +
                 "      handler2\n" +
@@ -3261,7 +3254,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      exporter1\n" +
                 "      exporter2\n" +
                 "      exporter3\n" +
-                "    expressionNumberKind: DOUBLE\n" +
+                "    expressionNumberKind: BIG_DECIMAL\n" +
                 "    formHandlers: \n" +
                 "      handler1\n" +
                 "      handler2\n" +
@@ -3499,7 +3492,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    exporter1\n" +
                 "    exporter2\n" +
                 "    exporter3\n" +
-                "  expressionNumberKind: DOUBLE\n" +
+                "  expressionNumberKind: BIG_DECIMAL\n" +
                 "  formHandlers: \n" +
                 "    handler1\n" +
                 "    handler2\n" +
