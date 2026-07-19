@@ -39,7 +39,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
     public final static Optional<SpreadsheetValidationReference> NO_VALIDATION_REFERENCE = Optional.empty();
 
     /**
-     * {@see BasicSpreadsheetConverterContext}
+     * {@see SpreadsheetConverterContextBasic}
      */
     public static SpreadsheetConverterContext basic(final HasUserDirectories hasUserDirectories,
                                                     final Optional<SpreadsheetMetadata> spreadsheetMetadata,
@@ -51,7 +51,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                     final JsonNodeConverterContext jsonNodeConverterContext,
                                                     final LocaleContext localeContext) {
-        return BasicSpreadsheetConverterContext.with(
+        return SpreadsheetConverterContextBasic.with(
             hasUserDirectories,
             spreadsheetMetadata,
             validationReference,

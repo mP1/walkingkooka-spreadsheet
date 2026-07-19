@@ -66,7 +66,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext>,
+public final class SpreadsheetConverterContextBasicTest implements SpreadsheetConverterContextTesting<SpreadsheetConverterContextBasic>,
     DecimalNumberContextDelegator,
     LocaleContextTesting {
 
@@ -117,7 +117,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullHasUserDirectoriesFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 null,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -136,7 +136,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullSpreadsheetMetadataFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 null,
                 VALIDATION_REFERENCE,
@@ -155,7 +155,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullConverterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -174,7 +174,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullMediaTypeDetectorFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -193,7 +193,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -212,7 +212,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullSpreadsheetLabelNameResolverFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -231,7 +231,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullSpreadsheetMetadataLoaderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -250,7 +250,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullJsonNodeConverterContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -269,7 +269,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public void testWithNullLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetConverterContext.with(
+            () -> SpreadsheetConverterContextBasic.with(
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -370,8 +370,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     }
 
     @Override
-    public BasicSpreadsheetConverterContext createContext() {
-        return BasicSpreadsheetConverterContext.with(
+    public SpreadsheetConverterContextBasic createContext() {
+        return SpreadsheetConverterContextBasic.with(
             HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             VALIDATION_REFERENCE,
@@ -519,7 +519,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetConverterContext> type() {
-        return BasicSpreadsheetConverterContext.class;
+    public Class<SpreadsheetConverterContextBasic> type() {
+        return SpreadsheetConverterContextBasic.class;
     }
 }
