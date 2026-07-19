@@ -22,7 +22,8 @@ import walkingkooka.convert.TextToTryingShortCircuitingConverter;
 /**
  * Base converter that handles converting text like source into a target type..
  */
-abstract class SpreadsheetConverterTextTo implements TextToTryingShortCircuitingConverter<SpreadsheetConverterContext> {
+abstract class SpreadsheetConverterTextTo extends SpreadsheetConverter
+    implements TextToTryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
     SpreadsheetConverterTextTo() {
         super();
