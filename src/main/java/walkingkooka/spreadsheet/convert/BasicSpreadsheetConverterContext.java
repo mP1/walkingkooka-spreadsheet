@@ -175,7 +175,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         );
     }
 
-    private final Optional<SpreadsheetValidationReference > validationReference;
+    private final Optional<SpreadsheetValidationReference> validationReference;
 
     // ConverterLike....................................................................................................
 
