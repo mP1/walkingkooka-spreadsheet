@@ -1962,6 +1962,35 @@ final class MissingConverterVerifier {
                     );
                 }
 
+                {
+                    final StorageBinary storageBinaryTsv = StorageBinary.with(
+                        STORAGE_PATH_TSV,
+                        Binary.with(
+                            TSV_STRING_LIST.text()
+                                .getBytes(charset)
+                        )
+                    );
+
+                    final StorageValue storageValueTsv = StorageValue.with(STORAGE_PATH_TSV)
+                        .setValue(
+                            Optional.of(TSV_STRING_LIST)
+                        );
+
+                    verifier.addIfConversionFail(
+                        storageBinaryTsv,
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TSV,
+                        storageValueTsv
+                    );
+
+                    verifier.addIfConversionFail(
+                        storageValueTsv,
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_TSV,
+                        storageBinaryTsv
+                    );
+                }
+
                 verifier.addIfConversionFail(
                     StorageBinary.with(
                         STORAGE_PATH_TXT,
@@ -1974,22 +2003,6 @@ final class MissingConverterVerifier {
                     StorageValue.with(STORAGE_PATH_TXT)
                         .setValue(
                             Optional.of(text)
-                        )
-                );
-
-                verifier.addIfConversionFail(
-                    StorageBinary.with(
-                        STORAGE_PATH_TSV,
-                        Binary.with(
-                            TSV_STRING_LIST.text()
-                                .getBytes(charset)
-                        )
-                    ),
-                    StorageValue.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TSV,
-                    StorageValue.with(STORAGE_PATH_TSV)
-                        .setValue(
-                            Optional.of(TSV_STRING_LIST)
                         )
                 );
 
