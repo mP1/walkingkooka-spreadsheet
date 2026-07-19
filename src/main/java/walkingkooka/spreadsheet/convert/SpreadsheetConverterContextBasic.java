@@ -185,7 +185,11 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         return this.converter.canConvert(
             value,
             type,
-            this
+            SpreadsheetConverterContexts.cycle(
+                value,
+                type,
+                this
+            )
         );
     }
 
@@ -195,7 +199,11 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         return this.converter.convert(
             value,
             type,
-            this
+            SpreadsheetConverterContexts.cycle(
+                value,
+                type,
+                this
+            )
         );
     }
 
