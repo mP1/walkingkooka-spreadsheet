@@ -26,8 +26,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -93,7 +91,6 @@ import walkingkooka.validation.form.FormField;
 import java.math.MathContext;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Currency;
@@ -158,16 +155,6 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             TEMPLATE_LOCAL_VALUE
         );
     };
-
-    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
-        DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(LOCALE)
-        ),
-        LOCALE,
-        1900,
-        20,
-        LocalDateTime::now
-    );
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 

@@ -25,9 +25,6 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -52,7 +49,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -65,16 +61,6 @@ import java.util.Optional;
 public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext>,
     DecimalNumberContextDelegator,
     LocaleContextTesting {
-
-    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
-        DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(LOCALE)
-        ),
-        LOCALE,
-        1900,
-        19,
-        LocalDateTime::now
-    );
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.basic(
         DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
