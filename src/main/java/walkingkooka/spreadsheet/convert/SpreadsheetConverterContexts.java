@@ -66,6 +66,19 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterContextCycle}
+     */
+    public static SpreadsheetConverterContext cycle(final Object value,
+                                                    final Class<?> type,
+                                                    final SpreadsheetConverterContext context) {
+        return SpreadsheetConverterContextCycle.with(
+            value,
+            type,
+            context
+        );
+    }
+
+    /**
      * {@see FakeSpreadsheetConverterContext}
      */
     public static SpreadsheetConverterContext fake() {
