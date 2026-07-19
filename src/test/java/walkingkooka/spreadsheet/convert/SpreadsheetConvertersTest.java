@@ -56,6 +56,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasDecimalNumberSymbols;
@@ -152,6 +153,7 @@ import java.util.Optional;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
     ConverterTesting,
+    DecimalNumberContextTesting,
     HasCharsetTesting,
     HasDateTimeSymbolsTesting,
     HasDecimalNumberSymbolsTesting,
@@ -1032,85 +1034,83 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         @Override
         public String currencySymbol() {
-            return this.decimalNumberContext.currencySymbol();
+            return DECIMAL_NUMBER_CONTEXT.currencySymbol();
         }
 
         @Override
         public char decimalSeparator() {
-            return this.decimalNumberContext.decimalSeparator();
+            return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
         }
 
         @Override
         public String exponentSymbol() {
-            return this.decimalNumberContext.exponentSymbol();
+            return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
         }
 
         @Override
         public char groupSeparator() {
-            return this.decimalNumberContext.groupSeparator();
+            return DECIMAL_NUMBER_CONTEXT.groupSeparator();
         }
 
         @Override
         public String infinitySymbol() {
-            return this.decimalNumberContext.infinitySymbol();
+            return DECIMAL_NUMBER_CONTEXT.infinitySymbol();
         }
 
         @Override
         public char monetaryDecimalSeparator() {
-            return this.decimalNumberContext.monetaryDecimalSeparator();
+            return DECIMAL_NUMBER_CONTEXT.monetaryDecimalSeparator();
         }
 
         @Override
         public String nanSymbol() {
-            return this.decimalNumberContext.nanSymbol();
+            return DECIMAL_NUMBER_CONTEXT.nanSymbol();
         }
 
         @Override
         public char negativeSign() {
-            return this.decimalNumberContext.negativeSign();
+            return DECIMAL_NUMBER_CONTEXT.negativeSign();
         }
 
         @Override
         public char percentSymbol() {
-            return this.decimalNumberContext.percentSymbol();
+            return DECIMAL_NUMBER_CONTEXT.percentSymbol();
         }
 
         @Override
         public char permillSymbol() {
-            return this.decimalNumberContext.permillSymbol();
+            return DECIMAL_NUMBER_CONTEXT.permillSymbol();
         }
 
         @Override
         public char positiveSign() {
-            return this.decimalNumberContext.positiveSign();
+            return DECIMAL_NUMBER_CONTEXT.positiveSign();
         }
 
         @Override
         public char zeroDigit() {
-            return this.decimalNumberContext.zeroDigit();
+            return DECIMAL_NUMBER_CONTEXT.zeroDigit();
         }
 
         @Override
         public DecimalNumberSymbols decimalNumberSymbols() {
-            return this.decimalNumberContext.decimalNumberSymbols();
+            return DECIMAL_NUMBER_CONTEXT.decimalNumberSymbols();
         }
 
         @Override
         public Locale locale() {
-            return this.decimalNumberContext.locale();
+            return DECIMAL_NUMBER_CONTEXT.locale();
         }
 
         @Override
         public MathContext mathContext() {
-            return this.decimalNumberContext.mathContext();
+            return DECIMAL_NUMBER_CONTEXT.mathContext();
         }
 
         @Override
         public char valueSeparator() {
             return ',';
         }
-
-        private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
     };
 
     // formAndValidation................................................................................................
@@ -2014,85 +2014,83 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         @Override
         public String currencySymbol() {
-            return this.decimalNumberContext.currencySymbol();
+            return DECIMAL_NUMBER_CONTEXT.currencySymbol();
         }
 
         @Override
         public char decimalSeparator() {
-            return this.decimalNumberContext.decimalSeparator();
+            return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
         }
 
         @Override
         public String exponentSymbol() {
-            return this.decimalNumberContext.exponentSymbol();
+            return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
         }
 
         @Override
         public char groupSeparator() {
-            return this.decimalNumberContext.groupSeparator();
+            return DECIMAL_NUMBER_CONTEXT.groupSeparator();
         }
 
         @Override
         public String infinitySymbol() {
-            return this.decimalNumberContext.infinitySymbol();
+            return DECIMAL_NUMBER_CONTEXT.infinitySymbol();
         }
 
         @Override
         public char monetaryDecimalSeparator() {
-            return this.decimalNumberContext.monetaryDecimalSeparator();
+            return DECIMAL_NUMBER_CONTEXT.monetaryDecimalSeparator();
         }
 
         @Override
         public String nanSymbol() {
-            return this.decimalNumberContext.nanSymbol();
+            return DECIMAL_NUMBER_CONTEXT.nanSymbol();
         }
 
         @Override
         public char negativeSign() {
-            return this.decimalNumberContext.negativeSign();
+            return DECIMAL_NUMBER_CONTEXT.negativeSign();
         }
 
         @Override
         public char percentSymbol() {
-            return this.decimalNumberContext.percentSymbol();
+            return DECIMAL_NUMBER_CONTEXT.percentSymbol();
         }
 
         @Override
         public char permillSymbol() {
-            return this.decimalNumberContext.permillSymbol();
+            return DECIMAL_NUMBER_CONTEXT.permillSymbol();
         }
 
         @Override
         public char positiveSign() {
-            return this.decimalNumberContext.positiveSign();
+            return DECIMAL_NUMBER_CONTEXT.positiveSign();
         }
 
         @Override
         public char zeroDigit() {
-            return this.decimalNumberContext.zeroDigit();
+            return DECIMAL_NUMBER_CONTEXT.zeroDigit();
         }
 
         @Override
         public DecimalNumberSymbols decimalNumberSymbols() {
-            return this.decimalNumberContext.decimalNumberSymbols();
+            return DECIMAL_NUMBER_CONTEXT.decimalNumberSymbols();
         }
 
         @Override
         public Locale locale() {
-            return this.decimalNumberContext.locale();
+            return DECIMAL_NUMBER_CONTEXT.locale();
         }
 
         @Override
         public int decimalNumberDigitCount() {
-            return this.decimalNumberContext.decimalNumberDigitCount();
+            return DECIMAL_NUMBER_CONTEXT.decimalNumberDigitCount();
         }
 
         @Override
         public MathContext mathContext() {
-            return this.decimalNumberContext.mathContext();
+            return DECIMAL_NUMBER_CONTEXT.mathContext();
         }
-
-        private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
 
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
@@ -3060,80 +3058,78 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         @Override
         public String currencySymbol() {
-            return this.decimalNumberContext.currencySymbol();
+            return DECIMAL_NUMBER_CONTEXT.currencySymbol();
         }
 
         @Override
         public char decimalSeparator() {
-            return this.decimalNumberContext.decimalSeparator();
+            return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
         }
 
         @Override
         public String exponentSymbol() {
-            return this.decimalNumberContext.exponentSymbol();
+            return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
         }
 
         @Override
         public char groupSeparator() {
-            return this.decimalNumberContext.groupSeparator();
+            return DECIMAL_NUMBER_CONTEXT.groupSeparator();
         }
 
         @Override
         public String infinitySymbol() {
-            return this.decimalNumberContext.infinitySymbol();
+            return DECIMAL_NUMBER_CONTEXT.infinitySymbol();
         }
 
         @Override
         public char monetaryDecimalSeparator() {
-            return this.decimalNumberContext.monetaryDecimalSeparator();
+            return DECIMAL_NUMBER_CONTEXT.monetaryDecimalSeparator();
         }
 
         @Override
         public String nanSymbol() {
-            return this.decimalNumberContext.nanSymbol();
+            return DECIMAL_NUMBER_CONTEXT.nanSymbol();
         }
 
         @Override
         public char negativeSign() {
-            return this.decimalNumberContext.negativeSign();
+            return DECIMAL_NUMBER_CONTEXT.negativeSign();
         }
 
         @Override
         public char percentSymbol() {
-            return this.decimalNumberContext.percentSymbol();
+            return DECIMAL_NUMBER_CONTEXT.percentSymbol();
         }
 
         @Override
         public char permillSymbol() {
-            return this.decimalNumberContext.permillSymbol();
+            return DECIMAL_NUMBER_CONTEXT.permillSymbol();
         }
 
         @Override
         public char positiveSign() {
-            return this.decimalNumberContext.positiveSign();
+            return DECIMAL_NUMBER_CONTEXT.positiveSign();
         }
 
         @Override
         public char zeroDigit() {
-            return this.decimalNumberContext.zeroDigit();
+            return DECIMAL_NUMBER_CONTEXT.zeroDigit();
         }
 
         @Override
         public DecimalNumberSymbols decimalNumberSymbols() {
-            return this.decimalNumberContext.decimalNumberSymbols();
+            return DECIMAL_NUMBER_CONTEXT.decimalNumberSymbols();
         }
 
         @Override
         public Locale locale() {
-            return this.decimalNumberContext.locale();
+            return DECIMAL_NUMBER_CONTEXT.locale();
         }
 
         @Override
         public MathContext mathContext() {
-            return this.decimalNumberContext.mathContext();
+            return DECIMAL_NUMBER_CONTEXT.mathContext();
         }
-
-        private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
 
         @Override
         public List<String> ampms() {
@@ -3600,85 +3596,83 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 @Override
                 public String currencySymbol() {
-                    return this.decimalNumberContext.currencySymbol();
+                    return DECIMAL_NUMBER_CONTEXT.currencySymbol();
                 }
 
                 @Override
                 public char decimalSeparator() {
-                    return this.decimalNumberContext.decimalSeparator();
+                    return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
                 }
 
                 @Override
                 public String exponentSymbol() {
-                    return this.decimalNumberContext.exponentSymbol();
+                    return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
                 }
 
                 @Override
                 public char groupSeparator() {
-                    return this.decimalNumberContext.groupSeparator();
+                    return DECIMAL_NUMBER_CONTEXT.groupSeparator();
                 }
 
                 @Override
                 public String infinitySymbol() {
-                    return this.decimalNumberContext.infinitySymbol();
+                    return DECIMAL_NUMBER_CONTEXT.infinitySymbol();
                 }
 
                 @Override
                 public char monetaryDecimalSeparator() {
-                    return this.decimalNumberContext.monetaryDecimalSeparator();
+                    return DECIMAL_NUMBER_CONTEXT.monetaryDecimalSeparator();
                 }
 
                 @Override
                 public String nanSymbol() {
-                    return this.decimalNumberContext.nanSymbol();
+                    return DECIMAL_NUMBER_CONTEXT.nanSymbol();
                 }
 
                 @Override
                 public char negativeSign() {
-                    return this.decimalNumberContext.negativeSign();
+                    return DECIMAL_NUMBER_CONTEXT.negativeSign();
                 }
 
                 @Override
                 public char percentSymbol() {
-                    return this.decimalNumberContext.percentSymbol();
+                    return DECIMAL_NUMBER_CONTEXT.percentSymbol();
                 }
 
                 @Override
                 public char permillSymbol() {
-                    return this.decimalNumberContext.permillSymbol();
+                    return DECIMAL_NUMBER_CONTEXT.permillSymbol();
                 }
 
                 @Override
                 public char positiveSign() {
-                    return this.decimalNumberContext.positiveSign();
+                    return DECIMAL_NUMBER_CONTEXT.positiveSign();
                 }
 
                 @Override
                 public char zeroDigit() {
-                    return this.decimalNumberContext.zeroDigit();
+                    return DECIMAL_NUMBER_CONTEXT.zeroDigit();
                 }
 
                 @Override
                 public DecimalNumberSymbols decimalNumberSymbols() {
-                    return this.decimalNumberContext.decimalNumberSymbols();
+                    return DECIMAL_NUMBER_CONTEXT.decimalNumberSymbols();
                 }
 
                 @Override
                 public Locale locale() {
-                    return this.decimalNumberContext.locale();
+                    return DECIMAL_NUMBER_CONTEXT.locale();
                 }
 
                 @Override
                 public int decimalNumberDigitCount() {
-                    return this.decimalNumberContext.decimalNumberDigitCount();
+                    return DECIMAL_NUMBER_CONTEXT.decimalNumberDigitCount();
                 }
 
                 @Override
                 public MathContext mathContext() {
-                    return this.decimalNumberContext.mathContext();
+                    return DECIMAL_NUMBER_CONTEXT.mathContext();
                 }
-
-                private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
 
                 @Override
                 public List<String> ampms() {

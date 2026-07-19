@@ -29,7 +29,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -84,7 +83,6 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -206,7 +204,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                                 LocaleContexts.jre(locale)
                             ),
                         DateTimeContexts.fake(),
-                        DecimalNumberContexts.american(MathContext.UNLIMITED)
+                        DECIMAL_NUMBER_CONTEXT
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),

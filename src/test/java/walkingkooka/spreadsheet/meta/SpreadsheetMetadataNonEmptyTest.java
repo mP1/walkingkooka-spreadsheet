@@ -45,7 +45,6 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -1441,7 +1440,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 TWO_DIGIT_YEAR,
                                 HAS_NOW
                             ),
-                            DecimalNumberContexts.american(MathContext.DECIMAL32)
+                            DECIMAL_NUMBER_CONTEXT
                         ),
                         metadata.expressionNumberKind()
                     ),
@@ -1978,35 +1977,33 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
                 @Override
                 public char decimalSeparator() {
-                    return this.decimalNumberContext.decimalSeparator();
+                    return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
                 }
 
                 @Override
                 public char groupSeparator() {
-                    return this.decimalNumberContext.groupSeparator();
+                    return DECIMAL_NUMBER_CONTEXT.groupSeparator();
                 }
 
                 @Override
                 public char negativeSign() {
-                    return this.decimalNumberContext.negativeSign();
+                    return DECIMAL_NUMBER_CONTEXT.negativeSign();
                 }
 
                 @Override
                 public char positiveSign() {
-                    return this.decimalNumberContext.positiveSign();
+                    return DECIMAL_NUMBER_CONTEXT.positiveSign();
                 }
 
                 @Override
                 public MathContext mathContext() {
-                    return this.decimalNumberContext.mathContext();
+                    return DECIMAL_NUMBER_CONTEXT.mathContext();
                 }
 
                 @Override
                 public char zeroDigit() {
-                    return this.decimalNumberContext.zeroDigit();
+                    return DECIMAL_NUMBER_CONTEXT.zeroDigit();
                 }
-
-                private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.UNLIMITED);
             },
             SpreadsheetText.with(text));
     }

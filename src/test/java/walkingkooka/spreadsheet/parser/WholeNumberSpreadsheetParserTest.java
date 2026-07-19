@@ -25,7 +25,7 @@ import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -36,10 +36,10 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.MathContext;
 import java.util.Locale;
 
 public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParserTesting2<WholeNumberSpreadsheetParser>,
+    DecimalNumberContextTesting,
     TreePrintableTesting,
     ClassTesting<WholeNumberSpreadsheetParser> {
 
@@ -194,7 +194,7 @@ public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParser
 
         @Override
         public DecimalNumberContext decimalNumberContext() {
-            return DecimalNumberContexts.american(MathContext.DECIMAL32);
+            return DECIMAL_NUMBER_CONTEXT;
         }
 
         @Override

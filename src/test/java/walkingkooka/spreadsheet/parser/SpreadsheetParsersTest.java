@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -30,11 +30,11 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.lang.reflect.Method;
-import java.math.MathContext;
 import java.util.List;
 
 public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
-    SpreadsheetParserTesting {
+    SpreadsheetParserTesting,
+    DecimalNumberContextTesting {
 
     // general..........................................................................................................
 
@@ -289,7 +289,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             DateTimeContexts.fake(), // DateTimeContext unnecessary
             ExpressionNumberContexts.basic(
                 ExpressionNumberKind.BIG_DECIMAL,
-                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                DECIMAL_NUMBER_CONTEXT
             ),
             ',' // valueSeparator
         );

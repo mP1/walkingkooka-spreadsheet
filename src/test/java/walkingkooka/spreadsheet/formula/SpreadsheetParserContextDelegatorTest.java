@@ -21,7 +21,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
@@ -46,7 +45,7 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
 
     private final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(
         ExpressionNumberKind.BIG_DECIMAL,
-        DecimalNumberContexts.american(MathContext.DECIMAL32)
+        DECIMAL_NUMBER_CONTEXT
     );
 
     // DecimalNumberContextDelegator....................................................................................
