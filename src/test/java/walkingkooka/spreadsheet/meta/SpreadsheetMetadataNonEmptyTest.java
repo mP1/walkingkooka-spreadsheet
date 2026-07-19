@@ -47,6 +47,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
@@ -1489,12 +1490,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static char VALUE_SEPARATOR = '\'';
 
-    private final static DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
-        '+',
-        new DecimalFormatSymbols(
-            Locale.forLanguageTag("EN-AU")
-        )
-    ).setCurrencySymbol("$AUD");
+    private final static DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = HasDecimalNumberSymbolsTesting.DECIMAL_NUMBER_SYMBOLS.setCurrencySymbol("$AUD");
 
     // HasDateTimeContext...............................................................................................
 
