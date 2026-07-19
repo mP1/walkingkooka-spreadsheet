@@ -30,7 +30,6 @@ import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -186,9 +185,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                         50, // two-digit-year
                         LocalDateTime::now
                     ),
-                    DecimalNumberContexts.american(
-                        MathContext.DECIMAL32
-                    )
+                    DECIMAL_NUMBER_CONTEXT
                 ),
                 ExpressionNumberKind.BIG_DECIMAL
             ),

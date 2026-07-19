@@ -30,7 +30,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -82,6 +82,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
+    DecimalNumberContextTesting,
     ParserTesting,
     HasSpreadsheetPatternKindTesting,
     HasTextTesting,
@@ -1621,7 +1622,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     DateTimeContexts.fake(),
                     ExpressionNumberContexts.basic(
                         kind,
-                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        DECIMAL_NUMBER_CONTEXT
                     ),
                     ','
                 )

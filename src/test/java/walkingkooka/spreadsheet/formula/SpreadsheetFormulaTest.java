@@ -29,6 +29,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
@@ -103,6 +104,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
     CanBeEmptyTesting,
     CanReplaceReferencesTesting<SpreadsheetFormula>,
+    DecimalNumberContextTesting,
     HasContentTypeTesting,
     HasValidationPromptValueTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
@@ -2066,9 +2068,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
 
     private SpreadsheetParserContext parserContext() {
-        return this.parserContext(
-            DecimalNumberContexts.american(MathContext.DECIMAL32)
-        );
+        return this.parserContext(DECIMAL_NUMBER_CONTEXT);
     }
 
     private SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext) {

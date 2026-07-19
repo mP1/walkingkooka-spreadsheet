@@ -29,7 +29,7 @@ import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -44,7 +44,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
@@ -55,7 +54,8 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterFormatPatternToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterFormatPatternToString>
-    implements HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString> {
+    implements DecimalNumberContextTesting,
+    HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -336,7 +336,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                             50,
                             LocalDateTime::now
                         ),
-                        DecimalNumberContexts.american(MathContext.DECIMAL128)
+                        DECIMAL_NUMBER_CONTEXT
                     ),
                     KIND
                 ),

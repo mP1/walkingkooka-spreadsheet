@@ -33,6 +33,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContextTesting;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.CharsetName;
@@ -119,6 +120,7 @@ import java.util.function.Function;
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     CurrencyLocaleContextTesting,
+    DecimalNumberContextTesting,
     HasCurrencyTesting,
     HasDateTimeSymbolsTesting,
     HasDecimalNumberSymbolsTesting,

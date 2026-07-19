@@ -24,8 +24,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -58,6 +57,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTesting,
+    DecimalNumberContextTesting,
     HasUrlFragmentTesting,
     ClassTesting<SpreadsheetPatternKind> {
 
@@ -528,25 +528,23 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
 
                 @Override
                 public char decimalSeparator() {
-                    return this.context.decimalSeparator();
+                    return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
                 }
 
                 @Override
                 public char negativeSign() {
-                    return this.context.negativeSign();
+                    return DECIMAL_NUMBER_CONTEXT.negativeSign();
                 }
 
                 @Override
                 public MathContext mathContext() {
-                    return this.context.mathContext();
+                    return DECIMAL_NUMBER_CONTEXT.mathContext();
                 }
 
                 @Override
                 public char zeroDigit() {
                     return '0';
                 }
-
-                private final DecimalNumberContext context = DecimalNumberContexts.american(MathContext.DECIMAL32);
             },
             "-12.56"
         );
