@@ -29,6 +29,8 @@ abstract class SpreadsheetConverter implements ShortCircuitingConverter<Spreadsh
         super();
     }
 
+    final static String SELECTION = "SELECTION";
+
     @Override
     public abstract String toString();
 }
