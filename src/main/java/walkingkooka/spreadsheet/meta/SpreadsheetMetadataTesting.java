@@ -25,6 +25,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.currency.HasCurrencyTesting;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
@@ -120,6 +121,7 @@ import java.util.function.Function;
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     CurrencyLocaleContextTesting,
+    DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasCurrencyTesting,
     HasDateTimeSymbolsTesting,

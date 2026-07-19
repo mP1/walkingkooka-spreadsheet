@@ -22,8 +22,7 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyContexts;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -41,14 +40,13 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
-import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber>
-    implements DecimalNumberContextTesting {
+    implements DateTimeContextTesting,
+    DecimalNumberContextTesting {
 
     @Test
     public void testExtractLocaleAwareValue() throws ParseException {
@@ -116,15 +114,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                                 .setLocaleContext(
                                     LocaleContexts.jre(locale)
                                 ),
-                            DateTimeContexts.basic(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                    new DateFormatSymbols(locale)
-                                ),
-                                locale,
-                                1900,
-                                20,
-                                LocalDateTime::now
-                            ),
+                            DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),
                         kind

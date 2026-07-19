@@ -24,7 +24,6 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
@@ -274,14 +273,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                                     );
                                 }
                             }.setLocaleContext(localeContext),
-                            DateTimeContexts.basic(
-                                localeContext.dateTimeSymbolsForLocale(locale)
-                                    .get(),
-                                locale,
-                                1900,
-                                20,
-                                LocalDateTime::now
-                            ),
+                            DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),
                         expressionNumberKind

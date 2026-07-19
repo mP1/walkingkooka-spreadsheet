@@ -42,7 +42,7 @@ import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.currency.CurrencyValue;
-import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasDateTimeSymbols;
@@ -140,7 +140,6 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -153,6 +152,7 @@ import java.util.Optional;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
     ConverterTesting,
+    DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasCharsetTesting,
     HasDateTimeSymbolsTesting,
@@ -3133,85 +3133,73 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         @Override
         public List<String> ampms() {
-            return this.dateTimeContext.ampms();
+            return DATE_TIME_CONTEXT.ampms();
         }
 
         @Override
         public String ampm(final int hourOfDay) {
-            return this.dateTimeContext.ampm(hourOfDay);
+            return DATE_TIME_CONTEXT.ampm(hourOfDay);
         }
 
         @Override
         public int defaultYear() {
-            return this.dateTimeContext.defaultYear();
+            return DATE_TIME_CONTEXT.defaultYear();
         }
 
         @Override
         public List<String> monthNames() {
-            return this.dateTimeContext.ampms();
+            return DATE_TIME_CONTEXT.ampms();
         }
 
         @Override
         public String monthName(final int month) {
-            return this.dateTimeContext.monthName(month);
+            return DATE_TIME_CONTEXT.monthName(month);
         }
 
         @Override
         public List<String> monthNameAbbreviations() {
-            return this.dateTimeContext.monthNameAbbreviations();
+            return DATE_TIME_CONTEXT.monthNameAbbreviations();
         }
 
         @Override
         public String monthNameAbbreviation(final int month) {
-            return this.dateTimeContext.monthNameAbbreviation(month);
+            return DATE_TIME_CONTEXT.monthNameAbbreviation(month);
         }
 
         @Override
         public int twoDigitYear() {
-            return this.dateTimeContext.twoDigitYear();
+            return DATE_TIME_CONTEXT.twoDigitYear();
         }
 
         @Override
         public List<String> weekDayNames() {
-            return this.dateTimeContext.weekDayNames();
+            return DATE_TIME_CONTEXT.weekDayNames();
         }
 
         @Override
         public String weekDayName(final int day) {
-            return this.dateTimeContext.weekDayName(day);
+            return DATE_TIME_CONTEXT.weekDayName(day);
         }
 
         @Override
         public List<String> weekDayNameAbbreviations() {
-            return this.dateTimeContext.weekDayNameAbbreviations();
+            return DATE_TIME_CONTEXT.weekDayNameAbbreviations();
         }
 
         @Override
         public String weekDayNameAbbreviation(final int day) {
-            return this.dateTimeContext.weekDayNameAbbreviation(day);
+            return DATE_TIME_CONTEXT.weekDayNameAbbreviation(day);
         }
 
         @Override
         public DateTimeSymbols dateTimeSymbols() {
-            return this.dateTimeContext.dateTimeSymbols();
+            return DATE_TIME_CONTEXT.dateTimeSymbols();
         }
 
         @Override
         public long dateOffset() {
             return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
         }
-
-        private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
-            DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(LOCALE)
-            ),
-            LOCALE,
-            1980, // defaultYear
-            50, // twoDigitYear,
-            () -> {
-                throw new UnsupportedOperationException();
-            }
-        );
     };
 
     // style............................................................................................................
@@ -3676,86 +3664,74 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 @Override
                 public List<String> ampms() {
-                    return this.dateTimeContext.ampms();
+                    return DATE_TIME_CONTEXT.ampms();
                 }
 
                 @Override
                 public String ampm(final int hourOfDay) {
-                    return this.dateTimeContext.ampm(hourOfDay);
+                    return DATE_TIME_CONTEXT.ampm(hourOfDay);
                 }
 
                 @Override
                 public int defaultYear() {
-                    return this.dateTimeContext.defaultYear();
+                    return DATE_TIME_CONTEXT.defaultYear();
                 }
 
                 @Override
                 public List<String> monthNames() {
-                    return this.dateTimeContext.ampms();
+                    return DATE_TIME_CONTEXT.ampms();
                 }
 
                 @Override
                 public String monthName(final int month) {
-                    return this.dateTimeContext.monthName(month);
+                    return DATE_TIME_CONTEXT.monthName(month);
                 }
 
                 @Override
                 public List<String> monthNameAbbreviations() {
-                    return this.dateTimeContext.monthNameAbbreviations();
+                    return DATE_TIME_CONTEXT.monthNameAbbreviations();
                 }
 
                 @Override
                 public String monthNameAbbreviation(final int month) {
-                    return this.dateTimeContext.monthNameAbbreviation(month);
+                    return DATE_TIME_CONTEXT.monthNameAbbreviation(month);
                 }
 
                 @Override
                 public int twoDigitYear() {
-                    return this.dateTimeContext.twoDigitYear();
+                    return DATE_TIME_CONTEXT.twoDigitYear();
                 }
 
                 @Override
                 public List<String> weekDayNames() {
-                    return this.dateTimeContext.weekDayNames();
+                    return DATE_TIME_CONTEXT.weekDayNames();
                 }
 
                 @Override
                 public String weekDayName(final int day) {
-                    return this.dateTimeContext.weekDayName(day);
+                    return DATE_TIME_CONTEXT.weekDayName(day);
                 }
 
                 @Override
                 public List<String> weekDayNameAbbreviations() {
-                    return this.dateTimeContext.weekDayNameAbbreviations();
+                    return DATE_TIME_CONTEXT.weekDayNameAbbreviations();
                 }
 
                 @Override
                 public String weekDayNameAbbreviation(final int day) {
-                    return this.dateTimeContext.weekDayNameAbbreviation(day);
+                    return DATE_TIME_CONTEXT.weekDayNameAbbreviation(day);
                 }
 
                 @Override
                 public DateTimeSymbols dateTimeSymbols() {
-                    return this.dateTimeContext.dateTimeSymbols();
+                    return DATE_TIME_CONTEXT.dateTimeSymbols();
                 }
 
                 @Override
                 public long dateOffset() {
                     return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
                 }
-
-                private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
-                    DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.ENGLISH)
-                    ),
-                    Locale.forLanguageTag("en-AU"),
-                    1980, // defaultYear
-                    50, // twoDigitYear,
-                    () -> {
-                        throw new UnsupportedOperationException();
-                    }
-                );
-
+                
                 @Override
                 public SpreadsheetMetadata spreadsheetMetadata() {
                     return SpreadsheetMetadata.EMPTY.set(
@@ -4166,17 +4142,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                             LineEnding.NL
                         ).setCharset(CHARSET),
                         CurrencyLocaleContexts.fake(),
-                        DateTimeContexts.basic(
-                            DateTimeSymbols.fromDateFormatSymbols(
-                                new DateFormatSymbols(locale)
-                            ),
-                            locale,
-                            1950,
-                            50,
-                            () -> {
-                                throw new UnsupportedOperationException("now() not supported");
-                            }
-                        ),
+                        DATE_TIME_CONTEXT,
                         DecimalNumberContexts.fake()
                     ),
                     ExpressionNumberKind.BIG_DECIMAL

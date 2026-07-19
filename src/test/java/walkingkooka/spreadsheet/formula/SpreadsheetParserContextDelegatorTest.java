@@ -17,8 +17,7 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -31,12 +30,11 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting<SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator>,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    DateTimeContextTesting {
 
     @Override
     public TestSpreadsheetParserContextDelegator createContext() {
@@ -73,15 +71,7 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
 
             return SpreadsheetParserContexts.basic(
                 InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-                DateTimeContexts.basic(
-                    DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(locale)
-                    ),
-                    locale,
-                    1950, // defaultYear
-                    50, // twoDigitYear
-                    LocalDateTime::now
-                ),
+                DATE_TIME_CONTEXT,
                 EXPRESSION_NUMBER_CONTEXT,
                 ',' // valueSeparator
             );

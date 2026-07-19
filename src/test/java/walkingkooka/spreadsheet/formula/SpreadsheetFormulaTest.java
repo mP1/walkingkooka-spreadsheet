@@ -25,8 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
@@ -90,7 +89,6 @@ import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValueType;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -104,6 +102,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
     CanBeEmptyTesting,
     CanReplaceReferencesTesting<SpreadsheetFormula>,
+    DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasContentTypeTesting,
     HasValidationPromptValueTesting,
@@ -2083,17 +2082,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext,
                                                    final char valueSeparator) {
         return this.parserContext(
-            DateTimeContexts.basic(
-                DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(LOCALE)
-                ),
-                LOCALE,
-                1920,
-                50,
-                () -> {
-                    throw new UnsupportedOperationException("now");
-                }
-            ),
+            DATE_TIME_CONTEXT,
             decimalNumberContext,
             valueSeparator
         );

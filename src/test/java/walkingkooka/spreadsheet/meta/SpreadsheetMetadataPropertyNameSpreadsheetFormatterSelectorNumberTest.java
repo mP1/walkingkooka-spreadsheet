@@ -25,8 +25,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -53,14 +52,13 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormatSymbols;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber>
-    implements DecimalNumberContextTesting {
+    implements DateTimeContextTesting,
+    DecimalNumberContextTesting {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
 
@@ -184,15 +182,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                             }.setLocaleContext(
                                 LocaleContexts.jre(locale)
                             ),
-                            DateTimeContexts.basic(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                    new DateFormatSymbols(locale)
-                                ),
-                                locale,
-                                1900,
-                                20,
-                                LocalDateTime::now
-                            ),
+                            DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),
                         ExpressionNumberKind.DEFAULT

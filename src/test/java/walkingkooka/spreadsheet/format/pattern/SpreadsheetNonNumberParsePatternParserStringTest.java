@@ -21,21 +21,18 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
-import java.text.DateFormatSymbols;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 
 public final class SpreadsheetNonNumberParsePatternParserStringTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserString>
-    implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserString> {
+    implements DateTimeContextTesting,
+    HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserString> {
 
     private final static String PATTERN = "Pattern-123";
 
@@ -189,16 +186,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     }
 
     private List<String> monthNames() {
-        return DateTimeContexts.basic(
-                DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
-                ),
-                Locale.forLanguageTag("EN-AU"),
-                1900,
-                20,
-                LocalDateTime::now
-            )
-            .monthNames();
+        return DATE_TIME_CONTEXT.monthNames();
     }
 
     // hashCode/equals..................................................................................................
