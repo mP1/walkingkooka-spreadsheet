@@ -25,7 +25,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.currency.HasCurrencyTesting;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContexts;
@@ -107,7 +107,6 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
-import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -122,6 +121,7 @@ import java.util.function.Function;
 public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     CurrencyLocaleContextTesting,
     HasCurrencyTesting,
+    HasDateTimeSymbolsTesting,
     HasExpressionNumberKindTesting,
     HasLocaleTesting,
     HasNowTesting,
@@ -165,10 +165,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 SPREADSHEET_PARSER_PROVIDER,
                 p
             )
-    );
-
-    DateTimeSymbols DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
-        new DateFormatSymbols(LOCALE)
     );
 
     DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
