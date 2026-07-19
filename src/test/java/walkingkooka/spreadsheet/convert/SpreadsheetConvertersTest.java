@@ -59,6 +59,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasDecimalNumberSymbols;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.math.HasOptionalDecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
@@ -139,7 +140,6 @@ import java.math.MathContext;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -154,6 +154,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     ConverterTesting,
     HasCharsetTesting,
     HasDateTimeSymbolsTesting,
+    HasDecimalNumberSymbolsTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     MediaTypeDetectorTesting,
     PublicStaticHelperTesting<SpreadsheetConverters> {
@@ -1507,12 +1508,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             DATE_TIME_SYMBOLS
         );
     }
-
-
-    private final static DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
-        '+',
-        new DecimalFormatSymbols(LOCALE)
-    );
 
     @Test
     public void testLocaleConvertLocaleToDecimalNumberSymbols() {

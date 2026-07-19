@@ -33,7 +33,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.CharsetName;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
@@ -107,7 +107,6 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
@@ -122,6 +121,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     CurrencyLocaleContextTesting,
     HasCurrencyTesting,
     HasDateTimeSymbolsTesting,
+    HasDecimalNumberSymbolsTesting,
     HasExpressionNumberKindTesting,
     HasLocaleTesting,
     HasNowTesting,
@@ -165,11 +165,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 SPREADSHEET_PARSER_PROVIDER,
                 p
             )
-    );
-
-    DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
-        '+',
-        new DecimalFormatSymbols(LOCALE)
     );
 
     StorageContext STORAGE_CONTEXT = new FakeStorageContext() {
