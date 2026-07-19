@@ -46,12 +46,12 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
+final class SpreadsheetConverterContextBasic implements SpreadsheetConverterContext,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
     UsesToStringBuilder {
 
-    static BasicSpreadsheetConverterContext with(final HasUserDirectories hasUserDirectories,
+    static SpreadsheetConverterContextBasic with(final HasUserDirectories hasUserDirectories,
                                                  final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetValidationReference > validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
@@ -72,7 +72,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         Objects.requireNonNull(jsonNodeConverterContext, "jsonNodeConverterContext");
         Objects.requireNonNull(localeContext, "localeContext");
 
-        return new BasicSpreadsheetConverterContext(
+        return new SpreadsheetConverterContextBasic(
             hasUserDirectories,
             spreadsheetMetadata,
             validationReference,
@@ -86,7 +86,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         );
     }
 
-    private BasicSpreadsheetConverterContext(final HasUserDirectories hasUserDirectories,
+    private SpreadsheetConverterContextBasic(final HasUserDirectories hasUserDirectories,
                                              final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetValidationReference > validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
@@ -114,7 +114,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         final JsonNodeConverterContext after = before.setObjectPostProcessor(processor);
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetConverterContext(
+            new SpreadsheetConverterContextBasic(
                 this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
@@ -134,7 +134,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         final JsonNodeConverterContext after = before.setPreProcessor(processor);
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetConverterContext(
+            new SpreadsheetConverterContextBasic(
                 this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
