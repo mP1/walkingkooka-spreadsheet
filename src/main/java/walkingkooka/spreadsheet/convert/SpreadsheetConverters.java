@@ -708,6 +708,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         storageValueToStorageBinaryCsv(),
         storageValueToStorageBinaryExpression(),
         storageValueToStorageBinaryJson(),
+        storageValueToStorageBinaryProperties(),
         storageValueToStorageBinaryBinary(),
         binary()
     );
