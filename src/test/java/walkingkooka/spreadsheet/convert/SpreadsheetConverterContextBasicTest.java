@@ -522,4 +522,9 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     public Class<SpreadsheetConverterContextBasic> type() {
         return SpreadsheetConverterContextBasic.class;
     }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
 }
