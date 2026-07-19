@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.Either;
@@ -124,8 +123,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
-    //@Test
-    @Disabled ("Cycle preventing SpreadsheetConverterContext https://github.com/mP1/walkingkooka-spreadsheet/issues/9550")
+    @Test
     public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
@@ -139,8 +137,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
-    //@Test
-    @Disabled ("Cycle preventing SpreadsheetConverterContext https://github.com/mP1/walkingkooka-spreadsheet/issues/9550")
+    @Test
     public void testVerifyAndCheckWithWithScriptingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER
@@ -234,17 +231,25 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             return this.converter.canConvert(
                 value,
                 type,
-                this
+                SpreadsheetConverterContexts.cycle(
+                    value,
+                    type,
+                    this
+                )
             );
         }
 
         @Override
         public <T> Either<T, String> convert(final Object value,
-                                             final Class<T> target) {
+                                             final Class<T> type) {
             return this.converter.convert(
                 value,
-                target,
-                this
+                type,
+                SpreadsheetConverterContexts.cycle(
+                    value,
+                    type,
+                    this
+                )
             );
         }
 
