@@ -26,8 +26,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContexts;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -45,7 +44,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -54,7 +52,8 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterFormatPatternToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterFormatPatternToString>
-    implements DecimalNumberContextTesting,
+    implements DateTimeContextTesting,
+    DecimalNumberContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
@@ -327,15 +326,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                             LineEnding.NL
                         ).setCharset(StandardCharsets.UTF_8),
                         CurrencyLocaleContexts.fake(),
-                        DateTimeContexts.basic(
-                            DateTimeSymbols.fromDateFormatSymbols(
-                                new DateFormatSymbols(locale)
-                            ),
-                            locale,
-                            1900,
-                            50,
-                            LocalDateTime::now
-                        ),
+                        DATE_TIME_CONTEXT,
                         DECIMAL_NUMBER_CONTEXT
                     ),
                     KIND

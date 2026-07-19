@@ -24,8 +24,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -45,16 +44,15 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
-    DateTimeSpreadsheetFormatParserToken> {
+    DateTimeSpreadsheetFormatParserToken>
+    implements DateTimeContextTesting {
 
     @Test
     public void testWithCurrencyFails() {
@@ -938,15 +936,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             }
 
             private DateTimeContext dateTimeContext() {
-                return DateTimeContexts.basic(
-                    DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
-                    ),
-                    Locale.forLanguageTag("EN-AU"),
-                    1900,
-                    20,
-                    LocalDateTime::now
-                );
+                return DATE_TIME_CONTEXT;
             }
 
             @Override

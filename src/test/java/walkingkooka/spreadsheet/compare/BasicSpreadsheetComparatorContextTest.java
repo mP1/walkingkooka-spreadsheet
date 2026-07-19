@@ -25,7 +25,6 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
@@ -177,14 +176,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                             );
                         }
                     }.setLocaleContext(LOCALE_CONTEXT),
-                    DateTimeContexts.basic(
-                        LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE_CONTEXT.locale())
-                            .get(),
-                        LOCALE_CONTEXT.locale(),
-                        1950, // default year
-                        50, // two-digit-year
-                        LocalDateTime::now
-                    ),
+                    DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT
                 ),
                 ExpressionNumberKind.BIG_DECIMAL

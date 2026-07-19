@@ -35,7 +35,6 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
@@ -1431,15 +1430,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 LINE_ENDING
                             ).setCharset(CHARSET),
                             CurrencyLocaleContexts.fake(),
-                            DateTimeContexts.basic(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                    new DateFormatSymbols(locale)
-                                ),
-                                locale,
-                                DEFAULT_YEAR,
-                                TWO_DIGIT_YEAR,
-                                HAS_NOW
-                            ),
+                            DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),
                         metadata.expressionNumberKind()

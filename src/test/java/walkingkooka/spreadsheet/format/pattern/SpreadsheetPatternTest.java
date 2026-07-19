@@ -26,9 +26,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.UrlFragment;
@@ -66,7 +64,6 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -82,6 +79,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
+    DateTimeContextTesting,
     DecimalNumberContextTesting,
     ParserTesting,
     HasSpreadsheetPatternKindTesting,
@@ -229,29 +227,17 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                 @Override
                 public String ampm(final int hourOfDay) {
-                    return this.dateTimeContext().ampm(hourOfDay);
+                    return DATE_TIME_CONTEXT.ampm(hourOfDay);
                 }
 
                 @Override
                 public String weekDayName(final int day) {
-                    return this.dateTimeContext().weekDayName(day);
+                    return DATE_TIME_CONTEXT.weekDayName(day);
                 }
 
                 @Override
                 public String monthName(int month) {
-                    return this.dateTimeContext().monthName(month);
-                }
-
-                private DateTimeContext dateTimeContext() {
-                    return DateTimeContexts.basic(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                            new DateFormatSymbols(LOCALE)
-                        ),
-                        LOCALE,
-                        1900,
-                        50,
-                        LocalDateTime::now
-                    );
+                    return DATE_TIME_CONTEXT.monthName(month);
                 }
 
                 @Override
@@ -482,16 +468,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         final Parser<SpreadsheetParserContext> parser = pattern.parser();
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        final DateTimeContext dateTimeContext = DateTimeContexts.basic(
-            DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(LOCALE)
-            ),
-            LOCALE,
-            1800,
-            50,
-            LocalDateTime::now
-        );
-
         this.checkEquals(
             expected,
             parser.parse(
@@ -499,7 +475,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     new FakeSpreadsheetParserContext() {
                         @Override
                         public List<String> ampms() {
-                            return dateTimeContext.ampms();
+                            return DATE_TIME_CONTEXT.ampms();
                         }
 
                         @Override
@@ -509,12 +485,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                         @Override
                         public List<String> monthNames() {
-                            return dateTimeContext.monthNames();
+                            return DATE_TIME_CONTEXT.monthNames();
                         }
 
                         @Override
                         public List<String> monthNameAbbreviations() {
-                            return dateTimeContext.monthNameAbbreviations();
+                            return DATE_TIME_CONTEXT.monthNameAbbreviations();
                         }
 
                         @Override
@@ -528,12 +504,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                         @Override
                         public int defaultYear() {
-                            return dateTimeContext.defaultYear();
+                            return DATE_TIME_CONTEXT.defaultYear();
                         }
 
                         @Override
                         public int twoDigitYear() {
-                            return dateTimeContext.twoDigitYear();
+                            return DATE_TIME_CONTEXT.twoDigitYear();
                         }
 
                     })
@@ -1619,7 +1595,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 TextCursors.charSequence(text),
                 SpreadsheetParserContexts.basic(
                     InvalidCharacterExceptionFactory.POSITION,
-                    DateTimeContexts.fake(),
+                    DATE_TIME_CONTEXT,
                     ExpressionNumberContexts.basic(
                         kind,
                         DECIMAL_NUMBER_CONTEXT

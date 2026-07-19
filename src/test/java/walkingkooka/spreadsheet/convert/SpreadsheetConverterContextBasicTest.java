@@ -29,7 +29,6 @@ import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyValue;
 import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
@@ -433,14 +432,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                                 this.locale()
                             )
                         ),
-                        DateTimeContexts.basic(
-                            LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
-                                .get(),
-                            LOCALE_CONTEXT.locale(),
-                            1900,
-                            20,
-                            LocalDateTime::now
-                        ),
+                        DATE_TIME_CONTEXT,
                         this.decimalNumberContext()
                     ),
                     EXPRESSION_NUMBER_KIND
