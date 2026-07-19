@@ -113,7 +113,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         SpreadsheetConverters.textToSpreadsheetSelection()
                     )
                 )
-            ).setToString("collection (SpreadsheetError to Number, TEXT to Selection)")
+            ).setToString("collection (SpreadsheetError to Number, TEXT to SELECTION)")
         );
     }
 

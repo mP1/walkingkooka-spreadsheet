@@ -344,6 +344,14 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
         };
     }
 
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            SpreadsheetConverterTextToSpreadsheetSelection.INSTANCE,
+            "TEXT to SELECTION"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

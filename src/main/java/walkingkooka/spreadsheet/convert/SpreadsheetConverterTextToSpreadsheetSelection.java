@@ -70,6 +70,6 @@ final class SpreadsheetConverterTextToSpreadsheetSelection extends SpreadsheetCo
 
     @Override
     public String toString() {
-        return TEXT + " to Selection";
+        return TEXT + " to " + SELECTION;
     }
 }
