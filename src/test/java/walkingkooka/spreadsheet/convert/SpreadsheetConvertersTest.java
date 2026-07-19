@@ -46,6 +46,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasDateTimeSymbols;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasOptionalDateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
@@ -152,6 +153,7 @@ import java.util.Optional;
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
     ConverterTesting,
     HasCharsetTesting,
+    HasDateTimeSymbolsTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     MediaTypeDetectorTesting,
     PublicStaticHelperTesting<SpreadsheetConverters> {
@@ -1437,12 +1439,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     };
 
     // locale...........................................................................................................
-
-    private final static Locale LOCALE = Locale.FRANCE;
-
-    private final static DateTimeSymbols DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
-        new DateFormatSymbols(LOCALE)
-    );
 
     @Test
     public void testLocaleConvertLocaleToDateTimeSymbols() {

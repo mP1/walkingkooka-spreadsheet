@@ -1496,10 +1496,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static char VALUE_SEPARATOR = '\'';
 
-    private final static DateTimeSymbols DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
-        new DateFormatSymbols(LOCALE)
-    );
-
     private final static DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
         '+',
         new DecimalFormatSymbols(
