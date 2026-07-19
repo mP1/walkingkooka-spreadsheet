@@ -1904,6 +1904,35 @@ final class MissingConverterVerifier {
                     );
                 }
 
+                {
+                    final StorageBinary storageBinaryJson = StorageBinary.with(
+                        STORAGE_PATH_JSON,
+                        Binary.with(
+                            JSON_OBJECT.toString()
+                                .getBytes(charset)
+                        )
+                    );
+
+                    final StorageValue storageValueJson = StorageValue.with(STORAGE_PATH_JSON)
+                        .setValue(
+                            Optional.of(JSON_OBJECT)
+                        );
+
+                    verifier.addIfConversionFail(
+                        storageBinaryJson,
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON,
+                        storageValueJson
+                    );
+
+                    verifier.addIfConversionFail(
+                        storageValueJson,
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_JSON,
+                        storageBinaryJson
+                    );
+                }
+
                 verifier.addIfConversionFail(
                     StorageBinary.with(
                         STORAGE_PATH_TXT,
@@ -1918,23 +1947,6 @@ final class MissingConverterVerifier {
                             Optional.of(text)
                         )
                 );
-
-                {
-                    verifier.addIfConversionFail(
-                        StorageBinary.with(
-                            STORAGE_PATH_JSON,
-                            Binary.with(
-                                JSON_OBJECT.toString().getBytes(charset)
-                            )
-                        ),
-                        StorageValue.class,
-                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON,
-                        StorageValue.with(STORAGE_PATH_JSON)
-                            .setValue(
-                                Optional.of(JSON_OBJECT)
-                            )
-                    );
-                }
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
