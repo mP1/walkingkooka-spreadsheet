@@ -39,8 +39,6 @@ import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.CharsetName;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
-import walkingkooka.net.http.server.hateos.HateosHandlerContext;
-import walkingkooka.net.http.server.hateos.HateosHandlerContexts;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -385,11 +383,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
-
-    HateosHandlerContext HATEOS_HANDLER_CONTEXT = HateosHandlerContexts.basic(
-        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-        TEXT_CONTEXT
-    );
 
     private static SpreadsheetEnvironmentContext providerContextSpreadsheetEnvironmentContext() {
         final SpreadsheetEnvironmentContext spreadsheeEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
