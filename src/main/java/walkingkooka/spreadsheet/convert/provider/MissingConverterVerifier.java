@@ -1913,11 +1913,15 @@ final class MissingConverterVerifier {
                             JSON_OBJECT.toString()
                                 .getBytes(charset)
                         )
+                    ).setContentType(
+                        Optional.of(MediaType.APPLICATION_JSON)
                     );
 
                     final StorageValue storageValueJson = StorageValue.with(STORAGE_PATH_JSON)
                         .setValue(
                             Optional.of(JSON_OBJECT)
+                        ).setContentType(
+                            Optional.of(MediaType.APPLICATION_JSON)
                         );
 
                     verifier.addIfConversionFail(
