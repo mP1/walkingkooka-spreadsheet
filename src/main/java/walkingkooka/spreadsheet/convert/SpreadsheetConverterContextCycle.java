@@ -70,7 +70,7 @@ final class SpreadsheetConverterContextCycle implements SpreadsheetConverterCont
         // guard against trying same value & type combo AGAIN which would probably result in StackOverflowError
         return this.isRecursive(value, type) ?
             false :
-            SpreadsheetConverterContextDelegator.super.canConvert(value, type);
+            this.context.canConvert(value, type);
     }
 
     @Override
