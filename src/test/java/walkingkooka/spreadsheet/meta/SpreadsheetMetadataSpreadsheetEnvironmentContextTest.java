@@ -44,15 +44,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     static {
         final EnvironmentContext context = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.FRENCH,
-                () -> NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
@@ -216,15 +208,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetMetadata.EMPTY,
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
-                    EnvironmentContexts.empty(
-                        CHARSET,
-                        CURRENCY,
-                        INDENTATION,
-                        LINE_ENDING,
-                        Locale.FRENCH,
-                        () -> NOW,
-                        OPTIONAL_USER
-                    )
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             SpreadsheetEnvironmentContext.CHARSET,
@@ -248,15 +232,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
-                    EnvironmentContexts.empty(
-                        CHARSET,
-                        CURRENCY,
-                        INDENTATION,
-                        LINE_ENDING,
-                        Locale.FRENCH,
-                        () -> NOW,
-                        OPTIONAL_USER
-                    )
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             SpreadsheetEnvironmentContext.CHARSET,
@@ -552,7 +528,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=fr, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=en_AU, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -910,7 +886,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  lineEnding\n" +
                 "    \"\\n\"\n" +
                 "  locale\n" +
-                "    fr (java.util.Locale)\n" +
+                "    en_AU (java.util.Locale)\n" +
                 "  now\n" +
                 "    1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
                 "  numberFormatter\n" +

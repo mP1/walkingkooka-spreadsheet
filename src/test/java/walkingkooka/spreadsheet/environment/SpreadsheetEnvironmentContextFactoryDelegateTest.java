@@ -30,9 +30,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.Indentation;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -73,15 +71,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
 
         {
             final EnvironmentContext context = EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    StandardCharsets.UTF_8,
-                    SpreadsheetEnvironmentContextFactoryDelegateTest.CURRENCY,
-                    Indentation.SPACES4,
-                    SpreadsheetEnvironmentContextFactoryDelegateTest.LINE_ENDING,
-                    SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             );
 
             context.setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE);

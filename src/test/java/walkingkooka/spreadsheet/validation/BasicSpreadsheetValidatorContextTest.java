@@ -20,18 +20,11 @@ package walkingkooka.spreadsheet.validation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.provider.ValidatorSelector;
-
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -99,15 +92,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
     public void testSetEnvironmentContextWithDifferentEnvironmentContext() {
         final BasicSpreadsheetValidatorContext context = this.createContext();
 
-        final EnvironmentContext environmentContext = EnvironmentContexts.empty(
-            StandardCharsets.UTF_8,
-            CURRENCY,
-            Indentation.SPACES4,
-            LineEnding.CRNL,
-            Locale.FRANCE,
-            LocalDateTime::now,
-            EnvironmentContext.ANONYMOUS
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final SpreadsheetValidatorContext after = context.setEnvironmentContext(environmentContext);
 

@@ -918,15 +918,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         );
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,

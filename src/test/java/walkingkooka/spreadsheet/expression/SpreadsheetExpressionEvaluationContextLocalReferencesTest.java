@@ -90,7 +90,6 @@ import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Currency;
@@ -472,15 +471,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     @Override
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                StandardCharsets.UTF_8,
-                Currency.getInstance("AUD"),
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE_CONTEXT.locale(),
-                HAS_NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,

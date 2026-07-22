@@ -48,7 +48,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -59,7 +58,6 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
@@ -591,15 +589,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 private final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        StandardCharsets.UTF_8,
-                        BasicSpreadsheetFormHandlerContextTest.CURRENCY,
-                        Indentation.SPACES4,
-                        BasicSpreadsheetFormHandlerContextTest.LINE_ENDING,
-                        Locale.ENGLISH,
-                        HAS_NOW,
-                        EnvironmentContext.ANONYMOUS
-                    )
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
                 );
             }
         );

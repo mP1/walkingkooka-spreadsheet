@@ -67,7 +67,6 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.Indentation;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -752,15 +751,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                Indentation.SPACES4,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,

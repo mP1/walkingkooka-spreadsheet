@@ -172,15 +172,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     @Test
     public void testCurrentWorkingDirectoryMissing() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.currentWorkingDirectoryAndCheck(
@@ -223,15 +215,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             MissingEnvironmentValueException.class,
             () -> BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             ).serverUrl()
         );
     }
@@ -239,15 +223,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     @Test
     public void testServerUrl() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
@@ -270,15 +246,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         this.spreadsheetIdAndCheck(
             BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
     }
@@ -300,15 +268,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                 BasicSpreadsheetEnvironmentContext.with(
                     STORAGE,
                     EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            CHARSET,
-                            CURRENCY,
-                            INDENTATION,
-                            LINE_ENDING,
-                            LOCALE,
-                            HAS_NOW,
-                            EnvironmentContext.ANONYMOUS
-                        )
+                        ENVIRONMENT_CONTEXT.cloneEnvironment()
                     )
                 ),
             SPREADSHEET_ID
@@ -321,15 +281,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
                 EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        CHARSET,
-                        CURRENCY,
-                        INDENTATION,
-                        LINE_ENDING,
-                        LOCALE,
-                        HAS_NOW,
-                        EnvironmentContext.ANONYMOUS
-                    )
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             );
 
