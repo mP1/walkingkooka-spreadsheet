@@ -29,21 +29,21 @@ import java.util.Objects;
 final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorContext,
     SpreadsheetConverterContextDelegator {
 
-    static BasicSpreadsheetComparatorContext with(final SpreadsheetConverterContext converterContext) {
+    static BasicSpreadsheetComparatorContext with(final SpreadsheetConverterContext context) {
         return new BasicSpreadsheetComparatorContext(
-            Objects.requireNonNull(converterContext, "converterContext")
+            Objects.requireNonNull(context, "context")
         );
     }
 
-    private BasicSpreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
-        this.converterContext = converterContext;
+    private BasicSpreadsheetComparatorContext(final SpreadsheetConverterContext context) {
+        this.context = context;
     }
 
     // LocaleContext....................................................................................................
 
     @Override
     public SpreadsheetComparatorContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        final SpreadsheetConverterContext before = this.converterContext;
+        final SpreadsheetConverterContext before = this.context;
         final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
         return before.equals(after) ?
             this :
@@ -52,7 +52,7 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
 
     @Override
     public SpreadsheetComparatorContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final SpreadsheetConverterContext before = this.converterContext;
+        final SpreadsheetConverterContext before = this.context;
         final SpreadsheetConverterContext after = before.setPreProcessor(processor);
         return before.equals(after) ?
             this :
@@ -73,13 +73,13 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
 
     @Override
     public SpreadsheetConverterContext spreadsheetConverterContext() {
-        return this.converterContext;
+        return this.context;
     }
 
-    private final SpreadsheetConverterContext converterContext;
+    private final SpreadsheetConverterContext context;
 
     @Override
     public String toString() {
-        return this.converterContext.toString();
+        return this.context.toString();
     }
 }
