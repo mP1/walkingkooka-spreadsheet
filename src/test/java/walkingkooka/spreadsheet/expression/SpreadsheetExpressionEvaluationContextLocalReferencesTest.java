@@ -35,7 +35,6 @@ import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -475,7 +474,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
-            Url.parseAbsolute("https://example.com")
+            SERVER_URL
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
