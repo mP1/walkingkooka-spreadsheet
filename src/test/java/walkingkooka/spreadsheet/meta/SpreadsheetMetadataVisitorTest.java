@@ -23,6 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -63,7 +64,8 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataVisitor> {
+public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataVisitor>,
+    HasCurrencyTesting {
 
     @Override
     public void testCheckToStringOverridden() {
@@ -226,7 +228,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
             SpreadsheetMetadataPropertyName.CURRENCY,
-            Currency.getInstance("AUD")
+            CURRENCY
         );
     }
 

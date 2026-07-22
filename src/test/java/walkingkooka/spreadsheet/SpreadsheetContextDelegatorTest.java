@@ -178,7 +178,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
         @Override
         public Currency currency() {
-            return Currency.getInstance("AUD");
+            return SpreadsheetContextDelegatorTest.CURRENCY;
         }
 
         @Override

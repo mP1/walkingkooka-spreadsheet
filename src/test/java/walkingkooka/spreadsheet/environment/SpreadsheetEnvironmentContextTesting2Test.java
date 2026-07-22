@@ -29,7 +29,6 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -165,7 +164,7 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     StandardCharsets.UTF_8,
-                    Currency.getInstance("AUD"),
+                    SpreadsheetEnvironmentContextTesting2Test.CURRENCY,
                     Indentation.SPACES4,
                     SpreadsheetEnvironmentContextTesting2Test.LINE_ENDING,
                     Locale.ENGLISH,

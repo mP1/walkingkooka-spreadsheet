@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
+import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.currency.OptionalCurrency;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
@@ -49,7 +50,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -57,6 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetReferenceTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetImporterCellValue>,
+    HasCurrencyTesting,
     ToStringTesting<SpreadsheetImporterCellValue>,
     TreePrintableTesting,
     ClassTesting2<SpreadsheetImporterCellValue> {
@@ -149,11 +150,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
     @Test
     public void testCurrency() {
-        final OptionalCurrency currency = OptionalCurrency.with(
-            Optional.of(
-                Currency.getInstance("AUD")
-            )
-        );
+        final OptionalCurrency currency = OptionalCurrency.with(OPTIONAL_CURRENCY);
 
         this.check(
             SpreadsheetImporterCellValue.currency(
