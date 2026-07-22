@@ -1870,7 +1870,9 @@ final class MissingConverterVerifier {
                         storageBinaryCsv,
                         StorageValue.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_CSV,
-                        storageValueCsv
+                        storageValueCsv.setContentType(
+                            Optional.of(MediaType.TEXT_CSV)
+                        )
                     );
 
                     verifier.addIfConversionFail(
@@ -1930,7 +1932,9 @@ final class MissingConverterVerifier {
                         storageBinaryJson,
                         StorageValue.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON,
-                        storageValueJson
+                        storageValueJson.setContentType(
+                            Optional.of(MediaType.APPLICATION_JSON)
+                        )
                     );
 
                     verifier.addIfConversionFail(
@@ -1961,7 +1965,9 @@ final class MissingConverterVerifier {
                         storageBinaryProperties,
                         StorageValue.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES,
-                        storageValueProperties
+                        storageValueProperties.setContentType(
+                            Optional.of(MediaType.TEXT_PROPERTIES)
+                        )
                     );
 
                     verifier.addIfConversionFail(
@@ -1992,7 +1998,9 @@ final class MissingConverterVerifier {
                         storageBinaryTsv,
                         StorageValue.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TSV,
-                        storageValueTsv
+                        storageValueTsv.setContentType(
+                            Optional.of(MediaType.TEXT_TAB_SEPARATED_VALUES)
+                        )
                     );
 
                     verifier.addIfConversionFail(
@@ -2022,7 +2030,9 @@ final class MissingConverterVerifier {
                         storageBinaryTxt,
                         StorageValue.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT,
-                        storageValueTxt
+                        storageValueTxt.setContentType(
+                            Optional.of(MediaType.TEXT_PLAIN)
+                        )
                     );
 
                     verifier.addIfConversionFail(
