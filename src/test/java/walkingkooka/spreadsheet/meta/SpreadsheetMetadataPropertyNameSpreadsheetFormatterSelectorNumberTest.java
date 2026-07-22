@@ -41,9 +41,8 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.Indentation;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -51,13 +50,13 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber>
-    implements DateTimeContextTesting,
+    implements BinaryTextContextTesting,
+    DateTimeContextTesting,
     DecimalNumberContextTesting {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
@@ -168,10 +167,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(),
-                            TextPrinting.with(
-                                Indentation.SPACES2,
-                                lineEnding
-                            ).setCharset(StandardCharsets.UTF_8),
+                            BINARY_TEXT_CONTEXT,
                             new FakeCurrencyContext() {
                                 @Override
                                 public Optional<Currency> currencyForLocale(final Locale locale) {

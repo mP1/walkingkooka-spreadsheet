@@ -85,7 +85,6 @@ import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -1423,10 +1422,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
-                            TextPrinting.with(
-                                INDENTATION,
-                                LINE_ENDING
-                            ).setCharset(CHARSET),
+                            BINARY_TEXT_CONTEXT,
                             CurrencyLocaleContexts.fake(),
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT

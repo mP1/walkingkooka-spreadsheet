@@ -33,8 +33,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -47,13 +46,12 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCondition,
-    ConditionSpreadsheetFormatParserToken> {
+    ConditionSpreadsheetFormatParserToken> implements BinaryTextContextTesting {
 
     private final static String TEXT_PATTERN = "@!condition-true";
 
@@ -341,10 +339,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
-                            TextPrinting.with(
-                                INDENTATION,
-                                LineEnding.NL
-                            ).setCharset(StandardCharsets.UTF_8),
+                            BINARY_TEXT_CONTEXT,
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.fake(),
                             this

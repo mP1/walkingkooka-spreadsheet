@@ -57,9 +57,8 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.store.Store;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -72,7 +71,6 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -87,6 +85,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends ClassTesting2<E>,
+    BinaryTextContextTesting,
     TreePrintableTesting,
     ThrowableTesting {
 
@@ -3054,10 +3053,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 ',', // valueSeparator
                 Converters.fake(),
                 BinaryNumberConverterFunctions.fake(), // multiplier
-                TextPrinting.with(
-                    INDENTATION,
-                    LineEnding.NL
-                ).setCharset(StandardCharsets.UTF_8),
+                BINARY_TEXT_CONTEXT,
                 new FakeCurrencyContext() {
                     @Override
                     public Optional<Currency> currencyForLocale(final Locale locale) {

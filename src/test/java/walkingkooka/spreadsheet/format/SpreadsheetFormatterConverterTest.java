@@ -37,8 +37,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -51,9 +50,9 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 
 public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, SpreadsheetConverterContext>,
+    BinaryTextContextTesting,
     DecimalNumberContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormatterConverter> {
 
@@ -157,10 +156,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(),
-                        TextPrinting.with(
-                            INDENTATION,
-                            LineEnding.NL
-                        ).setCharset(StandardCharsets.UTF_8),
+                        BINARY_TEXT_CONTEXT,
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(),
                         DECIMAL_NUMBER_CONTEXT

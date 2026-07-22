@@ -84,11 +84,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
@@ -121,7 +119,6 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -137,7 +134,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTesting<SpreadsheetFormulaParsers>,
-    ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
+    ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext>,
+    BinaryTextContextTesting {
 
     private final static int TWO_DIGIT_YEAR = 20;
     private ExpressionNumberKind expressionNumberKind;
@@ -4271,10 +4269,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
-                            TextPrinting.with(
-                                Indentation.SPACES2,
-                                LineEnding.NL
-                            ).setCharset(StandardCharsets.UTF_8),
+                            BINARY_TEXT_CONTEXT,
                             CurrencyLocaleContexts.fake(),
                             dateTimeContext(),
                             decimalNumberContext()

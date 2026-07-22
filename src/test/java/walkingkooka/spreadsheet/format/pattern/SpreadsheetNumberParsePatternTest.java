@@ -44,8 +44,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -58,13 +57,13 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
     NumberSpreadsheetFormatParserToken,
     NumberSpreadsheetFormulaParserToken,
-    ExpressionNumber> implements ConverterTesting {
+    ExpressionNumber> implements BinaryTextContextTesting,
+    ConverterTesting {
 
     @Test
     public void testWithAmpmFails() {
@@ -1272,10 +1271,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        TextPrinting.with(
-                            INDENTATION,
-                            LineEnding.NL
-                        ).setCharset(StandardCharsets.UTF_8),
+                        BINARY_TEXT_CONTEXT,
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // DateTimeContext unused
                         this.decimalNumberContext()
