@@ -38,7 +38,6 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.currency.CurrencyValue;
@@ -100,9 +99,8 @@ import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.StorageBinary;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.HasText;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -116,8 +114,6 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.Image;
 import walkingkooka.tree.text.Styleable;
 import walkingkooka.tree.text.TextNode;
@@ -145,13 +141,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
     ConverterTesting,
+    BinaryTextContextTesting,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasCharsetTesting,
@@ -3743,7 +3739,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 @Override
                 public <TT> TT unmarshall(final JsonNode json,
                                           final Class<TT> type) {
-                    return this.jsonNodeUnmarshallContext.unmarshall(
+                    return JSON_NODE_UNMARSHALL_CONTEXT.unmarshall(
                         json,
                         type
                     );
@@ -3751,32 +3747,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 @Override
                 public Optional<JsonString> typeName(final Class<?> type) {
-                    return this.jsonNodeUnmarshallContext.typeName(type);
+                    return JSON_NODE_UNMARSHALL_CONTEXT.typeName(type);
                 }
-
-                private final JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
-                    ExpressionNumberKind.BIG_DECIMAL,
-                    new CurrencyCodeLanguageTagContext() {
-                        @Override
-                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                            return Optional.ofNullable(
-                                Currency.getInstance(
-                                    currencyCode.value()
-                                )
-                            );
-                        }
-
-                        @Override
-                        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                            return Optional.of(
-                                Locale.forLanguageTag(
-                                    languageTag.value()
-                                )
-                            );
-                        }
-                    },
-                    MathContext.DECIMAL32
-                );
             },
             Cast.to(expected)
         );
@@ -4116,8 +4088,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private SpreadsheetConverterContext dateTimeSpreadsheetConverterContext() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
         return SpreadsheetConverterContexts.basic(
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
@@ -4137,10 +4107,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        TextPrinting.with(
-                            INDENTATION,
-                            LineEnding.NL
-                        ).setCharset(CHARSET),
+                        BINARY_TEXT_CONTEXT,
                         CurrencyLocaleContexts.fake(),
                         DATE_TIME_CONTEXT,
                         DecimalNumberContexts.fake()
@@ -4149,7 +4116,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
-            LocaleContexts.jre(locale)
+            LOCALE_CONTEXT
         );
     }
 
@@ -4494,10 +4461,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        TextPrinting.with(
-                            INDENTATION,
-                            LineEnding.NL
-                        ).setCharset(CHARSET),
+                        BINARY_TEXT_CONTEXT,
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers
                         DecimalNumberContexts.american(MathContext.DECIMAL32)
