@@ -31,7 +31,7 @@ public final class SpreadsheetMetadataPropertyNameCurrencyTest extends Spreadshe
             LocaleContexts.jre(
                 Locale.forLanguageTag("en-AU")
             ),
-            Currency.getInstance("AUD")
+            CURRENCY
         );
     }
 

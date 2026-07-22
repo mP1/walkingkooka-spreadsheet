@@ -223,7 +223,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     StandardCharsets.UTF_8,
-                    Currency.getInstance("AUD"),
+                    SpreadsheetStorageContextTesting2Test.CURRENCY,
                     Indentation.SPACES4,
                     SpreadsheetStorageContextTesting2Test.LINE_ENDING,
                     Locale.ENGLISH,

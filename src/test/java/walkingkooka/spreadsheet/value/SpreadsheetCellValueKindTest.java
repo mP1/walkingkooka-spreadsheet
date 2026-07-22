@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.value;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HasValueTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting;
@@ -45,58 +46,56 @@ import java.util.Set;
 import java.util.function.Function;
 
 public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
+    HasCurrencyTesting,
     HasValueTesting,
     ClassTesting<SpreadsheetCellValueKind> {
 
     @Test
     public void testCellValue() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setValueType(
+                SpreadsheetFormula.EMPTY.setValueType(
+                    Optional.of(
+                        ValueType.with("hello-value-type")
+                    )
+                )
+            ).setCurrency(OPTIONAL_CURRENCY)
+            .setDateTimeSymbols(
                 Optional.of(
-                    ValueType.with("hello-value-type")
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.FRANCE)
+                    )
                 )
-            )
-        ).setCurrency(
-            Optional.of(
-                Currency.getInstance("AUD")
-            )
-        ).setDateTimeSymbols(
-            Optional.of(
-                DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(Locale.FRANCE)
+            ).setDecimalNumberSymbols(
+                Optional.of(
+                    DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.FRANCE)
+                    )
                 )
-            )
-        ).setDecimalNumberSymbols(
-            Optional.of(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                    '+',
-                    new DecimalFormatSymbols(Locale.FRANCE)
+            ).setLocale(
+                Optional.of(Locale.ENGLISH)
+            ).setFormatter(
+                Optional.of(
+                    SpreadsheetFormatterSelector.parse("hello-formatter")
                 )
-            )
-        ).setLocale(
-            Optional.of(Locale.ENGLISH)
-        ).setFormatter(
-            Optional.of(
-                SpreadsheetFormatterSelector.parse("hello-formatter")
-            )
-        ).setParser(
-            Optional.of(
-                SpreadsheetParserSelector.parse("hello-parser")
-            )
-        ).setStyle(
-            TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
-            )
-        ).setValidator(
-            Optional.of(
-                ValidatorSelector.parse("hello-validator")
-            )
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("formatted-value")
-            )
-        );
+            ).setParser(
+                Optional.of(
+                    SpreadsheetParserSelector.parse("hello-parser")
+                )
+            ).setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
+                )
+            ).setValidator(
+                Optional.of(
+                    ValidatorSelector.parse("hello-validator")
+                )
+            ).setFormattedValue(
+                Optional.of(
+                    TextNode.text("formatted-value")
+                )
+            );
 
         final Set<Object> values = Sets.hash();
         for (final SpreadsheetCellValueKind kind : SpreadsheetCellValueKind.values()) {

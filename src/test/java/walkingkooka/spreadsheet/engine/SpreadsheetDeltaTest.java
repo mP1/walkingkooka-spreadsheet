@@ -2911,9 +2911,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchWithCurrency() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
-            .setCurrency(
-                Optional.of(Currency.getInstance("AUD"))
-            );
+            .setCurrency(OPTIONAL_CURRENCY);
+
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
             .setFormula(SpreadsheetFormula.EMPTY)
             .setCurrency(

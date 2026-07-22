@@ -43,7 +43,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -58,10 +57,6 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         .setFormula(
             SpreadsheetFormula.EMPTY.setText("=333")
         );
-
-    private final static Optional<Currency> CURRENCY = java.util.Optional.of(
-        Currency.getInstance("AUD")
-    );
 
     private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
         DateTimeSymbols.fromDateFormatSymbols(
@@ -111,7 +106,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    CELL_A1.setCurrency(CURRENCY)
+                    CELL_A1.setCurrency(OPTIONAL_CURRENCY)
                         .setDateTimeSymbols(DATE_TIME_SYMBOLS)
                         .setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS)
                         .setFormatter(FORMATTER)
@@ -245,7 +240,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    CELL_A1.setCurrency(CURRENCY),
+                    CELL_A1.setCurrency(OPTIONAL_CURRENCY),
                     CELL_A2
                 )
             ),

@@ -77,7 +77,6 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -755,7 +754,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
                 CHARSET,
-                Currency.getInstance("AUD"),
+                CURRENCY,
                 Indentation.SPACES4,
                 LINE_ENDING,
                 LOCALE,

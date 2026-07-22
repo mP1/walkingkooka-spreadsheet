@@ -31,7 +31,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -102,7 +101,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
 
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
             StandardCharsets.UTF_8,
-            Currency.getInstance("AUD"),
+            CURRENCY,
             Indentation.SPACES4,
             LineEnding.CRNL,
             Locale.FRANCE,

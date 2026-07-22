@@ -288,7 +288,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
         @Override
         public Currency currency() {
-            return Currency.getInstance("AUD");
+            return SpreadsheetContextTestingTest.CURRENCY;
         }
 
         @Override

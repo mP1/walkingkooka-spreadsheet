@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine.collection;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -40,14 +41,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToCurrencyMapTest implements MapTesting2<SpreadsheetCellReferenceToCurrencyMap, SpreadsheetCellReference, Optional<Currency>>,
     ClassTesting2<SpreadsheetCellReferenceToCurrencyMap>,
+    HasCurrencyTesting,
     JsonNodeMarshallingTesting<SpreadsheetCellReferenceToCurrencyMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static Optional<Currency> VALUE1 = Optional.of(
-        java.util.Currency.getInstance("AUD")
-    );
+    private final static Optional<Currency> VALUE1 = OPTIONAL_CURRENCY;
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
