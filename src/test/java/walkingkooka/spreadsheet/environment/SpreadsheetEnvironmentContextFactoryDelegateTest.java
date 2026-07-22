@@ -18,10 +18,9 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.convert.BinaryNumberConverterFunctions;
-import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegateTest.TestSpreadsheetEnvironmentContextFactoryDelegate;
@@ -33,7 +32,8 @@ import walkingkooka.storage.Storages;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContextFactoryDelegate> {
+public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContextFactoryDelegate>,
+    CurrencyLocaleContextTesting {
 
     @Override
     public TestSpreadsheetEnvironmentContextFactoryDelegate createContext() {
@@ -93,10 +93,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
                 MediaTypeDetectors.fake(),
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetMetadataLoaders.fake(),
-                CurrencyContexts.fake()
-                    .setLocaleContext(
-                        LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE)
-                    ),
+                CURRENCY_LOCALE_CONTEXT,
                 spreadsheetEnvironmentContext,
                 SpreadsheetProviders.fake(),
                 ProviderContexts.fake()

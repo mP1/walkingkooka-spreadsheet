@@ -21,10 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyExchange;
-import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -50,39 +46,12 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext>,
     DecimalNumberContextDelegator,
     LocaleContextTesting {
-
-    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = new FakeCurrencyContext() {
-
-        @Override
-        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                     final Optional<LocalDateTime> dateTime) {
-            Objects.requireNonNull(currencyExchange, "currencyExchange");
-            Objects.requireNonNull(dateTime, "dateTime");
-
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-            Objects.requireNonNull(currencyCode, "currencyCode");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<Currency> currencyForLocale(final Locale locale) {
-            return Optional.of(
-                Currency.getInstance(locale)
-            );
-        }
-    }.setLocaleContext(LOCALE_CONTEXT);
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 

@@ -18,12 +18,13 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 
 
 public final class SpreadsheetMetadataPropertyNameQueryTest extends SpreadsheetMetadataPropertyNameTestCase<
     SpreadsheetMetadataPropertyNameQuery,
-    SpreadsheetCellQuery> {
+    SpreadsheetCellQuery> implements CurrencyLocaleContextTesting {
 
     @Test
     public void testCheckValueWithInvalidFails3() {
@@ -49,7 +50,7 @@ public final class SpreadsheetMetadataPropertyNameQueryTest extends SpreadsheetM
             SpreadsheetMetadataPropertyName.QUERY
                 .parseValueText(
                     query.text(),
-                    CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
+                    CURRENCY_LOCALE_CONTEXT
                 )
         );
     }

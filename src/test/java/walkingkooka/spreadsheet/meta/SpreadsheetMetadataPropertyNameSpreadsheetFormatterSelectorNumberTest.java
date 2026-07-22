@@ -23,8 +23,6 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
@@ -42,7 +40,6 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.BinaryTextContextTesting;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -50,8 +47,6 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber>
@@ -79,23 +74,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
 
     private void extractLocaleValueAndCheck(final ExpressionNumber number,
                                             final String expected) {
-        final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance()
-            .extractLocaleAwareValue(
-                new FakeCurrencyContext() {
-
-                    @Override
-                    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                        return Optional.of(
-                            Currency.getInstance(
-                                currencyCode.value()
-                            )
-                        );
-                    }
-                }.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            ).get()
+            .extractLocaleAwareValue(CURRENCY_LOCALE_CONTEXT)
+            .get()
             .spreadsheetFormatPattern()
             .get();
 
@@ -114,9 +95,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {
-        final LineEnding lineEnding = LineEnding.NL;
-        final Locale locale = Locale.ENGLISH;
-
         return SpreadsheetFormatterContexts.basic(
             HasSpreadsheetCell.NO_CELL,
             (n -> {
@@ -168,16 +146,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(),
                             BINARY_TEXT_CONTEXT,
-                            new FakeCurrencyContext() {
-                                @Override
-                                public Optional<Currency> currencyForLocale(final Locale locale) {
-                                    return Optional.of(
-                                        Currency.getInstance(locale)
-                                    );
-                                }
-                            }.setLocaleContext(
-                                LocaleContexts.jre(locale)
-                            ),
+                            CURRENCY_LOCALE_CONTEXT,
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),

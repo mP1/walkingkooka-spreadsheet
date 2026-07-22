@@ -21,11 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
-import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.MissingEnvironmentValueException;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
@@ -1115,10 +1113,6 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             environmentContext
         );
 
-        final CurrencyLocaleContext currencyLocaleContext = CURRENCY_CONTEXT.setLocaleContext(
-            LocaleContexts.jre(LOCALE)
-        );
-
         final ProviderContext providerContext = ProviderContexts.basic(
             ConverterContexts.fake(),
             spreadsheetEnvironmentContext.cloneEnvironment(),
@@ -1182,7 +1176,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
                     );
                 }
             },
-            currencyLocaleContext,
+            CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
             SpreadsheetMetadataContexts.basic(
                 new FakeSpreadsheetMetadataCreator(),

@@ -3593,9 +3593,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ).set(
                     SpreadsheetMetadataPropertyName.LOCALE,
                     LOCALE
-                ).loadFromLocale(
-                    CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
-                ).set(
+                ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+                .set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.create(
                         USER,

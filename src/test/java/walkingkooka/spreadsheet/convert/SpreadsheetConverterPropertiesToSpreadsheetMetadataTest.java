@@ -23,9 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.locale.LocaleContexts;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.props.Properties;
 import walkingkooka.props.PropertiesPath;
@@ -36,20 +34,8 @@ import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class SpreadsheetConverterPropertiesToSpreadsheetMetadataTest extends SpreadsheetConverterTestCase<SpreadsheetConverterPropertiesToSpreadsheetMetadata> {
-
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
-    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = new FakeCurrencyContext() {
-        @Override
-        public Optional<Currency> currencyForLocale(final Locale locale) {
-            return Optional.of(
-                Currency.getInstance(locale)
-            );
-        }
-    }.setLocaleContext(
-        LocaleContexts.jre(LOCALE)
-    );
+public final class SpreadsheetConverterPropertiesToSpreadsheetMetadataTest extends SpreadsheetConverterTestCase<SpreadsheetConverterPropertiesToSpreadsheetMetadata>
+    implements CurrencyLocaleContextTesting {
 
     @Test
     public void testConvertPropertiesToSpreadsheetMetadataWithEmpty() {
