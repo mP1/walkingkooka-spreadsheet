@@ -64,8 +64,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -81,7 +80,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
@@ -91,7 +89,8 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     T extends ParentSpreadsheetFormatParserToken,
     SPT extends ParentSpreadsheetFormulaParserToken,
     V> extends SpreadsheetPatternTestCase<P>
-    implements ConverterTesting {
+    implements BinaryTextContextTesting,
+    ConverterTesting {
 
     final static int DEFAULT_YEAR = 1900;
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -886,10 +885,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                         ',', // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        TextPrinting.with(
-                            INDENTATION,
-                            LineEnding.NL
-                        ).setCharset(StandardCharsets.UTF_8),
+                        BINARY_TEXT_CONTEXT,
                         CurrencyLocaleContexts.fake(),
                         this.dateTimeContext(),
                         this.decimalNumberContext()

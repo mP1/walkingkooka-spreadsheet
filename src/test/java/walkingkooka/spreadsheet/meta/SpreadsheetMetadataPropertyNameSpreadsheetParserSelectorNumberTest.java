@@ -32,7 +32,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.TextPrinting;
+import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -45,7 +45,8 @@ import java.text.ParseException;
 import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber>
-    implements DateTimeContextTesting,
+    implements BinaryTextContextTesting,
+    DateTimeContextTesting,
     DecimalNumberContextTesting {
 
     @Test
@@ -106,10 +107,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                             ',', // valueSeparator
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
-                            TextPrinting.with(
-                                SpreadsheetMetadataTesting.INDENTATION,
-                                SpreadsheetMetadataTesting.LINE_ENDING
-                            ).setCharset(SpreadsheetMetadataTesting.CHARSET),
+                            BINARY_TEXT_CONTEXT,
                             CurrencyContexts.fake()
                                 .setLocaleContext(
                                     LocaleContexts.jre(locale)
