@@ -22,7 +22,6 @@ import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.Url;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegateTest.TestSpreadsheetEnvironmentContextFactoryDelegate;
@@ -77,7 +76,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             context.setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE);
             context.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,
-                Url.parseAbsolute("https://example.com")
+                SpreadsheetEnvironmentContextFactoryDelegateTest.SERVER_URL
             );
 
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(

@@ -24,7 +24,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -228,7 +227,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             );
             environmentContext.setEnvironmentValue(
                 SERVER_URL,
-                Url.parseAbsolute("https://example.com")
+                SpreadsheetStorageContextTesting2Test.SERVER_URL
             );
 
             this.environmentContext = SpreadsheetEnvironmentContexts.basic(

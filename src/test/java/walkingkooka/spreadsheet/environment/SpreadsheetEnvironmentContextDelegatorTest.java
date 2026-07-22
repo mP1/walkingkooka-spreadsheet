@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
-import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
@@ -111,7 +110,7 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
             );
             environmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,
-                Url.parseAbsolute("https://example.com")
+                SpreadsheetEnvironmentContextDelegatorTest.SERVER_URL
             );
             environmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SPREADSHEET_ID,
