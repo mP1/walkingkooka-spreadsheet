@@ -26,7 +26,6 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.Url;
@@ -153,8 +152,6 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
 
     @Override
     public SpreadsheetFormatterContext createContext() {
-        final Locale locale = Locale.forLanguageTag("en-AU");
-
         final SpreadsheetConverterContext converterContext = SpreadsheetConverterContexts.basic(
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
@@ -199,10 +196,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         BINARY_TEXT_CONTEXT,
-                        CurrencyLocaleContexts.fake()
-                            .setLocaleContext(
-                                LocaleContexts.jre(locale)
-                            ),
+                        CURRENCY_LOCALE_CONTEXT,
                         DateTimeContexts.fake(),
                         DECIMAL_NUMBER_CONTEXT
                     ),

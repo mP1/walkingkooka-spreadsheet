@@ -23,8 +23,6 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.currency.CurrencyExchange;
-import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
@@ -47,7 +45,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
@@ -149,33 +146,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     Converters.objectToString(),
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     BINARY_TEXT_CONTEXT,
-                    new FakeCurrencyContext() {
-
-                        @Override
-                        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                                     final Optional<LocalDateTime> dateTime) {
-                            Objects.requireNonNull(currencyExchange, "currencyExchange");
-                            Objects.requireNonNull(dateTime, "dateTime");
-
-                            throw new UnsupportedOperationException();
-                        }
-
-                        @Override
-                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                            return Optional.of(
-                                Currency.getInstance(
-                                    currencyCode.value()
-                                )
-                            );
-                        }
-
-                        @Override
-                        public Optional<Currency> currencyForLocale(final Locale locale) {
-                            return Optional.of(
-                                Currency.getInstance(locale)
-                            );
-                        }
-                    }.setLocaleContext(LOCALE_CONTEXT),
+                    CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT
                 ),

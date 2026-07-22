@@ -41,13 +41,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
 
     @Test
     public void testExtractLocaleAwareValueAndFormat() {
-        final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance()
-            .extractLocaleAwareValue(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            ).get()
+            .extractLocaleAwareValue(CURRENCY_LOCALE_CONTEXT)
+            .get()
             .spreadsheetFormatPattern()
             .get();
 
@@ -60,7 +56,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
             .get()
             .text();
         this.checkEquals(
-            "Friday, December 31, 1999 at 12:58:59 PM",
+            "Friday, 31 December 1999 at 12:58:59 PM",
             formatted,
             pattern::toString
         );

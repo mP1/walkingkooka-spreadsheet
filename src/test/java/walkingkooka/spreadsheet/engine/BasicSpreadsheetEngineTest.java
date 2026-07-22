@@ -38,7 +38,6 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.convert.provider.FakeConverterProvider;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
-import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -1349,10 +1348,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetEnvironmentContext.removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
         }
 
-        final CurrencyLocaleContext currencyLocaleContext = CURRENCY_CONTEXT.setLocaleContext(
-            LocaleContexts.jre(LOCALE)
-        );
-
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
@@ -1371,7 +1366,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 (c) -> {
                                     throw new UnsupportedOperationException();
                                 }, // httpRouterFactory
-                                currencyLocaleContext,
+                                CURRENCY_LOCALE_CONTEXT,
                                 spreadsheetEnvironmentContext,
                                 SPREADSHEET_PROVIDER,
                                 PROVIDER_CONTEXT
@@ -1382,7 +1377,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                 private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
             },
-            currencyLocaleContext,
+            CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
             SpreadsheetMetadataContexts.basic(
                 (EmailAddress user, Optional<Locale> defaultLocale) -> {

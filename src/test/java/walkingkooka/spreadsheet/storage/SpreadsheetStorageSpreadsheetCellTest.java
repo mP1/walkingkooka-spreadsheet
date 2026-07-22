@@ -21,12 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -679,8 +676,6 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     private SpreadsheetContext createSpreadsheetContext() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
-        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
-
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
 
         final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT;
@@ -689,9 +684,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.LOCALE,
                     LOCALE
-                ).loadFromLocale(
-                    CURRENCY_CONTEXT.setLocaleContext(localeContext)
-                ).set(
+                ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+                .set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.create(
                         USER,
@@ -773,8 +767,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
-            CurrencyContexts.fake()
-                .setLocaleContext(localeContext),
+            CURRENCY_LOCALE_CONTEXT,
             SpreadsheetEnvironmentContexts.basic(
                 Storages.treeMapStore(),
                 environmentContext

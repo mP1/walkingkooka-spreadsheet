@@ -27,9 +27,9 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContextTesting;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.naming.HasNameTesting;
 import walkingkooka.net.HasUrlFragment;
@@ -61,6 +61,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
     TypeNameTesting<N>,
     CurrencyContextTesting,
+    CurrencyLocaleContextTesting,
     HasNameTesting,
     HasValueTesting,
     LocaleContextTesting,
@@ -209,9 +210,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
     final void extractLocaleValueAwareAndCheck() {
         this.extractLocaleValueAwareAndCheck(
-            CURRENCY_CONTEXT.setLocaleContext(
-                LocaleContexts.jre(LOCALE)
-            ),
+            CURRENCY_LOCALE_CONTEXT,
             Optional.empty()
         );
     }
@@ -291,7 +290,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             value,
             propertyName.parseValueText(
                 valueText,
-                CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
+                CURRENCY_LOCALE_CONTEXT
             )
         );
     }

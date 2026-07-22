@@ -19,9 +19,8 @@ package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -50,11 +49,11 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetStorageContextDelegatorTest implements SpreadsheetStorageContextTesting2<TestSpreadsheetStorageDelegatorContext> {
+public final class SpreadsheetStorageContextDelegatorTest implements SpreadsheetStorageContextTesting2<TestSpreadsheetStorageDelegatorContext>,
+    CurrencyLocaleContextTesting {
 
     @Override
     public void testSetEnvironmentContextWithEqualEnvironmentContext() {
@@ -121,12 +120,7 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
                     (c) -> {
                         throw new UnsupportedOperationException();
                     }, // HttpRouter
-                    CurrencyContexts.fake()
-                        .setLocaleContext(
-                            LocaleContexts.jre(
-                                Locale.forLanguageTag("en-AU")
-                            )
-                        ),
+                    CURRENCY_LOCALE_CONTEXT,
                     SpreadsheetEnvironmentContexts.basic(
                         Storages.treeMapStore(),
                         spreadsheetEnvironmentContext

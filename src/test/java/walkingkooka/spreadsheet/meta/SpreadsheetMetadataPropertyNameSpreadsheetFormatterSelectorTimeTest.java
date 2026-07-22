@@ -41,13 +41,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
 
     @Test
     public void testExtractLocaleAwareValueAndFormat() {
-        final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance()
-            .extractLocaleAwareValue(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            ).get()
+            .extractLocaleAwareValue(CURRENCY_LOCALE_CONTEXT)
+            .get()
             .spreadsheetFormatPattern()
             .get();
 

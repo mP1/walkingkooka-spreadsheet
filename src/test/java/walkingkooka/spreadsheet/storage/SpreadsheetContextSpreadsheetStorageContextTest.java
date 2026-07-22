@@ -21,13 +21,10 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyContexts;
-import walkingkooka.currency.FakeCurrencyExchangeRater;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -78,13 +75,13 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext> {
+public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext>,
+    CurrencyLocaleContextTesting {
 
     // with.............................................................................................................
 
@@ -841,8 +838,6 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     public SpreadsheetContextSpreadsheetStorageContext createContext() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
-        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
-
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
 
         final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT;
@@ -852,11 +847,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
             ).loadFromLocale(
-                CurrencyContexts.jre(
-                    Currency.getInstance(LOCALE),
-                    new FakeCurrencyExchangeRater(),
-                    localeContext
-                ).setLocaleContext(localeContext)
+                CURRENCY_LOCALE_CONTEXT
             ).set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
@@ -940,8 +931,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                 (c) -> {
                     throw new UnsupportedOperationException();
                 }, // HttpRouter
-                CurrencyContexts.fake()
-                    .setLocaleContext(localeContext),
+                CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetEnvironmentContexts.basic(
                     storage,
                     environmentContext

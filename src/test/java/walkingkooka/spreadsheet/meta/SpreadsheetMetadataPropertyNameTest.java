@@ -25,11 +25,9 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.currency.CurrencyContexts;
-import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -67,13 +65,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataPropertyName<?>>
     implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>>,
     ConstantsTesting<SpreadsheetMetadataPropertyName<?>>,
+    CurrencyLocaleContextTesting,
     HasSpreadsheetPatternKindTesting,
     ThrowableTesting {
-
-    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CurrencyContexts.fake()
-        .setLocaleContext(
-            LocaleContexts.fake()
-        );
 
     @Test
     public void testWithUnknownConstantFails() {

@@ -21,9 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.datetime.DateTimeContextTesting;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -42,7 +40,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber>
     implements BinaryTextContextTesting,
@@ -72,13 +69,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
 
     private void extractLocaleValueAndCheck2(final String text,
                                              final ExpressionNumberKind kind) throws ParseException {
-        final Locale locale = Locale.ENGLISH;
         final SpreadsheetParserSelector parserSelector = SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber.instance()
-            .extractLocaleAwareValue(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            ).get();
+            .extractLocaleAwareValue(CURRENCY_LOCALE_CONTEXT)
+            .get();
 
         final ExpressionNumber value = SpreadsheetConverters.textToNumber(
             SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
@@ -108,10 +101,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
                             BINARY_TEXT_CONTEXT,
-                            CurrencyContexts.fake()
-                                .setLocaleContext(
-                                    LocaleContexts.jre(locale)
-                                ),
+                            CURRENCY_LOCALE_CONTEXT,
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),
@@ -119,11 +109,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                     ),
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
-                LocaleContexts.jre(locale)
+                LOCALE_CONTEXT
             )
         );
 
-        final DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(locale);
+        final DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(LOCALE);
         decimalFormat.setParseBigDecimal(true);
         final Number expected = decimalFormat.parse(text);
 

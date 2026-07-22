@@ -22,10 +22,6 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.currency.CurrencyExchange;
-import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -45,7 +41,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
@@ -221,8 +216,6 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
 
     @Override
     public SpreadsheetConverterNumberToTextSpreadsheetConverterContext createContext() {
-        final Locale locale = Locale.ENGLISH;
-        final LocaleContext localeContext = LocaleContexts.jre(locale);
         final ExpressionNumberKind expressionNumberKind = ExpressionNumberKind.BIG_DECIMAL;
 
         return SpreadsheetConverterNumberToTextSpreadsheetConverterContext.with(
@@ -246,33 +239,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                             Converters.fake(),
                             BinaryNumberConverterFunctions.fake(), // multiplier
                             BINARY_TEXT_CONTEXT,
-                            new FakeCurrencyContext() {
-
-                                @Override
-                                public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                                             final Optional<LocalDateTime> dateTime) {
-                                    Objects.requireNonNull(currencyExchange, "currencyExchange");
-                                    Objects.requireNonNull(dateTime, "dateTime");
-
-                                    throw new UnsupportedOperationException();
-                                }
-
-                                @Override
-                                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                                    return Optional.ofNullable(
-                                        Currency.getInstance(
-                                            currencyCode.value()
-                                        )
-                                    );
-                                }
-
-                                @Override
-                                public Optional<Currency> currencyForLocale(final Locale locale) {
-                                    return Optional.of(
-                                        Currency.getInstance(locale)
-                                    );
-                                }
-                            }.setLocaleContext(localeContext),
+                            CURRENCY_LOCALE_CONTEXT,
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),
@@ -305,7 +272,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                         )
                     )
                 ),
-                localeContext
+                LOCALE_CONTEXT
             )
         );
     }

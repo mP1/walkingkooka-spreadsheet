@@ -33,13 +33,11 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.currency.FakeCurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -135,6 +133,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     ClassTesting2<SpreadsheetMetadata>,
+    CurrencyLocaleContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     HasPropertiesTesting,
     HasUrlFragmentTesting,
@@ -171,28 +170,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     private final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.empty();
 
-    private final static CurrencyContext CURRENCY_CONTEXT = new FakeCurrencyContext() {
-
-        @Override
-        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-            return Optional.of(
-                Currency.getInstance(
-                    currencyCode.value()
-                )
-            );
-        }
-
-        @Override
-        public Optional<Currency> currencyForLocale(final Locale locale) {
-            return Optional.of(
-                Currency.getInstance(locale)
-            );
-        }
-    };
-
     private static final ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
-
-    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -414,9 +392,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
-            ).loadFromLocale(
-                CURRENCY_LOCALE_CONTEXT
-            )
+            ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
         );
     }
 
@@ -722,17 +698,11 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testConverter() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            );
+                LOCALE
+            ).loadFromLocale(CURRENCY_LOCALE_CONTEXT);
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -753,17 +723,11 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testConverterToStringPrefixedByPropertyNameWithFormulaConverter() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            );
+                LOCALE
+            ).loadFromLocale(CURRENCY_LOCALE_CONTEXT);
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -785,17 +749,11 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testConverterToStringPrefixedByPropertyNameWithFormatterConverter() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            );
+                LOCALE
+            ).loadFromLocale(CURRENCY_LOCALE_CONTEXT);
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
@@ -859,17 +817,12 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testDateTimeConverter() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
-            ).dateTimeConverter(
+                LOCALE
+            ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+            .dateTimeConverter(
                 spreadsheetFormatterProvider(),
                 spreadsheetParserProvider(),
                 PROVIDER_CONTEXT
@@ -1203,8 +1156,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testSpreadsheetConverterContextAndCellDateTimeSymbolsDecimalNumberSymbols() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
         final char positiveSign = '*';
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
@@ -1212,7 +1163,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         ).setDateTimeSymbols(
             Optional.of(
                 DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(locale)
+                    new DateFormatSymbols(LOCALE)
                 ).setMonthNames(
                     Lists.of("Jan*", "Feb*", "Mar*", "Apr*", "May*", "Jun*", "Jul*", "Aug*", "Sep*", "Oct*", "Nov*", "Dec*")
                 )
@@ -1221,18 +1172,16 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             Optional.of(
                 DecimalNumberSymbols.fromDecimalFormatSymbols(
                     positiveSign,
-                    new DecimalFormatSymbols(locale)
+                    new DecimalFormatSymbols(LOCALE)
                 )
             )
         );
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
-            locale
+            LOCALE
         ).loadFromLocale(
-            CURRENCY_CONTEXT.setLocaleContext(
-                LocaleContexts.jre(locale)
-            )
+            CURRENCY_LOCALE_CONTEXT
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
             Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
