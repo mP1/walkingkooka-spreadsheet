@@ -28,7 +28,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.Url;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -926,7 +925,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
-            Url.parseAbsolute("https://example.com")
+            SERVER_URL
         );
 
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
