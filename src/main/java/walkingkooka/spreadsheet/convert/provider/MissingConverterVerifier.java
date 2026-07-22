@@ -1877,7 +1877,9 @@ final class MissingConverterVerifier {
                         storageValueCsv,
                         StorageBinary.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_CSV,
-                        storageBinaryCsv
+                        storageBinaryCsv.setContentType(
+                            Optional.of(MediaType.TEXT_CSV)
+                        )
                     );
                 }
 
@@ -1935,7 +1937,9 @@ final class MissingConverterVerifier {
                         storageValueJson,
                         StorageBinary.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_JSON,
-                        storageBinaryJson
+                        storageBinaryJson.setContentType(
+                            Optional.of(MediaType.APPLICATION_JSON)
+                        )
                     );
                 }
 
@@ -1964,7 +1968,9 @@ final class MissingConverterVerifier {
                         storageValueProperties,
                         StorageBinary.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_PROPERTIES,
-                        storageBinaryProperties
+                        storageBinaryProperties.setContentType(
+                            Optional.of(MediaType.TEXT_PROPERTIES)
+                        )
                     );
                 }
 
@@ -1993,7 +1999,9 @@ final class MissingConverterVerifier {
                         storageValueTsv,
                         StorageBinary.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_TSV,
-                        storageBinaryTsv
+                        storageBinaryTsv.setContentType(
+                            Optional.of(MediaType.TEXT_TAB_SEPARATED_VALUES)
+                        )
                     );
                 }
 
@@ -2021,7 +2029,9 @@ final class MissingConverterVerifier {
                         storageValueTxt,
                         StorageBinary.class,
                         SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_TXT,
-                        storageBinaryTxt
+                        storageBinaryTxt.setContentType(
+                            Optional.of(MediaType.TEXT_PLAIN)
+                        )
                     );
                 }
 
