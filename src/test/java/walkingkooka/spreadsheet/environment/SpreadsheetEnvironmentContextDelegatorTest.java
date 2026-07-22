@@ -23,10 +23,7 @@ import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.Indentation;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -110,15 +107,7 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    StandardCharsets.UTF_8,
-                    SpreadsheetEnvironmentContextDelegatorTest.CURRENCY,
-                    Indentation.SPACES4,
-                    SpreadsheetEnvironmentContextDelegatorTest.LINE_ENDING,
-                    Locale.ENGLISH,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             );
             environmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,

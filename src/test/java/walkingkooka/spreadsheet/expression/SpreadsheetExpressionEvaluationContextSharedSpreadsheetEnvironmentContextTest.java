@@ -344,15 +344,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testLineEnding() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.lineEndingAndCheck(
@@ -366,15 +358,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
 
@@ -397,15 +381,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.FRANCE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.localeAndCheck(
@@ -419,15 +395,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    Locale.FRANCE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
 
@@ -526,15 +494,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testUser() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.userAndCheck(

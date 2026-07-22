@@ -72,7 +72,6 @@ import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -1074,18 +1073,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
-        final Locale locale = Locale.forLanguageTag("en-AU");
-
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                locale,
-                HAS_NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         environmentContext.setEnvironmentValue(
@@ -1105,7 +1094,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final CurrencyLocaleContext currencyLocaleContext = CURRENCY_CONTEXT.setLocaleContext(
-            LocaleContexts.jre(locale)
+            LocaleContexts.jre(LOCALE)
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(

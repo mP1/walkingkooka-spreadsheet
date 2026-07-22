@@ -1317,17 +1317,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     }
 
     private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-        final EnvironmentContext context = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.forLanguageTag("en-AU"),
-                LocalDateTime::now,
-                EnvironmentContext.ANONYMOUS
-            )
-        );
+        final EnvironmentContext context = EnvironmentContexts.map(ENVIRONMENT_CONTEXT.cloneEnvironment());
+
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             SpreadsheetEngineContextSharedSpreadsheetContextTest.CURRENT_WORKING_DIRECTORY

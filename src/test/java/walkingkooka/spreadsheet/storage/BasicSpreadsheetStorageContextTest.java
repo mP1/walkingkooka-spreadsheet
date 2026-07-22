@@ -1095,18 +1095,8 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             )
         );
 
-        final Locale locale = Locale.forLanguageTag("en-AU");
-
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                locale,
-                HAS_NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         environmentContext.setEnvironmentValue(
@@ -1126,7 +1116,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         );
 
         final CurrencyLocaleContext currencyLocaleContext = CURRENCY_CONTEXT.setLocaleContext(
-            LocaleContexts.jre(locale)
+            LocaleContexts.jre(LOCALE)
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(

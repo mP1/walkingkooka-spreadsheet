@@ -335,15 +335,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetEnvironmentContextWithDifferent() {
         final SpreadsheetEnvironmentContextFactory context = this.createContext();
 
-        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
-            CHARSET,
-            CURRENCY,
-            INDENTATION,
-            DIFFERENT_LINE_ENDING,
-            LOCALE,
-            HAS_NOW,
-            EnvironmentContext.ANONYMOUS
-        );
+        final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final SpreadsheetEnvironmentContextFactory afterSet = context.setEnvironmentContext(differentEnvironmentContext);
         this.checkNotEquals(
@@ -358,15 +350,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testCurrency() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.currencyAndCheck(
@@ -380,15 +364,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
 
@@ -416,15 +392,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testIndentation() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.indentationAndCheck(
@@ -438,15 +406,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
 
@@ -462,15 +422,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testLineEnding() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.lineEndingAndCheck(
@@ -484,15 +436,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
 
@@ -506,15 +450,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.FRANCE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.localeAndCheck(
@@ -528,15 +464,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    SpreadsheetEnvironmentContextFactoryTest.CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LINE_ENDING,
-                    Locale.FRANCE,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
 
@@ -633,15 +561,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testUser() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.userAndCheck(

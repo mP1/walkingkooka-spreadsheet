@@ -20,8 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -29,8 +27,6 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -38,7 +34,6 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.RoundingMode;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -158,15 +153,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             SpreadsheetMetadata.EMPTY.spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.basic(
                     Storages.fake(),
-                    EnvironmentContexts.empty(
-                        StandardCharsets.UTF_8,
-                        CURRENCY,
-                        Indentation.SPACES4,
-                        LineEnding.NL,
-                        LOCALE_CONTEXT.locale(),
-                        LocalDateTime::now,
-                        EnvironmentContext.ANONYMOUS
-                    )
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             EnvironmentValueName.with(

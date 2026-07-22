@@ -28,7 +28,6 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 
 import java.time.ZoneOffset;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -105,15 +104,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testSetSpreadsheetEnvironmentContextWithSame() {
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                DIFFERENT_LOCALE,
-                HAS_NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         final ReadOnlySpreadsheetEnvironmentContext readOnly = ReadOnlySpreadsheetEnvironmentContext.with(empty);
 
@@ -397,15 +388,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Override
     public ReadOnlySpreadsheetEnvironmentContext createContext() {
         final EnvironmentContext context = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.FRANCE,
-                () -> NOW,
-                OPTIONAL_USER
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         context.setEnvironmentValue(

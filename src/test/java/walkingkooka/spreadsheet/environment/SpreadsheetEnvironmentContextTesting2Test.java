@@ -26,10 +26,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2Test.TestSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
-import walkingkooka.text.Indentation;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -162,15 +159,7 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
 
         {
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    StandardCharsets.UTF_8,
-                    SpreadsheetEnvironmentContextTesting2Test.CURRENCY,
-                    Indentation.SPACES4,
-                    SpreadsheetEnvironmentContextTesting2Test.LINE_ENDING,
-                    Locale.ENGLISH,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             );
             environmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,

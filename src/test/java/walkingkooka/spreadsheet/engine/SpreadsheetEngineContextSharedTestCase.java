@@ -512,15 +512,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     @Test
     public final void testIndentation() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.indentationAndCheck(
@@ -532,15 +524,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     @Test
     public final void testSetIndentation() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final C context = this.createContext(environmentContext);
@@ -565,15 +549,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     @Test
     public final void testLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.lineEndingAndCheck(
@@ -585,15 +561,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     @Test
     public final void testSetLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final C context = this.createContext(environmentContext);
@@ -622,15 +590,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     @Test
     public final void testLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.FRANCE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.localeAndCheck(

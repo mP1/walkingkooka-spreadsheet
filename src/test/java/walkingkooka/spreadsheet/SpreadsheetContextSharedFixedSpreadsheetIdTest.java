@@ -398,15 +398,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     @Override
     public SpreadsheetContextSharedFixedSpreadsheetId createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                Optional.empty() // no user
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
