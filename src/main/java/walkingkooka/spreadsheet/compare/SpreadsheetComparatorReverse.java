@@ -32,7 +32,7 @@ final class SpreadsheetComparatorReverse<T> implements SpreadsheetComparator<T> 
         return comparator instanceof SpreadsheetComparatorReverse ?
             ((SpreadsheetComparatorReverse<T>) comparator).comparator :
             new SpreadsheetComparatorReverse<>(
-                Objects.requireNonNull(comparator, "compare")
+                Objects.requireNonNull(comparator, "comparator")
             );
     }
 
