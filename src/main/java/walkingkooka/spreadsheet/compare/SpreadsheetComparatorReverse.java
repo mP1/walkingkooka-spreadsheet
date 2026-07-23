@@ -26,17 +26,17 @@ import java.util.Objects;
 /**
  * Wraps another {@link SpreadsheetComparator} and reverses the compare result.
  */
-final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
+final class SpreadsheetComparatorReverse<T> implements SpreadsheetComparator<T> {
 
     static <T> SpreadsheetComparator<T> with(final SpreadsheetComparator<T> comparator) {
-        return comparator instanceof ReverseSpreadsheetComparator ?
-            ((ReverseSpreadsheetComparator<T>) comparator).comparator :
-            new ReverseSpreadsheetComparator<>(
+        return comparator instanceof SpreadsheetComparatorReverse ?
+            ((SpreadsheetComparatorReverse<T>) comparator).comparator :
+            new SpreadsheetComparatorReverse<>(
                 Objects.requireNonNull(comparator, "compare")
             );
     }
 
-    private ReverseSpreadsheetComparator(final SpreadsheetComparator<T> comparator) {
+    private SpreadsheetComparatorReverse(final SpreadsheetComparator<T> comparator) {
         this.comparator = comparator;
     }
 
@@ -74,10 +74,10 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof ReverseSpreadsheetComparator && this.equals0(Cast.to(other));
+            other instanceof SpreadsheetComparatorReverse && this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final ReverseSpreadsheetComparator<?> other) {
+    private boolean equals0(final SpreadsheetComparatorReverse<?> other) {
         return this.comparator.equals(other.comparator);
     }
 

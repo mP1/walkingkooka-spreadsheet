@@ -260,10 +260,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see ReverseSpreadsheetComparator}
+     * {@see SpreadsheetComparatorReverse}
      */
     public static <T> SpreadsheetComparator<T> reverse(final SpreadsheetComparator<T> comparator) {
-        return ReverseSpreadsheetComparator.with(comparator);
+        return SpreadsheetComparatorReverse.with(comparator);
     }
 
     public static SpreadsheetComparator<LocalTime> secondsOfMinute() {
