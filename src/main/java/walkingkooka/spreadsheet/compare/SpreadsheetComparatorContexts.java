@@ -19,14 +19,21 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+
+import java.util.function.BiFunction;
 
 public final class SpreadsheetComparatorContexts implements PublicStaticHelper {
 
     /**
      * {@see BasicSpreadsheetComparatorContext}
      */
-    public static SpreadsheetComparatorContext basic(final SpreadsheetConverterContext context) {
-        return BasicSpreadsheetComparatorContext.with(context);
+    public static SpreadsheetComparatorContext basic(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
+                                                     final SpreadsheetConverterContext context) {
+        return BasicSpreadsheetComparatorContext.with(
+            spreadsheetExpressionEvaluationContextFactory,
+            context
+        );
     }
 
     /**

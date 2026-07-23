@@ -22,6 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparators;
@@ -93,6 +94,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -819,6 +821,25 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 )
             ).collect(Collectors.toList());
 
+        final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory = (Object left, Object right) -> {
+            SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = context.spreadsheetExpressionEvaluationContext(
+                SpreadsheetEngineContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.empty()
+            );
+
+            spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.addLocalVariable(
+                SpreadsheetComparatorContext.LEFT,
+                Optional.ofNullable(left)
+            );
+
+            spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.addLocalVariable(
+                SpreadsheetComparatorContext.RIGHT,
+                Optional.ofNullable(right)
+            );
+
+            return spreadsheetExpressionEvaluationContext;
+        };
+
         cells.sort(
             comparators,
             movedFromTo, // moved cells
@@ -828,7 +849,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context, // mediaTypeDetector
                 context.multiplier(), // multiplier
                 context, // SpreadsheetLabelNameResolver
-                context, // SpreadsheetMetadataLoader
+                spreadsheetExpressionEvaluationContextFactory,
+                context, // SpreadsheetProvider
                 context, // BinaryTextContext
                 context, // CurrencyLocaleContext
                 providerContext// ProviderContext

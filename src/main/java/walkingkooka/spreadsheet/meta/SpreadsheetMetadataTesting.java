@@ -537,6 +537,9 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     );
 
     SpreadsheetComparatorContext SPREADSHEET_COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
+        (Object left, Object right) -> {
+            throw new UnsupportedOperationException();
+        },
         SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 

@@ -19,8 +19,12 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Context;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
@@ -29,6 +33,23 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
  * compatible with the actual {@link java.util.Comparator}.
  */
 public interface SpreadsheetComparatorContext extends SpreadsheetConverterContext {
+
+    /**
+     * A {@link SpreadsheetLabelName} that may be used within {@link Expression} to get the LEFT value with a {@link SpreadsheetExpressionEvaluationContext}.
+     */
+    SpreadsheetLabelName LEFT = SpreadsheetSelection.labelName("left");
+
+    /**
+     * A {@link SpreadsheetLabelName} that may be used within {@link Expression} to get the RIGHT value with a {@link SpreadsheetExpressionEvaluationContext}.
+     */
+    SpreadsheetLabelName RIGHT = SpreadsheetSelection.labelName("right");
+
+    /**
+     * Returns a {@link SpreadsheetExpressionEvaluationContext} which may be used to evaluate an {@link Expression} that
+     * compares two values.
+     */
+   SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Object left,
+                                                                                 final Object right);
 
     /**
      * {@link SpreadsheetMetadata} is unavailable in a comparator context.

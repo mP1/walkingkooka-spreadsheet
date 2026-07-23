@@ -19,25 +19,44 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorContext,
     SpreadsheetConverterContextDelegator {
 
-    static BasicSpreadsheetComparatorContext with(final SpreadsheetConverterContext context) {
+    static BasicSpreadsheetComparatorContext with(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
+                                                  final SpreadsheetConverterContext context) {
         return new BasicSpreadsheetComparatorContext(
+            Objects.requireNonNull(spreadsheetExpressionEvaluationContextFactory, "spreadsheetExpressionEvaluationContextFactory"),
             Objects.requireNonNull(context, "context")
         );
     }
 
-    private BasicSpreadsheetComparatorContext(final SpreadsheetConverterContext context) {
+    private BasicSpreadsheetComparatorContext(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
+                                              final SpreadsheetConverterContext context) {
+        super();
+
+        this.spreadsheetExpressionEvaluationContextFactory = spreadsheetExpressionEvaluationContextFactory;
         this.context = context;
     }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Object left,
+                                                                                         final Object right) {
+        return this.spreadsheetExpressionEvaluationContextFactory.apply(
+            left,
+            right
+        );
+    }
+
+    private final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory;
 
     // LocaleContext....................................................................................................
 
@@ -45,9 +64,12 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
     public SpreadsheetComparatorContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
         final SpreadsheetConverterContext before = this.context;
         final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
-        return before.equals(after) ?
+        return before == after ?
             this :
-            new BasicSpreadsheetComparatorContext(after);
+            new BasicSpreadsheetComparatorContext(
+                this.spreadsheetExpressionEvaluationContextFactory,
+                after
+            );
     }
 
     @Override
@@ -56,7 +78,10 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
         final SpreadsheetConverterContext after = before.setPreProcessor(processor);
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetComparatorContext(after);
+            new BasicSpreadsheetComparatorContext(
+                this.spreadsheetExpressionEvaluationContextFactory,
+                after
+            );
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................
