@@ -28,15 +28,15 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReverseSpreadsheetComparatorTest implements SpreadsheetComparatorTesting<ReverseSpreadsheetComparator<String>, String>,
-    HashCodeEqualsDefinedTesting2<ReverseSpreadsheetComparator<String>>,
-    ToStringTesting<ReverseSpreadsheetComparator<String>> {
+public final class SpreadsheetComparatorReverseTest implements SpreadsheetComparatorTesting<SpreadsheetComparatorReverse<String>, String>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorReverse<String>>,
+    ToStringTesting<SpreadsheetComparatorReverse<String>> {
 
     @Test
     public void testWithNullComparatorFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ReverseSpreadsheetComparator.with(
+            () -> SpreadsheetComparatorReverse.with(
                 null
             )
         );
@@ -44,7 +44,7 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
 
     @Test
     public void testWith() {
-        ReverseSpreadsheetComparator.with(
+        SpreadsheetComparatorReverse.with(
             SpreadsheetComparators.text()
 
         );
@@ -55,8 +55,8 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
         final SpreadsheetComparator<String> comparator = SpreadsheetComparators.text();
         assertSame(
             comparator,
-            ReverseSpreadsheetComparator.with(
-                ReverseSpreadsheetComparator.with(
+            SpreadsheetComparatorReverse.with(
+                SpreadsheetComparatorReverse.with(
                     comparator
                 )
             )
@@ -94,17 +94,17 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
     @Test
     public void testEqualsDifferentComparator() {
         this.checkNotEquals(
-            ReverseSpreadsheetComparator.with(
+            SpreadsheetComparatorReverse.with(
                 SpreadsheetComparators.hourOfDay()
             ),
-            ReverseSpreadsheetComparator.with(
+            SpreadsheetComparatorReverse.with(
                 SpreadsheetComparators.text()
             )
         );
     }
 
     @Override
-    public ReverseSpreadsheetComparator<String> createObject() {
+    public SpreadsheetComparatorReverse<String> createObject() {
         return this.createComparator();
     }
 
@@ -113,7 +113,7 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
         final SpreadsheetComparator<String> comparator = SpreadsheetComparators.textCaseInsensitive();
 
         this.toStringAndCheck(
-            ReverseSpreadsheetComparator.with(comparator),
+            SpreadsheetComparatorReverse.with(comparator),
             comparator.reversed()
                 .toString()
         );
@@ -121,18 +121,25 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
 
     // Comparator.......................................................................................................
     @Override
-    public ReverseSpreadsheetComparator<String> createComparator() {
+    public SpreadsheetComparatorReverse<String> createComparator() {
         return Cast.to(
-            ReverseSpreadsheetComparator.with(
+            SpreadsheetComparatorReverse.with(
                 SpreadsheetComparators.textCaseInsensitive()
             )
         );
     }
 
+    // Class............................................................................................................
+
     @Override
-    public Class<ReverseSpreadsheetComparator<String>> type() {
+    public Class<SpreadsheetComparatorReverse<String>> type() {
         return Cast.to(
-            ReverseSpreadsheetComparator.class
+            SpreadsheetComparatorReverse.class
         );
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
