@@ -39,12 +39,12 @@ import java.util.Objects;
 public final class SpreadsheetComparators implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetComparator}
+     * {@see SpreadsheetComparatorBasic}
      */
     public static <T> SpreadsheetComparator<T> basic(final Class<T> type,
                                                      final Comparator<? super T> comparator,
                                                      final SpreadsheetComparatorName name) {
-        return BasicSpreadsheetComparator.with(
+        return SpreadsheetComparatorBasic.with(
             type,
             comparator,
             name
