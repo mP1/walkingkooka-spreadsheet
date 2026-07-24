@@ -574,7 +574,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToIndentation();
                 break;
-            case TEXT_TO_JSON_NODE_STRING:
+            case TEXT_TO_JSON_STRING:
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToJson();
@@ -1281,9 +1281,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_INDENTATION = ConverterName.with(TEXT_TO_INDENTATION_STRING);
 
-    private final static String TEXT_TO_JSON_NODE_STRING = "text-to-json";
+    private final static String TEXT_TO_JSON_STRING = "text-to-json";
 
-    final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_NODE_STRING);
+    final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_STRING);
 
     private final static String TEXT_TO_JSON_POINTER_STRING = "text-to-json-pointer";
 
