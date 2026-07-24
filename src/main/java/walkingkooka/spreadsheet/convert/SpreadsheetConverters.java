@@ -427,6 +427,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToObject(),
         toJsonNode(),
         textToJson(),
+        textToJsonPointer(),
         toJsonText()
     );
 
