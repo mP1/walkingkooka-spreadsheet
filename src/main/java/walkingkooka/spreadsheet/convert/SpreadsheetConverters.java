@@ -1086,6 +1086,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see JsonNodeConverterTextToJsonSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToJsonSelector() {
+        return JsonNodeConverters.textToJsonSelector();
+    }
+
+    /**
      * {@see Converters#textToLineEnding}
      */
     public static Converter<SpreadsheetConverterContext> textToLineEnding() {

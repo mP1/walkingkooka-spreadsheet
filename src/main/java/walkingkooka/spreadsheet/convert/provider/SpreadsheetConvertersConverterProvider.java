@@ -584,6 +584,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToJsonPointer();
                 break;
+            case TEXT_TO_JSON_SELECTOR_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToJsonSelector();
+                break;
             case TEXT_TO_LINE_ENDING_STRING:
                 noParameterCheck(copy);
 
@@ -1284,6 +1289,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_JSON_POINTER = ConverterName.with(TEXT_TO_JSON_POINTER_STRING);
 
+    private final static String TEXT_TO_JSON_SELECTOR_STRING = "text-to-json-selector";
+
+    final static ConverterName TEXT_TO_JSON_SELECTOR = ConverterName.with(TEXT_TO_JSON_SELECTOR_STRING);
+
     private final static String TEXT_TO_LINE_ENDING_STRING = "text-to-line-ending";
 
     final static ConverterName TEXT_TO_LINE_ENDING = ConverterName.with(TEXT_TO_LINE_ENDING_STRING);
@@ -1621,6 +1630,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_INDENTATION),
             converterInfo(TEXT_TO_JSON),
             converterInfo(TEXT_TO_JSON_POINTER),
+            converterInfo(TEXT_TO_JSON_SELECTOR),
             converterInfo(TEXT_TO_LINE_ENDING),
             converterInfo(TEXT_TO_LOCALE),
             converterInfo(TEXT_TO_LOCALE_LANGUAGE_TAG),
