@@ -1065,6 +1065,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#textToIndentation}
+     */
+    public static Converter<SpreadsheetConverterContext> textToIndentation() {
+        return Converters.textToIndentation();
+    }
+
+    /**
      * {@see JsonNodeConverters#textToJsonNode}
      */
     public static Converter<SpreadsheetConverterContext> textToJson() {
@@ -1076,13 +1083,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToJsonPointer() {
         return JsonNodeConverters.textToJsonPointer();
-    }
-
-    /**
-     * {@see Converters#textToIndentation}
-     */
-    public static Converter<SpreadsheetConverterContext> textToIndentation() {
-        return Converters.textToIndentation();
     }
 
     /**
