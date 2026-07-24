@@ -97,6 +97,7 @@ import walkingkooka.tree.json.JsonNumber;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.JsonString;
+import walkingkooka.tree.json.pointer.JsonPointer;
 import walkingkooka.tree.text.Border;
 import walkingkooka.tree.text.BoxEdge;
 import walkingkooka.tree.text.Flag;
@@ -317,6 +318,8 @@ final class MissingConverterVerifier {
             JsonPropertyName.with("hello"),
             "world"
         );
+
+    private final static JsonPointer JSON_POINTER = JsonPointer.parse("/json1/pointer2/");
 
     private final static Properties PROPERTIES = Properties.parse("hello=world");
     
@@ -1098,6 +1101,16 @@ final class MissingConverterVerifier {
                     SpreadsheetCell.class,
                     SpreadsheetConvertersConverterProvider.JSON, // textToObject
                     spreadsheetCell
+                );
+            }
+
+            // to-json-pointer..........................................................................................
+            if (formula || scripting | validation) {
+                verifier.addIfConversionFail(
+                    JSON_POINTER,
+                    JsonPointer.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // TO_JSON,
+                    JSON_POINTER
                 );
             }
         }
