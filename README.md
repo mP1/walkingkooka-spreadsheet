@@ -234,6 +234,7 @@ eg
 - [text-to-host-address](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToHostAddress.java)
 - [text-to-indentation](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToIndentation.java)
 - [text-to-json-node](https://github.com/mP1/walkingkooka-tree-json/blob/master/src/main/java/walkingkooka/tree/json/convert/JsonNodeConverterTextToJsonNode.java)
+- [text-to-json-pointer](https://github.com/mP1/walkingkooka-tree-json/blob/master/src/main/java/walkingkooka/tree/json/convert/JsonNodeConverterTextToJsonPointer.java)
 - [text-to-line-ending](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToLineEnding.java)
 - [text-to-locale](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/convert/ConverterTextToLocale.java)
 - [text-to-locale-language-tag](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToLocaleLanguageTag.java)
