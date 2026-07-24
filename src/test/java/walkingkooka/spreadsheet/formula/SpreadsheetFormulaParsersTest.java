@@ -115,7 +115,6 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
@@ -4213,7 +4212,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                             (p, c) -> convertStringParameter(p, LocalTime.class)
                         );
                     default:
-                        throw new UnknownExpressionFunctionException(name);
+                        throw name.unknownExpressionFunctionException();
                 }
             }
 

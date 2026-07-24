@@ -70,7 +70,6 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
@@ -217,7 +216,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                 return Cast.to(ECHO);
             }
 
-            throw new UnknownExpressionFunctionException(n);
+            throw n.unknownExpressionFunctionException();
         }
 
         @Override
