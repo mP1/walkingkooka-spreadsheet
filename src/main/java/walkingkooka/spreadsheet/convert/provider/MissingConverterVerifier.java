@@ -1110,7 +1110,7 @@ final class MissingConverterVerifier {
             // to-json-pointer..........................................................................................
             if (formula || scripting | validation) {
                 verifier.addIfConversionFail(
-                    JSON_POINTER,
+                    JSON_POINTER.toString(),
                     JsonPointer.class,
                     SpreadsheetConvertersConverterProvider.JSON, // TO_JSON,
                     JSON_POINTER
