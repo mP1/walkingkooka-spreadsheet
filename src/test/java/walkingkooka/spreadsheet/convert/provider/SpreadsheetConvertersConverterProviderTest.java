@@ -932,6 +932,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToJsonPointer() {
+        this.converterAndCheck(
+            "text-to-json-pointer",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToJsonPointer()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToLineEnding() {
         this.converterAndCheck(
             "text-to-line-ending",

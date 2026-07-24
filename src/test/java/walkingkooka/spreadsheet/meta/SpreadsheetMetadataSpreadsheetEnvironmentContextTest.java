@@ -676,6 +676,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-host-address\n" +
                 "    text-to-indentation\n" +
                 "    text-to-json\n" +
+                "    text-to-json-pointer\n" +
                 "    text-to-line-ending\n" +
                 "    text-to-locale\n" +
                 "    text-to-locale-language-tag\n" +

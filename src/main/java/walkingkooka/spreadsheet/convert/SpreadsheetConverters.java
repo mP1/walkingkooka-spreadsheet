@@ -1072,6 +1072,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see JsonNodeConverterTextToJsonPointer}
+     */
+    public static Converter<SpreadsheetConverterContext> textToJsonPointer() {
+        return JsonNodeConverters.textToJsonPointer();
+    }
+
+    /**
      * {@see Converters#textToIndentation}
      */
     public static Converter<SpreadsheetConverterContext> textToIndentation() {
