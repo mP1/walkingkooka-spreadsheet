@@ -18,39 +18,18 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.FakeEnvironmentContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.FakeStorageEnvironmentContext;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
-public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext implements SpreadsheetEnvironmentContext {
+public class FakeSpreadsheetEnvironmentContext extends FakeStorageEnvironmentContext implements SpreadsheetEnvironmentContext {
 
     public FakeSpreadsheetEnvironmentContext() {
         super();
-    }
-
-    @Override
-    public Optional<StoragePath> currentWorkingDirectory() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<StoragePath> homeDirectory() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
-        throw new UnsupportedOperationException();
     }
     
     @Override
