@@ -676,9 +676,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "SPREADSHEET VALUE",
         errorToNumber(),
         nullToNumber(),
-        spreadsheetSelectionToSpreadsheetSelection(),
-        spreadsheetSelectionToText(),
-        textToSpreadsheetSelection(),
+        spreadsheetSelection(),
         errorToError(), // must be before #textToSpreadsheetError
         textToSpreadsheetError(),
         textToValueType(),
