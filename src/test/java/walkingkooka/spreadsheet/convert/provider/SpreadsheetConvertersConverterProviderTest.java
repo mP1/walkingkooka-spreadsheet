@@ -533,6 +533,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithSpreadsheetSelection() {
+        this.converterAndCheck(
+            "spreadsheet-selection",
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetSelection()
+        );
+    }
+
+    @Test
     public void testConverterNameWithSpreadsheetSelectionToSpreadsheetSelection() {
         this.converterAndCheck(
             "spreadsheet-selection-to-spreadsheet-selection",

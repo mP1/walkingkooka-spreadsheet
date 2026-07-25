@@ -637,6 +637,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * A converter that involves converting from or to a {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}.
+     */
+    public static Converter<SpreadsheetConverterContext> spreadsheetSelection() {
+        return SPREADSHEET_SELECTION;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> SPREADSHEET_SELECTION = namedCollection(
+        "SPREADSHEET SELECTION",
+        spreadsheetSelectionToSpreadsheetSelection(),
+        spreadsheetSelectionToText(),
+        textToSpreadsheetSelection()
+    );
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetSelectionToSpreadsheetSelection() {
