@@ -136,6 +136,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
             this.environmentContext.setCurrentWorkingDirectory(currentWorkingDirectory);
         }
+
+        @Override
+        public Optional<StoragePath> homeDirectory() {
+            return this.environmentContext.homeDirectory();
+        }
+
+        @Override
+        public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+            this.environmentContext.setHomeDirectory(homeDirectory);
+        }
         
         @Override
         public Indentation indentation() {
