@@ -32,45 +32,45 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
 
     @Override
     default Optional<StoragePath> currentWorkingDirectory() {
-        return this.environmentValue(CURRENT_WORKING_DIRECTORY);
+        return CURRENT_WORKING_DIRECTORY.getEnvironmentValue(this);
     }
 
     @Override
     default void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
-        this.setOrRemoveEnvironmentValue(
-            CURRENT_WORKING_DIRECTORY,
-            currentWorkingDirectory
+        CURRENT_WORKING_DIRECTORY.setOrRemoveEnvironmentValue(
+            currentWorkingDirectory,
+            this
         );
     }
 
     @Override
     default Optional<StoragePath> homeDirectory() {
-        return this.environmentValue(HOME_DIRECTORY);
+        return HOME_DIRECTORY.getEnvironmentValue(this);
     }
 
     @Override
     default void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
-        this.setOrRemoveEnvironmentValue(
-            HOME_DIRECTORY,
-            homeDirectory
+        HOME_DIRECTORY.setOrRemoveEnvironmentValue(
+            homeDirectory,
+            this
         );
     }
 
     @Override
     default AbsoluteUrl serverUrl() {
-        return this.environmentValueOrFail(SERVER_URL);
+        return SERVER_URL.getEnvironmentValueOrFail(this);
     }
 
     @Override
     default Optional<SpreadsheetId> spreadsheetId() {
-        return this.environmentValue(SPREADSHEET_ID);
+        return SPREADSHEET_ID.getEnvironmentValue(this);
     }
 
     @Override
     default void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
-        this.setOrRemoveEnvironmentValue(
-            SPREADSHEET_ID,
-            spreadsheetId
+        SPREADSHEET_ID.setOrRemoveEnvironmentValue(
+            spreadsheetId,
+            this
         );
     }
 
