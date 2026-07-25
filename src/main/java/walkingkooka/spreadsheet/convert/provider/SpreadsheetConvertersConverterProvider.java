@@ -349,6 +349,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetMetadata();
                 break;
+            case SPREADSHEET_SELECTION_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.spreadsheetSelection();
+                break;
             case SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION_STRING:
                 noParameterCheck(copy);
 
@@ -1101,6 +1106,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_METADATA = ConverterName.with(SPREADSHEET_METADATA_STRING);
 
+    private final static String SPREADSHEET_SELECTION_STRING = "spreadsheet-selection";
+
+    final static ConverterName SPREADSHEET_SELECTION = ConverterName.with(SPREADSHEET_SELECTION_STRING);
+
     private final static String SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION_STRING = "spreadsheet-selection-to-spreadsheet-selection";
 
     final static ConverterName SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION = ConverterName.with(SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION_STRING);
@@ -1583,6 +1592,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SPREADSHEET_CELL_SET),
             converterInfo(SPREADSHEET_ID_TO_SPREADSHEET_METADATA),
             converterInfo(SPREADSHEET_METADATA),
+            converterInfo(SPREADSHEET_SELECTION),
             converterInfo(SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION),
             converterInfo(SPREADSHEET_SELECTION_TO_TEXT),
             converterInfo(SPREADSHEET_VALUE),
