@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -28,6 +27,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
@@ -67,7 +68,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     }
 
     @Test
-    public void testWithNullSpreadsheetEnvironmentContextFails() {
+    public void testWithNullStorageEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextBasic.with(
@@ -122,11 +123,11 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
     @Test
     public void testWithEnvironmentContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.fake();
+        final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
 
         final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextBasic) SpreadsheetEnvironmentContextBasic.with(
             STORAGE,
-            environmentContext
+            storageEnvironmentContext
         );
 
         this.storageAndCheck(
@@ -136,7 +137,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         this.environmentContextAndCheck(
             basicSpreadsheetEnvironmentContext,
-            environmentContext
+            storageEnvironmentContext
         );
     }
 
@@ -186,7 +187,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.currentWorkingDirectoryAndCheck(
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                environmentContext
+                StorageEnvironmentContexts.basic(environmentContext)
             )
         );
     }
@@ -223,16 +224,16 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             MissingEnvironmentValueException.class,
             () -> SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
+                STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
             ).serverUrl()
         );
     }
 
     @Test
     public void testServerUrl() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
@@ -240,7 +241,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.serverUrlAndCheck(
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                environmentContext
+                storageEnvironmentContext
             ),
             SERVER_URL
         );
@@ -253,7 +254,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.spreadsheetIdAndCheck(
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
+                STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
     }
@@ -274,7 +275,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             (SpreadsheetEnvironmentContextBasic)
                 SpreadsheetEnvironmentContextBasic.with(
                     STORAGE,
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 ),
             SPREADSHEET_ID
         );
@@ -285,7 +286,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         final SpreadsheetEnvironmentContextBasic context = (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
+                STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
             );
 
         this.setSpreadsheetIdAndCheck(
@@ -398,10 +399,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     @Test
     public void testStorage() {
         this.storageAndCheck(
-            SpreadsheetEnvironmentContextBasic.with(
-                STORAGE,
-                EnvironmentContexts.fake()
-            ),
+            this.createContext(),
             STORAGE
         );
     }
@@ -410,18 +408,13 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
     @Override
     public SpreadsheetEnvironmentContextBasic createContext() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
-        
-        environmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            CURRENT_WORKING_DIRECTORY
-        );
-        
-        environmentContext.setEnvironmentValue(
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
@@ -429,7 +422,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         return (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                environmentContext
+                storageEnvironmentContext
             );
     }
 
@@ -437,16 +430,16 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
     @Test
     public void testEqualsDifferentStorage() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.fake();
+        final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
 
         this.checkNotEquals(
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                environmentContext
+                storageEnvironmentContext
             ),
             SpreadsheetEnvironmentContextBasic.with(
                 Storages.fake(),
-                environmentContext
+                storageEnvironmentContext
             )
         );
     }
@@ -456,11 +449,11 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.checkNotEquals(
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                EnvironmentContexts.fake()
+                StorageEnvironmentContexts.fake()
             ),
             SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
-                EnvironmentContexts.fake()
+                StorageEnvironmentContexts.fake()
             )
         );
     }
@@ -471,7 +464,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/home/user, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -483,29 +476,32 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             this.createContext(),
             "SpreadsheetEnvironmentContextBasic\n" +
                 "  environment\n" +
-                "    EnvironmentContextSharedMap\n" +
-                "      charset\n" +
-                "        UTF-8 (sun.nio.cs.UTF_8)\n" +
-                "      currency\n" +
-                "        AUD (java.util.Currency)\n" +
-                "      currentWorkingDirectory\n" +
-                "        /current1/working2/directory3\n" +
-                "      indentation\n" +
-                "        \"  \" (walkingkooka.text.Indentation)\n" +
-                "      lineEnding\n" +
-                "        \"\\n\"\n" +
-                "      locale\n" +
-                "        en_AU (java.util.Locale)\n" +
-                "      now\n" +
-                "        1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
-                "      serverUrl\n" +
-                "        https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
-                "      spreadsheetId\n" +
-                "        123\n" +
-                "      timeOffset\n" +
-                "        Z (java.time.ZoneOffset)\n" +
-                "      user\n" +
-                "        user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "    StorageEnvironmentContextBasic\n" +
+                "      EnvironmentContextSharedMap\n" +
+                "        charset\n" +
+                "          UTF-8 (sun.nio.cs.UTF_8)\n" +
+                "        currency\n" +
+                "          AUD (java.util.Currency)\n" +
+                "        currentWorkingDirectory\n" +
+                "          /current1/working2/directory3\n" +
+                "        homeDirectory\n" +
+                "          /home/user\n" +
+                "        indentation\n" +
+                "          \"  \" (walkingkooka.text.Indentation)\n" +
+                "        lineEnding\n" +
+                "          \"\\n\"\n" +
+                "        locale\n" +
+                "          en_AU (java.util.Locale)\n" +
+                "        now\n" +
+                "          1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
+                "        serverUrl\n" +
+                "          https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "        spreadsheetId\n" +
+                "          123\n" +
+                "        timeOffset\n" +
+                "          Z (java.time.ZoneOffset)\n" +
+                "        user\n" +
+                "          user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  storage\n" +
                 "    FakeStorage (walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextBasicTest$1)\n"
         );

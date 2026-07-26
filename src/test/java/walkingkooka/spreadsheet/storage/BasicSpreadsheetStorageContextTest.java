@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -66,6 +65,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContexts;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.Storages;
@@ -1092,14 +1092,9 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             )
         );
 
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            BasicSpreadsheetStorageContextTest.CURRENT_WORKING_DIRECTORY
-        );
-
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             BasicSpreadsheetStorageContextTest.SERVER_URL
         );
@@ -1107,7 +1102,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             storage,
-            environmentContext
+            storageEnvironmentContext
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(
@@ -1153,7 +1148,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
                             @Override
                             public void setLocale(final Locale locale) {
-                                environmentContext.setLocale(locale);
+                                storageEnvironmentContext.setLocale(locale);
                             }
 
                             @Override

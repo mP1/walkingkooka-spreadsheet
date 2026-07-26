@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -98,23 +99,19 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         }
     };
 
-    private static EnvironmentContext spreadsheetEnvironmentContextEnvironmentContext() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+    private static StorageEnvironmentContext storageEnvironmentContext() {
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            SpreadsheetContextSharedTestCase.CURRENT_WORKING_DIRECTORY
-        );
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
 
-        return environmentContext;
+        return storageEnvironmentContext;
     }
 
     final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
@@ -122,7 +119,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            spreadsheetEnvironmentContextEnvironmentContext()
+            storageEnvironmentContext()
         )
     );
 
@@ -236,15 +233,15 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     @Test
     public final void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            environmentContext
+            storageEnvironmentContext
         );
 
         final C context = this.createContext(spreadsheetEnvironmentContext);
@@ -256,15 +253,15 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     @Test
     public final void testSetEnvironmentContext() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            environmentContext
+            storageEnvironmentContext
         );
 
         final EnvironmentContext differentEnvironmentContext = spreadsheetEnvironmentContext.cloneEnvironment();
@@ -449,7 +446,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/home/user, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 

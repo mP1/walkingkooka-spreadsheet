@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageEnvironmentContextDelegator;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
@@ -32,24 +32,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetEnvironmentContext} that wraps a {@link EnvironmentContext}, with guards to stop attempts to
+ * A {@link SpreadsheetEnvironmentContext} that wraps a {@link StorageEnvironmentContext}, with guards to stop attempts to
  * set/remove {@link #SERVER_URL}.
  * <br>
- * Note if the given {@link EnvironmentContext} is a {@link SpreadsheetEnvironmentContext} it is not wrapped and returned.
+ * Note if the given {@link StorageEnvironmentContext} is a {@link SpreadsheetEnvironmentContext} it is not wrapped and returned.
  */
 final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironmentContext,
-    EnvironmentContextDelegator,
+    StorageEnvironmentContextDelegator,
     TreePrintable {
 
     static SpreadsheetEnvironmentContext with(final Storage<SpreadsheetStorageContext> storage,
-                                              final EnvironmentContext environmentContext) {
+                                              final StorageEnvironmentContext storageEnvironmentContext) {
         Objects.requireNonNull(storage, "storage");
-        Objects.requireNonNull(environmentContext, "environmentContext");
+        Objects.requireNonNull(storageEnvironmentContext, "storageEnvironmentContext");
 
         SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = null;
 
-        if (environmentContext instanceof SpreadsheetEnvironmentContext) {
-            spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) environmentContext;
+        if (storageEnvironmentContext instanceof SpreadsheetEnvironmentContext) {
+            spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) storageEnvironmentContext;
             if (false == spreadsheetEnvironmentContext.storage().equals(storage)) {
                 spreadsheetEnvironmentContext = null;
             }
@@ -58,7 +58,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
         if (null == spreadsheetEnvironmentContext) {
             spreadsheetEnvironmentContext = new SpreadsheetEnvironmentContextBasic(
                 storage,
-                environmentContext
+                storageEnvironmentContext
             );
         }
 
@@ -66,7 +66,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     }
 
     private SpreadsheetEnvironmentContextBasic(final Storage<SpreadsheetStorageContext> storage,
-                                               final EnvironmentContext context) {
+                                               final StorageEnvironmentContext context) {
         super();
 
         this.storage = storage;
@@ -74,32 +74,6 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     }
 
     // SpreadsheetEnvironmentContext....................................................................................
-
-    @Override
-    public Optional<StoragePath> currentWorkingDirectory() {
-        return this.environmentValue(CURRENT_WORKING_DIRECTORY);
-    }
-
-    @Override
-    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
-        this.setOrRemoveEnvironmentValue(
-            CURRENT_WORKING_DIRECTORY,
-            currentWorkingDirectory
-        );
-    }
-
-    @Override
-    public Optional<StoragePath> homeDirectory() {
-        return this.environmentValue(HOME_DIRECTORY);
-    }
-
-    @Override
-    public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
-        this.setOrRemoveEnvironmentValue(
-            HOME_DIRECTORY,
-            homeDirectory
-        );
-    }
 
     @Override
     public AbsoluteUrl serverUrl() {
@@ -137,12 +111,23 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
 
     @Override
     public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return this.context == environmentContext ?
-            this :
-            SpreadsheetEnvironmentContextBasic.with(
-            this.storage,
-            environmentContext
-        );
+        SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
+
+        if (environmentContext instanceof SpreadsheetEnvironmentContext) {
+            spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) environmentContext;
+        } else {
+            final StorageEnvironmentContext before = this.context;
+            final StorageEnvironmentContext after = before.setEnvironmentContext(environmentContext);
+
+            spreadsheetEnvironmentContext = before == after ?
+                this :
+                SpreadsheetEnvironmentContextBasic.with(
+                    this.storage,
+                    after
+                );
+        }
+
+        return spreadsheetEnvironmentContext;
     }
 
     @Override
@@ -168,11 +153,11 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     }
 
     @Override
-    public EnvironmentContext environmentContext() {
+    public StorageEnvironmentContext storageEnvironmentContext() {
         return this.context;
     }
 
-    private final EnvironmentContext context;
+    private final StorageEnvironmentContext context;
 
     // Object...........................................................................................................
 

@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 
 import java.time.ZoneOffset;
@@ -94,15 +94,15 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
 
     @Test
     public void testSetSpreadsheetEnvironmentContextWithSame() {
-        final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
+        final SpreadsheetEnvironmentContext notReadOnly = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(empty);
+        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(notReadOnly);
 
         assertSame(
-            readOnly.setEnvironmentContext(empty),
-            empty
+            readOnly.setEnvironmentContext(notReadOnly),
+            readOnly
         );
     }
 
@@ -110,22 +110,19 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     public void testSetSpreadsheetEnvironmentContext() {
         final Storage<SpreadsheetStorageContext> storage = Storages.fake();
 
-        final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
+        final SpreadsheetEnvironmentContext notReadOnly = SpreadsheetEnvironmentContexts.basic(
             storage,
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(empty);
-
-        final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
-        differentEnvironmentContext.setLocale(DIFFERENT_LOCALE);
+        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(notReadOnly);
 
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
             storage,
-            differentEnvironmentContext
+            DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT
         );
 
         this.checkNotEquals(
-            empty,
+            notReadOnly,
             different
         );
 
@@ -379,21 +376,17 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
 
     @Override
     public SpreadsheetEnvironmentContextReadOnly createContext() {
-        final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        context.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            CURRENT_WORKING_DIRECTORY
-        );
-        context.setLocale(LOCALE);
-        context.setEnvironmentValue(
+        storageEnvironmentContext.setLocale(LOCALE);
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            context
+            storageEnvironmentContext
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
@@ -408,6 +401,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
             SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            SpreadsheetEnvironmentContext.HOME_DIRECTORY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -442,7 +436,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/home/user, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -455,29 +449,32 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
             "SpreadsheetEnvironmentContextReadOnly\n" +
                 "  SpreadsheetEnvironmentContextBasic\n" +
                 "    environment\n" +
-                "      EnvironmentContextSharedMap\n" +
-                "        charset\n" +
-                "          UTF-8 (sun.nio.cs.UTF_8)\n" +
-                "        currency\n" +
-                "          AUD (java.util.Currency)\n" +
-                "        currentWorkingDirectory\n" +
-                "          /current1/working2/directory3\n" +
-                "        indentation\n" +
-                "          \"  \" (walkingkooka.text.Indentation)\n" +
-                "        lineEnding\n" +
-                "          \"\\n\"\n" +
-                "        locale\n" +
-                "          en_AU (java.util.Locale)\n" +
-                "        now\n" +
-                "          1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
-                "        serverUrl\n" +
-                "          https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
-                "        spreadsheetId\n" +
-                "          123\n" +
-                "        timeOffset\n" +
-                "          Z (java.time.ZoneOffset)\n" +
-                "        user\n" +
-                "          user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "      StorageEnvironmentContextBasic\n" +
+                "        EnvironmentContextSharedMap\n" +
+                "          charset\n" +
+                "            UTF-8 (sun.nio.cs.UTF_8)\n" +
+                "          currency\n" +
+                "            AUD (java.util.Currency)\n" +
+                "          currentWorkingDirectory\n" +
+                "            /current1/working2/directory3\n" +
+                "          homeDirectory\n" +
+                "            /home/user\n" +
+                "          indentation\n" +
+                "            \"  \" (walkingkooka.text.Indentation)\n" +
+                "          lineEnding\n" +
+                "            \"\\n\"\n" +
+                "          locale\n" +
+                "            en_AU (java.util.Locale)\n" +
+                "          now\n" +
+                "            1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
+                "          serverUrl\n" +
+                "            https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "          spreadsheetId\n" +
+                "            123\n" +
+                "          timeOffset\n" +
+                "            Z (java.time.ZoneOffset)\n" +
+                "          user\n" +
+                "            user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "    storage\n" +
                 "       (walkingkooka.storage.StorageSharedEmpty)\n"
         );

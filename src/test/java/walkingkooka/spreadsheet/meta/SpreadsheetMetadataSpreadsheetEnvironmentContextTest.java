@@ -20,21 +20,19 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 
 import java.math.RoundingMode;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
@@ -43,15 +41,14 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     static {
-        final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext context = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        CONTEXT = SpreadsheetEnvironmentContexts.basic(
-            STORAGE,
-            EnvironmentContexts.readOnly(
-                Predicates.always(), // all properties are read-only
+        CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+            SpreadsheetEnvironmentContexts.basic(
+                STORAGE,
                 context
             )
         );
@@ -144,7 +141,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT;
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT.cloneEnvironment();
         final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
@@ -153,7 +150,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
 
         final SpreadsheetEnvironmentContext afterSet = spreadsheetMetadataSpreadsheetEnvironmentContext.setEnvironmentContext(spreadsheetEnvironmentContext);
-        assertSame(
+        this.checkEquals(
             spreadsheetMetadataSpreadsheetEnvironmentContext,
             afterSet
         );
@@ -161,15 +158,14 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetEnvironmentContextWithDifferent() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT;
         final SpreadsheetMetadata metadata = METADATA;
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             metadata,
-            spreadsheetEnvironmentContext
+            CONTEXT
         );
 
-        final EnvironmentContext afterSet = spreadsheetMetadataSpreadsheetEnvironmentContext.setEnvironmentContext(DIFFERENT_ENVIRONMENT_CONTEXT);
+        final EnvironmentContext afterSet = spreadsheetMetadataSpreadsheetEnvironmentContext.setEnvironmentContext(DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT);
         assertNotSame(
             spreadsheetMetadataSpreadsheetEnvironmentContext,
             afterSet
@@ -180,7 +176,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 metadata,
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
-                    DIFFERENT_ENVIRONMENT_CONTEXT
+                    DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT
                 )
             ),
             afterSet
@@ -196,11 +192,13 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetMetadata.EMPTY,
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            SpreadsheetEnvironmentContext.HOME_DIRECTORY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -220,11 +218,13 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            SpreadsheetEnvironmentContext.HOME_DIRECTORY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -264,6 +264,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
             SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            SpreadsheetEnvironmentContext.HOME_DIRECTORY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -516,7 +518,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, indentation=  , lineEnding=\\n, locale=en_AU, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/home/user, indentation=  , lineEnding=\\n, locale=en_AU, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -727,6 +729,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    url-to-image\n" +
                 "  currency\n" +
                 "    AUD (java.util.Currency)\n" +
+                "  currentWorkingDirectory\n" +
+                "    /current1/working2/directory3\n" +
                 "  dateFormatter\n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
@@ -868,6 +872,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
                 "  formulaFunctions\n" +
                 "  functions\n" +
+                "  homeDirectory\n" +
+                "    /home/user\n" +
                 "  importers\n" +
                 "    collection\n" +
                 "    empty\n" +

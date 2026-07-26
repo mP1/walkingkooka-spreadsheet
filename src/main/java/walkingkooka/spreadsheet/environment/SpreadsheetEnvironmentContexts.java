@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.environment;
 
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 
 /**
  * A collection of factory methods for {@link SpreadsheetEnvironmentContext}.
@@ -31,7 +31,7 @@ public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper 
      * {@see SpreadsheetEnvironmentContextBasic}
      */
     public static SpreadsheetEnvironmentContext basic(final Storage<SpreadsheetStorageContext> storage,
-                                                      final EnvironmentContext context) {
+                                                      final StorageEnvironmentContext context) {
         return SpreadsheetEnvironmentContextBasic.with(
             storage,
             context

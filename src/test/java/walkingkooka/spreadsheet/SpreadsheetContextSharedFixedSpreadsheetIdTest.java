@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.http.server.HttpHandler;
@@ -46,6 +45,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
@@ -393,17 +393,13 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
     @Override
     public SpreadsheetContextSharedFixedSpreadsheetId createContext() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            CURRENT_WORKING_DIRECTORY
-        );
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
@@ -411,7 +407,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
                 STORAGE,
-                environmentContext
+                storageEnvironmentContext
             )
         );
     }

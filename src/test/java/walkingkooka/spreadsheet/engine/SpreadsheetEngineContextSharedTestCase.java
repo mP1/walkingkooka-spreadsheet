@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
@@ -841,7 +842,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
                 STORAGE,
-                environmentContext
+                StorageEnvironmentContexts.basic(environmentContext)
             )
         );
     }

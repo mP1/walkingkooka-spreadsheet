@@ -153,7 +153,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             SpreadsheetMetadata.EMPTY.spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.basic(
                     Storages.fake(),
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             EnvironmentValueName.with(
