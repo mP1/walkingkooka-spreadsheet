@@ -66,7 +66,6 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -83,21 +82,18 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedExpression>
     implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSharedExpression>,
     SpreadsheetMetadataTesting {
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
-
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(
             SpreadsheetMetadataPropertyName.LOCALE,
-            Locale.forLanguageTag("en-AU")
+            LOCALE
         ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
         .set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
