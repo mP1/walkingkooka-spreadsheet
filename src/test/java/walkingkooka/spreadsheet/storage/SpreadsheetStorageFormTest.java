@@ -24,7 +24,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.plugin.ProviderContext;
@@ -570,9 +569,8 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             spreadsheetId

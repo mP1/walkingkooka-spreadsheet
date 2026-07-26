@@ -24,7 +24,6 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -100,9 +99,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     };
 
     private static EnvironmentContext spreadsheetEnvironmentContextEnvironmentContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             SpreadsheetContextSharedTestCase.CURRENT_WORKING_DIRECTORY
@@ -238,9 +236,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     @Test
     public final void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
@@ -259,9 +256,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     @Test
     public final void testSetEnvironmentContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID

@@ -43,9 +43,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     static {
-        final EnvironmentContext context = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL

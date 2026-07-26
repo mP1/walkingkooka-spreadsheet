@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
@@ -339,9 +338,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testSetLineEnding() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
@@ -376,9 +373,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testSetLocale() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
@@ -421,9 +416,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testSetEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.map(
-                SPREADSHEET_ENVIRONMENT_CONTEXT
-            )
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(

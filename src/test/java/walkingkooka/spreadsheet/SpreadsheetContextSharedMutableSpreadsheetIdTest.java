@@ -23,7 +23,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
@@ -462,9 +461,8 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
 
     @Override
     public SpreadsheetContextSharedMutableSpreadsheetId createContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             SpreadsheetContextSharedMutableSpreadsheetIdTest.CURRENT_WORKING_DIRECTORY

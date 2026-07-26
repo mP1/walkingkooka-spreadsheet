@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
@@ -387,9 +386,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
 
     @Override
     public ReadOnlySpreadsheetEnvironmentContext createContext() {
-        final EnvironmentContext context = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,

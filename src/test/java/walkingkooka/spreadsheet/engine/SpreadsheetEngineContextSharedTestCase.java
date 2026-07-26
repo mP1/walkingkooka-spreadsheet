@@ -24,7 +24,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -507,9 +506,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testIndentation() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         this.indentationAndCheck(
             this.createContext(environmentContext),
@@ -519,9 +516,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testSetIndentation() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final C context = this.createContext(environmentContext);
 
@@ -544,9 +539,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testLineEnding() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         this.lineEndingAndCheck(
             this.createContext(environmentContext),
@@ -556,9 +549,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testSetLineEnding() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final C context = this.createContext(environmentContext);
 
@@ -585,9 +576,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testLocale() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         this.localeAndCheck(
             this.createContext(environmentContext),

@@ -38,7 +38,6 @@ import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContextTesting;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
@@ -1872,9 +1871,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .spreadsheetEnvironmentContext(
                     SpreadsheetEnvironmentContexts.basic(
                         Storages.fake(),
-                        EnvironmentContexts.map(
-                            ENVIRONMENT_CONTEXT.cloneEnvironment()
-                        )
+                        ENVIRONMENT_CONTEXT.cloneEnvironment()
                     )
                 ),
             EnvironmentValueName.with(
