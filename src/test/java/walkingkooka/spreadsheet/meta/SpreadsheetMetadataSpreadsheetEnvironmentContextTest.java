@@ -169,17 +169,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             spreadsheetEnvironmentContext
         );
 
-        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(
-            CONTEXT.cloneEnvironment()
-        );
-        differentEnvironmentContext.setLocale(Locale.GERMAN);
-
-        this.checkNotEquals(
-            spreadsheetEnvironmentContext,
-            differentEnvironmentContext
-        );
-
-        final EnvironmentContext afterSet = spreadsheetMetadataSpreadsheetEnvironmentContext.setEnvironmentContext(differentEnvironmentContext);
+        final EnvironmentContext afterSet = spreadsheetMetadataSpreadsheetEnvironmentContext.setEnvironmentContext(DIFFERENT_ENVIRONMENT_CONTEXT);
         assertNotSame(
             spreadsheetMetadataSpreadsheetEnvironmentContext,
             afterSet
@@ -190,7 +180,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 metadata,
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
-                    differentEnvironmentContext
+                    DIFFERENT_ENVIRONMENT_CONTEXT
                 )
             ),
             afterSet
