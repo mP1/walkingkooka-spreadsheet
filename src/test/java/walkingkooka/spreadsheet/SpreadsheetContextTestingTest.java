@@ -112,6 +112,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
     }
 
     @Override
+    public void testSetServerWithDifferentUrlFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetTimeOffsetWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }

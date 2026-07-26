@@ -115,6 +115,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
     }
 
     @Override
+    public void testSetServerWithDifferentUrlFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetTimeOffsetWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
