@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
@@ -314,24 +313,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testSetEnvironmentContextWithDifferent() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
 
-        final LineEnding lineEnding = LineEnding.CRNL;
-
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
-        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
-            CHARSET,
-            CURRENCY,
-            INDENTATION,
-            lineEnding,
-            LOCALE,
-            HAS_NOW,
-            EnvironmentContext.ANONYMOUS
-        );
-
-        final SpreadsheetExpressionEvaluationContext afterSet = context.setEnvironmentContext(differentEnvironmentContext);
+        final SpreadsheetExpressionEvaluationContext afterSet = context.setEnvironmentContext(DIFFERENT_ENVIRONMENT_CONTEXT);
         this.checkNotEquals(
             context,
             afterSet
