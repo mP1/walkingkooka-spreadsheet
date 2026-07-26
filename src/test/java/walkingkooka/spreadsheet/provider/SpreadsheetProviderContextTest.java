@@ -26,7 +26,6 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
@@ -268,9 +267,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Override
     public SpreadsheetProviderContext createContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             ENVIRONMENT_VALUE_NAME,
             ENVIRONMENT_VALUE
