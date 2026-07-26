@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2Test.TestSpreadsheetEnvironmentContext;
@@ -158,9 +157,8 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
         }
 
         {
-            final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            );
+            final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
             environmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,
                 SpreadsheetEnvironmentContextTesting2Test.SERVER_URL

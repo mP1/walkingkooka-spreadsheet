@@ -28,7 +28,6 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleContextTesting;
@@ -469,9 +468,8 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     
     @Override
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL

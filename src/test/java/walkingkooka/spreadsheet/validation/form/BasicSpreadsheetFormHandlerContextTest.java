@@ -25,7 +25,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.net.email.EmailAddress;
@@ -588,9 +587,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                     return this.environmentContext.addEnvironmentWatcherOnce(watcher);
                 }
 
-                private final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
-                );
+                private final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
             }
         );
     }

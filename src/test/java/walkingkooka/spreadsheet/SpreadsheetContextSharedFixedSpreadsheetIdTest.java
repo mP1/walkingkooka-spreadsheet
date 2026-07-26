@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.http.server.HttpHandler;
@@ -394,9 +393,8 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
     @Override
     public SpreadsheetContextSharedFixedSpreadsheetId createContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             CURRENT_WORKING_DIRECTORY

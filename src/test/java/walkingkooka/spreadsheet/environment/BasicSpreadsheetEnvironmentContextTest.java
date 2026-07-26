@@ -171,9 +171,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testCurrentWorkingDirectoryMissing() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         this.currentWorkingDirectoryAndCheck(
             BasicSpreadsheetEnvironmentContext.with(
@@ -222,9 +220,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testServerUrl() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
@@ -267,9 +264,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             (BasicSpreadsheetEnvironmentContext)
                 BasicSpreadsheetEnvironmentContext.with(
                     STORAGE,
-                    EnvironmentContexts.map(
-                        ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    )
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
                 ),
             SPREADSHEET_ID
         );
@@ -280,9 +275,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         final BasicSpreadsheetEnvironmentContext context = (BasicSpreadsheetEnvironmentContext)
             BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
-                EnvironmentContexts.map(
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
-                )
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
             );
 
         this.setSpreadsheetIdAndCheck(
@@ -407,7 +400,9 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Override
     public BasicSpreadsheetEnvironmentContext createContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment());
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
         
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,

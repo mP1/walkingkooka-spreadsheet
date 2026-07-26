@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegateTest.TestSpreadsheetEnvironmentContextFactoryDelegate;
@@ -69,9 +68,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
         }
 
         {
-            final EnvironmentContext context = EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            );
+            final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
             context.setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE);
             context.setEnvironmentValue(

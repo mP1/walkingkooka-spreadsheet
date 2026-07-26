@@ -31,7 +31,6 @@ import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -1316,7 +1315,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     }
 
     private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-        final EnvironmentContext context = EnvironmentContexts.map(ENVIRONMENT_CONTEXT.cloneEnvironment());
+        final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,

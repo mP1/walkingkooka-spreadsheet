@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
@@ -105,9 +104,8 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
 
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-            final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            );
+            final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
             environmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,
                 SpreadsheetEnvironmentContextDelegatorTest.SERVER_URL

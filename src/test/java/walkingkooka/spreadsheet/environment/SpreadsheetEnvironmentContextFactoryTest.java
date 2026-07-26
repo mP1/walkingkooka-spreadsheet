@@ -25,7 +25,6 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -363,9 +362,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetCurrency() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
@@ -405,9 +402,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetIndentation() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.setIndentationAndCheck(
@@ -435,9 +430,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetLineEnding() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.setLineEndingAndCheck(
@@ -463,9 +456,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetLocale() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            )
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
