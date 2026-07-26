@@ -68,7 +68,6 @@ import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -85,7 +84,6 @@ import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -336,23 +334,14 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testSetLineEnding() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            STORAGE,
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
-
-        final LineEnding lineEnding = LineEnding.CRNL;
-
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
         this.setLineEndingAndCheck(
-            context,
-            lineEnding
+            this.createContext(
+                SpreadsheetEnvironmentContexts.basic(
+                    STORAGE,
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                )
+            ),
+            DIFFERENT_LINE_ENDING
         );
     }
 
@@ -371,19 +360,15 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testSetLocale() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            STORAGE,
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
-
-        final Locale locale = Locale.GERMAN;
-        context.setLocale(locale);
-
-        this.localeAndCheck(
-            context,
-            locale
+        this.setLocaleAndCheck(
+            (SpreadsheetEnvironmentContext)
+                this.createContext(
+                    SpreadsheetEnvironmentContexts.basic(
+                        STORAGE,
+                        ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    )
+                ),
+            DIFFERENT_LOCALE
         );
     }
 
