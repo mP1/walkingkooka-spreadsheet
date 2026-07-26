@@ -32,26 +32,26 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReadOnlySpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<ReadOnlySpreadsheetEnvironmentContext>,
-    ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
+public final class SpreadsheetEnvironmentContextReadOnlyTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextReadOnly>,
+    ToStringTesting<SpreadsheetEnvironmentContextReadOnly> {
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ReadOnlySpreadsheetEnvironmentContext.with(null)
+            () -> SpreadsheetEnvironmentContextReadOnly.with(null)
         );
     }
 
     @Test
     public void testWithUnwraps() {
-        final ReadOnlySpreadsheetEnvironmentContext context = ReadOnlySpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextReadOnly context = SpreadsheetEnvironmentContextReadOnly.with(
             SpreadsheetEnvironmentContexts.fake()
         );
 
         assertSame(
             context,
-            ReadOnlySpreadsheetEnvironmentContext.with(context)
+            SpreadsheetEnvironmentContextReadOnly.with(context)
         );
     }
 
@@ -59,7 +59,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
 
     @Test
     public void testCloneEnvironment() {
-        final ReadOnlySpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetEnvironmentContextReadOnly context = this.createContext();
 
         assertNotSame(
             context,
@@ -69,7 +69,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
 
     @Test
     public void testCloneEnvironmentNotReadOnly() {
-        final ReadOnlySpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetEnvironmentContextReadOnly context = this.createContext();
 
         final SpreadsheetEnvironmentContext cloned = context.cloneEnvironment();
         assertNotSame(
@@ -98,7 +98,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             Storages.fake(),
             ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        final ReadOnlySpreadsheetEnvironmentContext readOnly = ReadOnlySpreadsheetEnvironmentContext.with(empty);
+        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(empty);
 
         assertSame(
             readOnly.setEnvironmentContext(empty),
@@ -114,7 +114,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             storage,
             ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        final ReadOnlySpreadsheetEnvironmentContext readOnly = ReadOnlySpreadsheetEnvironmentContext.with(empty);
+        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(empty);
 
         final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
         differentEnvironmentContext.setLocale(DIFFERENT_LOCALE);
@@ -378,7 +378,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     }
 
     @Override
-    public ReadOnlySpreadsheetEnvironmentContext createContext() {
+    public SpreadsheetEnvironmentContextReadOnly createContext() {
         final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         context.setEnvironmentValue(
@@ -397,7 +397,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
-        return ReadOnlySpreadsheetEnvironmentContext.with(spreadsheetEnvironmentContext);
+        return SpreadsheetEnvironmentContextReadOnly.with(spreadsheetEnvironmentContext);
     }
 
     // environmentValueNames............................................................................................
@@ -424,7 +424,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testStorage() {
         this.storageAndCheck(
-            ReadOnlySpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextReadOnly.with(
                 new FakeSpreadsheetEnvironmentContext() {
                     @Override
                     public Storage<SpreadsheetStorageContext> storage() {
@@ -452,7 +452,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testTreePrint() {
         this.treePrintAndCheck(
             this.createContext(),
-            "ReadOnlySpreadsheetEnvironmentContext\n" +
+            "SpreadsheetEnvironmentContextReadOnly\n" +
                 "  SpreadsheetEnvironmentContextBasic\n" +
                 "    environment\n" +
                 "      EnvironmentContextSharedMap\n" +
@@ -483,17 +483,15 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
     }
 
-    // type naming......................................................................................................
-
-    @Override
-    public String typeNameSuffix() {
-        return SpreadsheetEnvironmentContext.class.getSimpleName();
-    }
-
     // class............................................................................................................
 
     @Override
-    public Class<ReadOnlySpreadsheetEnvironmentContext> type() {
-        return ReadOnlySpreadsheetEnvironmentContext.class;
+    public Class<SpreadsheetEnvironmentContextReadOnly> type() {
+        return SpreadsheetEnvironmentContextReadOnly.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
