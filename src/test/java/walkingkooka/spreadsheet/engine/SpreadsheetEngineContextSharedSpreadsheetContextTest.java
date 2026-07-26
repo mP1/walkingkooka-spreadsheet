@@ -105,7 +105,6 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -1712,17 +1711,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     public void testEqualsDifferentSpreadsheetContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    CHARSET,
-                    CURRENCY,
-                    INDENTATION,
-                    LineEnding.CRNL,
-                    Locale.FRANCE,
-                    LocalDateTime::now,
-                    EnvironmentContext.ANONYMOUS
-                )
-            )
+            DIFFERENT_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
