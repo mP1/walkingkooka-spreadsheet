@@ -53,7 +53,6 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.lang.reflect.Field;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -454,19 +453,14 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
     @Test
     public void testSetLocale() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
-
-        final Locale locale = Locale.GERMAN;
-        context.setLocale(locale);
-
-        this.localeAndCheck(
-            context,
-            locale
+        this.setLocaleAndCheck(
+            this.createContext(
+                SpreadsheetEnvironmentContexts.basic(
+                    Storages.fake(),
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                )
+            ),
+            DIFFERENT_LOCALE
         );
     }
 
