@@ -38,6 +38,8 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
+    AbsoluteUrl DIFFERENT_SERVER_URL = Url.parseAbsolute("https://example.com/different");
+
     SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(0x123);
 
     Optional<SpreadsheetId> OPTIONAL_SPREADSHEET_ID = Optional.of(SPREADSHEET_ID);
