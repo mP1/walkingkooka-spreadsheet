@@ -152,6 +152,16 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     // setEnvironmentContext............................................................................................
 
     @Test
+    public void testSetEnvironmentContextWithSelf() {
+        final SpreadsheetEnvironmentContext context = this.createContext();
+
+        assertSame(
+            context,
+            context.setEnvironmentContext(context)
+        );
+    }
+
+    @Test
     public void testSetEnvironmentContextWithSpreadsheetEnvironmentContext() {
         final SpreadsheetEnvironmentContext context = this.createContext();
 
