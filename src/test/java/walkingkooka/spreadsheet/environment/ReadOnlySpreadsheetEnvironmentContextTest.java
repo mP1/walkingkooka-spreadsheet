@@ -35,13 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<ReadOnlySpreadsheetEnvironmentContext>,
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
-//    private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
-//        @Override
-//        public String toString() {
-//            return FakeStorage.class.getSimpleName();
-//        }
-//    };
-
     @Test
     public void testWithNullContextFails() {
         assertThrows(
