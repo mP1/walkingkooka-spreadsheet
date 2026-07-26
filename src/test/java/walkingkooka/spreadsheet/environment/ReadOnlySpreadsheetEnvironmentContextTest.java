@@ -453,7 +453,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         this.treePrintAndCheck(
             this.createContext(),
             "ReadOnlySpreadsheetEnvironmentContext\n" +
-                "  BasicSpreadsheetEnvironmentContext\n" +
+                "  SpreadsheetEnvironmentContextBasic\n" +
                 "    environment\n" +
                 "      EnvironmentContextSharedMap\n" +
                 "        charset\n" +

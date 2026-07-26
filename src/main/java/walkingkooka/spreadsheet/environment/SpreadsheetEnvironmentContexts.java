@@ -28,11 +28,11 @@ import walkingkooka.storage.Storage;
 public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetEnvironmentContext}
+     * {@see SpreadsheetEnvironmentContextBasic}
      */
     public static SpreadsheetEnvironmentContext basic(final Storage<SpreadsheetStorageContext> storage,
                                                       final EnvironmentContext context) {
-        return BasicSpreadsheetEnvironmentContext.with(
+        return SpreadsheetEnvironmentContextBasic.with(
             storage,
             context
         );
