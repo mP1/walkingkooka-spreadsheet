@@ -597,32 +597,12 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testSetLocale() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                CHARSET,
-                CURRENCY,
-                INDENTATION,
-                LINE_ENDING,
-                Locale.FRANCE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
-        );
-
-        final C context = this.createContext(environmentContext);
-
-        final Locale locale = Locale.GERMAN;
-        context.setLocale(locale);
-
-        this.localeAndCheck(
-            context,
-            locale
-        );
-
-        this.environmentValueAndCheck(
-            context,
-            EnvironmentValueName.LOCALE,
-            locale
+        this.setLocaleAndCheck(
+            (EnvironmentContext)
+            this.createContext(
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
+            ),
+            DIFFERENT_LOCALE
         );
     }
 
