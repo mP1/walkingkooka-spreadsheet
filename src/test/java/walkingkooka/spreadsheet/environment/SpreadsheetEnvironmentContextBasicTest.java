@@ -400,9 +400,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
     @Override
     public SpreadsheetEnvironmentContextBasic createContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
         
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
@@ -463,7 +461,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 

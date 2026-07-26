@@ -442,7 +442,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
