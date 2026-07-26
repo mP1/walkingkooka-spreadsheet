@@ -68,6 +68,24 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
         );
     }
 
+    SpreadsheetEnvironmentContext DIFFERENT_SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
+        STORAGE,
+        differentEnvironmentContext()
+    );
+
+    private static EnvironmentContext differentEnvironmentContext() {
+        final EnvironmentContext environmentContext = DIFFERENT_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            DIFFERENT_SERVER_URL
+        );
+
+        return EnvironmentContexts.readOnly(
+            Predicates.always(), // all values are read-only
+            environmentContext
+        );
+    }
+
     // serverUrl........................................................................................................
 
     @Override
