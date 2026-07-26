@@ -44,24 +44,24 @@ import java.util.Set;
  * Wraps another {@link SpreadsheetEnvironmentContext} presenting a read only view, with all setXXX and removeXXX
  * throwing {@link UnsupportedOperationException}.
  */
-final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext,
+final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironmentContext,
     TreePrintable {
 
-    static ReadOnlySpreadsheetEnvironmentContext with(final SpreadsheetEnvironmentContext context) {
-        ReadOnlySpreadsheetEnvironmentContext readOnlySpreadsheetEnvironmentContext;
+    static SpreadsheetEnvironmentContextReadOnly with(final SpreadsheetEnvironmentContext context) {
+        SpreadsheetEnvironmentContextReadOnly readOnly;
 
         Objects.requireNonNull(context, "context");
 
-        if (context instanceof ReadOnlySpreadsheetEnvironmentContext) {
-            readOnlySpreadsheetEnvironmentContext = (ReadOnlySpreadsheetEnvironmentContext) context;
+        if (context instanceof SpreadsheetEnvironmentContextReadOnly) {
+            readOnly = (SpreadsheetEnvironmentContextReadOnly) context;
         } else {
-            readOnlySpreadsheetEnvironmentContext = new ReadOnlySpreadsheetEnvironmentContext(context);
+            readOnly = new SpreadsheetEnvironmentContextReadOnly(context);
         }
 
-        return readOnlySpreadsheetEnvironmentContext;
+        return readOnly;
     }
 
-    private ReadOnlySpreadsheetEnvironmentContext(final SpreadsheetEnvironmentContext context) {
+    private SpreadsheetEnvironmentContextReadOnly(final SpreadsheetEnvironmentContext context) {
         super();
         this.context = context;
     }
@@ -278,11 +278,11 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof ReadOnlySpreadsheetEnvironmentContext &&
-                this.equals0((ReadOnlySpreadsheetEnvironmentContext) other));
+            (other instanceof SpreadsheetEnvironmentContextReadOnly &&
+                this.equals0((SpreadsheetEnvironmentContextReadOnly) other));
     }
 
-    private boolean equals0(final ReadOnlySpreadsheetEnvironmentContext other) {
+    private boolean equals0(final SpreadsheetEnvironmentContextReadOnly other) {
         return this.context.equals(other.context);
     }
 
