@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.storage;
 import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.net.AbsoluteUrl;
@@ -228,9 +227,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         {
-            final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-            );
+            final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
             environmentContext.setEnvironmentValue(
                 SPREADSHEET_ID,
                 SpreadsheetId.with(1)
