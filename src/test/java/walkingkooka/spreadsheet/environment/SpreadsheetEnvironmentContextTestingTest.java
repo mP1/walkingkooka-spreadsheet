@@ -41,6 +41,14 @@ public final class SpreadsheetEnvironmentContextTestingTest implements Spreadshe
             .setCharset(DIFFERENT_CHARSET);
     }
 
+    @Test
+    public void testDifferentSpreadsheetEnvironmentContext() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT,
+            SpreadsheetEnvironmentContextTesting.DIFFERENT_SPREADSHEET_ENVIRONMENT_CONTEXT
+        );
+    }
+
     // class............................................................................................................
 
     @Override
