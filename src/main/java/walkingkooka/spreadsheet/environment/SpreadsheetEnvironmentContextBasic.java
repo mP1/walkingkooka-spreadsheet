@@ -37,7 +37,7 @@ import java.util.Optional;
  * <br>
  * Note if the given {@link EnvironmentContext} is a {@link SpreadsheetEnvironmentContext} it is not wrapped and returned.
  */
-final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext,
+final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator,
     TreePrintable {
 
@@ -56,7 +56,7 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
         }
 
         if (null == spreadsheetEnvironmentContext) {
-            spreadsheetEnvironmentContext = new BasicSpreadsheetEnvironmentContext(
+            spreadsheetEnvironmentContext = new SpreadsheetEnvironmentContextBasic(
                 storage,
                 environmentContext
             );
@@ -65,7 +65,7 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
         return spreadsheetEnvironmentContext;
     }
 
-    private BasicSpreadsheetEnvironmentContext(final Storage<SpreadsheetStorageContext> storage,
+    private SpreadsheetEnvironmentContextBasic(final Storage<SpreadsheetStorageContext> storage,
                                                final EnvironmentContext context) {
         super();
 
@@ -139,7 +139,7 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext) {
         return this.context == environmentContext ?
             this :
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
             this.storage,
             environmentContext
         );
@@ -187,11 +187,11 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof BasicSpreadsheetEnvironmentContext &&
-                this.equals0((BasicSpreadsheetEnvironmentContext) other));
+            (other instanceof SpreadsheetEnvironmentContextBasic &&
+                this.equals0((SpreadsheetEnvironmentContextBasic) other));
     }
 
-    private boolean equals0(final BasicSpreadsheetEnvironmentContext other) {
+    private boolean equals0(final SpreadsheetEnvironmentContextBasic other) {
         return this.storage.equals(other.storage) &&
             this.context.equals(other.context);
     }

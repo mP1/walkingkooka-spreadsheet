@@ -40,10 +40,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<BasicSpreadsheetEnvironmentContext>,
+public final class SpreadsheetEnvironmentContextBasicTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextBasic>,
     SpreadsheetMetadataTesting,
     TreePrintableTesting,
-    ToStringTesting<BasicSpreadsheetEnvironmentContext> {
+    ToStringTesting<SpreadsheetEnvironmentContextBasic> {
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
 
@@ -59,7 +59,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testWithNullStorageFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetEnvironmentContext.with(
+            () -> SpreadsheetEnvironmentContextBasic.with(
                 null,
                 SpreadsheetEnvironmentContexts.fake()
             )
@@ -70,7 +70,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testWithNullSpreadsheetEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetEnvironmentContext.with(
+            () -> SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 null
             )
@@ -88,7 +88,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
         assertSame(
             wrap,
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 wrap
             )
@@ -104,7 +104,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             }
         };
 
-        final BasicSpreadsheetEnvironmentContext basicSpreadsheetEnvironmentContext = (BasicSpreadsheetEnvironmentContext) BasicSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextBasic) SpreadsheetEnvironmentContextBasic.with(
             STORAGE,
             wrap
         );
@@ -124,7 +124,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testWithEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.fake();
 
-        final BasicSpreadsheetEnvironmentContext basicSpreadsheetEnvironmentContext = (BasicSpreadsheetEnvironmentContext) BasicSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextBasic) SpreadsheetEnvironmentContextBasic.with(
             STORAGE,
             environmentContext
         );
@@ -140,7 +140,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         );
     }
 
-    private void environmentContextAndCheck(final BasicSpreadsheetEnvironmentContext basicSpreadsheetEnvironmentContext,
+    private void environmentContextAndCheck(final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext,
                                             final EnvironmentContext environmentContext) {
         assertSame(
             environmentContext,
@@ -174,7 +174,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         this.currentWorkingDirectoryAndCheck(
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 environmentContext
             )
@@ -211,7 +211,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testServerUrlMissing() {
         assertThrows(
             MissingEnvironmentValueException.class,
-            () -> BasicSpreadsheetEnvironmentContext.with(
+            () -> SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 ENVIRONMENT_CONTEXT.cloneEnvironment()
             ).serverUrl()
@@ -228,7 +228,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         );
 
         this.serverUrlAndCheck(
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 environmentContext
             ),
@@ -241,7 +241,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     @Test
     public void testSpreadsheetIdMissing() {
         this.spreadsheetIdAndCheck(
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
@@ -261,8 +261,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     @Test
     public void testSetSpreadsheetId() {
         this.setSpreadsheetIdAndCheck(
-            (BasicSpreadsheetEnvironmentContext)
-                BasicSpreadsheetEnvironmentContext.with(
+            (SpreadsheetEnvironmentContextBasic)
+                SpreadsheetEnvironmentContextBasic.with(
                     STORAGE,
                     ENVIRONMENT_CONTEXT.cloneEnvironment()
                 ),
@@ -272,8 +272,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testSetSpreadsheetId2() {
-        final BasicSpreadsheetEnvironmentContext context = (BasicSpreadsheetEnvironmentContext)
-            BasicSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextBasic context = (SpreadsheetEnvironmentContextBasic)
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 ENVIRONMENT_CONTEXT.cloneEnvironment()
             );
@@ -295,7 +295,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testSetLineEnding() {
-        final BasicSpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
 
         final LineEnding lineEnding = LineEnding.CRNL;
         this.checkNotEquals(
@@ -318,7 +318,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testSetIndentation() {
-        final BasicSpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
 
         final Indentation indentation = Indentation.SPACES4;
         this.checkNotEquals(
@@ -341,7 +341,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testSetLocale() {
-        final BasicSpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
 
         final Locale locale = Locale.GERMANY;
         this.checkNotEquals(
@@ -364,7 +364,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testSetUser() {
-        final BasicSpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
 
         final Optional<EmailAddress> user = Optional.of(DIFFERENT_USER);
         this.checkNotEquals(
@@ -388,7 +388,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     @Test
     public void testStorage() {
         this.storageAndCheck(
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 EnvironmentContexts.fake()
             ),
@@ -399,7 +399,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     // SpreadsheetEnvironmentContext....................................................................................
 
     @Override
-    public BasicSpreadsheetEnvironmentContext createContext() {
+    public SpreadsheetEnvironmentContextBasic createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -418,8 +418,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             SPREADSHEET_ID
         );
 
-        return (BasicSpreadsheetEnvironmentContext)
-            BasicSpreadsheetEnvironmentContext.with(
+        return (SpreadsheetEnvironmentContextBasic)
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 environmentContext
             );
@@ -432,11 +432,11 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         final EnvironmentContext environmentContext = EnvironmentContexts.fake();
 
         this.checkNotEquals(
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 environmentContext
             ),
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 Storages.fake(),
                 environmentContext
             )
@@ -446,11 +446,11 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     @Test
     public void testEqualsDifferentEnvironmentContext() {
         this.checkNotEquals(
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 EnvironmentContexts.fake()
             ),
-            BasicSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextBasic.with(
                 STORAGE,
                 EnvironmentContexts.fake()
             )
@@ -473,7 +473,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testTreePrint() {
         this.treePrintAndCheck(
             this.createContext(),
-            "BasicSpreadsheetEnvironmentContext\n" +
+            "SpreadsheetEnvironmentContextBasic\n" +
                 "  environment\n" +
                 "    EnvironmentContextSharedMap\n" +
                 "      charset\n" +
@@ -499,14 +499,19 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                 "      user\n" +
                 "        user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  storage\n" +
-                "    FakeStorage (walkingkooka.spreadsheet.environment.BasicSpreadsheetEnvironmentContextTest$1)\n"
+                "    FakeStorage (walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextBasicTest$1)\n"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetEnvironmentContext> type() {
-        return BasicSpreadsheetEnvironmentContext.class;
+    public Class<SpreadsheetEnvironmentContextBasic> type() {
+        return SpreadsheetEnvironmentContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
