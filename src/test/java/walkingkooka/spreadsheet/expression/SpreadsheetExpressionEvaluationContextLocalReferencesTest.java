@@ -464,6 +464,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testSetServerWithDifferentUrlFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // testSetEnvironmentContext........................................................................................
     
     @Override

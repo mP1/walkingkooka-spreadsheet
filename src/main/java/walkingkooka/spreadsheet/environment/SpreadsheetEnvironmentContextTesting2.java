@@ -50,7 +50,19 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
             Optional.ofNullable(serverUrl)
         );
     }
-    
+
+    @Test
+    default void testSetServerWithDifferentUrlFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .setEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SERVER_URL,
+                    DIFFERENT_SERVER_URL
+                )
+        );
+    }
+
     // spreadsheetId....................................................................................................
 
     @Test

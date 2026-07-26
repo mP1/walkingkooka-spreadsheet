@@ -149,7 +149,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                         final T value) {
         if(SERVER_URL.equals(name)) {
-            throw new IllegalArgumentException("Cannot set Read only value: " + name);
+            throw name.readOnlyEnvironmentValueException();
         }
 
         this.context.setEnvironmentValue(
@@ -161,7 +161,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     @Override
     public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         if(SERVER_URL.equals(name)) {
-            throw new IllegalArgumentException("Cannot remove Read only value: " + name);
+            throw name.readOnlyEnvironmentValueException();
         }
 
         this.context.removeEnvironmentValue(name);
