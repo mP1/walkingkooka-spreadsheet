@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StorageContexts;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -473,16 +474,16 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     
     @Override
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            environmentContext
+            storageEnvironmentContext
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(
             Optional.of(

@@ -74,15 +74,17 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
         return this.context.cloneEnvironment();
     }
 
-    /**
-     * Always returns the given {@link SpreadsheetEnvironmentContext}, which is not read only wrapped.
-     */
     @Override
     public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext context) {
-        return SpreadsheetEnvironmentContexts.basic(
-            this.context.storage(),
-            context
-        );
+        final SpreadsheetEnvironmentContext before = this.context;
+        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(context);
+
+        return before == after ?
+            this :
+            SpreadsheetEnvironmentContexts.basic(
+                before.storage(),
+                after
+            );
     }
 
     @Override

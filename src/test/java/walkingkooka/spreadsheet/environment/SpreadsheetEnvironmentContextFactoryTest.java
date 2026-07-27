@@ -348,7 +348,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testCurrency() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.currencyAndCheck(
@@ -361,7 +361,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetCurrency() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
@@ -388,7 +388,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testIndentation() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.indentationAndCheck(
@@ -401,7 +401,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetIndentation() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.setIndentationAndCheck(
@@ -416,7 +416,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testLineEnding() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.lineEndingAndCheck(
@@ -429,7 +429,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testSetLineEnding() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.setLineEndingAndCheck(
@@ -442,7 +442,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.localeAndCheck(
@@ -457,7 +457,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             this.createContext(
                 SpreadsheetEnvironmentContexts.basic(
                     Storages.fake(),
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             DIFFERENT_LOCALE
@@ -546,7 +546,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testUser() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.userAndCheck(

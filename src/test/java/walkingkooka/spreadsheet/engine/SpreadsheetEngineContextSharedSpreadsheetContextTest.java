@@ -89,6 +89,7 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.Storages;
@@ -1315,23 +1316,19 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     }
 
     private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-        final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        context.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-            SpreadsheetEngineContextSharedSpreadsheetContextTest.CURRENT_WORKING_DIRECTORY
-        );
-        context.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetEngineContextSharedSpreadsheetContextTest.SERVER_URL
         );
-        context.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
         );
         return SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            context
+            storageEnvironmentContext
         );
     }
 
@@ -1710,7 +1707,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     public void testEqualsDifferentSpreadsheetContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
-            DIFFERENT_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);

@@ -24,6 +24,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2Test.TestSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 
 import java.util.Objects;
@@ -157,20 +158,20 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
         }
 
         {
-            final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+            final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-            environmentContext.setEnvironmentValue(
+            storageEnvironmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,
                 SpreadsheetEnvironmentContextTesting2Test.SERVER_URL
             );
-            environmentContext.setEnvironmentValue(
+            storageEnvironmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SPREADSHEET_ID,
                 SpreadsheetEnvironmentContextTesting2Test.SPREADSHEET_ID
             );
 
             this.spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
                 Storages.fake(),
-                environmentContext
+                storageEnvironmentContext
             );
         }
 

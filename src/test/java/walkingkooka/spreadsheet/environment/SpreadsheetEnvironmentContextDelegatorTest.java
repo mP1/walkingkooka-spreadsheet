@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 
 import java.util.Objects;
@@ -104,20 +105,20 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
 
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-            final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+            final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-            environmentContext.setEnvironmentValue(
+            storageEnvironmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,
                 SpreadsheetEnvironmentContextDelegatorTest.SERVER_URL
             );
-            environmentContext.setEnvironmentValue(
+            storageEnvironmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SPREADSHEET_ID,
                 SpreadsheetId.with(1)
             );
 
             return SpreadsheetEnvironmentContexts.basic(
                 Storages.fake(),
-                environmentContext
+                storageEnvironmentContext
             );
         }
 

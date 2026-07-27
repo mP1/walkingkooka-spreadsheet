@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -59,6 +58,7 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -1070,14 +1070,14 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             CURRENT_WORKING_DIRECTORY
         );
 
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
@@ -1085,7 +1085,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             storage,
-            environmentContext
+            storageEnvironmentContext
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(

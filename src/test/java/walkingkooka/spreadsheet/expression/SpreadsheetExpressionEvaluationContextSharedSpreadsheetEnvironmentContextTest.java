@@ -323,7 +323,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testLineEnding() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.lineEndingAndCheck(
@@ -338,7 +338,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             this.createContext(
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
-                    ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             ),
             DIFFERENT_LINE_ENDING
@@ -349,7 +349,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.localeAndCheck(
@@ -365,7 +365,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 this.createContext(
                     SpreadsheetEnvironmentContexts.basic(
                         STORAGE,
-                        ENVIRONMENT_CONTEXT.cloneEnvironment()
+                        STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                     )
                 ),
             DIFFERENT_LOCALE
@@ -454,7 +454,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testUser() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            ENVIRONMENT_CONTEXT.cloneEnvironment()
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         this.userAndCheck(

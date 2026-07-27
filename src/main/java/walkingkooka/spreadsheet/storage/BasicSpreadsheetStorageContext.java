@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
@@ -411,15 +410,13 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
     @Override
     public SpreadsheetStorageContext setEnvironmentContext(final EnvironmentContext environmentContext) {
         final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
+        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
 
-        return before == environmentContext ?
+        return before == after ?
             this :
             new BasicSpreadsheetStorageContext(
                 this.spreadsheetEngine,
-                SpreadsheetEnvironmentContexts.basic(
-                    before.storage(),
-                    environmentContext
-                ),
+                after, // SpreadsheetEnvironmentContext
                 this.spreadsheetIdToSpreadsheetEngineContext,
                 this.spreadsheetMetadataContext,
                 this.storageContext

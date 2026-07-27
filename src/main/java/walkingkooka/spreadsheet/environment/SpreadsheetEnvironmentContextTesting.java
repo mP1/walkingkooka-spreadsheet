@@ -17,9 +17,6 @@
 
 package walkingkooka.spreadsheet.environment;
 
-import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextTesting;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.predicate.Predicates;
@@ -28,7 +25,9 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageEnvironmentContextTesting;
+import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.storage.Storages;
 
 import java.util.Optional;
@@ -50,39 +49,38 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
      * A {@link SpreadsheetEnvironmentContext} that contains {@link SpreadsheetEnvironmentContext#SERVER_URL} but not
      * {@link SpreadsheetEnvironmentContext#SPREADSHEET_ID}.
      */
-    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
-        STORAGE,
-        environmentContext()
+    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+        SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
+            storageEnvironmentContext()
+        )
     );
 
-    private static EnvironmentContext environmentContext() {
-        final EnvironmentContext environmentContext = EnvironmentContextTesting.ENVIRONMENT_CONTEXT.cloneEnvironment();
-        environmentContext.setEnvironmentValue(
+    private static StorageEnvironmentContext storageEnvironmentContext() {
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
 
-        return EnvironmentContexts.readOnly(
-            Predicates.always(), // all values are read-only
-            environmentContext
-        );
+        return storageEnvironmentContext;
     }
 
     SpreadsheetEnvironmentContext DIFFERENT_SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
         STORAGE,
-        differentEnvironmentContext()
+        differentStorageEnvironmentContext()
     );
 
-    private static EnvironmentContext differentEnvironmentContext() {
-        final EnvironmentContext environmentContext = DIFFERENT_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        environmentContext.setEnvironmentValue(
+    private static StorageEnvironmentContext differentStorageEnvironmentContext() {
+        final StorageEnvironmentContext storageEnvironmentContext = DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             DIFFERENT_SERVER_URL
         );
 
-        return EnvironmentContexts.readOnly(
+        return StorageEnvironmentContexts.readOnly(
             Predicates.always(), // all values are read-only
-            environmentContext
+            storageEnvironmentContext
         );
     }
 

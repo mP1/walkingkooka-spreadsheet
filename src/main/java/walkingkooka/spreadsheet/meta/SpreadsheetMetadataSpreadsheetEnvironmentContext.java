@@ -89,22 +89,19 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
+    public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext context) {
+        final SpreadsheetEnvironmentContext before = this.context;
+        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(context);
 
-        if (this.context == environmentContext) {
-            spreadsheetEnvironmentContext = this;
-        } else {
-            spreadsheetEnvironmentContext = with(
+        return before == after ?
+            this :
+            with(
                 this.metadata,
                 SpreadsheetEnvironmentContexts.basic(
                     this.storage(),
-                    environmentContext
+                    after
                 )
             );
-        }
-
-        return spreadsheetEnvironmentContext;
     }
 
     /**

@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 
 import java.util.Objects;
@@ -68,17 +69,17 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
         }
 
         {
-            final EnvironmentContext context = ENVIRONMENT_CONTEXT.cloneEnvironment();
+            final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-            context.setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE);
-            context.setEnvironmentValue(
+            storageEnvironmentContext.setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE);
+            storageEnvironmentContext.setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SERVER_URL,
                 SpreadsheetEnvironmentContextFactoryDelegateTest.SERVER_URL
             );
 
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
                 Storages.fake(),
-                context
+                storageEnvironmentContext
             );
             spreadsheetEnvironmentContext.setSpreadsheetId(
                 Optional.of(
