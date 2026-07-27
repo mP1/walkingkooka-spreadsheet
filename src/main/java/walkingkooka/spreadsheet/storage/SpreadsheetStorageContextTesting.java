@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StorageContextTesting;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -36,7 +37,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface SpreadsheetStorageContextTesting extends TreePrintableTesting {
+public interface SpreadsheetStorageContextTesting extends StorageContextTesting,
+    TreePrintableTesting {
     
     // loadCells........................................................................................................
     
