@@ -78,8 +78,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.storage.FakeStorageContext;
-import walkingkooka.storage.StorageContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
@@ -107,7 +105,6 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -168,18 +165,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 p
             )
     );
-
-    StorageContext STORAGE_CONTEXT = new FakeStorageContext() {
-        @Override
-        public LocalDateTime now() {
-            return SpreadsheetMetadataTesting.NOW;
-        }
-
-        @Override
-        public Optional<EmailAddress> user() {
-            return HAS_USER.user();
-        }
-    };
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
 
