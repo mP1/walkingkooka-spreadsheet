@@ -464,7 +464,7 @@ final class MissingConverterVerifier {
     private final static Predicate<Object> IS_INDENTATION = v -> v instanceof Indentation;
 
     private final static Predicate<Object> IS_JSON = v -> v instanceof JsonNode;
-    ;
+
     private final static Predicate<Object> IS_LOCAL_DATE_LIST = v -> v instanceof LocalDateList;
 
     private final static Predicate<Object> IS_LOCAL_DATE_TIME_LIST = v -> v instanceof LocalDateTimeList;

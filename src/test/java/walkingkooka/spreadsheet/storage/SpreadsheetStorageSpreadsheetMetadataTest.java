@@ -403,7 +403,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                 context.createdAuditInfo()
             )
         );
-    };
+    }
 
     @Test
     public void testAddWatcherAndSaveMetadata() {
