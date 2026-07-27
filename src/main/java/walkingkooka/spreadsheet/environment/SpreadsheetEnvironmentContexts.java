@@ -17,10 +17,13 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
+
+import java.util.function.Predicate;
 
 /**
  * A collection of factory methods for {@link SpreadsheetEnvironmentContext}.
@@ -48,8 +51,12 @@ public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper 
     /**
      * {@see SpreadsheetEnvironmentContextReadOnly}
      */
-    public static SpreadsheetEnvironmentContext readOnly(final SpreadsheetEnvironmentContext context) {
-        return SpreadsheetEnvironmentContextReadOnly.with(context);
+    public static SpreadsheetEnvironmentContext readOnly(final Predicate<EnvironmentValueName<?>> readOnlyFilter,
+                                                         final SpreadsheetEnvironmentContext context) {
+        return SpreadsheetEnvironmentContextReadOnly.with(
+            readOnlyFilter,
+            context
+        );
     }
 
     /**

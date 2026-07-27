@@ -28,6 +28,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -117,6 +118,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+        Predicates.always(), // all values are readonly
         SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             storageEnvironmentContext()

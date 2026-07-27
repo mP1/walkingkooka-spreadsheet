@@ -464,6 +464,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
             ).spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.readOnly(
+                    Predicates.always(), // everything is read only
                     providerContextSpreadsheetEnvironmentContext()
                 )
             ),
