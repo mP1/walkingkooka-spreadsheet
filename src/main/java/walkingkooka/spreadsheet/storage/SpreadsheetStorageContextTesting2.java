@@ -19,7 +19,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.convert.ConverterLikeTesting;
+import walkingkooka.convert.ConverterLikeTesting2;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.storage.StorageContextTesting;
@@ -31,7 +31,7 @@ public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageC
     StorageContextTesting<C>,
     SpreadsheetMetadataContextTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
-    ConverterLikeTesting<C> {
+    ConverterLikeTesting2<C> {
 
     @Override
     default void testCreateMetadataWithNullLocaleFails() {
