@@ -437,6 +437,25 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
 
     private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
+    @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        return SpreadsheetEnvironmentContextDelegator.super.currentWorkingDirectory();
+    }
+
+    @Override
+    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        SpreadsheetEnvironmentContextDelegator.super.setCurrentWorkingDirectory(currentWorkingDirectory);
+    }
+
+    @Override
+    public Optional<StoragePath> homeDirectory() {
+        return SpreadsheetEnvironmentContextDelegator.super.homeDirectory();
+    }
+
+    @Override
+    public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        SpreadsheetEnvironmentContextDelegator.super.setHomeDirectory(homeDirectory);
+    }
     // SpreadsheetMetadataContextDelegator..............................................................................
 
     @Override
