@@ -141,20 +141,20 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
     
     @Override
     public Optional<StoragePath> currentWorkingDirectory() {
-        return this.context.currentWorkingDirectory();
+        return CURRENT_WORKING_DIRECTORY.getEnvironmentValue(this);
     }
 
     @Override
     public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
-        this.setOrRemoveEnvironmentValue(
-            CURRENT_WORKING_DIRECTORY,
-            currentWorkingDirectory
+        CURRENT_WORKING_DIRECTORY.setOrRemoveEnvironmentValue(
+            currentWorkingDirectory,
+            this
         );
     }
 
     @Override
     public Optional<StoragePath> homeDirectory() {
-        return this.context.homeDirectory();
+        return HOME_DIRECTORY.getEnvironmentValue(this);
     }
 
     @Override
@@ -167,88 +167,90 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
 
     @Override
     public Indentation indentation() {
-        return this.context.indentation();
+        return INDENTATION.getEnvironmentValueOrFail(this);
     }
 
     @Override
     public void setIndentation(final Indentation indentation) {
-        this.setEnvironmentValue(
-            EnvironmentValueName.INDENTATION,
-            indentation
+        INDENTATION.setEnvironmentValue(
+            indentation,
+            this
         );
     }
     
     @Override
     public LineEnding lineEnding() {
-        return this.context.lineEnding();
+        return LINE_ENDING.getEnvironmentValueOrFail(this);
     }
 
     @Override
     public void setLineEnding(final LineEnding lineEnding) {
-        this.setEnvironmentValue(
-            EnvironmentValueName.LINE_ENDING,
-            lineEnding
+        LINE_ENDING.setEnvironmentValue(
+            lineEnding,
+            this
         );
     }
 
     @Override
     public Locale locale() {
-        return this.context.locale();
+        return LOCALE.getEnvironmentValueOrFail(this);
     }
 
     @Override
     public void setLocale(final Locale locale) {
-        this.setEnvironmentValue(
-            LOCALE,
-            locale
+        LOCALE.setEnvironmentValue(
+            locale,
+            this
         );
     }
 
     @Override
     public LocalDateTime now() {
-        return this.context.now();
+        return NOW.getEnvironmentValueOrFail(this);
     }
 
     @Override
     public AbsoluteUrl serverUrl() {
-        return this.context.serverUrl();
+        return SERVER_URL.getEnvironmentValueOrFail(this);
     }
 
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
-        return this.context.spreadsheetId();
+        return SPREADSHEET_ID.getEnvironmentValue(this);
     }
 
     @Override
     public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
-        this.setOrRemoveEnvironmentValue(
-            SPREADSHEET_ID,
-            spreadsheetId
+        SPREADSHEET_ID.setOrRemoveEnvironmentValue(
+            spreadsheetId,
+            this
         );
     }
 
     @Override
     public ZoneOffset timeOffset() {
-        return this.context.timeOffset();
+        return TIME_OFFSET.getEnvironmentValueOrFail(this.context);
     }
 
     @Override
     public void setTimeOffset(final ZoneOffset timeOffset) {
-        this.setEnvironmentValue(
-            TIME_OFFSET,
-            timeOffset
+        TIME_OFFSET.setEnvironmentValue(
+            timeOffset,
+            this
         );
     }
 
     @Override
     public Optional<EmailAddress> user() {
-        return this.context.user();
+        return USER.getEnvironmentValue(this);
     }
 
     @Override
     public void setUser(final Optional<EmailAddress> user) {
-        Objects.requireNonNull(user, "user");
-        throw USER.readOnlyEnvironmentValueException();
+        USER.setOrRemoveEnvironmentValue(
+            user,
+            this
+        );
     }
 
     @Override
