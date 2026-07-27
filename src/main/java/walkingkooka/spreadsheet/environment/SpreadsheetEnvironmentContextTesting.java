@@ -50,6 +50,7 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
      * {@link SpreadsheetEnvironmentContext#SPREADSHEET_ID}.
      */
     SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+        Predicates.always(), // all values are readonly
         SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             storageEnvironmentContext()

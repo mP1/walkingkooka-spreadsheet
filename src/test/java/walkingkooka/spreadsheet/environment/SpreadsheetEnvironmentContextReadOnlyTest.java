@@ -19,14 +19,17 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 
 import java.time.ZoneOffset;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -35,23 +38,64 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetEnvironmentContextReadOnlyTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextReadOnly>,
     ToStringTesting<SpreadsheetEnvironmentContextReadOnly> {
 
+    // ONLY user is writable
+    private final Predicate<EnvironmentValueName<?>> READ_ONLY_FILTER = Predicates.not(
+        Predicates.is(
+            EnvironmentContext.USER
+        )
+    );
+
     @Test
-    public void testWithNullContextFails() {
+    public void testWithNullReadOnlyFilterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetEnvironmentContextReadOnly.with(null)
+            () -> SpreadsheetEnvironmentContextReadOnly.with(
+                null,
+                SpreadsheetEnvironmentContexts.fake()
+            )
         );
     }
 
     @Test
-    public void testWithUnwraps() {
+    public void testWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextReadOnly.with(
+                READ_ONLY_FILTER,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testWithUnwrapsSpreadsheetEnvironmentContextReadOnlyWithSameReadOnlyFilter() {
         final SpreadsheetEnvironmentContextReadOnly context = SpreadsheetEnvironmentContextReadOnly.with(
+            READ_ONLY_FILTER,
             SpreadsheetEnvironmentContexts.fake()
         );
 
         assertSame(
             context,
-            SpreadsheetEnvironmentContextReadOnly.with(context)
+            SpreadsheetEnvironmentContextReadOnly.with(
+                READ_ONLY_FILTER,
+                context
+            )
+        );
+    }
+
+    @Test
+    public void testWithUnwrapsSpreadsheetEnvironmentContextReadOnlyWithDifferentReadOnlyFilter() {
+        final SpreadsheetEnvironmentContextReadOnly context = SpreadsheetEnvironmentContextReadOnly.with(
+            Predicates.fake(),
+            SpreadsheetEnvironmentContexts.fake()
+        );
+
+        assertNotSame(
+            context,
+            SpreadsheetEnvironmentContextReadOnly.with(
+                READ_ONLY_FILTER,
+                context
+            )
         );
     }
 
@@ -98,7 +142,10 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
             Storages.fake(),
             STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(notReadOnly);
+        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(
+            READ_ONLY_FILTER,
+            notReadOnly
+        );
 
         assertSame(
             readOnly.setEnvironmentContext(notReadOnly),
@@ -114,7 +161,10 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
             storage,
             STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(notReadOnly);
+        final SpreadsheetEnvironmentContextReadOnly readOnly = SpreadsheetEnvironmentContextReadOnly.with(
+            READ_ONLY_FILTER,
+            notReadOnly
+        );
 
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
             storage,
@@ -327,19 +377,11 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     // setUser..........................................................................................................
 
     @Test
-    public void testSetUserFails() {
-        assertThrows(
-            ReadOnlyEnvironmentValueException.class,
-            () -> this.createContext()
-                .setUser(
-                    OPTIONAL_USER
-                )
+    public void testSetUserNotReadOnly() {
+        this.setUserAndCheck(
+            this.createContext(),
+            DIFFERENT_USER
         );
-    }
-
-    @Override
-    public void testSetUserWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
     }
 
     // environmentValue.................................................................................................
@@ -390,7 +432,10 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
-        return SpreadsheetEnvironmentContextReadOnly.with(spreadsheetEnvironmentContext);
+        return SpreadsheetEnvironmentContextReadOnly.with(
+            READ_ONLY_FILTER,
+            spreadsheetEnvironmentContext
+        );
     }
 
     // environmentValueNames............................................................................................
@@ -419,6 +464,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     public void testStorage() {
         this.storageAndCheck(
             SpreadsheetEnvironmentContextReadOnly.with(
+                READ_ONLY_FILTER,
                 new FakeSpreadsheetEnvironmentContext() {
                     @Override
                     public Storage<SpreadsheetStorageContext> storage() {

@@ -33,6 +33,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.FakeSpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -117,7 +118,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             SpreadsheetExpressionFunctions.parseAliasSet("test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz")
         );
 
-        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(context);
+        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+            Predicates.always(), // all values are readonly
+            context
+        );
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;

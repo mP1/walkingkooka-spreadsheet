@@ -39,6 +39,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Wraps another {@link SpreadsheetEnvironmentContext} presenting a read only view, with all setXXX and removeXXX
@@ -47,22 +48,35 @@ import java.util.Set;
 final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironmentContext,
     TreePrintable {
 
-    static SpreadsheetEnvironmentContextReadOnly with(final SpreadsheetEnvironmentContext context) {
-        SpreadsheetEnvironmentContextReadOnly readOnly;
-
+    static SpreadsheetEnvironmentContextReadOnly with(final Predicate<EnvironmentValueName<?>> readOnlyFilter,
+                                                      final SpreadsheetEnvironmentContext context) {
+        Objects.requireNonNull(readOnlyFilter, "readOnlyFilter");
         Objects.requireNonNull(context, "context");
 
+        SpreadsheetEnvironmentContextReadOnly spreadsheetEnvironmentContextReadOnly = null;
+
         if (context instanceof SpreadsheetEnvironmentContextReadOnly) {
-            readOnly = (SpreadsheetEnvironmentContextReadOnly) context;
-        } else {
-            readOnly = new SpreadsheetEnvironmentContextReadOnly(context);
+            spreadsheetEnvironmentContextReadOnly = (SpreadsheetEnvironmentContextReadOnly) context;
+            if (false == readOnlyFilter.equals(spreadsheetEnvironmentContextReadOnly.readOnlyFilter)) {
+                spreadsheetEnvironmentContextReadOnly = null;
+            }
         }
 
-        return readOnly;
+        if (null == spreadsheetEnvironmentContextReadOnly) {
+            spreadsheetEnvironmentContextReadOnly = new SpreadsheetEnvironmentContextReadOnly(
+                readOnlyFilter,
+                context
+            );
+        }
+
+        return spreadsheetEnvironmentContextReadOnly;
     }
 
-    private SpreadsheetEnvironmentContextReadOnly(final SpreadsheetEnvironmentContext context) {
+    private SpreadsheetEnvironmentContextReadOnly(final Predicate<EnvironmentValueName<?>> readOnlyFilter,
+                                                  final SpreadsheetEnvironmentContext context) {
         super();
+
+        this.readOnlyFilter = readOnlyFilter;
         this.context = context;
     }
 
@@ -103,15 +117,28 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(value, "value");
 
-        throw name.readOnlyEnvironmentValueException();
+        if(this.readOnlyFilter.test(name)) {
+            throw name.readOnlyEnvironmentValueException();
+        }
+
+        this.context.setEnvironmentValue(
+            name,
+            value
+        );
     }
 
     @Override
     public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         Objects.requireNonNull(name, "name");
 
-        throw name.readOnlyEnvironmentValueException();
+        if(this.readOnlyFilter.test(name)) {
+            throw name.readOnlyEnvironmentValueException();
+        }
+
+        this.context.removeEnvironmentValue(name);
     }
+
+    private final Predicate<EnvironmentValueName<?>> readOnlyFilter;
 
     @Override
     public Charset charset() {
@@ -260,14 +287,12 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
 
     @Override
     public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
-        Objects.requireNonNull(watcher, "watcher");
-        throw new UnsupportedOperationException();
+        return this.context.addEnvironmentWatcher(watcher);
     }
 
     @Override
     public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
-        Objects.requireNonNull(watcher, "watcher");
-        throw new UnsupportedOperationException();
+        return this.context.addEnvironmentWatcherOnce(watcher);
     }
 
     private final SpreadsheetEnvironmentContext context;
@@ -276,7 +301,10 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
 
     @Override
     public int hashCode() {
-        return this.context.hashCode();
+        return Objects.hash(
+            this.context,
+            this.readOnlyFilter
+        );
     }
 
     @Override
@@ -287,7 +315,8 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
     }
 
     private boolean equals0(final SpreadsheetEnvironmentContextReadOnly other) {
-        return this.context.equals(other.context);
+        return this.context.equals(other.context) &&
+            this.readOnlyFilter.equals(other.readOnlyFilter);
     }
 
     @Override

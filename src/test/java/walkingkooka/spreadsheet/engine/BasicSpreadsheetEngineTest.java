@@ -58,6 +58,7 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -523,7 +524,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         spreadsheetEnvironmentContext.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
         );
-        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext);
+        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+            Predicates.always(), // all values are readonly
+            spreadsheetEnvironmentContext
+        );
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;

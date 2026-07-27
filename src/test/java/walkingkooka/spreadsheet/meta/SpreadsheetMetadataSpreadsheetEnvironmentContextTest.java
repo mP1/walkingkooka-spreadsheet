@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -47,6 +48,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SERVER_URL
         );
         CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+            Predicates.always(), // all values are readonly
             SpreadsheetEnvironmentContexts.basic(
                 STORAGE,
                 context
