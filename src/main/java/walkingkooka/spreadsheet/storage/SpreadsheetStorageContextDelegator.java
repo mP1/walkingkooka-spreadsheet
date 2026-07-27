@@ -199,6 +199,26 @@ public interface SpreadsheetStorageContextDelegator extends SpreadsheetStorageCo
     SpreadsheetStorageContext setEnvironmentContext(EnvironmentContext environmentContext);
 
     @Override
+    default Optional<StoragePath> currentWorkingDirectory() {
+        return SpreadsheetEnvironmentContextDelegator.super.currentWorkingDirectory();
+    }
+
+    @Override
+    default void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        SpreadsheetEnvironmentContextDelegator.super.setCurrentWorkingDirectory(currentWorkingDirectory);
+    }
+
+    @Override
+    default Optional<StoragePath> homeDirectory() {
+        return SpreadsheetEnvironmentContextDelegator.super.homeDirectory();
+    }
+
+    @Override
+    default void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        SpreadsheetEnvironmentContextDelegator.super.setHomeDirectory(homeDirectory);
+    }
+
+    @Override
     default StorageContext storageContext() {
         return this.spreadsheetStorageContext();
     }
