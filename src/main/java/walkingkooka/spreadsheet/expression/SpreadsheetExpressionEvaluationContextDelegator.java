@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
@@ -146,23 +147,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     // SpreadsheetEnvironmentContext....................................................................................
-
-    @Override
-    default Optional<StoragePath> currentWorkingDirectory() {
-        return this.spreadsheetEnvironmentContext()
-            .currentWorkingDirectory();
-    }
     
     @Override
     default void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
         this.spreadsheetExpressionEvaluationContext()
             .setCurrentWorkingDirectory(currentWorkingDirectory);
-    }
-
-    @Override
-    default Optional<StoragePath> homeDirectory() {
-        return this.spreadsheetEnvironmentContext()
-            .homeDirectory();
     }
 
     @Override
@@ -187,6 +176,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default void setSpreadsheetId(final Optional<SpreadsheetId> id) {
         this.spreadsheetExpressionEvaluationContext()
             .setSpreadsheetId(id);
+    }
+
+    @Override
+    default HasUserDirectories hasUserDirectories() {
+        return this.spreadsheetExpressionEvaluationContext();
     }
 
     @Override

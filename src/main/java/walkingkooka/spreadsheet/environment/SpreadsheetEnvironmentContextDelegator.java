@@ -22,18 +22,16 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.HasUserDirectories;
+import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvironmentContext,
-    EnvironmentContextDelegator {
-
-    @Override
-    default Optional<StoragePath> currentWorkingDirectory() {
-        return CURRENT_WORKING_DIRECTORY.getEnvironmentValue(this);
-    }
+    EnvironmentContextDelegator,
+    HasUserDirectoriesDelegator {
 
     @Override
     default void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
@@ -41,11 +39,6 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
             currentWorkingDirectory,
             this
         );
-    }
-
-    @Override
-    default Optional<StoragePath> homeDirectory() {
-        return HOME_DIRECTORY.getEnvironmentValue(this);
     }
 
     @Override
@@ -84,6 +77,11 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
 
     @Override
     default EnvironmentContext environmentContext() {
+        return this.spreadsheetEnvironmentContext();
+    }
+
+    @Override
+    default HasUserDirectories hasUserDirectories() {
         return this.spreadsheetEnvironmentContext();
     }
 
