@@ -25,6 +25,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.ConverterLikeTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
@@ -61,6 +62,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.StorageContexts;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
@@ -86,6 +88,7 @@ import java.util.Optional;
 
 public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedExpression>
     implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSharedExpression>,
+    ConverterLikeTesting,
     SpreadsheetMetadataTesting {
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
@@ -340,9 +343,12 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                             ValidatorProviders.empty()
                         ),
                         ProviderContexts.basic(
-                            ConverterContexts.fake(),
-                            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                            PluginStores.fake()
+                            PluginStores.fake(),
+                            StorageContexts.basic(
+                                CONVERTER_LIKE,
+                                MEDIA_TYPE_DETECTOR,
+                                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                            )
                         )
                     ),
                     TerminalContexts.fake()

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.provider;
 
+import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.BinaryNumberConverterFunction;
@@ -29,9 +30,9 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
@@ -41,6 +42,9 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageEnvironmentContextDelegator;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -59,14 +63,14 @@ import java.util.Objects;
  * A {@link ProviderContext} that may be used as the system {@link ProviderContext}.
  */
 final class SpreadsheetProviderContext implements ProviderContext,
-    EnvironmentContextDelegator,
+    StorageEnvironmentContextDelegator,
     ConverterContextDelegator {
 
     static SpreadsheetProviderContext with(final MediaTypeDetector mediaTypeDetector,
                                            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                            final PluginStore pluginStore,
                                            final CurrencyLocaleContext currencyLocaleContext,
-                                           final EnvironmentContext environmentContext,
+                                           final StorageEnvironmentContext storageEnvironmentContext,
                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return new SpreadsheetProviderContext(
             Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector"),
@@ -74,7 +78,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
             Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
-            Objects.requireNonNull(environmentContext, "environmentContext"),
+            Objects.requireNonNull(storageEnvironmentContext, "storageEnvironmentContext"),
             Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext")
         );
     }
@@ -84,7 +88,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                                        final PluginStore pluginStore,
                                        final ConverterContext converterContext,
                                        final CurrencyLocaleContext currencyLocaleContext,
-                                       final EnvironmentContext environmentContext,
+                                       final StorageEnvironmentContext storageEnvironmentContext,
                                        final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         super();
 
@@ -97,12 +101,26 @@ final class SpreadsheetProviderContext implements ProviderContext,
         this.converterContext = converterContext;
 
         this.currencyLocaleContext = currencyLocaleContext;
-        this.environmentContext = environmentContext;
+        this.storageEnvironmentContext = storageEnvironmentContext;
         this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
 
         if (null == converterContext) {
-            this.setConverterContext(environmentContext.locale());
+            this.setConverterContext(storageEnvironmentContext.locale());
         }
+    }
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary binary) {
+        return this.mediaTypeDetector.detect(
+            filename,
+            binary
+        );
+    }
+
+    @Override
+    public StoragePath parseStoragePath(final String text) {
+        return StoragePath.parse(text);
     }
 
     // PluginStore......................................................................................................
@@ -135,7 +153,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier = this.multiplier;
 
         final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
-        final EnvironmentContext environmentContext = this.environmentContext;
+        final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
             HasUserDirectorieses.empty(),
@@ -156,7 +174,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
                         Cast.to(multiplier),
-                        environmentContext, // BinaryTextContext
+                        storageEnvironmentContext, // BinaryTextContext
                         this.currencyLocaleContext,
                         DateTimeContexts.basic(
                             currencyLocaleContext.dateTimeSymbolsForLocale(locale)
@@ -164,7 +182,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                             locale,
                             1950, // defaultYear
                             50, // twoDigitYear
-                            environmentContext
+                            storageEnvironmentContext
                         ),
                         DecimalNumberContexts.basic(
                             DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
@@ -189,23 +207,24 @@ final class SpreadsheetProviderContext implements ProviderContext,
     @Override
     public SpreadsheetProviderContext cloneEnvironment() {
         return this.setEnvironmentContext(
-            this.environmentContext.cloneEnvironment()
+            this.storageEnvironmentContext.cloneEnvironment()
         );
     }
 
     @Override
     public SpreadsheetProviderContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final EnvironmentContext before = this.environmentContext;
+        final StorageEnvironmentContext before = this.storageEnvironmentContext;
+        final StorageEnvironmentContext after = before.setEnvironmentContext(environmentContext);
 
-        return before == environmentContext ?
+        return before == after ?
             this :
             new SpreadsheetProviderContext(
                 this.mediaTypeDetector,
                 this.multiplier,
                 this.pluginStore,
-                null, // recreate because environmentContext changed.
+                null, // recreate because storageEnvironmentContext changed.
                 this.currencyLocaleContext,
-                Objects.requireNonNull(environmentContext, "environmentContext"),
+                after,
                 this.jsonNodeMarshallUnmarshallContext
             );
     }
@@ -216,16 +235,16 @@ final class SpreadsheetProviderContext implements ProviderContext,
 
     private final MediaTypeDetector mediaTypeDetector;
 
-    // EnvironmentContextDelegator......................................................................................
+    // StorageEnvironmentContextDelegator...............................................................................
 
     @Override
     public Charset charset() {
-        return this.environmentContext.charset();
+        return this.storageEnvironmentContext.charset();
     }
 
     @Override
     public CurrencyCode currencyCode() {
-        return this.environmentContext.currencyCode();
+        return this.storageEnvironmentContext.currencyCode();
     }
 
     @Override
@@ -235,24 +254,24 @@ final class SpreadsheetProviderContext implements ProviderContext,
 
     @Override
     public Indentation indentation() {
-        return this.environmentContext.indentation();
+        return this.storageEnvironmentContext.indentation();
     }
 
     @Override
     public LineEnding lineEnding() {
-        return this.environmentContext.lineEnding();
+        return this.storageEnvironmentContext.lineEnding();
     }
 
     @Override
     public Locale locale() {
-        return this.environmentContext.locale();
+        return this.storageEnvironmentContext.locale();
     }
 
     @Override
     public void setLocale(final Locale locale) {
-        final EnvironmentContext environmentContext = this.environmentContext;
-        final Locale previous = environmentContext.locale();
-        this.environmentContext.setLocale(locale);
+        final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
+        final Locale previous = storageEnvironmentContext.locale();
+        this.storageEnvironmentContext.setLocale(locale);
 
         // re-create ConverterContext when Locale changes.
         if (false == previous.equals(locale)) {
@@ -261,11 +280,11 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     @Override
-    public EnvironmentContext environmentContext() {
-        return this.environmentContext;
+    public StorageEnvironmentContext storageEnvironmentContext() {
+        return this.storageEnvironmentContext;
     }
 
-    private final EnvironmentContext environmentContext;
+    private final StorageEnvironmentContext storageEnvironmentContext;
 
     // Object...........................................................................................................
 
@@ -275,7 +294,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             this.mediaTypeDetector,
             this.multiplier,
             this.pluginStore,
-            this.environmentContext
+            this.storageEnvironmentContext
         );
     }
 
@@ -290,7 +309,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         return this.mediaTypeDetector.equals(other.mediaTypeDetector) &&
             this.multiplier.equals(other.multiplier) &&
             this.pluginStore.equals(other.pluginStore) &&
-            this.environmentContext.equals(other.environmentContext);
+            this.storageEnvironmentContext.equals(other.storageEnvironmentContext);
     }
 
     @Override
@@ -304,8 +323,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
             .value(this.pluginStore)
             .label("converterContext")
             .value(this.converterContext)
-            .label("environmentContext")
-            .value(this.environmentContext)
+            .label("storageEnvironmentContext")
+            .value(this.storageEnvironmentContext)
             .build();
     }
 }

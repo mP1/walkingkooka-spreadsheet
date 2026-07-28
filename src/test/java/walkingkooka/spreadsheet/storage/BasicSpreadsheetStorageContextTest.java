@@ -1106,9 +1106,12 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(
-            ConverterContexts.fake(),
-            spreadsheetEnvironmentContext.cloneEnvironment(),
-            PluginStores.fake()
+            PluginStores.fake(),
+            StorageContexts.basic(
+                CONVERTER_LIKE,
+                MEDIA_TYPE_DETECTOR,
+                spreadsheetEnvironmentContext.cloneEnvironment()
+            )
         );
 
         final SpreadsheetProvider spreadsheetProvider = SpreadsheetProviders.basic(
