@@ -25,7 +25,6 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
@@ -34,7 +33,7 @@ import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.text.LineEnding;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
@@ -73,7 +72,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
@@ -88,7 +87,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 null,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
@@ -103,7 +102,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
@@ -118,14 +117,14 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MULTIPLIER,
                 PLUGIN_STORE,
                 null,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullEnvironmentContextFails() {
+    public void testWithNullStorageEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
@@ -148,7 +147,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 null
             )
         );
@@ -209,27 +208,19 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final SpreadsheetProviderContext context = this.createContext(environmentContext);
+        final SpreadsheetProviderContext context = this.createContext(storageEnvironmentContext);
         assertSame(
             context,
-            context.setEnvironmentContext(environmentContext)
+            context.setEnvironmentContext(storageEnvironmentContext)
         );
     }
 
     @Test
     public void testSetEnvironmentContextWithDifferent() {
-        final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
-        differentEnvironmentContext.setLineEnding(LineEnding.CRNL);
-
-        this.checkNotEquals(
-            ENVIRONMENT_CONTEXT,
-            differentEnvironmentContext
-        );
-
-        final SpreadsheetProviderContext spreadsheetProviderContext = this.createContext(ENVIRONMENT_CONTEXT);
-        final SpreadsheetProviderContext afterSet = spreadsheetProviderContext.setEnvironmentContext(differentEnvironmentContext);
+        final SpreadsheetProviderContext spreadsheetProviderContext = this.createContext(STORAGE_ENVIRONMENT_CONTEXT);
+        final SpreadsheetProviderContext afterSet = spreadsheetProviderContext.setEnvironmentContext(DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT);
 
         assertNotSame(
             afterSet,
@@ -237,7 +228,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         );
 
         this.checkEquals(
-            this.createContext(differentEnvironmentContext),
+            this.createContext(DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT),
             afterSet
         );
     }
@@ -267,22 +258,22 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Override
     public SpreadsheetProviderContext createContext() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        environmentContext.setEnvironmentValue(
+        storageEnvironmentContext.setEnvironmentValue(
             ENVIRONMENT_VALUE_NAME,
             ENVIRONMENT_VALUE
         );
-        return this.createContext(environmentContext);
+        return this.createContext(storageEnvironmentContext);
     }
 
-    private SpreadsheetProviderContext createContext(final EnvironmentContext environmentContext) {
+    private SpreadsheetProviderContext createContext(final StorageEnvironmentContext storageEnvironmentContext) {
         return SpreadsheetProviderContext.with(
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             PLUGIN_STORE,
             CURRENCY_LOCALE_CONTEXT,
-            environmentContext,
+            storageEnvironmentContext,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         );
     }
@@ -319,7 +310,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
@@ -333,7 +324,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 BinaryNumberConverterFunctions.fake(),
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
@@ -347,7 +338,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MULTIPLIER,
                 PluginStores.fake(),
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
@@ -364,24 +355,21 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                     .setLocaleContext(
                         LocaleContexts.jre(LOCALE)
                     ),
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
 
     @Test
-    public void testEqualsDifferentEnvironmentContext() {
-        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
-        environmentContext.setLineEnding(LineEnding.CRNL);
-
+    public void testEqualsDifferentStorageEnvironmentContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
-                environmentContext,
+                DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
@@ -395,7 +383,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
-                ENVIRONMENT_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             )
         );

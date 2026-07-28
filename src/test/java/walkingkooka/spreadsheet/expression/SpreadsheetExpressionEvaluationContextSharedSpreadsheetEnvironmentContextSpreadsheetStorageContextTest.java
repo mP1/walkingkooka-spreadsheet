@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -58,6 +57,7 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageContexts;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
@@ -1089,9 +1089,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(
-            ConverterContexts.fake(),
-            spreadsheetEnvironmentContext.cloneEnvironment(),
-            PluginStores.fake()
+            PluginStores.fake(),
+            StorageContexts.basic(
+                CONVERTER_LIKE,
+                MEDIA_TYPE_DETECTOR,
+                spreadsheetEnvironmentContext.cloneEnvironment()
+            )
         );
 
         final SpreadsheetProvider spreadsheetProvider = SpreadsheetProviders.basic(

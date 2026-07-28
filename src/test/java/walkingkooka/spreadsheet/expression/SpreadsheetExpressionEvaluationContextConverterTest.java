@@ -23,7 +23,6 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -57,6 +56,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.storage.StorageContexts;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
@@ -654,9 +654,12 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                         ValidatorProviders.empty()
                     ),
                     ProviderContexts.basic(
-                        ConverterContexts.fake(),
-                        SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                        PluginStores.fake()
+                        PluginStores.fake(),
+                        StorageContexts.basic(
+                            CONVERTER_LIKE,
+                            MEDIA_TYPE_DETECTOR,
+                            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                        )
                     )
                 ),
                 TerminalContexts.fake()
