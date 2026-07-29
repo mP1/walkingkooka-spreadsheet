@@ -144,7 +144,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     ToStringTesting<SpreadsheetMetadata> {
 
     private final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
-        StoragePath.parse("/current1/working2/directory3")
+        StoragePath.parse("/current1/working2/directory3/")
     );
 
     private final static Optional<StoragePath> HOME_DIRECTORY = Optional.of(
