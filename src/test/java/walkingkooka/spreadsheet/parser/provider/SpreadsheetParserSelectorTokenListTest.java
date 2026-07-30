@@ -217,4 +217,26 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     public SpreadsheetParserSelectorTokenList createJsonNodeMarshallingValue() {
         return this.createList();
     }
+
+    // firstOrEmpty.....................................................................................................
+
+    @Test
+    public void testFirstOrEmptyWhenEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetParserSelectorTokenList.EMPTY
+        );
+    }
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetParserSelectorTokenList.with(
+                Lists.of(
+                    COMPONENT1,
+                    COMPONENT2
+                )
+            ),
+            COMPONENT1
+        );
+    }
 }
