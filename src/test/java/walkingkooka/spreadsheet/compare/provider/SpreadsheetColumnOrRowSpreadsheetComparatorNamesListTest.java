@@ -650,6 +650,33 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         );
     }
 
+    // firstOrEmpty.....................................................................................................
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames first = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+            SpreadsheetSelection.parseColumn("A"),
+            Lists.of(
+                SpreadsheetComparatorName.TEXT
+            )
+        );
+
+        this.firstOrEmptyAndCheck(
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                Lists.of(
+                    first,
+                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                        SpreadsheetSelection.parseColumn("B"),
+                        Lists.of(
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
+                        )
+                    )
+                )
+            ),
+            first
+        );
+    }
+
     // class............................................................................................................
 
     @Override

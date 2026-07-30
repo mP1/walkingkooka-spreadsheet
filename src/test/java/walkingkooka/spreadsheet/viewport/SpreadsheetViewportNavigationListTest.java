@@ -789,6 +789,28 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         );
     }
 
+    // firstOrEmpty.....................................................................................................
+
+    @Test
+    public void testFirstOrEmptyWhenEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetViewportNavigationList.EMPTY
+        );
+    }
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        final SpreadsheetViewportNavigation first = SpreadsheetViewportNavigation.moveDown();
+
+        this.firstOrEmptyAndCheck(
+            SpreadsheetViewportNavigationList.EMPTY.concat(first)
+                .concat(
+                    SpreadsheetViewportNavigation.extendMoveUp()
+                ),
+            first
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

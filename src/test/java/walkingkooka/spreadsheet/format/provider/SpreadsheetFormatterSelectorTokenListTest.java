@@ -217,4 +217,26 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
     public SpreadsheetFormatterSelectorTokenList createJsonNodeMarshallingValue() {
         return this.createList();
     }
+
+    // firstOrEmpty.....................................................................................................
+
+    @Test
+    public void testFirstOrEmptyWhenEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetFormatterSelectorTokenList.EMPTY
+        );
+    }
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetFormatterSelectorTokenList.with(
+                Lists.of(
+                    COMPONENT1,
+                    COMPONENT2
+                )
+            ),
+            COMPONENT1
+        );
+    }
 }

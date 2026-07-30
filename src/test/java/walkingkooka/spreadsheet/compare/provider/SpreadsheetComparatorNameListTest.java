@@ -270,4 +270,30 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public SpreadsheetComparatorNameList createJsonNodeMarshallingValue() {
         return this.createList();
     }
+
+    // firstOrEmpty.....................................................................................................
+
+    @Test
+    public void testFirstOrEmptyWhenEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetComparatorNameList.with(
+                Lists.empty()
+            )
+        );
+    }
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        final SpreadsheetComparatorName first = SpreadsheetComparatorName.DATE;
+
+        this.firstOrEmptyAndCheck(
+            SpreadsheetComparatorNameList.with(
+                Lists.of(
+                    first,
+                    SpreadsheetComparatorName.YEAR
+                )
+            ),
+            first
+        );
+    }
 }

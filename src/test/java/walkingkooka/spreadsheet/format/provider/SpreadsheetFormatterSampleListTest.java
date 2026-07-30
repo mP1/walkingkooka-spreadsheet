@@ -219,4 +219,26 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     public SpreadsheetFormatterSampleList createJsonNodeMarshallingValue() {
         return this.createList();
     }
+
+    // firstOrEmpty.....................................................................................................
+
+    @Test
+    public void testFirstOrEmptyWhenEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetFormatterSampleList.EMPTY
+        );
+    }
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        this.firstOrEmptyAndCheck(
+            SpreadsheetFormatterSampleList.with(
+                Lists.of(
+                    SAMPLE1,
+                    SAMPLE2
+                )
+            ),
+            SAMPLE1
+        );
+    }
 }

@@ -190,6 +190,35 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
         );
     }
 
+    // firstOrEmpty.....................................................................................................
+
+    @Test
+    public void testFirstOrEmptyWhenNotEmpty() {
+        final SpreadsheetColumnOrRowSpreadsheetComparators first = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+            SpreadsheetSelection.A1.column(),
+            Lists.of(
+                SpreadsheetComparators.text()
+            )
+        );
+
+        this.firstOrEmptyAndCheck(
+            SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(
+                Lists.of(
+                    first,
+                    SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                        SpreadsheetSelection.parseColumn("B"),
+                        Lists.of(
+                            SpreadsheetComparators.date()
+                        )
+                    )
+                )
+            ),
+            first
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public Class<SpreadsheetColumnOrRowSpreadsheetComparatorsList> type() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorsList.class;
