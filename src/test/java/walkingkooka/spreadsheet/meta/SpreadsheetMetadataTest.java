@@ -2093,14 +2093,14 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testLastModifiedWhenEmpty() {
-        this.hasLastModifiedAndCheck(
+        this.lastModifiedAndCheck(
             SpreadsheetMetadata.EMPTY
         );
     }
 
     @Test
     public void testLastModifiedWhenNotEmptyMissingAuditInfo() {
-        this.hasLastModifiedAndCheck(
+        this.lastModifiedAndCheck(
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
@@ -2110,7 +2110,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testLastModifiedWhenNotEmptyWithAuditInfo() {
-        this.hasLastModifiedAndCheck(
+        this.lastModifiedAndCheck(
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
