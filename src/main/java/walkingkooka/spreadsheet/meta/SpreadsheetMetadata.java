@@ -194,7 +194,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
 
     /**
-     * A {@link SpreadsheetMetadata} with no textStyle.
+     * A {@link SpreadsheetMetadata} that is completely empty without any properties or default.
      */
     @SuppressWarnings("StaticInitializerReferencesSubClass")
     public static final SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
