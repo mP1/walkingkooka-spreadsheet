@@ -39,6 +39,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasLastModifiedTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContextTesting;
+import walkingkooka.environment.HasOptionalAuditInfoTesting;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
@@ -139,6 +140,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     EnvironmentContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     HasLastModifiedTesting,
+    HasOptionalAuditInfoTesting,
     HasPropertiesTesting,
     HasUrlFragmentTesting,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
@@ -2119,6 +2121,36 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 )
             ),
             NOW
+        );
+    }
+
+    // HasAuditInfo.....................................................................................................
+
+    @Test
+    public void testAuditInfoWhenEmpty() {
+        this.auditInfoAndCheck(
+            SpreadsheetMetadata.EMPTY
+        );
+    }
+
+    @Test
+    public void testAuditInfoWhenNotEmptyMissingAuditInfo() {
+        this.auditInfoAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            )
+        );
+    }
+
+    @Test
+    public void testAuditInfoWhenNotEmptyWithAuditInfo() {
+        this.auditInfoAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AUDIT_INFO
+            ),
+            AUDIT_INFO
         );
     }
 

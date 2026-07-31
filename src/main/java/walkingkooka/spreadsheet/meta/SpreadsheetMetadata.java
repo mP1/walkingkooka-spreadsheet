@@ -45,6 +45,7 @@ import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.HasOptionalAuditInfo;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
@@ -179,6 +180,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     HasLastModified,
     HasLocale,
     HasMathContext,
+    HasOptionalAuditInfo,
     HasOptionalName<SpreadsheetName>,
     HasProperties,
     HateosResource<SpreadsheetId>,
@@ -2030,7 +2032,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     @Override
     public Optional<LocalDateTime> lastModified() {
-        return this.get(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+        return this.auditInfo()
             .map(AuditInfo::modifiedTimestamp);
+    }
+
+    // HasOptionalAuditInfo.............................................................................................
+
+    @Override
+    public Optional<AuditInfo> auditInfo() {
+        return this.get(SpreadsheetMetadataPropertyName.AUDIT_INFO);
     }
 }
