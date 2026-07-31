@@ -36,7 +36,7 @@ import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.datetime.HasLastModifiedTesting;
+import walkingkooka.datetime.HasOptionalLastModifiedTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.environment.HasOptionalAuditInfoTesting;
@@ -139,8 +139,8 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     CurrencyLocaleContextTesting,
     EnvironmentContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
-    HasLastModifiedTesting,
     HasOptionalAuditInfoTesting,
+    HasOptionalLastModifiedTesting,
     HasPropertiesTesting,
     HasUrlFragmentTesting,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
@@ -2091,7 +2091,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         return true;
     }
 
-    // HasLastModified..................................................................................................
+    // HasOptionalLastModified..........................................................................................
 
     @Test
     public void testLastModifiedWhenEmpty() {
