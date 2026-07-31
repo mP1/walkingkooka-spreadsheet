@@ -36,7 +36,9 @@ import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasLastModifiedTesting;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
@@ -134,7 +136,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     ClassTesting2<SpreadsheetMetadata>,
     CurrencyLocaleContextTesting,
+    EnvironmentContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
+    HasLastModifiedTesting,
     HasPropertiesTesting,
     HasUrlFragmentTesting,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
@@ -2083,6 +2087,39 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     private Boolean value2() {
         return true;
+    }
+
+    // HasLastModified..................................................................................................
+
+    @Test
+    public void testLastModifiedWhenEmpty() {
+        this.hasLastModifiedAndCheck(
+            SpreadsheetMetadata.EMPTY
+        );
+    }
+
+    @Test
+    public void testLastModifiedWhenNotEmptyMissingAuditInfo() {
+        this.hasLastModifiedAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            )
+        );
+    }
+
+    @Test
+    public void testLastModifiedWhenNotEmptyWithAuditInfo() {
+        this.hasLastModifiedAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    USER,
+                    NOW
+                )
+            ),
+            NOW
+        );
     }
 
     // ClassTesting.....................................................................................................

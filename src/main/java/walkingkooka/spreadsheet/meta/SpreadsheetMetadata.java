@@ -40,6 +40,7 @@ import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasLastModified;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
@@ -148,6 +149,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
@@ -174,6 +176,7 @@ import java.util.function.Function;
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
     HasContentType,
     HasExpressionNumberKind,
+    HasLastModified,
     HasLocale,
     HasMathContext,
     HasOptionalName<SpreadsheetName>,
@@ -2021,5 +2024,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         return properties;
+    }
+
+    // HasLastModified..................................................................................................
+
+    @Override
+    public Optional<LocalDateTime> lastModified() {
+        return this.get(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+            .map(AuditInfo::modifiedTimestamp);
     }
 }
