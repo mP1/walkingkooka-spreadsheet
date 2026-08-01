@@ -137,10 +137,10 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
 
                         final boolean filter;
                         switch (name) {
-                            case "basic":
                             case "nullAfter":
                             case "nullBefore":
                             case "reverse":
+                            case "value":
                                 filter = false;
                                 break;
                             default:

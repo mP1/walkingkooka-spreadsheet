@@ -39,23 +39,10 @@ import java.util.Objects;
 public final class SpreadsheetComparators implements PublicStaticHelper {
 
     /**
-     * {@see SpreadsheetComparatorBasic}
-     */
-    public static <T> SpreadsheetComparator<T> basic(final Class<T> type,
-                                                     final Comparator<? super T> comparator,
-                                                     final SpreadsheetComparatorName name) {
-        return SpreadsheetComparatorBasic.with(
-            type,
-            comparator,
-            name
-        );
-    }
-
-    /**
      * {@link Comparators#customListCaseSensitive(List)}
      */
     public static SpreadsheetComparator<CharSequence> customList(final List<CharSequence> customList) {
-        return basic(
+        return value(
             CharSequence.class,
             Comparators.customListCaseSensitive(customList),
             SpreadsheetComparatorName.CUSTOM_LIST
@@ -66,7 +53,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@link Comparators#customListCaseInsensitive(List)}
      */
     public static SpreadsheetComparator<CharSequence> customListCaseInsensitive(final List<CharSequence> customList) {
-        return basic(
+        return value(
             CharSequence.class,
             Comparators.customListCaseInsensitive(customList),
             SpreadsheetComparatorName.CUSTOM_LIST_CASE_INSENSITIVE
@@ -77,7 +64,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return DATE;
     }
 
-    private final static SpreadsheetComparator<LocalDate> DATE = basic(
+    private final static SpreadsheetComparator<LocalDate> DATE = value(
         LocalDate.class,
         Comparator.naturalOrder(),
         SpreadsheetComparatorName.DATE
@@ -87,7 +74,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return DATETIME;
     }
 
-    private final static SpreadsheetComparator<LocalDateTime> DATETIME = basic(
+    private final static SpreadsheetComparator<LocalDateTime> DATETIME = value(
         LocalDateTime.class,
         Comparator.naturalOrder(),
         SpreadsheetComparatorName.DATE_TIME
@@ -98,7 +85,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return DAY_OF_MONTH;
     }
 
-    private final static SpreadsheetComparator<LocalDate> DAY_OF_MONTH = basic(
+    private final static SpreadsheetComparator<LocalDate> DAY_OF_MONTH = value(
         LocalDate.class,
         Cast.to(
             DateTimeComparators.dayOfMonth()
@@ -110,7 +97,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return DAY_OF_WEEK;
     }
 
-    private final static SpreadsheetComparator<LocalDate> DAY_OF_WEEK = basic(
+    private final static SpreadsheetComparator<LocalDate> DAY_OF_WEEK = value(
         LocalDate.class,
         Cast.to(
             DateTimeComparators.dayOfWeek()
@@ -129,7 +116,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return HOUR_OF_AMPM;
     }
 
-    private final static SpreadsheetComparator<LocalTime> HOUR_OF_AMPM = basic(
+    private final static SpreadsheetComparator<LocalTime> HOUR_OF_AMPM = value(
         LocalTime.class,
         Cast.to(
             DateTimeComparators.hourOfAmPm()
@@ -141,7 +128,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return HOUR_OF_DAY;
     }
 
-    private final static SpreadsheetComparator<LocalTime> HOUR_OF_DAY = basic(
+    private final static SpreadsheetComparator<LocalTime> HOUR_OF_DAY = value(
         LocalTime.class,
         Cast.to(
             DateTimeComparators.hourOfDay()
@@ -153,7 +140,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return MINUTE_OF_HOUR;
     }
 
-    private final static SpreadsheetComparator<LocalTime> MINUTE_OF_HOUR = basic(
+    private final static SpreadsheetComparator<LocalTime> MINUTE_OF_HOUR = value(
         LocalTime.class,
         Cast.to(
             DateTimeComparators.minuteOfHour()
@@ -165,7 +152,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return MONTH_OF_YEAR;
     }
 
-    private final static SpreadsheetComparator<LocalDate> MONTH_OF_YEAR = basic(
+    private final static SpreadsheetComparator<LocalDate> MONTH_OF_YEAR = value(
         LocalDate.class,
         Cast.to(
             DateTimeComparators.monthOfYear()
@@ -177,7 +164,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return NANO_OF_SECOND;
     }
 
-    private final static SpreadsheetComparator<LocalTime> NANO_OF_SECOND = basic(
+    private final static SpreadsheetComparator<LocalTime> NANO_OF_SECOND = value(
         LocalTime.class,
         Cast.to(
             DateTimeComparators.nanoOfSecond()
@@ -188,7 +175,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     public static <T> SpreadsheetComparator<T> nullAfter(final Class<T> type,
                                                          final Comparator<T> comparator,
                                                          final SpreadsheetComparatorName name) {
-        return basic(
+        return value(
             type,
             Comparators.nullAfter(comparator),
             name
@@ -198,7 +185,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     public static <T> SpreadsheetComparator<T> nullBefore(final Class<T> type,
                                                           final Comparator<T> comparator,
                                                           final SpreadsheetComparatorName name) {
-        return basic(
+        return value(
             type,
             Comparators.nullBefore(comparator),
             name
@@ -209,7 +196,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return NUMBER;
     }
 
-    private final static SpreadsheetComparator<ExpressionNumber> NUMBER = basic(
+    private final static SpreadsheetComparator<ExpressionNumber> NUMBER = value(
         ExpressionNumber.class,
         Comparator.naturalOrder(),
         SpreadsheetComparatorName.NUMBER
@@ -270,7 +257,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return SECONDS_OF_MINUTE;
     }
 
-    private final static SpreadsheetComparator<LocalTime> SECONDS_OF_MINUTE = basic(
+    private final static SpreadsheetComparator<LocalTime> SECONDS_OF_MINUTE = value(
         LocalTime.class,
         Cast.to(
             DateTimeComparators.secondOfMinute()
@@ -282,7 +269,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return TEXT;
     }
 
-    private final static SpreadsheetComparator<String> TEXT = basic(
+    private final static SpreadsheetComparator<String> TEXT = value(
         String.class,
         Comparator.naturalOrder(),
         SpreadsheetComparatorName.TEXT
@@ -292,7 +279,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return TEXT_CASE_INSENSITIVE;
     }
 
-    private final static SpreadsheetComparator<String> TEXT_CASE_INSENSITIVE = basic(
+    private final static SpreadsheetComparator<String> TEXT_CASE_INSENSITIVE = value(
         String.class,
         String.CASE_INSENSITIVE_ORDER,
         SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
@@ -305,7 +292,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return TEXT_WITH_NUMBERS;
     }
 
-    private final static SpreadsheetComparator<String> TEXT_WITH_NUMBERS = basic(
+    private final static SpreadsheetComparator<String> TEXT_WITH_NUMBERS = value(
         String.class,
         Comparators.textWithNumbersComparatorCaseSensitive(),
         SpreadsheetComparatorName.TEXT_WITH_NUMBERS
@@ -318,7 +305,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return TEXT_WITH_NUMBERS_CASE_INSENSITIVE;
     }
 
-    private final static SpreadsheetComparator<String> TEXT_WITH_NUMBERS_CASE_INSENSITIVE = basic(
+    private final static SpreadsheetComparator<String> TEXT_WITH_NUMBERS_CASE_INSENSITIVE = value(
         String.class,
         Comparators.textWithNumbersComparatorCaseSensitive(),
         SpreadsheetComparatorName.TEXT_WITH_NUMBERS_CASE_INSENSITIVE
@@ -328,17 +315,30 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return TIME;
     }
 
-    private final static SpreadsheetComparator<LocalTime> TIME = basic(
+    private final static SpreadsheetComparator<LocalTime> TIME = value(
         LocalTime.class,
         Comparator.naturalOrder(),
         SpreadsheetComparatorName.TIME
     );
 
+    /**
+     * {@see SpreadsheetComparatorValue}
+     */
+    public static <T> SpreadsheetComparator<T> value(final Class<T> type,
+                                                     final Comparator<? super T> comparator,
+                                                     final SpreadsheetComparatorName name) {
+        return SpreadsheetComparatorValue.with(
+            type,
+            comparator,
+            name
+        );
+    }
+
     public static SpreadsheetComparator<LocalDate> year() {
         return YEAR;
     }
 
-    private final static SpreadsheetComparator<LocalDate> YEAR = basic(
+    private final static SpreadsheetComparator<LocalDate> YEAR = value(
         LocalDate.class,
         Cast.to(
             DateTimeComparators.year()

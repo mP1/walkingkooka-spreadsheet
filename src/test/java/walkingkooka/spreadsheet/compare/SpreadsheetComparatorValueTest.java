@@ -30,9 +30,9 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparatorTesting<SpreadsheetComparatorBasic<String>, String>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorBasic<String>>,
-    ToStringTesting<SpreadsheetComparatorBasic<String>> {
+public final class SpreadsheetComparatorValueTest implements SpreadsheetComparatorTesting<SpreadsheetComparatorValue<String>, String>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorValue<String>>,
+    ToStringTesting<SpreadsheetComparatorValue<String>> {
 
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.TEXT;
 
@@ -40,7 +40,7 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     public void testWithNullTypeFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetComparatorBasic.with(
+            () -> SpreadsheetComparatorValue.with(
                 null,
                 String.CASE_INSENSITIVE_ORDER,
                 NAME
@@ -52,7 +52,7 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     public void testWithNullComparatorFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetComparatorBasic.with(
+            () -> SpreadsheetComparatorValue.with(
                 String.class,
                 null,
                 NAME
@@ -64,7 +64,7 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     public void testWithNullNameFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetComparatorBasic.with(
+            () -> SpreadsheetComparatorValue.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
                 null
@@ -74,7 +74,7 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
 
     @Test
     public void testWith() {
-        final SpreadsheetComparatorBasic<Temporal> comparator = SpreadsheetComparatorBasic.with(
+        final SpreadsheetComparatorValue<Temporal> comparator = SpreadsheetComparatorValue.with(
             Temporal.class,
             DateTimeComparators.dayOfMonth(),
             NAME
@@ -113,12 +113,12 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     @Test
     public void testEqualsDifferentComparator() {
         this.checkNotEquals(
-            SpreadsheetComparatorBasic.with(
+            SpreadsheetComparatorValue.with(
                 String.class,
                 Comparators.fake(),
                 NAME
             ),
-            SpreadsheetComparatorBasic.with(
+            SpreadsheetComparatorValue.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
                 NAME
@@ -129,12 +129,12 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     @Test
     public void testEqualsDifferentName() {
         this.checkNotEquals(
-            SpreadsheetComparatorBasic.with(
+            SpreadsheetComparatorValue.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
                 NAME
             ),
-            SpreadsheetComparatorBasic.with(
+            SpreadsheetComparatorValue.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
                 SpreadsheetComparatorName.with(
@@ -145,7 +145,7 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     }
 
     @Override
-    public SpreadsheetComparatorBasic<String> createObject() {
+    public SpreadsheetComparatorValue<String> createObject() {
         return this.createComparator();
     }
 
@@ -154,7 +154,7 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
         final Comparator<String> comparator = Comparators.fake();
 
         this.toStringAndCheck(
-            SpreadsheetComparatorBasic.with(
+            SpreadsheetComparatorValue.with(
                 String.class,
                 comparator,
                 NAME
@@ -166,8 +166,8 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     // Comparator.......................................................................................................
 
     @Override
-    public SpreadsheetComparatorBasic<String> createComparator() {
-        return SpreadsheetComparatorBasic.with(
+    public SpreadsheetComparatorValue<String> createComparator() {
+        return SpreadsheetComparatorValue.with(
             String.class,
             String.CASE_INSENSITIVE_ORDER,
             NAME
@@ -175,9 +175,9 @@ public final class SpreadsheetComparatorBasicTest implements SpreadsheetComparat
     }
 
     @Override
-    public Class<SpreadsheetComparatorBasic<String>> type() {
+    public Class<SpreadsheetComparatorValue<String>> type() {
         return Cast.to(
-            SpreadsheetComparatorBasic.class
+            SpreadsheetComparatorValue.class
         );
     }
 
