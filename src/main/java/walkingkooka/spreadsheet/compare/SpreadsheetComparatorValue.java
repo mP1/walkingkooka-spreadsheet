@@ -26,19 +26,19 @@ import java.util.Objects;
 /**
  * Wraps a {@link Comparator} along with a {@link Class type}.
  */
-final class SpreadsheetComparatorBasic<T> implements SpreadsheetComparator<T> {
+final class SpreadsheetComparatorValue<T> implements SpreadsheetComparator<T> {
 
-    static <T> SpreadsheetComparatorBasic<T> with(final Class<T> type,
+    static <T> SpreadsheetComparatorValue<T> with(final Class<T> type,
                                                   final Comparator<? super T> comparator,
                                                   final SpreadsheetComparatorName name) {
-        return new SpreadsheetComparatorBasic<>(
+        return new SpreadsheetComparatorValue<>(
             Objects.requireNonNull(type, "type"),
             Objects.requireNonNull(comparator, "compare"),
             Objects.requireNonNull(name, "name")
         );
     }
 
-    private SpreadsheetComparatorBasic(final Class<T> type,
+    private SpreadsheetComparatorValue(final Class<T> type,
                                        final Comparator<? super T> comparator,
                                        final SpreadsheetComparatorName name) {
         this.type = type;
@@ -85,10 +85,10 @@ final class SpreadsheetComparatorBasic<T> implements SpreadsheetComparator<T> {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof SpreadsheetComparatorBasic && this.equals0(Cast.to(other));
+            other instanceof SpreadsheetComparatorValue && this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetComparatorBasic<?> other) {
+    private boolean equals0(final SpreadsheetComparatorValue<?> other) {
         return this.type.equals(other.type) &&
             this.comparator.equals(other.comparator) &&
             this.name.equals(other.name);
