@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.Cast;
 import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Wraps another {@link SpreadsheetComparator} and reverses the compare result.
@@ -41,8 +43,12 @@ final class SpreadsheetComparatorReverse<T> implements SpreadsheetComparator<T> 
     }
 
     @Override
-    public Class<T> type() {
-        return this.comparator.type();
+    public Optional<T> extractValue(final SpreadsheetCell cell,
+                                    final SpreadsheetComparatorContext context) {
+        return this.comparator.extractValue(
+            cell,
+            context
+        );
     }
 
     @Override

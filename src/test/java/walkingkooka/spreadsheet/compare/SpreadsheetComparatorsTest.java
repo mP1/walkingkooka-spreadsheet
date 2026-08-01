@@ -27,7 +27,6 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.lang.reflect.Method;
@@ -47,7 +46,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testDate() {
         this.compareAndCheckLess(
             SpreadsheetComparators.date(),
-            LocalDate.class,
             LocalDate.of(1999, 1, 31),
             LocalDate.of(2001, 12, 1)
         );
@@ -57,7 +55,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testDate2() {
         this.compareAndCheckLess(
             SpreadsheetComparators.date(),
-            LocalDate.class,
             LocalDate.of(1999, 1, 1),
             LocalDate.of(2001, 2, 2)
         );
@@ -67,7 +64,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testDateTime() {
         this.compareAndCheckLess(
             SpreadsheetComparators.dateTime(),
-            LocalDateTime.class,
             LocalDateTime.of(1999, 1, 31, 12, 58, 59),
             LocalDateTime.of(2001, 12, 1, 12, 58, 59)
         );
@@ -77,7 +73,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testDayOfMonth() {
         this.compareAndCheckLess(
             SpreadsheetComparators.dayOfMonth(),
-            LocalDate.class,
             LocalDate.of(2001, 12, 1),
             LocalDate.of(1999, 1, 31)
         );
@@ -87,7 +82,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testDayOfWeek() {
         this.compareAndCheckLess(
             SpreadsheetComparators.dayOfWeek(),
-            LocalDate.class,
             LocalDate.of(2024, 4, 19),
             LocalDate.of(2024, 4, 20)
         );
@@ -97,7 +91,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testHourOfAmpm() {
         this.compareAndCheckLess(
             SpreadsheetComparators.hourOfAmPm(),
-            LocalTime.class,
             LocalTime.of(13, 1, 11),
             LocalTime.of(2, 2, 22)
         );
@@ -107,7 +100,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testHourOfDay() {
         this.compareAndCheckLess(
             SpreadsheetComparators.hourOfAmPm(),
-            LocalTime.class,
             LocalTime.of(1, 11, 11),
             LocalTime.of(2, 2, 2)
         );
@@ -117,7 +109,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testMinuteOfHour() {
         this.compareAndCheckLess(
             SpreadsheetComparators.minuteOfHour(),
-            LocalTime.class,
             LocalTime.of(13, 1, 11),
             LocalTime.of(2, 2, 22)
         );
@@ -127,7 +118,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testMonthOfYear() {
         this.compareAndCheckLess(
             SpreadsheetComparators.monthOfYear(),
-            LocalDate.class,
             LocalDate.of(2001, 1, 31),
             LocalDate.of(1999, 12, 2)
         );
@@ -137,7 +127,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testNanoOfSecond() {
         this.compareAndCheckLess(
             SpreadsheetComparators.nanoOfSecond(),
-            LocalTime.class,
             LocalTime.of(1, 1, 11, 100),
             LocalTime.of(2, 2, 22, 222)
         );
@@ -173,7 +162,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testNumber() {
         this.compareAndCheckLess(
             SpreadsheetComparators.number(),
-            ExpressionNumber.class,
             ExpressionNumberKind.BIG_DECIMAL.zero(),
             ExpressionNumberKind.BIG_DECIMAL.one()
         );
@@ -183,7 +171,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testNumberDifferentExpressionNumberKind() {
         this.compareAndCheckLess(
             SpreadsheetComparators.number(),
-            ExpressionNumber.class,
             ExpressionNumberKind.BIG_DECIMAL.zero(),
             ExpressionNumberKind.DOUBLE.one()
         );
@@ -193,7 +180,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testSecondOfMinute() {
         this.compareAndCheckLess(
             SpreadsheetComparators.secondsOfMinute(),
-            LocalTime.class,
             LocalTime.of(11, 11, 1, 100),
             LocalTime.of(2, 2, 22, 222)
         );
@@ -203,7 +189,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testStringCaseInsensitive() {
         this.compareAndCheckLess(
             SpreadsheetComparators.textCaseInsensitive(),
-            String.class,
             "abc",
             "XYZ"
         );
@@ -213,7 +198,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testText() {
         this.compareAndCheckLess(
             SpreadsheetComparators.text(),
-            String.class,
             "abc",
             "xyz"
         );
@@ -223,7 +207,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testText2() {
         this.compareAndCheckLess(
             SpreadsheetComparators.text(),
-            String.class,
             "BCD",
             "abc"
         );
@@ -233,7 +216,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testTextWithNumbers() {
         this.compareAndCheckLess(
             SpreadsheetComparators.textWithNumbers(),
-            String.class,
             "ABC 00001 DEF",
             "ABC 23 DEF"
         );
@@ -243,7 +225,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testStringCaseInsensitive2() {
         this.compareAndCheckLess(
             SpreadsheetComparators.textCaseInsensitive(),
-            String.class,
             "abc",
             "BCD"
         );
@@ -253,7 +234,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testTime() {
         this.compareAndCheckLess(
             SpreadsheetComparators.time(),
-            LocalTime.class,
             LocalTime.of(1, 58, 59),
             LocalTime.of(2, 58, 59)
         );
@@ -263,25 +243,8 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     public void testYear() {
         this.compareAndCheckLess(
             SpreadsheetComparators.monthOfYear(),
-            LocalDate.class,
             LocalDate.of(1999, 1, 1),
             LocalDate.of(2000, 12, 31)
-        );
-    }
-
-    private <T> void compareAndCheckLess(final SpreadsheetComparator<T> comparator,
-                                         final Class<T> type,
-                                         final T left,
-                                         final T right) {
-        this.checkEquals(
-            type,
-            comparator.type(),
-            () -> comparator + " type"
-        );
-        this.compareAndCheckLess(
-            comparator,
-            left,
-            right
         );
     }
 

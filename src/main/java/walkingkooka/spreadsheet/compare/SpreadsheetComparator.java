@@ -19,21 +19,22 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.naming.HasName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Comparator;
+import java.util.Optional;
 
 /**
- * A {@link Comparator} that includes a type property. Sorting cells is a two phase operation, first all cell values are
- * converted to the {@link SpreadsheetComparator#type()} and then converted cell values are sorted using this {@link Comparator}.
- * Cells that could not be converted will be placed before or after the sorted list of cells.
+ * A {@link Comparator} that sorts value from a {@link SpreadsheetCell}
  */
 public interface SpreadsheetComparator<T> extends Comparator<T>,
     HasName<SpreadsheetComparatorName> {
 
     /**
-     * The type handled by this {@link Comparator}. This is used to convert the left/right values before calling {@link Comparator#compare(Object, Object)}.
+     * Extract a value from the given {@link SpreadsheetCell}.
      */
-    Class<T> type();
+    Optional<T> extractValue(final SpreadsheetCell cell,
+                             final SpreadsheetComparatorContext context);
 
     /**
      * Returns a reversed {@link SpreadsheetComparator}
