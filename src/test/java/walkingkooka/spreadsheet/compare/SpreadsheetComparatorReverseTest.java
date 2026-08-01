@@ -26,7 +26,7 @@ import walkingkooka.ToStringTesting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetComparatorReverseTest implements SpreadsheetComparatorTesting<SpreadsheetComparatorReverse<String>, String>,
+public final class SpreadsheetComparatorReverseTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorReverse<String>, String>,
     HashCodeEqualsDefinedTesting2<SpreadsheetComparatorReverse<String>>,
     ToStringTesting<SpreadsheetComparatorReverse<String>> {
 

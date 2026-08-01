@@ -17,69 +17,19 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparatorTesting2;
+import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.naming.HasNameTesting;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>, T> extends ComparatorTesting2<C, T>,
+public interface SpreadsheetComparatorTesting extends ComparatorTesting,
     HasNameTesting {
 
-    @Test
-    default void testExtractValueWithNullContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createComparator()
-                .extractValue(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY
-                    ),
-                    null
-                )
-        );
-    }
 
-    default void extractValueAndCheck(final SpreadsheetCell cell,
-                                      final SpreadsheetComparatorContext context) {
-        this.extractValueAndCheck(
-            this.createComparator(),
-            cell,
-            context,
-            Optional.empty()
-        );
-    }
-
-    default void extractValueAndCheck(final SpreadsheetCell cell,
-                                      final SpreadsheetComparatorContext context,
-                                      final T expected) {
-        this.extractValueAndCheck(
-            this.createComparator(),
-            cell,
-            context,
-            Optional.of(expected)
-        );
-    }
-
-    default void extractValueAndCheck(final SpreadsheetCell cell,
-                                      final SpreadsheetComparatorContext context,
-                                      final Optional<T> expected) {
-        this.extractValueAndCheck(
-            this.createComparator(),
-            cell,
-            context,
-            expected
-        );
-    }
-
-    default void extractValueAndCheck(final SpreadsheetComparator<T> comparator,
-                                      final SpreadsheetCell cell,
-                                      final SpreadsheetComparatorContext context) {
+    default <T> void extractValueAndCheck(final SpreadsheetComparator<T> comparator,
+                                          final SpreadsheetCell cell,
+                                          final SpreadsheetComparatorContext context) {
         this.extractValueAndCheck(
             comparator,
             cell,
@@ -88,10 +38,10 @@ public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>
         );
     }
 
-    default void extractValueAndCheck(final SpreadsheetComparator<T> comparator,
-                                      final SpreadsheetCell cell,
-                                      final SpreadsheetComparatorContext context,
-                                      final T expected) {
+    default <T> void extractValueAndCheck(final SpreadsheetComparator<T> comparator,
+                                          final SpreadsheetCell cell,
+                                          final SpreadsheetComparatorContext context,
+                                          final T expected) {
         this.extractValueAndCheck(
             comparator,
             cell,
@@ -100,10 +50,10 @@ public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>
         );
     }
 
-    default void extractValueAndCheck(final SpreadsheetComparator<T> comparator,
-                                      final SpreadsheetCell cell,
-                                      final SpreadsheetComparatorContext context,
-                                      final Optional<T> expected) {
+    default <T> void extractValueAndCheck(final SpreadsheetComparator<T> comparator,
+                                          final SpreadsheetCell cell,
+                                          final SpreadsheetComparatorContext context,
+                                          final Optional<T> expected) {
         this.checkEquals(
             expected,
             comparator.extractValue(
@@ -112,6 +62,4 @@ public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>
             )
         );
     }
-
-    SpreadsheetComparatorContext createContext();
 }

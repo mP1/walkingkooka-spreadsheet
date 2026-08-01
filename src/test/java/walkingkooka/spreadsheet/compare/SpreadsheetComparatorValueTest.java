@@ -30,7 +30,7 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetComparatorValueTest implements SpreadsheetComparatorTesting<SpreadsheetComparatorValue<String>, String>,
+public final class SpreadsheetComparatorValueTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorValue<String>, String>,
     HashCodeEqualsDefinedTesting2<SpreadsheetComparatorValue<String>>,
     ToStringTesting<SpreadsheetComparatorValue<String>> {
 
