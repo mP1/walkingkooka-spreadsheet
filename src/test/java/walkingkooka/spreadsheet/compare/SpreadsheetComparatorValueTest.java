@@ -87,14 +87,6 @@ public final class SpreadsheetComparatorValueTest implements SpreadsheetComparat
     }
 
     @Test
-    public void testType() {
-        this.typeAndCheck(
-            this.createComparator(),
-            String.class
-        );
-    }
-
-    @Test
     public void testCompareLess() {
         this.compareAndCheckLess(
             "apple",
@@ -109,6 +101,22 @@ public final class SpreadsheetComparatorValueTest implements SpreadsheetComparat
             "Banana"
         );
     }
+
+    @Override
+    public SpreadsheetComparatorValue<String> createComparator() {
+        return SpreadsheetComparatorValue.with(
+            String.class,
+            String.CASE_INSENSITIVE_ORDER,
+            NAME
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorContext createContext() {
+        return new FakeSpreadsheetComparatorContext();
+    }
+
+    // hashCode/equals..................................................................................................
 
     @Test
     public void testEqualsDifferentComparator() {
@@ -163,16 +171,7 @@ public final class SpreadsheetComparatorValueTest implements SpreadsheetComparat
         );
     }
 
-    // Comparator.......................................................................................................
-
-    @Override
-    public SpreadsheetComparatorValue<String> createComparator() {
-        return SpreadsheetComparatorValue.with(
-            String.class,
-            String.CASE_INSENSITIVE_ORDER,
-            NAME
-        );
-    }
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetComparatorValue<String>> type() {

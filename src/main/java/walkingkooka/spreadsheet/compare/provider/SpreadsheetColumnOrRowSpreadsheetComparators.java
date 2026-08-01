@@ -96,43 +96,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                        final SpreadsheetComparatorContext context) {
         int result = Comparators.EQUAL;
 
-        final Object leftValue = valueOf(left);
-        final Object rightValue = valueOf(right);
-
         // try one by one, until a non equal match.
         for (final SpreadsheetComparator<?> comparator : this.comparators) {
-            final Class<?> type = comparator.type();
-
-            Object convertedLeftValue = null;
-            if (null != leftValue) {
-                convertedLeftValue = context.convert(
-                    leftValue,
-                    type
-                ).orElseLeft(null);
-            }
-
-            Object convertedRightValue = null;
-            if (null != rightValue) {
-                convertedRightValue = context.convert(
-                    rightValue,
-                    type
-                ).orElseLeft(null);
-            }
-
-            final boolean missingLeft = null == convertedLeftValue;
-            final boolean missingRight = null == convertedRightValue;
-            if (missingLeft || missingRight) {
-                result = missingLeft && missingRight ?
-                    Comparators.EQUAL :
-                    missingLeft ?
-                        Comparators.MORE :
-                        Comparators.LESS; // missing | nulls etc come AFTER
-            } else {
-                result = comparator.compare(
-                    Cast.to(convertedLeftValue),
-                    Cast.to(convertedRightValue)
-                );
-            }
+             result = compareValue(
+                Cast.to(comparator),
+                left,
+                right,
+                context
+            );
 
             if (Comparators.EQUAL != result) {
                 break;
@@ -142,12 +113,41 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         return result;
     }
 
-    private static Object valueOf(final SpreadsheetCell cell) {
-        return null == cell ?
-            null :
-            cell.formula().
-                errorOrValue()
-                .orElse(null);
+    private static <T> int compareValue(final SpreadsheetComparator<T> comparator,
+                                        final SpreadsheetCell left,
+                                        final SpreadsheetCell right,
+                                        final SpreadsheetComparatorContext context) {
+        final T leftValue = comparator.extractValue(
+            left,
+            context
+        ).orElse(null);
+
+        final T rightValue = comparator.extractValue(
+            right,
+            context
+        ).orElse(null);
+
+        final boolean missingLeft = null == leftValue;
+        final boolean missingRight = null == rightValue;
+
+        int result = Comparators.EQUAL;
+
+        if (missingLeft || missingRight) {
+            result = missingLeft && missingRight ?
+                Comparators.EQUAL :
+                missingLeft ?
+                    Comparators.MORE :
+                    Comparators.LESS; // missing | nulls etc come AFTER
+        } else {
+            result = comparator.compare(
+                //Cast.to(convertedLeftValue),
+                //Cast.to(convertedRightValue)
+                leftValue,
+                rightValue
+            );
+        }
+
+        return result;
     }
 
     public SpreadsheetColumnOrRowReferenceOrRange columnOrRow() {

@@ -23,8 +23,6 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 
-import java.time.LocalTime;
-
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -60,18 +58,6 @@ public final class SpreadsheetComparatorReverseTest implements SpreadsheetCompar
                     comparator
                 )
             )
-        );
-    }
-
-    @Test
-    public void testType() {
-        final SpreadsheetComparator<LocalTime> comparator = SpreadsheetComparators.hourOfDay();
-
-        this.typeAndCheck(
-            SpreadsheetComparators.reverse(
-                comparator
-            ),
-            LocalTime.class
         );
     }
 
@@ -127,6 +113,11 @@ public final class SpreadsheetComparatorReverseTest implements SpreadsheetCompar
                 SpreadsheetComparators.textCaseInsensitive()
             )
         );
+    }
+
+    @Override
+    public SpreadsheetComparatorContext createContext() {
+        return new FakeSpreadsheetComparatorContext();
     }
 
     // Class............................................................................................................

@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Wraps a {@link Comparator} along with a {@link Class type}.
@@ -46,9 +48,22 @@ final class SpreadsheetComparatorValue<T> implements SpreadsheetComparator<T> {
         this.name = name;
     }
 
+    /**
+     * Extracts the value or error from the given {@link SpreadsheetCell}
+     */
     @Override
-    public Class<T> type() {
-        return this.type;
+    public Optional<T> extractValue(final SpreadsheetCell cell,
+                                    final SpreadsheetComparatorContext context) {
+        return Optional.ofNullable(
+            context.convert(
+                null != cell ?
+                    cell.formula().
+                        errorOrValue()
+                        .orElse(null) :
+                    null,
+                this.type
+            ).orElseLeft(null)
+        );
     }
 
     private final Class<T> type;

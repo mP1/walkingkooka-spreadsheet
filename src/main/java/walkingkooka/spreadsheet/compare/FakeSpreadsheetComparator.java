@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+
+import java.util.Optional;
 
 public class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
@@ -26,7 +29,8 @@ public class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
     }
 
     @Override
-    public Class<T> type() {
+    public Optional<T> extractValue(final SpreadsheetCell cell,
+                                    final SpreadsheetComparatorContext context) {
         throw new UnsupportedOperationException();
     }
 
