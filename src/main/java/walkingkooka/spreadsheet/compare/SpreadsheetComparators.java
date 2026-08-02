@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
+import walkingkooka.color.compare.ColorComparators;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.compare.DateTimeComparators;
 import walkingkooka.plugin.ProviderContext;
@@ -38,6 +40,16 @@ import java.util.List;
 import java.util.Objects;
 
 public final class SpreadsheetComparators implements PublicStaticHelper {
+
+    /**
+     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     */
+    public static SpreadsheetComparator<Color> backgroundColor(final String colorCollection) {
+        return formattedValueTextStylePropertyNameColor(
+            TextStylePropertyName.BACKGROUND_COLOR,
+            colorCollection
+        );
+    }
 
     /**
      * {@link Comparators#customListCaseSensitive(List)}
@@ -121,6 +133,17 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         return SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
             textStylePropertyName,
             comparator
+        );
+    }
+
+    /**
+     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     */
+    private static SpreadsheetComparator<Color> formattedValueTextStylePropertyNameColor(final TextStylePropertyName<Color> textStylePropertyName,
+                                                                                         final String colorCollection) {
+        return formattedValueTextStylePropertyName(
+            textStylePropertyName,
+            ColorComparators.colorCollection(colorCollection)
         );
     }
 
