@@ -552,6 +552,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  colorWhite\n" +
                 "    2\n" +
                 "  comparators\n" +
+                "    background-color\n" +
                 "    custom-list\n" +
                 "    custom-list-case-insensitive\n" +
                 "    date\n" +

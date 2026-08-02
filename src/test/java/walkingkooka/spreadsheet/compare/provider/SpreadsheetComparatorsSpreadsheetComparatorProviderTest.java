@@ -146,7 +146,6 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
 
                         final boolean filter;
                         switch (name) {
-                            case "backgroundColor":
                             case "formattedValueTextStylePropertyName":
                             case "nullAfter":
                             case "nullBefore":
@@ -198,6 +197,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
         this.treePrintAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
             "SpreadsheetComparatorInfoSet\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/background-color background-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list-case-insensitive custom-list-case-insensitive\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\n" +
@@ -225,6 +225,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
         this.checkEquals(
             JsonNode.parse(
                 "[\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/background-color background-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list-case-insensitive custom-list-case-insensitive\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\",\n" +
