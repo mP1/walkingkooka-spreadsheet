@@ -35,7 +35,7 @@ final class SpreadsheetComparatorValue<T> implements SpreadsheetComparator<T> {
                                                   final SpreadsheetComparatorName name) {
         return new SpreadsheetComparatorValue<>(
             Objects.requireNonNull(type, "type"),
-            Objects.requireNonNull(comparator, "compare"),
+            Objects.requireNonNull(comparator, "comparator"),
             Objects.requireNonNull(name, "name")
         );
     }
