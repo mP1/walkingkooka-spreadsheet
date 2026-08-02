@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.plugin.PluginNameLike;
-import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -33,6 +32,7 @@ import java.util.AbstractList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * An immutable list of {@link SpreadsheetComparatorName}. This can be used to hold a list of names for sorting.
@@ -135,11 +135,19 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
 
     @Override
     public String text() {
-        return CharacterConstant.COMMA.toSeparatedString(
-            this,
-            SpreadsheetComparatorName::value
-        );
+        if (null == this.text) {
+            this.text = this.names.stream()
+                .map(SpreadsheetComparatorName::value)
+                .collect(Collectors.joining(SEPARATOR_SPACE))
+                .trim();
+        }
+
+        return this.text;
     }
+
+    private String text;
+
+    private final static String SEPARATOR_SPACE = ", ";
 
     // json.............................................................................................................
 

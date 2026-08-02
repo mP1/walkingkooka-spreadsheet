@@ -155,7 +155,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testHasUrlFragment() {
         this.urlFragmentAndCheck(
             this.createList(),
-            "date,number"
+            "date, number"
         );
     }
 
@@ -245,7 +245,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testMarshall() {
         this.marshallAndCheck(
             this.createList(),
-            "\"date,number\""
+            "\"date, number\""
         );
     }
 
