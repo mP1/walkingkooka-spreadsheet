@@ -73,6 +73,15 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
         SpreadsheetComparator<?> comparator;
 
         switch (name.value().toLowerCase()) {
+            case SpreadsheetComparatorName.BACKGROUND_COLOR_STRING:
+                if(values.size() != 1) {
+                    throw new IllegalArgumentException("Expected only 1 value");
+                }
+
+                comparator = SpreadsheetComparators.backgroundColor(
+                    (String)values.get(0)
+                );
+                break;
             case SpreadsheetComparatorName.CUSTOM_LIST_STRING:
                 comparator = SpreadsheetComparators.customList(
                     Cast.to(values)
