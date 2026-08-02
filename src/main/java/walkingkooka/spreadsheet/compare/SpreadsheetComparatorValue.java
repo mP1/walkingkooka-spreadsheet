@@ -26,7 +26,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Wraps a {@link Comparator} along with a {@link Class type}.
+ * Wraps a {@link Comparator} that extracts the value from a given {@link SpreadsheetCell} and converts that to a {@link Class type},
+ * using the given {@link Comparator} to {@link Comparator#compare(Object, Object)} to compare extracted values.
  */
 final class SpreadsheetComparatorValue<T> implements SpreadsheetComparator<T> {
 
