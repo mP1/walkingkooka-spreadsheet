@@ -105,6 +105,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithBorderBottomColor() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("border-bottom-color(\"red green blue\")"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.borderBottomColor("red green blue")
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorWithBorderColor() {
         this.spreadsheetComparatorAndCheck(
             SpreadsheetComparatorSelector.parse("border-color(\"red green blue\")"),
@@ -225,6 +234,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
             "SpreadsheetComparatorInfoSet\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/background-color background-color\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-bottom-color border-bottom-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-color border-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-left-color border-left-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/color color\n" +
@@ -256,6 +266,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
             JsonNode.parse(
                 "[\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/background-color background-color\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-bottom-color border-bottom-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-color border-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-left-color border-left-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/color color\",\n" +
