@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -110,6 +111,17 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      */
     public static <T> FakeSpreadsheetComparator<T> fake() {
         return new FakeSpreadsheetComparator<>();
+    }
+
+    /**
+     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     */
+    public static <T> SpreadsheetComparator<T> formattedValueTextStylePropertyName(final TextStylePropertyName<T> textStylePropertyName,
+                                                                                   final Comparator<? super T> comparator) {
+        return SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+            textStylePropertyName,
+            comparator
+        );
     }
 
     public static SpreadsheetComparator<LocalTime> hourOfAmPm() {
