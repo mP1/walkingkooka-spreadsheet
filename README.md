@@ -106,6 +106,7 @@ All sorting is performed by using a selected [SpreadsheetComparator](https://git
 which is identical to a `java.util.Comparator`. These may be enabled to supporting sorting one or more column/row/cell-range.
 
 - [background-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
+- [border-bottom-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
 - [border-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
 - [border-left-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
 - [color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
