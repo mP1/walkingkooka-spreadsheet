@@ -67,6 +67,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName BORDER_COLOR = registerConstant(BORDER_COLOR_STRING);
 
+    final static String BORDER_LEFT_COLOR_STRING = "border-left-color";
+
+    public final static SpreadsheetComparatorName BORDER_LEFT_COLOR = registerConstant(BORDER_LEFT_COLOR_STRING);
+
     final static String COLOR_STRING = "color";
 
     public final static SpreadsheetComparatorName COLOR = registerConstant(COLOR_STRING);
@@ -167,6 +171,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case BORDER_COLOR_STRING:
                 spreadsheetComparatorName = BORDER_COLOR;
+                break;
+            case BORDER_LEFT_COLOR_STRING:
+                spreadsheetComparatorName = BORDER_LEFT_COLOR;
                 break;
             case COLOR_STRING:
                 spreadsheetComparatorName = COLOR;

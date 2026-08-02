@@ -91,6 +91,15 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                     (String)values.get(0)
                 );
                 break;
+            case SpreadsheetComparatorName.BORDER_LEFT_COLOR_STRING:
+                if(values.size() != 1) {
+                    throw new IllegalArgumentException("Expected only 1 value");
+                }
+
+                comparator = SpreadsheetComparators.borderLeftColor(
+                    (String)values.get(0)
+                );
+                break;
             case SpreadsheetComparatorName.COLOR_STRING:
                 if(values.size() != 1) {
                     throw new IllegalArgumentException("Expected only 1 value");
@@ -150,6 +159,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
         Lists.of(
                 SpreadsheetComparators.backgroundColor("red"),
                 SpreadsheetComparators.borderColor("red"),
+                SpreadsheetComparators.borderLeftColor("red"),
                 SpreadsheetComparators.color("red"),
                 SpreadsheetComparators.customList(Lists.empty()),
                 SpreadsheetComparators.customListCaseInsensitive(Lists.empty()),
