@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -41,6 +42,15 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     ComparatorTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
+
+    @Test
+    public void testBackgroundColor() {
+        this.compareAndCheckLess(
+            SpreadsheetComparators.backgroundColor("red"),
+            Color.parse("#1FF"),
+            Color.parse("#2FF")
+        );
+    }
 
     @Test
     public void testDate() {

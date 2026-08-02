@@ -137,6 +137,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
 
                         final boolean filter;
                         switch (name) {
+                            case "backgroundColor":
                             case "formattedValueTextStylePropertyName":
                             case "nullAfter":
                             case "nullBefore":
