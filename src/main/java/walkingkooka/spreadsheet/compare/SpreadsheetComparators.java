@@ -52,6 +52,16 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     */
+    public static SpreadsheetComparator<Color> color(final String colorCollection) {
+        return formattedValueTextStylePropertyNameColor(
+            TextStylePropertyName.COLOR,
+            colorCollection
+        );
+    }
+
+    /**
      * {@link Comparators#customListCaseSensitive(List)}
      */
     public static SpreadsheetComparator<CharSequence> customList(final List<CharSequence> customList) {

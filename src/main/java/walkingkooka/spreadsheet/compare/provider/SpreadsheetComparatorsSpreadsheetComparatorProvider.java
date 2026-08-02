@@ -82,6 +82,15 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                     (String)values.get(0)
                 );
                 break;
+            case SpreadsheetComparatorName.COLOR_STRING:
+                if(values.size() != 1) {
+                    throw new IllegalArgumentException("Expected only 1 value");
+                }
+
+                comparator = SpreadsheetComparators.color(
+                    (String)values.get(0)
+                );
+                break;
             case SpreadsheetComparatorName.CUSTOM_LIST_STRING:
                 comparator = SpreadsheetComparators.customList(
                     Cast.to(values)
@@ -131,6 +140,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
     private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(
         Lists.of(
                 SpreadsheetComparators.backgroundColor("red"),
+                SpreadsheetComparators.color("red"),
                 SpreadsheetComparators.customList(Lists.empty()),
                 SpreadsheetComparators.customListCaseInsensitive(Lists.empty()),
                 SpreadsheetComparators.date(),
