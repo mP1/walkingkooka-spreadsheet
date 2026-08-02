@@ -553,6 +553,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    2\n" +
                 "  comparators\n" +
                 "    background-color\n" +
+                "    color\n" +
                 "    custom-list\n" +
                 "    custom-list-case-insensitive\n" +
                 "    date\n" +
@@ -938,7 +939,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  showHeadings\n" +
                 "    true\n" +
                 "  sortComparators\n" +
-                "    [background-color, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year]\n" +
+                "    [background-color, color, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year]\n" +
                 "  sortConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, locale, spreadsheet-value, basic)\"\n" +
