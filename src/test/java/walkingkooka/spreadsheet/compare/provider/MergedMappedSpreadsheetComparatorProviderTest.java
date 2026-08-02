@@ -149,7 +149,7 @@ public final class MergedMappedSpreadsheetComparatorProviderTest implements Spre
     public void testToString() {
         this.toStringAndCheck(
             this.createSpreadsheetComparatorProvider(),
-            "https://example.com/provider-only-comparator-222 provider-only-comparator-222,https://example.com/rename-comparator111 renamed-rename-comparator-111"
+            "https://example.com/provider-only-comparator-222 provider-only-comparator-222, https://example.com/rename-comparator111 renamed-rename-comparator-111"
         );
     }
 
