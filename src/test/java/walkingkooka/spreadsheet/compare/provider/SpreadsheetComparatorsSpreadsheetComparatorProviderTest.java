@@ -96,6 +96,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithBackgroundColor() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("background-color(\"red green blue\")"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.backgroundColor("red green blue")
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorWithCustomList() {
         this.spreadsheetComparatorAndCheck(
             SpreadsheetComparatorSelector.parse("custom-list(\"Hi\", \"Med\", \"Lo\")"),
