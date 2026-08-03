@@ -20,8 +20,6 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Comparator;
 import java.util.Currency;
@@ -39,10 +37,6 @@ final class SpreadsheetComparatorCurrency implements SpreadsheetComparator<Curre
         super();
     }
 
-    /**
-     * Extracts the {@link TextStylePropertyName} value from the given {@link SpreadsheetCell#formattedValue()} using
-     * {@link TextStylePropertyName#firstValueOrEmpty(TextNode)}.
-     */
     @Override
     public Optional<Currency> extractValue(final SpreadsheetCell cell,
                                            final SpreadsheetComparatorContext context) {
