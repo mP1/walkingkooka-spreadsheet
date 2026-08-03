@@ -33,6 +33,8 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,7 +49,8 @@ import java.util.stream.Collectors;
  * A {link SpreadsheetParserProvider} that supports creating {@link Parser} for each of the
  * available {@link SpreadsheetParsePattern}.
  */
-final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetParserProvider {
+final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetParserProvider,
+    TreePrintable {
 
     static SpreadsheetParserSpreadsheetParserProvider with(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
         return new SpreadsheetParserSpreadsheetParserProvider(
@@ -537,5 +540,22 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.spreadsheetParserInfos(),
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
