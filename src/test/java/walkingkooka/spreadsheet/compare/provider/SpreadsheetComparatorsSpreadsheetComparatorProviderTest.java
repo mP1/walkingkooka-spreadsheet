@@ -238,6 +238,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithTextDecorationColor() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("text-decoration-color(\"red green blue\")"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.textDecorationColor("red green blue")
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorWithTextWithNumbers() {
         this.spreadsheetComparatorAndCheck(
             "text-with-numbers",
@@ -283,6 +292,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-decoration-color text-decoration-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
@@ -318,6 +328,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-decoration-color text-decoration-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\",\n" +

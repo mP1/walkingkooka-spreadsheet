@@ -575,6 +575,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    seconds-of-minute\n" +
                 "    text\n" +
                 "    text-case-insensitive\n" +
+                "    text-decoration-color\n" +
                 "    text-with-numbers\n" +
                 "    text-with-numbers-case-insensitive\n" +
                 "    time\n" +

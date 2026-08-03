@@ -155,6 +155,15 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                     (String)values.get(0)
                 );
                 break;
+            case SpreadsheetComparatorName.TEXT_DECORATION_COLOR_STRING:
+                if(values.size() != 1) {
+                    throw new IllegalArgumentException("Expected only 1 value");
+                }
+
+                comparator = SpreadsheetComparators.textDecorationColor(
+                    (String)values.get(0)
+                );
+                break;
             default:
                 comparator = NAME_TO_COMPARATOR.get(name);
                 if (null == comparator) {
@@ -216,6 +225,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                 SpreadsheetComparators.secondsOfMinute(),
                 SpreadsheetComparators.text(),
                 SpreadsheetComparators.textCaseInsensitive(),
+                SpreadsheetComparators.textDecorationColor("red"),
                 SpreadsheetComparators.textWithNumbers(),
                 SpreadsheetComparators.textWithNumbersCaseInsensitive(),
                 SpreadsheetComparators.time(),

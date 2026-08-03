@@ -127,6 +127,7 @@ which is identical to a `java.util.Comparator`. These may be enabled to supporti
 - Second of Minute
 - Text
 - Text case-insensitive
+- [text-decoration-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
 - [text-with-numbers](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseSensitive.java)
 - [text-with-numbers-case-insensitive](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseInsensitive.java)
 - [formatted-value-text-style-property-name](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)

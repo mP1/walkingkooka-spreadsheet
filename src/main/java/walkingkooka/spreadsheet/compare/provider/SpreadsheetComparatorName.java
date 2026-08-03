@@ -151,6 +151,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName TEXT_CASE_INSENSITIVE = registerConstant(TEXT_CASE_INSENSITIVE_STRING);
 
+    final static String TEXT_DECORATION_COLOR_STRING = "text-decoration-color";
+
+    public final static SpreadsheetComparatorName TEXT_DECORATION_COLOR = registerConstant(TEXT_DECORATION_COLOR_STRING);
+
     private final static String TEXT_WITH_NUMBERS_STRING = "text-with-numbers";
 
     public final static SpreadsheetComparatorName TEXT_WITH_NUMBERS = registerConstant(TEXT_WITH_NUMBERS_STRING);
@@ -250,6 +254,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case TEXT_CASE_INSENSITIVE_STRING:
                 spreadsheetComparatorName = TEXT_CASE_INSENSITIVE;
+                break;
+            case TEXT_DECORATION_COLOR_STRING:
+                spreadsheetComparatorName = TEXT_DECORATION_COLOR;
                 break;
             case TEXT_WITH_NUMBERS_STRING:
                 spreadsheetComparatorName = TEXT_WITH_NUMBERS;
