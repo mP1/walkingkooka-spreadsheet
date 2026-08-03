@@ -55,7 +55,7 @@ abstract class SpreadsheetComparatorShared<T> implements SpreadsheetComparator<T
         return leftIsNull && rightIsNull ?
             Comparators.EQUAL :
             leftIsNull ? Comparators.MORE :
-                rightIsNull ? - Comparators.LESS :
+                rightIsNull ? Comparators.LESS :
                     this.compareNonNull(
                         left,
                         right
