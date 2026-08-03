@@ -114,10 +114,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetComparatorCurrency}
+     * {@see SpreadsheetComparatorSharedCurrency}
      */
     public static SpreadsheetComparator<Currency> currency() {
-        return SpreadsheetComparatorCurrency.INSTANCE;
+        return SpreadsheetComparatorSharedCurrency.INSTANCE;
     }
 
     /**
