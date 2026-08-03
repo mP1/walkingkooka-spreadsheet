@@ -614,7 +614,17 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "  spreadsheetParserProvider\n" +
                 "    SpreadsheetParserSpreadsheetParserProvider (walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSpreadsheetParserProvider)\n" +
                 "  validatorProvider\n" +
-                "    ValidationValidatorProvider (walkingkooka.validation.provider.ValidationValidatorProvider)\n"
+                "    ValidationValidatorProvider\n" +
+                "      ValidatorInfoSet\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/absolute-url absolute-url\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/checkbox checkbox\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/choice-list choice-list\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/collection collection\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/email-address email-address\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/expression expression\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/non-null non-null\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/text-length text-length\n" +
+                "        https://github.com/mP1/walkingkooka-validation/Validator/text-mask text-mask\n"
         );
     }
 
