@@ -23,53 +23,33 @@ import walkingkooka.text.CaseSensitivity;
 
 import java.util.Comparator;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
  * Wraps a {@link Comparator} sorting the {@link Locale} of given {@link SpreadsheetCell}.
  */
-final class SpreadsheetComparatorLocale implements SpreadsheetComparator<Locale> {
+final class SpreadsheetComparatorSharedLocale extends SpreadsheetComparatorShared<Locale> {
 
-    static SpreadsheetComparatorLocale INSTANCE = new SpreadsheetComparatorLocale();
+    static SpreadsheetComparatorSharedLocale INSTANCE = new SpreadsheetComparatorSharedLocale();
 
-    private SpreadsheetComparatorLocale() {
-        super();
+    private SpreadsheetComparatorSharedLocale() {
+        super(SpreadsheetComparatorName.LOCALE);
     }
 
     @Override
-    public Optional<Locale> extractValue(final SpreadsheetCell cell,
-                                           final SpreadsheetComparatorContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return null != cell ?
-            cell.locale() :
-            Optional.empty();
+    Optional<Locale> extractValueNonNull(final SpreadsheetCell cell,
+                                         final SpreadsheetComparatorContext context) {
+        return cell.locale();
     }
 
-    // Comparator.......................................................................................................
-
     @Override
-    public int compare(final Locale left,
+    int compareNonNull(final Locale left,
                        final Locale right) {
         return CaseSensitivity.INSENSITIVE.comparator()
             .compare(
-                nullSafeLocaleLanguageTag(left),
-                nullSafeLocaleLanguageTag(right)
+                left.toLanguageTag(),
+                right.toLanguageTag()
             );
-    }
-
-    private static String nullSafeLocaleLanguageTag(final Locale locale) {
-        return null != locale ?
-            locale.toLanguageTag() :
-            "";
-    }
-
-    // HasName..........................................................................................................
-
-    @Override
-    public SpreadsheetComparatorName name() {
-        return SpreadsheetComparatorName.LOCALE;
     }
 
     // Object...................................................................,.......................................
