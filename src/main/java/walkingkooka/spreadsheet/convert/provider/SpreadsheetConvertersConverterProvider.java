@@ -34,6 +34,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +45,8 @@ import java.util.stream.Collectors;
 /**
  * A {@link ConverterProvider} for {@link Converter} in {@link SpreadsheetConverters}.
  */
-final class SpreadsheetConvertersConverterProvider implements ConverterProvider {
+final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
+    TreePrintable {
 
     // This constant is here to avoid NullPointerExceptions by #converterInfo during a static initializer
     final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
@@ -1719,5 +1722,21 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.converterInfos(),
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
