@@ -568,6 +568,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    day-of-week\n" +
                 "    hour-of-am-pm\n" +
                 "    hour-of-day\n" +
+                "    locale\n" +
                 "    minute-of-hour\n" +
                 "    month-of-year\n" +
                 "    nano-of-second\n" +
@@ -947,7 +948,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  showHeadings\n" +
                 "    true\n" +
                 "  sortComparators\n" +
-                "    [background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, outline-color, seconds-of-minute, text, text-case-insensitive, time, year]\n" +
+                "    [background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, seconds-of-minute, text, text-case-insensitive, time, year]\n" +
                 "  sortConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, locale, spreadsheet-value, basic)\"\n" +

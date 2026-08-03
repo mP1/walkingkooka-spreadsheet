@@ -123,6 +123,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName HOUR_OF_DAY = registerConstant(HOUR_OF_DAY_STRING);
 
+    final static String LOCALE_STRING = "locale";
+
+    public final static SpreadsheetComparatorName LOCALE = registerConstant(LOCALE_STRING);
+
     private final static String MINUTE_OF_HOUR_STRING = "minute-of-hour";
 
     public final static SpreadsheetComparatorName MINUTE_OF_HOUR = registerConstant(MINUTE_OF_HOUR_STRING);
@@ -237,6 +241,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case HOUR_OF_DAY_STRING:
                 spreadsheetComparatorName = HOUR_OF_DAY;
+                break;
+            case LOCALE_STRING:
+                spreadsheetComparatorName = LOCALE;
                 break;
             case MINUTE_OF_HOUR_STRING:
                 spreadsheetComparatorName = MINUTE_OF_HOUR;
