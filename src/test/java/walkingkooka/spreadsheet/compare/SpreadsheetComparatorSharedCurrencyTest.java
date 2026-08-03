@@ -22,7 +22,7 @@ import walkingkooka.currency.CurrencyContextTesting;
 
 import java.util.Currency;
 
-public final class SpreadsheetComparatorCurrencyTest extends SpreadsheetComparatorTestCase<SpreadsheetComparatorCurrency, Currency>
+public final class SpreadsheetComparatorSharedCurrencyTest extends SpreadsheetComparatorTestCase<SpreadsheetComparatorSharedCurrency, Currency>
     implements CurrencyContextTesting{
 
     @Test
@@ -34,16 +34,24 @@ public final class SpreadsheetComparatorCurrencyTest extends SpreadsheetComparat
     }
 
     @Test
-    public void testCompareLessWithNullRight() {
-        this.compareAndCheckLess(
+    public void testCompareMoreWithNullLeft() {
+        this.compareAndCheckMore(
             null,
             DIFFERENT_CURRENCY
         );
     }
 
+    @Test
+    public void testCompareLessWithNullRight() {
+        this.compareAndCheckLess(
+            DIFFERENT_CURRENCY,
+            null
+        );
+    }
+
     @Override
-    public SpreadsheetComparatorCurrency createComparator() {
-        return SpreadsheetComparatorCurrency.INSTANCE;
+    public SpreadsheetComparatorSharedCurrency createComparator() {
+        return SpreadsheetComparatorSharedCurrency.INSTANCE;
     }
 
     @Override
@@ -64,7 +72,7 @@ public final class SpreadsheetComparatorCurrencyTest extends SpreadsheetComparat
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetComparatorCurrency> type() {
-        return SpreadsheetComparatorCurrency.class;
+    public Class<SpreadsheetComparatorSharedCurrency> type() {
+        return SpreadsheetComparatorSharedCurrency.class;
     }
 }

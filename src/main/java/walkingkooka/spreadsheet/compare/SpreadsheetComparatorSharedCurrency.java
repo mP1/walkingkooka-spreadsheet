@@ -23,53 +23,33 @@ import walkingkooka.text.CaseSensitivity;
 
 import java.util.Comparator;
 import java.util.Currency;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
  * Wraps a {@link Comparator} sorting the {@link java.util.Currency} of given {@link SpreadsheetCell}.
  */
-final class SpreadsheetComparatorCurrency implements SpreadsheetComparator<Currency> {
+final class SpreadsheetComparatorSharedCurrency extends SpreadsheetComparatorShared<Currency> {
 
-    static SpreadsheetComparatorCurrency INSTANCE = new SpreadsheetComparatorCurrency();
+    static SpreadsheetComparatorSharedCurrency INSTANCE = new SpreadsheetComparatorSharedCurrency();
 
-    private SpreadsheetComparatorCurrency() {
-        super();
+    private SpreadsheetComparatorSharedCurrency() {
+        super(SpreadsheetComparatorName.CURRENCY);
     }
 
     @Override
-    public Optional<Currency> extractValue(final SpreadsheetCell cell,
+    Optional<Currency> extractValueNonNull(final SpreadsheetCell cell,
                                            final SpreadsheetComparatorContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return null != cell ?
-            cell.currency() :
-            Optional.empty();
+        return cell.currency();
     }
 
-    // Comparator.......................................................................................................
-
     @Override
-    public int compare(final Currency left,
+    int compareNonNull(final Currency left,
                        final Currency right) {
         return CaseSensitivity.INSENSITIVE.comparator()
             .compare(
-                nullSafeCurrencyCode(left),
-                nullSafeCurrencyCode(right)
+                left.getCurrencyCode(),
+                right.getCurrencyCode()
             );
-    }
-
-    private static String nullSafeCurrencyCode(final Currency currency) {
-        return null != currency ?
-            currency.getCurrencyCode() :
-            "";
-    }
-
-    // HasName..........................................................................................................
-
-    @Override
-    public SpreadsheetComparatorName name() {
-        return SpreadsheetComparatorName.CURRENCY;
     }
 
     // Object...................................................................,.......................................
