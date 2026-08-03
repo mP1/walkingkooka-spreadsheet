@@ -422,6 +422,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second nano-of-second\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number number\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/outline-color outline-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/parser parser\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\n" +

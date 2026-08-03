@@ -228,6 +228,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                 SpreadsheetComparators.nanoOfSecond(),
                 SpreadsheetComparators.number(),
                 SpreadsheetComparators.outlineColor("red"),
+                SpreadsheetComparators.parser(),
                 SpreadsheetComparators.secondsOfMinute(),
                 SpreadsheetComparators.text(),
                 SpreadsheetComparators.textCaseInsensitive(),
