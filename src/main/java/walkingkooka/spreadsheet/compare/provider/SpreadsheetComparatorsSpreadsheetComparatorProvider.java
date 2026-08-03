@@ -209,6 +209,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                 SpreadsheetComparators.borderRightColor("red"),
                 SpreadsheetComparators.borderTopColor("red"),
                 SpreadsheetComparators.color("red"),
+                SpreadsheetComparators.currency(),
                 SpreadsheetComparators.customList(Lists.empty()),
                 SpreadsheetComparators.customListCaseInsensitive(Lists.empty()),
                 SpreadsheetComparators.date(),

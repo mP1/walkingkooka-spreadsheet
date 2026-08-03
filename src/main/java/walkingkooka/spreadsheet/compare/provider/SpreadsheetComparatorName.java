@@ -87,6 +87,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName COLOR = registerConstant(COLOR_STRING);
 
+    final static String CURRENCY_STRING = "currency";
+
+    public final static SpreadsheetComparatorName CURRENCY = registerConstant(CURRENCY_STRING);
+
     final static String CUSTOM_LIST_STRING = "custom-list";
 
     public final static SpreadsheetComparatorName CUSTOM_LIST = registerConstant(CUSTOM_LIST_STRING);
@@ -206,6 +210,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case COLOR_STRING:
                 spreadsheetComparatorName = COLOR;
+                break;
+            case CURRENCY_STRING:
+                spreadsheetComparatorName = CURRENCY;
                 break;
             case CUSTOM_LIST_STRING:
                 spreadsheetComparatorName = CUSTOM_LIST;
