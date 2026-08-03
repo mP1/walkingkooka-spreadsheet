@@ -54,18 +54,13 @@ abstract class SpreadsheetComparatorShared<T> implements SpreadsheetComparator<T
         final boolean rightIsNull = null == right;
         return leftIsNull && rightIsNull ?
             Comparators.EQUAL :
-            leftIsNull ? this.leftIsNull() :
-                rightIsNull ? -this.leftIsNull() :
+            leftIsNull ? Comparators.MORE :
+                rightIsNull ? - Comparators.LESS :
                     this.compareNonNull(
                         left,
                         right
                     );
     }
-
-    /**
-     * The compare result when the left value is null. This will be inverted when the right is null.
-     */
-    abstract int leftIsNull();
 
     abstract int compareNonNull(final T left,
                                 final T right);
