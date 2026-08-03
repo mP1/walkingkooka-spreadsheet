@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.CaseSensitivity;
 
 import java.util.Comparator;
 import java.util.Optional;
@@ -48,12 +47,9 @@ final class SpreadsheetComparatorSharedFormatter extends SpreadsheetComparatorSh
     @Override
     int compareNonNull(final SpreadsheetFormatterSelector left,
                        final SpreadsheetFormatterSelector right) {
-        return CaseSensitivity.INSENSITIVE.comparator()
-            .compare(
-                left.name()
-                    .value(),
+        return left.name()
+            .compareTo(
                 right.name()
-                    .value()
             );
     }
 
