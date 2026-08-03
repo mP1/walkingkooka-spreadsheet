@@ -23,12 +23,15 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.export.SpreadsheetExporter;
 import walkingkooka.spreadsheet.export.SpreadsheetExporters;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetExporterProvider {
+final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetExporterProvider,
+    TreePrintable {
 
     final static SpreadsheetExportSpreadsheetExporterProvider INSTANCE = new SpreadsheetExportSpreadsheetExporterProvider();
 
@@ -122,5 +125,21 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.spreadsheetExporterInfos(),
+                printer
+            );
+        }
+        printer.outdent();
     }
 }

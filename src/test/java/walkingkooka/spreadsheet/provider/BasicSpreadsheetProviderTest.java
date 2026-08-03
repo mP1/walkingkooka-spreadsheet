@@ -600,7 +600,11 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "  expressionFunctionProvider\n" +
                 "    EmptyExpressionFunctionProvider (walkingkooka.tree.expression.function.provider.EmptyExpressionFunctionProvider)\n" +
                 "  spreadsheetExporterProvider\n" +
-                "    SpreadsheetExportSpreadsheetExporterProvider (walkingkooka.spreadsheet.export.provider.SpreadsheetExportSpreadsheetExporterProvider)\n" +
+                "    SpreadsheetExportSpreadsheetExporterProvider\n" +
+                "      SpreadsheetExporterInfoSet\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/collection collection\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\n" +
                 "  spreadsheetFormatterProvider\n" +
                 "    SpreadsheetFormattersSpreadsheetFormatterProvider (walkingkooka.spreadsheet.format.provider.SpreadsheetFormattersSpreadsheetFormatterProvider)\n" +
                 "  formHandlerProvider\n" +
