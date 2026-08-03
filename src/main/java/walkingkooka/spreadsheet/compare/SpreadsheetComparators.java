@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -468,6 +469,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         SpreadsheetComparatorName.TIME
     );
 
+    /**
+     * {@see SpreadsheetComparatorSharedValidator}
+     */
+    public static SpreadsheetComparator<ValidatorSelector> validator() {
+        return SpreadsheetComparatorSharedValidator.INSTANCE;
+    }
+    
     /**
      * {@see SpreadsheetComparatorValue}
      */

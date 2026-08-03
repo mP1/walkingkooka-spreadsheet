@@ -183,6 +183,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName TIME = registerConstant(TIME_STRING);
 
+    private final static String VALIDATOR_STRING = "validator";
+
+    public final static SpreadsheetComparatorName VALIDATOR = registerConstant(VALIDATOR_STRING);
+
     private final static String YEAR_STRING = "year";
 
     public final static SpreadsheetComparatorName YEAR = registerConstant(YEAR_STRING);
@@ -294,6 +298,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case TIME_STRING:
                 spreadsheetComparatorName = TIME;
+                break;
+            case VALIDATOR_STRING:
+                spreadsheetComparatorName = VALIDATOR;
                 break;
             case YEAR_STRING:
                 spreadsheetComparatorName = YEAR;
