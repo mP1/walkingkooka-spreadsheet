@@ -48,12 +48,9 @@ final class SpreadsheetComparatorSharedParser extends SpreadsheetComparatorShare
     @Override
     int compareNonNull(final SpreadsheetParserSelector left,
                        final SpreadsheetParserSelector right) {
-        return SpreadsheetParserName.CASE_SENSITIVITY.comparator()
-            .compare(
-                left.name()
-                    .value(),
+        return left.name()
+            .compareTo(
                 right.name()
-                    .value()
             );
     }
 
