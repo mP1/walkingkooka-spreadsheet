@@ -132,6 +132,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithBorderRightColor() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("border-right-color(\"red green blue\")"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.borderRightColor("red green blue")
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorWithColor() {
         this.spreadsheetComparatorAndCheck(
             SpreadsheetComparatorSelector.parse("color(\"red green blue\")"),
@@ -237,6 +246,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-bottom-color border-bottom-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-color border-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-left-color border-left-color\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-right-color border-right-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/color color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list-case-insensitive custom-list-case-insensitive\n" +
@@ -269,6 +279,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-bottom-color border-bottom-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-color border-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-left-color border-left-color\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-right-color border-right-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/color color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list-case-insensitive custom-list-case-insensitive\",\n" +
