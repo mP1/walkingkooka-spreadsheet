@@ -241,10 +241,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     );
 
     /**
-     * {@see SpreadsheetComparatorLocale}
+     * {@see SpreadsheetComparatorSharedLocale}
      */
     public static SpreadsheetComparator<Locale> locale() {
-        return SpreadsheetComparatorLocale.INSTANCE;
+        return SpreadsheetComparatorSharedLocale.INSTANCE;
     }
 
     public static SpreadsheetComparator<LocalTime> minuteOfHour() {
