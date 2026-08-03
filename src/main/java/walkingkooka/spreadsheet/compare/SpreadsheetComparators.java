@@ -84,6 +84,16 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     /**
      * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
      */
+    public static SpreadsheetComparator<Color> borderRightColor(final String colorCollection) {
+        return formattedValueTextStylePropertyNameColor(
+            TextStylePropertyName.BORDER_RIGHT_COLOR,
+            colorCollection
+        );
+    }
+
+    /**
+     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     */
     public static SpreadsheetComparator<Color> color(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
             TextStylePropertyName.COLOR,
