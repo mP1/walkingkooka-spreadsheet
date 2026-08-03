@@ -38,6 +38,7 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class SpreadsheetComparators implements PublicStaticHelper {
@@ -238,6 +239,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         ),
         SpreadsheetComparatorName.HOUR_OF_DAY
     );
+
+    /**
+     * {@see SpreadsheetComparatorLocale}
+     */
+    public static SpreadsheetComparator<Locale> locale() {
+        return SpreadsheetComparatorLocale.INSTANCE;
+    }
 
     public static SpreadsheetComparator<LocalTime> minuteOfHour() {
         return MINUTE_OF_HOUR;

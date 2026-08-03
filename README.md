@@ -121,6 +121,7 @@ which is identical to a `java.util.Comparator`. These may be enabled to supporti
 - Day of Week
 - Hour of AMPM
 - Hour of Day
+- [locale](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorLocale.java)
 - Month of Year
 - Nano of Second
 - Number
