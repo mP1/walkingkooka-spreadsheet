@@ -115,6 +115,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName DAY_OF_WEEK = registerConstant(DAY_OF_WEEK_STRING);
 
+    final static String FORMATTER_STRING = "formatter";
+
+    public final static SpreadsheetComparatorName FORMATTER = registerConstant(FORMATTER_STRING);
+
     private final static String HOUR_OF_AMPM_STRING = "hour-of-am-pm";
 
     public final static SpreadsheetComparatorName HOUR_OF_AMPM = registerConstant(HOUR_OF_AMPM_STRING);
@@ -235,6 +239,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case DAY_OF_WEEK_STRING:
                 spreadsheetComparatorName = DAY_OF_WEEK;
+                break;
+            case FORMATTER_STRING:
+                spreadsheetComparatorName = FORMATTER;
                 break;
             case HOUR_OF_AMPM_STRING:
                 spreadsheetComparatorName = HOUR_OF_AMPM;

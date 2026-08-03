@@ -119,6 +119,7 @@ which is identical to a `java.util.Comparator`. These may be enabled to supporti
 - DateTime
 - Day of Month
 - Day of Week
+- [formatter](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorSharedFormatter.java)
 - Hour of AMPM
 - Hour of Day
 - [locale](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorLocale.java)
