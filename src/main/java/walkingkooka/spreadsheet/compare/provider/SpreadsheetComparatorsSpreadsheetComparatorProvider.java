@@ -26,6 +26,8 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,8 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetComparatorProvider} that uses the {@link SpreadsheetComparatorProvider} defined in {@link SpreadsheetComparators}.
  */
-final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider {
+final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements SpreadsheetComparatorProvider,
+    TreePrintable {
 
     /**
      * Singleton
@@ -245,5 +248,21 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.spreadsheetComparatorInfos(),
+                printer
+            );
+        }
+        printer.outdent();
     }
 }

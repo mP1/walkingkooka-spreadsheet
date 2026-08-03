@@ -404,7 +404,39 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             this.createSpreadsheetProvider(),
             "BasicSpreadsheetProvider\n" +
                 "  comparatorProvider\n" +
-                "    SpreadsheetComparatorsSpreadsheetComparatorProvider (walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorsSpreadsheetComparatorProvider)\n" +
+                "    SpreadsheetComparatorsSpreadsheetComparatorProvider\n" +
+                "      SpreadsheetComparatorInfoSet\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/background-color background-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-bottom-color border-bottom-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-color border-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-left-color border-left-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-right-color border-right-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/border-top-color border-top-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/color color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/currency currency\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list custom-list\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/custom-list-case-insensitive custom-list-case-insensitive\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-week day-of-week\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/formatter formatter\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-am-pm hour-of-am-pm\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-day hour-of-day\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/locale locale\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/minute-of-hour minute-of-hour\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year month-of-year\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second nano-of-second\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number number\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/outline-color outline-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-decoration-color text-decoration-color\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\n" +
                 "  converterProvider\n" +
                 "    SpreadsheetConvertersConverterProvider (walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProvider)\n" +
                 "  expressionFunctionProvider\n" +
