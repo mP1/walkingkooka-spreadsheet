@@ -298,6 +298,16 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     );
 
     /**
+     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     */
+    public static SpreadsheetComparator<Color> outlineColor(final String colorCollection) {
+        return formattedValueTextStylePropertyNameColor(
+            TextStylePropertyName.OUTLINE_COLOR,
+            colorCollection
+        );
+    }
+
+    /**
      * Accepts a string with compare names separated by commas.
      * <pre>
      * text, text-case-insensitive

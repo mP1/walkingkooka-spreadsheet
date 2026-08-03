@@ -146,6 +146,15 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                     Cast.to(values)
                 );
                 break;
+            case SpreadsheetComparatorName.OUTLINE_COLOR_STRING:
+                if(values.size() != 1) {
+                    throw new IllegalArgumentException("Expected only 1 value");
+                }
+
+                comparator = SpreadsheetComparators.outlineColor(
+                    (String)values.get(0)
+                );
+                break;
             default:
                 comparator = NAME_TO_COMPARATOR.get(name);
                 if (null == comparator) {
@@ -203,6 +212,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                 SpreadsheetComparators.monthOfYear(),
                 SpreadsheetComparators.nanoOfSecond(),
                 SpreadsheetComparators.number(),
+                SpreadsheetComparators.outlineColor("red"),
                 SpreadsheetComparators.secondsOfMinute(),
                 SpreadsheetComparators.text(),
                 SpreadsheetComparators.textCaseInsensitive(),

@@ -229,6 +229,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithOutlineColor() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("outline-color(\"red green blue\")"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.outlineColor("red green blue")
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorWithTextWithNumbers() {
         this.spreadsheetComparatorAndCheck(
             "text-with-numbers",
@@ -270,6 +279,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year month-of-year\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second nano-of-second\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number number\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/outline-color outline-color\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\n" +
@@ -304,6 +314,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/month-of-year month-of-year\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/nano-of-second nano-of-second\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/number number\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/outline-color outline-color\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/seconds-of-minute seconds-of-minute\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-case-insensitive text-case-insensitive\",\n" +
