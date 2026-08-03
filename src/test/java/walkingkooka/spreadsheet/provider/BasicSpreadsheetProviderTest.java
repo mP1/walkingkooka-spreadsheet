@@ -608,7 +608,9 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "  spreadsheetFormatterProvider\n" +
                 "    SpreadsheetFormattersSpreadsheetFormatterProvider (walkingkooka.spreadsheet.format.provider.SpreadsheetFormattersSpreadsheetFormatterProvider)\n" +
                 "  formHandlerProvider\n" +
-                "    ValidationFormHandlerProvider (walkingkooka.validation.form.provider.ValidationFormHandlerProvider)\n" +
+                "    ValidationFormHandlerProvider\n" +
+                "      FormHandlerInfoSet\n" +
+                "        https://github.com/mP1/walkingkooka-validation/FormHandler/basic basic\n" +
                 "  spreadsheetImporterProvider\n" +
                 "    SpreadsheetImportSpreadsheetImporterProvider (walkingkooka.spreadsheet.importer.provider.SpreadsheetImportSpreadsheetImporterProvider)\n" +
                 "  spreadsheetParserProvider\n" +
