@@ -391,6 +391,16 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     );
 
     /**
+     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     */
+    public static SpreadsheetComparator<Color> textDecorationColor(final String colorCollection) {
+        return formattedValueTextStylePropertyNameColor(
+            TextStylePropertyName.TEXT_DECORATION_COLOR,
+            colorCollection
+        );
+    }
+
+    /**
      * {@link Comparators#textWithNumbersComparatorCaseSensitive()}
      */
     public static SpreadsheetComparator<String> textWithNumbers() {

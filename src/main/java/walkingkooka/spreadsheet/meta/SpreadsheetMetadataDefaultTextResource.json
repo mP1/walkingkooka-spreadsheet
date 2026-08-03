@@ -95,7 +95,7 @@
   "showFormulas": false,
   "showGridLines": true,
   "showHeadings": true,
-  "sortComparators": "background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, outline-color, seconds-of-minute, text, text-case-insensitive, text-with-numbers, text-with-numbers-case-insensitive, time, year",
+  "sortComparators": "background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, outline-color, seconds-of-minute, text, text-case-insensitive, text-decoration-color, text-with-numbers, text-with-numbers-case-insensitive, time, year",
   "sortConverter": "collection(text, boolean, number, date-time, locale, spreadsheet-value, url, basic)",
   "style": {
     "background-color": "#ffffff",
