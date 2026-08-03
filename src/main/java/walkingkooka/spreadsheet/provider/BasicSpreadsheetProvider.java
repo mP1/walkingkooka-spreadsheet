@@ -31,6 +31,8 @@ import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviderDelegator;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviderDelegator;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderDelegator;
 import walkingkooka.validation.form.provider.FormHandlerProvider;
@@ -52,7 +54,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     SpreadsheetFormatterProviderDelegator,
     SpreadsheetImporterProviderDelegator,
     SpreadsheetParserProviderDelegator,
-    ValidatorProviderDelegator {
+    ValidatorProviderDelegator,
+    TreePrintable {
 
     static BasicSpreadsheetProvider with(final ConverterProvider converterProvider,
                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
@@ -212,5 +215,75 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
             this.spreadsheetParserProvider +
             " " +
             this.validatorProvider;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.printTreeLabel(
+                "comparatorProvider",
+                this.spreadsheetComparatorProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "converterProvider",
+                this.converterProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "expressionFunctionProvider",
+                this.expressionFunctionProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "spreadsheetExporterProvider",
+                this.spreadsheetExporterProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "spreadsheetFormatterProvider",
+                this.spreadsheetFormatterProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "formHandlerProvider",
+                this.formHandlerProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "spreadsheetImporterProvider",
+                this.spreadsheetImporterProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "spreadsheetParserProvider",
+                this.spreadsheetParserProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "validatorProvider",
+                this.validatorProvider,
+                printer
+            );
+        }
+        printer.outdent();
+    }
+
+    private void printTreeLabel(final String label,
+                                final Object value,
+                                final IndentingPrinter printer) {
+        printer.println(label);
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                value,
+                printer
+            );
+        }
+        printer.outdent();
     }
 }

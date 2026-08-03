@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -37,7 +38,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTesting<BasicSpreadsheetProvider>,
     HashCodeEqualsDefinedTesting2<BasicSpreadsheetProvider>,
     ToStringTesting<BasicSpreadsheetProvider>,
-    SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting,
+    TreePrintableTesting {
 
     // with.............................................................................................................
 
@@ -391,6 +393,34 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 SPREADSHEET_IMPORTER_PROVIDER + " " +
                 SPREADSHEET_PARSER_PROVIDER + " " +
                 VALIDATOR_PROVIDER
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createSpreadsheetProvider(),
+            "BasicSpreadsheetProvider\n" +
+                "  comparatorProvider\n" +
+                "    SpreadsheetComparatorsSpreadsheetComparatorProvider (walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorsSpreadsheetComparatorProvider)\n" +
+                "  converterProvider\n" +
+                "    SpreadsheetConvertersConverterProvider (walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProvider)\n" +
+                "  expressionFunctionProvider\n" +
+                "    EmptyExpressionFunctionProvider (walkingkooka.tree.expression.function.provider.EmptyExpressionFunctionProvider)\n" +
+                "  spreadsheetExporterProvider\n" +
+                "    SpreadsheetExportSpreadsheetExporterProvider (walkingkooka.spreadsheet.export.provider.SpreadsheetExportSpreadsheetExporterProvider)\n" +
+                "  spreadsheetFormatterProvider\n" +
+                "    SpreadsheetFormattersSpreadsheetFormatterProvider (walkingkooka.spreadsheet.format.provider.SpreadsheetFormattersSpreadsheetFormatterProvider)\n" +
+                "  formHandlerProvider\n" +
+                "    ValidationFormHandlerProvider (walkingkooka.validation.form.provider.ValidationFormHandlerProvider)\n" +
+                "  spreadsheetImporterProvider\n" +
+                "    SpreadsheetImportSpreadsheetImporterProvider (walkingkooka.spreadsheet.importer.provider.SpreadsheetImportSpreadsheetImporterProvider)\n" +
+                "  spreadsheetParserProvider\n" +
+                "    SpreadsheetParserSpreadsheetParserProvider (walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSpreadsheetParserProvider)\n" +
+                "  validatorProvider\n" +
+                "    ValidationValidatorProvider (walkingkooka.validation.provider.ValidationValidatorProvider)\n"
         );
     }
 
