@@ -430,6 +430,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/validator validator\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\n" +
                 "  converterProvider\n" +
                 "    SpreadsheetConvertersConverterProvider\n" +

@@ -583,6 +583,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-with-numbers\n" +
                 "    text-with-numbers-case-insensitive\n" +
                 "    time\n" +
+                "    validator\n" +
                 "    year\n" +
                 "  converters\n" +
                 "    basic\n" +
@@ -950,7 +951,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  showHeadings\n" +
                 "    true\n" +
                 "  sortComparators\n" +
-                "    [background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, year]\n" +
+                "    [background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, year]\n" +
                 "  sortConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, locale, spreadsheet-value, basic)\"\n" +

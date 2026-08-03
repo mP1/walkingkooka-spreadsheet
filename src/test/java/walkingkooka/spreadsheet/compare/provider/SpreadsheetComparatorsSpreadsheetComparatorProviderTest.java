@@ -294,6 +294,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithValidator() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("validator"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.validator()
+        );
+    }
+
+    @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
@@ -329,6 +338,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/validator validator\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\n"
         );
     }
@@ -369,6 +379,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers text-with-numbers\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/validator validator\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\"\n" +
                     "]"
             ),
