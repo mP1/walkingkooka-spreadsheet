@@ -28,6 +28,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -214,6 +215,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             textStylePropertyName,
             ColorComparators.colorCollection(colorCollection)
         );
+    }
+
+    /**
+     * {@see SpreadsheetComparatorSharedFormatter}
+     */
+    public static SpreadsheetComparator<SpreadsheetFormatterSelector> formatter() {
+        return SpreadsheetComparatorSharedFormatter.INSTANCE;
     }
 
     public static SpreadsheetComparator<LocalTime> hourOfAmPm() {
