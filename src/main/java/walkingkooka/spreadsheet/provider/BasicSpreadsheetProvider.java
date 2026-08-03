@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderDelegator;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
@@ -55,7 +57,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     SpreadsheetImporterProviderDelegator,
     SpreadsheetParserProviderDelegator,
     ValidatorProviderDelegator,
-    TreePrintable {
+    TreePrintable,
+    UsesToStringBuilder {
 
     static BasicSpreadsheetProvider with(final ConverterProvider converterProvider,
                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
@@ -200,22 +203,32 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
 
     @Override
     public String toString() {
-        return this.converterProvider +
-            " " +
-            this.expressionFunctionProvider +
-            " " +
-            this.spreadsheetComparatorProvider +
-            " " +
-            this.spreadsheetFormatterProvider +
-            " " +
-            this.formHandlerProvider +
-            " " +
-            this.spreadsheetImporterProvider +
-            " " +
-            this.spreadsheetParserProvider +
-            " " +
-            this.validatorProvider;
+        return ToStringBuilder.buildFrom(this);
     }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder builder) {
+        builder.label("converterProvider")
+            .value(this.converterProvider)
+            .label("expressionFunctionProvider")
+            .value(this.spreadsheetComparatorProvider)
+            .label("spreadsheetComparatorProvider")
+            .value(this.spreadsheetComparatorProvider)
+            .label("spreadsheetExporterProvider")
+            .value(this.spreadsheetExporterProvider)
+            .label("spreadsheetFormatterProvider")
+            .value(this.spreadsheetFormatterProvider)
+            .label("spreadsheetImporterProvider")
+            .value(this.spreadsheetImporterProvider)
+            .label("spreadsheetParserProvider")
+            .value(this.spreadsheetParserProvider)
+            .label("validatorProvider")
+            .value(this.validatorProvider)
+            .build();
+    }
+
 
     // TreePrintable....................................................................................................
 

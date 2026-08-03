@@ -385,14 +385,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testToString() {
         this.toStringAndCheck(
             this.createSpreadsheetProvider(),
-            CONVERTER_PROVIDER + " " +
-                EXPRESSION_FUNCTION_PROVIDER + " " +
-                SPREADSHEET_COMPARATOR_PROVIDER + " " +
-                SPREADSHEET_FORMATTER_PROVIDER + " " +
-                FORM_HANDLER_PROVIDER + " " +
-                SPREADSHEET_IMPORTER_PROVIDER + " " +
-                SPREADSHEET_PARSER_PROVIDER + " " +
-                VALIDATOR_PROVIDER
+            "converterProvider=SpreadsheetConvertersConverterProvider expressionFunctionProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider spreadsheetComparatorProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider spreadsheetExporterProvider=SpreadsheetExportSpreadsheetExporterProvider spreadsheetFormatterProvider=SpreadsheetFormattersSpreadsheetFormatterProvider spreadsheetImporterProvider=SpreadsheetImportSpreadsheetImporterProvider spreadsheetParserProvider=SpreadsheetParserSpreadsheetParserProvider validatorProvider=ValidationValidatorProvider"
         );
     }
 
