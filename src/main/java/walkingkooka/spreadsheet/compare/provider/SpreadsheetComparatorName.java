@@ -135,6 +135,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     public final static SpreadsheetComparatorName NUMBER = registerConstant(NUMBER_STRING);
 
+    final static String OUTLINE_COLOR_STRING = "outline-color";
+
+    public final static SpreadsheetComparatorName OUTLINE_COLOR = registerConstant(OUTLINE_COLOR_STRING);
+
     private final static String SECONDS_OF_MINUTE_STRING = "seconds-of-minute";
 
     public final static SpreadsheetComparatorName SECONDS_OF_MINUTE = registerConstant(SECONDS_OF_MINUTE_STRING);
@@ -234,6 +238,9 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             case NUMBER_STRING:
                 spreadsheetComparatorName = NUMBER;
+                break;
+            case OUTLINE_COLOR_STRING:
+                spreadsheetComparatorName = OUTLINE_COLOR;
                 break;
             case SECONDS_OF_MINUTE_STRING:
                 spreadsheetComparatorName = SECONDS_OF_MINUTE;
