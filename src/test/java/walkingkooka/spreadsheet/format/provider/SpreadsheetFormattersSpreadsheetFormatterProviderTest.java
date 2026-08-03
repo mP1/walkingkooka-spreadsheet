@@ -4765,6 +4765,45 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createSpreadsheetFormatterProvider(),
+            "SpreadsheetFormattersSpreadsheetFormatterProvider\n" +
+                "  SpreadsheetFormatterInfoSet\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/accounting accounting\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/badge-error badge-error\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/currency currency\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date date\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time date-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date full-date\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date-time full-date-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-time full-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/hyperlinking hyperlinking\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date-time long-date-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-time long-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date-time medium-date-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-time medium-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date short-date\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date-time short-date-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-time short-time\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
