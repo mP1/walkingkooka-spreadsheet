@@ -612,7 +612,11 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "      FormHandlerInfoSet\n" +
                 "        https://github.com/mP1/walkingkooka-validation/FormHandler/basic basic\n" +
                 "  spreadsheetImporterProvider\n" +
-                "    SpreadsheetImportSpreadsheetImporterProvider (walkingkooka.spreadsheet.importer.provider.SpreadsheetImportSpreadsheetImporterProvider)\n" +
+                "    SpreadsheetImportSpreadsheetImporterProvider\n" +
+                "      SpreadsheetImporterInfoSet\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\n" +
                 "  spreadsheetParserProvider\n" +
                 "    SpreadsheetParserSpreadsheetParserProvider (walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSpreadsheetParserProvider)\n" +
                 "  validatorProvider\n" +
