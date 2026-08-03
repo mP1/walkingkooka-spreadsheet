@@ -647,7 +647,26 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\n" +
                 "  spreadsheetParserProvider\n" +
-                "    SpreadsheetParserSpreadsheetParserProvider (walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSpreadsheetParserProvider)\n" +
+                "    SpreadsheetParserSpreadsheetParserProvider\n" +
+                "      SpreadsheetParserInfoSet\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date full-date\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date-time full-date-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-time full-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date long-date\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date-time long-date-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-time long-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date medium-date\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date-time medium-date-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-time medium-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date short-date\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date-time short-date-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-time short-time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/whole-number whole-number\n" +
                 "  validatorProvider\n" +
                 "    ValidationValidatorProvider\n" +
                 "      ValidatorInfoSet\n" +
