@@ -35,6 +35,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -57,7 +59,8 @@ import java.util.stream.Collectors;
  * A {link SpreadsheetFormatterProvider} that supports creating {@link SpreadsheetFormatter} for each of the
  * available {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern}.
  */
-final class SpreadsheetFormattersSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
+final class SpreadsheetFormattersSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider,
+    TreePrintable {
 
     /**
      * Singleton
@@ -2034,5 +2037,21 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.spreadsheetFormatterInfos(),
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
