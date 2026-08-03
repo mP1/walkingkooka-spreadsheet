@@ -75,6 +75,21 @@ public final class SpreadsheetImportSpreadsheetImporterProviderTest implements S
         return SpreadsheetImportSpreadsheetImporterProvider.INSTANCE;
     }
 
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createSpreadsheetImporterProvider(),
+            "SpreadsheetImportSpreadsheetImporterProvider\n" +
+                "  SpreadsheetImporterInfoSet\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
