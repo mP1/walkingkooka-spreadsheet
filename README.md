@@ -123,6 +123,7 @@ which is identical to a `java.util.Comparator`. These may be enabled to supporti
 - Month of Year
 - Nano of Second
 - Number
+- [outline-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
 - Second of Minute
 - Text
 - Text case-insensitive
