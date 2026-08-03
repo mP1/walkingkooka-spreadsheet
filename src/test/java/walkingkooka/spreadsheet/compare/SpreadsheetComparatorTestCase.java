@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
 
 public abstract class SpreadsheetComparatorTestCase<C extends SpreadsheetComparator<T>, T> implements SpreadsheetComparatorTesting2<C, T>,
     ClassTesting<C>,
@@ -38,7 +39,15 @@ public abstract class SpreadsheetComparatorTestCase<C extends SpreadsheetCompara
 
     @Override
     public final String typeNamePrefix() {
-        return SpreadsheetComparator.class.getSimpleName();
+        final String classSimpleName = this.getClass()
+            .getSuperclass()
+            .getSimpleName();
+
+        return CharSequences.subSequence(
+            classSimpleName,
+            0,
+            - "TestCase".length()
+        ).toString();
     }
 
     @Override
