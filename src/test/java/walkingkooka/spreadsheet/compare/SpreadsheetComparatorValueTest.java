@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.compare;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.ToStringTesting;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.compare.DateTimeComparators;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
@@ -30,9 +29,8 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetComparatorValueTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorValue<String>, String>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorValue<String>>,
-    ToStringTesting<SpreadsheetComparatorValue<String>> {
+public final class SpreadsheetComparatorValueTest extends SpreadsheetComparatorTestCase<SpreadsheetComparatorValue<String>, String>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetComparatorValue<String>> {
 
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.TEXT;
 
@@ -157,6 +155,8 @@ public final class SpreadsheetComparatorValueTest implements SpreadsheetComparat
         return this.createComparator();
     }
 
+    // toString.........................................................................................................
+
     @Test
     public void tesToString() {
         final Comparator<String> comparator = Comparators.fake();
@@ -178,10 +178,5 @@ public final class SpreadsheetComparatorValueTest implements SpreadsheetComparat
         return Cast.to(
             SpreadsheetComparatorValue.class
         );
-    }
-
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
     }
 }

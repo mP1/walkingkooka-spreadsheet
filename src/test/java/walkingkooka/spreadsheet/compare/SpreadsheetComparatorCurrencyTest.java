@@ -18,15 +18,12 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
-import walkingkooka.ToStringTesting;
 import walkingkooka.currency.CurrencyContextTesting;
 
 import java.util.Currency;
 
-public final class SpreadsheetComparatorCurrencyTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorCurrency, Currency>,
-    CurrencyContextTesting,
-    ToStringTesting<SpreadsheetComparatorCurrency> {
+public final class SpreadsheetComparatorCurrencyTest extends SpreadsheetComparatorTestCase<SpreadsheetComparatorCurrency, Currency>
+    implements CurrencyContextTesting{
 
     @Test
     public void testCompareLess() {
@@ -68,13 +65,6 @@ public final class SpreadsheetComparatorCurrencyTest implements SpreadsheetCompa
 
     @Override
     public Class<SpreadsheetComparatorCurrency> type() {
-        return Cast.to(
-            SpreadsheetComparatorFormattedValueTextStylePropertyName.class
-        );
-    }
-
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
+        return SpreadsheetComparatorCurrency.class;
     }
 }

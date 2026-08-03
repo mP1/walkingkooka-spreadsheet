@@ -21,14 +21,12 @@ package walkingkooka.spreadsheet.compare;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.ToStringTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetComparatorReverseTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorReverse<String>, String>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorReverse<String>>,
-    ToStringTesting<SpreadsheetComparatorReverse<String>> {
+public final class SpreadsheetComparatorReverseTest extends SpreadsheetComparatorTestCase<SpreadsheetComparatorReverse<String>, String>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetComparatorReverse<String>> {
 
     @Test
     public void testWithNullComparatorFails() {
@@ -127,10 +125,5 @@ public final class SpreadsheetComparatorReverseTest implements SpreadsheetCompar
         return Cast.to(
             SpreadsheetComparatorReverse.class
         );
-    }
-
-    @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
     }
 }
