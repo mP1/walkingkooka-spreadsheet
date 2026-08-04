@@ -56,14 +56,14 @@ import java.util.Optional;
  * An error for an individual cell or formula which may be a parsing or execution error.
  * Note the message may be empty but the {@link SpreadsheetErrorKind} is always required.
  */
-public final class SpreadsheetError implements HasValue<Optional<Object>>,
-    HasText,
-    TreePrintable,
+public final class SpreadsheetError implements HasConvertError,
     HasSpreadsheetErrorKind,
-    UsesToStringBuilder,
-    HasConvertError,
+    HasText,
+    HasTerminalErrorText,
     HasValidationPromptValue,
-    HasTerminalErrorText {
+    HasValue<Optional<Object>>,
+    TreePrintable,
+    UsesToStringBuilder {
 
     /**
      * The message component is optional.
@@ -113,11 +113,11 @@ public final class SpreadsheetError implements HasValue<Optional<Object>>,
      * is returned.
      */
     public static SpreadsheetError referenceNotFound(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
         return reference instanceof SpreadsheetExpressionReference ?
             selectionNotFound((SpreadsheetExpressionReference) reference) :
-            referenceNotSpreadsheetExpressionReferenceNotFound(reference);
+            referenceNotSpreadsheetExpressionReferenceNotFound(
+                Objects.requireNonNull(reference, "reference")
+            );
     }
 
     private static SpreadsheetError referenceNotSpreadsheetExpressionReferenceNotFound(final ExpressionReference reference) {
