@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -190,6 +191,13 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         ),
         SpreadsheetComparatorName.DAY_OF_WEEK
     );
+
+    /**
+     * {@see SpreadsheetComparatorSharedError}
+     */
+    public static SpreadsheetComparator<SpreadsheetError> error() {
+        return SpreadsheetComparatorSharedError.INSTANCE;
+    }
 
     /**
      * {@see FakeSpreadsheetComparatorContext}

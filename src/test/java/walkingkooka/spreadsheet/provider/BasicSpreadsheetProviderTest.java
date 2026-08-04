@@ -413,6 +413,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-week day-of-week\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/error error\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/formatter formatter\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-am-pm hour-of-am-pm\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/hour-of-day hour-of-day\n" +

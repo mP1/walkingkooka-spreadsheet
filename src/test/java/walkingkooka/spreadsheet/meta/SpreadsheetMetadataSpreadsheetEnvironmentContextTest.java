@@ -566,6 +566,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    date-time\n" +
                 "    day-of-month\n" +
                 "    day-of-week\n" +
+                "    error\n" +
                 "    formatter\n" +
                 "    hour-of-am-pm\n" +
                 "    hour-of-day\n" +
