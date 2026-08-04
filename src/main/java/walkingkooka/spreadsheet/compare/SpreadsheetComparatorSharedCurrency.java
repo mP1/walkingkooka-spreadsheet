@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.currency.HasCurrency;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.CaseSensitivity;
 
 import java.util.Comparator;
 import java.util.Currency;
@@ -45,7 +45,7 @@ final class SpreadsheetComparatorSharedCurrency extends SpreadsheetComparatorSha
     @Override
     int compareNonNull(final Currency left,
                        final Currency right) {
-        return CaseSensitivity.INSENSITIVE.comparator()
+        return HasCurrency.CURRENCY_CASE_SENSITIVITY.comparator()
             .compare(
                 left.getCurrencyCode(),
                 right.getCurrencyCode()
