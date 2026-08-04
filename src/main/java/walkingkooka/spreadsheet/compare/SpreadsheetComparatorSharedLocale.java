@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.CaseSensitivity;
+import walkingkooka.util.HasLocale;
 
 import java.util.Comparator;
 import java.util.Locale;
@@ -45,7 +45,7 @@ final class SpreadsheetComparatorSharedLocale extends SpreadsheetComparatorShare
     @Override
     int compareNonNull(final Locale left,
                        final Locale right) {
-        return CaseSensitivity.INSENSITIVE.comparator()
+        return HasLocale.LOCALE_CASE_SENSITIVITY.comparator()
             .compare(
                 left.toLanguageTag(),
                 right.toLanguageTag()
