@@ -303,6 +303,15 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorWithValueType() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse("value-type"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.valueType()
+        );
+    }
+
+    @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparatorInfos(),
@@ -339,6 +348,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/validator validator\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/value-type value-type\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\n"
         );
     }
@@ -380,6 +390,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/text-with-numbers-case-insensitive text-with-numbers-case-insensitive\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/time time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/validator validator\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/value-type value-type\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/year year\"\n" +
                     "]"
             ),
