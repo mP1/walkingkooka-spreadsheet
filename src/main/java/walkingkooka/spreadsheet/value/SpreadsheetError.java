@@ -23,6 +23,7 @@ import walkingkooka.HasValue;
 import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.compare.Comparators;
 import walkingkooka.convert.HasConvertError;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
@@ -31,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.terminal.HasTerminalErrorText;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -56,7 +58,8 @@ import java.util.Optional;
  * An error for an individual cell or formula which may be a parsing or execution error.
  * Note the message may be empty but the {@link SpreadsheetErrorKind} is always required.
  */
-public final class SpreadsheetError implements HasConvertError,
+public final class SpreadsheetError implements Comparable<SpreadsheetError>,
+    HasConvertError,
     HasSpreadsheetErrorKind,
     HasText,
     HasTerminalErrorText,
@@ -704,5 +707,20 @@ public final class SpreadsheetError implements HasConvertError,
             SpreadsheetError::marshall,
             SpreadsheetError.class
         );
+    }
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetError other) {
+        int result = this.kind.name().compareTo(other.kind.name());
+        if (Comparators.EQUAL == result) {
+            result = CaseSensitivity.INSENSITIVE.comparator()
+                .compare(
+                    this.message,
+                    other.message
+                );
+        }
+        return result;
     }
 }

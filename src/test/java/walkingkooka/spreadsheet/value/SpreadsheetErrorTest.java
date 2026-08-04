@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HasValueTesting;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -59,7 +59,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorTest implements ParseStringTesting<SpreadsheetError>,
     ClassTesting2<SpreadsheetError>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetError>,
+    ComparableTesting2<SpreadsheetError>,
     JsonNodeMarshallingTesting<SpreadsheetError>,
     HasTextTesting,
     HasConvertErrorTesting,
@@ -1264,8 +1264,46 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
+    @Test
+    public void testCompareLessKind() {
+        this.compareToAndCheckLess(
+            SpreadsheetError.with(
+                SpreadsheetErrorKind.VALUE,
+                MESSAGE,
+                VALUE
+            )
+        );
+    }
+
+    @Test
+    public void testCompareLessMessage() {
+        this.compareToAndCheckLess(
+            SpreadsheetError.with(
+                KIND,
+                "zzz",
+                VALUE
+            )
+        );
+    }
+
+    @Test
+    public void testCompareLessMessageCaseInsensitive() {
+        this.compareToAndCheckLess(
+            SpreadsheetError.with(
+                KIND,
+                "aaa",
+                VALUE
+            ),
+            SpreadsheetError.with(
+                KIND,
+                "ZZZ",
+                VALUE
+            )
+        );
+    }
+
     @Override
-    public SpreadsheetError createObject() {
+    public SpreadsheetError createComparable() {
         return SpreadsheetError.with(
             KIND,
             MESSAGE,
