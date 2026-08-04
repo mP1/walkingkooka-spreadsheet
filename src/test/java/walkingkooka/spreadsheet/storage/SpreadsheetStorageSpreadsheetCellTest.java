@@ -493,6 +493,23 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     }
 
     @Test
+    public void testSetAuditInfoFails() {
+        final SpreadsheetStorageContext storageContext = this.createContext();
+
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStorage()
+                .setAuditInfo(
+                    StorageValueInfo.with(
+                        StoragePath.parse("/A1"),
+                        storageContext.createdAuditInfo()
+                    ),
+                    storageContext
+                )
+        );
+    }
+
+    @Test
     public void testAddWatcherAndSave() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);

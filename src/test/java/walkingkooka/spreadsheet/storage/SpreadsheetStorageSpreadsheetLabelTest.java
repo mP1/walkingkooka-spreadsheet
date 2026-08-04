@@ -413,6 +413,20 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
     }
 
     @Test
+    public void testSetAuditInfoFails() {
+        final SpreadsheetStorageContext storageContext = this.createContext();
+
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStorage()
+                .setAuditInfo(
+                    INFO1,
+                    storageContext
+                )
+        );
+    }
+
+    @Test
     public void testAddWatcherAndSave() {
         final SpreadsheetStorageContext context = this.createContext();
 

@@ -410,6 +410,18 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
     }
 
     @Test
+    public void testSetAuditInfoFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStorage()
+                .setAuditInfo(
+                    INFO1,
+                    this.createContext()
+                )
+        );
+    }
+
+    @Test
     public void testAddWatcherAndSave() {
         final SpreadsheetStorageContext context = this.createContext();
         final SpreadsheetStorageForm storage = this.createStorage();
