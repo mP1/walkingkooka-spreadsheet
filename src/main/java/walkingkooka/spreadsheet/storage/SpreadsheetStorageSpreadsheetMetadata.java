@@ -210,6 +210,25 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
             ).collect(ImmutableList.collector());
     }
 
+    @Override
+    void setAuditInfo0(final StorageValueInfo value,
+                       final SpreadsheetStorageContext context) {
+        final SpreadsheetId spreadsheetId = this.toSpreadsheetId(
+            value.path()
+        );
+        if (null == spreadsheetId) {
+            throw new IllegalArgumentException("Missing spreadsheetId");
+        }
+
+        context.saveMetadata(
+            context.loadMetadataOrFail(spreadsheetId)
+                .set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    value.auditInfo()
+                )
+        );
+    }
+
     // addWatcher.......................................................................................................
 
     @Override

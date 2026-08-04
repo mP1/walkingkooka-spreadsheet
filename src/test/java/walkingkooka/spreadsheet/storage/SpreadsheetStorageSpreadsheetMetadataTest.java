@@ -406,6 +406,60 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
     }
 
     @Test
+    public void testSetAuditInfo() {
+        final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
+
+        final SpreadsheetStorageSpreadsheetMetadata storage = this.createStorage();
+
+        final StorageValue value = storage.save(
+            StorageValue.with(
+                StoragePath.ROOT
+            ).setValue(
+                Optional.of(
+                    METADATA_EN_AU.set(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                        SpreadsheetName.with("Hello1")
+                    )
+                )
+            ),
+            context
+        );
+
+        final StoragePath storagePath = StoragePath.parse(
+            "/" + (
+                (SpreadsheetMetadata) value.value()
+                    .get()
+            ).getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+        );
+
+        storage.setAuditInfo(
+            StorageValueInfo.with(
+                storagePath,
+                context.createdAuditInfo()
+            ).setAuditInfo(DIFFERENT_AUDIT_INFO),
+            context
+        );
+
+        this.loadAndCheck(
+            storage,
+            storagePath,
+            context,
+            StorageValue.with(storagePath)
+                .setValue(
+                    value.value()
+                        .map(
+                            (Object m) -> ((SpreadsheetMetadata) m).set(
+                                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                                DIFFERENT_AUDIT_INFO
+                            )
+                        )
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                )
+        );
+    }
+
+    @Test
     public void testAddWatcherAndSaveMetadata() {
         final SpreadsheetStorageSpreadsheetMetadata storage = this.createStorage();
 

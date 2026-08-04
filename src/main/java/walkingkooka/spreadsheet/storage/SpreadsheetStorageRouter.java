@@ -172,6 +172,24 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         );
     }
 
+    @Override
+    void setAuditInfo0(final StorageValueInfo value,
+                       final SpreadsheetStorageContext context) {
+        final StoragePath path = value.path();
+
+        this.route(
+            path,
+            context,
+            (s, c) -> {
+                s.setAuditInfo(
+                    value,
+                    c
+                );
+                return null;
+            }
+        );
+    }
+
     // addWatcher.......................................................................................................
 
     @Override

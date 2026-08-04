@@ -206,6 +206,12 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
             ).collect(ImmutableList.collector());
     }
 
+    @Override
+    void setAuditInfo0(final StorageValueInfo value,
+                       final SpreadsheetStorageContext context) {
+        throw new UnsupportedOperationException();
+    }
+
     // addWatcher.......................................................................................................
 
     @Override
