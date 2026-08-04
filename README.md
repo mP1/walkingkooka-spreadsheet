@@ -137,6 +137,7 @@ which is identical to a `java.util.Comparator`. These may be enabled to supporti
 - [formatted-value-text-style-property-name](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
 - Time
 - [validator](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorSharedValidator.java)
+- [value-type](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorSharedValueType.java)
 - Year
 
 Examples of combining multiple `SpreadsheetComparators` for a column range might include.

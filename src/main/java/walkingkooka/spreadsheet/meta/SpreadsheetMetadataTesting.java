@@ -311,7 +311,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             true
         ).set(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
-            SpreadsheetComparatorNameList.parse("background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, year")
+            SpreadsheetComparatorNameList.parse("background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year")
         ).set(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
             ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, basic)")
