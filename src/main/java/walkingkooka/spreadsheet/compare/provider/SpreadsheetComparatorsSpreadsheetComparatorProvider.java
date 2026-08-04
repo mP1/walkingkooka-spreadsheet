@@ -219,6 +219,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                 SpreadsheetComparators.dateTime(),
                 SpreadsheetComparators.dayOfMonth(),
                 SpreadsheetComparators.dayOfWeek(),
+                SpreadsheetComparators.error(),
                 SpreadsheetComparators.formatter(),
                 SpreadsheetComparators.hourOfAmPm(),
                 SpreadsheetComparators.hourOfDay(),
