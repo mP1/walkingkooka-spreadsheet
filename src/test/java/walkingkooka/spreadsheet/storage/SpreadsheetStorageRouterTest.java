@@ -504,6 +504,41 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
+    public void testLoadWithCwd() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final String content = "HelloWorld123";
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(
+                StoragePath.parse(CURRENT_WORKING_DIRECTORY + "/file1.txt")
+            ).setValue(
+                Optional.of(content)
+            ),
+            context
+        );
+
+        final StoragePath currentWorkingDirectoryPath = StoragePath.parse("/cwd/file1.txt");
+
+        this.loadAndCheck(
+            storage,
+            currentWorkingDirectoryPath,
+            context,
+            StorageValue.with(currentWorkingDirectoryPath)
+                .setValue(
+                    Optional.of(content)
+                )
+        );
+    }
+
+    @Test
     public void testLoadWithEnvironmentLineEndingUpperCased() {
         final StoragePath path = StoragePath.parse("/env/LINEENDING");
 
@@ -3097,7 +3132,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 METADATAS,
                 ROOT
             ),
-            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /form " + FORMS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /home " + ROOT
+            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /form " + FORMS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /cwd /home " + ROOT
         );
     }
 
