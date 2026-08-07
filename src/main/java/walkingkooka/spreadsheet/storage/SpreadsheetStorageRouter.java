@@ -93,7 +93,9 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         this.metadatas = metadatas.setPrefix(SPREADSHEET);
 
         this.root = SpreadsheetStorageRouterRootStorage.with(
-            SpreadsheetStorages.homeDirectory(root),
+            SpreadsheetStorages.currentWorkingDirectory(
+                SpreadsheetStorages.homeDirectory(root)
+            ),
             this
         );
     }
