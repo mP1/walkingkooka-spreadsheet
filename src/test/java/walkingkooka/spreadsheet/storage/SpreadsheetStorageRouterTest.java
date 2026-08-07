@@ -567,6 +567,41 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 )
         );
     }
+
+    @Test
+    public void testLoadWithHome() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final SpreadsheetStorageRouter storage = this.createStorage();
+
+        final String content = "HelloWorld123";
+
+        this.saveAndCheck(
+            storage,
+            StorageValue.with(
+                StoragePath.parse("/users/user123@example.com/file1.txt")
+            ).setValue(
+                Optional.of(content)
+            ),
+            context
+        );
+
+        final StoragePath homePath = StoragePath.parse("/home/file1.txt");
+
+        this.loadAndCheck(
+            storage,
+            homePath,
+            context,
+            StorageValue.with(homePath)
+                .setValue(
+                    Optional.of(content)
+                )
+        );
+    }
     
     @Test
     public void testLoadWithLabel() {
@@ -3062,7 +3097,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 METADATAS,
                 ROOT
             ),
-            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /form " + FORMS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /* " + ROOT
+            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /form " + FORMS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /home " + ROOT
         );
     }
 
