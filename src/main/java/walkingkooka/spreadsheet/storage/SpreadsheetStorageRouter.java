@@ -93,7 +93,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         this.metadatas = metadatas.setPrefix(SPREADSHEET);
 
         this.root = SpreadsheetStorageRouterRootStorage.with(
-            root,
+            SpreadsheetStorages.homeDirectory(root),
             this
         );
     }
@@ -427,6 +427,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     @Override
     public String toString() {
-        return this.cells + ", " + this.environment + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", /* " + this.root;
+        return this.cells + ", " + this.environment + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", " + this.root;
     }
 }
