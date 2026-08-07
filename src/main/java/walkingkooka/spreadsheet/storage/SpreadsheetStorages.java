@@ -34,6 +34,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageSharedWrapperExpandedCurrentWorkingDirectory}
+     */
+    public static Storage<SpreadsheetStorageContext> currentWorkingDirectory(final Storage<SpreadsheetStorageContext> storage) {
+        return Storages.currentWorkingDirectory(storage);
+    }
+
+    /**
      * {@link Storages#environment()}
      */
     public static Storage<SpreadsheetStorageContext> env() {
