@@ -1851,7 +1851,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 AUDIT_INFO
             ),
             StorageValueInfo.with(
-                StoragePath.parse("/root/"),
+                StoragePath.parse("/root"),
                 AUDIT_INFO
             )
         );
