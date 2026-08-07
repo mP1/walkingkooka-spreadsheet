@@ -48,6 +48,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageSharedWrapperExpandedHomeDirectory}
+     */
+    public static Storage<SpreadsheetStorageContext> homeDirectory(final Storage<SpreadsheetStorageContext> storage) {
+        return Storages.homeDirectory(storage);
+    }
+
+    /**
      * {@see SpreadsheetStorageSpreadsheetLabel}
      */
     public static Storage<SpreadsheetStorageContext> label() {
