@@ -155,6 +155,30 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
                                 final SpreadsheetStorageContext context);
 
     @Override
+    public final void mount(final StoragePath path,
+                            final Storage<SpreadsheetStorageContext> storage,
+                            final SpreadsheetStorageContext context) {
+        Objects.requireNonNull(path, "path");
+        if (path.isRoot()) {
+            throw new IllegalArgumentException("Mounting at root not allowed");
+        }
+
+        Objects.requireNonNull(storage, "storage");
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final void unmount(final StoragePath path,
+                              final SpreadsheetStorageContext context) {
+        Objects.requireNonNull(path, "path");
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public final Runnable addWatcher(final StorageWatcher watcher,
                                      final SpreadsheetStorageContext context) {
         Objects.requireNonNull(watcher, "watcher");
