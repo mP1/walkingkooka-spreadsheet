@@ -32,14 +32,14 @@ import java.util.function.Function;
 public final class SpreadsheetStorageContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetStorageContext}
+     * {@see SpreadsheetStorageContextBasic}
      */
     public static SpreadsheetStorageContext basic(final SpreadsheetEngine spreadsheetEngine,
                                                   final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                   final Function<SpreadsheetId, Optional<SpreadsheetEngineContext>> spreadsheetIdToSpreadsheetEngineContext,
                                                   final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                   final StorageContext storageContext) {
-        return BasicSpreadsheetStorageContext.with(
+        return SpreadsheetStorageContextBasic.with(
             spreadsheetEngine,
             spreadsheetEnvironmentContext,
             spreadsheetIdToSpreadsheetEngineContext,

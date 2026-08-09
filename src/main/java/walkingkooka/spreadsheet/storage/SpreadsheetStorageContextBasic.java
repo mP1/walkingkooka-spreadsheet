@@ -52,17 +52,17 @@ import java.util.function.Function;
  * A simple {@link SpreadsheetStorageContext} that delegates most methods to the provided {@link walkingkooka.Context},
  * and delegates the cell/form/label methods to the given {@link Function}.
  */
-final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
+final class SpreadsheetStorageContextBasic implements SpreadsheetStorageContext,
     SpreadsheetEnvironmentContextDelegator,
     SpreadsheetMetadataContextDelegator,
     StorageContextDelegator {
 
-    static BasicSpreadsheetStorageContext with(final SpreadsheetEngine spreadsheetEngine,
+    static SpreadsheetStorageContextBasic with(final SpreadsheetEngine spreadsheetEngine,
                                                final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                final Function<SpreadsheetId, Optional<SpreadsheetEngineContext>> spreadsheetIdToSpreadsheetEngineContext,
                                                final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                final StorageContext storageContext) {
-        return new BasicSpreadsheetStorageContext(
+        return new SpreadsheetStorageContextBasic(
             Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine"),
             Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext"),
             Objects.requireNonNull(spreadsheetIdToSpreadsheetEngineContext, "spreadsheetIdToSpreadsheetEngineContext"),
@@ -71,7 +71,7 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
         );
     }
 
-    private BasicSpreadsheetStorageContext(final SpreadsheetEngine spreadsheetEngine,
+    private SpreadsheetStorageContextBasic(final SpreadsheetEngine spreadsheetEngine,
                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                            final Function<SpreadsheetId, Optional<SpreadsheetEngineContext>> spreadsheetIdToSpreadsheetEngineContext,
                                            final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -398,7 +398,7 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
 
         return before == after ?
             this :
-            new BasicSpreadsheetStorageContext(
+            new SpreadsheetStorageContextBasic(
                 this.spreadsheetEngine,
                 after,
                 this.spreadsheetIdToSpreadsheetEngineContext,
@@ -414,7 +414,7 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
 
         return before == after ?
             this :
-            new BasicSpreadsheetStorageContext(
+            new SpreadsheetStorageContextBasic(
                 this.spreadsheetEngine,
                 after, // SpreadsheetEnvironmentContext
                 this.spreadsheetIdToSpreadsheetEngineContext,
