@@ -477,7 +477,7 @@ final class SpreadsheetStorageContextBasic implements SpreadsheetStorageContext,
     // toString.........................................................................................................
 
     public String toString() {
-        return ", spreadsheetEngine: " + this.spreadsheetEngine +
+        return "spreadsheetEngine: " + this.spreadsheetEngine +
             ", spreadsheetEnvironmentContext: " + this.spreadsheetEnvironmentContext +
             ", spreadsheetIdToSpreadsheetEngineContext: " + this.spreadsheetIdToSpreadsheetEngineContext +
             ", spreadsheetMetadataContext: " + this.spreadsheetMetadataContext +
