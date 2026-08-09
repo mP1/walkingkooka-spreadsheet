@@ -522,7 +522,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
                 "          user\n" +
                 "            user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "    storage\n" +
-                "       (walkingkooka.storage.StorageSharedEmpty)\n"
+                "       (walkingkooka.storage.StorageShared2Empty)\n"
         );
     }
 
