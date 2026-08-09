@@ -76,6 +76,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageSharedMount}
+     */
+    public static Storage<SpreadsheetStorageContext> mount(final Storage<SpreadsheetStorageContext> storage) {
+        return Storages.mount(storage);
+    }
+
+    /**
      * {@see SpreadsheetStorageRouter}
      */
     public static Storage<SpreadsheetStorageContext> router(final Storage<SpreadsheetStorageContext> cells,
