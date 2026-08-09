@@ -63,14 +63,12 @@ import java.util.function.BiFunction;
 final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     static SpreadsheetStorageRouter with(final Storage<SpreadsheetStorageContext> cells,
-                                         final Storage<SpreadsheetStorageContext> environment,
                                          final Storage<SpreadsheetStorageContext> forms,
                                          final Storage<SpreadsheetStorageContext> labels,
                                          final Storage<SpreadsheetStorageContext> metadatas,
                                          final Storage<SpreadsheetStorageContext> root) {
         return new SpreadsheetStorageRouter(
             Objects.requireNonNull(cells, "cells"),
-            Objects.requireNonNull(environment, "environment"),
             Objects.requireNonNull(forms, "forms"),
             Objects.requireNonNull(labels, "labels"),
             Objects.requireNonNull(metadatas, "metadatas"),
@@ -79,7 +77,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     }
 
     private SpreadsheetStorageRouter(final Storage<SpreadsheetStorageContext> cells,
-                                     final Storage<SpreadsheetStorageContext> environment,
                                      final Storage<SpreadsheetStorageContext> forms,
                                      final Storage<SpreadsheetStorageContext> labels,
                                      final Storage<SpreadsheetStorageContext> metadatas,
@@ -87,7 +84,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         super();
 
         this.cells = cells.setPrefix(CELL);
-        this.environment = environment.setPrefix(ENVIRONMENT);
         this.forms = forms.setPrefix(FORM);
         this.labels = labels.setPrefix(LABEL);
         this.metadatas = metadatas.setPrefix(SPREADSHEET);
@@ -223,13 +219,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         );
         removers.add(
             this.storageAddWatcher(
-                this.environment,
-                watcher,
-                addWatcher
-            )
-        );
-        removers.add(
-            this.storageAddWatcher(
                 this.forms,
                 watcher,
                 addWatcher
@@ -351,10 +340,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                         storage = this.cells;
                         executeContext = context;
                         break;
-                    case ENVIRONMENT_STRING:
-                        storage = this.environment;
-                        executeContext = context;
-                        break;
                     case FORM_STRING:
                         storage = this.forms;
                         executeContext = context;
@@ -390,12 +375,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         StorageName.with(CELL_STRING)
     );
 
-    private final static String ENVIRONMENT_STRING = "env";
-
-    final static StoragePath ENVIRONMENT = StoragePath.ROOT.append(
-        StorageName.with(ENVIRONMENT_STRING)
-    );
-
     private final static String FORM_STRING = "form";
 
     final static StoragePath FORM = StoragePath.ROOT.append(
@@ -409,8 +388,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     );
 
     final Storage<SpreadsheetStorageContext> cells;
-
-    final Storage<SpreadsheetStorageContext> environment;
 
     final Storage<SpreadsheetStorageContext> forms;
 
@@ -427,6 +404,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     @Override
     public String toString() {
-        return this.cells + ", " + this.environment + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", " + this.root;
+        return this.cells + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", " + this.root;
     }
 }

@@ -55,19 +55,15 @@ public final class SpreadsheetStorageRouterRootStorageTest implements StorageTes
     }
 
     @Test
-    public void testListOffsetZeroCountFive() {
+    public void testListOffsetZeroCountFour() {
         this.listAndCheck(
             this.createStorage(),
             StoragePath.ROOT,
             0,
-            5,
+            4,
             this.createContext(),
             StorageValueInfo.with(
                 SpreadsheetStorageRouter.CELL,
-                AUDIT_INFO
-            ),
-            StorageValueInfo.with(
-                SpreadsheetStorageRouter.ENVIRONMENT,
                 AUDIT_INFO
             ),
             StorageValueInfo.with(
@@ -90,7 +86,7 @@ public final class SpreadsheetStorageRouterRootStorageTest implements StorageTes
         this.listAndCheck(
             this.createStorage(),
             StoragePath.ROOT,
-            4,
+            3,
             1,
             this.createContext(),
             StorageValueInfo.with(
@@ -105,7 +101,7 @@ public final class SpreadsheetStorageRouterRootStorageTest implements StorageTes
         this.listAndCheck(
             this.createStorage(),
             StoragePath.ROOT,
-            4,
+            3,
             2,
             this.createContext(),
             StorageValueInfo.with(
@@ -120,11 +116,11 @@ public final class SpreadsheetStorageRouterRootStorageTest implements StorageTes
     }
 
     @Test
-    public void testListOffsetSpreadsheetCountFour() {
+    public void testListOffsetSpreadsheetCountThree() {
         this.listAndCheck(
             this.createStorage(),
             StoragePath.ROOT,
-            4,
+            3,
             3,
             this.createContext(),
             StorageValueInfo.with(
@@ -176,7 +172,6 @@ public final class SpreadsheetStorageRouterRootStorageTest implements StorageTes
             root,
             SpreadsheetStorageRouter.with(
                 SpreadsheetStorages.cell(),
-                SpreadsheetStorages.env(),
                 SpreadsheetStorages.form(),
                 SpreadsheetStorages.label(),
                 SpreadsheetStorages.metadata(),
