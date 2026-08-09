@@ -2821,13 +2821,21 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 "  \"/\"\n" +
                 "    " + ROOT + " (walkingkooka.spreadsheet.storage.SpreadsheetStorageRouterRootStorage)\n" +
                 "  \"/cell\"\n" +
-                "    /cell " + CELLS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n" +
+                "    StorageShared2WrapperPrefixed\n" +
+                "      \"/cell\"\n" +
+                "        " + CELLS + " (walkingkooka.storage.FakeStorage)\n" +
                 "  \"/form\"\n" +
-                "    /form " + FORMS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n" +
+                "    StorageShared2WrapperPrefixed\n" +
+                "      \"/form\"\n" +
+                "        " + FORMS + " (walkingkooka.storage.FakeStorage)\n" +
                 "  \"/label\"\n" +
-                "    /label " + LABELS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n" +
+                "    StorageShared2WrapperPrefixed\n" +
+                "      \"/label\"\n" +
+                "        " + LABELS + " (walkingkooka.storage.FakeStorage)\n" +
                 "  \"/spreadsheet\"\n" +
-                "    /spreadsheet " + METADATAS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n"
+                "    StorageShared2WrapperPrefixed\n" +
+                "      \"/spreadsheet\"\n" +
+                "        " + METADATAS + " (walkingkooka.storage.FakeStorage)\n"
         );
     }
 
