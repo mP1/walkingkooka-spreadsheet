@@ -56,10 +56,10 @@ public final class SpreadsheetStorageContexts implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetContextSpreadsheetStorageContext}
+     * {@see SpreadsheetStorageContextSpreadsheetContext}
      */
     public static SpreadsheetStorageContext spreadsheetContext(final SpreadsheetContext spreadsheetContext) {
-        return SpreadsheetContextSpreadsheetStorageContext.with(spreadsheetContext);
+        return SpreadsheetStorageContextSpreadsheetContext.with(spreadsheetContext);
     }
 
     /**
