@@ -79,7 +79,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext>,
+public final class SpreadsheetStorageContextSpreadsheetContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetStorageContextSpreadsheetContext>,
     CurrencyLocaleContextTesting {
 
     // with.............................................................................................................
@@ -88,7 +88,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     public void testWithNullEngineContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetContextSpreadsheetStorageContext.with(
+            () -> SpreadsheetStorageContextSpreadsheetContext.with(
                 null
             )
         );
@@ -135,7 +135,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testSaveCellsAndLoad() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValue(
@@ -160,7 +160,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testDeleteCell() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValue(
@@ -190,7 +190,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             )
         );
 
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         context.addCellWatcher(
             new StoreWatcher<>() {
@@ -214,7 +214,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                         "newValue"
                     );
 
-                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                    SpreadsheetStorageContextSpreadsheetContextTest.this.fired = true;
                 }
             }
         );
@@ -246,7 +246,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             )
         );
 
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         context.addCellWatcherOnce(
             new StoreWatcher<>() {
@@ -270,7 +270,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                         "newValue"
                     );
 
-                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                    SpreadsheetStorageContextSpreadsheetContextTest.this.fired = true;
                 }
             }
         );
@@ -316,7 +316,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testSaveForm() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final FormName formName = FormName.with("Form123");
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
@@ -336,7 +336,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testDeleteForm() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final FormName formName = FormName.with("Form123");
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
@@ -352,7 +352,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testFindFormByName() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final Form<SpreadsheetValidationReference> form1 = SpreadsheetForms.form(
             FormName.with("Form111")
@@ -383,7 +383,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testFindFormByNameWithOffsetAndCount() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final Form<SpreadsheetValidationReference> form1 = SpreadsheetForms.form(
             FormName.with("Form222")
@@ -411,7 +411,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testAddFormWatcherAndSaveForm() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final FormName formName = FormName.with("Form123");
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
@@ -432,7 +432,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                         "newValue"
                     );
 
-                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                    SpreadsheetStorageContextSpreadsheetContextTest.this.fired = true;
                 }
             }
         );
@@ -460,7 +460,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testAddFormWatcherOnceAndSaveForm() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final FormName formName = FormName.with("Form123");
         final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
@@ -481,7 +481,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                         "newValue"
                     );
 
-                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                    SpreadsheetStorageContextSpreadsheetContextTest.this.fired = true;
                 }
             }
         );
@@ -525,7 +525,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testSaveLabel() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
@@ -547,7 +547,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testDeleteLabel() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
@@ -565,7 +565,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testFindLabelByName() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(
@@ -601,7 +601,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testAddLabelWatcherSaveLabel() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
@@ -626,7 +626,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                         "newValue"
                     );
 
-                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                    SpreadsheetStorageContextSpreadsheetContextTest.this.fired = true;
                 }
             }
         );
@@ -652,7 +652,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testAddLabelWatcherOnceSaveLabel() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
@@ -677,7 +677,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                         "newValue"
                     );
 
-                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                    SpreadsheetStorageContextSpreadsheetContextTest.this.fired = true;
                 }
             }
         );
@@ -724,7 +724,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testLoadSpreadsheetMetadata() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         this.checkNotEquals(
             null,
@@ -734,7 +734,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testSaveSpreadsheetMetadata() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetMetadata metadata = context.loadMetadataOrFail(
             SpreadsheetId.with(1)
@@ -757,7 +757,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testDeleteSpreadsheetMetadata() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
@@ -779,7 +779,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     @Test
     public void testFindMetadataBySpreadsheetName() {
-        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
@@ -834,7 +834,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     }
 
     @Override
-    public SpreadsheetContextSpreadsheetStorageContext createContext() {
+    public SpreadsheetStorageContextSpreadsheetContext createContext() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
@@ -919,7 +919,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
-        return SpreadsheetContextSpreadsheetStorageContext.with(
+        return SpreadsheetStorageContextSpreadsheetContext.with(
             SpreadsheetContexts.fixedSpreadsheetId(
                 MediaTypeDetectors.binary(),
                 new FakeSpreadsheetMetadataCreator(),
@@ -957,7 +957,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetContextSpreadsheetStorageContext> type() {
-        return SpreadsheetContextSpreadsheetStorageContext.class;
+    public Class<SpreadsheetStorageContextSpreadsheetContext> type() {
+        return SpreadsheetStorageContextSpreadsheetContext.class;
     }
 }

@@ -56,16 +56,16 @@ import java.util.Set;
  * reading the {@link SpreadsheetEnvironmentContext#spreadsheetId()} to get the {@link SpreadsheetEngineContext} and execute
  * where necessary.
  */
-final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetStorageContext,
+final class SpreadsheetStorageContextSpreadsheetContext implements SpreadsheetStorageContext,
     SpreadsheetEnvironmentContextDelegator {
 
-    static SpreadsheetContextSpreadsheetStorageContext with(final SpreadsheetContext spreadsheetContext) {
-        return new SpreadsheetContextSpreadsheetStorageContext(
+    static SpreadsheetStorageContextSpreadsheetContext with(final SpreadsheetContext spreadsheetContext) {
+        return new SpreadsheetStorageContextSpreadsheetContext(
             Objects.requireNonNull(spreadsheetContext, "spreadsheetContext")
         );
     }
 
-    private SpreadsheetContextSpreadsheetStorageContext(final SpreadsheetContext spreadsheetContext) {
+    private SpreadsheetStorageContextSpreadsheetContext(final SpreadsheetContext spreadsheetContext) {
         super();
         this.spreadsheetContext = spreadsheetContext;
     }
@@ -337,7 +337,7 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
 
     @Override
     public SpreadsheetStorageContext cloneEnvironment() {
-        return new SpreadsheetContextSpreadsheetStorageContext(
+        return new SpreadsheetStorageContextSpreadsheetContext(
             this.spreadsheetContext.cloneEnvironment()
         );
     }
@@ -349,7 +349,7 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
 
         return before == after ?
             this :
-            new SpreadsheetContextSpreadsheetStorageContext(after);
+            new SpreadsheetStorageContextSpreadsheetContext(after);
     }
 
     @Override
