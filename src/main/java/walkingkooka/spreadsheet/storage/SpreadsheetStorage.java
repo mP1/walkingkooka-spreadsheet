@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -155,15 +156,13 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
                                 final SpreadsheetStorageContext context);
 
     @Override
-    public final void mount(final StoragePath path,
-                            final Storage<SpreadsheetStorageContext> storage,
+    public final void mount(final StorageMountPoint<SpreadsheetStorageContext> mountPoint,
                             final SpreadsheetStorageContext context) {
-        Objects.requireNonNull(path, "path");
-        if (path.isRoot()) {
+        Objects.requireNonNull(mountPoint, "mountPoint");
+        if (mountPoint.path().isRoot()) {
             throw new IllegalArgumentException("Mounting at root not allowed");
         }
 
-        Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(context, "context");
 
         throw new UnsupportedOperationException();
