@@ -2805,6 +2805,32 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetStorageRouter.with(
+                CELLS,
+                FORMS,
+                LABELS,
+                METADATAS,
+                ROOT
+            ),
+            "SpreadsheetStorageRouter\n" +
+                "  \"/\"\n" +
+                "    " + ROOT + " (walkingkooka.spreadsheet.storage.SpreadsheetStorageRouterRootStorage)\n" +
+                "  \"/cell\"\n" +
+                "    /cell " + CELLS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n" +
+                "  \"/form\"\n" +
+                "    /form " + FORMS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n" +
+                "  \"/label\"\n" +
+                "    /label " + LABELS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n" +
+                "  \"/spreadsheet\"\n" +
+                "    /spreadsheet " + METADATAS + " (walkingkooka.storage.StorageShared2WrapperPrefixed)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

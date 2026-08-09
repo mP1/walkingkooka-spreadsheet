@@ -28,6 +28,9 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
+import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.watch.Watchers;
 
 import java.util.List;
@@ -60,7 +63,8 @@ import java.util.function.BiFunction;
  * some with and some without a spreadsheet-id within the path. Those without the {@link SpreadsheetEnvironmentContextFactory#SPREADSHEET_ID},
  * will use the {@link EnvironmentValueName} when forming the final full path.
  */
-final class SpreadsheetStorageRouter extends SpreadsheetStorage {
+final class SpreadsheetStorageRouter extends SpreadsheetStorage
+    implements TreePrintable {
 
     static SpreadsheetStorageRouter with(final Storage<SpreadsheetStorageContext> cells,
                                          final Storage<SpreadsheetStorageContext> forms,
@@ -405,5 +409,59 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     @Override
     public String toString() {
         return this.cells + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", " + this.root;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.printTreeStorage(
+                StoragePath.ROOT,
+                this.root,
+                printer
+            );
+            this.printTreeStorage(
+                CELL,
+                this.cells,
+                printer
+            );
+            this.printTreeStorage(
+                FORM,
+                this.forms,
+                printer
+            );
+            this.printTreeStorage(
+                LABEL,
+                this.labels,
+                printer
+            );
+            this.printTreeStorage(
+                SPREADSHEET,
+                this.metadatas,
+                printer
+            );
+        }
+        printer.outdent();
+    }
+
+    private void printTreeStorage(final StoragePath path,
+                                  final Storage<SpreadsheetStorageContext> storage,
+                                  final IndentingPrinter printer) {
+        printer.println(
+            CharSequences.quoteAndEscape(
+                path.value()
+            )
+        );
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                storage,
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
