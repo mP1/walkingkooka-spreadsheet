@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
@@ -175,6 +176,11 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
         Objects.requireNonNull(context, "context");
 
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final List<StorageMountPoint<SpreadsheetStorageContext>> mountPoints() {
+        return Lists.empty();
     }
 
     @Override
