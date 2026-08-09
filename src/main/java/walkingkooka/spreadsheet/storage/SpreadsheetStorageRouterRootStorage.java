@@ -73,17 +73,8 @@ final class SpreadsheetStorageRouterRootStorage implements Storage<SpreadsheetSt
                             )
                         );
                         break;
-                    // /environment
-                    case 1:
-                        list.add(
-                            this.addMountEntry(
-                                SpreadsheetStorageRouter.ENVIRONMENT,
-                                context
-                            )
-                        );
-                        break;
                     // /forms
-                    case 2:
+                    case 1:
                         list.add(
                             this.addMountEntry(
                                 SpreadsheetStorageRouter.FORM,
@@ -92,7 +83,7 @@ final class SpreadsheetStorageRouterRootStorage implements Storage<SpreadsheetSt
                         );
                         break;
                     // /labels
-                    case 3:
+                    case 2:
                         list.add(
                             this.addMountEntry(
                                 SpreadsheetStorageRouter.LABEL,
@@ -101,7 +92,7 @@ final class SpreadsheetStorageRouterRootStorage implements Storage<SpreadsheetSt
                         );
                         break;
                     // /spreadsheet
-                    case 4:
+                    case 3:
                         list.add(
                             this.addMountEntry(
                                 SpreadsheetStorageRouter.SPREADSHEET,
@@ -110,7 +101,7 @@ final class SpreadsheetStorageRouterRootStorage implements Storage<SpreadsheetSt
                         );
                         break;
                     default:
-                        final int storageOffset = offset + list.size() - 5;
+                        final int storageOffset = offset + list.size() - 4;
                         if(storageOffset >= 0) {
                             list.addAll(
                                 storage.list(
