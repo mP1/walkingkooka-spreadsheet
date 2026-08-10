@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.Cast;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -28,6 +29,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -140,6 +142,17 @@ public interface SpreadsheetStorageContext extends StorageContext,
                 parent,
                 offset,
                 count,
+                this
+            );
+    }
+
+    /**
+     * {@link Storage#mount(StorageMountPoint, StorageContext)}
+     */
+    default void mount(final StorageMountPoint<?> mountPoint) {
+        this.storage()
+            .mount(
+                Cast.to(mountPoint),
                 this
             );
     }
