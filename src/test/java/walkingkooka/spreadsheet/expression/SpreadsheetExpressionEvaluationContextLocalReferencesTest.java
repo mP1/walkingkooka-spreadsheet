@@ -968,6 +968,14 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             );
         }
 
+        @Override
+        public void unmountStorage(final StoragePath path) {
+            this.storage.unmount(
+                path,
+                this
+            );
+        }
+
         private final Storage<StorageContext> storage = Storages.treeMapStore();
 
         @Override

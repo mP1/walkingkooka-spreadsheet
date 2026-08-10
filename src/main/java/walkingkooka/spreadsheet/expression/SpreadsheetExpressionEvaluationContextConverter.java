@@ -421,6 +421,11 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
         );
     }
 
+    @Override
+    public void unmountStorage(final StoragePath path) {
+        this.context.unmountStorage(path);
+    }
+
     // TerminalContextDelegator.........................................................................................
 
     @Override

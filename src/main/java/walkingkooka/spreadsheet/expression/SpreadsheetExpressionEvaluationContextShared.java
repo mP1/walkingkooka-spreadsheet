@@ -382,6 +382,15 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
+    public void unmountStorage(final StoragePath path) {
+        this.storage()
+            .unmount(
+                path,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
     public final Storage<SpreadsheetStorageContext> storage() {
         return this.environmentContext()
             .storage();
