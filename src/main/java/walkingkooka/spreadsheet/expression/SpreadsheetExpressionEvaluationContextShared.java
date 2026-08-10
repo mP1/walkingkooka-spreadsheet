@@ -391,6 +391,14 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
+    public List<StorageMountPoint<?>> storageMountPoints() {
+        return Cast.to(
+            this.storage()
+                .mountPoints()
+        );
+    }
+
+    @Override
     public final Storage<SpreadsheetStorageContext> storage() {
         return this.environmentContext()
             .storage();
