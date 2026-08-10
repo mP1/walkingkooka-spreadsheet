@@ -373,7 +373,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public void mountStoragePoint(final StorageMountPoint<?> mountPoint) {
+    public void mountStorage(final StorageMountPoint<?> mountPoint) {
         this.storage()
             .mount(
                 Cast.to(mountPoint),
