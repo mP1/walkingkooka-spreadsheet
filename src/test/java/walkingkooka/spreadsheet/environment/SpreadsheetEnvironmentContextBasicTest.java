@@ -464,7 +464,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3/, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -483,7 +483,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
                 "        currency\n" +
                 "          AUD (java.util.Currency)\n" +
                 "        currentWorkingDirectory\n" +
-                "          /current1/working2/directory3/\n" +
+                "          /current1/working2/directory3\n" +
                 "        homeDirectory\n" +
                 "          /users/user123@example.com\n" +
                 "        indentation\n" +
