@@ -29,7 +29,6 @@ import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
@@ -78,6 +77,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
@@ -479,7 +479,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         (final Object exitValue) -> {
             throw new UnsupportedOperationException();
         },
-        EnvironmentContexts.readOnly(
+        StorageEnvironmentContexts.readOnly(
             Predicates.always(), // all values are read-only
             terminalContextSpreadsheetEnvironmentContext()
         )

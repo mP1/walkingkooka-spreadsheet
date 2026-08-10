@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.HasUserDirectories;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
@@ -225,6 +226,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
         return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    @Override
+    default StorageEnvironmentContext storageEnvironmentContext() {
+        return StorageExpressionEvaluationContextDelegator.super.storageEnvironmentContext();
     }
 
     // TerminalContextDelegator.........................................................................................
