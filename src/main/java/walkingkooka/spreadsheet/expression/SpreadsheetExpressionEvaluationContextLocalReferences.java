@@ -241,8 +241,8 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
-    public void mountStoragePoint(final StorageMountPoint<?> mountPoint) {
-        this.context.mountStoragePoint(
+    public void mountStorage(final StorageMountPoint<?> mountPoint) {
+        this.context.mountStorage(
                 Cast.to(mountPoint)
         );
     }
