@@ -520,7 +520,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3/, homeDirectory=/users/user123@example.com, indentation=  , lineEnding=\\n, locale=en_AU, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=  , lineEnding=\\n, locale=en_AU, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -748,7 +748,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  currency\n" +
                 "    AUD (java.util.Currency)\n" +
                 "  currentWorkingDirectory\n" +
-                "    /current1/working2/directory3/\n" +
+                "    /current1/working2/directory3\n" +
                 "  dateFormatter\n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
