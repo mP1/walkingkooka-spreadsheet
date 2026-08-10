@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -367,6 +368,15 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
                 parent,
                 offset,
                 count,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
+    public void mountStoragePoint(final StorageMountPoint<?> mountPoint) {
+        this.storage()
+            .mount(
+                Cast.to(mountPoint),
                 this.spreadsheetStorageContext()
             );
     }

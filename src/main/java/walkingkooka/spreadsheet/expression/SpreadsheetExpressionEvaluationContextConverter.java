@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Binary;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
@@ -56,6 +57,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -409,6 +411,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
             parent,
             offset,
             count
+        );
+    }
+
+    @Override
+    public void mountStoragePoint(final StorageMountPoint<?> mountPoint) {
+        this.context.mountStoragePoint(
+                Cast.to(mountPoint)
         );
     }
 

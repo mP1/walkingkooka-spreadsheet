@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
+import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
@@ -60,6 +61,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StorageContexts;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -955,6 +957,14 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
                 offset,
                 count,
                 StorageContexts.fake()
+            );
+        }
+
+        @Override
+        public void mountStoragePoint(final StorageMountPoint<?> mountPoint) {
+            this.storage.mount(
+                Cast.to(mountPoint),
+                this
             );
         }
 
