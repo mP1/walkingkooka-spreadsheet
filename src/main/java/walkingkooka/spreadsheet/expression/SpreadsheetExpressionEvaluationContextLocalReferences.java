@@ -252,6 +252,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
         this.context.unmountStorage(path);
     }
 
+    @Override
+    public List<StorageMountPoint<?>> storageMountPoints() {
+        return this.context.storageMountPoints();
+    }
+
     // TerminalContextDelegator.........................................................................................
 
     @Override
