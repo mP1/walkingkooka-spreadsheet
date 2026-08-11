@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
-import walkingkooka.spreadsheet.SpreadsheetContextTesting;
+import walkingkooka.spreadsheet.SpreadsheetContextTesting2;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -42,7 +42,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
-    SpreadsheetContextTesting<C>,
+    SpreadsheetContextTesting2<C>,
     ParserTesting,
     SpreadsheetLabelNameResolverTesting<C>,
     SpreadsheetProviderTesting<C>,

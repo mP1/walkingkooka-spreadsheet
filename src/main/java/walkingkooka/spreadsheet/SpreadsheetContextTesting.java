@@ -17,76 +17,41 @@
 
 package walkingkooka.spreadsheet;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.currency.CurrencyLocaleContextTesting2;
-import walkingkooka.net.header.MediaTypeDetectorTesting2;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting2;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 
 import java.util.Currency;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends SpreadsheetEnvironmentContextTesting2<C>,
+public interface SpreadsheetContextTesting extends SpreadsheetEnvironmentContextTesting,
     HasProviderContextTesting,
     HasSpreadsheetMetadataTesting,
-    CurrencyLocaleContextTesting2<C>,
-    MediaTypeDetectorTesting2<C>,
-    SpreadsheetMetadataContextTesting2<C> {
+    CurrencyLocaleContextTesting,
+    MediaTypeDetectorTesting,
+    SpreadsheetMetadataContextTesting {
 
     // setCurrency......................................................................................................
 
-    @Test
-    @Override
-    default void testSetCurrencyWithNullFails() {
-        CurrencyLocaleContextTesting2.super.testSetCurrencyWithNullFails();
-    }
-
     //@Override
-    default void setCurrencyAndCheck(final C context,
+    default void setCurrencyAndCheck(final SpreadsheetContext context,
                                      final Currency currency) {
-        SpreadsheetEnvironmentContextTesting2.super.setCurrencyAndCheck(
+        SpreadsheetEnvironmentContextTesting.super.setCurrencyAndCheck(
             context,
             currency
         );
     }
 
-    // setLocale........................................................................................................
-
-    @Test
-    @Override
-    default void testSetLocaleWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .setLocale(null)
-        );
-    }
-
     // spreadsheetEngine................................................................................................
 
-    default void spreadsheetEngineAndCheck(final C context,
+    default void spreadsheetEngineAndCheck(final SpreadsheetContext context,
                                            final SpreadsheetEngine engine) {
         this.checkEquals(
             engine,
             context.spreadsheetEngine()
         );
-    }
-
-    // MediaTypeDetector................................................................................................
-
-    @Override
-    default C createMediaTypeDetector() {
-        return this.createContext();
-    }
-
-    // class............................................................................................................
-
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetContext.class.getSimpleName();
     }
 }

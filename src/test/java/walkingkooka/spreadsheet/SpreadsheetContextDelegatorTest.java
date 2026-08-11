@@ -52,7 +52,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetContextDelegatorTest implements SpreadsheetContextTesting<TestSpreadsheetContextDelegator> {
+public final class SpreadsheetContextDelegatorTest implements SpreadsheetContextTesting2<TestSpreadsheetContextDelegator> {
 
     private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
 
