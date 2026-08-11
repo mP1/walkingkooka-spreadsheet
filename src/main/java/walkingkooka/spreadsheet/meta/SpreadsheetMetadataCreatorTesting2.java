@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
 import org.junit.jupiter.api.Test;
-import walkingkooka.net.email.EmailAddress;
 
 import java.util.Optional;
 
@@ -52,7 +51,7 @@ public interface SpreadsheetMetadataCreatorTesting2<C extends SpreadsheetMetadat
             NullPointerException.class,
             () -> this.createSpreadsheetMetadataCreator()
                 .createMetadata(
-                    EmailAddress.parse("user@example.com"),
+                    USER,
                     null // locale
                 )
         );
