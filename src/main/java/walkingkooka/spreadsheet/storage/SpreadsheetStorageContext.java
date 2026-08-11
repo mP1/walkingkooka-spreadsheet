@@ -149,7 +149,7 @@ public interface SpreadsheetStorageContext extends StorageContext,
     /**
      * {@link Storage#mount(StorageMountPoint, StorageContext)}
      */
-    default void mount(final StorageMountPoint<?> mountPoint) {
+    default void mountStorage(final StorageMountPoint<?> mountPoint) {
         this.storage()
             .mount(
                 Cast.to(mountPoint),
