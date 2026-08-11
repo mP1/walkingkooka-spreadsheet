@@ -127,9 +127,9 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testMountStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.mount(
-            Storages.treeMapStore()
-        );
+        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+
+        final Storage<SpreadsheetStorageContext> storage = Storages.mount(root);
 
         final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
 
@@ -142,15 +142,19 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
         this.mountPointsAndCheck(
             storage,
+            StorageMountPoint.with(
+                StoragePath.ROOT,
+                root
+            ),
             mountPoint
         );
     }
 
     @Test
     public void testUnmountStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.mount(
-            Storages.treeMapStore()
-        );
+        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+
+        final Storage<SpreadsheetStorageContext> storage = Storages.mount(root);
 
         final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
 
@@ -167,15 +171,19 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
         context.unmountStorage(STORAGE_PATH);
 
         this.mountPointsAndCheck(
-            storage
+            storage,
+            StorageMountPoint.with(
+                StoragePath.ROOT,
+                root
+            )
         );
     }
 
     @Test
     public void testStorageMountPoints() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.mount(
-            Storages.treeMapStore()
-        );
+        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+
+        final Storage<SpreadsheetStorageContext> storage = Storages.mount(root);
 
         final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
 
@@ -188,6 +196,10 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
         this.storageMountPointsAndCheck(
             context,
+            StorageMountPoint.with(
+                StoragePath.ROOT,
+                root
+            ),
             mountPoint
         );
     }
