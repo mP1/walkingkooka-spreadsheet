@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContextTesting;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -302,6 +303,25 @@ public interface SpreadsheetStorageContextTesting extends StorageContextTesting,
                 count
             ),
             () -> "listStorage " + parent + " offset=" + offset + " count=" + count + " " + expected
+        );
+    }
+
+    // storageMountPoints...............................................................................................
+
+    default void storageMountPointsAndCheck(final SpreadsheetStorageContext context,
+                                            final StorageMountPoint<SpreadsheetStorageContext>... expected) {
+        this.storageMountPointsAndCheck(
+            context,
+            Lists.of(expected)
+        );
+    }
+
+    default void storageMountPointsAndCheck(final SpreadsheetStorageContext context,
+                                            final List<StorageMountPoint<SpreadsheetStorageContext>> expected) {
+        this.checkEquals(
+            expected,
+            context.storageMountPoints(),
+            context::toString
         );
     }
 }

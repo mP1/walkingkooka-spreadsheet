@@ -170,6 +170,27 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
             storage
         );
     }
+
+    @Test
+    public void testStorageMountPoints() {
+        final Storage<SpreadsheetStorageContext> storage = Storages.mount(
+            Storages.treeMapStore()
+        );
+
+        final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
+
+        final StorageMountPoint<SpreadsheetStorageContext> mountPoint = StorageMountPoint.with(
+            STORAGE_PATH,
+            Storages.fake()
+        );
+
+        context.mountStorage(mountPoint);
+
+        this.storageMountPointsAndCheck(
+            context,
+            mountPoint
+        );
+    }
     
     static final class TestSpreadsheetStorageContext extends FakeSpreadsheetStorageContext {
 

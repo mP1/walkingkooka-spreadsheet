@@ -168,6 +168,14 @@ public interface SpreadsheetStorageContext extends StorageContext,
             );
     }
 
+    /**
+     * {@link Storage#mountPoints()}
+     */
+    default List<StorageMountPoint<SpreadsheetStorageContext>> storageMountPoints() {
+        return this.storage()
+            .mountPoints();
+    }
+
     // StorageContext...................................................................................................
 
     @Override
