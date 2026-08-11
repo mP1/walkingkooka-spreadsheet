@@ -80,7 +80,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public abstract class SpreadsheetEngineContextSharedTestCase<C extends SpreadsheetEngineContextShared> implements SpreadsheetEngineContextTesting<C>,
+public abstract class SpreadsheetEngineContextSharedTestCase<C extends SpreadsheetEngineContextShared> implements SpreadsheetEngineContextTesting2<C>,
     SpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<C> {
 
