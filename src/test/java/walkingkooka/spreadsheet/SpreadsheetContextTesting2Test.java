@@ -30,7 +30,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
-import walkingkooka.spreadsheet.SpreadsheetContextTestingTest.TestSpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetContextTesting2Test.TestSpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
@@ -49,7 +49,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetContextTestingTest implements SpreadsheetContextTesting<TestSpreadsheetContext> {
+public final class SpreadsheetContextTesting2Test implements SpreadsheetContextTesting2<TestSpreadsheetContext> {
 
     @Override
     public void testEnvironmentValueLineEndingEqualsLineEnding() {
@@ -130,14 +130,14 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
         @Override
         public Optional<SpreadsheetId> spreadsheetId() {
-            return Optional.of(SpreadsheetContextTestingTest.SPREADSHEET_ID);
+            return Optional.of(SpreadsheetContextTesting2Test.SPREADSHEET_ID);
         }
 
         @Override
         public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
             Objects.requireNonNull(id, "id");
 
-            if (false == SpreadsheetContextTestingTest.SPREADSHEET_ID.equals(id.orElse(null))) {
+            if (false == SpreadsheetContextTesting2Test.SPREADSHEET_ID.equals(id.orElse(null))) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -177,7 +177,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
             return Optional.ofNullable(
                 SpreadsheetContext.SPREADSHEET_ID.equals(name) ?
-                    (T) SpreadsheetContextTestingTest.SPREADSHEET_ID :
+                    (T) SpreadsheetContextTesting2Test.SPREADSHEET_ID :
                     SERVER_URL.equals(name) ?
                         (T) this.serverUrl() :
                         null
@@ -298,7 +298,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
         @Override
         public Currency currency() {
-            return SpreadsheetContextTestingTest.CURRENCY;
+            return SpreadsheetContextTesting2Test.CURRENCY;
         }
 
         @Override
@@ -309,12 +309,12 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
         @Override
         public LineEnding lineEnding() {
-            return SpreadsheetContextTestingTest.LINE_ENDING;
+            return SpreadsheetContextTesting2Test.LINE_ENDING;
         }
 
         @Override
         public AbsoluteUrl serverUrl() {
-            return SpreadsheetContextTestingTest.SERVER_URL;
+            return SpreadsheetContextTesting2Test.SERVER_URL;
         }
 
         @Override
