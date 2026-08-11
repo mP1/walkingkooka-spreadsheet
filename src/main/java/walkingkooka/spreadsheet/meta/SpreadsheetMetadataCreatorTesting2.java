@@ -19,31 +19,44 @@
 package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.text.printer.TreePrintableTesting;
 
-import java.util.Locale;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
  */
 @GwtIncompatible
-public interface SpreadsheetMetadataCreatorTesting extends TreePrintableTesting {
+public interface SpreadsheetMetadataCreatorTesting2<C extends SpreadsheetMetadataCreator> extends SpreadsheetMetadataCreatorTesting {
 
     // createMetadata...................................................................................................
 
-    default void createSpreadsheetMetadataAndCheck(final SpreadsheetMetadataCreator context,
-                                                   final EmailAddress user,
-                                                   final Optional<Locale> locale,
-                                                   final SpreadsheetMetadata expected) {
-        this.checkEquals(
-            expected,
-            context.createMetadata(
-                user,
-                locale
-            ),
-            "createMetadata " + user + " " + locale.orElse(null)
+    @Test
+    default void testCreateMetadataWithNullUserFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetMetadataCreator()
+                .createMetadata(
+                    null,
+                    Optional.empty()
+                )
         );
     }
+
+    @Test
+    default void testCreateMetadataWithNullLocaleFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetMetadataCreator()
+                .createMetadata(
+                    EmailAddress.parse("user@example.com"),
+                    null // locale
+                )
+        );
+    }
+
+    C createSpreadsheetMetadataCreator();
 }
