@@ -27,7 +27,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetMetadataContextDelegatorTest implements SpreadsheetMetadataContextTesting<TestSpreadsheetMetadataContextDelegator> {
+public final class SpreadsheetMetadataContextDelegatorTest implements SpreadsheetMetadataContextTesting2<TestSpreadsheetMetadataContextDelegator> {
 
     @Override
     public void testTypeNaming() {

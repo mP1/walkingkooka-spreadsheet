@@ -31,7 +31,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMetadataContextTesting<BasicSpreadsheetMetadataContext>,
+public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMetadataContextTesting2<BasicSpreadsheetMetadataContext>,
     HashCodeEqualsDefinedTesting2<BasicSpreadsheetMetadataContext> {
 
     private final static LocalDateTime NOW = LocalDateTime.of(

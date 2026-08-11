@@ -27,7 +27,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetMetadataContextTestingTest implements SpreadsheetMetadataContextTesting<TestSpreadsheetMetadataContext> {
+public final class SpreadsheetMetadataContextTestingTest implements SpreadsheetMetadataContextTesting2<TestSpreadsheetMetadataContext> {
 
     @Override
     public void testCheckToStringOverridden() {

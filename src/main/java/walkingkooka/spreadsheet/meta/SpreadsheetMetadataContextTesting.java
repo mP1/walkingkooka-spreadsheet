@@ -17,31 +17,17 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.ContextTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadataContext> extends ContextTesting<C>,
-    SpreadsheetMetadataCreatorTesting2<C>,
-    SpreadsheetMetadataLoaderTesting2<C> {
+public interface SpreadsheetMetadataContextTesting extends SpreadsheetMetadataCreatorTesting,
+    SpreadsheetMetadataLoaderTesting {
 
     // saveMetadata.....................................................................................................
 
-    @Test
-    default void testSaveMetadataWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .saveMetadata(null)
-        );
-    }
-
-    default void saveMetadataAndCheck(final C context,
+    default void saveMetadataAndCheck(final SpreadsheetMetadataContext context,
                                       final SpreadsheetMetadata metadata,
                                       final SpreadsheetMetadata expected) {
         this.checkEquals(
@@ -51,57 +37,7 @@ public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadata
         );
     }
 
-    // deleteMetadata...................................................................................................
-
-    @Test
-    default void testDeleteMetadataWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .deleteMetadata(null)
-        );
-    }
-
     // findMetadataBySpreadsheetName....................................................................................
-
-    @Test
-    default void testFindMetadataBySpreadsheetNameWithNullNameFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .findMetadataBySpreadsheetName(
-                    null,
-                    0, // offset
-                    1 // count
-                )
-        );
-    }
-
-    @Test
-    default void testFindMetadataBySpreadsheetNameWithNegativeOffsetFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .findMetadataBySpreadsheetName(
-                    "Hello",
-                    -1, // offset
-                    1 // count
-                )
-        );
-    }
-
-    @Test
-    default void testFindMetadataBySpreadsheetNameWithNegativeCountFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .findMetadataBySpreadsheetName(
-                    "Hello",
-                    0, // offset
-                    -1 // count
-                )
-        );
-    }
 
     default void findMetadataBySpreadsheetNameAndCheck(final SpreadsheetMetadataContext context,
                                                        final String name,
@@ -131,48 +67,5 @@ public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadata
             ),
             () -> "findMetadataBySpreadsheetName " + CharSequences.quoteAndEscape(name) + " offset=" + offset + " count=" + count
         );
-    }
-
-    // addMetadataWatcher...............................................................................................
-
-    @Test
-    default void testAddMetadataWatcherWithNullWatcherFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .addMetadataWatcher(null)
-        );
-    }
-
-    // addMetadataWatcherOnce...........................................................................................
-
-    @Test
-    default void testAddMetadataWatcherOnceWithNullWatcherFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .addMetadataWatcherOnce(null)
-        );
-    }
-
-    // SpreadsheetMetadataCreator.......................................................................................
-
-    @Override
-    default C createSpreadsheetMetadataCreator() {
-        return this.createContext();
-    }
-
-    // SpreadsheetMetadataLoader........................................................................................
-
-    @Override
-    default C createSpreadsheetMetadataLoader() {
-        return this.createContext();
-    }
-
-    // class............................................................................................................
-
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetMetadataContext.class.getSimpleName();
     }
 }

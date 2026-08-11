@@ -21,7 +21,7 @@ package walkingkooka.spreadsheet.storage;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterLikeTesting2;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting2;
 import walkingkooka.storage.StorageContextTesting2;
 import walkingkooka.storage.StoragePath;
 
@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageContext> extends SpreadsheetStorageContextTesting,
     StorageContextTesting2<C>,
-    SpreadsheetMetadataContextTesting<C>,
+    SpreadsheetMetadataContextTesting2<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     ConverterLikeTesting2<C> {
 
