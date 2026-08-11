@@ -157,6 +157,17 @@ public interface SpreadsheetStorageContext extends StorageContext,
             );
     }
 
+    /**
+     * {@link Storage#unmount(StoragePath, StorageContext)}
+     */
+    default void unmountStorage(final StoragePath path) {
+        this.storage()
+            .unmount(
+                Cast.to(path),
+                this
+            );
+    }
+
     // StorageContext...................................................................................................
 
     @Override
