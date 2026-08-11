@@ -17,27 +17,13 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+public interface SpreadsheetMetadataLoaderTesting extends TreePrintableTesting {
 
-public interface SpreadsheetMetadataLoaderTesting<C extends SpreadsheetMetadataLoader> extends TreePrintableTesting {
-
-    // loadMetadata.....................................................................................................
-
-    @Test
-    default void testLoadMetadataWithNullIdFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetMetadataLoader()
-                .loadMetadata(null)
-        );
-    }
-
-    default void loadMetadataAndCheck(final C context,
+    default void loadMetadataAndCheck(final SpreadsheetMetadataLoader context,
                                       final SpreadsheetId id) {
         this.loadMetadataAndCheck(
             context,
@@ -46,7 +32,7 @@ public interface SpreadsheetMetadataLoaderTesting<C extends SpreadsheetMetadataL
         );
     }
 
-    default void loadMetadataAndCheck(final C context,
+    default void loadMetadataAndCheck(final SpreadsheetMetadataLoader context,
                                       final SpreadsheetId id,
                                       final SpreadsheetMetadata expected) {
         this.loadMetadataAndCheck(
@@ -56,7 +42,7 @@ public interface SpreadsheetMetadataLoaderTesting<C extends SpreadsheetMetadataL
         );
     }
 
-    default void loadMetadataAndCheck(final C context,
+    default void loadMetadataAndCheck(final SpreadsheetMetadataLoader context,
                                       final SpreadsheetId id,
                                       final Optional<SpreadsheetMetadata> expected) {
         this.checkEquals(
@@ -65,8 +51,4 @@ public interface SpreadsheetMetadataLoaderTesting<C extends SpreadsheetMetadataL
             () -> "loadMetadata " + id
         );
     }
-
-    // SpreadsheetMetadataLoader........................................................................................
-
-    C createSpreadsheetMetadataLoader();
 }
