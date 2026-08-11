@@ -27,7 +27,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadataContext> extends ContextTesting<C>,
-    SpreadsheetMetadataCreatorTesting<C>,
+    SpreadsheetMetadataCreatorTesting2<C>,
     SpreadsheetMetadataLoaderTesting<C> {
 
     // saveMetadata.....................................................................................................
