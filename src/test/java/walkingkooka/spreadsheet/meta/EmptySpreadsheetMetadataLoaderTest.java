@@ -22,7 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class EmptySpreadsheetMetadataLoaderTest implements SpreadsheetMetadataLoaderTesting<EmptySpreadsheetMetadataLoader>,
+public final class EmptySpreadsheetMetadataLoaderTest implements SpreadsheetMetadataLoaderTesting2<EmptySpreadsheetMetadataLoader>,
     ToStringTesting<EmptySpreadsheetMetadataLoader>,
     ClassTesting<EmptySpreadsheetMetadataLoader> {
 
