@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.environment.HasUserTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -29,7 +30,8 @@ import java.util.Optional;
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
  */
 @GwtIncompatible
-public interface SpreadsheetMetadataCreatorTesting extends TreePrintableTesting {
+public interface SpreadsheetMetadataCreatorTesting extends HasUserTesting,
+    TreePrintableTesting {
 
     // createMetadata...................................................................................................
 
