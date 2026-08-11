@@ -24,7 +24,7 @@ import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting2;
 
 import java.util.Currency;
 
@@ -35,7 +35,7 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     HasSpreadsheetMetadataTesting,
     CurrencyLocaleContextTesting2<C>,
     MediaTypeDetectorTesting2<C>,
-    SpreadsheetMetadataContextTesting<C> {
+    SpreadsheetMetadataContextTesting2<C> {
 
     // setCurrency......................................................................................................
 
