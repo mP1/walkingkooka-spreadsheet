@@ -243,18 +243,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext impleme
         throw new UnsupportedOperationException();
     }
 
-//    @Override
-//    public boolean canConvert(final Object value,
-//                              final Class<?> type) {
-//        throw new UnsupportedOperationException();
-//    }
-//
-//    @Override
-//    public <T> Either<T, String> convert(final Object value,
-//                                         final Class<T> target) {
-//        throw new UnsupportedOperationException();
-//    }
-
     @Override
     public SpreadsheetMetadata createMetadata(final EmailAddress user,
                                               final Optional<Locale> locale) {
