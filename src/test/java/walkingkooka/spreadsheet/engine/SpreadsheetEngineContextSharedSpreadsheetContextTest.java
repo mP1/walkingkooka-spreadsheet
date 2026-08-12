@@ -1327,7 +1327,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
         );
         return SpreadsheetEnvironmentContexts.basic(
-            STORAGE,
+            STORAGE_SPREADSHEET_STORAGE_CONTEXT,
             storageEnvironmentContext
         );
     }

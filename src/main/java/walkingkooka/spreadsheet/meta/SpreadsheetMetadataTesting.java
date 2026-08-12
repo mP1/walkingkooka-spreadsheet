@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converters;
@@ -413,6 +414,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             PluginStores.fake(),
+            Cast.to(STORAGE_SPREADSHEET_STORAGE_CONTEXT),
             CURRENCY_LOCALE_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,

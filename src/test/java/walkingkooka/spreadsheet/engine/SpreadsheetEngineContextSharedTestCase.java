@@ -841,7 +841,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     final C createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
-                STORAGE,
+                STORAGE_SPREADSHEET_STORAGE_CONTEXT,
                 StorageEnvironmentContexts.basic(environmentContext)
             )
         );

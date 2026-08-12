@@ -18,7 +18,9 @@
 package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.Binary;
+import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
@@ -43,7 +45,10 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
@@ -55,6 +60,7 @@ import walkingkooka.validation.form.FormName;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -407,6 +413,71 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         @Override
         public Storage<SpreadsheetStorageContext> storage() {
             return Storages.empty();
+        }
+
+        // StorageContext...................................................................................................
+
+        @Override
+        public Optional<StorageValue> loadStorage(final StoragePath path) {
+            return this.storage()
+                .load(
+                    path,
+                    this
+                );
+        }
+
+        @Override
+        public StorageValue saveStorage(final StorageValue value) {
+            return this.storage()
+                .save(
+                    value,
+                    this
+                );
+        }
+
+        @Override
+        public void deleteStorage(final StoragePath path) {
+            this.storage()
+                .delete(
+                    path,
+                    this
+                );
+        }
+
+        @Override
+        public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                                  final int offset,
+                                                  final int count) {
+            return this.storage()
+                .list(
+                    parent,
+                    offset,
+                    count,
+                    this
+                );
+        }
+
+        @Override
+        public void mountStorage(final StorageMountPoint<?> mountPoint) {
+            this.storage()
+                .mount(
+                    Cast.to(mountPoint),
+                    this
+                );
+        }
+
+        @Override
+        public void unmountStorage(final StoragePath path) {
+            this.storage()
+                .unmount(
+                    path,
+                    this
+                );
+        }
+
+        @Override
+        public List<StorageMountPoint<?>> storageMountPoints() {
+            return Lists.empty();
         }
 
         // Object.......................................................................................................

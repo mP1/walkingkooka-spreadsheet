@@ -57,6 +57,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.storage.StorageContexts;
+import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
@@ -658,6 +659,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                         StorageContexts.basic(
                             CONVERTER_LIKE,
                             MEDIA_TYPE_DETECTOR,
+                            Storages.fake(),
                             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                         )
                     )

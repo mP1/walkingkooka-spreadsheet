@@ -709,7 +709,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testStorage() {
         this.storageAndCheck(
             this.createContext(),
-            STORAGE
+            STORAGE_SPREADSHEET_STORAGE_CONTEXT
         );
     }
 

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting;
@@ -31,6 +32,7 @@ import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting, ClassTesting<SpreadsheetStorageContext>,
@@ -194,7 +196,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
         context.mountStorage(mountPoint);
 
-        this.storageMountPointsAndCheck(
+        this.storageMountPoints(
             context,
             StorageMountPoint.with(
                 StoragePath.ROOT,
@@ -212,8 +214,67 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
         }
 
         @Override
+        public Optional<StorageValue> loadStorage(final StoragePath path) {
+            return this.storage.load(
+                path,
+                this
+            );
+        }
+
+        @Override
+        public StorageValue saveStorage(final StorageValue value) {
+            return this.storage.save(
+                value,
+                this
+            );
+        }
+
+        @Override
+        public void deleteStorage(final StoragePath path) {
+            this.storage.delete(
+                path,
+                this
+            );
+        }
+
+        @Override
+        public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                                  final int offset,
+                                                  final int count) {
+            return this.storage.list(
+                parent,
+                offset,
+                count,
+                this
+            );
+        }
+
+        @Override
+        public void mountStorage(final StorageMountPoint<?> mountPoint) {
+            this.storage.mount(
+                Cast.to(mountPoint),
+                this
+            );
+        }
+
+        @Override
+        public void unmountStorage(final StoragePath path) {
+            this.storage.unmount(
+                path,
+                this
+            );
+        }
+
+        @Override
+        public List<StorageMountPoint<?>> storageMountPoints() {
+            return Cast.to(
+                this.storage.mountPoints()
+            );
+        }
+
+        @Override
         public Storage<SpreadsheetStorageContext> storage() {
-            return storage;
+            return this.storage;
         }
         
         private final Storage<SpreadsheetStorageContext> storage;

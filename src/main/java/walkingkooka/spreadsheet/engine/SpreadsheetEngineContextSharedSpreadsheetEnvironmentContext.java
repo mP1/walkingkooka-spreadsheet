@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Binary;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
@@ -173,6 +174,9 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
                     }
                 }, // ConverterLike
                 mediaTypeDetector,
+                Cast.to(
+                    spreadsheetEnvironmentContextFactory.storage()
+                ),
                 spreadsheetEnvironmentContextFactory.environmentContext() // EnvironmentContext
             )
         );

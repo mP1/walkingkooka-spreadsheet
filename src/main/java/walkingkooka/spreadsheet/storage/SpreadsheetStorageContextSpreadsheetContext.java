@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.Binary;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
@@ -39,6 +40,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StorageMountPoint;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -363,6 +368,74 @@ final class SpreadsheetStorageContextSpreadsheetContext implements SpreadsheetSt
     }
 
     private final SpreadsheetContext spreadsheetContext;
+
+    // StorageContext...................................................................................................
+
+    @Override
+    public Optional<StorageValue> loadStorage(final StoragePath path) {
+        return this.spreadsheetContext.storage()
+            .load(
+                path,
+                this
+            );
+    }
+
+    @Override
+    public StorageValue saveStorage(final StorageValue value) {
+        return this.spreadsheetContext.storage()
+            .save(
+                value,
+                this
+            );
+    }
+
+    @Override
+    public void deleteStorage(final StoragePath path) {
+        this.spreadsheetContext.storage()
+            .delete(
+                path,
+                this
+            );
+    }
+
+    @Override
+    public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                              final int offset,
+                                              final int count) {
+        return this.spreadsheetContext.storage()
+            .list(
+                parent,
+                offset,
+                count,
+                this
+            );
+    }
+
+    @Override
+    public void mountStorage(final StorageMountPoint<?> mountPoint) {
+        this.spreadsheetContext.storage()
+            .mount(
+                Cast.to(mountPoint),
+                this
+            );
+    }
+
+    @Override
+    public void unmountStorage(final StoragePath path) {
+        this.spreadsheetContext.storage()
+            .unmount(
+                path,
+                this
+            );
+    }
+
+    @Override
+    public List<StorageMountPoint<?>> storageMountPoints() {
+        return Cast.to(
+            this.spreadsheetContext.storage()
+                .mountPoints()
+        );
+    }
 
     // Object...........................................................................................................
 
