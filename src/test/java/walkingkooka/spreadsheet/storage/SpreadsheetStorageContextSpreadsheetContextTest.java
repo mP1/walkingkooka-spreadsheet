@@ -1026,7 +1026,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
         context.mountStorage(storageMountPoint);
 
-        this.storageMountPoints(
+        this.storageMountPointsAndCheck(
             context,
             StorageMountPoint.with(
                 StoragePath.ROOT,
