@@ -23,6 +23,7 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -61,6 +62,11 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageMountPoint;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageTesting;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -80,7 +86,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetStorageContextSpreadsheetContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetStorageContextSpreadsheetContext>,
-    CurrencyLocaleContextTesting {
+    CurrencyLocaleContextTesting,
+    HasAuditInfoTesting,
+    StorageTesting {
 
     // with.............................................................................................................
 
@@ -833,8 +841,214 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
         );
     }
 
+    // StorageContext...................................................................................................
+
+    private final static StoragePath STORAGE_PATH = StoragePath.parse("/value111");
+
+    private final static StorageValue STORAGE_VALUE = StorageValue.with(STORAGE_PATH)
+        .setValue(
+            Optional.of(111)
+        );
+
+    @Test
+    public void testLoadStorage() {
+        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
+
+        storage.save(
+            STORAGE_VALUE,
+            context
+        );
+
+        this.loadStorageAndCheck(
+            context,
+            STORAGE_PATH,
+            STORAGE_VALUE
+        );
+    }
+
+    @Test
+    public void testSaveStorage() {
+        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
+
+        this.saveStorageAndCheck(
+            context,
+            STORAGE_VALUE,
+            STORAGE_VALUE
+        );
+
+        this.loadAndCheck(
+            storage,
+            STORAGE_PATH,
+            context,
+            STORAGE_VALUE
+        );
+    }
+
+    @Test
+    public void testDeleteStorage() {
+        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
+
+        this.saveAndCheck(
+            storage,
+            STORAGE_VALUE,
+            context,
+            STORAGE_VALUE
+        );
+
+        context.deleteStorage(STORAGE_PATH);
+
+        this.loadAndCheck(
+            storage,
+            STORAGE_PATH,
+            context
+        );
+    }
+
+    @Test
+    public void testListStorage() {
+        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
+
+        this.saveStorageAndCheck(
+            context,
+            STORAGE_VALUE,
+            STORAGE_VALUE
+        );
+
+        this.listStorageAndCheck(
+            context,
+            StoragePath.ROOT,
+            0,
+            1000,
+            StorageValueInfo.with(
+                STORAGE_PATH,
+                AUDIT_INFO
+            )
+        );
+    }
+
+    private final static StoragePath MOUNT_PATH = StoragePath.parse("/mount1");
+
+    @Test
+    public void testMountStorage() {
+        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = Storages.mount(
+            root
+        );
+
+        final Storage<SpreadsheetStorageContext> mount = Storages.treeMapStore();
+
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);;
+
+        context.mountStorage(
+            StorageMountPoint.with(
+                MOUNT_PATH,
+                mount
+            )
+        );
+
+        final StorageValue storageValue = STORAGE_VALUE.setPath(
+            MOUNT_PATH.append(STORAGE_PATH)
+        );
+
+        this.saveStorageAndCheck(
+            context,
+            storageValue,
+            storageValue
+        );
+
+        this.loadAndCheck(
+            mount,
+            STORAGE_PATH,
+            context,
+            STORAGE_VALUE
+        );
+    }
+
+    @Test
+    public void testUnmountStorage() {
+        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = Storages.mount(
+            root
+        );
+
+        final Storage<SpreadsheetStorageContext> mount = Storages.treeMapStore();
+
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
+
+        final StorageMountPoint<?> storageMountPoint = StorageMountPoint.with(
+            MOUNT_PATH,
+            mount
+        );
+
+        context.mountStorage(storageMountPoint);
+
+        final StoragePath storagePath = MOUNT_PATH.append(STORAGE_PATH);
+        final StorageValue storageValue = STORAGE_VALUE.setPath(storagePath);
+
+        this.saveStorageAndCheck(
+            context,
+            storageValue,
+            storageValue
+        );
+
+        context.unmountStorage(MOUNT_PATH);
+
+        this.loadAndCheck(
+            root,
+            storagePath,
+            context
+        );
+    }
+
+    @Test
+    public void testStorageMountPoints() {
+        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = Storages.mount(
+            root
+        );
+
+        final Storage<SpreadsheetStorageContext> mount = Storages.treeMapStore();
+
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
+
+        final StorageMountPoint<?> storageMountPoint = StorageMountPoint.with(
+            MOUNT_PATH,
+            mount
+        );
+
+        context.mountStorage(storageMountPoint);
+
+        this.storageMountPoints(
+            context,
+            StorageMountPoint.with(
+                StoragePath.ROOT,
+                root
+            ),
+            StorageMountPoint.with(
+                MOUNT_PATH,
+                mount
+            )
+        );
+    }
+
     @Override
     public SpreadsheetStorageContextSpreadsheetContext createContext() {
+        return this.createContext(
+            Storages.mount(
+                Storages.treeMapStore()
+            )
+        );
+    }
+
+    private SpreadsheetStorageContextSpreadsheetContext createContext(final Storage<SpreadsheetStorageContext> storage) {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
@@ -916,8 +1130,6 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
         return SpreadsheetStorageContextSpreadsheetContext.with(
             SpreadsheetContexts.fixedSpreadsheetId(

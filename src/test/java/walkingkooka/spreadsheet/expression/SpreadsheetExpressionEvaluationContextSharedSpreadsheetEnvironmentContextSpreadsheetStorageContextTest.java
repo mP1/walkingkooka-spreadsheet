@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.header.MediaTypeDetector;
@@ -1093,6 +1094,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             StorageContexts.basic(
                 CONVERTER_LIKE,
                 MEDIA_TYPE_DETECTOR,
+                Cast.to(storage),
                 spreadsheetEnvironmentContext.cloneEnvironment()
             )
         );

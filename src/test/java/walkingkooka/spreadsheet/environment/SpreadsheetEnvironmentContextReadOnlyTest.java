@@ -427,7 +427,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            STORAGE,
+            STORAGE_SPREADSHEET_STORAGE_CONTEXT,
             storageEnvironmentContext
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
@@ -468,11 +468,11 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
                 new FakeSpreadsheetEnvironmentContext() {
                     @Override
                     public Storage<SpreadsheetStorageContext> storage() {
-                        return STORAGE;
+                        return STORAGE_SPREADSHEET_STORAGE_CONTEXT;
                     }
                 }
             ),
-            STORAGE
+            STORAGE_SPREADSHEET_STORAGE_CONTEXT
         );
     }
 

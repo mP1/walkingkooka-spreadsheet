@@ -43,7 +43,7 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
 
     Optional<SpreadsheetId> OPTIONAL_SPREADSHEET_ID = Optional.of(SPREADSHEET_ID);
 
-    Storage<SpreadsheetStorageContext> STORAGE = Storages.empty();
+    Storage<SpreadsheetStorageContext> STORAGE_SPREADSHEET_STORAGE_CONTEXT = Storages.empty();
 
     /**
      * A {@link SpreadsheetEnvironmentContext} that contains {@link SpreadsheetEnvironmentContext#SERVER_URL} but not
@@ -52,7 +52,7 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
     SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         Predicates.always(), // all values are readonly
         SpreadsheetEnvironmentContexts.basic(
-            STORAGE,
+            STORAGE_SPREADSHEET_STORAGE_CONTEXT,
             storageEnvironmentContext()
         )
     );
@@ -68,7 +68,7 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
     }
 
     SpreadsheetEnvironmentContext DIFFERENT_SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
-        STORAGE,
+        STORAGE_SPREADSHEET_STORAGE_CONTEXT,
         differentStorageEnvironmentContext()
     );
 

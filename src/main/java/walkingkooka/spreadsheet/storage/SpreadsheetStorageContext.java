@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.storage;
 
-import walkingkooka.Cast;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -27,17 +26,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
-import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.StorageValue;
-import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -95,86 +89,6 @@ public interface SpreadsheetStorageContext extends StorageContext,
     Runnable addLabelWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher);
 
     Runnable addLabelWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher);
-
-    // Storage..........................................................................................................
-
-    /**
-     * {@link Storage#load(StoragePath, StorageContext)}.
-     */
-    default Optional<StorageValue> loadStorage(final StoragePath path) {
-        return this.storage()
-            .load(
-                path,
-                this
-            );
-    }
-
-    /**
-     * {@link Storage#save(StorageValue, StorageContext)}.
-     */
-    default StorageValue saveStorage(final StorageValue value) {
-        return this.storage()
-            .save(
-                value,
-                this
-            );
-    }
-
-    /**
-     * {@link Storage#delete(StoragePath, StorageContext)
-     */
-    default void deleteStorage(final StoragePath path) {
-        this.storage()
-            .delete(
-                path,
-                this
-            );
-    }
-
-    /**
-     * {@link Storage#list(StoragePath, int, int, StorageContext)}
-     */
-    default List<StorageValueInfo> listStorage(final StoragePath parent,
-                                               final int offset,
-                                               final int count) {
-        return this.storage()
-            .list(
-                parent,
-                offset,
-                count,
-                this
-            );
-    }
-
-    /**
-     * {@link Storage#mount(StorageMountPoint, StorageContext)}
-     */
-    default void mountStorage(final StorageMountPoint<?> mountPoint) {
-        this.storage()
-            .mount(
-                Cast.to(mountPoint),
-                this
-            );
-    }
-
-    /**
-     * {@link Storage#unmount(StoragePath, StorageContext)}
-     */
-    default void unmountStorage(final StoragePath path) {
-        this.storage()
-            .unmount(
-                Cast.to(path),
-                this
-            );
-    }
-
-    /**
-     * {@link Storage#mountPoints()}
-     */
-    default List<StorageMountPoint<SpreadsheetStorageContext>> storageMountPoints() {
-        return this.storage()
-            .mountPoints();
-    }
 
     // StorageContext...................................................................................................
 

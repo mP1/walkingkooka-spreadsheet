@@ -42,9 +42,13 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageEnvironmentContextDelegator;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -56,8 +60,10 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import java.math.MathContext;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link ProviderContext} that may be used as the system {@link ProviderContext}.
@@ -69,6 +75,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
     static SpreadsheetProviderContext with(final MediaTypeDetector mediaTypeDetector,
                                            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                            final PluginStore pluginStore,
+                                           final Storage<StorageContext> storage,
                                            final CurrencyLocaleContext currencyLocaleContext,
                                            final StorageEnvironmentContext storageEnvironmentContext,
                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
@@ -76,6 +83,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector"),
             Objects.requireNonNull(multiplier, "multiplier"),
             Objects.requireNonNull(pluginStore, "pluginStore"),
+            Objects.requireNonNull(storage, "storage"),
             null, // ConverterContext
             Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
             Objects.requireNonNull(storageEnvironmentContext, "storageEnvironmentContext"),
@@ -86,6 +94,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
     private SpreadsheetProviderContext(final MediaTypeDetector mediaTypeDetector,
                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                        final PluginStore pluginStore,
+                                       final Storage<StorageContext> storage,
                                        final ConverterContext converterContext,
                                        final CurrencyLocaleContext currencyLocaleContext,
                                        final StorageEnvironmentContext storageEnvironmentContext,
@@ -97,6 +106,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
         this.multiplier = multiplier;
         
         this.pluginStore = pluginStore;
+        
+        this.storage = storage;
 
         this.converterContext = converterContext;
 
@@ -122,6 +133,30 @@ final class SpreadsheetProviderContext implements ProviderContext,
     public StoragePath parseStoragePath(final String text) {
         return StoragePath.parse(text);
     }
+
+    // Storage..........................................................................................................
+
+    @Override
+    public Optional<StorageValue> loadStorage(final StoragePath path) {
+        return this.storage.load(
+            path,
+            this
+        );
+    }
+
+    @Override
+    public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                              final int offset,
+                                              final int count) {
+        return this.storage.list(
+            parent,
+            offset,
+            count,
+            this
+        );
+    }
+
+    private final Storage<StorageContext> storage;
 
     // PluginStore......................................................................................................
 
@@ -222,6 +257,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                 this.mediaTypeDetector,
                 this.multiplier,
                 this.pluginStore,
+                this.storage,
                 null, // recreate because storageEnvironmentContext changed.
                 this.currencyLocaleContext,
                 after,
@@ -294,6 +330,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             this.mediaTypeDetector,
             this.multiplier,
             this.pluginStore,
+            this.storage,
             this.storageEnvironmentContext
         );
     }
@@ -309,6 +346,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         return this.mediaTypeDetector.equals(other.mediaTypeDetector) &&
             this.multiplier.equals(other.multiplier) &&
             this.pluginStore.equals(other.pluginStore) &&
+            this.storage.equals(other.storage) &&
             this.storageEnvironmentContext.equals(other.storageEnvironmentContext);
     }
 
@@ -321,6 +359,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
             .value(this.multiplier)
             .label("pluginStore")
             .value(this.pluginStore)
+            .label("storage")
+            .value(this.storage)
             .label("converterContext")
             .value(this.converterContext)
             .label("storageEnvironmentContext")

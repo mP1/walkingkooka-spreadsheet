@@ -62,6 +62,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.StorageContextTesting;
 import walkingkooka.storage.StorageContexts;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
@@ -89,6 +90,7 @@ import java.util.Optional;
 public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedExpression>
     implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSharedExpression>,
     ConverterLikeTesting,
+    StorageContextTesting,
     SpreadsheetMetadataTesting {
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
@@ -347,6 +349,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                             StorageContexts.basic(
                                 CONVERTER_LIKE,
                                 MEDIA_TYPE_DETECTOR,
+                                STORAGE,
                                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                             )
                         )

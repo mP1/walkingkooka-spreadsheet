@@ -40,10 +40,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StorageMountPoint;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -411,6 +416,49 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     private final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context;
+
+    // StorageContext...................................................................................................
+
+    @Override
+    public Optional<StorageValue> loadStorage(final StoragePath path) {
+        return this.context.loadStorage(path);
+    }
+
+    @Override
+    public StorageValue saveStorage(final StorageValue value) {
+        return this.context.saveStorage(value);
+    }
+
+    @Override
+    public void deleteStorage(final StoragePath path) {
+        this.context.deleteStorage(path);
+    }
+
+    @Override
+    public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                              final int offset,
+                                              final int count) {
+        return this.context.listStorage(
+            parent,
+            offset,
+            count
+        );
+    }
+
+    @Override
+    public void mountStorage(final StorageMountPoint<?> mountPoint) {
+        this.context.mountStorage(mountPoint);
+    }
+
+    @Override
+    public void unmountStorage(final StoragePath path) {
+        this.context.unmountStorage(path);
+    }
+
+    @Override
+    public List<StorageMountPoint<?>> storageMountPoints() {
+        return this.context.storageMountPoints();
+    }
 
     // Object...........................................................................................................
 

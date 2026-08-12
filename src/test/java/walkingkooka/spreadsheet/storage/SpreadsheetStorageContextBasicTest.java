@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
@@ -1110,6 +1111,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
             StorageContexts.basic(
                 CONVERTER_LIKE,
                 MEDIA_TYPE_DETECTOR,
+                Cast.to(storage),
                 spreadsheetEnvironmentContext.cloneEnvironment()
             )
         );
@@ -1197,6 +1199,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
             StorageContexts.basic(
                 ConverterContexts.fake(), // ConverterLike
                 mediaTypeDetector,
+                Cast.to(storage),
                 spreadsheetEnvironmentContext // EnvironmentContext
             )
         );

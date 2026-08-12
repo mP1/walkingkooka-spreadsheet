@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.storage;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -25,16 +24,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContextTesting;
-import walkingkooka.storage.StorageMountPoint;
-import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.StorageValue;
-import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -232,96 +226,6 @@ public interface SpreadsheetStorageContextTesting extends StorageContextTesting,
                 count
             ),
             () -> "findLabelsByName " + CharSequences.quoteAndEscape(text) + " offset=" + offset + " count=" + count
-        );
-    }
-
-    // Storage..........................................................................................................
-
-    default void loadStorageAndCheck(final SpreadsheetStorageContext context,
-                                     final StoragePath path) {
-        this.loadStorageAndCheck(
-            context,
-            path,
-            Optional.empty()
-        );
-    }
-
-    default void loadStorageAndCheck(final SpreadsheetStorageContext context,
-                                     final StoragePath path,
-                                     final StorageValue expected) {
-        this.loadStorageAndCheck(
-            context,
-            path,
-            Optional.of(expected)
-        );
-    }
-
-    default void loadStorageAndCheck(final SpreadsheetStorageContext context,
-                                     final StoragePath path,
-                                     final Optional<StorageValue> expected) {
-        this.checkEquals(
-            expected,
-            context.loadStorage(path),
-            () -> "loadStorage " + path
-        );
-    }
-
-    default void saveStorageAndCheck(final SpreadsheetStorageContext context,
-                                     final StorageValue value,
-                                     final StorageValue expected) {
-        this.checkEquals(
-            expected,
-            context.saveStorage(value),
-            () -> "saveStorage " + value
-        );
-    }
-
-    default void listStorageAndCheck(final SpreadsheetStorageContext context,
-                                     final StoragePath parent,
-                                     final int offset,
-                                     final int count,
-                                     final StorageValueInfo... expected) {
-        this.listStorageAndCheck(
-            context,
-            parent,
-            offset,
-            count,
-            Lists.of(expected)
-        );
-    }
-
-    default void listStorageAndCheck(final SpreadsheetStorageContext context,
-                                     final StoragePath parent,
-                                     final int offset,
-                                     final int count,
-                                     final List<StorageValueInfo> expected) {
-        this.checkEquals(
-            expected,
-            context.listStorage(
-                parent,
-                offset,
-                count
-            ),
-            () -> "listStorage " + parent + " offset=" + offset + " count=" + count + " " + expected
-        );
-    }
-
-    // storageMountPoints...............................................................................................
-
-    default void storageMountPointsAndCheck(final SpreadsheetStorageContext context,
-                                            final StorageMountPoint<SpreadsheetStorageContext>... expected) {
-        this.storageMountPointsAndCheck(
-            context,
-            Lists.of(expected)
-        );
-    }
-
-    default void storageMountPointsAndCheck(final SpreadsheetStorageContext context,
-                                            final List<StorageMountPoint<SpreadsheetStorageContext>> expected) {
-        this.checkEquals(
-            expected,
-            context.storageMountPoints(),
-            context::toString
         );
     }
 }

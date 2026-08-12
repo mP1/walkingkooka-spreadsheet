@@ -53,7 +53,10 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.test.Fake;
 import walkingkooka.text.Indentation;
@@ -573,6 +576,45 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext impleme
     @Override
     public Storage<SpreadsheetStorageContext> storage() {
         throw new UnsupportedOperationException();
+    }
+
+    // StorageContext...................................................................................................
+
+    @Override
+    public Optional<StorageValue> loadStorage(final StoragePath path) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public StorageValue saveStorage(final StorageValue value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteStorage(final StoragePath path) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                              final int offset,
+                                              final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void mountStorage(final StorageMountPoint<?> mountPoint) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void unmountStorage(final StoragePath path) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<StorageMountPoint<?>> storageMountPoints() {
+        return List.of();
     }
 
     // ProviderContext..................................................................................................
