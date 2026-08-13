@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
+import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -45,7 +46,8 @@ import java.util.stream.Collectors;
 /**
  * A {@link ConverterProvider} for {@link Converter} in {@link SpreadsheetConverters}.
  */
-final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
+final class SpreadsheetConvertersConverterProvider extends SpreadsheetConvertersConverterProviderGwt
+    implements ConverterProvider,
     TreePrintable {
 
     // This constant is here to avoid NullPointerExceptions by #converterInfo during a static initializer
@@ -640,7 +642,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             case TEXT_TO_PATH_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.textToPath();
+                converter = textToPathConverter();
                 break;
             case TEXT_TO_PROPERTIES_STRING:
                 noParameterCheck(copy);
@@ -912,6 +914,14 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
         if (expected != values.size()) {
             throw new IllegalArgumentException("Expected " + expected + " values got " + values.size() + " " + values);
         }
+    }
+
+    /**
+     * The shadowed method in {@link SpreadsheetConvertersConverterProviderGwt#textToPathConverter()} throws an exception
+     */
+    @GwtIncompatible
+    static Converter<SpreadsheetConverterContext> textToPathConverter() {
+        return SpreadsheetConverters.textToPath();
     }
 
     private final static String BASIC_STRING = "basic";
