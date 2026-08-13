@@ -17,15 +17,18 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.convert.Converter;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-abstract class SpreadsheetConvertersGwt {
-
-    public static Converter<SpreadsheetConverterContext> textToPath() {
-        throw new UnsupportedOperationException();
+public final class SpreadsheetConvertersStorageGwtTest implements ClassTesting<SpreadsheetConvertersStorageGwt> {
+    
+    @Override
+    public Class<SpreadsheetConvertersStorageGwt> type() {
+        return SpreadsheetConvertersStorageGwt.class;
     }
 
-    SpreadsheetConvertersGwt() {
-        super();
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
