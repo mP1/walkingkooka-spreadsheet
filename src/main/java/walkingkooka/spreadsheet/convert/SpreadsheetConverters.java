@@ -68,7 +68,8 @@ import java.util.function.Function;
 /**
  * A collection of factory methods for creating {@link Converter} converters.
  */
-public final class SpreadsheetConverters implements PublicStaticHelper {
+public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
+    implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> TEMPLATE = namedCollection(
         "TEMPLATE",
@@ -713,6 +714,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> STORAGE = namedCollection(
         "STORAGE",
         textToStoragePath(),
+        textToPath(),
         storageBinaryToStorageValueCsv(),
         storageBinaryToStorageValueExpression(),
         storageBinaryToStorageValueJson(),
