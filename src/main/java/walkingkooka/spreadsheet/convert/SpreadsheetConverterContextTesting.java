@@ -20,13 +20,13 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting2;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
-import walkingkooka.storage.convert.StorageConverterContextTesting;
+import walkingkooka.storage.convert.StorageConverterContextTesting2;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
 public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends JsonNodeConverterContextTesting<C>,
     SpreadsheetLabelNameResolverTesting<C>,
     SpreadsheetMetadataLoaderTesting2<C>,
-    StorageConverterContextTesting<C>,
+    StorageConverterContextTesting2<C>,
     SpreadsheetProviderContextTesting<C> {
 
     @Override
