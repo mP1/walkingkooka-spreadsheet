@@ -141,7 +141,10 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
             SpreadsheetSelection.parseRow("2").row()
         );
 
-        this.toStringAndCheck(store, "[2]");
+        this.toStringAndCheck(
+            store,
+            "{2=2}"
+        );
     }
 
     // class............................................................................................................

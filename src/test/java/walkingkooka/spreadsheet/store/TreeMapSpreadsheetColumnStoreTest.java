@@ -136,7 +136,10 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
                 .column()
         );
 
-        this.toStringAndCheck(store, "[B]");
+        this.toStringAndCheck(
+            store,
+            "{B=B}"
+        );
     }
 
     // class............................................................................................................
