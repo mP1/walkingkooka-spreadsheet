@@ -31,6 +31,7 @@ import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.environment.HasUserTesting;
 import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContextTesting;
@@ -119,6 +120,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     CurrencyLocaleContextTesting,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
+    HasAuditInfoTesting,
     HasCurrencyTesting,
     HasDateTimeSymbolsTesting,
     HasDecimalNumberSymbolsTesting,
@@ -180,10 +182,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             CURRENCY_LOCALE_CONTEXT
         ).set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
-            AuditInfo.create(
-                USER,
-                NOW
-            )
+            AUDIT_INFO
         ).set(
             SpreadsheetMetadataPropertyName.AUTO_HIDE_SCROLLBARS,
             false
