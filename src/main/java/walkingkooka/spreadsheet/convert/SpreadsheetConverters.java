@@ -60,6 +60,7 @@ import walkingkooka.validation.convert.ValidationConvertConverters;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
@@ -708,29 +709,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter for storage
      */
     public static Converter<SpreadsheetConverterContext> storage() {
-        return STORAGE;
+        return SpreadsheetConvertersStorage.STORAGE;
     }
-
-    private final static Converter<SpreadsheetConverterContext> STORAGE = namedCollection(
-        "STORAGE",
-        textToStoragePath(),
-        textToPath(),
-        storageBinaryToStorageValueCsv(),
-        storageBinaryToStorageValueExpression(),
-        storageBinaryToStorageValueJson(),
-        storageBinaryToStorageValueProperties(),
-        storageBinaryToStorageValueTsv(),
-        storageBinaryToStorageValueTxt(),
-        storageBinaryToStorageValueBinary(),
-        storageValueToStorageBinaryCsv(),
-        storageValueToStorageBinaryExpression(),
-        storageValueToStorageBinaryJson(),
-        storageValueToStorageBinaryProperties(),
-        storageValueToStorageBinaryTsv(),
-        storageValueToStorageBinaryTxt(),
-        storageValueToStorageBinaryBinary(),
-        binary()
-    );
 
     /**
      * {see StorageConverterStorageBinaryToStorageValueBinary}
@@ -1558,8 +1538,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     @SafeVarargs
-    private static <C extends ConverterContext> Converter<C> namedCollection(final String toString,
-                                                                             final Converter<C>... converters) {
+    static <C extends ConverterContext> Converter<C> namedCollection(final String toString,
+                                                                     final Converter<C>... converters) {
+        System.out.println(Arrays.toString(converters));
         return collection(
             Lists.of(
                 converters

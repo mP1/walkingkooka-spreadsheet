@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
+import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.list.BooleanList;
@@ -123,6 +124,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -1823,6 +1825,10 @@ final class MissingConverterVerifier {
             if (formula || scripting) {
                 final String text = "BinaryTextContent123";
 
+                textToPath(
+                    verifier
+                );
+
                 verifier.addIfConversionFail(
                     BINARY,
                     Binary.class,
@@ -2555,6 +2561,19 @@ final class MissingConverterVerifier {
 
         return MissingConverterSet.EMPTY.setElements(
             verifier.missing.values()
+        );
+    }
+
+    // shadowed method will be a NOOP.
+    @GwtIncompatible
+    static void textToPath(final MissingConverterVerifier verifier) {
+        final String path = "/tmp/File1.txt";
+
+        verifier.addIfConversionFail(
+            path,
+            Path.class,
+            SpreadsheetConvertersConverterProvider.TEXT_TO_PATH,
+            Path.of(path)
         );
     }
 

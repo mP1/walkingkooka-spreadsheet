@@ -15,17 +15,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.convert;
+package walkingkooka.spreadsheet.convert.provider;
 
-import walkingkooka.convert.Converter;
+abstract class MissingConverterVerifierGwt {
 
-abstract class SpreadsheetConvertersGwt {
-
-    public static Converter<SpreadsheetConverterContext> textToPath() {
-        throw new UnsupportedOperationException();
-    }
-
-    SpreadsheetConvertersGwt() {
-        super();
+    static void textToPath(final MissingConverterVerifier verifier) {
+        // NOP
     }
 }
