@@ -695,6 +695,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-number-list\n" +
                 "    text-to-object\n" +
                 "    text-to-padding\n" +
+                "    text-to-path\n" +
                 "    text-to-properties\n" +
                 "    text-to-spreadsheet-color-name\n" +
                 "    text-to-spreadsheet-formatter-selector\n" +
