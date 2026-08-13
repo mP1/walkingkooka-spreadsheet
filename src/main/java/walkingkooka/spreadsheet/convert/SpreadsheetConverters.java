@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Binary;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.convert.ColorConverters;
@@ -1175,6 +1176,14 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToPadding() {
         return TreeTextConverters.textToPadding();
+    }
+
+    /**
+     * {@see ConverterTextToPath}
+     */
+    @GwtIncompatible
+    public static Converter<SpreadsheetConverterContext> textToPath() {
+        return Converters.textToPath();
     }
     
     /**

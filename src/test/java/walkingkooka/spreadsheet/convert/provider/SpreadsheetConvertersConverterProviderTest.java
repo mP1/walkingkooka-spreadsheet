@@ -1014,6 +1014,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToPath() {
+        this.converterAndCheck(
+            "text-to-path",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToPath()
+        );
+    }
+    
+    @Test
     public void testConverterSelectorWithTextToProperties() {
         this.converterAndCheck(
             "text-to-properties",
@@ -1597,6 +1606,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-number-list text-to-number-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-object text-to-object\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-padding text-to-padding\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-path text-to-path\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-properties text-to-properties\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-color-name text-to-spreadsheet-color-name\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-formatter-selector text-to-spreadsheet-formatter-selector\n" +

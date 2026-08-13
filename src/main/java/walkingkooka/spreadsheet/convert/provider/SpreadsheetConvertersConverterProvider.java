@@ -637,6 +637,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
                 converter = SpreadsheetConverters.textToPadding();
                 break;
+            case TEXT_TO_PATH_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToPath();
+                break;
             case TEXT_TO_PROPERTIES_STRING:
                 noParameterCheck(copy);
 
@@ -1337,6 +1342,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
     final static ConverterName TEXT_TO_PADDING = ConverterName.with(TEXT_TO_PADDING_STRING);
 
+    private final static String TEXT_TO_PATH_STRING = "text-to-path";
+
+    final static ConverterName TEXT_TO_PATH = ConverterName.with(TEXT_TO_PATH_STRING);
+
     private final static String TEXT_TO_PROPERTIES_STRING = "text-to-properties";
 
     final static ConverterName TEXT_TO_PROPERTIES = ConverterName.with(TEXT_TO_PROPERTIES_STRING);
@@ -1652,6 +1661,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             converterInfo(TEXT_TO_NUMBER_LIST),
             converterInfo(TEXT_TO_OBJECT),
             converterInfo(TEXT_TO_PADDING),
+            converterInfo(TEXT_TO_PATH),
             converterInfo(TEXT_TO_PROPERTIES),
             converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
             converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),
