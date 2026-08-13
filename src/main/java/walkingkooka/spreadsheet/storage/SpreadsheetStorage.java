@@ -212,4 +212,9 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
 
     abstract Runnable addWatcherOnce0(final StorageWatcher watcher,
                                       final SpreadsheetStorageContext context);
+
+    @Override
+    public final void stop() {
+        // NOP
+    }
 }
