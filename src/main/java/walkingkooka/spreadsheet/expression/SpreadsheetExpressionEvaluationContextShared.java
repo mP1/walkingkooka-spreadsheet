@@ -333,6 +333,15 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     // StorageExpressionEvaluationContext...............................................................................
 
     @Override
+    public final boolean canReadStorage(final StoragePath path) {
+        return this.storage()
+            .canRead(
+                path,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
     public final Optional<StorageValue> loadStorage(final StoragePath path) {
         return this.storage()
             .load(

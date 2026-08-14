@@ -372,6 +372,15 @@ final class SpreadsheetStorageContextSpreadsheetContext implements SpreadsheetSt
     // StorageContext...................................................................................................
 
     @Override
+    public boolean canReadStorage(final StoragePath path) {
+        return this.spreadsheetContext.storage()
+            .canRead(
+                path,
+                this
+            );
+    }
+
+    @Override
     public Optional<StorageValue> loadStorage(final StoragePath path) {
         return this.spreadsheetContext.storage()
             .load(

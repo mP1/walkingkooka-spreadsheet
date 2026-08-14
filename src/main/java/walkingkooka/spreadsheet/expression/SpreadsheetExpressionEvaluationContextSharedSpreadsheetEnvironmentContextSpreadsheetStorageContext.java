@@ -420,6 +420,11 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     // StorageContext...................................................................................................
 
     @Override
+    public boolean canReadStorage(final StoragePath path) {
+        return this.context.canReadStorage(path);
+    }
+
+    @Override
     public Optional<StorageValue> loadStorage(final StoragePath path) {
         return this.context.loadStorage(path);
     }

@@ -925,6 +925,14 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         // SpreadsheetStorageContext....................................................................................
 
         @Override
+        public boolean canReadStorage(final StoragePath path) {
+            return this.storage.canRead(
+                path,
+                StorageContexts.fake()
+            );
+        }
+
+        @Override
         public Optional<StorageValue> loadStorage(final StoragePath path) {
             return this.storage.load(
                 path,
