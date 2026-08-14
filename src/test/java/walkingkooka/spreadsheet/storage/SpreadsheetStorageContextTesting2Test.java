@@ -418,6 +418,15 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         // StorageContext...................................................................................................
 
         @Override
+        public boolean canReadStorage(final StoragePath path) {
+            return this.storage()
+                .canRead(
+                    path,
+                    this
+                );
+        }
+
+        @Override
         public Optional<StorageValue> loadStorage(final StoragePath path) {
             return this.storage()
                 .load(
