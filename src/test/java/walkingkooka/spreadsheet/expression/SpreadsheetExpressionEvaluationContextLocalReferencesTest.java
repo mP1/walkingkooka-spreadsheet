@@ -59,7 +59,6 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
-import walkingkooka.storage.StorageContexts;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
@@ -928,7 +927,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         public boolean canReadStorage(final StoragePath path) {
             return this.storage.canRead(
                 path,
-                StorageContexts.fake()
+                this
             );
         }
 
@@ -936,7 +935,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         public Optional<StorageValue> loadStorage(final StoragePath path) {
             return this.storage.load(
                 path,
-                StorageContexts.fake()
+                this
             );
         }
 
@@ -944,7 +943,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         public StorageValue saveStorage(final StorageValue value) {
             return this.storage.save(
                 value,
-                StorageContexts.fake()
+                this
             );
         }
 
@@ -952,7 +951,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         public void deleteStorage(final StoragePath path) {
             this.storage.delete(
                 path,
-                StorageContexts.fake()
+                this
             );
         }
 
@@ -964,7 +963,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
                 parent,
                 offset,
                 count,
-                StorageContexts.fake()
+                this
             );
         }
 
