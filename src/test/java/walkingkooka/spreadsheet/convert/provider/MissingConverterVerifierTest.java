@@ -218,14 +218,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
-        public StoragePath parseStoragePath(final String value) {
-            return StoragePath.parseSpecial(
-                value,
-                this  // HasUserDirectories
-            );
-        }
-
-        @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
             return this.converter.canConvert(

@@ -282,11 +282,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext impleme
     }
 
     @Override
-    public StoragePath parseStoragePath(final String text) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
         throw new UnsupportedOperationException();
     }
