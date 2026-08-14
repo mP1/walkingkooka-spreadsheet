@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -89,16 +88,6 @@ public interface SpreadsheetStorageContext extends StorageContext,
     Runnable addLabelWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher);
 
     Runnable addLabelWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher);
-
-    // StorageContext...................................................................................................
-
-    @Override
-    default StoragePath parseStoragePath(final String text) {
-        return StoragePath.parseSpecial(
-            text,
-            this // HasUserDirectories
-        );
-    }
 
     // SpreadsheetEnvironmentContext....................................................................................
 
