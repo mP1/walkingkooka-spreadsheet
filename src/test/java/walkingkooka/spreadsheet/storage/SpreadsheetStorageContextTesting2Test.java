@@ -476,6 +476,15 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
+        public void setAuditInfoStorage(final StorageValueInfo info) {
+            this.storage()
+                .setAuditInfo(
+                    info,
+                    this
+                );
+        }
+
+        @Override
         public void mountStorage(final StorageMountPoint<?> mountPoint) {
             this.storage()
                 .mount(
