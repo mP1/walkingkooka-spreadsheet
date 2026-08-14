@@ -147,7 +147,7 @@ import java.util.function.Predicate;
  * FAIL. This is useful particularly in tests which may be using a {@link FakeSpreadsheetConverterContext} with some
  * unimplemented methods.
  */
-final class MissingConverterVerifier {
+final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
     private final static List<Class<?>> NUMBER_TYPES = Lists.of(
         ExpressionNumber.class,
