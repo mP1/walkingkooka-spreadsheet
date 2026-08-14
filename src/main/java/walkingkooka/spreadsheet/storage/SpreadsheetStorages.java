@@ -21,6 +21,8 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 
+import java.nio.file.Path;
+
 /**
  * A collection of {@link Storage} for a spreadsheet terminal.
  */
@@ -80,6 +82,17 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
      */
     public static Storage<SpreadsheetStorageContext> mount(final Storage<SpreadsheetStorageContext> storage) {
         return Storages.mount(storage);
+    }
+
+    /**
+     * {@see StorageShared2NativeFile}
+     */
+    public static Storage<SpreadsheetStorageContext> nativeFile(final Path root,
+                                                                final SpreadsheetStorageContext context) {
+        return Storages.nativeStorage(
+            root,
+            context
+        );
     }
 
     /**
