@@ -391,6 +391,15 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
+    public void setAuditInfoStorage(final StorageValueInfo info) {
+        this.storage()
+            .setAuditInfo(
+                info,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
     public void mountStorage(final StorageMountPoint<?> mountPoint) {
         this.storage()
             .mount(

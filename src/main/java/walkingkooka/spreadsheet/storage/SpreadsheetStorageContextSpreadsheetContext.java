@@ -430,6 +430,15 @@ final class SpreadsheetStorageContextSpreadsheetContext implements SpreadsheetSt
     }
 
     @Override
+    public void setAuditInfoStorage(final StorageValueInfo info) {
+        this.spreadsheetContext.storage()
+            .setAuditInfo(
+                info,
+                this
+            );
+    }
+
+    @Override
     public void mountStorage(final StorageMountPoint<?> mountPoint) {
         this.spreadsheetContext.storage()
             .mount(

@@ -172,6 +172,14 @@ final class SpreadsheetProviderContext implements ProviderContext,
         );
     }
 
+    @Override
+    public void setAuditInfoStorage(final StorageValueInfo info) {
+        this.storage.setAuditInfo(
+            info,
+            this
+        );
+    }
+
     private final Storage<StorageContext> storage;
 
     // PluginStore......................................................................................................

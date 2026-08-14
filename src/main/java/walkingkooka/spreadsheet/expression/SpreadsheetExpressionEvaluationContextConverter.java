@@ -425,6 +425,11 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
+    public void setAuditInfoStorage(final StorageValueInfo info) {
+        this.context.setAuditInfoStorage(info);
+    }
+
+    @Override
     public void mountStorage(final StorageMountPoint<?> mountPoint) {
         this.context.mountStorage(
                 Cast.to(mountPoint)
