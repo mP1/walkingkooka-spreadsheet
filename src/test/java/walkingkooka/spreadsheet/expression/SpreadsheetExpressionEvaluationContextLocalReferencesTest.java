@@ -699,14 +699,6 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public StoragePath parseStoragePath(final String text) {
-            return StoragePath.parseSpecial(
-                text,
-                this // HasUserDirectories
-            );
-        }
-
-        @Override
         public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 

@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.convert.StorageConverterContext;
 import walkingkooka.storage.convert.StorageConverterContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -134,14 +133,6 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
     @Override
     public MathContext mathContext() {
         return this.context.mathContext();
-    }
-
-    @Override
-    public StoragePath parseStoragePath(final String path) {
-        return StoragePath.parseSpecial(
-            path,
-            this
-        );
     }
 
     // JsonNodeMarshallUnmarshallContextDelegator.......................................................................

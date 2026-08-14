@@ -218,12 +218,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // StorageExpressionEvaluationContextDelegator......................................................................
 
     @Override
-    default StoragePath parseStoragePath(final String text) {
-        return this.spreadsheetExpressionEvaluationContext()
-            .parseStoragePath(text);
-    }
-
-    @Override
     default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }
