@@ -220,6 +220,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
+    public boolean canWriteStorage(final StoragePath path) {
+        return this.context.canWriteStorage(path);
+    }
+
+    @Override
     public Optional<StorageValue> loadStorage(final StoragePath path) {
         return this.context.loadStorage(path);
     }
