@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
@@ -87,6 +88,7 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     /**
      * {@see StorageShared2NativeFile}
      */
+    @GwtIncompatible
     public static Storage<SpreadsheetStorageContext> nativeFile(final Path root,
                                                                 final SpreadsheetStorageContext context) {
         return Storages.nativeStorage(
