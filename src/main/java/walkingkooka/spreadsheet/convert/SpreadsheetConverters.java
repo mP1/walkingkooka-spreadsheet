@@ -60,7 +60,6 @@ import walkingkooka.validation.convert.ValidationConvertConverters;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
@@ -1540,7 +1539,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     @SafeVarargs
     static <C extends ConverterContext> Converter<C> namedCollection(final String toString,
                                                                      final Converter<C>... converters) {
-        System.out.println(Arrays.toString(converters));
         return collection(
             Lists.of(
                 converters
