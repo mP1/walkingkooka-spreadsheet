@@ -381,6 +381,15 @@ final class SpreadsheetStorageContextSpreadsheetContext implements SpreadsheetSt
     }
 
     @Override
+    public boolean canWriteStorage(final StoragePath path) {
+        return this.spreadsheetContext.storage()
+            .canWrite(
+                path,
+                this
+            );
+    }
+
+    @Override
     public Optional<StorageValue> loadStorage(final StoragePath path) {
         return this.spreadsheetContext.storage()
             .load(

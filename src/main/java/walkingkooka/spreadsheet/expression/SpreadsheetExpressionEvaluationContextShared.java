@@ -342,6 +342,15 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
+    public final boolean canWriteStorage(final StoragePath path) {
+        return this.storage()
+            .canWrite(
+                path,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
     public final Optional<StorageValue> loadStorage(final StoragePath path) {
         return this.storage()
             .load(

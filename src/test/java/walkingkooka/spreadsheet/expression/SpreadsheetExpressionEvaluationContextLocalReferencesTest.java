@@ -924,6 +924,14 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
+        public boolean canWriteStorage(final StoragePath path) {
+            return this.storage.canWrite(
+                path,
+                this
+            );
+        }
+
+        @Override
         public Optional<StorageValue> loadStorage(final StoragePath path) {
             return this.storage.load(
                 path,
