@@ -86,13 +86,6 @@ final class SpreadsheetStorageContextBasic implements SpreadsheetStorageContext,
         this.storageContext = storageContext;
     }
 
-    // SpreadsheetStorageContext........................................................................................
-
-    @Override
-    public StoragePath parseStoragePath(final String text) {
-        return SpreadsheetStorageContext.super.parseStoragePath(text);
-    }
-
     // SpreadsheetStorageContext: cells.................................................................................
 
     @Override

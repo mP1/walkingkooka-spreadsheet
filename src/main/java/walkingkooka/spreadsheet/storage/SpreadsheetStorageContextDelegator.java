@@ -69,11 +69,6 @@ public interface SpreadsheetStorageContextDelegator extends SpreadsheetStorageCo
     // SpreadsheetStorageContextDelegator...............................................................................
 
     @Override
-    default StoragePath parseStoragePath(final String text) {
-        return SpreadsheetStorageContext.super.parseStoragePath(text);
-    }
-
-    @Override
     default Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
         return this.spreadsheetStorageContext()
             .loadCells(cellsOrLabel);
