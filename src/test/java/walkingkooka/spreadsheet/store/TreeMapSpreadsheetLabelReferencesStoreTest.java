@@ -19,13 +19,15 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
 
-public final class TreeMapSpreadsheetLabelReferencesStoreTest implements SpreadsheetLabelReferencesStoreTesting<TreeMapSpreadsheetLabelReferencesStore> {
+public final class TreeMapSpreadsheetLabelReferencesStoreTest implements SpreadsheetLabelReferencesStoreTesting<TreeMapSpreadsheetLabelReferencesStore>,
+    CanBeEmptyTesting {
 
     // findCellsWithCellOrCellRange.....................................................................................
 
@@ -481,6 +483,31 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
     @Override
     public SpreadsheetCellReference value() {
         return SpreadsheetSelection.parseCell("B2");
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testIsEmptyWhenEmpty() {
+        this.isEmptyAndCheck(
+            this.createStore(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsEmptyWhenNotEmpty() {
+        final TreeMapSpreadsheetLabelReferencesStore store = this.createStore();
+
+        store.addValue(
+            SpreadsheetSelection.labelName("Label123"),
+            SpreadsheetSelection.A1
+        );
+
+        this.isEmptyAndCheck(
+            store,
+            false
+        );
     }
 
     // class............................................................................................................
