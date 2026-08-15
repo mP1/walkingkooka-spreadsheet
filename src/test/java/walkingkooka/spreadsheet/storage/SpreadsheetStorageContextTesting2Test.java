@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.storage;
 import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.Either;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
@@ -505,7 +504,10 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
 
         @Override
         public List<StorageMountPoint<?>> storageMountPoints() {
-            return Lists.empty();
+            return Cast.to(
+                this.storage()
+                .mountPoints()
+            );
         }
 
         @Override
