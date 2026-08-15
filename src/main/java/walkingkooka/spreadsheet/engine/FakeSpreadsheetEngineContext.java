@@ -613,7 +613,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext impleme
 
     @Override
     public List<StorageMountPoint<?>> storageMountPoints() {
-        return List.of();
+        throw new UnsupportedOperationException();
     }
 
     @Override
