@@ -424,7 +424,25 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 rangeToCells,
                 rows
             ),
-            cells + " " + cellReferences + " " + columns + " " + forms + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows);
+            "cells=" +
+                cells +
+                " cellReferences=" +
+                cellReferences +
+                " columns=" +
+                columns +
+                " forms=" +
+                forms +
+                " labels=" +
+                labels +
+                " labelReferences=" +
+                labelReferences +
+                " metadatas=" +
+                metadatas +
+                " rangeToCells=" +
+                rangeToCells +
+                " rows=" +
+                rows
+        );
     }
 
     // class............................................................................................................
