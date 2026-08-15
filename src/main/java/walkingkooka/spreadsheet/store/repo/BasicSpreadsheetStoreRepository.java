@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.store.repo;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -33,7 +35,8 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetStoreRepository} that exposes the {@link Store stores} given to it.
  */
-final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepository {
+final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepository,
+    UsesToStringBuilder {
 
     static BasicSpreadsheetStoreRepository with(final SpreadsheetCellStore cells,
                                                 final SpreadsheetCellReferencesStore cellReferences,
@@ -188,14 +191,30 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
 
     @Override
     public String toString() {
-        return this.cells + " " +
-            this.cellReferences + " " +
-            this.columns + " " +
-            this.forms + " " +
-            this.labels + " " +
-            this.labelReferences + " " +
-            this.metadatas + " " +
-            this.rangeToCells + " " +
-            this.rows;
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder b) {
+        b.label("cells")
+            .value(this.cells)
+            .label("cellReferences")
+            .value(this.cellReferences)
+            .label("columns")
+            .value(this.columns)
+            .label("forms")
+            .value(this.forms)
+            .label("labels")
+            .value(this.labels)
+            .label("labelReferences")
+            .value(this.labelReferences)
+            .label("metadatas")
+            .value(this.metadatas)
+            .label("rangeToCells")
+            .value(this.rangeToCells)
+            .label("rows")
+            .value(this.rows);
     }
 }
