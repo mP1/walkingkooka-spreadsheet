@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -28,7 +29,8 @@ import walkingkooka.store.FakeMultiValueStoreWatcher;
 import java.util.TreeMap;
 
 public class TreeMapSpreadsheetExpressionReferencesStoreTest extends SpreadsheetExpressionReferencesStoreTestCase<TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference>, SpreadsheetCellReference>
-    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference>> {
+    implements CanBeEmptyTesting,
+    HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference>> {
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
@@ -1520,7 +1522,32 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> createObject() {
         return this.createStore();
     }
-    
+
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testIsEmptyWhenEmpty() {
+        this.isEmptyAndCheck(
+            this.createStore(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsEmptyWhenNotEmpty() {
+        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
+
+        store.addValue(
+            A1,
+            B1
+        );
+
+        this.isEmptyAndCheck(
+            store,
+            false
+        );
+    }
+
     // class............................................................................................................
 
     @Override

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -37,7 +38,8 @@ import java.util.function.Supplier;
 // using a type parameter of T extends SpreadsheetExpressionReference & Comparable<T> causes a Transpiler ERROR.
 // Error:TreeMapSpreadsheetExpressionReferencesStore.java:39: This class must implement the inherited abstract method SpreadsheetExpressionReference.equalsIgnoreReferenceK
 final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference> implements SpreadsheetExpressionReferencesStore<T>,
-    MultiValueStoreDelegator<T, SpreadsheetCellReference> {
+    MultiValueStoreDelegator<T, SpreadsheetCellReference>,
+    CanBeEmpty {
 
     static <T extends SpreadsheetExpressionReference> TreeMapSpreadsheetExpressionReferencesStore<T> create() {
         return new TreeMapSpreadsheetExpressionReferencesStore<>();
@@ -112,5 +114,12 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     @Override
     public String toString() {
         return this.store.toString();
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return CanBeEmpty.maybeCanBeEmpty(this.store);
     }
 }
