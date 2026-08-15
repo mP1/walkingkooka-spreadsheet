@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.reflect.ClassTesting;
@@ -30,6 +31,7 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCellRangeStoreTesting<TreeMapSpreadsheetCellRangeStore>,
+    CanBeEmptyTesting,
     HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetCellRangeStore>,
     ClassTesting<TreeMapSpreadsheetCellRangeStore> {
 
@@ -1382,6 +1384,31 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         this.toStringAndCheck(
             store,
             "{A1=[Z1], A2=[Z2]}"
+        );
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testIsEmptyWhenEmpty() {
+        this.isEmptyAndCheck(
+            this.createStore(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsEmptyWhenNotEmpty() {
+        final TreeMapSpreadsheetCellRangeStore store = this.createStore();
+
+        store.addValue(
+            SpreadsheetSelection.parseCellRange("A1:A1"),
+            VALUE1
+        );
+
+        this.isEmptyAndCheck(
+            store,
+            false
         );
     }
 

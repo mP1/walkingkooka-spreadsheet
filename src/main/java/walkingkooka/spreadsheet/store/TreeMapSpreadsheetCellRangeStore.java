@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -34,7 +35,8 @@ import java.util.function.Supplier;
  * A {@link SpreadsheetCellRangeStore} that wraps a {@link walkingkooka.store.TreeMapMultiValueStore}.
  */
 final class TreeMapSpreadsheetCellRangeStore implements SpreadsheetCellRangeStore,
-    MultiValueStoreDelegator<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
+    MultiValueStoreDelegator<SpreadsheetCellRangeReference, SpreadsheetCellReference>,
+    CanBeEmpty {
 
     /**
      * Factory that creates a new {@link TreeMapSpreadsheetCellRangeStore}
@@ -127,5 +129,12 @@ final class TreeMapSpreadsheetCellRangeStore implements SpreadsheetCellRangeStor
     @Override
     public String toString() {
         return this.store.toString();
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return CanBeEmpty.maybeCanBeEmpty(this.store);
     }
 }
