@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
 
-public final class TreeMapSpreadsheetCellReferencesStoreTest implements SpreadsheetCellReferencesStoreTesting<TreeMapSpreadsheetCellReferencesStore> {
+public final class TreeMapSpreadsheetCellReferencesStoreTest implements SpreadsheetCellReferencesStoreTesting<TreeMapSpreadsheetCellReferencesStore>,
+    CanBeEmptyTesting {
 
     final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
     final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
@@ -315,6 +317,31 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     @Override
     public SpreadsheetCellReference value() {
         return SpreadsheetSelection.parseCell("B2");
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testIsEmptyWhenEmpty() {
+        this.isEmptyAndCheck(
+            this.createStore(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsEmptyWhenNotEmpty() {
+        final TreeMapSpreadsheetCellReferencesStore store = this.createStore();
+
+        store.addValue(
+            b2,
+            a1
+        );
+
+        this.isEmptyAndCheck(
+            store,
+            false
+        );
     }
 
     // class............................................................................................................
