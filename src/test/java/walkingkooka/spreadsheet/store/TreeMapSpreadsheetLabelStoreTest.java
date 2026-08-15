@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -34,7 +35,8 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore>
-    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetLabelStore>,
+    implements CanBeEmptyTesting,
+    HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetLabelStore>,
     ThrowableTesting {
 
     private final static SpreadsheetLabelName LABEL1 = SpreadsheetSelection.labelName("label1");
@@ -836,6 +838,30 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         this.toStringAndCheck(
             store,
             "[label1=A1:A3, label2=A2]"
+        );
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testIsEmptyWhenEmpty() {
+        this.isEmptyAndCheck(
+            TreeMapSpreadsheetLabelStore.create(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsEmptyWhenNotEmpty() {
+        final TreeMapSpreadsheetLabelStore store = TreeMapSpreadsheetLabelStore.create();
+
+        store.save(
+            LABEL.setLabelMappingReference(SpreadsheetSelection.A1)
+        );
+
+        this.isEmptyAndCheck(
+            store,
+            false
         );
     }
 
