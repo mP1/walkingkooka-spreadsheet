@@ -34,6 +34,7 @@ import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -267,5 +268,15 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     @Override
     public List<StorageMountPoint<?>> storageMountPoints() {
         return List.of();
+    }
+
+    @Override
+    public Runnable addStorageWatcher(final StorageWatcher watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+        throw new UnsupportedOperationException();
     }
 }

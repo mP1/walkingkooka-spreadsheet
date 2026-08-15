@@ -60,6 +60,7 @@ import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
@@ -270,6 +271,16 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public List<StorageMountPoint<?>> storageMountPoints() {
         return this.context.storageMountPoints();
+    }
+
+    @Override
+    public Runnable addStorageWatcher(final StorageWatcher watcher) {
+        return this.context.addStorageWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+        return this.context.addStorageWatcherOnce(watcher);
     }
 
     // TerminalContextDelegator.........................................................................................
