@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
@@ -35,7 +36,8 @@ import java.util.Set;
  * A {@link SpreadsheetLabelReferencesStore} that uses a {@link Map} to store a cell or label to its many {@link SpreadsheetLabelName}.
  */
 final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelReferencesStore,
-    SpreadsheetExpressionReferencesStoreDelegator<SpreadsheetLabelName> {
+    SpreadsheetExpressionReferencesStoreDelegator<SpreadsheetLabelName>,
+    CanBeEmpty {
 
     static TreeMapSpreadsheetLabelReferencesStore empty() {
         return new TreeMapSpreadsheetLabelReferencesStore();
@@ -102,5 +104,12 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     @Override
     public String toString() {
         return this.store.toString();
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return CanBeEmpty.maybeCanBeEmpty(this.store);
     }
 }
