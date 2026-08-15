@@ -64,6 +64,7 @@ import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.template.TemplateValueName;
@@ -987,6 +988,22 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         public void unmountStorage(final StoragePath path) {
             this.storage.unmount(
                 path,
+                this
+            );
+        }
+
+        @Override
+        public Runnable addStorageWatcher(final StorageWatcher watcher) {
+            return this.storage.addWatcher(
+                watcher,
+                this
+            );
+        }
+
+        @Override
+        public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+            return this.storage.addWatcherOnce(
+                watcher,
                 this
             );
         }

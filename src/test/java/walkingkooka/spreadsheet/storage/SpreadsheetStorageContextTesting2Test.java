@@ -49,6 +49,7 @@ import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
@@ -505,6 +506,24 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         @Override
         public List<StorageMountPoint<?>> storageMountPoints() {
             return Lists.empty();
+        }
+
+        @Override
+        public Runnable addStorageWatcher(final StorageWatcher watcher) {
+            return this.storage()
+                .addWatcher(
+                    watcher,
+                    this
+                );
+        }
+
+        @Override
+        public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+            return this.storage()
+                .addWatcherOnce(
+                    watcher,
+                    this
+                );
         }
 
         // Object.......................................................................................................

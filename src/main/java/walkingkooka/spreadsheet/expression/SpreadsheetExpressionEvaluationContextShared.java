@@ -50,6 +50,7 @@ import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.Indentation;
@@ -423,6 +424,24 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
             this.storage()
                 .mountPoints()
         );
+    }
+
+    @Override
+    public Runnable addStorageWatcher(final StorageWatcher watcher) {
+        return this.storage()
+            .addWatcher(
+                watcher,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
+    public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+        return this.storage()
+            .addWatcherOnce(
+                watcher,
+                this.spreadsheetStorageContext()
+            );
     }
 
     @Override

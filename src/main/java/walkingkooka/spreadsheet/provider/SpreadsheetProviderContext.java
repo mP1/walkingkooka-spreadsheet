@@ -49,6 +49,7 @@ import walkingkooka.storage.StorageEnvironmentContextDelegator;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -176,6 +177,22 @@ final class SpreadsheetProviderContext implements ProviderContext,
     public void setAuditInfoStorage(final StorageValueInfo info) {
         this.storage.setAuditInfo(
             info,
+            this
+        );
+    }
+
+    @Override
+    public Runnable addStorageWatcher(final StorageWatcher watcher) {
+        return this.storage.addWatcher(
+            watcher,
+            this
+        );
+    }
+
+    @Override
+    public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+        return this.storage.addWatcherOnce(
+            watcher,
             this
         );
     }

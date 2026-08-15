@@ -44,6 +44,7 @@ import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -462,6 +463,24 @@ final class SpreadsheetStorageContextSpreadsheetContext implements SpreadsheetSt
             this.spreadsheetContext.storage()
                 .mountPoints()
         );
+    }
+
+    @Override
+    public Runnable addStorageWatcher(final StorageWatcher watcher) {
+        return this.spreadsheetContext.storage()
+            .addWatcher(
+                watcher,
+                this
+            );
+    }
+
+    @Override
+    public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+        return this.spreadsheetContext.storage()
+            .addWatcherOnce(
+                watcher,
+                this
+            );
     }
 
     // Object...........................................................................................................
