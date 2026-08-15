@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.NeverError;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
@@ -51,7 +52,8 @@ import java.util.stream.Stream;
 /**
  * A {@link SpreadsheetCellStore} that uses a {@link Map}.
  */
-final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
+final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore,
+    CanBeEmpty {
 
     /**
      * Factory that creates a new {@link TreeMapSpreadsheetCellStore}
@@ -542,5 +544,12 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public String toString() {
         return this.store.toString();
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return CanBeEmpty.maybeCanBeEmpty(this.store);
     }
 }
