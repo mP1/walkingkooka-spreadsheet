@@ -37,10 +37,10 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
-     * {@see StorageSharedWrapperExpandedCurrentWorkingDirectory}
+     * {@see StorageSharedExpandedCurrentWorkingDirectory}
      */
-    public static Storage<SpreadsheetStorageContext> currentWorkingDirectory(final Storage<SpreadsheetStorageContext> storage) {
-        return Storages.currentWorkingDirectory(storage);
+    public static Storage<SpreadsheetStorageContext> currentWorkingDirectory() {
+        return Storages.currentWorkingDirectory();
     }
 
     /**
@@ -58,10 +58,10 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
-     * {@see StorageSharedWrapperExpandedHomeDirectory}
+     * {@see StorageSharedExpandedHomeDirectory}
      */
-    public static Storage<SpreadsheetStorageContext> homeDirectory(final Storage<SpreadsheetStorageContext> storage) {
-        return Storages.homeDirectory(storage);
+    public static Storage<SpreadsheetStorageContext> homeDirectory() {
+        return Storages.homeDirectory();
     }
 
     /**
