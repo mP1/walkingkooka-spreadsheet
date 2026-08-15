@@ -267,7 +267,7 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
 
     @Override
     public List<StorageMountPoint<?>> storageMountPoints() {
-        return List.of();
+        throw new UnsupportedOperationException();
     }
 
     @Override
