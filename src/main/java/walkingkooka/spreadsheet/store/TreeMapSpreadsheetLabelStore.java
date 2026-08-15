@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
@@ -41,7 +42,8 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetLabelStore} that uses a {@link Map}.
  */
-final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
+final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore,
+    CanBeEmpty {
 
     /**
      * Factory that creates a new {@link TreeMapSpreadsheetLabelStore}
@@ -239,5 +241,12 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     @Override
     public String toString() {
         return this.mappings.values().toString();
+    }
+
+    // CanBeEmpty.......................................................................................................
+
+    @Override
+    public boolean isEmpty() {
+        return this.mappings.isEmpty();
     }
 }
