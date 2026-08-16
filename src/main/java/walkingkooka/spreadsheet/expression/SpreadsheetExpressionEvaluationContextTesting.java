@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -60,7 +60,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     SpreadsheetMetadataContextTesting2<C>,
     StorageExpressionEvaluationContextTesting2<C>,
     ValidatorExpressionEvaluationContextTesting2<SpreadsheetValidationReference, C>,
-    SpreadsheetProviderContextTesting<C> {
+    SpreadsheetProviderContextTesting2<C> {
 
     // stringEqualsCaseSensitivity......................................................................................
 
