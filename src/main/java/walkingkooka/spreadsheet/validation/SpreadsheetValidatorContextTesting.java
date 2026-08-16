@@ -25,9 +25,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.validation.ValidatorContextTesting;
+import walkingkooka.validation.ValidatorContextTesting2;
 
-public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting<C, SpreadsheetValidationReference>,
+public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting2<C, SpreadsheetValidationReference>,
     SpreadsheetProviderContextTesting<C>,
     SpreadsheetEnvironmentContextTesting {
 

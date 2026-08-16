@@ -43,7 +43,7 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContextTesting;
-import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting;
+import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting2;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting;
 
 import java.util.Optional;
@@ -59,7 +59,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     SpreadsheetLabelNameResolverTesting<C>,
     SpreadsheetMetadataContextTesting2<C>,
     StorageExpressionEvaluationContextTesting2<C>,
-    ValidatorExpressionEvaluationContextTesting<SpreadsheetValidationReference, C>,
+    ValidatorExpressionEvaluationContextTesting2<SpreadsheetValidationReference, C>,
     SpreadsheetProviderContextTesting<C> {
 
     // stringEqualsCaseSensitivity......................................................................................
