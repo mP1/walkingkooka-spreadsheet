@@ -48,7 +48,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testLoadStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
 
@@ -66,7 +66,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testSaveStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
 
@@ -86,7 +86,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testDeleteStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
 
@@ -106,7 +106,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testListStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContext context = new TestSpreadsheetStorageContext(storage);
 
@@ -129,7 +129,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testMountStorage() {
-        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> root = SpreadsheetStorages.treeMapStore();
 
         final Storage<SpreadsheetStorageContext> storage = Storages.mount(root);
 
@@ -154,7 +154,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testUnmountStorage() {
-        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> root = SpreadsheetStorages.treeMapStore();
 
         final Storage<SpreadsheetStorageContext> storage = Storages.mount(root);
 
@@ -183,7 +183,7 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
 
     @Test
     public void testStorageMountPoints() {
-        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> root = SpreadsheetStorages.treeMapStore();
 
         final Storage<SpreadsheetStorageContext> storage = Storages.mount(root);
 

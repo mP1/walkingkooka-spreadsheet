@@ -57,11 +57,11 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorages;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
-import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -756,7 +756,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                     null
             ),
             SpreadsheetEnvironmentContexts.basic(
-                Storages.treeMapStore(),
+                SpreadsheetStorages.treeMapStore(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );

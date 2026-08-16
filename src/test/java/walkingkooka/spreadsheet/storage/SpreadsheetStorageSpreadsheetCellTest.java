@@ -62,7 +62,6 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
-import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -784,7 +783,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             }, // HttpRouter
             CURRENCY_LOCALE_CONTEXT,
             SpreadsheetEnvironmentContexts.basic(
-                Storages.treeMapStore(),
+                SpreadsheetStorages.treeMapStore(),
                 storageEnvironmentContext
             ),
             SpreadsheetProviders.basic(

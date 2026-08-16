@@ -27,7 +27,6 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageTesting2;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
-import walkingkooka.storage.Storages;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -140,7 +139,7 @@ public final class SpreadsheetStorageRouterRootStorageTest implements StorageTes
 
     @Override
     public SpreadsheetStorageRouterRootStorage createStorage() {
-        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> root = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContext context = this.createContext();
 

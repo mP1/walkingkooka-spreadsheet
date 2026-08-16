@@ -69,7 +69,6 @@ import walkingkooka.storage.StorageContexts;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
-import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
@@ -1100,7 +1099,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
             SpreadsheetStorageContextBasicTest.SERVER_URL
         );
 
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             storage,
             storageEnvironmentContext
