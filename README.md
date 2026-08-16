@@ -377,6 +377,7 @@ to allow user customisation of that value type along with a single color.
 - [metadata](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageSpreadsheetMetadata.java)
 - [mount](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageSharedMount.java)
 - [native](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2NativeFile.java)
+- [router](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageRouter.java)
 
 ### Other internal components
 
