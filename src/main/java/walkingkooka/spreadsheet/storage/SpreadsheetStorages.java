@@ -21,9 +21,11 @@ import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.Storages;
 
 import java.nio.file.Path;
+import java.util.function.Function;
 
 /**
  * A collection of {@link Storage} for a spreadsheet terminal.
@@ -146,6 +148,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
      */
     public static Storage<SpreadsheetStorageContext> treeMapStore() {
         return Storages.treeMapStore();
+    }
+
+    /**
+     * {@see StorageShared2Value}
+     */
+    public static Storage<SpreadsheetStorageContext> value(final Function<SpreadsheetStorageContext, StorageValue> value) {
+        return Storages.value(value);
     }
 
     /**
