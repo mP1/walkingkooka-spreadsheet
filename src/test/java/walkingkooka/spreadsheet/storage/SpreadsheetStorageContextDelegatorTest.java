@@ -44,7 +44,6 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextDelegatorTest.TestSpreadsheetStorageDelegatorContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
-import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -122,7 +121,7 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
                     }, // HttpRouter
                     CURRENCY_LOCALE_CONTEXT,
                     SpreadsheetEnvironmentContexts.basic(
-                        Storages.treeMapStore(),
+                        SpreadsheetStorages.treeMapStore(),
                         spreadsheetEnvironmentContext
                     ),
                     SpreadsheetProviders.basic(

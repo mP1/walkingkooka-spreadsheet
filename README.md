@@ -381,7 +381,8 @@ to allow user customisation of that value type along with a single color.
 - [prefixed](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2WrapperPrefixed.java)
 - [readOnly](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/ReadOnlyStorage.java)
 - [router](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageRouter.java)
-
+- [treeMapStore](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2TreeMapStore.java)
+- 
 ### Other internal components
 
 *TODO* Mention here

@@ -56,7 +56,6 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
-import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -592,7 +591,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             SERVER_URL
         );
 
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         return SpreadsheetContexts.fixedSpreadsheetId(
             MEDIA_TYPE_DETECTOR,

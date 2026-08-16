@@ -852,7 +852,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
     @Test
     public void testLoadStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
 
@@ -870,7 +870,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
     @Test
     public void testSaveStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
 
@@ -890,7 +890,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
     @Test
     public void testDeleteStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
 
@@ -912,7 +912,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
     @Test
     public void testListStorage() {
-        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
 
@@ -938,12 +938,12 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
     @Test
     public void testMountStorage() {
-        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> root = SpreadsheetStorages.treeMapStore();
         final Storage<SpreadsheetStorageContext> storage = Storages.mount(
             root
         );
 
-        final Storage<SpreadsheetStorageContext> mount = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> mount = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);;
 
@@ -974,12 +974,12 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
     @Test
     public void testUnmountStorage() {
-        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> root = SpreadsheetStorages.treeMapStore();
         final Storage<SpreadsheetStorageContext> storage = Storages.mount(
             root
         );
 
-        final Storage<SpreadsheetStorageContext> mount = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> mount = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
 
@@ -1010,12 +1010,12 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
     @Test
     public void testStorageMountPoints() {
-        final Storage<SpreadsheetStorageContext> root = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> root = SpreadsheetStorages.treeMapStore();
         final Storage<SpreadsheetStorageContext> storage = Storages.mount(
             root
         );
 
-        final Storage<SpreadsheetStorageContext> mount = Storages.treeMapStore();
+        final Storage<SpreadsheetStorageContext> mount = SpreadsheetStorages.treeMapStore();
 
         final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
 
@@ -1043,7 +1043,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
     public SpreadsheetStorageContextSpreadsheetContext createContext() {
         return this.createContext(
             Storages.mount(
-                Storages.treeMapStore()
+                SpreadsheetStorages.treeMapStore()
             )
         );
     }

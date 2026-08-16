@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorages;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
@@ -1200,7 +1201,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext() {
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
-                Storages.treeMapStore(),
+                SpreadsheetStorages.treeMapStore(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );

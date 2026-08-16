@@ -140,6 +140,14 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
         );
     }
 
+
+    /**
+     * {@link Storages#treeMapStore()}
+     */
+    public static Storage<SpreadsheetStorageContext> treeMapStore() {
+        return Storages.treeMapStore();
+    }
+
     /**
      * Stop creation
      */

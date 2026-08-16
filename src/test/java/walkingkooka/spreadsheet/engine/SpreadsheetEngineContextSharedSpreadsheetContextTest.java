@@ -76,6 +76,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorages;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
@@ -1172,7 +1173,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     public void testStorage() {
         this.storageAndCheck(
             this.createContext(),
-            Storages.treeMapStore()
+            SpreadsheetStorages.treeMapStore()
         );
     }
 
@@ -1287,7 +1288,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     @Override
     public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            Storages.treeMapStore(),
+            SpreadsheetStorages.treeMapStore(),
             SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
