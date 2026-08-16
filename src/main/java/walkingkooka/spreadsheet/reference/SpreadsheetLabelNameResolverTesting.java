@@ -17,89 +17,11 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelNameResolver> extends TreePrintableTesting {
-
-    @Test
-    default void testResolveIfLabelWithNullSpreadsheetSelectionFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetLabelNameResolver()
-                .resolveIfLabel(null)
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelWithCell() {
-        this.resolveIfLabelAndCheckSame(
-            SpreadsheetSelection.parseCell("B2")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelWithCellRange() {
-        this.resolveIfLabelAndCheckSame(
-            SpreadsheetSelection.parseCellRange("C3:D4")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelWithColumn() {
-        this.resolveIfLabelAndCheckSame(
-            SpreadsheetSelection.parseColumn("Z")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelWithColumnRange() {
-        this.resolveIfLabelAndCheckSame(
-            SpreadsheetSelection.parseColumnRange("X:Y")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelWithRow() {
-        this.resolveIfLabelAndCheckSame(
-            SpreadsheetSelection.parseRow("2")
-        );
-    }
-
-    @Test
-    default void testResolveIfLabelWithRowRange() {
-        this.resolveIfLabelAndCheckSame(
-            SpreadsheetSelection.parseRowRange("3:4")
-        );
-    }
-
-    default void resolveIfLabelAndCheckSame(final SpreadsheetSelection selection) {
-        this.resolveIfLabelAndCheck(
-            selection,
-            selection
-        );
-    }
-
-    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection) {
-        this.resolveIfLabelAndCheck(
-            this.createSpreadsheetLabelNameResolver(),
-            selection,
-            Optional.empty()
-        );
-    }
-
-    default void resolveIfLabelAndCheck(final SpreadsheetSelection selection,
-                                        final SpreadsheetSelection expected) {
-        this.resolveIfLabelAndCheck(
-            this.createSpreadsheetLabelNameResolver(),
-            selection,
-            expected
-        );
-    }
+public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTesting {
 
     default void resolveIfLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
                                         final SpreadsheetSelection selection,
@@ -132,38 +54,6 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
 
     // resolveLabel.....................................................................................................
 
-    @Test
-    default void testResolveLabelWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetLabelNameResolver()
-                .resolveLabel(null)
-        );
-    }
-
-    default void resolveLabelAndCheck(final SpreadsheetLabelName labelName) {
-        this.resolveLabelAndCheck(
-            labelName,
-            Optional.empty()
-        );
-    }
-
-    default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
-                                      final SpreadsheetSelection expected) {
-        this.resolveLabelAndCheck(
-            labelName,
-            Optional.of(expected)
-        );
-    }
-
-    default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
-                                      final Optional<SpreadsheetSelection> expected) {
-        this.resolveLabelAndCheck(
-            this.createSpreadsheetLabelNameResolver(),
-            labelName,
-            expected
-        );
-    }
 
     default void resolveLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
                                       final String labelName,
@@ -203,8 +93,4 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
             () -> "resolveLabel " + labelName
         );
     }
-
-    // createSpreadsheetLabelNameResolver.....................................................................................
-
-    R createSpreadsheetLabelNameResolver();
 }

@@ -27,7 +27,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverTest implements SpreadsheetLabelNameResolverTesting<SpreadsheetLabelStoreSpreadsheetLabelNameResolver>,
+public final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverTest implements SpreadsheetLabelNameResolverTesting2<SpreadsheetLabelStoreSpreadsheetLabelNameResolver>,
     ToStringTesting<SpreadsheetLabelStoreSpreadsheetLabelNameResolver> {
 
     private final static SpreadsheetLabelName LABEL1 = SpreadsheetSelection.labelName("Label111");

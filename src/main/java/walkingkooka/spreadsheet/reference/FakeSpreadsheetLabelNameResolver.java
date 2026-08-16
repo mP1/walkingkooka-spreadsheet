@@ -24,7 +24,7 @@ public class FakeSpreadsheetLabelNameResolver implements SpreadsheetLabelNameRes
 
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        // required so SpreadsheetLabelNameResolverTesting.testResolveLabelWithNullFails passes
+        // required so SpreadsheetLabelNameResolverTesting2.testResolveLabelWithNullFails passes
         Objects.requireNonNull(labelName, "label");
         throw new UnsupportedOperationException();
     }
