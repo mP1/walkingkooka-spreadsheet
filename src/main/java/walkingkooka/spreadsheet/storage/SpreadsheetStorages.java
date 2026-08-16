@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.storage;
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 
 import java.nio.file.Path;
@@ -101,6 +102,17 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
         return Storages.nativeStorage(
             root,
             context
+        );
+    }
+
+    /**
+     * {@link Storages#prefixed(StoragePath, Storage)}
+     */
+    public static Storage<SpreadsheetStorageContext> prefixed(final StoragePath path,
+                                                              final Storage<SpreadsheetStorageContext> storage) {
+        return Storages.prefixed(
+            path,
+            storage
         );
     }
 
