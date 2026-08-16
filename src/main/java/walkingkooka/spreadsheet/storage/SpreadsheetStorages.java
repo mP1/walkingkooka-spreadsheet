@@ -117,6 +117,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@link Storages#readOnly(Storage)}
+     */
+    public static Storage<SpreadsheetStorageContext> readOnly(final Storage<SpreadsheetStorageContext> storage) {
+        return Storages.readOnly(storage);
+    }
+
+    /**
      * {@see SpreadsheetStorageRouter}
      */
     public static Storage<SpreadsheetStorageContext> router(final Storage<SpreadsheetStorageContext> cells,
