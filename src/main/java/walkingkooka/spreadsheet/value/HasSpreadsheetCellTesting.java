@@ -21,16 +21,16 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 
-public interface HasSpreadsheetCellTesting<T extends HasSpreadsheetCell> extends TreePrintableTesting {
+public interface HasSpreadsheetCellTesting extends TreePrintableTesting {
 
-    default void cellAndCheck(final T hasCell) {
+    default void cellAndCheck(final HasSpreadsheetCell hasCell) {
         this.cellAndCheck(
             hasCell,
             HasSpreadsheetCell.NO_CELL
         );
     }
 
-    default void cellAndCheck(final T hasCell,
+    default void cellAndCheck(final HasSpreadsheetCell hasCell,
                               final SpreadsheetCell expected) {
         this.cellAndCheck(
             hasCell,
@@ -38,7 +38,7 @@ public interface HasSpreadsheetCellTesting<T extends HasSpreadsheetCell> extends
         );
     }
 
-    default void cellAndCheck(final T hasCell,
+    default void cellAndCheck(final HasSpreadsheetCell hasCell,
                               final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
             expected,
