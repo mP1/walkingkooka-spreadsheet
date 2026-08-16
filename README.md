@@ -366,6 +366,18 @@ to allow user customisation of that value type along with a single color.
 - Additional `SpreadsheetFormatter(s)` may be provided via a custom [SpreadsheetFormatterProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterProvider.java) *DONE*
 - Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/14)
 
+### [Storage](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/Storage.java)
+
+- [cell](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageSpreadsheetCell.java)
+- [currentWorkingDirectory](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2ExpandedCurrentWorkingDirectory.java)
+- [env](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2Environment.java)
+- [form](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageForm.java)
+- [homeDirectory](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2ExpandedHomeDirectory.java)
+- [label](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageSpreadsheetLabel.java)
+- [metadata](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageSpreadsheetMetadata.java)
+- [mount](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageSharedMount.java)
+- [native](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2NativeFile.java)
+
 ### Other internal components
 
 *TODO* Mention here
