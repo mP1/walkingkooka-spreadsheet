@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTest.TestSpreadsheetLabelNameResolver;
 
-public final class SpreadsheetLabelNameResolverTest implements SpreadsheetLabelNameResolverTesting<TestSpreadsheetLabelNameResolver> {
+public final class SpreadsheetLabelNameResolverTest implements SpreadsheetLabelNameResolverTesting2<TestSpreadsheetLabelNameResolver> {
 
     @Override
     public TestSpreadsheetLabelNameResolver createSpreadsheetLabelNameResolver() {

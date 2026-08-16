@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
@@ -56,7 +56,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     HasSpreadsheetCellTesting,
     JsonNodeExpressionEvaluationContextTesting2<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
-    SpreadsheetLabelNameResolverTesting<C>,
+    SpreadsheetLabelNameResolverTesting2<C>,
     SpreadsheetMetadataContextTesting2<C>,
     StorageExpressionEvaluationContextTesting2<C>,
     ValidatorExpressionEvaluationContextTesting2<SpreadsheetValidationReference, C>,
@@ -513,7 +513,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
-    // SpreadsheetLabelNameResolverTesting..............................................................................
+    // SpreadsheetLabelNameResolverTesting2..............................................................................
 
     @Override
     default C createSpreadsheetLabelNameResolver() {

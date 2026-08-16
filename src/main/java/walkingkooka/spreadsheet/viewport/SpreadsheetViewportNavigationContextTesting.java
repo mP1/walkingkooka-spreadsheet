@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -30,7 +30,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetViewportNavigationContextTesting<C extends SpreadsheetViewportNavigationContext> extends SpreadsheetProviderContextTesting<C>,
-    SpreadsheetLabelNameResolverTesting<C> {
+    SpreadsheetLabelNameResolverTesting2<C> {
 
     // isColumnHidden..................................................................................................
 

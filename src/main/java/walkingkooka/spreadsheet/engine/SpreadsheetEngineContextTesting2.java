@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEngineContextTesting2<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
     SpreadsheetEngineContextTesting,
     SpreadsheetContextTesting2<C>,
-    SpreadsheetLabelNameResolverTesting<C>,
+    SpreadsheetLabelNameResolverTesting2<C>,
     SpreadsheetProviderTesting<C>,
     SpreadsheetStorageContextTesting2<C> {
 
@@ -58,7 +58,7 @@ public interface SpreadsheetEngineContextTesting2<C extends SpreadsheetEngineCon
         );
     }
 
-    // SpreadsheetLabelNameResolverTesting..............................................................................
+    // SpreadsheetLabelNameResolverTesting2..............................................................................
 
     @Override
     default C createSpreadsheetLabelNameResolver() {
