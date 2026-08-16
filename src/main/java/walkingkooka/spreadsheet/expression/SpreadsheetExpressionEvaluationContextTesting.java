@@ -44,7 +44,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContextTesting;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting2;
-import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting;
+import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting2;
 
 import java.util.Optional;
 import java.util.Set;
@@ -52,7 +52,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetValidationReference, SpreadsheetDelta, C>,
+public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting2<SpreadsheetValidationReference, SpreadsheetDelta, C>,
     HasSpreadsheetCellTesting<C>,
     JsonNodeExpressionEvaluationContextTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
