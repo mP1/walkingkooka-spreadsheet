@@ -104,7 +104,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
+public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest implements SpreadsheetExpressionEvaluationContextTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
     HashCodeEqualsDefinedTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
     LocaleContextTesting,
     ToStringTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
