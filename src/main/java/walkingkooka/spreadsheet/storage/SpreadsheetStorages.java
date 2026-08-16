@@ -44,6 +44,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@link Storages#empty()}
+     */
+    public static Storage<SpreadsheetStorageContext> empty() {
+        return Storages.empty();
+    }
+
+    /**
      * {@link Storages#environment()}
      */
     public static Storage<SpreadsheetStorageContext> env() {
