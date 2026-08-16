@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting2<SpreadsheetValidationReference, SpreadsheetDelta, C>,
-    HasSpreadsheetCellTesting<C>,
+    HasSpreadsheetCellTesting,
     JsonNodeExpressionEvaluationContextTesting2<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting<C>,
