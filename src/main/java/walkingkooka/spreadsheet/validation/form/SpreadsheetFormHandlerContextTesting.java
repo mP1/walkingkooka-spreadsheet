@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.validation.form;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
-import walkingkooka.validation.form.FormHandlerContextTesting;
+import walkingkooka.validation.form.FormHandlerContextTesting2;
 
-public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormHandlerContext> extends FormHandlerContextTesting<C, SpreadsheetValidationReference, SpreadsheetDelta>,
+public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormHandlerContext> extends FormHandlerContextTesting2<C, SpreadsheetValidationReference, SpreadsheetDelta>,
     SpreadsheetProviderContextTesting<C> {
 }
