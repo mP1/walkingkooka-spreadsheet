@@ -32,7 +32,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C extends SpreadsheetExpressionEvaluationContextShared> implements SpreadsheetExpressionEvaluationContextTesting<C>,
+public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C extends SpreadsheetExpressionEvaluationContextShared> implements SpreadsheetExpressionEvaluationContextTesting2<C>,
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 

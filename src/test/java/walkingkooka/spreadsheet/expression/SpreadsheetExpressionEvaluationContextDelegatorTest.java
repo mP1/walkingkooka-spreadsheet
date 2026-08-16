@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContextDelegatorTest.TestSpreadsheetExpressionEvaluationContextDelegator;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -59,7 +60,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public final class SpreadsheetExpressionEvaluationContextDelegatorTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextDelegatorTest.TestSpreadsheetExpressionEvaluationContextDelegator>,
+public final class SpreadsheetExpressionEvaluationContextDelegatorTest implements SpreadsheetExpressionEvaluationContextTesting2<TestSpreadsheetExpressionEvaluationContextDelegator>,
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 
