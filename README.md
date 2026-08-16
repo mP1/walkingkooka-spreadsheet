@@ -372,6 +372,7 @@ to allow user customisation of that value type along with a single color.
 - [currentWorkingDirectory](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2ExpandedCurrentWorkingDirectory.java)
 - [empty](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2Empty.java)
 - [env](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2Environment.java)
+- [explodedZipFile](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2WrapperExplodedZipFile.java)
 - [form](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageForm.java)
 - [homeDirectory](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/StorageShared2ExpandedHomeDirectory.java)
 - [label](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/storage/SpreadsheetStorageSpreadsheetLabel.java)
