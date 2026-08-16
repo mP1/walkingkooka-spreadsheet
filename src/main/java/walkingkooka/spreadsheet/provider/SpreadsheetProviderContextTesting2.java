@@ -15,13 +15,21 @@
  *
  */
 
-package walkingkooka.spreadsheet.validation.form;
+package walkingkooka.spreadsheet.provider;
 
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
-import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
-import walkingkooka.validation.form.FormHandlerContextTesting2;
+import org.junit.jupiter.api.Test;
+import walkingkooka.Context;
+import walkingkooka.ContextTesting;
+import walkingkooka.plugin.ProviderContext;
 
-public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormHandlerContext> extends FormHandlerContextTesting2<C, SpreadsheetValidationReference, SpreadsheetDelta>,
-    SpreadsheetProviderContextTesting2<C> {
+public interface SpreadsheetProviderContextTesting2<C extends Context> extends SpreadsheetProviderContextTesting,
+    ContextTesting<C> {
+
+    @Test
+    default void testClassDoesntImplementProviderContext() {
+        this.checkEquals(
+            false,
+            this.createContext() instanceof ProviderContext
+        );
+    }
 }

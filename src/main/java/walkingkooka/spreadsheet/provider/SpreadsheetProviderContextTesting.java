@@ -17,18 +17,7 @@
 
 package walkingkooka.spreadsheet.provider;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.Context;
-import walkingkooka.ContextTesting;
-import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.printer.TreePrintableTesting;
 
-public interface SpreadsheetProviderContextTesting<C extends Context> extends ContextTesting<C> {
-
-    @Test
-    default void testClassDoesntImplementProviderContext() {
-        this.checkEquals(
-            false,
-            this.createContext() instanceof ProviderContext
-        );
-    }
+public interface SpreadsheetProviderContextTesting extends TreePrintableTesting {
 }
