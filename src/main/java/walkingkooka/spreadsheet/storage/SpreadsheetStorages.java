@@ -61,6 +61,18 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageShared2WrapperExplodedZipFile}
+     */
+    @GwtIncompatible
+    public static Storage<SpreadsheetStorageContext> explodedZipFile(final StoragePath archive,
+                                                                     final Storage<SpreadsheetStorageContext> storage) {
+        return Storages.explodedZipFile(
+            archive,
+            storage
+        );
+    }
+
+    /**
      * {@see SpreadsheetStorageForm}
      */
     public static Storage<SpreadsheetStorageContext> form() {
