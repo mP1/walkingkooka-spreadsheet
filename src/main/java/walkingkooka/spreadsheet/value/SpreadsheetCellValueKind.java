@@ -133,11 +133,17 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
     };
 
     SpreadsheetCellValueKind() {
-        this.fileExtension = FileExtension.parse(
-            CaseKind.SNAKE.change(
-                this.name(),
-                CaseKind.KEBAB
-            )
+        final String name = this.name();
+
+        this.fileExtension = Optional.ofNullable(
+            "CELL".equals(name) ?
+                null :
+                FileExtension.parse(
+                    CaseKind.SNAKE.change(
+                        name,
+                        CaseKind.KEBAB
+                    )
+                )
         );
     }
 
@@ -148,7 +154,7 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
     /**
      * Some examples of file extensions include:
      * <pre>
-     * a1.cell
+     * a1 NOT a1.cell
      * a1.style
      * a1.value
      * al.value-type
@@ -156,17 +162,8 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
      */
     @Override
     public final Optional<FileExtension> fileExtension() {
-        return Optional.of(this.fileExtension);
-    }
-
-    /**
-     * Returns the preferred file extension for this {@link SpreadsheetCell} component. Note this does not include
-     * the actual type technology file extension such as <code>*.json</code>, which needs to be appended.
-     */
-    @Override
-    public final FileExtension fileExtensionOrFail() {
         return this.fileExtension;
     }
 
-    private final FileExtension fileExtension;
+    private final Optional<FileExtension> fileExtension;
 }

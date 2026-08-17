@@ -296,8 +296,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     @Test
     public void testFileExtensionWithCell() {
         this.fileExtensionAndCheck(
-            SpreadsheetCellValueKind.CELL,
-            "cell"
+            SpreadsheetCellValueKind.CELL
         );
     }
 
