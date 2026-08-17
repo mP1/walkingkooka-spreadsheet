@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
@@ -50,6 +51,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     HasCurrencyTesting,
     HasFileExtensionTesting,
     HasValueTesting,
+    ParseStringTesting<SpreadsheetCellValueKind>,
     ClassTesting<SpreadsheetCellValueKind> {
 
     @Test
@@ -394,6 +396,68 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
             SpreadsheetCellValueKind.VALUE_TYPE,
             "value-type"
         );
+    }
+
+    // parse............................................................................................................
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testParseWithEmptyString() {
+        this.parseStringAndCheck(
+            "",
+            SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    @Test
+    public void testParseWithFormattedValueString() {
+        this.parseStringAndCheck(
+            "formatted-value",
+            SpreadsheetCellValueKind.FORMATTED_VALUE
+        );
+    }
+
+    @Test
+    public void testParseWithFormatter() {
+        this.parseStringAndCheck(
+            "formatter",
+            SpreadsheetCellValueKind.FORMATTER
+        );
+    }
+
+    @Test
+    public void testParseWithValueType() {
+        this.parseStringAndCheck(
+            "value-type",
+            SpreadsheetCellValueKind.VALUE_TYPE
+        );
+    }
+
+    @Test
+    public void testParseWithValueTypeMixedCase() {
+        this.parseStringAndCheck(
+            "value-TYPE",
+            SpreadsheetCellValueKind.VALUE_TYPE
+        );
+    }
+
+    @Override
+    public SpreadsheetCellValueKind parseString(final String text) {
+        return SpreadsheetCellValueKind.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // class............................................................................................................

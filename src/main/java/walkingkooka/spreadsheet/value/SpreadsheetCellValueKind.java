@@ -25,13 +25,16 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.text.CaseKind;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -135,19 +138,36 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
     SpreadsheetCellValueKind() {
         final String name = this.name();
 
+        final String fileExtensionText = "CELL".equals(name) ?
+            "" :
+            CaseKind.SNAKE.change(
+                name,
+                CaseKind.KEBAB
+            );
+
+        this.fileExtensionText = fileExtensionText;
+
         this.fileExtension = Optional.ofNullable(
-            "CELL".equals(name) ?
+            fileExtensionText.isEmpty() ?
                 null :
-                FileExtension.parse(
-                    CaseKind.SNAKE.change(
-                        name,
-                        CaseKind.KEBAB
-                    )
-                )
+                FileExtension.parse(fileExtensionText)
         );
     }
 
     public abstract Object cellValue(final SpreadsheetCell cell);
+
+    public static SpreadsheetCellValueKind parse(final String fileExtension) {
+        Objects.requireNonNull(fileExtension, "fileExtension");
+
+        return Arrays.stream(values())
+            .filter((SpreadsheetCellValueKind kind) -> FileExtension.CASE_SENSITIVITY.equals(
+                kind.fileExtensionText,
+                fileExtension
+            )).findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Unknown file extension " + CharSequences.quote(fileExtension)));
+    }
+
+    private final String fileExtensionText;
 
     // HasFileExtension.................................................................................................
 
