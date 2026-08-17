@@ -67,7 +67,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     ThrowableTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetError>,
-    HasTerminalErrorTextTesting<SpreadsheetError>,
+    HasTerminalErrorTextTesting,
     HasValueTesting {
 
     private final static SpreadsheetErrorKind KIND = SpreadsheetErrorKind.NA;
