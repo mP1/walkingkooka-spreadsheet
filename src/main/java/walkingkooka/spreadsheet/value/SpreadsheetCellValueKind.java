@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.value;
 
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.io.FileExtension;
+import walkingkooka.io.HasFileExtension;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -36,7 +37,7 @@ import java.util.Optional;
 /**
  * Directive that controls what part of a cell to export or when importing what part of a cell to replace.
  */
-public enum SpreadsheetCellValueKind {
+public enum SpreadsheetCellValueKind implements HasFileExtension {
 
     CELL {
         @Override
@@ -142,11 +143,19 @@ public enum SpreadsheetCellValueKind {
 
     public abstract Object cellValue(final SpreadsheetCell cell);
 
+    // HasFileExtension.................................................................................................
+
+    @Override
+    public final Optional<FileExtension> fileExtension() {
+        return Optional.of(this.fileExtension);
+    }
+
     /**
      * Returns the preferred file extension for this {@link SpreadsheetCell} component. Note this does not include
      * the actual type technology file extension such as <code>*.json</code>, which needs to be appended.
      */
-    public final FileExtension fileExtension() {
+    @Override
+    public final FileExtension fileExtensionOrFail() {
         return this.fileExtension;
     }
 
