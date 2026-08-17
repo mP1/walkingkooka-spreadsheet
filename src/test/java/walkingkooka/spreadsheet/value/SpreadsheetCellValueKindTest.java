@@ -22,7 +22,6 @@ import walkingkooka.HasValueTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.io.FileExtension;
 import walkingkooka.io.HasFileExtensionTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting;
@@ -395,14 +394,6 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.VALUE_TYPE,
             "value-type"
-        );
-    }
-
-    private void fileExtensionAndCheck(final SpreadsheetCellValueKind kind,
-                                       final String expected) {
-        this.fileExtensionAndCheck(
-            kind,
-            FileExtension.parse(expected)
         );
     }
 
