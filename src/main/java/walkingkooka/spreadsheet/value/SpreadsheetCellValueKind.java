@@ -145,6 +145,15 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
 
     // HasFileExtension.................................................................................................
 
+    /**
+     * Some examples of file extensions include:
+     * <pre>
+     * a1.cell
+     * a1.style
+     * a1.value
+     * al.value-type
+     * </pre>
+     */
     @Override
     public final Optional<FileExtension> fileExtension() {
         return Optional.of(this.fileExtension);
