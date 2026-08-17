@@ -108,6 +108,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageMountPointPaths}
+     */
+    public static Storage<SpreadsheetStorageContext> mountPointPaths() {
+        return Storages.mountPointPaths();
+    }
+
+    /**
      * {@see StorageShared2NativeFile}
      */
     @GwtIncompatible
