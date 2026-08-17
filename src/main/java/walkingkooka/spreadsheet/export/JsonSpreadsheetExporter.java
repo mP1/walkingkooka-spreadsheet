@@ -200,7 +200,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                             .toString()
                             .replace(SpreadsheetSelection.SEPARATOR.character(), '-') + // make a helper that gives safe WebEntityFileName
                             FileExtension.SEPARATOR +
-                            valueKind.fileExtension()
+                            valueKind.fileExtensionOrFail()
                                 .append(SpreadsheetFileExtensions.JSON)
                     )
                 )
