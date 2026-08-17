@@ -119,7 +119,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.CELL,
-            "A1-XFD1048576.cell.json",
+            "A1-XFD1048576.json",
             SpreadsheetMediaTypes.JSON_CELL,
             "{\n" +
                 "  \"A1\": {\n" +

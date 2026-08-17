@@ -182,6 +182,21 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 );
         }
 
+        // A1.json CELL has no file extension
+        // A1.style.json
+        // A1.value.json
+        String filename = cells.range()
+            .toString()
+            .replace(SpreadsheetSelection.SEPARATOR.character(), '-');
+
+        final FileExtension fileExtension = valueKind.fileExtension()
+            .orElse(null);
+        if (null != fileExtension) {
+            filename = filename + FileExtension.SEPARATOR + fileExtension;
+        }
+
+        filename = filename + FileExtension.SEPARATOR + SpreadsheetFileExtensions.JSON;
+
         return WebEntity.empty()
             .setContentType(
                 Optional.of(contentType)
@@ -195,14 +210,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                     ).toString()
             ).setFilename(
                 Optional.of(
-                    WebEntityFileName.with(
-                        cells.range()
-                            .toString()
-                            .replace(SpreadsheetSelection.SEPARATOR.character(), '-') + // make a helper that gives safe WebEntityFileName
-                            FileExtension.SEPARATOR +
-                            valueKind.fileExtensionOrFail()
-                                .append(SpreadsheetFileExtensions.JSON)
-                    )
+                    WebEntityFileName.with(filename)
                 )
             );
     }
