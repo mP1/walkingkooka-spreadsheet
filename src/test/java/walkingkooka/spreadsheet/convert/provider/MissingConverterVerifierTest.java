@@ -26,8 +26,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyExchangeRater;
-import walkingkooka.currency.CurrencyExchangeRaterDelegator;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.locale.LocaleContext;
@@ -64,6 +63,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -197,7 +197,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     static class TestSpreadsheetConverterContext implements SpreadsheetConverterContext,
-        CurrencyExchangeRaterDelegator,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
         JsonNodeMarshallUnmarshallContextDelegator,
@@ -294,9 +293,22 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             JSON_NODE_UNMARSHALL_CONTEXT
         );
 
+        // CanCurrencyExchangeRate......................................................................................
+
         @Override
-        public CurrencyExchangeRater currencyExchangeRater() {
-            return CURRENCY_CONTEXT;
+        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                     final Optional<LocalDateTime> dateTime) {
+            return CURRENCY_CONTEXT.currencyExchangeRate(
+                currencyExchange,
+                dateTime
+            );
+        }
+
+        // CanCurrencyExchanges.........................................................................................
+
+        @Override
+        public Set<CurrencyExchange> currencyExchanges() {
+            return CURRENCY_CONTEXT.currencyExchanges();
         }
 
         @Override

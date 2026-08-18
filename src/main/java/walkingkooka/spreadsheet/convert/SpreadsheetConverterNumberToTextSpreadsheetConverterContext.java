@@ -21,8 +21,7 @@ import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyExchangeRater;
-import walkingkooka.currency.CurrencyExchangeRaterDelegator;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.DateTimeContexts;
@@ -49,13 +48,14 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implements SpreadsheetConverterContext,
-    CurrencyExchangeRaterDelegator,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -211,11 +211,22 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
 
     private final SpreadsheetConverterContext spreadsheetConverterContext;
 
-    // CurrencyExchangeRaterDelegator...................................................................................
+    // CanCurrencyExchangeRate..........................................................................................
 
     @Override
-    public CurrencyExchangeRater currencyExchangeRater() {
-        return this.spreadsheetConverterContext;
+    public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                 final Optional<LocalDateTime> dateTime) {
+        return this.spreadsheetConverterContext.currencyExchangeRate(
+            currencyExchange,
+            dateTime
+        );
+    }
+
+    // CanCurrencyExchanges.............................................................................................
+
+    @Override
+    public Set<CurrencyExchange> currencyExchanges() {
+        return this.spreadsheetConverterContext.currencyExchanges();
     }
 
     // DateTimeContextDelegator.........................................................................................
