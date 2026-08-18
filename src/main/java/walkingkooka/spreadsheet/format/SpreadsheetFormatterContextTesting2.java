@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextTesting;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextTesting;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextTesting2;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetFormatterContextTesting2<C extends SpreadsheetFormatterContext> extends SpreadsheetFormatterContextTesting<C>,
     SpreadsheetConverterContextTesting<C>,
-    ExpressionNumberConverterContextTesting<C> {
+    ExpressionNumberConverterContextTesting2<C> {
 
     @Override
     default C createConverterLike() {
