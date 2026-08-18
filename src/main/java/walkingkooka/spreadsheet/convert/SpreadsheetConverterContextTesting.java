@@ -17,30 +17,15 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting2;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
-import walkingkooka.storage.convert.StorageConverterContextTesting2;
-import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting2;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
+import walkingkooka.storage.convert.StorageConverterContextTesting;
+import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
-public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends JsonNodeConverterContextTesting2<C>,
-    SpreadsheetLabelNameResolverTesting2<C>,
-    SpreadsheetMetadataLoaderTesting2<C>,
-    StorageConverterContextTesting2<C>,
-    SpreadsheetProviderContextTesting2<C> {
-
-    @Override
-    default C createSpreadsheetLabelNameResolver() {
-        return this.createContext();
-    }
-
-    @Override
-    default C createSpreadsheetMetadataLoader() {
-        return this.createContext();
-    }
-
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetConverterContext.class.getSimpleName();
-    }
+public interface SpreadsheetConverterContextTesting extends JsonNodeConverterContextTesting,
+    SpreadsheetLabelNameResolverTesting,
+    SpreadsheetMetadataLoaderTesting,
+    StorageConverterContextTesting,
+    SpreadsheetProviderContextTesting {
 }

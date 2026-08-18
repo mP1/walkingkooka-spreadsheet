@@ -46,7 +46,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<SpreadsheetConverterNumberToTextSpreadsheetConverterContext>,
+public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting2<SpreadsheetConverterNumberToTextSpreadsheetConverterContext>,
     DecimalNumberContextDelegator {
 
     @Override

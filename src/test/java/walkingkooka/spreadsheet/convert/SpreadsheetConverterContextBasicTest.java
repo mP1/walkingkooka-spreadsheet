@@ -64,7 +64,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetConverterContextBasicTest implements SpreadsheetConverterContextTesting<SpreadsheetConverterContextBasic>,
+public final class SpreadsheetConverterContextBasicTest implements SpreadsheetConverterContextTesting2<SpreadsheetConverterContextBasic>,
     DecimalNumberContextDelegator,
     LocaleContextTesting {
 
