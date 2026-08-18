@@ -34,7 +34,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetConverterContextCycleTest implements SpreadsheetConverterContextTesting<SpreadsheetConverterContextCycle>,
+public final class SpreadsheetConverterContextCycleTest implements SpreadsheetConverterContextTesting2<SpreadsheetConverterContextCycle>,
 
     DecimalNumberContextDelegator {
 
