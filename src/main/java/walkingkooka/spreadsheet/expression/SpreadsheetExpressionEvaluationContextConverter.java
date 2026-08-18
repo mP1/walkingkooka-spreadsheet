@@ -22,8 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyExchangeRater;
-import walkingkooka.currency.CurrencyExchangeRaterDelegator;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
@@ -103,7 +102,6 @@ import java.util.Set;
  * <br>
  */
 final class SpreadsheetExpressionEvaluationContextConverter implements SpreadsheetExpressionEvaluationContext,
-    CurrencyExchangeRaterDelegator,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -295,11 +293,22 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
         return this.context.valueSeparator();
     }
 
-    // CurrencyExchangeRaterDelegator...................................................................................
+    // CanCurrencyExchangeRate..........................................................................................
 
     @Override
-    public CurrencyExchangeRater currencyExchangeRater() {
-        return this.context;
+    public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                 final Optional<LocalDateTime> dateTime) {
+        return this.context.currencyExchangeRate(
+            currencyExchange,
+            dateTime
+        );
+    }
+
+    // CanCurrencyExchanges.............................................................................................
+
+    @Override
+    public Set<CurrencyExchange> currencyExchanges() {
+        return this.context.currencyExchanges();
     }
 
     // SpreadsheetExpressionEvaluationContext delegate..................................................................
