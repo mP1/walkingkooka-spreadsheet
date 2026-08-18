@@ -21,9 +21,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting2;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.storage.convert.StorageConverterContextTesting2;
-import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
+import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting2;
 
-public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends JsonNodeConverterContextTesting<C>,
+public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends JsonNodeConverterContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting2<C>,
     SpreadsheetMetadataLoaderTesting2<C>,
     StorageConverterContextTesting2<C>,
