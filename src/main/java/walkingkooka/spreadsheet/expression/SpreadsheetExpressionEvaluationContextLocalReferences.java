@@ -67,6 +67,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.tree.expression.CanEvaluateString;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -211,6 +212,13 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public SpreadsheetValidationReference validationReference() {
         return this.context.validationReference();
+    }
+
+    // CanEvaluateStringDelegator.......................................................................................
+
+    @Override
+    public CanEvaluateString canEvaluateString() {
+        return this.context;
     }
 
     // StorageExpressionEvaluationContext...............................................................................

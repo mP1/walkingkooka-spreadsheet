@@ -57,6 +57,7 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.tree.expression.CanEvaluateString;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -212,6 +213,13 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     abstract Optional<Optional<Object>> handleSpreadsheetExpressionReference(final SpreadsheetExpressionReference reference);
+
+    // CanEvaluateStringDelegator.......................................................................................
+
+    @Override
+    public final CanEvaluateString canEvaluateString() {
+        return this;
+    }
 
     // LocaleContextDelegator...........................................................................................
 

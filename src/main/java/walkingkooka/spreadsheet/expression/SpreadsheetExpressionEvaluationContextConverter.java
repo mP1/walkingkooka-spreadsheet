@@ -66,6 +66,7 @@ import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.tree.expression.CanEvaluateString;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -579,6 +580,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     @Override
     public ExpressionEvaluationException referenceNotFound(final ExpressionReference reference) {
         return this.context.referenceNotFound(reference);
+    }
+    
+    // CanEvaluateStringDelegator.......................................................................................
+
+    @Override
+    public CanEvaluateString canEvaluateString() {
+        return this;
     }
 
     // DateTimeContext.................................................................................................

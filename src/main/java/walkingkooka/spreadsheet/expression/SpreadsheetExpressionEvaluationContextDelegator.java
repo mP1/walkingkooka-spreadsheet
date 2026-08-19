@@ -53,6 +53,7 @@ import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.tree.expression.CanEvaluateString;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -110,6 +111,19 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default MathContext mathContext() {
         return this.spreadsheetExpressionEvaluationContext()
             .mathContext();
+    }
+
+    // CanEvaluateStringDelegator.......................................................................................
+
+    @Override
+    default Object evaluate(final String evaluate) {
+        return this.spreadsheetExpressionEvaluationContext()
+            .evaluate(evaluate);
+    }
+
+    @Override
+    default CanEvaluateString canEvaluateString() {
+        return this.spreadsheetExpressionEvaluationContext();
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................
@@ -235,11 +249,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     // SpreadsheetExpressionEvaluationContext...........................................................................
-
-    @Override
-    default Object evaluate(final String expression) {
-        return SpreadsheetExpressionEvaluationContext.super.evaluate(expression);
-    }
 
     @Override
     default SpreadsheetFormulaParserToken parseExpression(final TextCursor formula) {
