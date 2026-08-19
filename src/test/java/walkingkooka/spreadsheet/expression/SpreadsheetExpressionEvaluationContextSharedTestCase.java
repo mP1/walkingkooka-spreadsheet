@@ -318,7 +318,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateIncompleteExpressionFails() {
         this.evaluateAndCheck(
-            this.createContext(),
             "=1+",
             SpreadsheetErrorKind.ERROR.setMessage(
                 "End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
@@ -329,7 +328,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateApostrophe() {
         this.evaluateAndCheck(
-            this.createContext(),
             "'Hello",
             "Hello"
         );
@@ -338,7 +336,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateDate() {
         this.evaluateAndCheck(
-            this.createContext(),
             "1999/12/31",
             LocalDate.of(
                 1999,
@@ -351,7 +348,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateDateTime() {
         this.evaluateAndCheck(
-            this.createContext(),
             "1999/12/31 12:58",
             LocalDateTime.of(
                 1999,
@@ -366,7 +362,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateNumberValue() {
         this.evaluateAndCheck(
-            this.createContext(),
             "123.5",
             EXPRESSION_NUMBER_KIND.create(123.5)
         );
@@ -375,7 +370,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateTime() {
         this.evaluateAndCheck(
-            this.createContext(),
             "12:58:59",
             LocalTime.of(
                 12,
@@ -388,7 +382,6 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateExpression() {
         this.evaluateAndCheck(
-            this.createContext(),
             "=1+2",
             EXPRESSION_NUMBER_KIND.create(3)
         );

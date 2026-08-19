@@ -670,7 +670,22 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
     }
 
     @Override
+    public void testErrorNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testInputNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testLoadLabelWithNullLabelFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testOutputNotNull() {
         throw new UnsupportedOperationException();
     }
 
