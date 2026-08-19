@@ -78,10 +78,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting extends FormHandl
                 TextCursors.charSequence(expression)
             )
         );
-        this.checkEquals(
-            expected,
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            expected
         );
     }
 
