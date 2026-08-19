@@ -1023,6 +1023,23 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         return METADATA.getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
     }
 
+    // TerminalContext..................................................................................................
+
+    @Override
+    public void testErrorNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testInputNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testOutputNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
     // Class............................................................................................................
 
     @Override

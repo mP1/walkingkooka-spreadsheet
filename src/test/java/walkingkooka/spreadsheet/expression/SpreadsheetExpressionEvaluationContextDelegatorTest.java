@@ -154,6 +154,23 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         throw new UnsupportedOperationException();
     }
 
+    // TerminalContext..................................................................................................
+
+    @Override
+    public void testErrorNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testInputNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testOutputNotNull() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public TestSpreadsheetExpressionEvaluationContextDelegator createContext() {
         return new TestSpreadsheetExpressionEvaluationContextDelegator();

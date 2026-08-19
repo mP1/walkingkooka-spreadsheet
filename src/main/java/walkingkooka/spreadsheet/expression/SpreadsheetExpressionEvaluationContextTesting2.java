@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextTesting2;
+import walkingkooka.terminal.expression.TerminalExpressionEvaluationContextTesting2;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContextTesting2;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting2;
@@ -46,6 +47,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     SpreadsheetLabelNameResolverTesting2<C>,
     SpreadsheetMetadataContextTesting2<C>,
     StorageExpressionEvaluationContextTesting2<C>,
+    TerminalExpressionEvaluationContextTesting2<C>,
     ValidatorExpressionEvaluationContextTesting2<SpreadsheetValidationReference, C>,
     SpreadsheetProviderContextTesting2<C> {
 
@@ -65,7 +67,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     @Test
     default void testEvaluateWithEmptyStringReturnsError() {
         this.evaluateAndCheck(
-            this.createContext(),
             "",
             SpreadsheetErrorKind.ERROR.setMessage("End of text, expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
         );
@@ -74,7 +75,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     @Test
     default void testEvaluateWithWhitespaceStringReturnsError() {
         this.evaluateAndCheck(
-            this.createContext(),
             " ",
             SpreadsheetErrorKind.ERROR.setMessage("Invalid character \' \' expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
         );
@@ -296,6 +296,18 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
             NullPointerException.class,
             () -> this.createContext()
                 .spreadsheetFormatterContext(null)
+        );
+    }
+
+    // setLocale........................................................................................................
+
+    @Test
+    @Override
+    default void testSetLocaleWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .setLocale(null)
         );
     }
 
