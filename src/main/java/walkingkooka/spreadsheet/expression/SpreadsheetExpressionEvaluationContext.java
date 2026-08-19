@@ -47,6 +47,8 @@ import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.tree.expression.CanEvaluateString;
+import walkingkooka.tree.expression.CanEvaluateStringDelegator;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -78,6 +80,7 @@ import java.util.function.Function;
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpressionEvaluationContext<SpreadsheetValidationReference, SpreadsheetDelta>,
+    CanEvaluateStringDelegator,
     HasSpreadsheetCell,
     HasSpreadsheetMetadata,
     JsonNodeExpressionEvaluationContext,
@@ -291,4 +294,11 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
 
     @Override
     SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);
+
+    // CanEvaluateStringDelegator.......................................................................................
+
+    @Override
+    default CanEvaluateString canEvaluateString() {
+        return this;
+    }
 }
