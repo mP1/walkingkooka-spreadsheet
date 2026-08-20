@@ -849,6 +849,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toStyleable();
                 break;
+            case TO_TSV_STRING_LIST_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toTsvStringList();
+                break;
             case TO_VALIDATION_CHECKBOX_STRING:
                 noParameterCheck(copy);
 
@@ -1533,6 +1538,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_TEXT_NODE = ConverterName.with(TO_TEXT_NODE_STRING);
 
+    private final static String TO_TSV_STRING_LIST_STRING = "to-tsv-string-list";
+
+    final static ConverterName TO_TSV_STRING_LIST = ConverterName.with(TO_TSV_STRING_LIST_STRING);
+
     private final static String TO_VALIDATION_CHECKBOX_STRING = "to-validation-checkbox";
 
     final static ConverterName TO_VALIDATION_CHECKBOX = ConverterName.with(TO_VALIDATION_CHECKBOX_STRING);
@@ -1724,6 +1733,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_STYLE),
             converterInfo(TO_STYLEABLE),
             converterInfo(TO_TEXT_NODE),
+            converterInfo(TO_TSV_STRING_LIST),
             converterInfo(TO_VALIDATION_CHECKBOX),
             converterInfo(TO_VALIDATION_CHOICE),
             converterInfo(TO_VALIDATION_CHOICE_LIST),

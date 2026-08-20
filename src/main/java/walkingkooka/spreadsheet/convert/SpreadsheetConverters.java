@@ -1481,6 +1481,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link Converters#toTsvStringList()}
+     */
+    public static Converter<SpreadsheetConverterContext> toTsvStringList() {
+        return Converters.toTsvStringList();
+    }
+
+    /**
      * {@see ValidationConvertConverters.toValidationCheckbox}
      */
     public static Converter<SpreadsheetConverterContext> toValidationCheckbox() {
