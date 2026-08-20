@@ -1373,6 +1373,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToTsvStringList() {
+        this.converterAndCheck(
+            "to-tsv-string-list",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toTsvStringList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToValidationCheckbox() {
         this.converterAndCheck(
             "to-validation-checkbox",
@@ -1659,6 +1668,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-style to-style\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-styleable to-styleable\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-text-node to-text-node\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-tsv-string-list to-tsv-string-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-checkbox to-validation-checkbox\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-choice to-validation-choice\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-choice-list to-validation-choice-list\n" +

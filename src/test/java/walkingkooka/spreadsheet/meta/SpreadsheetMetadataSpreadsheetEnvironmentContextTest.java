@@ -739,6 +739,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-style\n" +
                 "    to-styleable\n" +
                 "    to-text-node\n" +
+                "    to-tsv-string-list\n" +
                 "    to-validation-checkbox\n" +
                 "    to-validation-choice\n" +
                 "    to-validation-choice-list\n" +
