@@ -46,7 +46,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTesting<JsonSpreadsheetExporter>,
+public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTesting2<JsonSpreadsheetExporter>,
     SpreadsheetMetadataTesting {
 
     private static final SpreadsheetCell CELL_A1 = SpreadsheetSelection.A1.setFormula(

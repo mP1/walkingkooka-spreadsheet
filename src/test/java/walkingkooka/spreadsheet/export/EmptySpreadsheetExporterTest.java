@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 
-public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTesting<EmptySpreadsheetExporter>,
+public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTesting2<EmptySpreadsheetExporter>,
     ToStringTesting<EmptySpreadsheetExporter> {
 
     @Test
