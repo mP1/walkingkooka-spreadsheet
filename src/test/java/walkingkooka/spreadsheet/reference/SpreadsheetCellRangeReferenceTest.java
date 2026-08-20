@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRangeReference>
     implements ComparableTesting2<SpreadsheetCellRangeReference>,
-    CanReplaceReferencesTesting<SpreadsheetCellRangeReference>,
+    CanReplaceReferencesTesting2<SpreadsheetCellRangeReference>,
     IterableTesting<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;

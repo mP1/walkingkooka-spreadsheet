@@ -17,28 +17,17 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> extends TreePrintableTesting {
+public interface CanReplaceReferencesTesting extends TreePrintableTesting {
 
-    @Test
-    default void testReplaceReferencesWithNullMapperFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createReplaceReference()
-                .replaceReferences(null)
-        );
-    }
-
-    default <TT extends CanReplaceReferences<TT>> void replaceReferencesAndCheck(final TT can,
-                                                                                 final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
+    default <T extends CanReplaceReferences<T>> void replaceReferencesAndCheck(final CanReplaceReferences<T> can,
+                                                                               final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         assertSame(
             can,
             can.replaceReferences(mapper),
@@ -46,15 +35,13 @@ public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> 
         );
     }
 
-    default <TT extends CanReplaceReferences<T>> void replaceReferencesAndCheck(final TT can,
-                                                                                final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
-                                                                                final TT expected) {
+    default <T extends CanReplaceReferences<T>> void replaceReferencesAndCheck(final CanReplaceReferences<T> can,
+                                                                               final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
+                                                                               final T expected) {
         this.checkEquals(
             expected,
             can.replaceReferences(mapper),
             can::toString
         );
     }
-
-    T createReplaceReference();
 }
