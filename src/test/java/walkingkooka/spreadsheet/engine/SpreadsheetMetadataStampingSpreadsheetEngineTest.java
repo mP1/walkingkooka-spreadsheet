@@ -74,7 +74,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements SpreadsheetEngineTesting<SpreadsheetMetadataStampingSpreadsheetEngine>,
+public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements SpreadsheetEngineTesting2<SpreadsheetMetadataStampingSpreadsheetEngine>,
     CurrencyContextTesting,
     LocaleContextTesting,
     ToStringTesting<SpreadsheetMetadataStampingSpreadsheetEngine> {

@@ -233,7 +233,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("PointlessArithmeticExpression")
 public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngine>
-    implements SpreadsheetEngineTesting<BasicSpreadsheetEngine>,
+    implements SpreadsheetEngineTesting2<BasicSpreadsheetEngine>,
     SpreadsheetMetadataTesting,
     MathTesting,
     ThrowableTesting {
