@@ -17,57 +17,39 @@
 
 package walkingkooka.spreadsheet;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+public interface SpreadsheetContextSupplierTesting extends TreePrintableTesting {
 
-public interface SpreadsheetContextSupplierTesting<C extends SpreadsheetContextSupplier> extends ClassTesting<C>,
-    TreePrintableTesting {
-
-    // spreadsheetContext...............................................................................................
-
-    @Test
-    default void testSpreadsheetContextWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetContextSupplier()
-                .spreadsheetContext(null)
-        );
-    }
-
-    default void spreadsheetContextAndCheck(final C context,
+    default void spreadsheetContextAndCheck(final SpreadsheetContextSupplier supplier,
                                             final SpreadsheetId id) {
         this.spreadsheetContextAndCheck(
-            context,
+            supplier,
             id,
             Optional.empty()
         );
     }
 
-    default void spreadsheetContextAndCheck(final C context,
+    default void spreadsheetContextAndCheck(final SpreadsheetContextSupplier supplier,
                                             final SpreadsheetId id,
                                             final SpreadsheetContext expected) {
         this.spreadsheetContextAndCheck(
-            context,
+            supplier,
             id,
             Optional.of(expected)
         );
     }
 
-    default void spreadsheetContextAndCheck(final C context,
+    default void spreadsheetContextAndCheck(final SpreadsheetContextSupplier supplier,
                                             final SpreadsheetId id,
                                             final Optional<SpreadsheetContext> expected) {
         this.checkEquals(
             expected,
-            context.spreadsheetContext(id),
-            () -> context + " spreadsheetContext " + id
+            supplier.spreadsheetContext(id),
+            () -> supplier + " spreadsheetContext " + id
         );
     }
-
-    C createSpreadsheetContextSupplier();
 }
