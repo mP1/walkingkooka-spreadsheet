@@ -45,7 +45,7 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting<BasicSpreadsheetComparatorContext>,
+public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting2<BasicSpreadsheetComparatorContext>,
     DecimalNumberContextDelegator,
     LocaleContextTesting {
 
