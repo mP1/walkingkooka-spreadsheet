@@ -97,9 +97,10 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
             .filter(c -> c.reference().equalsIgnoreReferenceKind(cell))
             .findFirst()
             .orElseGet(() -> {
-                Assertions.fail("Loading " + cell + " failed to return requested cell, cells: " + delta);
-                return null;
-            });
+                    Assertions.fail("Loading " + cell + " failed to return requested cell, cells: " + delta);
+                    return null;
+                }
+            );
     }
 
     default void loadCellFailsCheck(final SpreadsheetEngine engine,
@@ -119,7 +120,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                 .stream()
                 .filter(c -> c.reference().equals(cell))
                 .findFirst(),
-            "Expected reference " + cell + " to fail"
+            () -> "Expected reference " + cell + " to fail"
         );
     }
 
@@ -291,7 +292,8 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                 deltaProperties,
                 context
             ),
-            () -> "loadCell " + cell);
+            () -> "loadCell " + cell
+        );
     }
 
     // loadMultipleCellRanges...........................................................................................
@@ -354,7 +356,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                                 final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                 final SpreadsheetEngineContext context,
                                                 final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.loadMultipleCellRanges(
                 cellRanges,
@@ -372,7 +374,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                   final SpreadsheetCell save,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.saveCell(save, context),
             () -> "saveCell " + save
@@ -383,7 +385,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                    final Set<SpreadsheetCell> save,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.saveCells(
                 save,
@@ -399,7 +401,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                     final SpreadsheetSelection delete,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.deleteCells(
                 delete,
@@ -417,7 +419,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                    final SpreadsheetCellRangeReference to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.fillCells(cells, from, to, context),
             () -> "fillCells " + cells + " " + from + " to " + to
@@ -605,7 +607,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                        final int count,
                                        final SpreadsheetEngineContext context,
                                        final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.deleteColumns(column, count, context),
             () -> "deleteColumns column: " + column + " count: " + count
@@ -647,7 +649,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.deleteRows(row, count, context),
             () -> "deleteRows row: " + row + " count: " + count
@@ -693,7 +695,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                        final int count,
                                        final SpreadsheetEngineContext context,
                                        final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.insertColumns(column, count, context),
             () -> "insertColumns column: " + column + " count: " + count
@@ -739,7 +741,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta delta) {
-        checkEquals(
+        this.checkEquals(
             delta,
             engine.insertRows(row, count, context),
             () -> "insertRows row: " + row + " count: " + count
@@ -963,7 +965,6 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
             label,
             context
         );
-
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
             .setCells(cells)
@@ -1262,11 +1263,10 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
 
     // window...........................................................................................................
 
-    default void windowAndCheck(
-        final SpreadsheetEngine engine,
-        final SpreadsheetViewport viewport,
-        final SpreadsheetEngineContext context,
-        final String window) {
+    default void windowAndCheck(final SpreadsheetEngine engine,
+                                final SpreadsheetViewport viewport,
+                                final SpreadsheetEngineContext context,
+                                final String window) {
         this.windowAndCheck(
             engine,
             viewport,
@@ -1275,11 +1275,10 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
         );
     }
 
-    default void windowAndCheck(
-        final SpreadsheetEngine engine,
-        final SpreadsheetViewport viewport,
-        final SpreadsheetEngineContext context,
-        final SpreadsheetCellRangeReference... window) {
+    default void windowAndCheck(final SpreadsheetEngine engine,
+                                final SpreadsheetViewport viewport,
+                                final SpreadsheetEngineContext context,
+                                final SpreadsheetCellRangeReference... window) {
         this.windowAndCheck(
             engine,
             viewport,
@@ -1290,11 +1289,10 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
         );
     }
 
-    default void windowAndCheck(
-        final SpreadsheetEngine engine,
-        final SpreadsheetViewport viewport,
-        final SpreadsheetEngineContext context,
-        final SpreadsheetViewportWindows window) {
+    default void windowAndCheck(final SpreadsheetEngine engine,
+                                final SpreadsheetViewport viewport,
+                                final SpreadsheetEngineContext context,
+                                final SpreadsheetViewportWindows window) {
         this.checkEquals(
             window,
             engine.window(
