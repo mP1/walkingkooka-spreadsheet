@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 
-public final class EmptySpreadsheetExpressionReferenceLoaderTest implements SpreadsheetExpressionReferenceLoaderTesting<EmptySpreadsheetExpressionReferenceLoader> {
+public final class EmptySpreadsheetExpressionReferenceLoaderTest implements SpreadsheetExpressionReferenceLoaderTesting2<EmptySpreadsheetExpressionReferenceLoader> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
 
