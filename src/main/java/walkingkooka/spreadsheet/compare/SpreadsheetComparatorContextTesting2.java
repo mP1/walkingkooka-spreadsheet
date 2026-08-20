@@ -17,7 +17,13 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextTesting;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextTesting2;
 
-public interface SpreadsheetComparatorContextTesting extends SpreadsheetConverterContextTesting {
+public interface SpreadsheetComparatorContextTesting2<C extends SpreadsheetComparatorContext> extends SpreadsheetComparatorContextTesting,
+    SpreadsheetConverterContextTesting2<C> {
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetComparatorContext.class.getSimpleName();
+    }
 }
