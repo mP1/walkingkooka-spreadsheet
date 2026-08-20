@@ -27590,9 +27590,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                        final SpreadsheetFormatterContext context) {
         final SpreadsheetFormula formula = cell.formula();
 
-        final DateTimeContext dateTimeContext = this.dateTimeContext();
-        final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
-
         SpreadsheetCell result;
 
         if (false == formula.text().isEmpty() || formula.value().isPresent()) {
@@ -27612,20 +27609,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     cell.dateTimeSymbols()
                         .map(s -> DateTimeContexts.basic(
                                 s,
-                                dateTimeContext.locale(),
-                                dateTimeContext.defaultYear(),
-                                dateTimeContext.twoDigitYear(),
-                                dateTimeContext
+                                DATE_TIME_CONTEXT.locale(),
+                                DATE_TIME_CONTEXT.defaultYear(),
+                                DATE_TIME_CONTEXT.twoDigitYear(),
+                                DATE_TIME_CONTEXT
                             )
-                        ).orElse(dateTimeContext),
+                        ).orElse(DATE_TIME_CONTEXT),
                     cell.decimalNumberSymbols()
                         .map(s -> DecimalNumberContexts.basic(
                                 DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                                 s,
-                                decimalNumberContext.locale(),
-                                decimalNumberContext.mathContext()
+                                DECIMAL_NUMBER_CONTEXT.locale(),
+                                DECIMAL_NUMBER_CONTEXT.mathContext()
                             )
-                        ).orElse(decimalNumberContext)
+                        ).orElse(DECIMAL_NUMBER_CONTEXT)
                 ).setValue(value)
             );
         } else {
