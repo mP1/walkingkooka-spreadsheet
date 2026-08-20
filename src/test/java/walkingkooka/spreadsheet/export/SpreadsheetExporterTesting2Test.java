@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterTesting2Test.TestSpreadsheetExporter;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
@@ -28,7 +29,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetExporterTestingTest implements SpreadsheetExporterTesting<SpreadsheetExporterTestingTest.TestSpreadsheetExporter> {
+public final class SpreadsheetExporterTesting2Test implements SpreadsheetExporterTesting2<TestSpreadsheetExporter> {
 
     private final static WebEntity WEB_ENTITY = WebEntity.empty()
         .setContentType(Optional.of(MediaType.TEXT_PLAIN))
@@ -39,7 +40,7 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
         final String message = "Fail message 123";
 
         this.exportFails(
-            new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
+            new SpreadsheetExporterTesting2Test.TestSpreadsheetExporter() {
                 @Override
                 public WebEntity export(final SpreadsheetCellRange cells,
                                         final SpreadsheetCellValueKind valueKind,
@@ -70,7 +71,7 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
         );
 
         this.exportAndCheck(
-            new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
+            new SpreadsheetExporterTesting2Test.TestSpreadsheetExporter() {
                 @Override
                 public WebEntity export(final SpreadsheetCellRange r,
                                         final SpreadsheetCellValueKind k,

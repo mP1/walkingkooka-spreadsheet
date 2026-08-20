@@ -33,7 +33,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExporterCollectionTest implements SpreadsheetExporterTesting<SpreadsheetExporterCollection>,
+public final class SpreadsheetExporterCollectionTest implements SpreadsheetExporterTesting2<SpreadsheetExporterCollection>,
     HashCodeEqualsDefinedTesting2<SpreadsheetExporterCollection>,
     ToStringTesting<SpreadsheetExporterCollection> {
 
