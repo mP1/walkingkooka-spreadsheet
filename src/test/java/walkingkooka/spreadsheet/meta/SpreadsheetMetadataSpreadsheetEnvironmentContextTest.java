@@ -725,6 +725,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-zone-offset\n" +
                 "    to-binary\n" +
                 "    to-boolean\n" +
+                "    to-csv-string-list\n" +
                 "    to-date-time-symbols\n" +
                 "    to-decimal-number-symbols\n" +
                 "    to-host-address\n" +
