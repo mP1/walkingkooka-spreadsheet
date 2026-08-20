@@ -20,17 +20,9 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.convert.BinaryNumberConverterFunctions;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
-import walkingkooka.currency.FakeCurrencyContext;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.locale.LocaleContexts;
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.datetime.DateTimeContextTesting;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
@@ -51,25 +43,19 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
-
-import java.math.MathContext;
-import java.text.DateFormatSymbols;
-import java.time.LocalDateTime;
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends SpreadsheetEngineTesting,
     ClassTesting2<E>,
     BinaryTextContextTesting,
+    CurrencyLocaleContextTesting,
+    DateTimeContextTesting,
+    DecimalNumberContextTesting,
+    HasExpressionNumberKindTesting,
     TreePrintableTesting,
     ThrowableTesting {
 
@@ -1790,74 +1776,6 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
     E createSpreadsheetEngine();
 
     SpreadsheetEngineContext createContext();
-
-    default Converter<ExpressionNumberConverterContext> converter() {
-        return Converters.collection(
-            Lists.of(
-                Converters.simple(),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.numberToNumber()),
-                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                    .to(
-                        Number.class,
-                        Converters.numberToNumber()
-                    )
-            )
-        );
-    }
-
-    default ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(
-            this.converter(),
-            BinaryNumberConverterFunctions.multiply(),
-            ConverterContexts.basic(
-                false, // canNumbersHaveGroupSeparator
-                Converters.JAVA_EPOCH_OFFSET,
-                ',', // valueSeparator
-                Converters.fake(),
-                BinaryNumberConverterFunctions.fake(), // multiplier
-                BINARY_TEXT_CONTEXT,
-                new FakeCurrencyContext() {
-                    @Override
-                    public Optional<Currency> currencyForLocale(final Locale locale) {
-                        return Optional.of(
-                            Currency.getInstance(locale)
-                        );
-                    }
-                }.setLocaleContext(
-                    LocaleContexts.jre(
-                        this.decimalNumberContext()
-                            .locale()
-                    )
-                ),
-                this.dateTimeContext(),
-                this.decimalNumberContext()
-            ),
-            this.expressionNumberKind()
-        );
-    }
-
-    default ExpressionNumberKind expressionNumberKind() {
-        return ExpressionNumberKind.BIG_DECIMAL;
-    }
-
-    default DateTimeContext dateTimeContext() {
-        final Locale locale = this.decimalNumberContext()
-            .locale();
-
-        return DateTimeContexts.basic(
-            DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(locale)
-            ),
-            locale,
-            1900,
-            50,
-            LocalDateTime::now
-        );
-    }
-
-    default DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.american(MathContext.DECIMAL32);
-    }
 
     // class............................................................................................................
 
