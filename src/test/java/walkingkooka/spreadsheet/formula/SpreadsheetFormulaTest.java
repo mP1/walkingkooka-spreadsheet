@@ -50,7 +50,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
+import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -101,7 +101,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
     CanBeEmptyTesting,
-    CanReplaceReferencesTesting<SpreadsheetFormula>,
+    CanReplaceReferencesTesting2<SpreadsheetFormula>,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasContentTypeTesting,

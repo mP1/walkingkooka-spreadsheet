@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellReference>
     implements ComparableTesting2<SpreadsheetCellReference>,
     HateosResourceTesting<SpreadsheetCellReference, String>,
-    CanReplaceReferencesTesting<SpreadsheetCellReference>,
+    CanReplaceReferencesTesting2<SpreadsheetCellReference>,
     ValidationReferenceTesting,
     ThrowableTesting {
 
