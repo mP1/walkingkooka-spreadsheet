@@ -1390,6 +1390,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link Converters#toCsvStringList()}
+     */
+    public static Converter<SpreadsheetConverterContext> toCsvStringList() {
+        return Converters.toCsvStringList();
+    }
+
+    /**
      * {@see ConverterToDateTimeSymbols}
      */
     public static Converter<SpreadsheetConverterContext> toDateTimeSymbols() {
