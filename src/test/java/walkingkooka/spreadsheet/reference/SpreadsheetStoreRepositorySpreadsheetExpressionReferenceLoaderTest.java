@@ -34,7 +34,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoaderTest implements SpreadsheetExpressionReferenceLoaderTesting<SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader> {
+public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoaderTest implements SpreadsheetExpressionReferenceLoaderTesting2<SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
 

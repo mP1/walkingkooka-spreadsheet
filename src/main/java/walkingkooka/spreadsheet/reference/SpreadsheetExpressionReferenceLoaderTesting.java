@@ -17,47 +17,19 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetExpressionReferenceLoaderTesting<T extends SpreadsheetExpressionReferenceLoader> extends TreePrintableTesting {
+public interface SpreadsheetExpressionReferenceLoaderTesting extends TreePrintableTesting {
 
     // loadCell.........................................................................................................
 
-    @Test
-    default void testLoadCellWithNullCellFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetExpressionReferenceLoader()
-                .loadCell(
-                    null,
-                    SpreadsheetExpressionEvaluationContexts.fake()
-                )
-        );
-    }
-
-    @Test
-    default void testLoadCellWithNullContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetExpressionReferenceLoader()
-                .loadCell(
-                    SpreadsheetSelection.A1,
-                    null
-                )
-        );
-    }
-
-    default void loadCellAndCheck(final T loader,
+    default void loadCellAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetCellReference cellReference,
                                   final SpreadsheetExpressionEvaluationContext context) {
         this.loadCellAndCheck(
@@ -68,7 +40,7 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
         );
     }
 
-    default void loadCellAndCheck(final T loader,
+    default void loadCellAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetCellReference cellReference,
                                   final SpreadsheetExpressionEvaluationContext context,
                                   final SpreadsheetCell expected) {
@@ -80,7 +52,7 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
         );
     }
 
-    default void loadCellAndCheck(final T loader,
+    default void loadCellAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetCellReference cellReference,
                                   final SpreadsheetExpressionEvaluationContext context,
                                   final Optional<SpreadsheetCell> expected) {
@@ -96,31 +68,7 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
 
     // loadCellRange........................................................................................................
 
-    @Test
-    default void testLoadCellRangeWithNullRangeFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetExpressionReferenceLoader()
-                .loadCellRange(
-                    null,
-                    SpreadsheetExpressionEvaluationContexts.fake()
-                )
-        );
-    }
-
-    @Test
-    default void testLoadCellRangeWithNullContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetExpressionReferenceLoader()
-                .loadCellRange(
-                    SpreadsheetSelection.ALL_CELLS,
-                    null
-                )
-        );
-    }
-
-    default void loadCellRangeAndCheck(final T loader,
+    default void loadCellRangeAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                        final SpreadsheetCellRangeReference range,
                                        final SpreadsheetExpressionEvaluationContext context,
                                        final SpreadsheetCell... expected) {
@@ -132,7 +80,7 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
         );
     }
 
-    default void loadCellRangeAndCheck(final T loader,
+    default void loadCellRangeAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                        final SpreadsheetCellRangeReference range,
                                        final SpreadsheetExpressionEvaluationContext context,
                                        final Set<SpreadsheetCell> expected) {
@@ -148,16 +96,7 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
 
     // loadLabel........................................................................................................
 
-    @Test
-    default void testLoadLabelWithNullLabelFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetExpressionReferenceLoader()
-                .loadLabel(null)
-        );
-    }
-
-    default void loadLabelAndCheck(final T loader,
+    default void loadLabelAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                    final SpreadsheetLabelName labelName) {
         this.loadLabelAndCheck(
             loader,
@@ -166,7 +105,7 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
         );
     }
 
-    default void loadLabelAndCheck(final T loader,
+    default void loadLabelAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                    final SpreadsheetLabelName labelName,
                                    final SpreadsheetLabelMapping expected) {
         this.loadLabelAndCheck(
@@ -176,7 +115,7 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
         );
     }
 
-    default void loadLabelAndCheck(final T loader,
+    default void loadLabelAndCheck(final SpreadsheetExpressionReferenceLoader loader,
                                    final SpreadsheetLabelName labelName,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
@@ -185,11 +124,4 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
             () -> "loadLabel " + labelName
         );
     }
-
-    // createLoader.....................................................................................................
-
-    T createSpreadsheetExpressionReferenceLoader();
-
-
-    SpreadsheetExpressionEvaluationContext createContext();
 }
