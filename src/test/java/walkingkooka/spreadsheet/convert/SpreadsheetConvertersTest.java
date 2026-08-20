@@ -37,6 +37,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContexts;
@@ -69,12 +70,15 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
@@ -2251,6 +2255,148 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
     };
 
+    // plugins..........................................................................................................
+
+    @Test
+    public void testPluginConvertStringToComparatorSelectorFails() {
+        final String selector = "hello-comparator";
+
+        this.pluginConvertFails(
+            selector,
+            SpreadsheetComparatorSelector.class
+        );
+    }
+
+    @Test
+    public void testPluginConvertStringToConverterSelectorFails() {
+        final String selector = "hello-converter";
+
+        this.pluginConvertFails(
+            selector,
+            ConverterSelector.class
+        );
+    }
+
+    @Test
+    public void testPluginConvertStringToSpreadsheetExporterSelectorFails() {
+        final String selector = "hello-exporter";
+
+        this.pluginConvertFails(
+            selector,
+            SpreadsheetExporterSelector.class
+        );
+    }
+
+    @Test
+    public void testPluginConvertSpreadsheetCellToSpreadsheetFormatterSelector() {
+        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("hello-formatter");
+
+        this.pluginConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormatter(
+                    Optional.of(formatter)
+                ),
+            formatter
+        );
+    }
+
+    @Test
+    public void testPluginConvertStringToSpreadsheetImporterSelectorFails() {
+        final String selector = "hello-importer";
+
+        this.pluginConvertFails(
+            selector,
+            SpreadsheetImporterSelector.class
+        );
+    }
+
+    @Test
+    public void testPluginConvertSpreadsheetCellToSpreadsheetParserSelector() {
+        final SpreadsheetParserSelector parser = SpreadsheetParserSelector.parse("hello-parser");
+
+        this.pluginConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setParser(
+                    Optional.of(parser)
+                ),
+            parser
+        );
+    }
+
+    @Test
+    public void testPluginConvertSpreadsheetCellToValidatorSelector() {
+        final ValidatorSelector validator = ValidatorSelector.parse("hello-validator");
+
+        this.pluginConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(
+                    Optional.of(validator)
+                ),
+            validator
+        );
+    }
+
+    private void pluginConvertFails(final Object value,
+                                    final Class<?> type) {
+        this.convertFails(
+            SpreadsheetConverters.plugins(),
+            value,
+            type,
+            PLUGIN_CONVERTER_CONTEXT
+        );
+    }
+
+
+    private void pluginConvertAndCheck(final Object value,
+                                       final Object expected) {
+        this.pluginConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void pluginConvertAndCheck(final Object value,
+                                           final Class<T> type,
+                                           final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.plugins(),
+            value,
+            type,
+            PLUGIN_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext PLUGIN_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+
     // spreadsheetValue.................................................................................................
 
     @Test
@@ -2558,32 +2704,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetFormatterSelector() {
-        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("hello-formatter");
-
-        this.spreadsheetValueConvertAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(
-                    Optional.of(formatter)
-                ),
-            formatter
-        );
-    }
-
-    @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetParserSelector() {
-        final SpreadsheetParserSelector parser = SpreadsheetParserSelector.parse("hello-parser");
-
-        this.spreadsheetValueConvertAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(
-                    Optional.of(parser)
-                ),
-            parser
-        );
-    }
-
-    @Test
     public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetSelection() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetCell spreadsheetCell = cell.setFormula(
@@ -2593,19 +2713,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.spreadsheetValueConvertAndCheck(
             spreadsheetCell,
             cell
-        );
-    }
-
-    @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellToValidatorSelector() {
-        final ValidatorSelector validator = ValidatorSelector.parse("hello-validator");
-
-        this.spreadsheetValueConvertAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(
-                    Optional.of(validator)
-                ),
-            validator
         );
     }
 

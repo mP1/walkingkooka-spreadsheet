@@ -1347,12 +1347,36 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         
         // plugins......................................................................................................
         {
+            // has-spreadsheet-formatter-selector.......................................................................
             if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
-                    FORMATTER_SELECTOR.text(),
+                    spreadsheetCell,
                     SpreadsheetFormatterSelector.class,
-                    SpreadsheetConvertersConverterProvider.PLUGINS, // SPREADSHEET_VALUE
-                    FORMATTER_SELECTOR
+                    SpreadsheetConvertersConverterProvider.PLUGINS,
+                    spreadsheetCell.formatterSelector()
+                        .orElse(null)
+                );
+            }
+
+            // has-spreadsheet-parser-selector..........................................................................
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    spreadsheetCell,
+                    SpreadsheetParserSelector.class,
+                    SpreadsheetConvertersConverterProvider.PLUGINS,
+                    spreadsheetCell.parserSelector()
+                        .orElse(null)
+                );
+            }
+
+            // has-validation-selector..................................................................................
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    spreadsheetCell,
+                    ValidatorSelector.class,
+                    SpreadsheetConvertersConverterProvider.PLUGINS,
+                    spreadsheetCell.validator()
+                        .orElse(null)
                 );
             }
 
@@ -1491,39 +1515,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // NULL_TO_NUMBER
                     IS_NUMBER
-                );
-            }
-
-            // has-spreadsheet-formatter-selector.......................................................................
-            if (formula || scripting || validation) {
-                verifier.addIfConversionFail(
-                    spreadsheetCell,
-                    SpreadsheetFormatterSelector.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
-                    spreadsheetCell.formatterSelector()
-                        .orElse(null)
-                );
-            }
-
-            // has-spreadsheet-parser-selector..........................................................................
-            if (formula || scripting || validation) {
-                verifier.addIfConversionFail(
-                    spreadsheetCell,
-                    SpreadsheetParserSelector.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
-                    spreadsheetCell.parserSelector()
-                        .orElse(null)
-                );
-            }
-
-            // has-validation-selector..................................................................................
-            if (formula || scripting || validation) {
-                verifier.addIfConversionFail(
-                    spreadsheetCell,
-                    ValidatorSelector.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
-                    spreadsheetCell.validator()
-                        .orElse(null)
                 );
             }
 
