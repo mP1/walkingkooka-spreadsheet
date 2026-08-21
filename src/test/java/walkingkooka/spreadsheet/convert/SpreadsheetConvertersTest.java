@@ -27,6 +27,7 @@ import walkingkooka.collect.list.BooleanList;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
+import walkingkooka.collect.list.TsvStringList;
 import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.TsvStringSet;
@@ -4532,6 +4533,76 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // tsv..............................................................................................................
+
+    @Test
+    public void testTsvConvertStringToColorFails() {
+        this.convertFails(
+            SpreadsheetConverters.tsv(),
+            Color.BLACK.value(),
+            Color.class,
+            TSV_CONVERTER_CONTEXT
+        );
+    }
+
+    final TsvStringList TSV_STRING_LIST = TsvStringList.parse("a\tb\t111");
+
+    @Test
+    public void testTsvConvertStringToTsvStringList() {
+        this.tsvConvertAndCheck(
+            TSV_STRING_LIST.text(),
+            TSV_STRING_LIST
+        );
+    }
+
+    @Test
+    public void testTsvConvertTsvStringListToTsvStringList() {
+        this.tsvConvertAndCheck(
+            TSV_STRING_LIST.text(),
+            TSV_STRING_LIST
+        );
+    }
+
+    private void tsvConvertAndCheck(final Object value,
+                                    final TsvStringList expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.tsv(),
+            value,
+            TsvStringList.class,
+            TSV_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext TSV_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+    
     // url..............................................................................................................
 
     @Test
