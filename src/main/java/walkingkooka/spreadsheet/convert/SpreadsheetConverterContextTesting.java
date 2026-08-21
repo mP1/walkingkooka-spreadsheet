@@ -17,13 +17,15 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.environment.convert.EnvironmentConverterContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.storage.convert.StorageConverterContextTesting;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
-public interface SpreadsheetConverterContextTesting extends JsonNodeConverterContextTesting,
+public interface SpreadsheetConverterContextTesting extends EnvironmentConverterContextTesting,
+    JsonNodeConverterContextTesting,
     SpreadsheetLabelNameResolverTesting,
     SpreadsheetMetadataLoaderTesting,
     StorageConverterContextTesting,
