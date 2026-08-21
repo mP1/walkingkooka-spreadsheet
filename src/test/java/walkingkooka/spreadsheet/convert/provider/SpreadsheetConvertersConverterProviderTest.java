@@ -173,6 +173,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+
+    @Test
+    public void testConverterSelectorWithCsv() {
+        this.converterAndCheck(
+            "csv",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.csv()
+        );
+    }
+
     @Test
     public void testConverterSelectorWithCurrency() {
         this.converterAndCheck(
@@ -1528,6 +1538,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/color color\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/color-to-color color-to-color\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/color-to-number color-to-number\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/csv csv\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/currency currency\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/currency-code-to-currency currency-code-to-currency\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/currency-value-to currency-value-to\n" +

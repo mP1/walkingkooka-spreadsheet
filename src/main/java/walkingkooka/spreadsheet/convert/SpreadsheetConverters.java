@@ -235,6 +235,19 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * A converter that involves {@link walkingkooka.collect.list.CsvStringList}.
+     */
+    public static Converter<SpreadsheetConverterContext> csv() {
+        return CSV;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> CSV = namedCollection(
+        "CSV",
+        textToCsvStringList(),
+        toCsvStringList()
+    );
+
+    /**
      * A collection of currency {@link Converter}.
      */
     public static Converter<SpreadsheetConverterContext> currency() {

@@ -599,6 +599,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    color\n" +
                 "    color-to-color\n" +
                 "    color-to-number\n" +
+                "    csv\n" +
                 "    currency\n" +
                 "    currency-code-to-currency\n" +
                 "    currency-value-to\n" +

@@ -147,6 +147,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.colorToNumber();
                 break;
+            case CSV_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.csv();
+                break;
             case CURRENCY_STRING:
                 noParameterCheck(copy);
 
@@ -978,6 +983,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName COLOR_TO_NUMBER = ConverterName.with(COLOR_TO_NUMBER_STRING);
 
+    private final static String CSV_STRING = "csv";
+
+    final static ConverterName CSV = ConverterName.with(CSV_STRING);
+
     private final static String CURRENCY_STRING = "currency";
 
     final static ConverterName CURRENCY = ConverterName.with(CURRENCY_STRING);
@@ -1593,6 +1602,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(COLOR),
             converterInfo(COLOR_TO_COLOR),
             converterInfo(COLOR_TO_NUMBER),
+            converterInfo(CSV),
             converterInfo(CURRENCY),
             converterInfo(CURRENCY_CODE_TO_CURRENCY),
             converterInfo(CURRENCY_VALUE_TO),
