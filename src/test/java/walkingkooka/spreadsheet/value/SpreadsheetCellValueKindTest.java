@@ -25,10 +25,13 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.io.FileExtension;
 import walkingkooka.io.HasFileExtensionTesting;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.header.HasContentTypeTesting;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -51,6 +54,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
+    HasContentTypeTesting,
     HasCurrencyTesting,
     HasFileExtensionTesting,
     HasValueTesting,
@@ -654,6 +658,29 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
             SpreadsheetCellValueKind.fromFileExtension(fileExtension),
             fileExtension::toString
         );
+    }
+
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentTypeWithCell() {
+        this.contentTypeAndCheck(
+            SpreadsheetCellValueKind.CELL,
+            SpreadsheetMediaTypes.JSON_CELL
+        );
+    }
+
+    @Test
+    public void testContentTypesForEach() throws Exception {
+        for (final SpreadsheetCellValueKind kind : SpreadsheetCellValueKind.values()) {
+            this.contentTypeAndCheck(
+                kind,
+                MediaType.class.cast(
+                    SpreadsheetMediaTypes.class.getField("JSON_" + kind.name())
+                        .get(null)
+                )
+            );
+        }
     }
 
     // class............................................................................................................
