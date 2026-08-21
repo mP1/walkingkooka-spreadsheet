@@ -314,7 +314,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testFileExtensionWithDateTimeSymbols() {
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
-            "date-time-symbols"
+            "dateTimeSymbols"
         );
     }
 
@@ -322,7 +322,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testFileExtensionWithDecimalNumberSymbols() {
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
-            "decimal-number-symbols"
+            "decimalNumberSymbols"
         );
     }
 
@@ -330,7 +330,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testFileExtensionWithFormattedValue() {
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.FORMATTED_VALUE,
-            "formatted-value"
+            "formattedValue"
         );
     }
 
@@ -394,7 +394,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testFileExtensionWithValueType() {
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.VALUE_TYPE,
-            "value-type"
+            "valueType"
         );
     }
 
@@ -416,7 +416,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     @Test
     public void testParseWithFormattedValueString() {
         this.parseStringAndCheck(
-            "formatted-value",
+            "formattedValue",
             SpreadsheetCellValueKind.FORMATTED_VALUE
         );
     }
@@ -432,7 +432,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     @Test
     public void testParseWithValueType() {
         this.parseStringAndCheck(
-            "value-type",
+            "valueType",
             SpreadsheetCellValueKind.VALUE_TYPE
         );
     }
@@ -440,7 +440,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     @Test
     public void testParseWithValueTypeMixedCase() {
         this.parseStringAndCheck(
-            "value-TYPE",
+            "valueTYPE",
             SpreadsheetCellValueKind.VALUE_TYPE
         );
     }

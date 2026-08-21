@@ -265,7 +265,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
-            "A1-XFD1048576.date-time-symbols.json",
+            "A1-XFD1048576.dateTimeSymbols.json",
             SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS,
             "{\n" +
                 "  \"A1\": {\n" +
@@ -336,7 +336,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
-            "A1-XFD1048576.decimal-number-symbols.json",
+            "A1-XFD1048576.decimalNumberSymbols.json",
             SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS,
             "{\n" +
                 "  \"A1\": {\n" +
@@ -524,7 +524,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.VALUE_TYPE,
-            "A1-XFD1048576.value-type.json",
+            "A1-XFD1048576.valueType.json",
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
             "{\n" +
                 "  \"A1\": \"hello-value-type\",\n" +
@@ -544,7 +544,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.FORMATTED_VALUE,
-            "A1-XFD1048576.formatted-value.json",
+            "A1-XFD1048576.formattedValue.json",
             SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
             "{\n" +
                 "  \"A1\": {\n" +
