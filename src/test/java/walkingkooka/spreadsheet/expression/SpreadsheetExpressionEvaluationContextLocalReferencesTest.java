@@ -862,6 +862,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             throw new UnsupportedOperationException();
         }
 
+        @Override
+        public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+            return STORAGE_ENVIRONMENT_CONTEXT.parseEnvironmentValueName(name);
+        }
+
         // SpreadsheetMetadataContext...................................................................................
 
         @Override

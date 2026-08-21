@@ -382,6 +382,13 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
         throw new UnsupportedOperationException();
     }
 
+    // CanParseEnvironmentValueName.....................................................................................
+
+    @Override
+    public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+        throw new UnsupportedOperationException();
+    }
+
     // HasProviderContext...............................................................................................
 
     @Override

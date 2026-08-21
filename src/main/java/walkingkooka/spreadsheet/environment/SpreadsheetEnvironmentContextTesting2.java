@@ -31,6 +31,16 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     EnvironmentContextTesting2<C>,
     StorageEnvironmentContextTesting2<C> {
 
+    @Test
+    default void testParseEnvironmentValueNameWithServerUrl() {
+        this.parseEnvironmentValueNameAndCheck(SpreadsheetEnvironmentContext.SERVER_URL);
+    }
+
+    @Test
+    default void testParseEnvironmentValueNameWithSpreadsheetId() {
+        this.parseEnvironmentValueNameAndCheck(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
+    }
+
     // serverUrl........................................................................................................
 
     @Test

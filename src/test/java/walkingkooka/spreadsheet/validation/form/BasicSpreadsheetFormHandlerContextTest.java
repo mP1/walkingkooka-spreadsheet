@@ -587,6 +587,11 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                     return this.environmentContext.addEnvironmentWatcherOnce(watcher);
                 }
 
+                @Override
+                public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+                    return this.environmentContext.parseEnvironmentValueName(name);
+                }
+
                 private final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
             }
         );

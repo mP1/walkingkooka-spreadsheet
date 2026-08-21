@@ -295,6 +295,11 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
         return this.context.addEnvironmentWatcherOnce(watcher);
     }
 
+    @Override
+    public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+        return this.context.parseEnvironmentValueName(name);
+    }
+
     private final SpreadsheetEnvironmentContext context;
 
     // Object...........................................................................................................
