@@ -29,7 +29,6 @@ import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.environment.FakeSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -43,7 +42,6 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2Test.Te
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
@@ -109,153 +107,136 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
 
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-            return this.environmentContext.environmentValue(name);
+            return this.spreadsheetEnvironmentContext.environmentValue(name);
         }
 
         @Override
         public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            this.environmentContext.removeEnvironmentValue(name);
+            this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
         }
 
         @Override
         public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                             final T value) {
-            this.environmentContext.setEnvironmentValue(name, value);
+            this.spreadsheetEnvironmentContext.setEnvironmentValue(name, value);
         }
 
         @Override
         public Currency currency() {
-            return this.environmentContext.currency();
+            return this.spreadsheetEnvironmentContext.currency();
         }
 
         @Override
         public void setCurrency(final Currency currency) {
-            this.environmentContext.setCurrency(currency);
+            this.spreadsheetEnvironmentContext.setCurrency(currency);
         }
         
         @Override
         public Optional<StoragePath> currentWorkingDirectory() {
-            return this.environmentContext.currentWorkingDirectory();
+            return this.spreadsheetEnvironmentContext.currentWorkingDirectory();
         }
 
         @Override
         public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
-            this.environmentContext.setCurrentWorkingDirectory(currentWorkingDirectory);
+            this.spreadsheetEnvironmentContext.setCurrentWorkingDirectory(currentWorkingDirectory);
         }
 
         @Override
         public Optional<StoragePath> homeDirectory() {
-            return this.environmentContext.homeDirectory();
+            return this.spreadsheetEnvironmentContext.homeDirectory();
         }
 
         @Override
         public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
-            this.environmentContext.setHomeDirectory(homeDirectory);
+            this.spreadsheetEnvironmentContext.setHomeDirectory(homeDirectory);
         }
         
         @Override
         public Indentation indentation() {
-            return this.environmentContext.indentation();
+            return this.spreadsheetEnvironmentContext.indentation();
         }
 
         @Override
         public void setIndentation(final Indentation indentation) {
-            this.environmentContext.setIndentation(indentation);
+            this.spreadsheetEnvironmentContext.setIndentation(indentation);
         }
         
         @Override
         public LineEnding lineEnding() {
-            return this.environmentContext.lineEnding();
+            return this.spreadsheetEnvironmentContext.lineEnding();
         }
 
         @Override
         public void setLineEnding(final LineEnding lineEnding) {
-            this.environmentContext.setLineEnding(lineEnding);
+            this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
         }
 
         @Override
         public Locale locale() {
-            return this.environmentContext.locale();
+            return this.spreadsheetEnvironmentContext.locale();
         }
 
         @Override
         public void setLocale(final Locale locale) {
-            this.environmentContext.setLocale(locale);
+            this.spreadsheetEnvironmentContext.setLocale(locale);
         }
 
         @Override
         public LocalDateTime now() {
-            return this.environmentContext.now();
+            return this.spreadsheetEnvironmentContext.now();
         }
 
         @Override
         public AbsoluteUrl serverUrl() {
-            return this.environmentContext.serverUrl();
+            return this.spreadsheetEnvironmentContext.serverUrl();
         }
 
         @Override
         public Optional<SpreadsheetId> spreadsheetId() {
-            return this.environmentContext.spreadsheetId();
+            return this.spreadsheetEnvironmentContext.spreadsheetId();
         }
 
         @Override
         public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
-            this.environmentContext.setSpreadsheetId(spreadsheetId);
+            this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
         }
 
         @Override
         public ZoneOffset timeOffset() {
-            return this.environmentContext.timeOffset();
+            return this.spreadsheetEnvironmentContext.timeOffset();
         }
 
         @Override
         public void setTimeOffset(final ZoneOffset timeOffset) {
-            this.environmentContext.setTimeOffset(timeOffset);
+            this.spreadsheetEnvironmentContext.setTimeOffset(timeOffset);
         }
 
         @Override
         public Optional<EmailAddress> user() {
-            return this.environmentContext.user();
+            return this.spreadsheetEnvironmentContext.user();
         }
 
         @Override
         public void setUser(final Optional<EmailAddress> user) {
-            this.environmentContext.setUser(user);
+            this.spreadsheetEnvironmentContext.setUser(user);
         }
 
         @Override
         public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
-            return this.environmentContext.addEnvironmentWatcher(watcher);
+            return this.spreadsheetEnvironmentContext.addEnvironmentWatcher(watcher);
         }
 
         @Override
         public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
-            return this.environmentContext.addEnvironmentWatcherOnce(watcher);
-        }
-
-        {
-            final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
-            storageEnvironmentContext.setEnvironmentValue(
-                SPREADSHEET_ID,
-                SpreadsheetId.with(1)
-            );
-            storageEnvironmentContext.setEnvironmentValue(
-                SERVER_URL,
-                SpreadsheetStorageContextTesting2Test.SERVER_URL
-            );
-
-            this.environmentContext = SpreadsheetEnvironmentContexts.basic(
-                Storages.fake(),
-                storageEnvironmentContext
-            );
+            return this.spreadsheetEnvironmentContext.addEnvironmentWatcherOnce(watcher);
         }
 
         @Override
         public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
-            return this.environmentContext.parseEnvironmentValueName(name);
+            return this.spreadsheetEnvironmentContext.parseEnvironmentValueName(name);
         }
 
-        private final SpreadsheetEnvironmentContext environmentContext;
+        private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         @Override
         public <T> Either<T, String> convert(final Object value,
