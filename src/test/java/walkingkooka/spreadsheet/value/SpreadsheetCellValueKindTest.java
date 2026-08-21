@@ -22,6 +22,7 @@ import walkingkooka.HasValueTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.io.FileExtension;
 import walkingkooka.io.HasFileExtensionTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting;
@@ -46,6 +47,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     HasCurrencyTesting,
@@ -458,6 +461,199 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // fromFileExtension................................................................................................
+
+    @Test
+    public void testFromFileExtensionWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetCellValueKind.fromFileExtension(null)
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithEmpty() {
+        this.fromFileExtensionAndCheck(
+            SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithJson() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.JSON,
+            SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithTxt() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.TXT,
+            SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithSomethingTxt() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("something.txt"),
+            SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithCurrency() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("currency"),
+            SpreadsheetCellValueKind.CURRENCY
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithCurrencyMixedCase() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("CuRrEnCy"),
+            SpreadsheetCellValueKind.CURRENCY
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithCurrencyUpperCase() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("CURRENCY"),
+            SpreadsheetCellValueKind.CURRENCY
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithCurrencyJson() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("currency.json"),
+            SpreadsheetCellValueKind.CURRENCY
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithSomethingCurrencyJson() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("something.currency.json"),
+            SpreadsheetCellValueKind.CURRENCY
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithDateTimeSymbols() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("dateTimeSymbols"),
+            SpreadsheetCellValueKind.DATE_TIME_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithDecimalNumberSymbols() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("decimalNumberSymbols"),
+            SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithFormula() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("formula"),
+            SpreadsheetCellValueKind.FORMULA
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithFormatter() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("formatter"),
+            SpreadsheetCellValueKind.FORMATTER
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithLocale() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("locale"),
+            SpreadsheetCellValueKind.LOCALE
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithParser() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("parser"),
+            SpreadsheetCellValueKind.PARSER
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithStyle() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("style"),
+            SpreadsheetCellValueKind.STYLE
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithValidator() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("validator"),
+            SpreadsheetCellValueKind.VALIDATOR
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithValue() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("value"),
+            SpreadsheetCellValueKind.VALUE
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithValueType() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("valueType"),
+            SpreadsheetCellValueKind.VALUE_TYPE
+        );
+    }
+
+    @Test
+    public void testFromFileExtensionWithFormattedValue() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("formattedValue"),
+            SpreadsheetCellValueKind.FORMATTED_VALUE
+        );
+    }
+
+    private void fromFileExtensionAndCheck(final SpreadsheetCellValueKind expected) {
+        this.fromFileExtensionAndCheck(
+            Optional.empty(),
+            expected
+        );
+    }
+
+    private void fromFileExtensionAndCheck(final FileExtension fileExtension,
+                                           final SpreadsheetCellValueKind expected) {
+        this.fromFileExtensionAndCheck(
+            Optional.of(fileExtension),
+            expected
+        );
+    }
+
+    private void fromFileExtensionAndCheck(final Optional<FileExtension> fileExtension,
+                                           final SpreadsheetCellValueKind expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetCellValueKind.fromFileExtension(fileExtension),
+            fileExtension::toString
+        );
     }
 
     // class............................................................................................................

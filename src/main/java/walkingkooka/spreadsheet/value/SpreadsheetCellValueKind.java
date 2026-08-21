@@ -169,6 +169,70 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
 
     private final String fileExtensionText;
 
+    // fromFileExtension................................................................................................
+
+    /**
+     * From a {@link FileExtension} matches the appropriate {@link SpreadsheetCellValueKind}.
+     * <pre>
+     * a1.json -> {@link SpreadsheetCellValueKind#CELL}
+     * a1.style -> {@link SpreadsheetCellValueKind#STYLE}
+     * a1.style.json -> {@link SpreadsheetCellValueKind#STYLE}
+     * </pre>
+     */
+    public static SpreadsheetCellValueKind fromFileExtension(final Optional<FileExtension> fileExtension) {
+        Objects.requireNonNull(fileExtension, "fileExtension");
+
+        SpreadsheetCellValueKind spreadsheetCellValueKind = null;
+
+        FileExtension fileExtensionOrNull = fileExtension.orElse(null);
+        if (null != fileExtensionOrNull) {
+            final String fileExtensionText = fileExtensionOrNull.value();
+
+            final int length = fileExtensionText.length();
+
+            int i = 0;
+            while (i < length) {
+                final int next = fileExtensionText.indexOf(
+                    FileExtension.SEPARATOR,
+                    i
+                );
+                if (-1 == next) {
+                    spreadsheetCellValueKind = fromFileExtensionOrNull(
+                        fileExtensionText.substring(
+                            i
+                        )
+                    );
+                    break;
+                }
+
+                spreadsheetCellValueKind = fromFileExtensionOrNull(
+                    fileExtensionText.substring(
+                        i,
+                        next
+                    )
+                );
+
+                if (null != spreadsheetCellValueKind) {
+                    break;
+                }
+                i = next + 1;
+            }
+        }
+
+        return null != spreadsheetCellValueKind ?
+            spreadsheetCellValueKind :
+            CELL;
+    }
+
+    private static SpreadsheetCellValueKind fromFileExtensionOrNull(final String fileExtension) {
+        return Arrays.stream(values())
+            .filter((SpreadsheetCellValueKind kind) -> FileExtension.CASE_SENSITIVITY.equals(
+                kind.fileExtensionText,
+                fileExtension
+            )).findFirst()
+            .orElse(null);
+    }
+
     // HasFileExtension.................................................................................................
 
     /**
