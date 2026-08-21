@@ -656,6 +656,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testCsvConvertCsvStringSetToCsv() {
+        this.csvConvertAndCheck(
+            CsvStringSet.EMPTY.setElements(CSV_STRING_LIST),
+            CSV_STRING_LIST
+        );
+    }
+
     private void csvConvertAndCheck(final Object value,
                                     final CsvStringList expected) {
         this.convertAndCheck(
