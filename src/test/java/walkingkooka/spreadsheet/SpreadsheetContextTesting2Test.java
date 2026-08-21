@@ -29,7 +29,6 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.SpreadsheetContextTesting2Test.TestSpreadsheetContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -201,35 +200,33 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
 
         @Override
         public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
+            return LOCALE_CONTEXT.dateTimeSymbolsForLocale(locale);
         }
 
         @Override
         public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
+            return LOCALE_CONTEXT.decimalNumberSymbolsForLocale(locale);
         }
 
         @Override
         public Set<Locale> findByLocaleText(final String text,
                                             final int offset,
                                             final int count) {
-            Objects.requireNonNull(text, "text");
-            Store.checkOffsetAndCount(offset, count);
-            throw new UnsupportedOperationException();
+            return LOCALE_CONTEXT.findByLocaleText(
+                text,
+                offset,
+                count
+            );
         }
 
         @Override
         public Optional<String> localeText(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
+            return LOCALE_CONTEXT.localeText(locale);
         }
 
         @Override
         public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-            Objects.requireNonNull(languageTag, "languageTag");
-            throw new UnsupportedOperationException();
+            return LOCALE_CONTEXT.localeForLanguageTag(languageTag);
         }
 
         @Override
@@ -288,57 +285,48 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
 
         @Override
         public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-            Objects.requireNonNull(currencyCode, "currencyCode");
-            throw new UnsupportedOperationException();
+            return CURRENCY_CONTEXT.currencyForCurrencyCode(currencyCode);
         }
 
         @Override
         public Optional<Currency> currencyForLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
+            return CURRENCY_CONTEXT.currencyForLocale(locale);
         }
 
         @Override
         public Optional<String> currencyText(final CurrencyCode currencyCode) {
-            Objects.requireNonNull(currencyCode, "currencyCode");
-            throw new UnsupportedOperationException();
+            return CURRENCY_CONTEXT.currencyText(currencyCode);
         }
 
         @Override
         public Set<Locale> localesForCurrencyCode(final CurrencyCode currencyCode) {
-            Objects.requireNonNull(currencyCode, "currencyCode");
-            throw new UnsupportedOperationException();
+            return CURRENCY_CONTEXT.localesForCurrencyCode(currencyCode);
         }
 
         @Override
         public Set<CurrencyCode> findByCurrencyText(final String text,
                                                     final int offset,
                                                     final int count) {
-            Objects.requireNonNull(text, "text");
-            if (offset < 0) {
-                throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-            }
-            if (count < 0) {
-                throw new IllegalArgumentException("Invalid count " + count + " < 0");
-            }
-
-            throw new UnsupportedOperationException();
+            return CURRENCY_CONTEXT.findByCurrencyText(
+                text,
+                offset,
+                count
+            );
         }
 
         @Override
         public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
                                                      final Optional<LocalDateTime> dateTime) {
-            Objects.requireNonNull(currencyExchange, "currencyExchange");
-            Objects.requireNonNull(dateTime, "dateTime");
-
-            throw new UnsupportedOperationException();
+            return CURRENCY_CONTEXT.currencyExchangeRate(
+                currencyExchange,
+                dateTime
+            );
         }
 
         @Override
         public MediaType detect(final String filename,
                                 final Binary content) {
-            return MediaTypeDetectors.binary()
-                .detect(
+            return MEDIA_TYPE_DETECTOR.detect(
                     filename,
                     content
                 );
