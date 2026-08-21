@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.HasConverter;
+import walkingkooka.environment.convert.EnvironmentConverterContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -33,7 +34,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 /**
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
  */
-public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext,
+public interface SpreadsheetConverterContext extends EnvironmentConverterContext,
+    ExpressionNumberConverterContext,
     JsonNodeConverterContext,
     HasConverter<SpreadsheetConverterContext>,
     HasSpreadsheetMetadata,
