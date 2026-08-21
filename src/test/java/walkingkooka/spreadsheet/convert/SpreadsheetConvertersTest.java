@@ -2478,7 +2478,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // spreadsheetValue.................................................................................................
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetErrorToNumber() {
+    public void testValueConvertSpreadsheetErrorToNumber() {
         final SpreadsheetError spreadsheetError = SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1);
 
         this.valueConvertAndCheck(
@@ -2589,7 +2589,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetCellReference() {
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetCellReference() {
         this.valueConvertAndCheck(
             SpreadsheetSelection.A1,
             SpreadsheetSelection.A1
@@ -2597,7 +2597,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetCellRangeReference() {
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetCellRangeReference() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.valueConvertAndCheck(
@@ -2607,7 +2607,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetColumnReference() {
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetColumnReference() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.valueConvertAndCheck(
@@ -2617,7 +2617,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetRowReference() {
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetRowReference() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.valueConvertAndCheck(
@@ -2627,7 +2627,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetErrorToSpreadsheetError() {
+    public void testValueConvertSpreadsheetErrorToSpreadsheetError() {
         final SpreadsheetError error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero is not allowed 123");
 
         this.valueConvertAndCheck(
@@ -2638,7 +2638,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetSelectionFails() {
+    public void testValueConvertStringToSpreadsheetSelectionFails() {
         this.convertFails(
             SpreadsheetConverters.value(),
             SpreadsheetSelection.A1.text(),
@@ -2648,7 +2648,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetCellReference() {
+    public void testValueConvertStringToSpreadsheetCellReference() {
         this.valueConvertAndCheck(
             SpreadsheetSelection.A1.text(),
             SpreadsheetSelection.A1
@@ -2656,7 +2656,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReference() {
+    public void testValueConvertStringToSpreadsheetCellRangeReference() {
         this.valueConvertAndCheck(
             SpreadsheetSelection.A1.text(),
             SpreadsheetSelection.A1.toRange()
@@ -2664,7 +2664,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReferenceWithColumn() {
+    public void testValueConvertStringToSpreadsheetCellRangeReferenceWithColumn() {
         this.valueConvertAndCheck(
             SpreadsheetSelection.parseColumn("B"),
             SpreadsheetSelection.parseColumnRange("B")
@@ -2673,7 +2673,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReferenceWithRow() {
+    public void testValueConvertStringToSpreadsheetCellRangeReferenceWithRow() {
         this.valueConvertAndCheck(
             SpreadsheetSelection.parseRow("3"),
             SpreadsheetSelection.parseRowRange("3")
@@ -2682,7 +2682,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetColumnReference() {
+    public void testValueConvertStringToSpreadsheetColumnReference() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
 
         this.valueConvertAndCheck(
@@ -2692,7 +2692,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetColumnRangeReference() {
+    public void testValueConvertStringToSpreadsheetColumnRangeReference() {
         final SpreadsheetColumnRangeReference column = SpreadsheetSelection.parseColumnRange("C:D");
 
         this.valueConvertAndCheck(
@@ -2702,7 +2702,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetLabelName() {
+    public void testValueConvertStringToSpreadsheetLabelName() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         this.valueConvertAndCheck(
@@ -2712,7 +2712,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetLabelNameWithRowFails() {
+    public void testValueConvertStringToSpreadsheetLabelNameWithRowFails() {
         this.convertFails(
             SpreadsheetConverters.value(),
             "2",
@@ -2722,7 +2722,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetRowReference() {
+    public void testValueConvertStringToSpreadsheetRowReference() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("5");
 
         this.valueConvertAndCheck(
@@ -2732,7 +2732,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetRowRangeReference() {
+    public void testValueConvertStringToSpreadsheetRowRangeReference() {
         final SpreadsheetRowRangeReference row = SpreadsheetSelection.parseRowRange("6:77");
 
         this.valueConvertAndCheck(
@@ -2742,7 +2742,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToSpreadsheetError() {
+    public void testValueConvertStringToSpreadsheetError() {
         final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Value error 123");
 
         this.valueConvertAndCheck(
@@ -2752,7 +2752,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToString() {
+    public void testValueConvertSpreadsheetCellReferenceToString() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.valueConvertAndCheck(
@@ -2762,7 +2762,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToString2() {
+    public void testValueConvertSpreadsheetCellReferenceToString2() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1.toAbsolute();
 
         this.valueConvertAndCheck(
@@ -2772,7 +2772,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellRangeReferenceToString() {
+    public void testValueConvertSpreadsheetCellRangeReferenceToString() {
         final String text = "B2:C3";
 
         this.valueConvertAndCheck(
@@ -2782,7 +2782,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetSelection() {
+    public void testValueConvertSpreadsheetCellToSpreadsheetSelection() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetCell spreadsheetCell = cell.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2")
@@ -2795,7 +2795,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetCellSet() {
+    public void testValueConvertSpreadsheetCellToSpreadsheetCellSet() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2")
         );
@@ -2808,7 +2808,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetCellReference() {
+    public void testValueConvertSpreadsheetCellToSpreadsheetCellReference() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2")
         );
