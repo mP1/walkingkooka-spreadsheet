@@ -231,6 +231,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             CSV = namedCollection(
                 "CSV",
                 textToCsvStringList(),
+                textToCsvStringSet(),
                 toCsvStringList()
             );
         }
