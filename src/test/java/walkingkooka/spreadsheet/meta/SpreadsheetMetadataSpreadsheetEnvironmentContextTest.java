@@ -745,6 +745,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-validation-choice-list\n" +
                 "    to-validation-error-list\n" +
                 "    to-value\n" +
+                "    tsv\n" +
                 "    url\n" +
                 "    url-to-hyperlink\n" +
                 "    url-to-image\n" +

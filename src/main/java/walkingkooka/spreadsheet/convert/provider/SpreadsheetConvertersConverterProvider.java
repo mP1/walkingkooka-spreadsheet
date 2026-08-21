@@ -879,6 +879,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toValue();
                 break;
+            case TSV_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.tsv();
+                break;
             case URL_STRING:
                 noParameterCheck(copy);
 
@@ -1567,6 +1572,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_VALUE = ConverterName.with(TO_VALUE_STRING);
 
+    private final static String TSV_STRING = "tsv";
+
+    final static ConverterName TSV = ConverterName.with(TSV_STRING);
+
     private final static String URL_STRING = "url";
 
     final static ConverterName URL = ConverterName.with(URL_STRING);
@@ -1748,6 +1757,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_VALIDATION_CHOICE_LIST),
             converterInfo(TO_VALIDATION_ERROR_LIST),
             converterInfo(TO_VALUE),
+            converterInfo(TSV),
             converterInfo(URL),
             converterInfo(URL_TO_HYPERLINK),
             converterInfo(URL_TO_IMAGE),

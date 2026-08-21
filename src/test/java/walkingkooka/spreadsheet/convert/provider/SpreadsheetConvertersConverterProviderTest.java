@@ -1428,6 +1428,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTsv() {
+        this.converterAndCheck(
+            "tsv",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.tsv()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithUrl() {
         this.converterAndCheck(
             "url",
@@ -1684,6 +1693,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-choice-list to-validation-choice-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-error-list to-validation-error-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-value to-value\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/tsv tsv\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/url url\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-hyperlink url-to-hyperlink\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-image url-to-image\n" +

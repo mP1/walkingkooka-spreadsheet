@@ -1501,6 +1501,19 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * A converter that involves {@link walkingkooka.collect.list.TsvStringList}.
+     */
+    public static Converter<SpreadsheetConverterContext> tsv() {
+        return TSV;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> TSV = namedCollection(
+        "TSV",
+        textToTsvStringList(),
+        toTsvStringList()
+    );
+    
+    /**
      * A converter that involves {@link Url}.
      */
     public static Converter<SpreadsheetConverterContext> url() {
