@@ -271,6 +271,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             }
 
             @Override
+            public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+                return STORAGE_ENVIRONMENT_CONTEXT.parseEnvironmentValueName(name);
+            }
+
+            @Override
             public Charset charset() {
                 return StandardCharsets.UTF_8;
             }

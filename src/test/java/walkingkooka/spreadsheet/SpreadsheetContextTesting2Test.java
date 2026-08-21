@@ -341,6 +341,11 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
         }
 
         @Override
+        public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+            return STORAGE_ENVIRONMENT_CONTEXT.parseEnvironmentValueName(name);
+        }
+
+        @Override
         public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
             Objects.requireNonNull(currencyCode, "currencyCode");
             throw new UnsupportedOperationException();

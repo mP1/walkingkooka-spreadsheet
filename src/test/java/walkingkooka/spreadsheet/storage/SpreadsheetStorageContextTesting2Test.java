@@ -250,6 +250,11 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             );
         }
 
+        @Override
+        public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+            return this.environmentContext.parseEnvironmentValueName(name);
+        }
+
         private final SpreadsheetEnvironmentContext environmentContext;
 
         @Override
