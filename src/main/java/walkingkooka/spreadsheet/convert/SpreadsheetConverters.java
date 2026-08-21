@@ -1625,16 +1625,14 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 spreadsheetCellSet(),
                 collectionToList(),
                 textToBooleanList(),
-                textToCsvStringList(),
-                textToCsvStringSet(),
                 textToDateList(),
                 textToDateTimeList(),
                 textToLineEnding(),
                 textToNumberList(),
                 textToTimeList(),
-                textToTsvStringList(),
-                textToTsvStringSet(),
                 textToStringList(),
+                csv(),
+                tsv(),
                 binaryToText(),
                 Converters.objectToString()
             );
