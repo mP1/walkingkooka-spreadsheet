@@ -650,6 +650,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
 
     private final static Converter<SpreadsheetConverterContext> SPREADSHEET_SELECTION = namedCollection(
         "SPREADSHEET SELECTION",
+        hasSpreadsheetSelection(),
         spreadsheetSelectionToSpreadsheetSelection(),
         spreadsheetSelectionToText(),
         textToSpreadsheetSelection()
@@ -686,7 +687,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         textToSpreadsheetError(),
         textToValueType(),
         textToZoneOffset(),
-        hasSpreadsheetSelection(),
         spreadsheetCellSet(),
         collectionToList(),
         textToBooleanList(),
