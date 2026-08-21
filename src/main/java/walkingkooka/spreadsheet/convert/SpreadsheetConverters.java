@@ -71,29 +71,6 @@ import java.util.function.Function;
 public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     implements PublicStaticHelper {
 
-    private final static Converter<SpreadsheetConverterContext> TEMPLATE = namedCollection(
-        "TEMPLATE",
-        TemplateConverters.textToTemplateValueName()
-    );
-
-    private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
-        "TEXT",
-        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-        SpreadsheetConverters.textToCharset(),
-        SpreadsheetConverters.textToIndentation(),
-        SpreadsheetConverters.textToLineEnding()
-    );
-
-    private final static Converter<SpreadsheetConverterContext> TEXT_NODE = namedCollection(
-        "TEXTNODE",
-        textToFlag(),
-        textToSpreadsheetText(),
-        textToTextNode(),
-        toTextNode(),
-        urlToHyperlink(),
-        urlToImage()
-    );
-
     private static final Function<SpreadsheetConverterContext, SpreadsheetParserContext> SPREADSHEET_CONVERTER_CONTEXT_TO_SPREADSHEET_PARSER_CONTEXT = (final SpreadsheetConverterContext scc) ->
         SpreadsheetParserContexts.basic(
             InvalidCharacterExceptionFactory.POSITION,
@@ -128,29 +105,35 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * {@see SpreadsheetConverterBasic}
      */
     public static Converter<SpreadsheetConverterContext> basic() {
+        if (null == BASIC) {
+            BASIC = namedCollection(
+                "BASIC",
+                Converters.simple(),
+                SpreadsheetConverters.collectionTo(),
+                SpreadsheetConverters.optionalTo()
+            );
+        }
         return BASIC;
     }
 
-    private final static Converter<SpreadsheetConverterContext> BASIC = namedCollection(
-        "BASIC",
-        Converters.simple(),
-        SpreadsheetConverters.collectionTo(),
-        SpreadsheetConverters.optionalTo()
-    );
+    private static Converter<SpreadsheetConverterContext> BASIC;
 
     /**
      * A {@link Converter} that handles converting from or to a {@link Binary} value
      */
     public static Converter<SpreadsheetConverterContext> binary() {
+        if (null == BINARY) {
+            BINARY = namedCollection(
+                "BINARY",
+                SpreadsheetConverters.textToBinary(),
+                SpreadsheetConverters.toBinary(),
+                SpreadsheetConverters.binaryToText()
+            );
+        }
         return BINARY;
     }
 
-    private final static Converter<SpreadsheetConverterContext> BINARY = namedCollection(
-        "BINARY",
-        SpreadsheetConverters.textToBinary(),
-        SpreadsheetConverters.toBinary(),
-        SpreadsheetConverters.binaryToText()
-    );
+    private static Converter<SpreadsheetConverterContext> BINARY;
 
     /**
      * {@link  Converters#binaryToString()}
@@ -163,14 +146,17 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A {@link Converter} that handles converting from or to a {@link Boolean} value
      */
     public static Converter<SpreadsheetConverterContext> booleans() {
+        if (null == BOOLEAN) {
+            BOOLEAN = namedCollection(
+                "BOOLEAN",
+                SpreadsheetConverters.toBoolean(),
+                SpreadsheetConverters.booleanToText()
+            );
+        }
         return BOOLEAN;
     }
 
-    private final static Converter<SpreadsheetConverterContext> BOOLEAN = namedCollection(
-        "BOOLEAN",
-        SpreadsheetConverters.toBoolean(),
-        SpreadsheetConverters.booleanToText()
-    );
+    private static Converter<SpreadsheetConverterContext> BOOLEAN;
 
     /**
      * {@see SpreadsheetConverterBooleanToText}
@@ -206,19 +192,22 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves color as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> color() {
+        if (null == COLOR) {
+            COLOR = namedCollection(
+                "COLOR",
+                text(),
+                colorToColor(),
+                textToColor(),
+                colorToNumber(),
+                numberToColor(),
+                textToSpreadsheetColorName(),
+                textToSpreadsheetMetadataColor()
+            );
+        }
         return COLOR;
     }
 
-    private final static Converter<SpreadsheetConverterContext> COLOR = namedCollection(
-        "COLOR",
-        text(),
-        colorToColor(),
-        textToColor(),
-        colorToNumber(),
-        numberToColor(),
-        textToSpreadsheetColorName(),
-        textToSpreadsheetMetadataColor()
-    );
+    private static Converter<SpreadsheetConverterContext> COLOR;
 
     /**
      * {@see ColorConverters#colorToColor}
@@ -238,32 +227,38 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves {@link walkingkooka.collect.list.CsvStringList}.
      */
     public static Converter<SpreadsheetConverterContext> csv() {
+        if (null == CSV) {
+            CSV = namedCollection(
+                "CSV",
+                textToCsvStringList(),
+                toCsvStringList()
+            );
+        }
         return CSV;
     }
 
-    private final static Converter<SpreadsheetConverterContext> CSV = namedCollection(
-        "CSV",
-        textToCsvStringList(),
-        toCsvStringList()
-    );
+    private static Converter<SpreadsheetConverterContext> CSV;
 
     /**
      * A collection of currency {@link Converter}.
      */
     public static Converter<SpreadsheetConverterContext> currency() {
+        if (null == CURRENCY) {
+            CURRENCY = namedCollection(
+                "CURRENCY",
+                currencyCodeToCurrency(),
+                currencyValueToNumber(),
+                currencyValueTo(),
+                numberToCurrencyValue(),
+                textToCurrency(),
+                textToCurrencyCode(),
+                textToCurrencyValue()
+            );
+        }
         return CURRENCY;
     }
 
-    private final static Converter<SpreadsheetConverterContext> CURRENCY = namedCollection(
-        "CURRENCY",
-        currencyCodeToCurrency(),
-        currencyValueToNumber(),
-        currencyValueTo(),
-        numberToCurrencyValue(),
-        textToCurrency(),
-        textToCurrencyCode(),
-        textToCurrencyValue()
-    );
+    private static Converter<SpreadsheetConverterContext> CURRENCY;
 
     /**
      * {@see Converters.currencyCodeToCurrency}
@@ -336,13 +331,16 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * or values from an {@link walkingkooka.environment.EnvironmentContext}.
      */
     public static Converter<SpreadsheetConverterContext> environment() {
+        if (null == ENVIRONMENT) {
+            ENVIRONMENT = namedCollection(
+                "ENVIRONMENT",
+                EnvironmentConverters.textToEnvironmentValueName()
+            );
+        }
         return ENVIRONMENT;
     }
 
-    private final static Converter<SpreadsheetConverterContext> ENVIRONMENT = namedCollection(
-        "ENVIRONMENT",
-        EnvironmentConverters.textToEnvironmentValueName()
-    );
+    private static Converter<SpreadsheetConverterContext> ENVIRONMENT;
 
     /**
      * {@see SpreadsheetConverterSpreadsheetErrorToSpreadsheetError}
@@ -369,30 +367,36 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves {@link walkingkooka.tree.expression.Expression}
      */
     public static Converter<SpreadsheetConverterContext> expression() {
+        if (null == EXPRESSION) {
+            EXPRESSION = namedCollection(
+                "EXPRESSION",
+                textToExpression()
+            );
+        }
         return EXPRESSION;
     }
 
-    private final static Converter<SpreadsheetConverterContext> EXPRESSION = namedCollection(
-        "EXPRESSION",
-        textToExpression()
-    );
+    private static Converter<SpreadsheetConverterContext> EXPRESSION;
 
     /**
      * A converter that involves {@link walkingkooka.validation.form.Form} and {@link walkingkooka.validation.Validator}
      */
     public static Converter<SpreadsheetConverterContext> formAndValidation() {
+        if (null == FORM_AND_VALIDATION) {
+            FORM_AND_VALIDATION = namedCollection(
+                "FORM-AND-VALIDATION",
+                textToFormName(),
+                textToValidationError(),
+                toValidationCheckbox(),
+                toValidationChoice(),
+                toValidationChoiceList(),
+                toValidationErrorList()
+            );
+        }
         return FORM_AND_VALIDATION;
     }
 
-    private final static Converter<SpreadsheetConverterContext> FORM_AND_VALIDATION = namedCollection(
-        "FORM-AND-VALIDATION",
-        textToFormName(),
-        textToValidationError(),
-        toValidationCheckbox(),
-        toValidationChoice(),
-        toValidationChoiceList(),
-        toValidationErrorList()
-    );
+    private static Converter<SpreadsheetConverterContext> FORM_AND_VALIDATION;
 
     /**
      * {@see SpreadsheetConverterFormatPatternToString}
@@ -460,18 +464,21 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * to {@link String} will be incorrect returning {@link Locale#toString()} rather than {@link Locale#toLanguageTag()}.
      */
     public static Converter<SpreadsheetConverterContext> locale() {
+        if (null == LOCALE) {
+            LOCALE = namedCollection(
+                "LOCALE",
+                localeToText(),
+                toLocale(),
+                toLocaleLanguageTag(),
+                dateTimeSymbols(),
+                decimalNumberSymbols(),
+                textToLocaleLanguageTag()
+            );
+        }
         return LOCALE;
     }
 
-    private final static Converter<SpreadsheetConverterContext> LOCALE = namedCollection(
-        "LOCALE",
-        localeToText(),
-        toLocale(),
-        toLocaleLanguageTag(),
-        dateTimeSymbols(),
-        decimalNumberSymbols(),
-        textToLocaleLanguageTag()
-    );
+    private static Converter<SpreadsheetConverterContext> LOCALE;
 
     /**
      * {@link Converters#localeToString}
@@ -498,16 +505,19 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves {@link Number} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> number() {
+        if (null == NUMBER) {
+            NUMBER = NUMBER = namedCollection(
+                "NUMBER",
+                nullToNumber(),
+                numberToNumber(),
+                toNumber(),
+                numberToText()
+            );
+        }
         return NUMBER;
     }
 
-    private final static Converter<SpreadsheetConverterContext> NUMBER = namedCollection(
-        "NUMBER",
-        nullToNumber(),
-        numberToNumber(),
-        toNumber(),
-        numberToText()
-    );
+    private static Converter<SpreadsheetConverterContext> NUMBER;
     
     /**
      * {@see ColorConverters#numberToColor}
@@ -569,30 +579,36 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves plugin as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> plugins() {
+        if (null == PLUGINS) {
+            PLUGINS = PLUGINS = namedCollection(
+                "PLUGINS",
+                hasSpreadsheetFormatterSelector(),
+                hasSpreadsheetParserSelector(),
+                hasValidatorSelector(),
+                textToSpreadsheetFormatterSelector(),
+                textToValidatorSelector()
+            );
+        }
         return PLUGINS;
     }
 
-    private final static Converter<SpreadsheetConverterContext> PLUGINS = namedCollection(
-        "PLUGINS",
-        hasSpreadsheetFormatterSelector(),
-        hasSpreadsheetParserSelector(),
-        hasValidatorSelector(),
-        textToSpreadsheetFormatterSelector(),
-        textToValidatorSelector()
-    );
+    private static Converter<SpreadsheetConverterContext> PLUGINS;
 
     /**
      * A converter for properties
      */
     public static Converter<SpreadsheetConverterContext> properties() {
+        if (null == PROPERTIES) {
+            PROPERTIES = namedCollection(
+                "PROPERTIES",
+                toProperties(),
+                textToProperties()
+            );
+        }
         return PROPERTIES;
     }
 
-    private final static Converter<SpreadsheetConverterContext> PROPERTIES = namedCollection(
-        "PROPERTIES",
-        toProperties(),
-        textToProperties()
-    );
+    private static Converter<SpreadsheetConverterContext> PROPERTIES;
 
     /**
      * {@link Converters#propertiesToDateTimeSymbols()}.
@@ -640,33 +656,39 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} data types.
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetMetadata() {
+        if (null == SPREADSHEET_METADATA) {
+            SPREADSHEET_METADATA = namedCollection(
+                "SPREADSHEET METADATA",
+                textToSpreadsheetId(),
+                textToSpreadsheetMetadata(),
+                textToSpreadsheetMetadataPropertyName(),
+                textToSpreadsheetName(),
+                propertiesToSpreadsheetMetadata(),
+                spreadsheetIdToSpreadsheetMetadata()
+            );
+        }
         return SPREADSHEET_METADATA;
     }
 
-    private final static Converter<SpreadsheetConverterContext> SPREADSHEET_METADATA = namedCollection(
-        "SPREADSHEET METADATA",
-        textToSpreadsheetId(),
-        textToSpreadsheetMetadata(),
-        textToSpreadsheetMetadataPropertyName(),
-        textToSpreadsheetName(),
-        propertiesToSpreadsheetMetadata(),
-        spreadsheetIdToSpreadsheetMetadata()
-    );
+    private static Converter<SpreadsheetConverterContext> SPREADSHEET_METADATA;
 
     /**
      * A converter that involves converting from or to a {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}.
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetSelection() {
+        if (null == SPREADSHEET_SELECTION) {
+            SPREADSHEET_SELECTION = namedCollection(
+                "SPREADSHEET SELECTION",
+                hasSpreadsheetSelection(),
+                spreadsheetSelectionToSpreadsheetSelection(),
+                spreadsheetSelectionToText(),
+                textToSpreadsheetSelection()
+            );
+        }
         return SPREADSHEET_SELECTION;
     }
 
-    private final static Converter<SpreadsheetConverterContext> SPREADSHEET_SELECTION = namedCollection(
-        "SPREADSHEET SELECTION",
-        hasSpreadsheetSelection(),
-        spreadsheetSelectionToSpreadsheetSelection(),
-        spreadsheetSelectionToText(),
-        textToSpreadsheetSelection()
-    );
+    private static Converter<SpreadsheetConverterContext> SPREADSHEET_SELECTION;
 
     /**
      * {@see SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection}
@@ -798,19 +820,27 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves {@link TextStyle} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> style() {
+        if (null == STYLE) {
+            STYLE = namedCollection(
+                "STYLE",
+                toStyle(),
+                textToBorder(),
+                textToMargin(),
+                textToPadding(),
+                textToTextStyle(),
+                textToTextStylePropertyName(),
+                SpreadsheetConverters.toStyleable(),
+                propertiesToTextStyle()
+            );
+        }
         return STYLE;
     }
 
-    private final static Converter<SpreadsheetConverterContext> STYLE = namedCollection(
-        "STYLE",
-        toStyle(),
-        textToBorder(),
-        textToMargin(),
-        textToPadding(),
-        textToTextStyle(),
-        textToTextStylePropertyName(),
-        SpreadsheetConverters.toStyleable(),
-        propertiesToTextStyle()
+    private static Converter<SpreadsheetConverterContext> STYLE;
+
+    // @VisibleForTesting
+    public final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
+        "collection(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)"
     );
 
     /**
@@ -818,58 +848,73 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * the system {@link ProviderContext}.
      */
     public static Converter<SpreadsheetConverterContext> system() {
+        if (null == SYSTEM_CONVERTER) {
+            SYSTEM_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (ProviderContext context) -> dateTime(
+                    SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
+                        .formatter()
+                        .converter(), // dateToString
+                    SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
+                        .formatter()
+                        .converter(), // dateTimeToString
+                    SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
+                        .formatter()
+                        .converter(), // timeToString
+                    SpreadsheetConverters.textToDate(
+                        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                            .parser()
+                    ), // stringToDate
+                    SpreadsheetConverters.textToDateTime(
+                        SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
+                            .parser()
+                    ), // stringToDateTime
+                    SpreadsheetConverters.textToTime(
+                        SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+                            .parser()
+                    ) // stringToTime
+                )
+            ).converter(
+                SYSTEM_CONVERTER_SELECTOR,
+                ProviderContexts.fake()
+            );
+        }
         return SYSTEM_CONVERTER;
     }
 
-    private final static Converter<SpreadsheetConverterContext> SYSTEM_DATE_TIME = dateTime(
-        SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
-            .formatter()
-            .converter(), // dateToString
-        SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
-            .formatter()
-            .converter(), // dateTimeToString
-        SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
-            .formatter()
-            .converter(), // timeToString
-        SpreadsheetConverters.textToDate(
-            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                .parser()
-        ), // stringToDate
-        SpreadsheetConverters.textToDateTime(
-            SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
-                .parser()
-        ), // stringToDateTime
-        SpreadsheetConverters.textToTime(
-            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
-                .parser()
-        ) // stringToTime
-    );
-
-    // @VisibleForTesting
-    public final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
-        "collection(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)"
-    );
-
-    private final static Converter<SpreadsheetConverterContext> SYSTEM_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-        (ProviderContext context) -> SYSTEM_DATE_TIME
-    ).converter(
-        SYSTEM_CONVERTER_SELECTOR,
-        ProviderContexts.fake()
-    );
+    private static Converter<SpreadsheetConverterContext> SYSTEM_CONVERTER;
 
     /**
      * A converter that involves templating.
      */
     public static Converter<SpreadsheetConverterContext> template() {
+        if (null == TEMPLATE) {
+            TEMPLATE = namedCollection(
+                "TEMPLATE",
+                TemplateConverters.textToTemplateValueName()
+            );
+        }
         return TEMPLATE;
     }
+
+    private static Converter<SpreadsheetConverterContext> TEMPLATE;
 
     /**
      * A {@link Converter} that handles converting system text conversions.
      */
     public static Converter<SpreadsheetConverterContext> text() {
+        if (null == TEXT) {
+            TEXT = namedCollection(
+                "TEXT",
+                Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                SpreadsheetConverters.textToCharset(),
+                SpreadsheetConverters.textToIndentation(),
+                SpreadsheetConverters.textToLineEnding()
+            );
+        }
         return TEXT;
     }
+
+    private static Converter<SpreadsheetConverterContext> TEXT;
 
     /**
      * A converter that involves {@link TextNode} as a source or destination.
@@ -878,8 +923,21 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * To create a {@link walkingkooka.tree.text.Image} with a {@link Url} the target must be {@link walkingkooka.tree.text.Image}.
      */
     public static Converter<SpreadsheetConverterContext> textNode() {
+        if (null == TEXT_NODE) {
+            TEXT_NODE = namedCollection(
+                "TEXTNODE",
+                textToFlag(),
+                textToSpreadsheetText(),
+                textToTextNode(),
+                toTextNode(),
+                urlToHyperlink(),
+                urlToImage()
+            );
+        }
         return TEXT_NODE;
     }
+
+    private static Converter<SpreadsheetConverterContext> TEXT_NODE;
 
     /**
      * {@link Converters#textToBooleanList()}
@@ -1504,28 +1562,34 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      * A converter that involves {@link walkingkooka.collect.list.TsvStringList}.
      */
     public static Converter<SpreadsheetConverterContext> tsv() {
+        if (null == TSV) {
+            TSV = namedCollection(
+                "TSV",
+                textToTsvStringList(),
+                toTsvStringList()
+            );
+        }
         return TSV;
     }
 
-    private final static Converter<SpreadsheetConverterContext> TSV = namedCollection(
-        "TSV",
-        textToTsvStringList(),
-        toTsvStringList()
-    );
+    private static Converter<SpreadsheetConverterContext> TSV;
     
     /**
      * A converter that involves {@link Url}.
      */
     public static Converter<SpreadsheetConverterContext> url() {
+        if (null == URL) {
+            URL = namedCollection(
+                "URL",
+                textToUrl(),
+                urlToHyperlink(),
+                urlToImage()
+            );
+        }
         return URL;
     }
 
-    private final static Converter<SpreadsheetConverterContext> URL = namedCollection(
-        "URL",
-        textToUrl(),
-        urlToHyperlink(),
-        urlToImage()
-    );
+    private static Converter<SpreadsheetConverterContext> URL;
 
     /**
      * {@see TreeTextConverters.urlToHyperlink()}
