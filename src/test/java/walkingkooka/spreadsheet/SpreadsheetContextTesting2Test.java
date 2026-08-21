@@ -31,15 +31,16 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.SpreadsheetContextTesting2Test.TestSpreadsheetContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -51,117 +52,111 @@ import java.util.Set;
 
 public final class SpreadsheetContextTesting2Test implements SpreadsheetContextTesting2<TestSpreadsheetContext> {
 
-    @Override
-    public void testEnvironmentValueLineEndingEqualsLineEnding() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testEnvironmentValueLocaleEqualsLocale() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testEnvironmentValueNowEqualsNow() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testRemoveEnvironmentValueWithNowFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetEnvironmentValueWithNowFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetCurrencyWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetCurrentWorkingDirectoryWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetHomeDirectoryWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetIndentationWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-    
-    @Override
-    public void testSetLineEndingWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLocaleWithDifferent() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLocaleWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetServerWithDifferentUrlFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetTimeOffsetWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetUserWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    static class TestSpreadsheetContext extends FakeSpreadsheetContext {
-
-        @Override
-        public Optional<SpreadsheetId> spreadsheetId() {
-            return Optional.of(SpreadsheetContextTesting2Test.SPREADSHEET_ID);
-        }
-
-        @Override
-        public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
-            Objects.requireNonNull(id, "id");
-
-            if (false == SpreadsheetContextTesting2Test.SPREADSHEET_ID.equals(id.orElse(null))) {
-                throw new UnsupportedOperationException();
-            }
-        }
+    final static class TestSpreadsheetContext extends FakeSpreadsheetContext {
 
         @Override
         public Charset charset() {
-            return StandardCharsets.UTF_8;
+            return this.spreadsheetEnvironmentContext.charset();
+        }
+
+        @Override
+        public Currency currency() {
+            return this.spreadsheetEnvironmentContext.currency();
+        }
+
+        @Override
+        public void setCurrency(final Currency currency) {
+            this.spreadsheetEnvironmentContext.setCurrency(currency);
+        }
+
+        @Override
+        public Optional<StoragePath> currentWorkingDirectory() {
+            return this.spreadsheetEnvironmentContext.currentWorkingDirectory();
+        }
+
+        @Override
+        public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+            this.spreadsheetEnvironmentContext.setCurrentWorkingDirectory(currentWorkingDirectory);
+        }
+
+        @Override
+        public Optional<StoragePath> homeDirectory() {
+            return this.spreadsheetEnvironmentContext.homeDirectory();
+        }
+
+        @Override
+        public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+            this.spreadsheetEnvironmentContext.setHomeDirectory(homeDirectory);
         }
 
         @Override
         public Indentation indentation() {
-            return Indentation.SPACES2;
+            return this.spreadsheetEnvironmentContext.indentation();
         }
 
         @Override
         public void setIndentation(final Indentation indentation) {
-            Objects.requireNonNull(indentation, "indentation");
-            throw new UnsupportedOperationException();
+            this.spreadsheetEnvironmentContext.setIndentation(indentation);
         }
-        
+
+        @Override
+        public LineEnding lineEnding() {
+            return this.spreadsheetEnvironmentContext.lineEnding();
+        }
+
         @Override
         public void setLineEnding(final LineEnding lineEnding) {
-            Objects.requireNonNull(lineEnding, "lineEnding");
-            throw new UnsupportedOperationException();
+            this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
+        }
+
+        @Override
+        public Locale locale() {
+            return this.spreadsheetEnvironmentContext.locale();
+        }
+
+        @Override
+        public void setLocale(final Locale locale) {
+            this.spreadsheetEnvironmentContext.setLocale(locale);
+        }
+
+        @Override
+        public LocalDateTime now() {
+            return this.spreadsheetEnvironmentContext.now();
+        }
+
+        @Override
+        public AbsoluteUrl serverUrl() {
+            return this.spreadsheetEnvironmentContext.serverUrl();
+        }
+
+        @Override
+        public Optional<SpreadsheetId> spreadsheetId() {
+            return this.spreadsheetEnvironmentContext.spreadsheetId();
+        }
+
+        @Override
+        public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
+            this.spreadsheetEnvironmentContext.setSpreadsheetId(id);
+        }
+
+        @Override
+        public ZoneOffset timeOffset() {
+            return this.spreadsheetEnvironmentContext.timeOffset();
+        }
+
+        @Override
+        public void setTimeOffset(final ZoneOffset timeOffset) {
+            this.spreadsheetEnvironmentContext.setTimeOffset(timeOffset);
+        }
+
+        @Override
+        public Optional<EmailAddress> user() {
+            return this.spreadsheetEnvironmentContext.user();
+        }
+
+        @Override
+        public void setUser(final Optional<EmailAddress> user) {
+            this.spreadsheetEnvironmentContext.setUser(user);
         }
 
         @Override
@@ -173,30 +168,36 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
 
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-            Objects.requireNonNull(name, "name");
-
-            return Optional.ofNullable(
-                SpreadsheetContext.SPREADSHEET_ID.equals(name) ?
-                    (T) SpreadsheetContextTesting2Test.SPREADSHEET_ID :
-                    SERVER_URL.equals(name) ?
-                        (T) this.serverUrl() :
-                        null
-            );
+            return this.spreadsheetEnvironmentContext.environmentValue(name);
         }
 
         @Override
         public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                             final T value) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(value, "value");
-            throw new UnsupportedOperationException();
+            this.spreadsheetEnvironmentContext.setEnvironmentValue(name, value);
         }
 
         @Override
         public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            Objects.requireNonNull(name, "name");
-            throw new UnsupportedOperationException();
+            this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
         }
+
+        @Override
+        public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
+            return this.spreadsheetEnvironmentContext.addEnvironmentWatcher(watcher);
+        }
+
+        @Override
+        public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
+            return this.spreadsheetEnvironmentContext.addEnvironmentWatcher(watcher);
+        }
+
+        @Override
+        public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+            return this.spreadsheetEnvironmentContext.parseEnvironmentValueName(name);
+        }
+
+        private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         @Override
         public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
@@ -228,17 +229,6 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
         @Override
         public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
             Objects.requireNonNull(languageTag, "languageTag");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Locale locale() {
-            return Locale.ENGLISH;
-        }
-
-        @Override
-        public void setLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
         }
 
@@ -294,55 +284,6 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
             Objects.requireNonNull(watcher, "watcher");
 
             throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Currency currency() {
-            return SpreadsheetContextTesting2Test.CURRENCY;
-        }
-
-        @Override
-        public void setCurrency(final Currency currency) {
-            Objects.requireNonNull(currency, "currency");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public LineEnding lineEnding() {
-            return SpreadsheetContextTesting2Test.LINE_ENDING;
-        }
-
-        @Override
-        public AbsoluteUrl serverUrl() {
-            return SpreadsheetContextTesting2Test.SERVER_URL;
-        }
-
-        @Override
-        public void setTimeOffset(final ZoneOffset timeOffset) {
-            Objects.requireNonNull(timeOffset, "timeOffset");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<EmailAddress> user() {
-            return Optional.empty();
-        }
-
-        @Override
-        public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
-            return STORAGE_ENVIRONMENT_CONTEXT.parseEnvironmentValueName(name);
         }
 
         @Override
