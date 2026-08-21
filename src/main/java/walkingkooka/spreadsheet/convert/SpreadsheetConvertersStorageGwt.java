@@ -19,28 +19,13 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
 
+import java.util.List;
+
 abstract class SpreadsheetConvertersStorageGwt {
 
-    final static Converter<SpreadsheetConverterContext> STORAGE = SpreadsheetConverters.namedCollection(
-        "STORAGE",
-        SpreadsheetConverters.textToStoragePath(),
-        SpreadsheetConverters.textToPath(), // if GWT is true will be filtered.
-        SpreadsheetConverters.storageBinaryToStorageValueCsv(),
-        SpreadsheetConverters.storageBinaryToStorageValueExpression(),
-        SpreadsheetConverters.storageBinaryToStorageValueJson(),
-        SpreadsheetConverters.storageBinaryToStorageValueProperties(),
-        SpreadsheetConverters.storageBinaryToStorageValueTsv(),
-        SpreadsheetConverters.storageBinaryToStorageValueTxt(),
-        SpreadsheetConverters.storageBinaryToStorageValueBinary(),
-        SpreadsheetConverters.storageValueToStorageBinaryCsv(),
-        SpreadsheetConverters.storageValueToStorageBinaryExpression(),
-        SpreadsheetConverters.storageValueToStorageBinaryJson(),
-        SpreadsheetConverters.storageValueToStorageBinaryProperties(),
-        SpreadsheetConverters.storageValueToStorageBinaryTsv(),
-        SpreadsheetConverters.storageValueToStorageBinaryTxt(),
-        SpreadsheetConverters.storageValueToStorageBinaryBinary(),
-        SpreadsheetConverters.binary()
-    );
+    static void textToPath(final List<Converter<SpreadsheetConverterContext>> converters) {
+        // NOP unavailable
+    }
 
     SpreadsheetConvertersStorageGwt() {
         throw new UnsupportedOperationException();

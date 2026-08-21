@@ -1557,7 +1557,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             Lists.of(
                 converters
             )
-        ).setToString(toString);
+        );
+    }
+
+    static <C extends ConverterContext> Converter<C> namedCollection(final String toString,
+                                                                     final List<Converter<C>> converters) {
+        return collection(converters)
+            .setToString(toString);
     }
 
     /**

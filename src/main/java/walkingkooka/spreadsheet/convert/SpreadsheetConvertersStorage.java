@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet.convert;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
+
+import java.util.List;
 
 /**
  * Extracted here because extracting two STORAGE constants into {@link SpreadsheetConverters} and {@link SpreadsheetConvertersGwt},
@@ -26,27 +29,49 @@ import walkingkooka.convert.Converter;
  */
 final class SpreadsheetConvertersStorage extends SpreadsheetConvertersStorageGwt {
 
+    static {
+        final List<Converter<SpreadsheetConverterContext>> converters = Lists.array();
+
+        converters.add(
+            SpreadsheetConverters.textToStoragePath()
+        );
+
+        textToPath(converters);
+
+        converters.addAll(
+            Lists.of(
+                SpreadsheetConverters.storageBinaryToStorageValueCsv(),
+                SpreadsheetConverters.storageBinaryToStorageValueExpression(),
+                SpreadsheetConverters.storageBinaryToStorageValueJson(),
+                SpreadsheetConverters.storageBinaryToStorageValueProperties(),
+                SpreadsheetConverters.storageBinaryToStorageValueTsv(),
+                SpreadsheetConverters.storageBinaryToStorageValueTxt(),
+                SpreadsheetConverters.storageBinaryToStorageValueBinary(),
+                SpreadsheetConverters.storageValueToStorageBinaryCsv(),
+                SpreadsheetConverters.storageValueToStorageBinaryExpression(),
+                SpreadsheetConverters.storageValueToStorageBinaryJson(),
+                SpreadsheetConverters.storageValueToStorageBinaryProperties(),
+                SpreadsheetConverters.storageValueToStorageBinaryTsv(),
+                SpreadsheetConverters.storageValueToStorageBinaryTxt(),
+                SpreadsheetConverters.storageValueToStorageBinaryBinary(),
+                SpreadsheetConverters.binary()
+            )
+        );
+
+        STORAGE = SpreadsheetConverters.namedCollection(
+            "STORAGE",
+            converters
+        );
+    }
+
     @GwtIncompatible
-    final static Converter<SpreadsheetConverterContext> STORAGE = SpreadsheetConverters.namedCollection(
-        "STORAGE",
-        SpreadsheetConverters.textToStoragePath(),
-        SpreadsheetConverters.textToPath(), // if GWT is true will be filtered.
-        SpreadsheetConverters.storageBinaryToStorageValueCsv(),
-        SpreadsheetConverters.storageBinaryToStorageValueExpression(),
-        SpreadsheetConverters.storageBinaryToStorageValueJson(),
-        SpreadsheetConverters.storageBinaryToStorageValueProperties(),
-        SpreadsheetConverters.storageBinaryToStorageValueTsv(),
-        SpreadsheetConverters.storageBinaryToStorageValueTxt(),
-        SpreadsheetConverters.storageBinaryToStorageValueBinary(),
-        SpreadsheetConverters.storageValueToStorageBinaryCsv(),
-        SpreadsheetConverters.storageValueToStorageBinaryExpression(),
-        SpreadsheetConverters.storageValueToStorageBinaryJson(),
-        SpreadsheetConverters.storageValueToStorageBinaryProperties(),
-        SpreadsheetConverters.storageValueToStorageBinaryTsv(),
-        SpreadsheetConverters.storageValueToStorageBinaryTxt(),
-        SpreadsheetConverters.storageValueToStorageBinaryBinary(),
-        SpreadsheetConverters.binary()
-    );
+    static void textToPath(final List<Converter<SpreadsheetConverterContext>> converters) {
+        converters.add(
+            SpreadsheetConverters.textToPath()
+        );
+    }
+
+    final static Converter<SpreadsheetConverterContext> STORAGE;
 
     private SpreadsheetConvertersStorage() {
         super();
