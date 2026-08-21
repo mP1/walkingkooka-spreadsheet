@@ -298,9 +298,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     public static Converter<SpreadsheetConverterContext> dateTimeSymbols() {
         return collection(
             Lists.of(
-                SpreadsheetConverters.toDateTimeSymbols(),
+                toDateTimeSymbols(),
                 Converters.localeToDateTimeSymbols(),
-                SpreadsheetConverters.propertiesToDateTimeSymbols()
+                propertiesToDateTimeSymbols()
             )
         );
     }
@@ -311,9 +311,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     public static Converter<SpreadsheetConverterContext> decimalNumberSymbols() {
         return collection(
             Lists.of(
-                SpreadsheetConverters.toDecimalNumberSymbols(),
+                toDecimalNumberSymbols(),
                 Converters.localeToDecimalNumberSymbols(),
-                SpreadsheetConverters.propertiesToDecimalNumberSymbols()
+                propertiesToDecimalNumberSymbols()
             )
         );
     }
