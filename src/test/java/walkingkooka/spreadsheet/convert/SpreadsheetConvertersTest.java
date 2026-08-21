@@ -4545,7 +4545,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    final TsvStringList TSV_STRING_LIST = TsvStringList.parse("a\tb\t111");
+    final TsvStringList TSV_STRING_LIST = TsvStringList.parse("a\tb\tc");
 
     @Test
     public void testTsvConvertStringToTsvStringList() {
@@ -4559,6 +4559,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testTsvConvertTsvStringListToTsvStringList() {
         this.tsvConvertAndCheck(
             TSV_STRING_LIST.text(),
+            TSV_STRING_LIST
+        );
+    }
+
+    @Test
+    public void testTsvConvertTsvStringSetToTsvStringList() {
+        this.tsvConvertAndCheck(
+            TsvStringSet.EMPTY.setElements(TSV_STRING_LIST),
             TSV_STRING_LIST
         );
     }
