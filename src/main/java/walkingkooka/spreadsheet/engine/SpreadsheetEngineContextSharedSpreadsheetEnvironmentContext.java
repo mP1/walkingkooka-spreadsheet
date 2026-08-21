@@ -177,7 +177,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
                 Cast.to(
                     spreadsheetEnvironmentContextFactory.storage()
                 ),
-                spreadsheetEnvironmentContextFactory.environmentContext() // EnvironmentContext
+                spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext() // StorageEnvironmentContext
             )
         );
     }
