@@ -142,7 +142,7 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
             "" :
             CaseKind.SNAKE.change(
                 name,
-                CaseKind.KEBAB
+                CaseKind.CAMEL
             );
 
         this.fileExtensionText = fileExtensionText;
