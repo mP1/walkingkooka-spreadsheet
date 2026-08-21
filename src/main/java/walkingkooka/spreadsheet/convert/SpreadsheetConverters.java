@@ -1581,7 +1581,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     @SafeVarargs
     static <C extends ConverterContext> Converter<C> namedCollection(final String toString,
                                                                      final Converter<C>... converters) {
-        return collection(
+        return namedCollection(
+            toString,
             Lists.of(
                 converters
             )
