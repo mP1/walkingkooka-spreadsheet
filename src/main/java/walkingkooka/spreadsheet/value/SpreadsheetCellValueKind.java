@@ -21,8 +21,11 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.io.FileExtension;
 import walkingkooka.io.HasFileExtension;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
@@ -40,79 +43,80 @@ import java.util.Optional;
 /**
  * Directive that controls what part of a cell to export or when importing what part of a cell to replace.
  */
-public enum SpreadsheetCellValueKind implements HasFileExtension {
+public enum SpreadsheetCellValueKind implements HasContentType,
+    HasFileExtension {
 
-    CELL {
+    CELL(SpreadsheetMediaTypes.JSON_CELL) {
         @Override
         public SpreadsheetCell cellValue(final SpreadsheetCell cell) {
             return cell;
         }
     },
 
-    CURRENCY {
+    CURRENCY(SpreadsheetMediaTypes.JSON_CURRENCY) {
         @Override
         public Optional<Currency> cellValue(final SpreadsheetCell cell) {
             return cell.currency();
         }
     },
 
-    DATE_TIME_SYMBOLS {
+    DATE_TIME_SYMBOLS(SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS) {
         @Override
         public Optional<DateTimeSymbols> cellValue(final SpreadsheetCell cell) {
             return cell.dateTimeSymbols();
         }
     },
 
-    DECIMAL_NUMBER_SYMBOLS {
+    DECIMAL_NUMBER_SYMBOLS(SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS) {
         @Override
         public Optional<DecimalNumberSymbols> cellValue(final SpreadsheetCell cell) {
             return cell.decimalNumberSymbols();
         }
     },
 
-    FORMULA {
+    FORMULA(SpreadsheetMediaTypes.JSON_FORMULA) {
         @Override
         public SpreadsheetFormula cellValue(final SpreadsheetCell cell) {
             return cell.formula();
         }
     },
 
-    FORMATTER {
+    FORMATTER(SpreadsheetMediaTypes.JSON_FORMATTER) {
         @Override
         public Optional<SpreadsheetFormatterSelector> cellValue(final SpreadsheetCell cell) {
             return cell.formatter();
         }
     },
 
-    LOCALE {
+    LOCALE(SpreadsheetMediaTypes.JSON_LOCALE) {
         @Override
         public Optional<Locale> cellValue(final SpreadsheetCell cell) {
             return cell.locale();
         }
     },
 
-    PARSER {
+    PARSER(SpreadsheetMediaTypes.JSON_PARSER) {
         @Override
         public Optional<SpreadsheetParserSelector> cellValue(final SpreadsheetCell cell) {
             return cell.parser();
         }
     },
 
-    STYLE {
+    STYLE(SpreadsheetMediaTypes.JSON_STYLE) {
         @Override
         public TextStyle cellValue(final SpreadsheetCell cell) {
             return cell.style();
         }
     },
 
-    VALIDATOR {
+    VALIDATOR(SpreadsheetMediaTypes.JSON_VALIDATOR) {
         @Override
         public Optional<ValidatorSelector> cellValue(final SpreadsheetCell cell) {
             return cell.validator();
         }
     },
 
-    VALUE {
+    VALUE(SpreadsheetMediaTypes.JSON_VALUE) {
         @Override
         public Optional<Object> cellValue(final SpreadsheetCell cell) {
             return cell.formula()
@@ -120,7 +124,7 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
         }
     },
 
-    VALUE_TYPE {
+    VALUE_TYPE(SpreadsheetMediaTypes.JSON_VALUE_TYPE) {
         @Override
         public Optional<ValueType> cellValue(final SpreadsheetCell cell) {
             return cell.formula()
@@ -128,14 +132,16 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
         }
     },
 
-    FORMATTED_VALUE {
+    FORMATTED_VALUE(SpreadsheetMediaTypes.JSON_FORMATTED_VALUE) {
         @Override
         public Optional<TextNode> cellValue(final SpreadsheetCell cell) {
             return cell.formattedValue();
         }
     };
 
-    SpreadsheetCellValueKind() {
+    SpreadsheetCellValueKind(final MediaType contentType) {
+        this.contentType = Optional.of(contentType);
+
         final String name = this.name();
 
         final String fileExtensionText = "CELL".equals(name) ?
@@ -153,6 +159,8 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
                 FileExtension.parse(fileExtensionText)
         );
     }
+
+    // cellValue........................................................................................................
 
     public abstract Object cellValue(final SpreadsheetCell cell);
 
@@ -233,6 +241,15 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
             )).findFirst()
             .orElse(null);
     }
+
+    // HasContentType...................................................................................................
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return this.contentType;
+    }
+
+    private final Optional<MediaType> contentType;
 
     // HasFileExtension.................................................................................................
 
