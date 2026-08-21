@@ -490,7 +490,6 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection spreadsheet-selection\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection-to-spreadsheet-selection spreadsheet-selection-to-spreadsheet-selection\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection-to-text spreadsheet-selection-to-text\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-value spreadsheet-value\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage storage\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-binary storage-binary-to-storage-value-binary\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-csv storage-binary-to-storage-value-csv\n" +
@@ -597,6 +596,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url url\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-hyperlink url-to-hyperlink\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-image url-to-image\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/value value\n" +
                 "  expressionFunctionProvider\n" +
                 "    EmptyExpressionFunctionProvider (walkingkooka.tree.expression.function.provider.EmptyExpressionFunctionProvider)\n" +
                 "  spreadsheetExporterProvider\n" +

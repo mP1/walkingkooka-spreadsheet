@@ -132,7 +132,7 @@ public final class SpreadsheetFormatterSharedBadgeErrorTest extends SpreadsheetF
             private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
                 Lists.of(
                     SpreadsheetConverters.text(),
-                    SpreadsheetConverters.spreadsheetValue()
+                    SpreadsheetConverters.value()
                 )
             );
         };

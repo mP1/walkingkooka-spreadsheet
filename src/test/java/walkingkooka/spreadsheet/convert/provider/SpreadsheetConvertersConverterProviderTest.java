@@ -581,15 +581,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithSpreadsheetValue() {
-        this.converterAndCheck(
-            "spreadsheet-value",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.spreadsheetValue()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithStorage() {
         this.converterAndCheck(
             "storage",
@@ -1453,6 +1444,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+    @Test
+    public void testConverterSelectorWithValue() {
+        this.converterAndCheck(
+            "value",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.value()
+        );
+    }
+
     @Override
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
@@ -1570,7 +1570,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection spreadsheet-selection\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection-to-spreadsheet-selection spreadsheet-selection-to-spreadsheet-selection\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection-to-text spreadsheet-selection-to-text\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-value spreadsheet-value\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage storage\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-binary storage-binary-to-storage-value-binary\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-csv storage-binary-to-storage-value-csv\n" +
@@ -1676,7 +1675,8 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-value to-value\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/url url\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-hyperlink url-to-hyperlink\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-image url-to-image\n"
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-image url-to-image\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/value value\n"
         );
     }
 

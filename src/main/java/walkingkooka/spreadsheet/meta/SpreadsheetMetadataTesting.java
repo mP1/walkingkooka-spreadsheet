@@ -241,7 +241,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             EXPRESSION_NUMBER_KIND
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, plugins, properties, style, text-node, template, net, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, currency, plugins, properties, style, text-node, template, net, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -254,7 +254,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             FormHandlerAliasSet.EMPTY
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -283,7 +283,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             7
         ).set(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -292,7 +292,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             RoundingMode.HALF_UP
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)"
+            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)"
             )
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
@@ -314,7 +314,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetComparatorNameList.parse("background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year")
         ).set(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, spreadsheet-value, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, locale, value, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.STYLE,
             TextStyle.EMPTY
@@ -339,7 +339,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 .aliasSet()
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET

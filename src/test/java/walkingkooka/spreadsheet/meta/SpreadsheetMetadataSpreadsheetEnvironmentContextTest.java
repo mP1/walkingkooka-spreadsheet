@@ -641,7 +641,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    spreadsheet-selection\n" +
                 "    spreadsheet-selection-to-spreadsheet-selection\n" +
                 "    spreadsheet-selection-to-text\n" +
-                "    spreadsheet-value\n" +
                 "    storage\n" +
                 "    storage-binary-to-storage-value-binary\n" +
                 "    storage-binary-to-storage-value-csv\n" +
@@ -748,6 +747,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    url\n" +
                 "    url-to-hyperlink\n" +
                 "    url-to-image\n" +
+                "    value\n" +
                 "  currency\n" +
                 "    AUD (java.util.Currency)\n" +
                 "  currentWorkingDirectory\n" +
@@ -885,12 +885,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    time\n" +
                 "  formattingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, currency, plugins, properties, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, currency, plugins, properties, style, text-node, template, net, basic)\"\n" +
                 "  formattingFunctions\n" +
                 "  formHandlers\n" +
                 "  formulaConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
                 "  formulaFunctions\n" +
                 "  functions\n" +
                 "  homeDirectory\n" +
@@ -937,13 +937,13 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    7\n" +
                 "  queryConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, basic)\"\n" +
                 "  queryFunctions\n" +
                 "  roundingMode\n" +
                 "    HALF_UP\n" +
                 "  scriptingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
                 "  scriptingFunctions\n" +
                 "  serverUrl\n" +
                 "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
@@ -959,7 +959,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    [background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year]\n" +
                 "  sortConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, locale, spreadsheet-value, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, locale, value, basic)\"\n" +
                 "  spreadsheetId\n" +
                 "    123\n" +
                 "  style\n" +
@@ -983,7 +983,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  validationConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\"\n" +
                 "  validationFunctions\n" +
                 "  validationValidators\n" +
                 "    absolute-url\n" +

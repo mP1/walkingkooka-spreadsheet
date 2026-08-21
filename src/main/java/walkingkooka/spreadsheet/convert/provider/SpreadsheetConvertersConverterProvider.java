@@ -369,11 +369,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.spreadsheetSelectionToText();
                 break;
-            case SPREADSHEET_VALUE_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.spreadsheetValue();
-                break;
             case STORAGE_STRING:
                 noParameterCheck(copy);
 
@@ -894,6 +889,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.urlToImage();
                 break;
+            case VALUE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.value();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown converter " + name);
         }
@@ -1145,11 +1145,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String SPREADSHEET_SELECTION_TO_TEXT_STRING = "spreadsheet-selection-to-text";
 
     final static ConverterName SPREADSHEET_SELECTION_TO_TEXT = ConverterName.with(SPREADSHEET_SELECTION_TO_TEXT_STRING);
-
-    private final static String SPREADSHEET_VALUE_STRING = "spreadsheet-value";
-
-    final static ConverterName SPREADSHEET_VALUE = ConverterName.with(SPREADSHEET_VALUE_STRING);
-
+    
     private final static String STORAGE_STRING = "storage";
 
     final static ConverterName STORAGE = ConverterName.with(STORAGE_STRING);
@@ -1574,6 +1570,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName URL_TO_IMAGE = ConverterName.with(URL_TO_IMAGE_STRING);
 
+    private final static String VALUE_STRING = "value";
+
+    final static ConverterName VALUE = ConverterName.with(VALUE_STRING);
+
     @Override
     public ConverterInfoSet converterInfos() {
         return INFOS;
@@ -1635,7 +1635,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(SPREADSHEET_SELECTION),
             converterInfo(SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION),
             converterInfo(SPREADSHEET_SELECTION_TO_TEXT),
-            converterInfo(SPREADSHEET_VALUE),
             converterInfo(STORAGE),
             converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_BINARY),
             converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_CSV),
@@ -1741,7 +1740,8 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_VALUE),
             converterInfo(URL),
             converterInfo(URL_TO_HYPERLINK),
-            converterInfo(URL_TO_IMAGE)
+            converterInfo(URL_TO_IMAGE),
+            converterInfo(VALUE)
         )
     );
 

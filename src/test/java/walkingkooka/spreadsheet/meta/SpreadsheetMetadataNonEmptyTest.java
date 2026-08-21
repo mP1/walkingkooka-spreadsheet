@@ -1446,7 +1446,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
                 DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
             ).set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-            .set(converterSelector, ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value)"))
+            .set(converterSelector, ConverterSelector.parse("collection(text, number, date-time, basic, value)"))
             .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -2661,7 +2661,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.CONVERTERS,
-            ConverterAliasSet.parse("text, number, date-time, basic, spreadsheet-value, boolean")
+            ConverterAliasSet.parse("text, number, date-time, basic, value, boolean")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.CURRENCY,
@@ -2724,7 +2724,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean)")
+            ConverterSelector.parse("collection(text, number, date-time, basic, value, boolean)")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
@@ -3017,7 +3017,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      time\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
-                "        \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "        \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
                 "    formulaFunctions: \n" +
                 "      function1\n" +
                 "      function2\n" +
@@ -3257,7 +3257,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      time\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
-                "        \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "        \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
                 "    formulaFunctions: \n" +
                 "      function1\n" +
                 "      function2\n" +
@@ -3495,7 +3495,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    time\n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
                 "  formulaFunctions: \n" +
                 "    function1\n" +
                 "    function2\n" +
@@ -3648,7 +3648,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     FormHandlerAliasSet.parse("handler1, handler2, handler3")
                 ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)")
+                    ConverterSelector.parse("collection(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)")
                 ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("function1, function2, function3")
