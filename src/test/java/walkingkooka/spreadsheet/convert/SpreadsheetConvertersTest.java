@@ -626,6 +626,76 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // csv..............................................................................................................
+
+    @Test
+    public void testCsvConvertStringToColorFails() {
+        this.convertFails(
+            SpreadsheetConverters.csv(),
+            Color.BLACK.value(),
+            Color.class,
+            CSV_CONVERTER_CONTEXT
+        );
+    }
+
+    final CsvStringList CSV_STRING_LIST = CsvStringList.parse("a,b,c");
+
+    @Test
+    public void testCsvConvertStringToCsv() {
+        this.csvConvertAndCheck(
+            CSV_STRING_LIST.text(),
+            CSV_STRING_LIST
+        );
+    }
+
+    @Test
+    public void testCsvConvertCsvStringListToCsv() {
+        this.csvConvertAndCheck(
+            CSV_STRING_LIST.text(),
+            CSV_STRING_LIST
+        );
+    }
+
+    private void csvConvertAndCheck(final Object value,
+                                    final CsvStringList expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.csv(),
+            value,
+            CsvStringList.class,
+            CSV_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext CSV_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+    
     // currency.........................................................................................................
 
     private final static CurrencyCode FROM_CURRENCY_CODE = CurrencyCode.parse("AUD");
