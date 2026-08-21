@@ -159,12 +159,13 @@ public enum SpreadsheetCellValueKind implements HasFileExtension {
     public static SpreadsheetCellValueKind parse(final String fileExtension) {
         Objects.requireNonNull(fileExtension, "fileExtension");
 
-        return Arrays.stream(values())
-            .filter((SpreadsheetCellValueKind kind) -> FileExtension.CASE_SENSITIVITY.equals(
-                kind.fileExtensionText,
-                fileExtension
-            )).findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Unknown file extension " + CharSequences.quote(fileExtension)));
+        final SpreadsheetCellValueKind spreadsheetCellValueKind = fromFileExtensionOrNull(fileExtension);
+
+        if (null == spreadsheetCellValueKind) {
+            new IllegalArgumentException("Unknown file extension " + CharSequences.quote(fileExtension));
+        }
+
+        return spreadsheetCellValueKind;
     }
 
     private final String fileExtensionText;
