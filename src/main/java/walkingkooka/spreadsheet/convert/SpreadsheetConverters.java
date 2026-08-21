@@ -562,6 +562,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
 
     private final static Converter<SpreadsheetConverterContext> PLUGINS = namedCollection(
         "PLUGINS",
+        hasSpreadsheetFormatterSelector(),
+        hasSpreadsheetParserSelector(),
+        hasValidatorSelector(),
         textToSpreadsheetFormatterSelector(),
         textToValidatorSelector()
     );
@@ -683,10 +686,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         textToSpreadsheetError(),
         textToValueType(),
         textToZoneOffset(),
-        hasSpreadsheetFormatterSelector(),
-        hasSpreadsheetParserSelector(),
         hasSpreadsheetSelection(),
-        hasValidatorSelector(),
         spreadsheetCellSet(),
         collectionToList(),
         textToBooleanList(),
