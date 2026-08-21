@@ -443,9 +443,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
 
     /**
      * A converter that involves {@link Locale}, {@link walkingkooka.locale.LocaleLanguageTag} as a source or destination.
-     * In any {@link Converter} declarations it should appear before {@link #spreadsheetValue()}, otherwise
-     * converting {@link Locale} to {@link String} will be incorrect returning {@link Locale#toString()} rather than
-     * {@link Locale#toLanguageTag()}.
+     * In any {@link Converter} declarations it should appear before {@link #value()}, otherwise converting {@link Locale}
+     * to {@link String} will be incorrect returning {@link Locale#toString()} rather than {@link Locale#toLanguageTag()}.
      */
     public static Converter<SpreadsheetConverterContext> locale() {
         return LOCALE;
@@ -671,40 +670,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * A converter that involves spreadsheet values like {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection},
-     * but not system types like number, date etc.
-     */
-    public static Converter<SpreadsheetConverterContext> spreadsheetValue() {
-        return SPREADSHEET_VALUE;
-    }
-
-    private final static Converter<SpreadsheetConverterContext> SPREADSHEET_VALUE = namedCollection(
-        "SPREADSHEET VALUE",
-        errorToNumber(),
-        nullToNumber(),
-        spreadsheetSelection(),
-        errorToError(), // must be before #textToSpreadsheetError
-        textToSpreadsheetError(),
-        textToValueType(),
-        textToZoneOffset(),
-        spreadsheetCellSet(),
-        collectionToList(),
-        textToBooleanList(),
-        textToCsvStringList(),
-        textToCsvStringSet(),
-        textToDateList(),
-        textToDateTimeList(),
-        textToLineEnding(),
-        textToNumberList(),
-        textToTimeList(),
-        textToTsvStringList(),
-        textToTsvStringSet(),
-        textToStringList(),
-        binaryToText(),
-        Converters.objectToString()
-    );
-
-    /**
      * A converter for storage
      */
     public static Converter<SpreadsheetConverterContext> storage() {
@@ -869,7 +834,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
 
     // @VisibleForTesting
     public final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
-        "collection(text, boolean, number, date-time, locale, spreadsheet-value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)"
+        "collection(text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)"
     );
 
     private final static Converter<SpreadsheetConverterContext> SYSTEM_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -1550,6 +1515,43 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         return TreeTextConverters.urlToImage();
     }
 
+    /**
+     * A converter that involves spreadsheet values like {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection},
+     * but not system types like number, date etc.
+     */
+    public static Converter<SpreadsheetConverterContext> value() {
+        if (null == VALUE) {
+            VALUE = namedCollection(
+                "VALUE",
+                errorToNumber(),
+                nullToNumber(),
+                spreadsheetSelection(),
+                errorToError(), // must be before #textToSpreadsheetError
+                textToSpreadsheetError(),
+                textToValueType(),
+                textToZoneOffset(),
+                spreadsheetCellSet(),
+                collectionToList(),
+                textToBooleanList(),
+                textToCsvStringList(),
+                textToCsvStringSet(),
+                textToDateList(),
+                textToDateTimeList(),
+                textToLineEnding(),
+                textToNumberList(),
+                textToTimeList(),
+                textToTsvStringList(),
+                textToTsvStringSet(),
+                textToStringList(),
+                binaryToText(),
+                Converters.objectToString()
+            );
+        }
+        return VALUE;
+    }
+
+    private static Converter<SpreadsheetConverterContext> VALUE;
+    
     @SafeVarargs
     static <C extends ConverterContext> Converter<C> namedCollection(final String toString,
                                                                      final Converter<C>... converters) {

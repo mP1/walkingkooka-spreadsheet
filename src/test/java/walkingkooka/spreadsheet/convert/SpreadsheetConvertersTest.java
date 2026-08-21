@@ -2403,7 +2403,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetErrorToNumber() {
         final SpreadsheetError spreadsheetError = SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1);
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             spreadsheetError,
             ExpressionNumber.class,
             EXPRESSION_NUMBER_KIND.zero()
@@ -2411,8 +2411,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertNullToNumber() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertNullToNumber() {
+        this.valueConvertAndCheck(
             null,
             Number.class,
             EXPRESSION_NUMBER_KIND.zero()
@@ -2420,41 +2420,41 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertBinaryToString() {
+    public void testValueConvertBinaryToString() {
         final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             jsonNode.binary(CHARSET),
             jsonNode.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertByteToString() {
+    public void testValueConvertByteToString() {
         final Byte byteValue = 123;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             byteValue,
             byteValue.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertDateToString() {
+    public void testValueConvertDateToString() {
         final LocalDate date = LocalDate.of(
             1999,
             12,
             31
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             date,
             date.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertDateTimeToString() {
+    public void testValueConvertDateTimeToString() {
         final LocalDateTime dateTime = LocalDateTime.of(
             1999,
             12,
@@ -2464,47 +2464,47 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             59
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             dateTime,
             dateTime.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertExpressionNumberBigDecimalToString() {
+    public void testValueConvertExpressionNumberBigDecimalToString() {
         final ExpressionNumber expressionNumber = ExpressionNumberKind.BIG_DECIMAL.create(123);
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             expressionNumber,
             expressionNumber.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertExpressionNumberDoubleToString() {
+    public void testValueConvertExpressionNumberDoubleToString() {
         final ExpressionNumber expressionNumber = ExpressionNumberKind.DOUBLE.create(123);
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             expressionNumber,
             expressionNumber.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertIntegerToString() {
+    public void testValueConvertIntegerToString() {
         final Integer integer = 123;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             integer,
             integer.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertLongToString() {
+    public void testValueConvertLongToString() {
         final Long longValue = 456L;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             longValue,
             longValue.toString()
         );
@@ -2512,7 +2512,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetCellReference() {
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             SpreadsheetSelection.A1,
             SpreadsheetSelection.A1
         );
@@ -2522,7 +2522,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetCellRangeReference() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             cell,
             cell.toRange()
         );
@@ -2532,7 +2532,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetColumnReference() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             cell,
             cell.toColumn()
         );
@@ -2542,7 +2542,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetRowReference() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             cell,
             cell.toRow()
         );
@@ -2552,7 +2552,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetErrorToSpreadsheetError() {
         final SpreadsheetError error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero is not allowed 123");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             error,
             SpreadsheetError.class,
             error
@@ -2562,7 +2562,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testSpreadsheetValueConvertStringToSpreadsheetSelectionFails() {
         this.convertFails(
-            SpreadsheetConverters.spreadsheetValue(),
+            SpreadsheetConverters.value(),
             SpreadsheetSelection.A1.text(),
             SpreadsheetSelection.class,
             SPREADSHEET_VALUE_CONVERTER_CONTEXT
@@ -2571,7 +2571,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertStringToSpreadsheetCellReference() {
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             SpreadsheetSelection.A1.text(),
             SpreadsheetSelection.A1
         );
@@ -2579,7 +2579,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReference() {
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             SpreadsheetSelection.A1.text(),
             SpreadsheetSelection.A1.toRange()
         );
@@ -2587,7 +2587,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReferenceWithColumn() {
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             SpreadsheetSelection.parseColumn("B"),
             SpreadsheetSelection.parseColumnRange("B")
                 .setRowRange(SpreadsheetSelection.ALL_ROWS)
@@ -2596,7 +2596,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReferenceWithRow() {
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             SpreadsheetSelection.parseRow("3"),
             SpreadsheetSelection.parseRowRange("3")
                 .setColumnRange(SpreadsheetSelection.ALL_COLUMNS)
@@ -2607,7 +2607,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertStringToSpreadsheetColumnReference() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             column.toString(),
             column
         );
@@ -2617,7 +2617,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertStringToSpreadsheetColumnRangeReference() {
         final SpreadsheetColumnRangeReference column = SpreadsheetSelection.parseColumnRange("C:D");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             column.toString(),
             column
         );
@@ -2627,7 +2627,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertStringToSpreadsheetLabelName() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             label.toString(),
             label
         );
@@ -2636,7 +2636,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testSpreadsheetValueConvertStringToSpreadsheetLabelNameWithRowFails() {
         this.convertFails(
-            SpreadsheetConverters.spreadsheetValue(),
+            SpreadsheetConverters.value(),
             "2",
             SpreadsheetLabelName.class,
             SPREADSHEET_VALUE_CONVERTER_CONTEXT
@@ -2647,7 +2647,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertStringToSpreadsheetRowReference() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("5");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             row.toString(),
             row
         );
@@ -2657,7 +2657,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertStringToSpreadsheetRowRangeReference() {
         final SpreadsheetRowRangeReference row = SpreadsheetSelection.parseRowRange("6:77");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             row.toString(),
             row
         );
@@ -2667,7 +2667,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertStringToSpreadsheetError() {
         final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Value error 123");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             error.toString(),
             error
         );
@@ -2677,7 +2677,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetCellReferenceToString() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             cell,
             "A1"
         );
@@ -2687,7 +2687,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetCellReferenceToString2() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1.toAbsolute();
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             cell,
             "$A$1"
         );
@@ -2697,7 +2697,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSpreadsheetValueConvertSpreadsheetCellRangeReferenceToString() {
         final String text = "B2:C3";
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             SpreadsheetSelection.parseCellRange(text),
             text
         );
@@ -2710,7 +2710,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetFormula.EMPTY.setText("=1+2")
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             spreadsheetCell,
             cell
         );
@@ -2722,7 +2722,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetFormula.EMPTY.setText("=1+2")
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             cell,
             SpreadsheetCellSet.class,
             SpreadsheetCellSet.EMPTY.concat(cell)
@@ -2735,7 +2735,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetFormula.EMPTY.setText("=1+2")
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             cell,
             SpreadsheetCellReference.class,
             cell.reference()
@@ -2743,39 +2743,39 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToTsvStringSet() {
+    public void testValueConvertStringToTsvStringSet() {
         final TsvStringSet set = TsvStringSet.EMPTY.concat("abc")
             .concat("def")
             .concat("gh\t i");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             set.text(),
             set
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToValueType() {
+    public void testValueType() {
         final ValueType type = SpreadsheetValueType.NUMBER;
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             type.toString(),
             type
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToZoneOffset() {
+    public void testValueConvertStringToZoneOffset() {
         final ZoneOffset zoneOffset = ZoneOffset.of("+11");
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             zoneOffset,
             zoneOffset.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertListOfBooleanToBooleanList() {
+    public void testValueConvertListOfBooleanToBooleanList() {
         final List<Boolean> booleans = Lists.of(
             true,
             false,
@@ -2783,28 +2783,28 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             null
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             booleans,
             BooleanList.EMPTY.setElements(booleans)
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertListOfStringsToCsvStringList() {
+    public void testValueConvertListOfStringsToCsvStringList() {
         final List<String> strings = Lists.of(
             "Apple",
             "Banana",
             "333"
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             strings,
             CsvStringList.EMPTY.setElements(strings)
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertListOfDateToLocalDateList() {
+    public void testValueConvertListOfDateToLocalDateList() {
         final List<LocalDate> dates = Lists.of(
             LocalDate.of(
                 1999,
@@ -2819,14 +2819,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             null
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             dates,
             LocalDateList.EMPTY.setElements(dates)
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertListOfDateTimeToLocalDateTimeList() {
+    public void testValueConvertListOfDateTimeToLocalDateTimeList() {
         final List<LocalDateTime> datesTimes = Lists.of(
             LocalDateTime.of(
                 1999,
@@ -2847,14 +2847,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             null
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             datesTimes,
             LocalDateTimeList.EMPTY.setElements(datesTimes)
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertListOfTimeToLocalTimeList() {
+    public void testValueConvertListOfTimeToLocalTimeList() {
         final List<LocalTime> times = Lists.of(
             LocalTime.of(
                 12,
@@ -2869,14 +2869,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             null
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             times,
             LocalTimeList.EMPTY.setElements(times)
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertListOfNumbersToNumberList() {
+    public void testValueConvertListOfNumbersToNumberList() {
         final List<Number> numbers = Lists.of(
             EXPRESSION_NUMBER_KIND.create(1),
             EXPRESSION_NUMBER_KIND.create(22),
@@ -2884,29 +2884,29 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             null
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             numbers,
             NumberList.EMPTY.setElements(numbers)
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertListOfStringsToStringList() {
+    public void testValueConvertListOfStringsToStringList() {
         final List<String> strings = Lists.of(
             "Apple",
             "Banana",
             null
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             strings,
             StringList.EMPTY.setElements(strings)
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToBooleanList() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToBooleanList() {
+        this.valueConvertAndCheck(
             "TRUE, FALSE, true",
             BooleanList.EMPTY.setElements(
                 Lists.of(
@@ -2919,8 +2919,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToCsvStringList() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToCsvStringList() {
+        this.valueConvertAndCheck(
             "Apple,Banana,\"333 444\"",
             CsvStringList.EMPTY.setElements(
                 Lists.of(
@@ -2933,8 +2933,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToCsvStringSet() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToCsvStringSet() {
+        this.valueConvertAndCheck(
             "Apple,Banana,\"333 444\"",
             CsvStringSet.EMPTY.setElements(
                 Sets.of(
@@ -2947,8 +2947,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToLocalDateList() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToLocalDateList() {
+        this.valueConvertAndCheck(
             "1999/12/31, 2000/2/2",
             LocalDateList.EMPTY.setElements(
                 Lists.of(
@@ -2968,8 +2968,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToLocalDateTimeList() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToLocalDateTimeList() {
+        this.valueConvertAndCheck(
             "1999/12/31 12:0:0, 2000/2/2 2:22:22",
             LocalDateTimeList.EMPTY.setElements(
                 Lists.of(
@@ -2995,8 +2995,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToLocalTimeList() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToLocalTimeList() {
+        this.valueConvertAndCheck(
             "12:58:59,2:22:22",
             LocalTimeList.EMPTY.setElements(
                 Lists.of(
@@ -3016,8 +3016,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToNumberList() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToNumberList() {
+        this.valueConvertAndCheck(
             "1,22,333.5",
             NumberList.EMPTY.setElements(
                 Lists.of(
@@ -3030,8 +3030,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStringToStringList() {
-        this.spreadsheetValueConvertAndCheck(
+    public void testValueConvertStringToStringList() {
+        this.valueConvertAndCheck(
             "Apple, Banana, Carrot ",
             StringList.EMPTY.setElements(
                 Lists.of(
@@ -3044,7 +3044,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testSpreadsheetValueConvertStorageBinaryToString() {
+    public void testValueConvertStorageBinaryToString() {
         final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
 
         final StorageBinary storageBinary = StorageBinary.with(
@@ -3052,40 +3052,40 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             jsonNode.binary(CHARSET)
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             storageBinary,
             jsonNode.toString()
         );
     }
 
     @Test
-    public void testSpreadsheetValueConvertTimeToString() {
+    public void testValueConvertTimeToString() {
         final LocalTime time = LocalTime.of(
             12,
             58,
             59
         );
 
-        this.spreadsheetValueConvertAndCheck(
+        this.valueConvertAndCheck(
             time,
             time.toString()
         );
     }
 
-    private void spreadsheetValueConvertAndCheck(final Object value,
-                                                 final Object expected) {
-        this.spreadsheetValueConvertAndCheck(
+    private void valueConvertAndCheck(final Object value,
+                                      final Object expected) {
+        this.valueConvertAndCheck(
             value,
             expected.getClass(),
             Cast.to(expected)
         );
     }
 
-    private <T> void spreadsheetValueConvertAndCheck(final Object value,
-                                                     final Class<T> type,
-                                                     final T expected) {
+    private <T> void valueConvertAndCheck(final Object value,
+                                          final Class<T> type,
+                                          final T expected) {
         this.convertAndCheck(
-            SpreadsheetConverters.spreadsheetValue(),
+            SpreadsheetConverters.value(),
             value,
             type,
             SPREADSHEET_VALUE_CONVERTER_CONTEXT,

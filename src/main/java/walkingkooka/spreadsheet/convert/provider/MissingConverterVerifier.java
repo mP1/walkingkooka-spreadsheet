@@ -1488,329 +1488,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             }
         }
 
-        // spreadsheetValue.............................................................................................
-        {
-            // error-to-error...........................................................................................
-            if (formula) {
-                verifier.addIfConversionFail(
-                    ERROR,
-                    SpreadsheetError.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // ERROR_TO_ERROR
-                );
-            }
-
-            // error-to-number..........................................................................................
-            if (formula) {
-                verifier.addIfConversionFail(
-                    ERROR,
-                    ExpressionNumber.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // ERROR_TO_NUMBER
-                    IS_NUMBER
-                );
-            }
-
-            if (formatting || formula || scripting) {
-                verifier.addIfConversionFail(
-                    null, // dont want List overload
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // NULL_TO_NUMBER
-                    IS_NUMBER
-                );
-            }
-
-            // spreadsheet-selection-to-spreadsheet-selection...............................................................
-            if (formula) {
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        CELL,
-                        CELL_RANGE
-                    ),
-                    SpreadsheetCellReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                    IS_CELL_REFERENCE
-                );
-
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        CELL,
-                        CELL_RANGE,
-                        COLUMN,
-                        COLUMN_RANGE,
-                        ROW,
-                        ROW_RANGE
-                    ),
-                    SpreadsheetCellRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                    IS_CELL_RANGE_REFERENCE
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN,
-                    SpreadsheetColumnReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN,
-                    SpreadsheetColumnRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                    COLUMN.toColumnRange()
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN_RANGE,
-                    SpreadsheetColumnRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                );
-
-                verifier.addIfConversionFail(
-                    ROW,
-                    SpreadsheetRowReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                );
-
-                verifier.addIfConversionFail(
-                    ROW_RANGE,
-                    SpreadsheetRowRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                );
-            }
-
-            // spreadsheet-selection-to-text............................................................................
-
-            if (formula || scripting || validation) {
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        CELL,
-                        CELL_RANGE,
-                        COLUMN,
-                        COLUMN_RANGE,
-                        ROW,
-                        ROW_RANGE,
-                        LABEL
-                    ),
-                    String.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
-                    IS_STRING
-                );
-            }
-
-            // spreadsheet-values to text...............................................................................
-
-            if (formula || scripting || validation) {
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        AUDIT_INFO,
-                        spreadsheetCell,
-                        ERROR,
-                        SpreadsheetId.with(1),
-                        STORAGE_PATH,
-                        StorageValue.with(
-                            STORAGE_PATH
-                        ).setValue(
-                            Optional.of("StorageValue123")
-                        ),
-                        StorageValueInfo.with(
-                            STORAGE_PATH,
-                            AUDIT_INFO
-                        ),
-                        STYLE,
-                        ZoneOffset.UTC
-                    ),
-                    String.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE,
-                    IS_STRING
-                );
-            }
-
-            // text-to-error............................................................................................
-            if (validation) {
-                verifier.addIfConversionFail(
-                    ERROR.text(),
-                    SpreadsheetError.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_ERROR
-                    IS_ERROR
-                );
-            }
-
-            // text.....................................................................................................
-            verifier.addIfConversionFail(
-                ' ',
-                Lists.of(
-                    Character.class,
-                    String.class
-                ),
-                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_NOT_NULL
-            );
-
-            verifier.addIfConversionFail(
-                "A",
-                Lists.of(
-                    Character.class,
-                    String.class
-                ),
-                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_NOT_NULL
-            );
-
-            verifier.addIfConversionFail(
-                charset.toString(),
-                Charset.class,
-                SpreadsheetConvertersConverterProvider.TEXT,
-                charset
-            );
-
-            verifier.addIfConversionFail(
-                "   ",
-                Indentation.class,
-                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_INDENTATION
-            );
-
-            verifier.addIfConversionFail(
-                Lists.of(
-                    "\r\n",
-                    "crnl"
-                ),
-                LineEnding.class,
-                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_LINE_ENDING
-            );
-
-            // text-to-lineEnding.......................................................................................
-            verifier.addIfConversionFail(
-                LineEnding.NL.text(),
-                LineEnding.class,
-                SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_LINE_ENDING
-                IS_LINE_ENDING
-            );
-
-            // text-to-spreadsheet-selection............................................................................
-            if (formula || scripting || validation) {
-                for (final SpreadsheetSelection selection : Lists.of(
-                    CELL,
-                    CELL_RANGE,
-                    COLUMN,
-                    COLUMN_RANGE,
-                    LABEL
-                )) {
-                    verifier.addIfConversionFail(
-                        selection.toString(),
-                        selection.getClass(),
-                        SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                        selection // expected
-                    );
-                }
-
-                verifier.addIfConversionFail(
-                    CELL.toString(),
-                    SpreadsheetCellReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    CELL
-                );
-
-                verifier.addIfConversionFail(
-                    CELL.toString(),
-                    SpreadsheetCellRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    CELL.toCellRange()
-                );
-
-                verifier.addIfConversionFail(
-                    CELL_RANGE.toString(),
-                    SpreadsheetCellRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    CELL_RANGE
-                );
-
-                verifier.addIfConversionFail(
-                    LABEL.toString(),
-                    SpreadsheetLabelName.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    LABEL
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN.toString(),
-                    SpreadsheetColumnReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    COLUMN
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN.toString(),
-                    SpreadsheetColumnRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    COLUMN.toColumnRange()
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN.toString(),
-                    SpreadsheetColumnReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    COLUMN
-                );
-
-                verifier.addIfConversionFail(
-                    COLUMN_RANGE.toString(),
-                    SpreadsheetColumnRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    COLUMN_RANGE
-                );
-
-                verifier.addIfConversionFail(
-                    ROW.toString(),
-                    SpreadsheetRowReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    ROW
-                );
-
-                verifier.addIfConversionFail(
-                    ROW.toString(),
-                    SpreadsheetRowRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    ROW.toRowRange()
-                );
-
-                verifier.addIfConversionFail(
-                    ROW.toString(),
-                    SpreadsheetRowReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    ROW
-                );
-
-                verifier.addIfConversionFail(
-                    ROW_RANGE.toString(),
-                    SpreadsheetRowRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_SPREADSHEET_SELECTION
-                    ROW_RANGE
-                );
-            }
-
-            // text-to-value-type.......................................................................................
-            if (validation) {
-                verifier.addIfConversionFail(
-                    SpreadsheetValueType.TEXT.value(),
-                    ValueType.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_VALUE_TYPE
-                    SpreadsheetValueType.TEXT
-                );
-            }
-
-            // text-to-zone-offset......................................................................................
-            if (formula || scripting) {
-                final ZoneOffset zoneOffset = ZoneOffset.ofHoursMinutes(12, 59);
-
-                verifier.addIfConversionFail(
-                    zoneOffset.toString(),
-                    ZoneOffset.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE, // TEXT_TO_ZONE_OFFSET
-                    zoneOffset
-                );
-            }
-        }
-
         // storage......................................................................................................
         {
             if (formula || scripting) {
@@ -2547,6 +2224,329 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                         IS_VALIDATION_ERROR_LIST
                     );
                 }
+            }
+        }
+
+        // value........................................................................................................
+        {
+            // error-to-error...........................................................................................
+            if (formula) {
+                verifier.addIfConversionFail(
+                    ERROR,
+                    SpreadsheetError.class,
+                    SpreadsheetConvertersConverterProvider.VALUE // ERROR_TO_ERROR
+                );
+            }
+
+            // error-to-number..........................................................................................
+            if (formula) {
+                verifier.addIfConversionFail(
+                    ERROR,
+                    ExpressionNumber.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // ERROR_TO_NUMBER
+                    IS_NUMBER
+                );
+            }
+
+            if (formatting || formula || scripting) {
+                verifier.addIfConversionFail(
+                    null, // dont want List overload
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
+                    IS_NUMBER
+                );
+            }
+
+            // spreadsheet-selection-to-spreadsheet-selection...............................................................
+            if (formula) {
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        CELL,
+                        CELL_RANGE
+                    ),
+                    SpreadsheetCellReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    IS_CELL_REFERENCE
+                );
+
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        CELL,
+                        CELL_RANGE,
+                        COLUMN,
+                        COLUMN_RANGE,
+                        ROW,
+                        ROW_RANGE
+                    ),
+                    SpreadsheetCellRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    IS_CELL_RANGE_REFERENCE
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN,
+                    SpreadsheetColumnReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN,
+                    SpreadsheetColumnRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                    COLUMN.toColumnRange()
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN_RANGE,
+                    SpreadsheetColumnRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                );
+
+                verifier.addIfConversionFail(
+                    ROW,
+                    SpreadsheetRowReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                );
+
+                verifier.addIfConversionFail(
+                    ROW_RANGE,
+                    SpreadsheetRowRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
+                );
+            }
+
+            // spreadsheet-selection-to-text............................................................................
+
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        CELL,
+                        CELL_RANGE,
+                        COLUMN,
+                        COLUMN_RANGE,
+                        ROW,
+                        ROW_RANGE,
+                        LABEL
+                    ),
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.VALUE,
+                    IS_STRING
+                );
+            }
+
+            // text-to-error............................................................................................
+            if (validation) {
+                verifier.addIfConversionFail(
+                    ERROR.text(),
+                    SpreadsheetError.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_ERROR
+                    IS_ERROR
+                );
+            }
+
+            // text.....................................................................................................
+            verifier.addIfConversionFail(
+                ' ',
+                Lists.of(
+                    Character.class,
+                    String.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_NOT_NULL
+            );
+
+            verifier.addIfConversionFail(
+                "A",
+                Lists.of(
+                    Character.class,
+                    String.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_NOT_NULL
+            );
+
+            verifier.addIfConversionFail(
+                charset.toString(),
+                Charset.class,
+                SpreadsheetConvertersConverterProvider.TEXT,
+                charset
+            );
+
+            verifier.addIfConversionFail(
+                "   ",
+                Indentation.class,
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_INDENTATION
+            );
+
+            verifier.addIfConversionFail(
+                Lists.of(
+                    "\r\n",
+                    "crnl"
+                ),
+                LineEnding.class,
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                IS_LINE_ENDING
+            );
+
+            // text-to-lineEnding.......................................................................................
+            verifier.addIfConversionFail(
+                LineEnding.NL.text(),
+                LineEnding.class,
+                SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_LINE_ENDING
+                IS_LINE_ENDING
+            );
+
+            // text-to-spreadsheet-selection............................................................................
+            if (formula || scripting || validation) {
+                for (final SpreadsheetSelection selection : Lists.of(
+                    CELL,
+                    CELL_RANGE,
+                    COLUMN,
+                    COLUMN_RANGE,
+                    LABEL
+                )) {
+                    verifier.addIfConversionFail(
+                        selection.toString(),
+                        selection.getClass(),
+                        SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                        selection // expected
+                    );
+                }
+
+                verifier.addIfConversionFail(
+                    CELL.toString(),
+                    SpreadsheetCellReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    CELL
+                );
+
+                verifier.addIfConversionFail(
+                    CELL.toString(),
+                    SpreadsheetCellRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    CELL.toCellRange()
+                );
+
+                verifier.addIfConversionFail(
+                    CELL_RANGE.toString(),
+                    SpreadsheetCellRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    CELL_RANGE
+                );
+
+                verifier.addIfConversionFail(
+                    LABEL.toString(),
+                    SpreadsheetLabelName.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    LABEL
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN.toString(),
+                    SpreadsheetColumnReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN.toString(),
+                    SpreadsheetColumnRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN.toColumnRange()
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN.toString(),
+                    SpreadsheetColumnReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN
+                );
+
+                verifier.addIfConversionFail(
+                    COLUMN_RANGE.toString(),
+                    SpreadsheetColumnRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    COLUMN_RANGE
+                );
+
+                verifier.addIfConversionFail(
+                    ROW.toString(),
+                    SpreadsheetRowReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW
+                );
+
+                verifier.addIfConversionFail(
+                    ROW.toString(),
+                    SpreadsheetRowRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW.toRowRange()
+                );
+
+                verifier.addIfConversionFail(
+                    ROW.toString(),
+                    SpreadsheetRowReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW
+                );
+
+                verifier.addIfConversionFail(
+                    ROW_RANGE.toString(),
+                    SpreadsheetRowRangeReference.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_SPREADSHEET_SELECTION
+                    ROW_RANGE
+                );
+            }
+
+            // text-to-value-type.......................................................................................
+            if (validation) {
+                verifier.addIfConversionFail(
+                    SpreadsheetValueType.TEXT.value(),
+                    ValueType.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_VALUE_TYPE
+                    SpreadsheetValueType.TEXT
+                );
+            }
+
+            // text-to-zone-offset......................................................................................
+            if (formula || scripting) {
+                final ZoneOffset zoneOffset = ZoneOffset.ofHoursMinutes(12, 59);
+
+                verifier.addIfConversionFail(
+                    zoneOffset.toString(),
+                    ZoneOffset.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_ZONE_OFFSET
+                    zoneOffset
+                );
+            }
+
+            // values to text...........................................................................................
+
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        AUDIT_INFO,
+                        spreadsheetCell,
+                        ERROR,
+                        SpreadsheetId.with(1),
+                        STORAGE_PATH,
+                        StorageValue.with(
+                            STORAGE_PATH
+                        ).setValue(
+                            Optional.of("StorageValue123")
+                        ),
+                        StorageValueInfo.with(
+                            STORAGE_PATH,
+                            AUDIT_INFO
+                        ),
+                        STYLE,
+                        ZoneOffset.UTC
+                    ),
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.VALUE,
+                    IS_STRING
+                );
             }
         }
 
