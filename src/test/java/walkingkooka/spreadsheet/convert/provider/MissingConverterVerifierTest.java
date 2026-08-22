@@ -37,7 +37,6 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -57,10 +56,8 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
@@ -212,8 +209,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public MediaType detect(final String filename,
                                 final Binary content) {
-            return MediaTypeDetectors.binary()
-                .detect(
+            return MEDIA_TYPE_DETECTOR.detect(
                     filename,
                     content
                 );
@@ -251,50 +247,33 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public ExpressionNumberKind expressionNumberKind() {
-            return ExpressionNumberKind.BIG_DECIMAL;
+            return EXPRESSION_NUMBER_KIND;
         }
 
         @Override
         public JsonNode marshall(final Object object) {
-            return JsonNodeMarshallContexts.basic()
-                .marshall(object);
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(object);
         }
 
         @Override
         public DateTimeContext dateTimeContext() {
-            return this.dateTimeContext;
+            return DATE_TIME_CONTEXT;
         }
-
-        private final DateTimeContext dateTimeContext = METADATA_EN_AU.dateTimeContext(
-            SpreadsheetMetadata.NO_CELL,
-            HAS_NOW,
-            LOCALE_CONTEXT
-        );
 
         @Override
         public DecimalNumberContext decimalNumberContext() {
-            return this.decimalNumberContext;
+            return DECIMAL_NUMBER_CONTEXT;
         }
 
         @Override
         public MathContext mathContext() {
-            return this.decimalNumberContext.mathContext();
+            return MATH_CONTEXT;
         }
-
-        private final DecimalNumberContext decimalNumberContext = METADATA_EN_AU.decimalNumberContext(
-            SpreadsheetMetadata.NO_CELL,
-            LOCALE_CONTEXT
-        );
 
         @Override
         public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
-            return this.jsonNodeMarshallUnmarshallContext;
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT;
         }
-
-        private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.basic(
-            JSON_NODE_MARSHALL_CONTEXT,
-            JSON_NODE_UNMARSHALL_CONTEXT
-        );
 
         // CanCurrencyExchangeRate......................................................................................
 
@@ -341,7 +320,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public Indentation indentation() {
-            return Indentation.SPACES2;
+            return INDENTATION;
         }
 
         @Override
@@ -378,7 +357,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public Locale locale() {
-            return LOCALE_CONTEXT.locale();
+            return LOCALE;
         }
 
         @Override
