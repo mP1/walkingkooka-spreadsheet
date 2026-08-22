@@ -1297,8 +1297,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
             JsonNode.object()
                 .set(
                     SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                    this.marshallContext()
-                        .marshall(viewport)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(viewport)
                 )
                 .set(SpreadsheetDelta.WINDOW_PROPERTY, WINDOW_JSON_STRING),
             SpreadsheetDeltaWindowed.withWindowed(

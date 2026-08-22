@@ -272,7 +272,13 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testFromEmptyJsonObject() {
-        assertSame(SpreadsheetMetadata.EMPTY, SpreadsheetMetadata.unmarshall(JsonNode.object(), this.unmarshallContext()));
+        assertSame(
+            SpreadsheetMetadata.EMPTY,
+            SpreadsheetMetadata.unmarshall(
+                JsonNode.object(),
+                JSON_NODE_UNMARSHALL_CONTEXT
+            )
+        );
     }
 
     @Test

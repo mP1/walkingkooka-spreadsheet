@@ -1697,34 +1697,29 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.FORMULA_PROPERTY,
-                    this.marshallContext()
-                        .marshall(
-                            this.formula()
-                        )
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(
+                        this.formula()
+                    )
                 )
         );
     }
 
     @Test
     public void testUnmarshallObjectReferenceMissingFails2() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.unmarshallFails(
             JsonNode.object()
                 .set(
                     SpreadsheetCell.FORMULA_PROPERTY,
-                    context.marshall(this.formula()))
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(this.formula()))
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    context.marshall(BOLD_ITALICS)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(BOLD_ITALICS)
                 )
         );
     }
 
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyle() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.unmarshallAndCheck(
             JsonNode.object()
                 .set(
@@ -1733,10 +1728,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     ), JsonNode.object()
                         .set(
                             SpreadsheetCell.FORMULA_PROPERTY,
-                            context.marshall(this.formula())
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(this.formula())
                         ).set(
                             SpreadsheetCell.STYLE_PROPERTY,
-                            context.marshall(BOLD_ITALICS)
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(BOLD_ITALICS)
                         )
                 ),
             SpreadsheetCell.with(
@@ -1749,14 +1744,24 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatter() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.unmarshallAndCheck(
             JsonNode.object()
                 .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                    .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                    .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
-                    .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
+                    .set(
+                        SpreadsheetCell.FORMULA_PROPERTY,
+                        JSON_NODE_MARSHALL_CONTEXT.marshall(
+                            this.formula()
+                        )
+                    ).set(
+                        SpreadsheetCell.STYLE_PROPERTY,
+                        JSON_NODE_MARSHALL_CONTEXT.marshall(BOLD_ITALICS)
+                    ).set(
+                        SpreadsheetCell.FORMATTER_PROPERTY,
+                        JSON_NODE_MARSHALL_CONTEXT.marshall(
+                            formatter()
+                                .get()
+                        )
+                    )
                 ),
             SpreadsheetCell.with(
                     reference(),
@@ -1769,8 +1774,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.unmarshallAndCheck(
             JsonNode.object()
                 .set(
@@ -1778,9 +1781,21 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         reference().toString()
                     ),
                     JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
-                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                        .set(
+                            SpreadsheetCell.FORMULA_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                this.formula()
+                            )
+                        ).set(
+                            SpreadsheetCell.STYLE_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(BOLD_ITALICS)
+                        ).set(
+                            SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                                formattedValue()
+                                    .get()
+                            )
+                        )
                 ),
             SpreadsheetCell.with(reference(), this.formula())
                 .setStyle(BOLD_ITALICS)
@@ -1790,8 +1805,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndParsePattern() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         final SpreadsheetFormula formula = this.formula()
             .setToken(
                 Optional.of(
@@ -1809,9 +1822,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .set(
                     JsonPropertyName.with(reference().toString()),
                     JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
-                        .set(SpreadsheetCell.PARSER_PROPERTY, context.marshall(this.parser().get()))
-                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                        .set(
+                            SpreadsheetCell.FORMULA_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(formula)
+                        ).set(
+                            SpreadsheetCell.PARSER_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                this.parser()
+                                    .get()
+                            )
+                        ).set(
+                            SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                                formattedValue()
+                                    .get()
+                            )
+                        )
                 ),
             reference()
                 .setFormula(SpreadsheetFormula.EMPTY)
@@ -1824,8 +1850,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectCurrency() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         final Optional<Currency> currency = this.currency(LOCALE);
 
         this.unmarshallAndCheck(
@@ -1834,7 +1858,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     JsonNode.object()
                         .set(
                             SpreadsheetCell.CURRENCY_PROPERTY,
-                            context.marshall(currency.get())
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                currency.get()
+                            )
                         )
                 ),
             SpreadsheetCell.with(
@@ -1847,8 +1873,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectDateTimeSymbols() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         final Optional<DateTimeSymbols> dateTimeSymbols = this.dateTimeSymbols(Locale.ENGLISH);
 
         this.unmarshallAndCheck(
@@ -1857,7 +1881,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     JsonNode.object()
                         .set(
                             SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
-                            context.marshall(dateTimeSymbols.get())
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                dateTimeSymbols.get()
+                            )
                         )
                 ),
             SpreadsheetCell.with(
@@ -1871,8 +1897,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectDecimalNumberSymbols() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         final Optional<DecimalNumberSymbols> decimalNumberSymbols = this.decimalNumberSymbols(Locale.ENGLISH);
 
         this.unmarshallAndCheck(
@@ -1881,7 +1905,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     JsonNode.object()
                         .set(
                             SpreadsheetCell.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                            context.marshall(decimalNumberSymbols.get())
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                decimalNumberSymbols.get()
+                            )
                         )
                 ),
             SpreadsheetCell.with(
@@ -1893,15 +1919,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testUnmarshallObjectLocale() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.unmarshallAndCheck(
             JsonNode.object()
                 .set(JsonPropertyName.with(reference().toString()),
                     JsonNode.object()
                         .set(
                             SpreadsheetCell.LOCALE_PROPERTY,
-                            context.marshall(LOCALE)
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(LOCALE)
                         )
                 ),
             SpreadsheetCell.with(
@@ -1916,15 +1940,28 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndFormatterAndFormattedCell() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.unmarshallAndCheck(
             JsonNode.object()
                 .set(JsonPropertyName.with(reference().toString()),
                     JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
-                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                        .set(
+                            SpreadsheetCell.FORMULA_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                this.formula()
+                            )
+                        ).set(
+                            SpreadsheetCell.FORMATTER_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                formatter()
+                                    .get()
+                            )
+                        ).set(
+                            SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                                formattedValue()
+                                    .get()
+                            )
+                        )
                 ),
             SpreadsheetCell.with(reference(), this.formula())
                 .setFormatter(formatter())
@@ -1934,17 +1971,32 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatterAndFormattedCell() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         this.unmarshallAndCheck(
             JsonNode.object()
                 .set(
                     JsonPropertyName.with(reference().toString()),
                     JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
-                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
-                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                        .set(
+                            SpreadsheetCell.FORMULA_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                this.formula()
+                            )
+                        ).set(
+                            SpreadsheetCell.STYLE_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(BOLD_ITALICS)
+                        ).set(
+                            SpreadsheetCell.FORMATTER_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                                formatter()
+                                    .get()
+                            )
+                        ).set(
+                            SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
+                            JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                                formattedValue()
+                                    .get()
+                            )
+                        )
                 ),
             SpreadsheetCell.with(reference(), this.formula())
                 .setStyle(BOLD_ITALICS)
@@ -2450,8 +2502,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.CURRENCY_PROPERTY,
-                    marshallContext()
-                        .marshall(currency.get())
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(
+                        currency.get()
+                    )
                 ),
             cell.setCurrency(currency)
         );
@@ -2471,8 +2524,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
-                    marshallContext()
-                        .marshall(dateTimeSymbols.get())
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(
+                        dateTimeSymbols.get()
+                    )
                 ),
             cell.setDateTimeSymbols(dateTimeSymbols)
         );
@@ -2492,8 +2546,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.LOCALE_PROPERTY,
-                    marshallContext()
-                        .marshall(locale.get())
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(
+                        locale.get()
+                    )
                 ),
             cell.setLocale(locale)
         );

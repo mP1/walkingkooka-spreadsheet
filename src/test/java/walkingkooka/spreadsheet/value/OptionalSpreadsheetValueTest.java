@@ -155,9 +155,7 @@ public final class OptionalSpreadsheetValueTest implements ClassTesting<Optional
         this.marshallRoundTripTwiceAndCheck(
             OptionalSpreadsheetValue.with(
                 Optional.of(
-                    this.unmarshallContext()
-                        .expressionNumberKind()
-                        .create(12.5)
+                    EXPRESSION_NUMBER_KIND.create(12.5)
                 )
             )
         );
