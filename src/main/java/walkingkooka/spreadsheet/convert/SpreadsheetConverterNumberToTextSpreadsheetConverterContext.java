@@ -26,6 +26,8 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.CanParseEnvironmentValueName;
+import walkingkooka.environment.CanParseEnvironmentValueNameDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -56,6 +58,7 @@ import java.util.Optional;
 import java.util.Set;
 
 final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implements SpreadsheetConverterContext,
+    CanParseEnvironmentValueNameDelegator,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -227,6 +230,13 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     @Override
     public Set<CurrencyExchange> currencyExchanges() {
         return this.spreadsheetConverterContext.currencyExchanges();
+    }
+
+    // CanParseEnvironmentValueNameDelegator............................................................................
+
+    @Override
+    public CanParseEnvironmentValueName canParseEnvironmentValueName() {
+        return this.spreadsheetConverterContext;
     }
 
     // DateTimeContextDelegator.........................................................................................

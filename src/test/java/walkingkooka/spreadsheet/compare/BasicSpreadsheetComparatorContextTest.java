@@ -26,6 +26,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -47,7 +48,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting2<BasicSpreadsheetComparatorContext>,
     DecimalNumberContextDelegator,
-    LocaleContextTesting {
+    LocaleContextTesting,
+    SpreadsheetEnvironmentContextTesting {
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -75,6 +77,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     };
 
     private final static SpreadsheetConverterContext CONTEXT = SpreadsheetConverterContexts.basic(
+        CAN_PARSE_ENVIRONMENT_VALUE_NAME,
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

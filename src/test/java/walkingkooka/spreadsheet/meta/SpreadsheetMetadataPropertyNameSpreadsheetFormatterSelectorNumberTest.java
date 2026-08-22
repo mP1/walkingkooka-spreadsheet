@@ -30,6 +30,7 @@ import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
@@ -52,7 +53,8 @@ import java.util.Optional;
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber>
     implements BinaryTextContextTesting,
     DateTimeContextTesting,
-    DecimalNumberContextTesting {
+    DecimalNumberContextTesting,
+    SpreadsheetEnvironmentContextTesting {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
 
@@ -109,6 +111,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 throw new UnsupportedOperationException();
             },
             SpreadsheetConverterContexts.basic(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

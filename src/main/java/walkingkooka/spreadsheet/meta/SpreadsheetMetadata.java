@@ -43,6 +43,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.datetime.HasOptionalLastModified;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasOptionalAuditInfo;
@@ -1009,7 +1010,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
      */
-    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final HasUserDirectories hasUserDirectories,
+    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final CanParseEnvironmentValueName canParseEnvironmentValueName,
+                                                                               final HasUserDirectories hasUserDirectories,
                                                                                final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                                final MediaTypeDetector mediaTypeDetector,
                                                                                final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
@@ -1023,6 +1025,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             spreadsheetExpressionEvaluationContextFactory,
             this.sortSpreadsheetConverterContext(
                 resolveIfLabel,
+                canParseEnvironmentValueName,
                 spreadsheetProvider, // ConverterProvider
                 hasUserDirectories,
                 mediaTypeDetector,
@@ -1039,6 +1042,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetConverterContext} to be used when doing a sort.
      */
     private SpreadsheetConverterContext sortSpreadsheetConverterContext(final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                        final CanParseEnvironmentValueName canParseEnvironmentValueName,
                                                                         final ConverterProvider converterProvider,
                                                                         final HasUserDirectories hasUserDirectories,
                                                                         final MediaTypeDetector mediaTypeDetector,
@@ -1051,6 +1055,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             NO_CELL,
             NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+            canParseEnvironmentValueName,
             hasUserDirectories,
             labelNameResolver,
             mediaTypeDetector,
@@ -1084,6 +1089,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetConverterContext spreadsheetConverterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Optional<SpreadsheetValidationReference> validationReference,
                                                                          final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
+                                                                         final CanParseEnvironmentValueName canParseEnvironmentValueName,
                                                                          final HasUserDirectories hasUserDirectories,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final MediaTypeDetector mediaTypeDetector,
@@ -1096,6 +1102,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
+        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
@@ -1168,6 +1175,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
+            canParseEnvironmentValueName,
             hasUserDirectories,
             Optional.of(this),
             validationReference,
@@ -1255,6 +1263,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
+                                                                         final CanParseEnvironmentValueName canParseEnvironmentValueName,
                                                                          final HasUserDirectories hasUserDirectories,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final MediaTypeDetector mediaTypeDetector,
@@ -1266,6 +1275,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
+        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
@@ -1295,6 +1305,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 cell,
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+                canParseEnvironmentValueName,
                 hasUserDirectories,
                 labelNameResolver,
                 mediaTypeDetector,
@@ -1334,6 +1345,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Optional<SpreadsheetCell> cell,
                                                                                                        final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
+                                                                                                       final CanParseEnvironmentValueName canParseEnvironmentValueName,
                                                                                                        final HasUserDirectories hasUserDirectories,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final MediaTypeDetector mediaTypeDetector,
@@ -1347,6 +1359,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             this.spreadsheetFormatterContext(
                 cell,
                 spreadsheetExpressionEvaluationContext,
+                canParseEnvironmentValueName,
                 hasUserDirectories,
                 labelNameResolver,
                 mediaTypeDetector,
@@ -1453,6 +1466,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetValidationReference cellOrLabel,
                                                                          final Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
                                                                          final BiFunction<Object, SpreadsheetValidationReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
+                                                                         final CanParseEnvironmentValueName canParseEnvironmentValueName,
                                                                          final HasUserDirectories hasUserDirectories,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final MediaTypeDetector mediaTypeDetector,
@@ -1465,6 +1479,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
         Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
+        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
@@ -1483,6 +1498,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 NO_CELL,
                 Optional.of(cellOrLabel), // validationReference
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+                canParseEnvironmentValueName,
                 hasUserDirectories,
                 labelNameResolver,
                 mediaTypeDetector,

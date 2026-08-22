@@ -761,6 +761,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     null,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -783,6 +784,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     null,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -804,6 +806,30 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    null,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                    HAS_USER_DIRECTORIES,
+                    LABEL_NAME_RESOLVER,
+                    MEDIA_TYPE_DETECTOR,
+                    MULTIPLIER,
+                    SPREADSHEET_METADATA_LOADER,
+                    CONVERTER_PROVIDER,
+                    BINARY_TEXT_CONTEXT,
+                    CURRENCY_LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithNullCanParseEnvironmentValueNameFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     null,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
@@ -827,6 +853,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     null,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -849,6 +876,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     null,
                     MEDIA_TYPE_DETECTOR,
@@ -871,6 +899,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     null,
@@ -893,6 +922,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -915,6 +945,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -937,6 +968,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -959,6 +991,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -981,6 +1014,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,
@@ -1003,6 +1037,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     HAS_USER_DIRECTORIES,
                     LABEL_NAME_RESOLVER,
                     MEDIA_TYPE_DETECTOR,

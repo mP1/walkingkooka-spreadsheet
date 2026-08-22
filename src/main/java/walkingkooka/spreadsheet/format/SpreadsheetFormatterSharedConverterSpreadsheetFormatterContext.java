@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.environment.CanParseEnvironmentValueName;
+import walkingkooka.environment.CanParseEnvironmentValueNameDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -45,6 +47,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
+    CanParseEnvironmentValueNameDelegator,
     StorageConverterContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator {
 
@@ -106,6 +109,13 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
     @Override
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         throw new UnsupportedOperationException();
+    }
+
+    // CanParseEnvironmentValueNameDelegator............................................................................
+
+    @Override
+    public CanParseEnvironmentValueName canParseEnvironmentValueName() {
+        return this.context;
     }
 
     // StorageConverterContextDelegator.................................................................................

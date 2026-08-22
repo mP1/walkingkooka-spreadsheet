@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.predicate.Predicates;
@@ -84,6 +85,8 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
             storageEnvironmentContext
         );
     }
+
+    CanParseEnvironmentValueName CAN_PARSE_ENVIRONMENT_VALUE_NAME = SPREADSHEET_ENVIRONMENT_CONTEXT;
 
     // serverUrl........................................................................................................
 

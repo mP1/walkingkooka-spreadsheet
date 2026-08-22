@@ -234,6 +234,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "2000/12/31",
             LocalDate.class,
             SpreadsheetConverterContexts.basic(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

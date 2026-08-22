@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Binary;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleLanguageTag;
@@ -111,6 +112,13 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default MathContext mathContext() {
         return this.spreadsheetExpressionEvaluationContext()
             .mathContext();
+    }
+
+    // CanParseEnvironmentValueNameDelegator............................................................................
+
+    @Override
+    default CanParseEnvironmentValueName canParseEnvironmentValueName() {
+        return this.spreadsheetExpressionEvaluationContext();
     }
 
     // CanEvaluateStringDelegator.......................................................................................

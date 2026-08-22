@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.Converter;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.locale.LocaleContextTesting;
@@ -48,6 +49,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     LocaleContextTesting,
     SpreadsheetEnvironmentContextTesting,
     TreePrintableTesting {
+
+    private final static CanParseEnvironmentValueName CAN_PARSE_ENVIRONMENT_VALUE_NAME = SpreadsheetEnvironmentContextTesting.CAN_PARSE_ENVIRONMENT_VALUE_NAME;
 
     @Test
     public void testCurrencyContextReadOnly() {
@@ -100,6 +103,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             SpreadsheetMetadata.NO_CELL,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HasUserDirectorieses.empty(), // no current working directory
             SPREADSHEET_LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,
@@ -293,6 +297,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HAS_USER_DIRECTORIES,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,

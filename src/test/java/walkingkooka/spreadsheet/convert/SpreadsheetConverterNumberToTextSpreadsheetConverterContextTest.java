@@ -26,6 +26,7 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.header.MediaTypeDetectors;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -47,7 +48,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting2<SpreadsheetConverterNumberToTextSpreadsheetConverterContext>,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    SpreadsheetEnvironmentContextTesting {
 
     @Override
     public void testAmpms() {
@@ -220,6 +222,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
 
         return SpreadsheetConverterNumberToTextSpreadsheetConverterContext.with(
             SpreadsheetConverterContexts.basic(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

@@ -30,6 +30,7 @@ import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -54,7 +55,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetConverterFormatPatternToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterFormatPatternToString>
     implements DateTimeContextTesting,
     DecimalNumberContextTesting,
-    HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString>,
+    SpreadsheetEnvironmentContextTesting {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -303,6 +305,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
         final Locale locale = Locale.FRANCE;
 
         return SpreadsheetConverterContexts.basic(
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

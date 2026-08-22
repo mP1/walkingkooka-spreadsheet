@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -35,8 +36,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterContextCycleTest implements SpreadsheetConverterContextTesting2<SpreadsheetConverterContextCycle>,
-
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    SpreadsheetEnvironmentContextTesting {
 
     private final static Object VALUE = "Hello";
     private final static Class<?> TYPE = Object.class;
@@ -103,6 +104,7 @@ public final class SpreadsheetConverterContextCycleTest implements SpreadsheetCo
             VALUE,
             TYPE,
             SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 Optional.empty(), // validationReference

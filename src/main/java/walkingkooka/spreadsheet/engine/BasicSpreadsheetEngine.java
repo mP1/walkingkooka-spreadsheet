@@ -844,6 +844,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             comparators,
             movedFromTo, // moved cells
             metadata.sortSpreadsheetComparatorContext(
+                context, // CanParseEnvironmentValueName
                 context, // HasUserDirectories
                 context, // ConverterProvider
                 context, // mediaTypeDetector
@@ -1918,6 +1919,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     SpreadsheetValidatorContext.VALUE,
                                     Optional.ofNullable(value)
                                 ),
+                                context, // CanParseEnvironmentValueName
                                 context, // HasUserDirectories
                                 context, // SpreadsheetLabelNameResolver
                                 context, // MediaTypeDetector

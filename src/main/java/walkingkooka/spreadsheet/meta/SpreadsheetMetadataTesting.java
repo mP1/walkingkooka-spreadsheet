@@ -30,6 +30,7 @@ import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.environment.HasUserTesting;
@@ -133,6 +134,8 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     MediaTypeDetectorTesting,
     SpreadsheetEnvironmentContextTesting,
     TreePrintableTesting {
+
+    CanParseEnvironmentValueName CAN_PARSE_ENVIRONMENT_VALUE_NAME = SPREADSHEET_ENVIRONMENT_CONTEXT;
 
     SpreadsheetName SPREADSHEET_NAME = SpreadsheetName.with("SpreadsheetName456");
 
@@ -512,6 +515,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SpreadsheetMetadata.NO_CELL,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+        CAN_PARSE_ENVIRONMENT_VALUE_NAME, // CanParseEnvironmentValueName
         HAS_USER_DIRECTORIES,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,
@@ -553,6 +557,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        CAN_PARSE_ENVIRONMENT_VALUE_NAME, // CanParseEnvironmentValueName
         HAS_USER_DIRECTORIES,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,
@@ -567,6 +572,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        CAN_PARSE_ENVIRONMENT_VALUE_NAME,
         HAS_USER_DIRECTORIES,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,

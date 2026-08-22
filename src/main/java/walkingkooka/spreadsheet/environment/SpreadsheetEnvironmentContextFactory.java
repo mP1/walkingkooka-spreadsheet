@@ -330,6 +330,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
+                spreadsheetEnvironmentContext, // CanParseEnvironmentValueName
                 spreadsheetEnvironmentContext, // HasUserDirectories
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
