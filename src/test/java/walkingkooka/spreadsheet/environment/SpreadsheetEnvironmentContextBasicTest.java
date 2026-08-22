@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -391,6 +392,26 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.setUserAndCheck(
             context,
             user
+        );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameAfterSetEnvironmentValue() {
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "magic",
+            String.class
+        );
+
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+        this.setEnvironmentValueAndCheck(
+            context,
+            name,
+            "value123"
+        );
+
+        this.parseEnvironmentValueNameAndCheck(
+            context,
+            name
         );
     }
 
