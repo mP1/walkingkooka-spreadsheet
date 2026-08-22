@@ -23,11 +23,11 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
-    JsonNodeMarshallingTesting<SpreadsheetEngineEvaluation>,
+    JsonNodeMarshallerTesting<SpreadsheetEngineEvaluation>,
     ParseStringTesting<SpreadsheetEngineEvaluation> {
 
     // parse............................................................................................................
@@ -63,7 +63,7 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
         return thrown;
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testUnmarshallStringUnknownFails() {
@@ -116,7 +116,7 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetEngineEvaluation createJsonNodeMarshallingValue() {

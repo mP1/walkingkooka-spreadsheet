@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDate;
@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToValueMapTest implements MapTesting2<SpreadsheetCellReferenceToValueMap, SpreadsheetCellReference, Optional<Object>>,
     ClassTesting2<SpreadsheetCellReferenceToValueMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValueMap>,
+    JsonNodeMarshallerTesting<SpreadsheetCellReferenceToValueMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;

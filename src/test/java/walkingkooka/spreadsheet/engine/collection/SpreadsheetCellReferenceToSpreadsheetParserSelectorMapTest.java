@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Iterator;
@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap, SpreadsheetCellReference, Optional<SpreadsheetParserSelector>>,
     ClassTesting2<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap>,
+    JsonNodeMarshallerTesting<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;

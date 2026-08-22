@@ -35,7 +35,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +49,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     implements ClassTesting2<P>,
     SpreadsheetPatternSpreadsheetFormatterTesting,
     HashCodeEqualsDefinedTesting2<P>,
-    JsonNodeMarshallingTesting<P>,
+    JsonNodeMarshallerTesting<P>,
     IsMethodTesting<P>,
     MathTesting,
     ParserTesting,

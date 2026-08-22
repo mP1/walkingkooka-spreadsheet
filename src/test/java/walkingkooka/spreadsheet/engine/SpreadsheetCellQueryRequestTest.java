@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.ValueType;
 
@@ -54,7 +54,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
     HashCodeEqualsDefinedTesting2<SpreadsheetCellQueryRequest>,
     ToStringTesting<SpreadsheetCellQueryRequest>,
     ParseStringTesting<SpreadsheetCellQueryRequest>,
-    JsonNodeMarshallingTesting<SpreadsheetCellQueryRequest>,
+    JsonNodeMarshallerTesting<SpreadsheetCellQueryRequest>,
     ThrowableTesting {
 
     private final static Optional<SpreadsheetCellRangeReferencePath> PATH = Optional.of(

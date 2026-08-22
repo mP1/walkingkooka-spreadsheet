@@ -24,7 +24,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -33,7 +33,7 @@ public final class SpreadsheetRowReferenceSetTest implements ImmutableSortedSetT
     HasTextTesting,
     ParseStringTesting<SpreadsheetRowReferenceSet>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<SpreadsheetRowReferenceSet> {
+    JsonNodeMarshallerTesting<SpreadsheetRowReferenceSet> {
 
     @Test
     public void testDeleteBecomesEmpty() {

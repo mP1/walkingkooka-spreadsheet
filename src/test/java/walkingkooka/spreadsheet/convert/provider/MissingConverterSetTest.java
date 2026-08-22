@@ -24,7 +24,7 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.TreeSet;
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class MissingConverterSetTest implements ImmutableSortedSetTesting<MissingConverterSet, MissingConverter>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<MissingConverterSet> {
+    JsonNodeMarshallerTesting<MissingConverterSet> {
 
     @Test
     public void testDeleteBecomesEmpty() {

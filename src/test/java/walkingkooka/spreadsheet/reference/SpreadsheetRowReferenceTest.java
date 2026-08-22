@@ -1708,7 +1708,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         return IllegalRowArgumentException.class;
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetRowReference unmarshall(final JsonNode from,

@@ -1874,7 +1874,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         return SpreadsheetSelection.parseColumn(text);
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetColumnReference unmarshall(final JsonNode from,

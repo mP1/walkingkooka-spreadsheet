@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetViewport>,
     HasUrlFragmentTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetViewport>,
-    JsonNodeMarshallingTesting<SpreadsheetViewport>,
+    JsonNodeMarshallerTesting<SpreadsheetViewport>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetViewport>,
     TreePrintableTesting {

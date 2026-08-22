@@ -27,7 +27,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.HasTextNodeTesting;
 import walkingkooka.tree.text.TextNode;
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>,
     HashCodeEqualsDefinedTesting2<SpreadsheetText>,
     HasTextNodeTesting,
-    JsonNodeMarshallingTesting<SpreadsheetText>,
+    JsonNodeMarshallerTesting<SpreadsheetText>,
     ToStringTesting<SpreadsheetText>,
     TreePrintableTesting {
 

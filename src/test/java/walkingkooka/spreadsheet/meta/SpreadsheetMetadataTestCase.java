@@ -56,7 +56,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -81,7 +81,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     HasContentTypeTesting,
     HasOptionalNameTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
-    JsonNodeMarshallingTesting<SpreadsheetMetadata>,
+    JsonNodeMarshallerTesting<SpreadsheetMetadata>,
     LocaleContextTesting,
     MediaTypeDetectorTesting,
     HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,

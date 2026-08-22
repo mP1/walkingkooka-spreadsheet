@@ -26,7 +26,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextNode;
 
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SpreadsheetFormatterSampleListTest implements ListTesting2<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
     ClassTesting<SpreadsheetFormatterSampleList>,
     ImmutableListTesting<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
-    JsonNodeMarshallingTesting<SpreadsheetFormatterSampleList>,
+    JsonNodeMarshallerTesting<SpreadsheetFormatterSampleList>,
     ThrowableTesting {
 
     private final static SpreadsheetFormatterSample SAMPLE1 = SpreadsheetFormatterSample.with(

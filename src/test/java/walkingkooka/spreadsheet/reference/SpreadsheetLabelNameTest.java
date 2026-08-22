@@ -626,7 +626,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testUnmarshallString() {
@@ -715,7 +715,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         return SpreadsheetLabelName.class;
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetLabelName unmarshall(final JsonNode from,

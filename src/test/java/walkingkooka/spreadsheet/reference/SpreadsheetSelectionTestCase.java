@@ -50,7 +50,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 
 import java.util.Map;
 import java.util.Optional;
@@ -68,7 +68,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     HasUrlFragmentTesting,
     HasTextTesting,
     HasNotFoundTextTesting,
-    JsonNodeMarshallingTesting<S>,
+    JsonNodeMarshallerTesting<S>,
     IsMethodTesting<S>,
     ParseStringTesting<S>,
     PredicateTesting2<S, SpreadsheetSelection>,

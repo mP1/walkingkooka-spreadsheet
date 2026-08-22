@@ -28,7 +28,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -37,7 +37,7 @@ import java.util.function.Predicate;
 
 public abstract class SpreadsheetFormulaParserTokenTestCase<T extends SpreadsheetFormulaParserToken> implements ClassTesting2<T>,
     IsMethodTesting<T>,
-    JsonNodeMarshallingTesting<T>,
+    JsonNodeMarshallerTesting<T>,
     ParserTokenTesting<T> {
 
     final static int DEFAULT_YEAR = 1900;

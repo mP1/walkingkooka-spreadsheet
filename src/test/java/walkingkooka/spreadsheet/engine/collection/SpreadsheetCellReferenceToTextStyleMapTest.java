@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTesting2<SpreadsheetCellReferenceToTextStyleMap, SpreadsheetCellReference, TextStyle>,
     ClassTesting2<SpreadsheetCellReferenceToTextStyleMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToTextStyleMap>,
+    JsonNodeMarshallerTesting<SpreadsheetCellReferenceToTextStyleMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;

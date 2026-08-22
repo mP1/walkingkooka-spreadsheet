@@ -24,7 +24,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.SortedSet;
@@ -35,7 +35,7 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
     HasTextTesting,
     ParseStringTesting<SpreadsheetExpressionReferenceSet>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<SpreadsheetExpressionReferenceSet> {
+    JsonNodeMarshallerTesting<SpreadsheetExpressionReferenceSet> {
 
     @Test
     public void testDeleteBecomesEmpty() {

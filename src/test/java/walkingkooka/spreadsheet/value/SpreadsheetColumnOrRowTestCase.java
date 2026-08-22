@@ -26,7 +26,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
     R extends SpreadsheetSelection & Comparable<R>>
     implements ClassTesting2<T>,
     HashCodeEqualsDefinedTesting2<T>,
-    JsonNodeMarshallingTesting<T>,
+    JsonNodeMarshallerTesting<T>,
     ToStringTesting<T>,
     TreePrintableTesting {
 
@@ -57,7 +57,7 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
         this.checkEquals(hidden, columnOrRow.hidden(), "hidden");
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public final void testUnmarshallStringFails() {
@@ -83,7 +83,7 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public final T createJsonNodeMarshallingValue() {

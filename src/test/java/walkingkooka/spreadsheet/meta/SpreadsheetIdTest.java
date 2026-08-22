@@ -29,7 +29,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
@@ -37,7 +37,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     HasNotFoundTextTesting,
     HasTextTesting,
     HasUrlFragmentTesting,
-    JsonNodeMarshallingTesting<SpreadsheetId>,
+    JsonNodeMarshallerTesting<SpreadsheetId>,
     ParseStringTesting<SpreadsheetId>,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetId>,
@@ -159,7 +159,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
             Long.toHexString(VALUE));
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testUnmarshallInvalidStringFails() {

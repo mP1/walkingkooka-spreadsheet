@@ -25,7 +25,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,7 +34,7 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     HashCodeEqualsDefinedTesting2<MissingConverterValue>,
     ToStringTesting<MissingConverterValue>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<MissingConverterValue> {
+    JsonNodeMarshallerTesting<MissingConverterValue> {
 
     private final static Object VALUE = "Hello";
 

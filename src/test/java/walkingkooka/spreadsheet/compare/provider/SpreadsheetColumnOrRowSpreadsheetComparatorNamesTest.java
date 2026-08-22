@@ -37,7 +37,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     HasTextTesting,
     ToStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
-    JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
+    JsonNodeMarshallerTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     TreePrintableTesting,
     ThrowableTesting {
 

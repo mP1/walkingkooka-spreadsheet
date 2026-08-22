@@ -23,7 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting<OptionalSpreadsheetParserSelector>,
     HashCodeEqualsDefinedTesting2<OptionalSpreadsheetParserSelector>,
     ToStringTesting<OptionalSpreadsheetParserSelector>,
-    JsonNodeMarshallingTesting<OptionalSpreadsheetParserSelector> {
+    JsonNodeMarshallerTesting<OptionalSpreadsheetParserSelector> {
     // with.............................................................................................................
 
     @Test

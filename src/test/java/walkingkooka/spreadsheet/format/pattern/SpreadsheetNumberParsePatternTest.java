@@ -1335,7 +1335,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         return SpreadsheetNumberParsePattern.class;
     }
 
-    // JsonNodeMarshallingTesting............................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetNumberParsePattern unmarshall(final JsonNode jsonNode,

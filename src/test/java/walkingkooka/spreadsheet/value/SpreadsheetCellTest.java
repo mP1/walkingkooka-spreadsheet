@@ -63,7 +63,7 @@ import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
@@ -113,7 +113,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasOptionalValidatorSelectorTesting,
     HasValidationPromptValueTesting,
     ParseStringTesting<SpreadsheetCell>,
-    JsonNodeMarshallingTesting<SpreadsheetCell>,
+    JsonNodeMarshallerTesting<SpreadsheetCell>,
     HasSpreadsheetReferenceTesting,
     HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
     PatchableTesting<SpreadsheetCell>,

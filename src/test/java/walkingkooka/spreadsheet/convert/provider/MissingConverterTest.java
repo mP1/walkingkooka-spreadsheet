@@ -29,7 +29,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDate;
@@ -43,7 +43,7 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     IteratorTesting,
     ToStringTesting<MissingConverter>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<MissingConverter> {
+    JsonNodeMarshallerTesting<MissingConverter> {
 
     private final static ConverterName NAME = ConverterName.BOOLEAN_TO_NUMBER;
 

@@ -31,7 +31,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     ClassTesting<SpreadsheetViewportNavigationList>,
     HasTextTesting,
     HasUrlFragmentTesting,
-    JsonNodeMarshallingTesting<SpreadsheetViewportNavigationList> {
+    JsonNodeMarshallerTesting<SpreadsheetViewportNavigationList> {
 
     @Test
     public void testSetElementsIncludesNullFails() {

@@ -26,7 +26,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
     ComparableTesting2<SpreadsheetLabelMapping>,
-    JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
+    JsonNodeMarshallerTesting<SpreadsheetLabelMapping>,
     HateosResourceTesting<SpreadsheetLabelMapping, SpreadsheetLabelName>,
     ThrowableTesting,
     TreePrintableTesting,
@@ -166,7 +166,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.checkReference(different, differentTarget);
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testUnmarshallEmptyObjectFails() {

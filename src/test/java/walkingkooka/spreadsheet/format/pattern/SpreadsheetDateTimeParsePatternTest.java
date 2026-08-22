@@ -654,7 +654,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
         return SpreadsheetDateTimeParsePattern.class;
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetDateTimeParsePattern unmarshall(final JsonNode jsonNode,
