@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.text.DecimalFormatSymbols;
@@ -43,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest implements MapTesting2<SpreadsheetCellReferenceToDecimalNumberSymbolsMap, SpreadsheetCellReference, Optional<DecimalNumberSymbols>>,
     ClassTesting2<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
+    JsonNodeMarshallerTesting<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;

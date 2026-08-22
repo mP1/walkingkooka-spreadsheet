@@ -24,7 +24,7 @@ import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatParserTokenTestCase<T extends SpreadsheetFormatParserToken> implements ClassTesting2<T>,
     IsMethodTesting<T>,
-    JsonNodeMarshallingTesting<T>,
+    JsonNodeMarshallerTesting<T>,
     ParserTokenTesting<T> {
 
     SpreadsheetFormatParserTokenTestCase() {

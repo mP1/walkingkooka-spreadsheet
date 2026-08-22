@@ -898,7 +898,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         );
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public final void testJsonRoundtripMultiplePatterns() {

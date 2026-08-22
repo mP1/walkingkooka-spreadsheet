@@ -1003,7 +1003,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         return SpreadsheetNumberFormatPattern.class;
     }
 
-    // JsonNodeMarshallingTesting............................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetNumberFormatPattern unmarshall(final JsonNode jsonNode,

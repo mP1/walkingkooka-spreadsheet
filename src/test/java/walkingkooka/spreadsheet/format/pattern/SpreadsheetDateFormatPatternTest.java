@@ -718,7 +718,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         return SpreadsheetDateFormatPattern.class;
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetDateFormatPattern unmarshall(final JsonNode jsonNode,

@@ -96,7 +96,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
@@ -143,7 +143,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     HasOptionalLastModifiedTesting,
     HasPropertiesTesting,
     HasUrlFragmentTesting,
-    JsonNodeMarshallingTesting<SpreadsheetMetadata>,
+    JsonNodeMarshallerTesting<SpreadsheetMetadata>,
     LocaleContextTesting,
     MediaTypeDetectorTesting,
     PatchableTesting<SpreadsheetMetadata>,

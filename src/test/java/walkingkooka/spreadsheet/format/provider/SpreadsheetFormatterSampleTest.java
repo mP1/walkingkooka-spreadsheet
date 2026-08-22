@@ -25,7 +25,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextNode;
 
@@ -37,7 +37,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     ClassTesting<SpreadsheetFormatterSample>,
     ToStringTesting<SpreadsheetFormatterSample>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<SpreadsheetFormatterSample> {
+    JsonNodeMarshallerTesting<SpreadsheetFormatterSample> {
 
     private final static String LABEL = "Label123";
 

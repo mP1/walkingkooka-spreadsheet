@@ -27,7 +27,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -38,7 +38,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     ImmutableListTesting<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
     HasUrlFragmentTesting,
     ParseStringTesting<SpreadsheetComparatorNameList>,
-    JsonNodeMarshallingTesting<SpreadsheetComparatorNameList>,
+    JsonNodeMarshallerTesting<SpreadsheetComparatorNameList>,
     ThrowableTesting {
 
     private final static SpreadsheetComparatorName DATE1 = SpreadsheetComparatorName.DATE;

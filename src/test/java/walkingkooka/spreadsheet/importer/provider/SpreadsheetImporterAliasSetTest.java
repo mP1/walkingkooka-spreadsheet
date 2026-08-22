@@ -23,7 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliasSetLikeTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -37,7 +37,7 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
     SpreadsheetImporterAliasSet>,
     HashCodeEqualsDefinedTesting2<SpreadsheetImporterAliasSet>,
     ToStringTesting<SpreadsheetImporterAliasSet>,
-    JsonNodeMarshallingTesting<SpreadsheetImporterAliasSet> {
+    JsonNodeMarshallerTesting<SpreadsheetImporterAliasSet> {
 
     // with.............................................................................................................
 

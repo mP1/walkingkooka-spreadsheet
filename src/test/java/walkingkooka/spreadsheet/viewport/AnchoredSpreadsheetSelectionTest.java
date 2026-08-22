@@ -26,7 +26,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<AnchoredSpreadsheetSelection>,
     HashCodeEqualsDefinedTesting2<AnchoredSpreadsheetSelection>,
     ToStringTesting<AnchoredSpreadsheetSelection>,
-    JsonNodeMarshallingTesting<AnchoredSpreadsheetSelection>,
+    JsonNodeMarshallerTesting<AnchoredSpreadsheetSelection>,
     TreePrintableTesting,
     HasUrlFragmentTesting {
 

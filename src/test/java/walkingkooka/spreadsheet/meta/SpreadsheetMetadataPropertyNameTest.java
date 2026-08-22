@@ -677,7 +677,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetMetadataPropertyName<?> createName(final String name) {

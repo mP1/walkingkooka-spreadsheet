@@ -268,7 +268,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.toStringAndCheck(SpreadsheetMetadata.EMPTY, "{}");
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testFromEmptyJsonObject() {

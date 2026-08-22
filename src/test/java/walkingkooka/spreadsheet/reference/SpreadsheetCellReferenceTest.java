@@ -1400,7 +1400,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         return SpreadsheetSelection.parseCell(text);
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testUnmarshallString() {

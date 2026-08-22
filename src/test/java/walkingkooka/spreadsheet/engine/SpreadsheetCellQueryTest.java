@@ -39,7 +39,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Map;
@@ -54,7 +54,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     ToStringTesting<SpreadsheetCellQuery>,
     ParseStringTesting<SpreadsheetCellQuery>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<SpreadsheetCellQuery> {
+    JsonNodeMarshallerTesting<SpreadsheetCellQuery> {
 
     // with.............................................................................................................
 

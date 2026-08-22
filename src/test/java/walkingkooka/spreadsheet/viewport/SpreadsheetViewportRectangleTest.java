@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportRectangleTest implements ClassTesting2<SpreadsheetViewportRectangle>,
     HashCodeEqualsDefinedTesting2<SpreadsheetViewportRectangle>,
-    JsonNodeMarshallingTesting<SpreadsheetViewportRectangle>,
+    JsonNodeMarshallerTesting<SpreadsheetViewportRectangle>,
     ParseStringTesting<SpreadsheetViewportRectangle>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetViewportRectangle>,
@@ -554,7 +554,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         );
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testMarshall2() {

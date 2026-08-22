@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.text.DateFormatSymbols;
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToDateTimeSymbolsMapTest implements MapTesting2<SpreadsheetCellReferenceToDateTimeSymbolsMap, SpreadsheetCellReference, Optional<DateTimeSymbols>>,
     ClassTesting2<SpreadsheetCellReferenceToDateTimeSymbolsMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToDateTimeSymbolsMap>,
+    JsonNodeMarshallerTesting<SpreadsheetCellReferenceToDateTimeSymbolsMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;

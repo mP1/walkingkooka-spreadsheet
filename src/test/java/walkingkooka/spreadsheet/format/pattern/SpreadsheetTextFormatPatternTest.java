@@ -512,7 +512,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         return SpreadsheetTextFormatPattern.class;
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetTextFormatPattern unmarshall(final JsonNode jsonNode,

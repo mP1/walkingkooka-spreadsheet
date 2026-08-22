@@ -114,7 +114,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         );
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Test
     public void testMarshall() {
@@ -264,7 +264,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         return SpreadsheetRow.class;
     }
 
-    // JsonNodeMarshallingTesting......................................................................................
+    // JsonNodeMarshallerTesting........................................................................................
 
     @Override
     public SpreadsheetRow unmarshall(final JsonNode jsonNode,

@@ -41,7 +41,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationCheckbox;
@@ -60,7 +60,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetErrorTest implements ParseStringTesting<SpreadsheetError>,
     ClassTesting2<SpreadsheetError>,
     ComparableTesting2<SpreadsheetError>,
-    JsonNodeMarshallingTesting<SpreadsheetError>,
+    JsonNodeMarshallerTesting<SpreadsheetError>,
     HasTextTesting,
     HasConvertErrorTesting,
     HasValidationPromptValueTesting,

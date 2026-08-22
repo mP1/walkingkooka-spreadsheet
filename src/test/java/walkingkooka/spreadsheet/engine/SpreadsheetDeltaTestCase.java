@@ -52,7 +52,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.Form;
@@ -74,7 +74,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     TypeNameTesting<D>,
     HashCodeEqualsDefinedTesting2<D>,
     ToStringTesting<D>,
-    JsonNodeMarshallingTesting<D>,
+    JsonNodeMarshallerTesting<D>,
     TreePrintableTesting {
 
     SpreadsheetDeltaTestCase() {

@@ -25,7 +25,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken>,
     ClassTesting<SpreadsheetFormatterSelectorTokenList>,
     ImmutableListTesting<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken>,
-    JsonNodeMarshallingTesting<SpreadsheetFormatterSelectorTokenList>,
+    JsonNodeMarshallerTesting<SpreadsheetFormatterSelectorTokenList>,
     ThrowableTesting {
 
     private final static SpreadsheetFormatterSelectorToken COMPONENT1 = SpreadsheetFormatterSelectorToken.with(
