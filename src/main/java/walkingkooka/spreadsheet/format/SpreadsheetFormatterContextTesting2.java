@@ -26,7 +26,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetFormatterContextTesting2<C extends SpreadsheetFormatterContext> extends SpreadsheetFormatterContextTesting<C>,
+public interface SpreadsheetFormatterContextTesting2<C extends SpreadsheetFormatterContext> extends SpreadsheetFormatterContextTesting,
     SpreadsheetConverterContextTesting2<C>,
     ExpressionNumberConverterContextTesting2<C> {
 
