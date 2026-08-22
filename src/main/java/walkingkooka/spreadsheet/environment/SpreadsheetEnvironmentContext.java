@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
@@ -25,7 +26,9 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.terminal.TerminalContext;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -43,6 +46,29 @@ public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext
         "spreadsheetId",
         SpreadsheetId.class
     );
+
+    /**
+     * A {@link CanParseEnvironmentValueName} that only works for {@link SpreadsheetEnvironmentContext}.
+     */
+    CanParseEnvironmentValueName SPREADSHEET_ENVIRONMENT_CONTEXT_PARSE = (final String name) -> {
+        Objects.requireNonNull(name, "name");
+
+        final EnvironmentValueName<?> environmentValueName;
+
+        // assumes Case insensitive
+        switch (name.toLowerCase()) {
+            case "serverurl":
+                environmentValueName = SERVER_URL;
+                break;
+            case "spreadsheetid":
+                environmentValueName = SPREADSHEET_ID;
+                break;
+            default:
+                environmentValueName = TerminalContext.TERMINAL_CONTEXT_PARSE.parseEnvironmentValueName(name);
+        }
+
+        return environmentValueName;
+    };
 
     /**
      * The {@link SpreadsheetId} that identifies a spreadsheet.
