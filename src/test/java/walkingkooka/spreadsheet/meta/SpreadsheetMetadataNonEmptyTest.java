@@ -3763,19 +3763,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         return this.createSpreadsheetMetadata(map);
     }
 
-    private <X, Y, Z> SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
-                                                                            final X value1,
-                                                                            final SpreadsheetMetadataPropertyName<Y> property2,
-                                                                            final Y value2,
-                                                                            final SpreadsheetMetadataPropertyName<Z> property3,
-                                                                            final Z value3) {
-        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
-        map.put(property1, value1);
-        map.put(property2, value2);
-        map.put(property3, value3);
-        return this.createSpreadsheetMetadata(map);
-    }
-
     private SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
         return SpreadsheetMetadataNonEmpty.with(map, null);
     }
