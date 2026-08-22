@@ -27,28 +27,23 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContextTesting;
-import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContextTesting;
-import walkingkooka.net.header.MediaTypeDetectors;
+import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -56,9 +51,10 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     implements DateTimeContextTesting,
     DecimalNumberContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString>,
+    HasExpressionNumberKindTesting,
+    LocaleContextTesting,
+    MediaTypeDetectorTesting,
     SpreadsheetEnvironmentContextTesting {
-
-    private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     @Test
     public void testWithNullPatternFails() {
@@ -131,7 +127,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testConvertExpressionNumberToString() {
         this.convertNumberToStringAndCheck(
-            KIND.create(NUMBER)
+            EXPRESSION_NUMBER_KIND.create(NUMBER)
         );
     }
 
@@ -302,15 +298,13 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
             )
         );
 
-        final Locale locale = Locale.FRANCE;
-
         return SpreadsheetConverterContexts.basic(
             CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-            HasUserDirectorieses.fake(),
+            HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             converter,
-            MediaTypeDetectors.fake(),
+            MEDIA_TYPE_DETECTOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(),
             SpreadsheetMetadataLoaders.fake(),
@@ -324,19 +318,16 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        TextPrinting.with(
-                            INDENTATION,
-                            LineEnding.NL
-                        ).setCharset(StandardCharsets.UTF_8),
+                        BINARY_TEXT_CONTEXT,
                         CurrencyLocaleContexts.fake(),
                         DATE_TIME_CONTEXT,
                         DECIMAL_NUMBER_CONTEXT
                     ),
-                    KIND
+                    EXPRESSION_NUMBER_KIND
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
-            LocaleContexts.jre(locale)
+            LOCALE_CONTEXT
         );
     }
 
