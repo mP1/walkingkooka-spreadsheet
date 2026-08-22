@@ -810,7 +810,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY
             ).setDateTimeSymbols(
-                Optional.of(DATE_TIME_SYMBOLS)
+                OPTIONAL_DATE_TIME_SYMBOLS
             ),
             DateTimeSymbols.class,
             DATE_TIME_SYMBOLS_CONTEXT,
@@ -889,7 +889,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY
             ).setDecimalNumberSymbols(
-                Optional.of(DECIMAL_NUMBER_SYMBOLS)
+                OPTIONAL_DECIMAL_NUMBER_SYMBOLS
             ),
             DecimalNumberSymbols.class,
             DECIMAL_NUMBER_SYMBOLS_CONTEXT,
@@ -4278,7 +4278,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private SpreadsheetConverterContext dateTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
             CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-            HasUserDirectorieses.fake(),
+            HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used
@@ -4301,7 +4301,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         DATE_TIME_CONTEXT,
                         DecimalNumberContexts.fake()
                     ),
-                    ExpressionNumberKind.BIG_DECIMAL
+                    EXPRESSION_NUMBER_KIND
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
