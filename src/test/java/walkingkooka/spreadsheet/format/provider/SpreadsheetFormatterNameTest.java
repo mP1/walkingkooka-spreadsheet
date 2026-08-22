@@ -172,8 +172,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
         assertSame(
             instance,
             this.unmarshall(
-                this.marshallContext()
-                    .marshall(instance)
+                JSON_NODE_MARSHALL_CONTEXT.marshall(instance)
             )
         );
     }

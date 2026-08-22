@@ -1330,8 +1330,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                     MESSAGE
                 ).set(
                     SpreadsheetError.VALUE_PROPERTY,
-                    this.marshallContext().
-                        marshallWithType(VALUE.get())
+                    JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                        VALUE.get()
+                    )
                 ),
             SpreadsheetError.with(
                 KIND,
@@ -1352,8 +1353,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                     kind.name()
                 ).set(
                     SpreadsheetError.VALUE_PROPERTY,
-                    this.marshallContext()
-                        .marshallWithType(VALUE.get())
+                    JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                        VALUE.get()
+                    )
                 ),
             SpreadsheetError.with(
                 kind,
@@ -1372,8 +1374,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                     KIND.name()
                 ).set(
                     SpreadsheetError.VALUE_PROPERTY,
-                    this.marshallContext()
-                        .marshallWithType(VALUE.get())
+                    JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                        VALUE.get()
+                    )
                 ),
             SpreadsheetError.with(
                 KIND,
@@ -1396,8 +1399,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                     MESSAGE
                 ).set(
                     SpreadsheetError.VALUE_PROPERTY,
-                    this.marshallContext()
-                        .marshallWithType(VALUE.get())
+                    JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                        VALUE.get()
+                    )
                 )
         );
     }
@@ -1411,8 +1415,17 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                 VALUE
             ),
             JsonNode.object()
-                .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(KIND.name()))
-                .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext().marshallWithType(VALUE.get()))
+                .set(
+                    SpreadsheetError.KIND_PROPERTY,
+                    JsonNode.string(
+                        KIND.name()
+                    )
+                ).set(
+                    SpreadsheetError.VALUE_PROPERTY,
+                    JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                        VALUE.get()
+                    )
+                )
         );
     }
 

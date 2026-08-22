@@ -94,16 +94,24 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testUnmarshallWithCellReference() {
         final String reference = "A1";
-        this.checkEquals(SpreadsheetSelection.parseCell(reference),
-            SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(reference), this.unmarshallContext())
+        this.checkEquals(
+            SpreadsheetSelection.parseCell(reference),
+            SpreadsheetExpressionReference.unmarshallExpressionReference(
+                JsonNode.string(reference),
+                JSON_NODE_UNMARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testUnmarshallWithLabel() {
         final String label = "label123";
-        this.checkEquals(SpreadsheetSelection.labelName(label),
-            SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(label), this.unmarshallContext())
+        this.checkEquals(
+            SpreadsheetSelection.labelName(label),
+            SpreadsheetExpressionReference.unmarshallExpressionReference(
+                JsonNode.string(label),
+                JSON_NODE_UNMARSHALL_CONTEXT
+            )
         );
     }
 

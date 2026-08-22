@@ -52,7 +52,6 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.ValueType;
@@ -169,9 +168,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final JsonNode viewportJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
-        return context.marshall(
+        return JSON_NODE_MARSHALL_CONTEXT.marshall(
             this.viewport()
                 .get()
         );
@@ -312,33 +309,27 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final JsonNode cellsJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         JsonObject object = JsonNode.object();
         object = cellsJson0(
             object,
-            this.a1(),
-            context
+            this.a1()
         );
         object = cellsJson0(
             object,
-            this.b2(),
-            context
+            this.b2()
         );
         object = cellsJson0(
             object,
-            this.c3(),
-            context
+            this.c3()
         );
 
         return object;
     }
 
     private static JsonObject cellsJson0(final JsonObject object,
-                                         final SpreadsheetCell cell,
-                                         final JsonNodeMarshallContext context) {
+                                         final SpreadsheetCell cell) {
         JsonObject updated = object;
-        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(cell)
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : JSON_NODE_MARSHALL_CONTEXT.marshall(cell)
             .objectOrFail()
             .asMap()
             .entrySet()) {
@@ -502,38 +493,31 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final JsonNode columnsJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         JsonObject object = JsonNode.object();
         object = columnsJson0(
             object,
-            this.a(),
-            context
+            this.a()
         );
         object = columnsJson0(
             object,
-            this.b(),
-            context
+            this.b()
         );
         object = columnsJson0(
             object,
-            this.c(),
-            context
+            this.c()
         );
         object = columnsJson0(
             object,
-            this.hiddenD(),
-            context
+            this.hiddenD()
         );
 
         return object;
     }
 
     private static JsonObject columnsJson0(final JsonObject object,
-                                           final SpreadsheetColumn column,
-                                           final JsonNodeMarshallContext context) {
+                                           final SpreadsheetColumn column) {
         JsonObject updated = object;
-        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(column)
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : JSON_NODE_MARSHALL_CONTEXT.marshall(column)
             .objectOrFail()
             .asMap()
             .entrySet()) {
@@ -692,10 +676,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final JsonNode formsJson() {
-        return this.marshallContext()
-            .marshallCollection(
-                this.forms()
-            );
+        return JSON_NODE_MARSHALL_CONTEXT.marshallCollection(
+            this.forms()
+        );
     }
 
     // labels...........................................................................................................
@@ -854,10 +837,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final JsonNode labelsJson() {
-        return this.marshallContext()
-            .marshallCollection(
-                this.labels()
-            );
+        return JSON_NODE_MARSHALL_CONTEXT.marshallCollection(
+            this.labels()
+        );
     }
 
     // rows.............................................................................................................
@@ -1030,39 +1012,32 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final JsonNode rowsJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
         JsonObject object = JsonNode.object();
         object = rowsJson0(
             object,
-            this.row1(),
-            context
+            this.row1()
         );
         object = rowsJson0(
             object,
-            this.row2(),
-            context
+            this.row2()
         );
         object = rowsJson0(
             object,
-            this.row3(),
-            context
+            this.row3()
         );
         object = rowsJson0(
             object,
-            this.hiddenRow4(),
-            context
+            this.hiddenRow4()
         );
 
         return object;
     }
 
     private static JsonObject rowsJson0(final JsonObject object,
-                                        final SpreadsheetRow row,
-                                        final JsonNodeMarshallContext context) {
+                                        final SpreadsheetRow row) {
         JsonObject updated = object;
 
-        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(row)
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : JSON_NODE_MARSHALL_CONTEXT.marshall(row)
             .objectOrFail()
             .asMap()
             .entrySet()) {
@@ -1251,20 +1226,17 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 JsonPropertyName.with("A1"),
                 JsonNode.array()
                     .appendChild(
-                        marshallContext()
-                            .marshallWithType(
-                                SpreadsheetSelection.parseCell("B2")
-                            )
+                        JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                            SpreadsheetSelection.parseCell("B2")
+                        )
                     ).appendChild(
-                        marshallContext()
-                            .marshallWithType(
-                                SpreadsheetSelection.parseCellRange("C3:D4")
-                            )
+                        JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                            SpreadsheetSelection.parseCellRange("C3:D4")
+                        )
                     ).appendChild(
-                        marshallContext()
-                            .marshallWithType(
-                                SpreadsheetSelection.labelName("LabelA1A")
-                            )
+                        JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
+                            SpreadsheetSelection.labelName("LabelA1A")
+                        )
                     )
             );
     }
