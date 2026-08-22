@@ -150,6 +150,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     ),
                     TERMINAL_CONTEXT
                 ),
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
@@ -4753,6 +4754,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 )
             ),
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HAS_USER_DIRECTORIES,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,

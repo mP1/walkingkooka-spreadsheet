@@ -264,6 +264,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     this.cell,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
+                    this, // CanParseEnvironmentValueName
                     this, // HasUserDirectories
                     this.spreadsheetLabelNameResolver,
                     spreadsheetContext, // MediaTypeDetector
@@ -344,6 +345,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
+                this, // CanParseEnvironmentValueName
                 this, // HasUserDirectories
                 this.spreadsheetLabelNameResolver,
                 spreadsheetContext, // MediaTypeDetector

@@ -34,6 +34,7 @@ import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -90,7 +91,8 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     SPT extends ParentSpreadsheetFormulaParserToken,
     V> extends SpreadsheetPatternTestCase<P>
     implements BinaryTextContextTesting,
-    ConverterTesting {
+    ConverterTesting,
+    SpreadsheetEnvironmentContextTesting {
 
     final static int DEFAULT_YEAR = 1900;
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -867,6 +869,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

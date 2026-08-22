@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -41,7 +42,8 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetConverterContextBasic}
      */
-    public static SpreadsheetConverterContext basic(final HasUserDirectories hasUserDirectories,
+    public static SpreadsheetConverterContext basic(final CanParseEnvironmentValueName canParseEnvironmentValueName,
+                                                    final HasUserDirectories hasUserDirectories,
                                                     final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                     final Optional<SpreadsheetValidationReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
@@ -52,6 +54,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final JsonNodeConverterContext jsonNodeConverterContext,
                                                     final LocaleContext localeContext) {
         return SpreadsheetConverterContextBasic.with(
+            canParseEnvironmentValueName,
             hasUserDirectories,
             spreadsheetMetadata,
             validationReference,

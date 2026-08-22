@@ -29,6 +29,8 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.environment.CanParseEnvironmentValueName;
+import walkingkooka.environment.CanParseEnvironmentValueNameDelegator;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
@@ -197,6 +199,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     static class TestSpreadsheetConverterContext implements SpreadsheetConverterContext,
+        CanParseEnvironmentValueNameDelegator,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
         JsonNodeMarshallUnmarshallContextDelegator,
@@ -430,6 +433,13 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
             return LOCALE_CONTEXT.localeForLanguageTag(languageTag);
+        }
+
+        // CanParseEnvironmentValueNameDelegator........................................................................
+
+        @Override
+        public CanParseEnvironmentValueName canParseEnvironmentValueName() {
+            return CAN_PARSE_ENVIRONMENT_VALUE_NAME;
         }
 
     }

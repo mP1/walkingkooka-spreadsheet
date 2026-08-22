@@ -73,6 +73,7 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -160,7 +161,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     HasDecimalNumberSymbolsTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     MediaTypeDetectorTesting,
-    PublicStaticHelperTesting<SpreadsheetConverters> {
+    PublicStaticHelperTesting<SpreadsheetConverters>,
+    SpreadsheetEnvironmentContextTesting {
 
     // basic............................................................................................................
 
@@ -4275,6 +4277,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext dateTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -4707,6 +4710,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

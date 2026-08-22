@@ -34,6 +34,7 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -66,6 +67,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterContextBasicTest implements SpreadsheetConverterContextTesting2<SpreadsheetConverterContextBasic>,
     DecimalNumberContextDelegator,
+    SpreadsheetEnvironmentContextTesting,
     LocaleContextTesting {
 
     private final static HasUserDirectories HAS_USER_DIRECTORIES = HasUserDirectorieses.fake();
@@ -110,10 +112,31 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     // with.............................................................................................................
 
     @Test
+    public void testWithNullCanParseEnvironmentValueNameFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetConverterContextBasic.with(
+                null,
+                HAS_USER_DIRECTORIES,
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullHasUserDirectoriesFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 null,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -133,6 +156,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 null,
                 VALIDATION_REFERENCE,
@@ -152,6 +176,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -171,6 +196,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -190,6 +216,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -209,6 +236,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -228,6 +256,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -247,6 +276,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -266,6 +296,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -368,6 +399,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     @Override
     public SpreadsheetConverterContextBasic createContext() {
         return SpreadsheetConverterContextBasic.with(
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             VALIDATION_REFERENCE,

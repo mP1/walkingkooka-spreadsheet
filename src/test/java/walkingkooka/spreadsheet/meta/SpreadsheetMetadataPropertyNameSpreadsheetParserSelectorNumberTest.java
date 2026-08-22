@@ -26,6 +26,7 @@ import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -44,7 +45,8 @@ import java.text.ParseException;
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber>
     implements BinaryTextContextTesting,
     DateTimeContextTesting,
-    DecimalNumberContextTesting {
+    DecimalNumberContextTesting,
+    SpreadsheetEnvironmentContextTesting {
 
     @Test
     public void testExtractLocaleAwareValue() throws ParseException {
@@ -82,6 +84,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
             text,
             ExpressionNumber.class,
             SpreadsheetConverterContexts.basic(
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

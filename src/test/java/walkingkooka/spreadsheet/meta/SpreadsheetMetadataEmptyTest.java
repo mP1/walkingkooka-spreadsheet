@@ -244,6 +244,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                  final SpreadsheetValidationReference cellOrLabel) -> {
                     throw new UnsupportedOperationException();
                 },
+                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,

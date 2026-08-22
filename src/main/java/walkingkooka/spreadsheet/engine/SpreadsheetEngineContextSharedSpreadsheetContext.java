@@ -145,6 +145,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
+                    this, // CanParseEnvironmentValueName
                     this, // HasUserDirectories
                     this.spreadsheetLabelNameResolver,
                     spreadsheetContext, // MediaTypeDetector
@@ -327,6 +328,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
+                this, // CanParseEnvironmentValueName
                 this, // HasUserDirectories
                 this, // SpreadsheetLabelNameResolver,
                 context, // MediaTypeDetector

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Binary;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -46,6 +47,11 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
     @Override
     public MediaType detect(final String filename,
                             final Binary content) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
         throw new UnsupportedOperationException();
     }
 

@@ -31,6 +31,7 @@ import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -54,7 +55,8 @@ import java.math.BigInteger;
 public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, SpreadsheetConverterContext>,
     BinaryTextContextTesting,
     DecimalNumberContextTesting,
-    HashCodeEqualsDefinedTesting2<SpreadsheetFormatterConverter> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetFormatterConverter>,
+    SpreadsheetEnvironmentContextTesting {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -138,6 +140,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     @Override
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
+            CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

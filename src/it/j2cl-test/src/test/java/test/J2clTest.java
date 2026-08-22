@@ -378,6 +378,7 @@ public class J2clTest {
                             SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                            this, // CanParseEnvironmentValue
                             HasUserDirectorieses.empty(),
                             LABEL_NAME_RESOLVER,
                             MEDIA_TYPE_DETECTOR,
@@ -439,6 +440,7 @@ public class J2clTest {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
+                        this, // CanParseEnvironmentValue
                         HasUserDirectorieses.empty(),
                         LABEL_NAME_RESOLVER,
                         MEDIA_TYPE_DETECTOR,

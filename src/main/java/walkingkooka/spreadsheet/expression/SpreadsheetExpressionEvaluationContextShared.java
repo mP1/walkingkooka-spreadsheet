@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -213,6 +214,13 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     abstract Optional<Optional<Object>> handleSpreadsheetExpressionReference(final SpreadsheetExpressionReference reference);
+
+    // CanParseEnvironmentValueNameDelegator............................................................................
+
+    @Override
+    public CanParseEnvironmentValueName canParseEnvironmentValueName() {
+        return this.spreadsheetEnvironmentContext();
+    }
 
     // CanEvaluateStringDelegator.......................................................................................
 
