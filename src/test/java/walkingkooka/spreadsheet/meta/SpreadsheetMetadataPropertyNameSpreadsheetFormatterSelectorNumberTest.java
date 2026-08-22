@@ -39,10 +39,10 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
-import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -54,14 +54,13 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     implements BinaryTextContextTesting,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
+    HasExpressionNumberKindTesting,
     SpreadsheetEnvironmentContextTesting {
-
-    private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAndCheck(
-            KIND.create(1.25),
+            EXPRESSION_NUMBER_KIND.create(1.25),
             "1.25"
         );
     }
@@ -69,7 +68,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     @Test
     public void testExtractLocaleAwareValueInteger() {
         this.extractLocaleValueAndCheck(
-            KIND.create(789),
+            EXPRESSION_NUMBER_KIND.create(789),
             "789."
         );
     }
@@ -112,7 +111,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
             },
             SpreadsheetConverterContexts.basic(
                 CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HasUserDirectorieses.fake(),
+                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 new FakeConverter<>() {
