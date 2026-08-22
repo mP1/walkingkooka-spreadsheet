@@ -17,31 +17,19 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
-import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetViewportNavigationContextTesting<C extends SpreadsheetViewportNavigationContext> extends SpreadsheetProviderContextTesting2<C>,
-    SpreadsheetLabelNameResolverTesting2<C> {
+public interface SpreadsheetViewportNavigationContextTesting extends SpreadsheetProviderContextTesting,
+    SpreadsheetLabelNameResolverTesting {
 
     // isColumnHidden..................................................................................................
-
-    @Test
-    default void isColumnHiddenWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().isColumnHidden(null)
-        );
-    }
-
+    
     default void isColumnHiddenAndCheck(final SpreadsheetViewportNavigationContext context,
                                         final SpreadsheetColumnReference column,
                                         final boolean expected) {
@@ -53,15 +41,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
     }
 
     // isRowHidden......................................................................................................
-
-    @Test
-    default void isRowHiddenWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().isRowHidden(null)
-        );
-    }
-
+    
     default void isRowHiddenAndCheck(final SpreadsheetViewportNavigationContext context,
                                      final SpreadsheetRowReference row,
                                      final boolean expected) {
@@ -73,16 +53,9 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
     }
 
     // moveLeftColumn...................................................................................................
+    
 
-    @Test
-    default void testMoveLeftColumnWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().moveLeft(null)
-        );
-    }
-
-    default void moveLeftColumnAndCheck(final C context,
+    default void moveLeftColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                         final String reference) {
         this.moveLeftColumnAndCheck(
             context,
@@ -91,7 +64,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveLeftColumnAndCheck(final C context,
+    default void moveLeftColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                         final String reference,
                                         final String expected) {
         this.moveLeftColumnAndCheck(
@@ -101,7 +74,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveLeftColumnAndCheck(final C context,
+    default void moveLeftColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                         final SpreadsheetColumnReference reference) {
         this.moveLeftColumnAndCheck(
             context,
@@ -110,7 +83,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveLeftColumnAndCheck(final C context,
+    default void moveLeftColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                         final SpreadsheetColumnReference reference,
                                         final SpreadsheetColumnReference expected) {
         this.moveLeftColumnAndCheck(
@@ -120,7 +93,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveLeftColumnAndCheck(final C context,
+    default void moveLeftColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                         final SpreadsheetColumnReference reference,
                                         final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
@@ -132,15 +105,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     // moveRightColumn..................................................................................................
 
-    @Test
-    default void testMoveRightColumnWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().moveRightColumn(null)
-        );
-    }
-
-    default void moveRightColumnAndCheck(final C context,
+    default void moveRightColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                          final String reference) {
         this.moveRightColumnAndCheck(
             context,
@@ -148,7 +113,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveRightColumnAndCheck(final C context,
+    default void moveRightColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                          final String reference,
                                          final String expected) {
         this.moveRightColumnAndCheck(
@@ -158,7 +123,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveRightColumnAndCheck(final C context,
+    default void moveRightColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                          final SpreadsheetColumnReference reference) {
         this.moveRightColumnAndCheck(
             context,
@@ -167,7 +132,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveRightColumnAndCheck(final C context,
+    default void moveRightColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                          final SpreadsheetColumnReference reference,
                                          final SpreadsheetColumnReference expected) {
         this.moveRightColumnAndCheck(
@@ -177,7 +142,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveRightColumnAndCheck(final C context,
+    default void moveRightColumnAndCheck(final SpreadsheetViewportNavigationContext context,
                                          final SpreadsheetColumnReference reference,
                                          final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
@@ -189,15 +154,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     // moveUpRow........................................................................................................
 
-    @Test
-    default void testMoveUpRowWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().moveUpRow(null)
-        );
-    }
-
-    default void moveUpRowAndCheck(final C context,
+    default void moveUpRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                    final String reference) {
         this.moveUpRowAndCheck(
             context,
@@ -206,7 +163,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveUpRowAndCheck(final C context,
+    default void moveUpRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                    final String reference,
                                    final String expected) {
         this.moveUpRowAndCheck(
@@ -216,7 +173,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveUpRowAndCheck(final C context,
+    default void moveUpRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                    final SpreadsheetRowReference reference) {
         this.moveUpRowAndCheck(
             context,
@@ -225,7 +182,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveUpRowAndCheck(final C context,
+    default void moveUpRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                    final SpreadsheetRowReference reference,
                                    final SpreadsheetRowReference expected) {
         this.moveUpRowAndCheck(
@@ -235,7 +192,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveUpRowAndCheck(final C context,
+    default void moveUpRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                    final SpreadsheetRowReference reference,
                                    final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
@@ -247,15 +204,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     // moveDownRow......................................................................................................
 
-    @Test
-    default void testMoveDownRowWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().downRow(null)
-        );
-    }
-
-    default void moveDownRowAndCheck(final C context,
+    default void moveDownRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                      final String reference) {
         this.moveDownRowAndCheck(
             context,
@@ -264,7 +213,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveDownRowAndCheck(final C context,
+    default void moveDownRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                      final String reference,
                                      final String expected) {
         this.moveDownRowAndCheck(
@@ -274,7 +223,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveDownRowAndCheck(final C context,
+    default void moveDownRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                      final SpreadsheetRowReference reference) {
         this.moveDownRowAndCheck(
             context,
@@ -283,7 +232,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveDownRowAndCheck(final C context,
+    default void moveDownRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                      final SpreadsheetRowReference reference,
                                      final SpreadsheetRowReference expected) {
         this.moveDownRowAndCheck(
@@ -293,7 +242,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void moveDownRowAndCheck(final C context,
+    default void moveDownRowAndCheck(final SpreadsheetViewportNavigationContext context,
                                      final SpreadsheetRowReference reference,
                                      final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
@@ -305,29 +254,9 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     // moveLeftPixels...................................................................................................
 
-    @Test
-    default void testMoveLeftPixelsWithNullColumnFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().leftPixels(null, 1)
-        );
-    }
-
-    @Test
-    default void testMoveLeftPixelsWithNegativePixelsFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .leftPixels(
-                    SpreadsheetReferenceKind.RELATIVE.firstColumn(),
-                    -1
-                )
-        );
-    }
-
     default void moveLeftPixelsAndCheck(final String start,
                                         final int pixels,
-                                        final C context,
+                                        final SpreadsheetViewportNavigationContext context,
                                         final String expected) {
         this.moveLeftPixelsAndCheck(
             SpreadsheetSelection.parseColumn(start),
@@ -341,7 +270,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     default void moveLeftPixelsAndCheck(final SpreadsheetColumnReference start,
                                         final int pixels,
-                                        final C context,
+                                        final SpreadsheetViewportNavigationContext context,
                                         final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
             expected,
@@ -355,29 +284,9 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     // moveRightPixels..................................................................................................
 
-    @Test
-    default void testMoveRightPixelsWithNullColumnFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().rightPixels(null, 1)
-        );
-    }
-
-    @Test
-    default void testMoveRightPixelsWithNegativePixelsFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .rightPixels(
-                    SpreadsheetReferenceKind.RELATIVE.firstColumn(),
-                    -1
-                )
-        );
-    }
-
     default void moveRightPixelsAndCheck(final String start,
                                          final int pixels,
-                                         final C context,
+                                         final SpreadsheetViewportNavigationContext context,
                                          final String expected) {
         this.moveRightPixelsAndCheck(
             SpreadsheetSelection.parseColumn(start),
@@ -391,7 +300,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     default void moveRightPixelsAndCheck(final SpreadsheetColumnReference start,
                                          final int pixels,
-                                         final C context,
+                                         final SpreadsheetViewportNavigationContext context,
                                          final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
             expected,
@@ -405,29 +314,9 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     // moveUpPixels.....................................................................................................
 
-    @Test
-    default void testMoveUpPixelsWithNullRowFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().upPixels(null, 1)
-        );
-    }
-
-    @Test
-    default void testMoveUpPixelsWithNegativePixelsFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .upPixels(
-                    SpreadsheetReferenceKind.RELATIVE.firstRow(),
-                    -1
-                )
-        );
-    }
-
     default void moveUpPixelsAndCheck(final String start,
                                       final int pixels,
-                                      final C context,
+                                      final SpreadsheetViewportNavigationContext context,
                                       final String expected) {
         this.moveUpPixelsAndCheck(
             SpreadsheetSelection.parseRow(start),
@@ -441,7 +330,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     default void moveUpPixelsAndCheck(final SpreadsheetRowReference start,
                                       final int pixels,
-                                      final C context,
+                                      final SpreadsheetViewportNavigationContext context,
                                       final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
             expected,
@@ -453,31 +342,11 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    // downPixels.......................................................................................................
-
-    @Test
-    default void testMoveDownPixelsWithNullRowFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext().downPixels(null, 1)
-        );
-    }
-
-    @Test
-    default void testMoveDownPixelsWithNegativePixelsFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .downPixels(
-                    SpreadsheetReferenceKind.RELATIVE.firstRow(),
-                    -1
-                )
-        );
-    }
+    // moveDownPixels...................................................................................................
 
     default void moveDownPixelsAndCheck(final String start,
                                         final int pixels,
-                                        final C context,
+                                        final SpreadsheetViewportNavigationContext context,
                                         final String expected) {
         this.moveDownPixelsAndCheck(
             SpreadsheetSelection.parseRow(start),
@@ -491,7 +360,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
 
     default void moveDownPixelsAndCheck(final SpreadsheetRowReference start,
                                         final int pixels,
-                                        final C context,
+                                        final SpreadsheetViewportNavigationContext context,
                                         final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
             expected,
@@ -501,15 +370,5 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
             ),
             () -> "downPixels " + start + " " + pixels
         );
-    }
-
-    @Override
-    default C createSpreadsheetLabelNameResolver() {
-        return this.createContext();
-    }
-
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetViewportNavigationContext.class.getSimpleName();
     }
 }
