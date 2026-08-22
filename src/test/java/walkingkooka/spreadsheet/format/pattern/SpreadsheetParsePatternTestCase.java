@@ -25,6 +25,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContexts;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -74,13 +75,11 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
@@ -92,10 +91,9 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     V> extends SpreadsheetPatternTestCase<P>
     implements BinaryTextContextTesting,
     ConverterTesting,
+    DateTimeContextTesting,
     SpreadsheetEnvironmentContextTesting {
 
-    final static int DEFAULT_YEAR = 1900;
-    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     final static char VALUE_SEPARATOR = ',';
 
     final static String CURRENCY = "NZ$";
@@ -838,7 +836,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
             new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
         ),
         ARABIC_ZERO_DIGIT_LOCALE,
-        MathContext.DECIMAL32
+        MATH_CONTEXT
     );
 
     // ConverterTesting.................................................................................................
