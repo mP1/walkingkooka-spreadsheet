@@ -38,9 +38,6 @@ import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -102,14 +99,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                 ),
                 EXPRESSION_NUMBER_KIND
             ),
-            JsonNodeMarshallUnmarshallContexts.basic(
-                JsonNodeMarshallContexts.basic(),
-                JsonNodeUnmarshallContexts.basic(
-                    EXPRESSION_NUMBER_KIND,
-                    CURRENCY_LOCALE_CONTEXT,
-                    DECIMAL_NUMBER_CONTEXT.mathContext()
-                )
-            )
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         ),
         LOCALE_CONTEXT
     );
@@ -206,10 +196,9 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
 
     @Test
     public void testToString() {
-        final SpreadsheetConverterContext converterContext = CONVERTER_CONTEXT;
         this.toStringAndCheck(
-            SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(converterContext),
-            converterContext.toString()
+            SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(CONVERTER_CONTEXT),
+            CONVERTER_CONTEXT.toString()
         );
     }
 
