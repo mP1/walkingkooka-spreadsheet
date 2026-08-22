@@ -24,7 +24,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
-public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends HasSpreadsheetCellTesting {
+public interface SpreadsheetFormatterContextTesting extends HasSpreadsheetCellTesting {
 
     default void colorNumberAndCheck(final SpreadsheetFormatterContext context,
                                      final int number,
