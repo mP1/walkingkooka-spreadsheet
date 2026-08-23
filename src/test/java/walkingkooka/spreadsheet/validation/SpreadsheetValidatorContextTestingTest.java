@@ -23,8 +23,6 @@ import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -39,55 +37,9 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext>,
     SpreadsheetMetadataTesting {
-
-    @Override
-    public void testRemoveEnvironmentValueWithNowFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetEnvironmentValueWithNowFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetCurrencyWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetIndentationWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLineEndingWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLocaleWithDifferent() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLocaleWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetTimeOffsetWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetUserWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public TestSpreadsheetValidatorContext createContext() {
@@ -96,11 +48,6 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
     @Override
     public void testSetValidationReferenceSame() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testEnvironmentValueWithNullFails() {
         throw new UnsupportedOperationException();
     }
 
@@ -130,11 +77,6 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public CurrencyCode currencyCode() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public ConverterContext converterContext() {
             return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
         }
@@ -146,11 +88,10 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public void setCharset(final Charset charset) {
-            Objects.requireNonNull(charset, "charset");
+        public CurrencyCode currencyCode() {
             throw new UnsupportedOperationException();
         }
-        
+
         @Override
         public Indentation indentation() {
             return this.environmentContext()
@@ -158,23 +99,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public void setIndentation(final Indentation indentation) {
-            Objects.requireNonNull(indentation, "indentation");
-            throw new UnsupportedOperationException();
-        }
-        
-        @Override
         public LineEnding lineEnding() {
             return this.environmentContext()
                 .lineEnding();
         }
 
-        @Override
-        public void setLineEnding(final LineEnding lineEnding) {
-            Objects.requireNonNull(lineEnding, "lineEnding");
-            throw new UnsupportedOperationException();
-        }
-        
         @Override
         public Locale locale() {
             return this.environmentContext()
@@ -182,15 +111,8 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public void setLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setUser(final Optional<EmailAddress> user) {
-            Objects.requireNonNull(user, "user");
-            throw new UnsupportedOperationException();
+        public LocalDateTime now() {
+            return this.environmentContext.now();
         }
 
         @Override
@@ -206,30 +128,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
-                                            final T value) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(value, "value");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            Objects.requireNonNull(name, "name");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public EnvironmentContext environmentContext() {
             return this.environmentContext;
         }
 
-        private final EnvironmentContext environmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT;
-
-        @Override
-        public LocalDateTime now() {
-            return SpreadsheetValidatorContextTestingTest.NOW;
-        }
+        private final EnvironmentContext environmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         @Override
         public SpreadsheetValidatorContext setValidationReference(final SpreadsheetValidationReference cellOrLabel) {
