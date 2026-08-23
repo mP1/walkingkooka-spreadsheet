@@ -749,6 +749,23 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         return DECIMAL_NUMBER_CONTEXT;
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final Converter<SpreadsheetExpressionEvaluationContext> converter = Converters.fake();
+        final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
+
+        this.environmentContextAndCheck(
+            SpreadsheetExpressionEvaluationContextConverter.with(
+                converter,
+                context
+            ),
+            context
+        );
+    }
+
     // Class............................................................................................................
 
     @Override

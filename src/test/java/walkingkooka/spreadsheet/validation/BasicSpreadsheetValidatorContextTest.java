@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -124,6 +125,19 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
                     SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             )
+        );
+    }
+
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final ValidatorContext<SpreadsheetValidationReference> context = ValidatorContexts.fake();
+
+        this.environmentContextAndCheck(
+            BasicSpreadsheetValidatorContext.with(context),
+            context
         );
     }
 

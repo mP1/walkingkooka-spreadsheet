@@ -834,6 +834,17 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         return this.createContext();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        this.environmentContextAndCheck(
+            this.createContext(),
+            SPREADSHEET_ENVIRONMENT_CONTEXT
+        );
+    }
+
     // class............................................................................................................
 
     @Override

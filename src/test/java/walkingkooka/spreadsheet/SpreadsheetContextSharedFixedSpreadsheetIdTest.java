@@ -494,6 +494,18 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.fake();
+
+        this.environmentContextAndCheck(
+            this.createContext(context),
+            context
+        );
+    }
 
     // class............................................................................................................
 

@@ -439,6 +439,25 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         return this.createContext();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        this.environmentContextAndCheck(
+            SpreadsheetProviderContext.with(
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                PLUGIN_STORE,
+                STORAGE,
+                CURRENCY_LOCALE_CONTEXT,
+                STORAGE_ENVIRONMENT_CONTEXT,
+                JsonNodeMarshallUnmarshallContexts.fake()
+            ),
+            STORAGE_ENVIRONMENT_CONTEXT
+        );
+    }
+
     // class............................................................................................................
 
     @Override

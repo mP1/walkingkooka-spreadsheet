@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
@@ -68,6 +69,21 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
     public TestSpreadsheetStorageDelegatorContext createContext() {
         return new TestSpreadsheetStorageDelegatorContext();
     }
+
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final TestSpreadsheetStorageDelegatorContext context = new TestSpreadsheetStorageDelegatorContext();
+
+        this.environmentContextAndCheck(
+            context,
+            context.context
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<TestSpreadsheetStorageDelegatorContext> type() {

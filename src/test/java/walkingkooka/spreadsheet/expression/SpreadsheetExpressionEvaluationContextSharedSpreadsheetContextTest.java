@@ -1040,6 +1040,13 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         throw new UnsupportedOperationException();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Override
+    public void testEnvironmentContext() {
+        throw new UnsupportedOperationException();
+    }
+
     // Class............................................................................................................
 
     @Override

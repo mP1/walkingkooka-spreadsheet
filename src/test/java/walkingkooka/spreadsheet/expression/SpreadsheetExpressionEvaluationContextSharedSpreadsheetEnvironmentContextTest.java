@@ -1354,6 +1354,19 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         throw new UnsupportedOperationException();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        this.environmentContextAndCheck(
+            context,
+            context.spreadsheetEnvironmentContextFactory
+        );
+    }
+
     // Class............................................................................................................
 
     @Override

@@ -974,6 +974,19 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        this.environmentContextAndCheck(
+            context,
+            context.spreadsheetEnvironmentContextFactory
+        );
+    }
+
     // class............................................................................................................
 
     @Override

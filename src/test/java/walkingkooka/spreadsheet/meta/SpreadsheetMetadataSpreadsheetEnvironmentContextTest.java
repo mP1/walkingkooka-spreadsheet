@@ -524,6 +524,22 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.fake();
+
+        this.environmentContextAndCheck(
+            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+                METADATA,
+                context
+            ),
+            context
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test

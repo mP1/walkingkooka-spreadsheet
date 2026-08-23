@@ -27,6 +27,7 @@ import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
@@ -1163,6 +1164,19 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
                 ),
                 ProviderContexts.fake()
             )
+        );
+    }
+
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetContext spreadsheetContext = SpreadsheetContexts.fake();
+
+        this.environmentContextAndCheck(
+            SpreadsheetStorageContextSpreadsheetContext.with(spreadsheetContext),
+            spreadsheetContext
         );
     }
 

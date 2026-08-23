@@ -507,7 +507,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return this.spreadsheetEnvironmentContextFactory;
     }
 
-    private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
+    // @VisibleForTesting
+    final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
 
     // SpreadsheetStorageContextDelegator..............................................................................
 

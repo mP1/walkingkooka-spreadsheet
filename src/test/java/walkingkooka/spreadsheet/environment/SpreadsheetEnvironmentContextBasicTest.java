@@ -528,6 +528,20 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        this.environmentContextAndCheck(
+            SpreadsheetEnvironmentContextBasic.with(
+                STORAGE,
+                STORAGE_ENVIRONMENT_CONTEXT
+            ),
+            STORAGE_ENVIRONMENT_CONTEXT
+        );
+    }
+
     // class............................................................................................................
 
     @Override

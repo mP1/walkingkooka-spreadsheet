@@ -1434,6 +1434,22 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.fake();
+
+        this.environmentContextAndCheck(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
+                REFERENCE_TO_VALUES,
+                spreadsheetExpressionEvaluationContext
+            ),
+            spreadsheetExpressionEvaluationContext
+        );
+    }
+
     // class............................................................................................................
 
     @Override

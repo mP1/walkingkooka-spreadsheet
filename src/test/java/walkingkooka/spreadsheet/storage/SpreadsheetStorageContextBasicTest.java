@@ -1204,6 +1204,27 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
+
+        this.environmentContextAndCheck(
+            SpreadsheetStorageContextBasic.with(
+                SpreadsheetEngines.fake(),
+                spreadsheetEnvironmentContext,
+                (SpreadsheetId spreadsheetId) -> {
+                    throw new UnsupportedOperationException();
+                },
+                SpreadsheetMetadataContexts.fake(),
+                StorageContexts.fake()
+            ),
+            spreadsheetEnvironmentContext
+        );
+    }
+
     // class............................................................................................................
 
     @Override
