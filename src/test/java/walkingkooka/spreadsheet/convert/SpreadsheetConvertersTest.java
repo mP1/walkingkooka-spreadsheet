@@ -1002,6 +1002,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private final static SpreadsheetConverterContext ENVIRONMENT_SYMBOLS_CONTEXT = new FakeSpreadsheetConverterContext() {
+
+        @Override
+        public EnvironmentValueName<?> parseEnvironmentValueName(String name) {
+            return SPREADSHEET_ENVIRONMENT_CONTEXT.parseEnvironmentValueName(name);
+        }
+
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
