@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.EnvironmentContext;
@@ -39,6 +40,21 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
     public TestSpreadsheetEnvironmentContextFactoryDelegate createContext() {
         return new TestSpreadsheetEnvironmentContextFactoryDelegate();
     }
+
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final TestSpreadsheetEnvironmentContextFactoryDelegate context = new TestSpreadsheetEnvironmentContextFactoryDelegate();
+
+        this.environmentContextAndCheck(
+            context,
+            context.factory
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public void testTypeNaming() {

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -74,6 +75,21 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
         return new TestSpreadsheetEnvironmentContextDelegator();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final TestSpreadsheetEnvironmentContextDelegator context = new TestSpreadsheetEnvironmentContextDelegator();
+
+        this.environmentContextAndCheck(
+            context,
+            context.context
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public Class<TestSpreadsheetEnvironmentContextDelegator> type() {
         return TestSpreadsheetEnvironmentContextDelegator.class;
@@ -105,6 +121,10 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
 
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+            return this.context;
+        }
+
+        {
             final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
             storageEnvironmentContext.setEnvironmentValue(
@@ -116,11 +136,13 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
                 SpreadsheetId.with(1)
             );
 
-            return SpreadsheetEnvironmentContexts.basic(
+            this.context = SpreadsheetEnvironmentContexts.basic(
                 Storages.fake(),
                 storageEnvironmentContext
             );
         }
+
+        private final SpreadsheetEnvironmentContext context;
 
         @Override
         public String toString() {

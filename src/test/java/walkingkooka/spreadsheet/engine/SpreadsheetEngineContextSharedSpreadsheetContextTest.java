@@ -1777,6 +1777,21 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        this.environmentContextAndCheck(
+            SpreadsheetEngineContextSharedSpreadsheetContext.with(
+                SpreadsheetMetadataMode.FORMULA,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            ),
+            SPREADSHEET_CONTEXT
+        );
+    }
+
     // class............................................................................................................
 
     @Override

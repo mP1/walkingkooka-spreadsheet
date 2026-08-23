@@ -463,7 +463,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return this.spreadsheetEnvironmentContextFactory;
     }
 
-    private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
+    // @VisibleForTesting
+    final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
 
     final MediaTypeDetector mediaTypeDetector;
 

@@ -197,6 +197,13 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         return new TestSpreadsheetExpressionEvaluationContextDelegator();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Override
+    public void testEnvironmentContext() {
+        throw new UnsupportedOperationException();
+    }
+
     // class............................................................................................................
 
     @Override

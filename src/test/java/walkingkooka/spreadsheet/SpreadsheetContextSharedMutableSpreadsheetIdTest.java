@@ -598,6 +598,19 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         );
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.fake();
+
+        this.environmentContextAndCheck(
+            this.createContext(context),
+            context
+        );
+    }
+
     // class............................................................................................................
 
     @Override

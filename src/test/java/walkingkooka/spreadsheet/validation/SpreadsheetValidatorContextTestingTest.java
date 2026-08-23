@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.currency.CurrencyCode;
@@ -101,6 +102,19 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
     @Override
     public void testEnvironmentValueWithNullFails() {
         throw new UnsupportedOperationException();
+    }
+
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final TestSpreadsheetValidatorContext context = new TestSpreadsheetValidatorContext();
+
+        this.environmentContextAndCheck(
+            context,
+            context.environmentContext
+        );
     }
 
     static class TestSpreadsheetValidatorContext implements SpreadsheetValidatorContext,
@@ -207,8 +221,10 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
         @Override
         public EnvironmentContext environmentContext() {
-            return SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT;
+            return this.environmentContext;
         }
+
+        private final EnvironmentContext environmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT;
 
         @Override
         public LocalDateTime now() {

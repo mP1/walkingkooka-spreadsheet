@@ -75,6 +75,21 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         return new TestSpreadsheetContextDelegator();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final TestSpreadsheetContextDelegator context = new TestSpreadsheetContextDelegator();
+
+        this.environmentContextAndCheck(
+            context,
+            context.context
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public Class<TestSpreadsheetContextDelegator> type() {
         return TestSpreadsheetContextDelegator.class;

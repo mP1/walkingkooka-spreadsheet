@@ -739,6 +739,24 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         return this.createContext();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.fake();
+
+        this.environmentContextAndCheck(
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                context
+            ),
+            context
+        );
+    }
+
     // class............................................................................................................
 
     @Override

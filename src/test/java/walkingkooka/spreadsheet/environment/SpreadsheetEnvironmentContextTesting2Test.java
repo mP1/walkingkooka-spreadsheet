@@ -104,6 +104,19 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
         }.testSpreadsheetIdAndEnvironmentValueName();
     }
 
+    // HasEnvironmentContext............................................................................................
+
+    @Test
+    @Override
+    public void testEnvironmentContext() {
+        final TestSpreadsheetEnvironmentContext context = new TestSpreadsheetEnvironmentContext();
+
+        this.environmentContextAndCheck(
+            context,
+            context.spreadsheetEnvironmentContext
+        );
+    }
+
     final static class TestSpreadsheetEnvironmentContext3 extends FakeSpreadsheetEnvironmentContext {
 
         @Override
