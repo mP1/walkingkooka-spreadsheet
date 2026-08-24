@@ -507,7 +507,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> number() {
         if (null == NUMBER) {
-            NUMBER = NUMBER = namedCollection(
+            NUMBER = namedCollection(
                 "NUMBER",
                 nullToNumber(),
                 numberToNumber(),
@@ -581,7 +581,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> plugins() {
         if (null == PLUGINS) {
-            PLUGINS = PLUGINS = namedCollection(
+            PLUGINS = namedCollection(
                 "PLUGINS",
                 hasSpreadsheetFormatterSelector(),
                 hasSpreadsheetParserSelector(),
