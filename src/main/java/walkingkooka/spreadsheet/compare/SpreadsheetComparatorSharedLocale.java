@@ -30,7 +30,7 @@ import java.util.Optional;
  */
 final class SpreadsheetComparatorSharedLocale extends SpreadsheetComparatorShared<Locale> {
 
-    static SpreadsheetComparatorSharedLocale INSTANCE = new SpreadsheetComparatorSharedLocale();
+    final static SpreadsheetComparatorSharedLocale INSTANCE = new SpreadsheetComparatorSharedLocale();
 
     private SpreadsheetComparatorSharedLocale() {
         super(SpreadsheetComparatorName.LOCALE);

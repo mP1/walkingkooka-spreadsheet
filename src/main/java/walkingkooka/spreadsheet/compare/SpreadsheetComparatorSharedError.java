@@ -29,7 +29,7 @@ import java.util.Optional;
  */
 final class SpreadsheetComparatorSharedError extends SpreadsheetComparatorShared<SpreadsheetError> {
 
-    static SpreadsheetComparatorSharedError INSTANCE = new SpreadsheetComparatorSharedError();
+    final static SpreadsheetComparatorSharedError INSTANCE = new SpreadsheetComparatorSharedError();
 
     private SpreadsheetComparatorSharedError() {
         super(SpreadsheetComparatorName.ERROR);

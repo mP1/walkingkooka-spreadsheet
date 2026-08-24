@@ -29,7 +29,7 @@ import java.util.Optional;
  */
 final class SpreadsheetComparatorSharedValueType extends SpreadsheetComparatorShared<ValueType> {
 
-    static SpreadsheetComparatorSharedValueType INSTANCE = new SpreadsheetComparatorSharedValueType();
+    final static SpreadsheetComparatorSharedValueType INSTANCE = new SpreadsheetComparatorSharedValueType();
 
     private SpreadsheetComparatorSharedValueType() {
         super(SpreadsheetComparatorName.VALUE_TYPE);
