@@ -23,7 +23,6 @@ import walkingkooka.convert.ConverterLikeTesting2;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting2;
 import walkingkooka.storage.StorageContextTesting2;
-import walkingkooka.storage.StoragePath;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -320,57 +319,6 @@ public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageC
             NullPointerException.class,
             () -> this.createContext()
                 .deleteStorage(null)
-        );
-    }
-
-    // listStorage......................................................................................................
-
-    @Test
-    default void testListStorageWithNullParentFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .listStorage(
-                    null,
-                    0,
-                    0
-                )
-        );
-    }
-
-    @Test
-    default void testListStorageWithNegativeOffsetFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .listStorage(
-                    StoragePath.ROOT,
-                    -1,
-                    1
-                )
-        );
-
-        this.checkEquals(
-            "Invalid offset -1 < 0",
-            thrown.getMessage()
-        );
-    }
-
-    @Test
-    default void testListStorageWithNegativeCountFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .listStorage(
-                    StoragePath.ROOT,
-                    0,
-                    -1
-                )
-        );
-
-        this.checkEquals(
-            "Invalid count -1 < 0",
-            thrown.getMessage()
         );
     }
 
