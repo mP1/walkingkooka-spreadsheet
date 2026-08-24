@@ -24,7 +24,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExporterContextTesting<BasicSpreadsheetExporterContext>,
+public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExporterContextTesting2<BasicSpreadsheetExporterContext>,
     ToStringTesting<BasicSpreadsheetExporterContext> {
 
     @Test
