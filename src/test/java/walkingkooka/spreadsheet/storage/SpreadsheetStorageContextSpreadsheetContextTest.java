@@ -946,7 +946,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
 
         final Storage<SpreadsheetStorageContext> mount = SpreadsheetStorages.treeMapStore();
 
-        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);;
+        final SpreadsheetStorageContextSpreadsheetContext context = this.createContext(storage);
 
         context.mountStorage(
             StorageMountPoint.with(
