@@ -30,7 +30,7 @@ import java.util.Optional;
  */
 final class SpreadsheetComparatorSharedCurrency extends SpreadsheetComparatorShared<Currency> {
 
-    static SpreadsheetComparatorSharedCurrency INSTANCE = new SpreadsheetComparatorSharedCurrency();
+    final static SpreadsheetComparatorSharedCurrency INSTANCE = new SpreadsheetComparatorSharedCurrency();
 
     private SpreadsheetComparatorSharedCurrency() {
         super(SpreadsheetComparatorName.CURRENCY);
