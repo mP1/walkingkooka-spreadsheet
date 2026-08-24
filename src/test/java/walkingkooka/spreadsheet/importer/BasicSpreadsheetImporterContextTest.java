@@ -23,7 +23,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImporterContextTesting<BasicSpreadsheetImporterContext>,
+public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImporterContextTesting2<BasicSpreadsheetImporterContext>,
     JsonNodeUnmarshallContextTesting,
     ToStringTesting<BasicSpreadsheetImporterContext> {
 
