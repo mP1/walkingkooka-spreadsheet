@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextTesting;
 import walkingkooka.terminal.expression.TerminalExpressionEvaluationContextTesting;
 import walkingkooka.text.CharSequences;
@@ -266,11 +265,5 @@ public interface SpreadsheetExpressionEvaluationContextTesting extends FormHandl
             expected,
             context.nextEmptyRow(column)
         );
-    }
-
-    default void evaluateAndCheck(final StorageExpressionEvaluationContext context,
-                                  final String expression,
-                                  final Object expected) {
-        ;
     }
 }
