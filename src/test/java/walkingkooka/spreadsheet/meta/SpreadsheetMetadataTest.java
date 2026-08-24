@@ -81,9 +81,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.FakeHasUserDirectories;
-import walkingkooka.storage.HasUserDirectories;
-import walkingkooka.storage.StoragePath;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -148,27 +145,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     PatchableTesting<SpreadsheetMetadata>,
     SpreadsheetEnvironmentContextTesting,
     ToStringTesting<SpreadsheetMetadata> {
-
-    private final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
-        StoragePath.parse("/current1/working2/directory3/")
-    );
-
-    private final static Optional<StoragePath> HOME_DIRECTORY = Optional.of(
-        StoragePath.parse("/home/user123")
-    );
-
-    private final static HasUserDirectories HAS_USER_DIRECTORIES = new FakeHasUserDirectories() {
-
-        @Override
-        public Optional<StoragePath> currentWorkingDirectory() {
-            return CURRENT_WORKING_DIRECTORY;
-        }
-
-        @Override
-        public Optional<StoragePath> homeDirectory() {
-            return HOME_DIRECTORY;
-        }
-    };
 
     private static final SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -468,9 +444,9 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.with(
                 EmailAddress.parse("different@example.com"),
-                LocalDateTime.MIN,
+                NOW,
                 EmailAddress.parse("different2@example.com"),
-                LocalDateTime.MAX
+                DIFFERENT_NOW
             )
         );
 
@@ -570,7 +546,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                 DecimalNumberSymbols.fromDecimalFormatSymbols(
                     '+',
-                    new DecimalFormatSymbols(Locale.FRANCE)
+                    new DecimalFormatSymbols(DIFFERENT_LOCALE)
                 )
             ),
             metadata,
@@ -598,7 +574,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             );
 
         this.shouldViewRefreshAndCheck(
-            metadata.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.FRANCE),
+            metadata.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                DIFFERENT_LOCALE
+            ),
             metadata,
             true
         );
@@ -1422,7 +1401,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "    \"createdBy\": \"creator@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true\n" +
                 "}"
@@ -2117,9 +2096,9 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     private AuditInfo value1() {
         return AuditInfo.with(
             EmailAddress.parse("creator@example.com"),
-            LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+            NOW,
             EmailAddress.parse("modified@example.com"),
-            LocalDateTime.of(2000, 1, 2, 12, 58, 59)
+            DIFFERENT_NOW
         );
     }
 
@@ -2156,10 +2135,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         this.lastModifiedAndCheck(
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.create(
-                    USER,
-                    NOW
-                )
+                AUDIT_INFO
             ),
             NOW
         );
