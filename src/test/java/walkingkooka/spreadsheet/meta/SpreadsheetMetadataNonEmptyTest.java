@@ -1414,7 +1414,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 JsonNodeConverterContexts.basic(
-                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                    SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
@@ -2015,7 +2015,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
@@ -2065,7 +2065,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> v) -> {
                     throw new UnsupportedOperationException();
                 },
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
@@ -2404,7 +2404,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                  final SpreadsheetValidationReference c) -> {
                     throw new UnsupportedOperationException();
                 },
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,

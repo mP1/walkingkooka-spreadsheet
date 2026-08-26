@@ -86,7 +86,10 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
         );
     }
 
+    // use SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME
     CanParseEnvironmentValueName CAN_PARSE_ENVIRONMENT_VALUE_NAME = SPREADSHEET_ENVIRONMENT_CONTEXT;
+
+    CanParseEnvironmentValueName SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME = CAN_PARSE_ENVIRONMENT_VALUE_NAME;
 
     // serverUrl........................................................................................................
 

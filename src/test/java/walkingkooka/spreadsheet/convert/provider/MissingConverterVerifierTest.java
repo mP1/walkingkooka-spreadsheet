@@ -418,7 +418,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public CanParseEnvironmentValueName canParseEnvironmentValueName() {
-            return CAN_PARSE_ENVIRONMENT_VALUE_NAME;
+            return SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME;
         }
 
     }
