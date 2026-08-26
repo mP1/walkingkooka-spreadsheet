@@ -1414,7 +1414,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 JsonNodeConverterContexts.basic(
-                    SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier

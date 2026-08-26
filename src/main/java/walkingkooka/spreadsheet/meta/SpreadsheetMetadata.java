@@ -1192,7 +1192,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             labelNameResolver,
             spreadsheetMetadataLoader,
             JsonNodeConverterContexts.basic(
-                canParseEnvironmentValueName,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     BinaryNumberConverterFunctions.fake(),

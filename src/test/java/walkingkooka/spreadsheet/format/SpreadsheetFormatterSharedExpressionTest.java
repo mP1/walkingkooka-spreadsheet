@@ -187,7 +187,6 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),
             JsonNodeConverterContexts.basic(
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     BinaryNumberConverterFunctions.fake(), // multiplier
