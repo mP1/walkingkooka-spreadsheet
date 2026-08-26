@@ -20,30 +20,19 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -218,15 +207,13 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
 
     @Override
     public SpreadsheetConverterNumberToTextSpreadsheetConverterContext createContext() {
-        final ExpressionNumberKind expressionNumberKind = ExpressionNumberKind.BIG_DECIMAL;
-
         return SpreadsheetConverterNumberToTextSpreadsheetConverterContext.with(
             SpreadsheetConverterContexts.basic(
-                HasUserDirectorieses.fake(),
+                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(),
-                MediaTypeDetectors.binary(),
+                MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.multiply(), // multiplier
                 SpreadsheetLabelNameResolvers.empty(),
                 SPREADSHEET_METADATA_LOADER,
@@ -246,34 +233,9 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
                         ),
-                        expressionNumberKind
+                        EXPRESSION_NUMBER_KIND
                     ),
-                    JsonNodeMarshallUnmarshallContexts.basic(
-                        JsonNodeMarshallContexts.basic(),
-                        JsonNodeUnmarshallContexts.basic(
-                            expressionNumberKind,
-                            new CurrencyCodeLanguageTagContext() {
-                                @Override
-                                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                                    return Optional.ofNullable(
-                                        Currency.getInstance(
-                                            currencyCode.value()
-                                        )
-                                    );
-                                }
-
-                                @Override
-                                public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                                    return Optional.of(
-                                        Locale.forLanguageTag(
-                                            languageTag.value()
-                                        )
-                                    );
-                                }
-                            },
-                            DECIMAL_NUMBER_CONTEXT.mathContext()
-                        )
-                    )
+                    JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 ),
                 LOCALE_CONTEXT
             )
