@@ -24,7 +24,6 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.CanParseEnvironmentValueNameDelegator;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -54,8 +53,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
     JsonNodeConverterContextDelegator,
     UsesToStringBuilder {
 
-    static SpreadsheetConverterContextBasic with(final CanParseEnvironmentValueName canParseEnvironmentValueName,
-                                                 final HasUserDirectories hasUserDirectories,
+    static SpreadsheetConverterContextBasic with(final HasUserDirectories hasUserDirectories,
                                                  final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetValidationReference > validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
@@ -65,7 +63,6 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                                                  final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
                                                  final LocaleContext localeContext) {
-        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
@@ -78,7 +75,6 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         Objects.requireNonNull(localeContext, "localeContext");
 
         return new SpreadsheetConverterContextBasic(
-            canParseEnvironmentValueName,
             hasUserDirectories,
             spreadsheetMetadata,
             validationReference,
@@ -92,8 +88,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         );
     }
 
-    private SpreadsheetConverterContextBasic(final CanParseEnvironmentValueName canParseEnvironmentValueName,
-                                             final HasUserDirectories hasUserDirectories,
+    private SpreadsheetConverterContextBasic(final HasUserDirectories hasUserDirectories,
                                              final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetValidationReference > validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
@@ -105,7 +100,6 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                                              final LocaleContext localeContext) {
         super();
 
-        this.canParseEnvironmentValueName = canParseEnvironmentValueName;
         this.hasUserDirectories = hasUserDirectories;
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
@@ -125,7 +119,6 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new SpreadsheetConverterContextBasic(
-                this.canParseEnvironmentValueName,
                 this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
@@ -146,7 +139,6 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new SpreadsheetConverterContextBasic(
-                this.canParseEnvironmentValueName,
                 this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
@@ -294,15 +286,6 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
     }
 
     private final LocaleContext localeContext;
-
-    // CanParseEnvironmentValueNameDelegator............................................................................
-
-    @Override
-    public CanParseEnvironmentValueName canParseEnvironmentValueName() {
-        return this.canParseEnvironmentValueName;
-    }
-
-    private final CanParseEnvironmentValueName canParseEnvironmentValueName;
 
     // HasUserDirectories...............................................................................................
 

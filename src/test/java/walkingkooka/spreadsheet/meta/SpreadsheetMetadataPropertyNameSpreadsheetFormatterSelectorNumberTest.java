@@ -110,7 +110,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 throw new UnsupportedOperationException();
             },
             SpreadsheetConverterContexts.basic(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

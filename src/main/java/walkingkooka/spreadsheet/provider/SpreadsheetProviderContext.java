@@ -232,7 +232,6 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
-            this, // CanParseEnvironmentValueName
             HasUserDirectorieses.empty(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

@@ -104,7 +104,6 @@ public final class SpreadsheetConverterContextCycleTest implements SpreadsheetCo
             VALUE,
             TYPE,
             SpreadsheetConverterContextBasic.with(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 Optional.empty(), // validationReference

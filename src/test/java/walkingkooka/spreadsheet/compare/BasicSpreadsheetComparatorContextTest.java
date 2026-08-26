@@ -77,7 +77,6 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     };
 
     private final static SpreadsheetConverterContext CONTEXT = SpreadsheetConverterContexts.basic(
-        CAN_PARSE_ENVIRONMENT_VALUE_NAME,
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
