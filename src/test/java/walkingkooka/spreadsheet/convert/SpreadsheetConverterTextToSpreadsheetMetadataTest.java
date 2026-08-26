@@ -22,32 +22,19 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.convert.JsonNodeConverters;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextTesting;
 
-import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadata>
-    implements JsonNodeMarshallContextTesting {
-
-    private final static JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
+    implements JsonNodeMarshallUnmarshallContextTesting {
 
     @Test
     public void testConvertStringToSpreadsheetMetadata() {
@@ -144,34 +131,10 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
                 )
             );
 
-            private final JsonNodeUnmarshallContext unmarshallContext = JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberKind.BIG_DECIMAL,
-                new CurrencyCodeLanguageTagContext() {
-                    @Override
-                    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                        return Optional.ofNullable(
-                            Currency.getInstance(
-                                currencyCode.value()
-                            )
-                        );
-                    }
-
-                    @Override
-                    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                        return Optional.of(
-                            Locale.forLanguageTag(
-                                languageTag.value()
-                            )
-                        );
-                    }
-                },
-                MathContext.UNLIMITED
-            );
-
             @Override
             public <T> T unmarshall(final JsonNode jsonNode,
                                     final Class<T> type) {
-                return this.unmarshallContext.unmarshall(
+                return JSON_NODE_UNMARSHALL_CONTEXT.unmarshall(
                     jsonNode,
                     type
                 );
@@ -179,7 +142,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
 
             @Override
             public Optional<JsonString> typeName(final Class<?> type) {
-                return this.unmarshallContext.typeName(type);
+                return JSON_NODE_UNMARSHALL_CONTEXT.typeName(type);
             }
         };
     }

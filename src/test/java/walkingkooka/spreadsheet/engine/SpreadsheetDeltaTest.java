@@ -23,10 +23,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -66,7 +63,6 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.ValidatorSelector;
 
-import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.util.Currency;
@@ -5460,29 +5456,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
-        return JsonNodeUnmarshallContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            new CurrencyCodeLanguageTagContext() {
-                @Override
-                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                    return Optional.ofNullable(
-                        Currency.getInstance(
-                            currencyCode.value()
-                        )
-                    );
-                }
-
-                @Override
-                public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                    return Optional.of(
-                        Locale.forLanguageTag(
-                            languageTag.value()
-                        )
-                    );
-                }
-            },
-            MathContext.UNLIMITED
-        );
+        return JSON_NODE_UNMARSHALL_CONTEXT;
     }
 
     // resolveCellLabels................................................................................................

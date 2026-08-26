@@ -24,12 +24,9 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.HasOptionalCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasOptionalDateTimeSymbolsTesting;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasOptionalDecimalNumberSymbolsTesting;
 import walkingkooka.net.header.HasContentTypeTesting;
@@ -65,7 +62,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
@@ -83,7 +79,6 @@ import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 import walkingkooka.validation.provider.ValidatorSelector;
 
-import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -2730,29 +2725,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
-        return JsonNodeUnmarshallContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            new CurrencyCodeLanguageTagContext() {
-                @Override
-                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                    return Optional.ofNullable(
-                        Currency.getInstance(
-                            currencyCode.value()
-                        )
-                    );
-                }
-
-                @Override
-                public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                    return Optional.of(
-                        Locale.forLanguageTag(
-                            languageTag.value()
-                        )
-                    );
-                }
-            },
-            MathContext.UNLIMITED
-        );
+        return JSON_NODE_UNMARSHALL_CONTEXT;
     }
 
     // XXXPatch.........................................................................................................

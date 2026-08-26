@@ -27,6 +27,7 @@ import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
@@ -603,6 +604,13 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
 
     @Override
     public EnvironmentContext environmentContext() {
+        return this.context;
+    }
+
+    // CanParseEnvironmentValueName.....................................................................................
+
+    @Override
+    public CanParseEnvironmentValueName canParseEnvironmentValueName() {
         return this.context;
     }
 

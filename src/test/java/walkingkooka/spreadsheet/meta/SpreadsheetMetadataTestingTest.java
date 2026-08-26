@@ -147,7 +147,10 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testJsonNodeUnmarshallContext() {
-        METADATA_EN_AU.jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT);
+        METADATA_EN_AU.jsonNodeUnmarshallContext(
+            SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+            CURRENCY_LOCALE_CONTEXT
+        );
     }
 
     @Test

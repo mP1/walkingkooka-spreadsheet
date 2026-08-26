@@ -56,7 +56,6 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -271,11 +270,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             ),
             JsonNodeMarshallUnmarshallContexts.basic(
                 JsonNodeMarshallContexts.basic(),
-                JsonNodeUnmarshallContexts.basic(
-                    EXPRESSION_NUMBER_KIND,
-                    CURRENCY_LOCALE_CONTEXT,
-                    DECIMAL_NUMBER_CONTEXT.mathContext()
-                )
+                JSON_NODE_UNMARSHALL_CONTEXT
             )
         ),
         LocaleContexts.jre(LOCALE)

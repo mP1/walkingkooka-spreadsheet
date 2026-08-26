@@ -31,7 +31,6 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
@@ -40,7 +39,6 @@ import walkingkooka.datetime.HasOptionalLastModifiedTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.HasOptionalAuditInfoTesting;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
@@ -116,7 +114,6 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
@@ -1597,29 +1594,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
-        return JsonNodeUnmarshallContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            new CurrencyCodeLanguageTagContext() {
-                @Override
-                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                    return Optional.ofNullable(
-                        Currency.getInstance(
-                            currencyCode.value()
-                        )
-                    );
-                }
-
-                @Override
-                public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                    return Optional.of(
-                        Locale.forLanguageTag(
-                            languageTag.value()
-                        )
-                    );
-                }
-            },
-            MathContext.UNLIMITED
-        );
+        return JSON_NODE_UNMARSHALL_CONTEXT;
     }
 
     private JsonNode marshall(final Object value) {
