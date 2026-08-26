@@ -84,7 +84,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
             text,
             ExpressionNumber.class,
             SpreadsheetConverterContexts.basic(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

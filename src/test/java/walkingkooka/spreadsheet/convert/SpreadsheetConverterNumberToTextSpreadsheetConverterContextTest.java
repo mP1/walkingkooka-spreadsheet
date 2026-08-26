@@ -222,7 +222,6 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
 
         return SpreadsheetConverterNumberToTextSpreadsheetConverterContext.with(
             SpreadsheetConverterContexts.basic(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Binary;
 import walkingkooka.convert.Converter;
-import walkingkooka.environment.CanParseEnvironmentValueName;
-import walkingkooka.environment.CanParseEnvironmentValueNameDelegator;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -36,14 +34,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
-    CanParseEnvironmentValueNameDelegator,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator {
-
-    @Override
-    default CanParseEnvironmentValueName canParseEnvironmentValueName() {
-        return this.spreadsheetConverterContext();
-    }
 
     @Override
     default JsonNodeConverterContext jsonNodeConverterContext() {
