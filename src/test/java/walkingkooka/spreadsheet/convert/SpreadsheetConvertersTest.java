@@ -4292,7 +4292,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),
             JsonNodeConverterContexts.basic(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     BinaryNumberConverterFunctions.fake(), // multiplier
@@ -4725,7 +4725,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),
             JsonNodeConverterContexts.basic(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     BinaryNumberConverterFunctions.fake(), // multiplier

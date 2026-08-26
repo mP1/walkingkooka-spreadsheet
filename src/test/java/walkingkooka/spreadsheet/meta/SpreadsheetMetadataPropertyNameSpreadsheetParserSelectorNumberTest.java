@@ -93,7 +93,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetMetadataLoaders.fake(),
                 JsonNodeConverterContexts.basic(
-                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                    SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier

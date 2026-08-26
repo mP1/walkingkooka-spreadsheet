@@ -379,7 +379,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
             LABEL_RESOLVER,
             SPREADSHEET_METADATA_LOADER,
             JsonNodeConverterContexts.basic(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
@@ -499,11 +499,11 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
 
         this.toStringAndCheck(
             JsonNodeConverterContexts.basic(
-                CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                 converterContext,
                 marshallUnmarshallContext
             ),
-            CAN_PARSE_ENVIRONMENT_VALUE_NAME +
+            SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME +
                 " " +
             converterContext +
                 " " +
