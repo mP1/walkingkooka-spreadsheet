@@ -86,7 +86,6 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         SpreadsheetLabelNameResolvers.empty(),
         SPREADSHEET_METADATA_LOADER,
         JsonNodeConverterContexts.basic(
-            SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier

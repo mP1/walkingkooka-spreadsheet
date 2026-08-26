@@ -113,7 +113,6 @@ public final class SpreadsheetConverterContextCycleTest implements SpreadsheetCo
                 SpreadsheetLabelNameResolvers.empty(),
                 SpreadsheetMetadataLoaders.empty(),
                 JsonNodeConverterContexts.basic(
-                    SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
