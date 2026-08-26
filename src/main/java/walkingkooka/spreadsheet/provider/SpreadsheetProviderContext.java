@@ -242,6 +242,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             SpreadsheetLabelNameResolvers.empty(),
             SpreadsheetMetadataLoaders.empty(), // dont support loading SpreadsheetMetadata from a ProviderContext
             JsonNodeConverterContexts.basic(
+                this, // CanParseEnvironmentValueName
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
                     Cast.to(multiplier), // ExpressionNumberConverterContext
@@ -394,6 +395,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
 
     @Override
     public String toString() {
+        // do not include #converterContext to avoid StackOverFlowError
         return ToStringBuilder.empty()
             .label("mediaTypeDetector")
             .value(this.mediaTypeDetector)
@@ -403,8 +405,6 @@ final class SpreadsheetProviderContext implements ProviderContext,
             .value(this.pluginStore)
             .label("storage")
             .value(this.storage)
-            .label("converterContext")
-            .value(this.converterContext)
             .label("storageEnvironmentContext")
             .value(this.storageEnvironmentContext)
             .build();
