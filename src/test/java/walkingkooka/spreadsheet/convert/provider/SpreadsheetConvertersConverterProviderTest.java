@@ -244,6 +244,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetMetadataLoaders.fake(),
                 JsonNodeConverterContexts.basic(
+                    CAN_PARSE_ENVIRONMENT_VALUE_NAME,
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier

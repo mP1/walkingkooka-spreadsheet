@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
@@ -49,7 +50,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext>,
     CurrencyLocaleContextTesting,
     JsonNodeMarshallUnmarshallContextTesting,
-    MediaTypeDetectorTesting {
+    MediaTypeDetectorTesting,
+    ToStringTesting<SpreadsheetProviderContext> {
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
 
@@ -437,6 +439,30 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     @Override
     public SpreadsheetProviderContext createObject() {
         return this.createContext();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            ENVIRONMENT_VALUE
+        );
+
+        this.toStringAndCheck(
+            this.createObject(),
+            "mediaTypeDetector=" +
+                MEDIA_TYPE_DETECTOR +
+                " multiplier=" +
+                MULTIPLIER +
+                " pluginStore=" +
+                PLUGIN_STORE +
+                " storageEnvironmentContext=" +
+                storageEnvironmentContext
+        );
     }
 
     // HasEnvironmentContext............................................................................................

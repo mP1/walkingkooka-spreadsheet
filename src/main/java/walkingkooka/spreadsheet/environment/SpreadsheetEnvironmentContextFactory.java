@@ -340,6 +340,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 SpreadsheetLabelNameResolvers.empty(),
                 this.spreadsheetMetadataLoader,
                 JsonNodeConverterContexts.basic(
+                    spreadsheetEnvironmentContext, // CanParseEnvironmentValueName
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
