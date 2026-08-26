@@ -572,6 +572,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
             JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
                 expressionNumberKind,
+                spreadsheetEnvironmentContext, // CanParseEnvironmentValueName
                 currencyLocaleContext, // CurrencyCodeLanguageTagContext
                 mathContext
             );

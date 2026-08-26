@@ -19,22 +19,14 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
-import java.math.MathContext;
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Optional;
-
-public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTesting<SpreadsheetMetadataDefaultTextResource> {
+public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNodeUnmarshallContextTesting,
+    ClassTesting<SpreadsheetMetadataDefaultTextResource> {
 
     @Test
     public void testDateTimeOffsetExcelOffset() {
@@ -42,30 +34,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
 
         final JsonObject resource = JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text())
             .objectOrFail();
-        final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberKind.DEFAULT,
-                new CurrencyCodeLanguageTagContext() {
-                    @Override
-                    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                        return Optional.ofNullable(
-                            Currency.getInstance(
-                                currencyCode.value()
-                            )
-                        );
-                    }
-
-                    @Override
-                    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                        return Optional.of(
-                            Locale.forLanguageTag(
-                                languageTag.value()
-                            )
-                        );
-                    }
-                },
-                MathContext.DECIMAL32
-            )
-            .unmarshall(resource, SpreadsheetMetadata.class);
+        final SpreadsheetMetadata metadata = JSON_NODE_UNMARSHALL_CONTEXT.unmarshall(resource, SpreadsheetMetadata.class);
         this.checkEquals(
             Converters.EXCEL_1900_DATE_SYSTEM_OFFSET,
             metadata.getOrFail(

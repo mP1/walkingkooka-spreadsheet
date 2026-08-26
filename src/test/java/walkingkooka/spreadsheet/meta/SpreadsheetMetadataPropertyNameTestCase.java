@@ -23,14 +23,11 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContextTesting;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.naming.HasNameTesting;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -45,15 +42,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 import walkingkooka.tree.text.TextStylePropertyName;
 
-import java.math.MathContext;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -64,6 +57,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     CurrencyLocaleContextTesting,
     HasNameTesting,
     HasValueTesting,
+    JsonNodeUnmarshallContextTesting,
     LocaleContextTesting,
     ToStringTesting<N>,
     ThrowableTesting {
@@ -108,29 +102,10 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             .marshall(metadata);
         this.checkEquals(
             metadata,
-            JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberKind.DOUBLE,
-                new CurrencyCodeLanguageTagContext() {
-                    @Override
-                    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                        return Optional.ofNullable(
-                            Currency.getInstance(
-                                currencyCode.value()
-                            )
-                        );
-                    }
-
-                    @Override
-                    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                        return Optional.of(
-                            Locale.forLanguageTag(
-                                languageTag.value()
-                            )
-                        );
-                    }
-                },
-                MathContext.DECIMAL32
-            ).unmarshall(node, SpreadsheetMetadata.class)
+            JSON_NODE_UNMARSHALL_CONTEXT.unmarshall(
+                node,
+                SpreadsheetMetadata.class
+            )
         );
     }
 

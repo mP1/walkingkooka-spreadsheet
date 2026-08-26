@@ -1109,6 +1109,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
         ExpressionNumberKind.BIG_DECIMAL,
+        (String name) -> {
+            throw new UnsupportedOperationException();
+        }, // CanParseEnvironmentValueName
         new CurrencyCodeLanguageTagContext() {
             @Override
             public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {

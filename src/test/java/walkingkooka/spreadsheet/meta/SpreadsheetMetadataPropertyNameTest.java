@@ -23,12 +23,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ConstantsTesting;
@@ -45,13 +42,11 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
 import java.lang.reflect.Field;
-import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -67,6 +62,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     ConstantsTesting<SpreadsheetMetadataPropertyName<?>>,
     CurrencyLocaleContextTesting,
     HasSpreadsheetPatternKindTesting,
+    JsonNodeUnmarshallContextTesting,
     ThrowableTesting {
 
     @Test
@@ -441,29 +437,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
             expected,
             initial.patch(
                 propertyName.patch(value),
-                JsonNodeUnmarshallContexts.basic(
-                    ExpressionNumberKind.BIG_DECIMAL,
-                    new CurrencyCodeLanguageTagContext() {
-                        @Override
-                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                            return Optional.ofNullable(
-                                Currency.getInstance(
-                                    currencyCode.value()
-                                )
-                            );
-                        }
-
-                        @Override
-                        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                            return Optional.of(
-                                Locale.forLanguageTag(
-                                    languageTag.value()
-                                )
-                            );
-                        }
-                    },
-                    MathContext.DECIMAL32
-                )
+                JSON_NODE_UNMARSHALL_CONTEXT
             ),
             () -> initial + " patch " + propertyName + " patch " + value
         );

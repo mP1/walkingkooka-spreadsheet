@@ -169,7 +169,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testUnmarshallContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
             IllegalStateException.class,
-            () -> SpreadsheetMetadata.EMPTY.jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT)
+            () -> SpreadsheetMetadata.EMPTY.jsonNodeUnmarshallContext(
+                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
+                CURRENCY_LOCALE_CONTEXT
+            )
         );
         this.getMessageAndCheck(
             thrown,

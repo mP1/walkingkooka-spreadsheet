@@ -25,6 +25,7 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
@@ -757,6 +758,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     @Override
     public Storage<SpreadsheetStorageContext> storage() {
         return this.context.storage();
+    }
+
+    // CanParseEnvironmentValueName.....................................................................................
+
+    @Override
+    public CanParseEnvironmentValueName canParseEnvironmentValueName() {
+        return this.context;
     }
 
     // SpreadsheetMetadataContextDelegator..............................................................................

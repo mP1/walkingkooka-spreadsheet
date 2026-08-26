@@ -860,8 +860,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     // jsonNodeUnmarshallContext........................................................................................
 
-    public final JsonNodeUnmarshallContext jsonNodeUnmarshallContext(final CurrencyCodeLanguageTagContext context) {
-        Objects.requireNonNull(context, "context");
+    public final JsonNodeUnmarshallContext jsonNodeUnmarshallContext(final CanParseEnvironmentValueName canParseEnvironmentValueName,
+                                                                     final CurrencyCodeLanguageTagContext currencyCodeLanguageTagContext) {
+        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
+        Objects.requireNonNull(currencyCodeLanguageTagContext, "currencyCodeLanguageTagContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
@@ -879,7 +881,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return JsonNodeUnmarshallContexts.basic(
             expressionNumberKind,
-            context,
+            canParseEnvironmentValueName,
+            currencyCodeLanguageTagContext, // CurrencyCodeLanguageTagContext
             mathContext
         );
     }
@@ -887,10 +890,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link JsonNodeMarshallUnmarshallContext} build using properties from this metadata.
      */
-    public final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext(final CurrencyCodeLanguageTagContext context) {
+    public final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext(final CanParseEnvironmentValueName canParseEnvironmentValueName,
+                                                                                     final CurrencyCodeLanguageTagContext currencyCodeLanguageTagContext) {
         return JsonNodeMarshallUnmarshallContexts.basic(
             this.jsonNodeMarshallContext(),
-            this.jsonNodeUnmarshallContext(context)
+            this.jsonNodeUnmarshallContext(
+                canParseEnvironmentValueName,
+                currencyCodeLanguageTagContext
+            )
         );
     }
 
@@ -1161,6 +1168,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
         try {
             jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext(
+                canParseEnvironmentValueName,
                 currencyLocaleContext // CurrencyCodeLanguageTagContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1758,6 +1766,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return JsonNodeUnmarshallContexts.basic(
             ExpressionNumberKind.DEFAULT,
+            (String name) -> {
+                throw new UnsupportedOperationException();
+            }, // CanParseEnvironmentValueName
             new CurrencyCodeLanguageTagContext() {
                 @Override
                 public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
