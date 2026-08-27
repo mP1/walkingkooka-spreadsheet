@@ -496,6 +496,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage storage\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-binary storage-binary-to-storage-value-binary\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-csv storage-binary-to-storage-value-csv\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-environment storage-binary-to-storage-value-environment\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-expression storage-binary-to-storage-value-expression\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-json storage-binary-to-storage-value-json\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/storage-binary-to-storage-value-properties storage-binary-to-storage-value-properties\n" +
