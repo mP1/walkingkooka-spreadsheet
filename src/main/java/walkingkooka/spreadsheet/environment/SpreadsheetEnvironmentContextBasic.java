@@ -100,6 +100,26 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
 
     private final Storage<SpreadsheetStorageContext> storage;
 
+    // CanParseEnvironmentValueName.....................................................................................
+
+    @Override
+    public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
+        Objects.requireNonNull(name, "name");
+
+        // required because wrapped StorageEnvironmentContext may be missing terminalId
+        return EnvironmentValueName.CASE_SENSITIVITY.equals(
+            SERVER_URL.value(),
+            name
+        ) ?
+            SERVER_URL :
+            EnvironmentValueName.CASE_SENSITIVITY.equals(
+                SPREADSHEET_ID.value(),
+                name
+            ) ?
+                SPREADSHEET_ID :
+                this.context.parseEnvironmentValueName(name);
+    }
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override
