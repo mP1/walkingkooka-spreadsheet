@@ -339,7 +339,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 .aliasSet()
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, value, environment, environment-to-text, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, value, environment, environment-to-binary, environment-to-text, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET

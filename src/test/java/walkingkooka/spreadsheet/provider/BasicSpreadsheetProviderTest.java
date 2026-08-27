@@ -457,6 +457,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/date-time-symbols date-time-symbols\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/decimal-number-symbols decimal-number-symbols\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/environment environment\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/environment-to-binary environment-to-binary\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/environment-to-text environment-to-text\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-throwing error-throwing\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-error error-to-error\n" +

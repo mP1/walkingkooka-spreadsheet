@@ -344,6 +344,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     private static Converter<SpreadsheetConverterContext> ENVIRONMENT;
 
     /**
+     * {@link EnvironmentConverters#environmentToBinary()}
+     */
+    public static Converter<SpreadsheetConverterContext> environmentToBinary() {
+        return EnvironmentConverters.environmentToBinary();
+    }
+
+    /**
      * {@link EnvironmentConverters#environmentToString()}
      */
     public static Converter<SpreadsheetConverterContext> environmentToText() {
