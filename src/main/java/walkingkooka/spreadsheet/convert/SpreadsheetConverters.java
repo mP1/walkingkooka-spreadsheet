@@ -344,6 +344,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     private static Converter<SpreadsheetConverterContext> ENVIRONMENT;
 
     /**
+     * {@link EnvironmentConverters#environmentToString()}
+     */
+    public static Converter<SpreadsheetConverterContext> environmentToText() {
+        return EnvironmentConverters.environmentToString();
+    }
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetErrorToSpreadsheetError}
      */
     public static Converter<SpreadsheetConverterContext> errorToError() {
