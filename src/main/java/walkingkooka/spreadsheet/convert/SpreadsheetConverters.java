@@ -804,6 +804,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@see StorageConverterStorageValueToStorageBinarySharedEnvironment}
+     */
+    public static <C extends StorageConverterContext> Converter<C> storageValueToStorageBinaryEnvironment() {
+        return StorageConverters.storageValueToStorageBinaryEnvironment();
+    }
+
+    /**
      * {@see StorageConverterStorageValueToStorageBinarySharedExpression}
      */
     public static <C extends StorageConverterContext> Converter<C> storageValueToStorageBinaryExpression() {
