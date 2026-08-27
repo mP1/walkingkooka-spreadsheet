@@ -804,6 +804,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toDecimalNumberSymbols();
                 break;
+            case TO_ENVIRONMENT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toEnvironment();
+                break;
             case TO_HOST_ADDRESS_STRING:
                 noParameterCheck(copy);
 
@@ -1504,6 +1509,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_DECIMAL_NUMBER_SYMBOLS = ConverterName.with(TO_DECIMAL_NUMBER_SYMBOLS_STRING);
 
+    private final static String TO_ENVIRONMENT_STRING = "to-environment";
+
+    final static ConverterName TO_ENVIRONMENT = ConverterName.with(TO_ENVIRONMENT_STRING);
+    
     private final static String TO_HOST_ADDRESS_STRING = "to-host-address";
 
     final static ConverterName TO_HOST_ADDRESS = ConverterName.with(TO_HOST_ADDRESS_STRING);
@@ -1740,6 +1749,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_CSV_STRING_LIST),
             converterInfo(TO_DATE_TIME_SYMBOLS),
             converterInfo(TO_DECIMAL_NUMBER_SYMBOLS),
+            converterInfo(TO_ENVIRONMENT),
             converterInfo(TO_HOST_ADDRESS),
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_JSON_TEXT),

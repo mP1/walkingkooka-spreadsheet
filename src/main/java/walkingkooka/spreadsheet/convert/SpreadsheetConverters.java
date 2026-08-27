@@ -1448,6 +1448,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link  EnvironmentConverters#toEnvironment()}
+     */
+    public static Converter<SpreadsheetConverterContext> toEnvironment() {
+        return EnvironmentConverters.toEnvironment();
+    }
+
+    /**
      * {@link  NetConverters#toHostAddress()}
      */
     public static Converter<SpreadsheetConverterContext> toHostAddress() {

@@ -577,6 +577,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-csv-string-list to-csv-string-list\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-date-time-symbols to-date-time-symbols\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-decimal-number-symbols to-decimal-number-symbols\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-environment to-environment\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-host-address to-host-address\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-json-node to-json-node\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-json-text to-json-text\n" +

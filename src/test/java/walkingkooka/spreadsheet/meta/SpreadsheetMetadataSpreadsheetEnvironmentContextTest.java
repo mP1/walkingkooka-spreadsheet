@@ -744,6 +744,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-csv-string-list\n" +
                 "    to-date-time-symbols\n" +
                 "    to-decimal-number-symbols\n" +
+                "    to-environment\n" +
                 "    to-host-address\n" +
                 "    to-json-node\n" +
                 "    to-json-text\n" +
