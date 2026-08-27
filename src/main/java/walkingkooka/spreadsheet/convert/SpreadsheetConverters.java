@@ -1056,6 +1056,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@see EnvironmentConverters#textToEnvironment}
+     */
+    public static Converter<SpreadsheetConverterContext> textToEnvironment() {
+        return EnvironmentConverters.textToEnvironment();
+    }
+
+    /**
      * {@see EnvironmentConverters#textToEnvironmentValueName}
      */
     public static Converter<SpreadsheetConverterContext> textToEnvironmentValueName() {

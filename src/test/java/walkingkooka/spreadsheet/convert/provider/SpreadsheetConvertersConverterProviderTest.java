@@ -880,6 +880,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToEnvironment() {
+        this.converterAndCheck(
+            "text-to-environment",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToEnvironment()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToEnvironmentValueName() {
         this.converterAndCheck(
             "text-to-environment-value-name",
@@ -1633,6 +1642,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-date-list text-to-date-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-date-time-list text-to-date-time-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-email-address text-to-email-address\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-environment text-to-environment\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-environment-value-name text-to-environment-value-name\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-error text-to-error\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-expression text-to-expression\n" +

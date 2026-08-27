@@ -692,6 +692,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-date-list\n" +
                 "    text-to-date-time-list\n" +
                 "    text-to-email-address\n" +
+                "    text-to-environment\n" +
                 "    text-to-environment-value-name\n" +
                 "    text-to-error\n" +
                 "    text-to-expression\n" +
