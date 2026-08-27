@@ -395,6 +395,8 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         );
     }
 
+    // parseEnvironmentValueName........................................................................................
+
     @Test
     public void testParseEnvironmentValueNameAfterSetEnvironmentValue() {
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
@@ -412,6 +414,58 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.parseEnvironmentValueNameAndCheck(
             context,
             name
+        );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameWrappedMissingServerId() {
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
+        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
+            SpreadsheetEnvironmentContextBasic.with(
+                STORAGE,
+                storageEnvironmentContext
+            );
+
+        this.environmentValueAndCheck(
+            spreadsheetEnvironmentContextBasic,
+            SpreadsheetEnvironmentContext.SERVER_URL
+        );
+
+        this.parseEnvironmentValueNameAndCheck(
+            spreadsheetEnvironmentContextBasic,
+            SpreadsheetEnvironmentContext.SERVER_URL
+        );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameWrappedMissingSpreadsheetId() {
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+
+        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
+            SpreadsheetEnvironmentContextBasic.with(
+                STORAGE,
+                storageEnvironmentContext
+            );
+
+        this.environmentValueAndCheck(
+            spreadsheetEnvironmentContextBasic,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
+        );
+
+        this.parseEnvironmentValueNameAndCheck(
+            spreadsheetEnvironmentContextBasic,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
         );
     }
 
