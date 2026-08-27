@@ -859,7 +859,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
         @Override
         public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
-            return STORAGE_ENVIRONMENT_CONTEXT.parseEnvironmentValueName(name);
+            return this.spreadsheetEnvironmentContext.parseEnvironmentValueName(name);
         }
 
         // SpreadsheetMetadataContext...................................................................................
