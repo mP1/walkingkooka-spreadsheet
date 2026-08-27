@@ -336,6 +336,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             ENVIRONMENT = namedCollection(
                 "ENVIRONMENT",
                 EnvironmentConverters.toEnvironment(),
+                textToEnvironment(),
                 EnvironmentConverters.textToEnvironmentValueName()
             );
         }

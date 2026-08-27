@@ -1065,6 +1065,21 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME,
                     EnvironmentValueName.CURRENCY
                 );
+
+                final CurrencyCode currencyCode = context.currencyCode();
+
+                verifier.addIfConversionFail(
+                    EnvironmentValueName.CURRENCY + "=" + currencyCode,
+                    Environment.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT,
+                    Environment.empty()
+                        .set(
+                            EnvironmentValueName.CURRENCY,
+                            Currency.getInstance(
+                                currencyCode.value()
+                            )
+                        )
+                );
             }
         }
 
