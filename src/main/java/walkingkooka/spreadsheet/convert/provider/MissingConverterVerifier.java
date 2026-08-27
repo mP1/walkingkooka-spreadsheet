@@ -1057,11 +1057,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     Environment.class,
                     SpreadsheetConvertersConverterProvider.ENVIRONMENT // TEXT_TO_ENVIRONMENT_VALUE_NAME
                 );
+            }
+        }
 
+        // error........................................................................................................
+        {
+            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     ERROR,
                     SpreadsheetError.class,
-                    SpreadsheetConvertersConverterProvider.ENVIRONMENT // TEXT_TO_ENVIRONMENT_VALUE_NAME
+                    SpreadsheetConvertersConverterProvider.VALUE
                 );
             }
         }
