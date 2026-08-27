@@ -52,6 +52,7 @@ import walkingkooka.datetime.HasOptionalDateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
+import walkingkooka.environment.Environment;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -960,6 +961,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     };
 
     // environment......................................................................................................
+
+    @Test
+    public void testEnvironmentConvertEnvironmentToEnvironment() {
+        final Environment environment = ENVIRONMENT_CONTEXT.environment();
+
+        this.environmentConvertAndCheck(
+            environment,
+            Environment.class,
+            environment
+        );
+    }
 
     @Test
     public void testEnvironmentConvertEnvironmentValueNameToEnvironmentValueName() {

@@ -43,6 +43,7 @@ import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.Environment;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
@@ -1049,6 +1050,14 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         // environment..................................................................................................
         {
             if (formula || scripting) {
+                final Environment environment = Environment.empty();
+
+                verifier.addIfConversionFail(
+                    environment,
+                    Environment.class,
+                    SpreadsheetConvertersConverterProvider.ENVIRONMENT // TEXT_TO_ENVIRONMENT_VALUE_NAME
+                );
+
                 verifier.addIfConversionFail(
                     ERROR,
                     SpreadsheetError.class,
