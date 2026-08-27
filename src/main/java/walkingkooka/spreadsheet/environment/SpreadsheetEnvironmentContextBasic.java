@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageEnvironmentContextDelegator;
+import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
@@ -117,7 +118,12 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
                 name
             ) ?
                 SPREADSHEET_ID :
-                this.context.parseEnvironmentValueName(name);
+                EnvironmentValueName.CASE_SENSITIVITY.equals(
+                    TerminalContext.TERMINAL_ID.value(),
+                    name
+                ) ?
+                    TerminalContext.TERMINAL_ID :
+                    this.context.parseEnvironmentValueName(name);
     }
 
     // EnvironmentContextDelegator......................................................................................

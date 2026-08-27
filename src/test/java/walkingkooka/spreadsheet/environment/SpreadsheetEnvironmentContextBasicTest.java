@@ -32,6 +32,7 @@ import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
+import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -466,6 +467,32 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.parseEnvironmentValueNameAndCheck(
             spreadsheetEnvironmentContextBasic,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID
+        );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameWrappedMissingTerminalId() {
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+
+        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
+            SpreadsheetEnvironmentContextBasic.with(
+                STORAGE,
+                storageEnvironmentContext
+            );
+
+        this.environmentValueAndCheck(
+            spreadsheetEnvironmentContextBasic,
+            TerminalContext.TERMINAL_ID
+        );
+
+        this.parseEnvironmentValueNameAndCheck(
+            spreadsheetEnvironmentContextBasic,
+            TerminalContext.TERMINAL_ID
         );
     }
 

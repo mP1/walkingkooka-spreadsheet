@@ -209,6 +209,27 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
     }
 
+    // parseEnvironmentValueName........................................................................................
+
+    @Test
+    public void testParseEnvironmentValueNameWrappedMissingTerminalId() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext spreadsheetExpressionEvaluationContextSharedSpreadsheetContext = this.createContext(
+            spreadsheetEnvironmentContext
+        );
+
+        this.environmentValueAndCheck(
+            spreadsheetExpressionEvaluationContextSharedSpreadsheetContext,
+            TerminalContext.TERMINAL_ID
+        );
+
+        this.parseEnvironmentValueNameAndCheck(
+            spreadsheetExpressionEvaluationContextSharedSpreadsheetContext,
+            TerminalContext.TERMINAL_ID
+        );
+    }
+
     // setCell..........................................................................................................
 
     @Test
