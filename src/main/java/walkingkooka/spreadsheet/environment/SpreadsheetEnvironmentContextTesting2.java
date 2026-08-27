@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.storage.StorageEnvironmentContextTesting2;
+import walkingkooka.terminal.TerminalContext;
 
 import java.util.Optional;
 
@@ -39,6 +40,11 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     @Test
     default void testParseEnvironmentValueNameWithSpreadsheetId() {
         this.parseEnvironmentValueNameAndCheck(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
+    }
+
+    @Test
+    default void testParseEnvironmentValueNameWithTerminalId() {
+        this.parseEnvironmentValueNameAndCheck(TerminalContext.TERMINAL_ID);
     }
 
     // serverUrl........................................................................................................
