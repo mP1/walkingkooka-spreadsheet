@@ -192,6 +192,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.environment();
                 break;
+            case ENVIRONMENT_TO_TEXT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.environmentToText();
+                break;
             case ERROR_TO_ERROR_STRING:
                 noParameterCheck(copy);
 
@@ -1034,6 +1039,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName ENVIRONMENT = ConverterName.with(ENVIRONMENT_STRING);
 
+    private final static String ENVIRONMENT_TO_TEXT_STRING = "environment-to-text";
+
+    final static ConverterName ENVIRONMENT_TO_TEXT = ConverterName.with(ENVIRONMENT_TO_TEXT_STRING);
+
     private final static String ERROR_TO_ERROR_STRING = "error-to-error";
 
     final static ConverterName ERROR_TO_ERROR = ConverterName.with(ERROR_TO_ERROR_STRING);
@@ -1638,6 +1647,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(DATE_TIME_SYMBOLS),
             converterInfo(DECIMAL_NUMBER_SYMBOLS),
             converterInfo(ENVIRONMENT),
+            converterInfo(ENVIRONMENT_TO_TEXT),
             converterInfo(ERROR_TO_ERROR),
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),

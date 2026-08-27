@@ -624,6 +624,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    date-time-symbols\n" +
                 "    decimal-number-symbols\n" +
                 "    environment\n" +
+                "    environment-to-text\n" +
                 "    error-throwing\n" +
                 "    error-to-error\n" +
                 "    error-to-number\n" +
@@ -1003,7 +1004,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  validationConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, value, environment, environment-to-text, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\"\n" +
                 "  validationFunctions\n" +
                 "  validationValidators\n" +
                 "    absolute-url\n" +

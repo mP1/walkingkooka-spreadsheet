@@ -295,6 +295,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithEnvironmentToText() {
+        this.converterAndCheck(
+            "environment-to-text",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.environmentToText()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithErrorToNumber() {
         this.converterAndCheck(
             "error-to-number",
@@ -1574,6 +1583,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/date-time-symbols date-time-symbols\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/decimal-number-symbols decimal-number-symbols\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/environment environment\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/environment-to-text environment-to-text\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-throwing error-throwing\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-error error-to-error\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-number error-to-number\n" +
