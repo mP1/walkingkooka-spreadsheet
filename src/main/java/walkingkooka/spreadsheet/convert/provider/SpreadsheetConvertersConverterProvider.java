@@ -192,6 +192,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.environment();
                 break;
+            case ENVIRONMENT_TO_BINARY_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.environmentToBinary();
+                break;
             case ENVIRONMENT_TO_TEXT_STRING:
                 noParameterCheck(copy);
 
@@ -1039,6 +1044,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName ENVIRONMENT = ConverterName.with(ENVIRONMENT_STRING);
 
+    private final static String ENVIRONMENT_TO_BINARY_STRING = "environment-to-binary";
+
+    final static ConverterName ENVIRONMENT_TO_BINARY = ConverterName.with(ENVIRONMENT_TO_BINARY_STRING);
+
     private final static String ENVIRONMENT_TO_TEXT_STRING = "environment-to-text";
 
     final static ConverterName ENVIRONMENT_TO_TEXT = ConverterName.with(ENVIRONMENT_TO_TEXT_STRING);
@@ -1647,6 +1656,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(DATE_TIME_SYMBOLS),
             converterInfo(DECIMAL_NUMBER_SYMBOLS),
             converterInfo(ENVIRONMENT),
+            converterInfo(ENVIRONMENT_TO_BINARY),
             converterInfo(ENVIRONMENT_TO_TEXT),
             converterInfo(ERROR_TO_ERROR),
             converterInfo(ERROR_THROWING),
