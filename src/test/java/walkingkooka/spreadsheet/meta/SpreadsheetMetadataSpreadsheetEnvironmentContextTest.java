@@ -672,6 +672,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    storage-value-info-list-to-text\n" +
                 "    storage-value-to-storage-binary-binary\n" +
                 "    storage-value-to-storage-binary-csv\n" +
+                "    storage-value-to-storage-binary-environment\n" +
                 "    storage-value-to-storage-binary-expression\n" +
                 "    storage-value-to-storage-binary-json\n" +
                 "    storage-value-to-storage-binary-properties\n" +

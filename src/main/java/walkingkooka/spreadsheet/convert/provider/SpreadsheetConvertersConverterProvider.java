@@ -444,6 +444,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryCsv();
                 break;
+            case STORAGE_VALUE_TO_STORAGE_BINARY_ENVIRONMENT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.storageValueToStorageBinaryEnvironment();
+                break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_EXPRESSION_STRING:
                 noParameterCheck(copy);
 
@@ -1241,6 +1246,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName STORAGE_VALUE_TO_STORAGE_BINARY_CSV = ConverterName.with(STORAGE_VALUE_TO_STORAGE_BINARY_CSV_STRING);
 
+    private final static String STORAGE_VALUE_TO_STORAGE_BINARY_ENVIRONMENT_STRING = "storage-value-to-storage-binary-environment";
+
+    final static ConverterName STORAGE_VALUE_TO_STORAGE_BINARY_ENVIRONMENT = ConverterName.with(STORAGE_VALUE_TO_STORAGE_BINARY_ENVIRONMENT_STRING);
+
     private final static String STORAGE_VALUE_TO_STORAGE_BINARY_EXPRESSION_STRING = "storage-value-to-storage-binary-expression";
 
     final static ConverterName STORAGE_VALUE_TO_STORAGE_BINARY_EXPRESSION = ConverterName.with(STORAGE_VALUE_TO_STORAGE_BINARY_EXPRESSION_STRING);
@@ -1713,6 +1722,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(STORAGE_VALUE_INFO_LIST_TO_TEXT),
             converterInfo(STORAGE_VALUE_TO_STORAGE_BINARY_BINARY),
             converterInfo(STORAGE_VALUE_TO_STORAGE_BINARY_CSV),
+            converterInfo(STORAGE_VALUE_TO_STORAGE_BINARY_ENVIRONMENT),
             converterInfo(STORAGE_VALUE_TO_STORAGE_BINARY_EXPRESSION),
             converterInfo(STORAGE_VALUE_TO_STORAGE_BINARY_JSON),
             converterInfo(STORAGE_VALUE_TO_STORAGE_BINARY_PROPERTIES),
