@@ -44,6 +44,7 @@ import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.Environment;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
@@ -1056,6 +1057,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     environment,
                     Environment.class,
                     SpreadsheetConvertersConverterProvider.ENVIRONMENT // TEXT_TO_ENVIRONMENT_VALUE_NAME
+                );
+
+                verifier.addIfConversionFail(
+                    EnvironmentValueName.CURRENCY.value(),
+                    EnvironmentValueName.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME,
+                    EnvironmentValueName.CURRENCY
                 );
             }
         }
