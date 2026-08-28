@@ -109,8 +109,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             BASIC = namedCollection(
                 "BASIC",
                 Converters.simple(),
-                SpreadsheetConverters.collectionTo(),
-                SpreadsheetConverters.optionalTo()
+                collectionTo(),
+                optionalTo()
             );
         }
         return BASIC;
@@ -125,9 +125,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == BINARY) {
             BINARY = namedCollection(
                 "BINARY",
-                SpreadsheetConverters.textToBinary(),
-                SpreadsheetConverters.toBinary(),
-                SpreadsheetConverters.binaryToText()
+                textToBinary(),
+                toBinary(),
+                binaryToText()
             );
         }
         return BINARY;
@@ -149,8 +149,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == BOOLEAN) {
             BOOLEAN = namedCollection(
                 "BOOLEAN",
-                SpreadsheetConverters.toBoolean(),
-                SpreadsheetConverters.booleanToText()
+                toBoolean(),
+                booleanToText()
             );
         }
         return BOOLEAN;
@@ -862,7 +862,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 textToPadding(),
                 textToTextStyle(),
                 textToTextStylePropertyName(),
-                SpreadsheetConverters.toStyleable(),
+                toStyleable(),
                 propertiesToTextStyle()
             );
         }
@@ -893,15 +893,15 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                     SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
                         .formatter()
                         .converter(), // timeToString
-                    SpreadsheetConverters.textToDate(
+                    textToDate(
                         SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                             .parser()
                     ), // stringToDate
-                    SpreadsheetConverters.textToDateTime(
+                    textToDateTime(
                         SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
                             .parser()
                     ), // stringToDateTime
-                    SpreadsheetConverters.textToTime(
+                    textToTime(
                         SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
                             .parser()
                     ) // stringToTime
@@ -939,9 +939,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             TEXT = namedCollection(
                 "TEXT",
                 Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-                SpreadsheetConverters.textToCharset(),
-                SpreadsheetConverters.textToIndentation(),
-                SpreadsheetConverters.textToLineEnding()
+                textToCharset(),
+                textToIndentation(),
+                textToLineEnding()
             );
         }
         return TEXT;
