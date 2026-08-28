@@ -24,10 +24,8 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -44,18 +42,16 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -69,7 +65,8 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<BasicSpreadsheetFormatterContext>,
-    SpreadsheetEnvironmentContextTesting {
+    SpreadsheetEnvironmentContextTesting,
+    SpreadsheetLabelNameResolverTesting {
 
     private final static Optional<SpreadsheetCell> CELL = Optional.of(
         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
@@ -102,8 +99,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             return "bingo=" + COLOR;
         }
     };
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = new FakeSpreadsheetLabelNameResolver() {
 
@@ -173,7 +168,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
         @Override
         public MathContext mathContext() {
-            return MathContext.DECIMAL32;
+            return MATH_CONTEXT;
         }
 
         @Override
@@ -235,7 +230,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 )
             )
         ),
-        MediaTypeDetectors.binary(),
+        MEDIA_TYPE_DETECTOR,
         BinaryNumberConverterFunctions.multiply(), // multiplier
         LABEL_NAME_RESOLVER,
         new SpreadsheetMetadataLoader() {
@@ -267,12 +262,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 ),
                 EXPRESSION_NUMBER_KIND
             ),
-            JsonNodeMarshallUnmarshallContexts.basic(
-                JsonNodeMarshallContexts.basic(),
-                JSON_NODE_UNMARSHALL_CONTEXT
-            )
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         ),
-        LocaleContexts.jre(LOCALE)
+        LOCALE_CONTEXT
     );
 
     private final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =
