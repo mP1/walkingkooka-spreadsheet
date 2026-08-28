@@ -1813,7 +1813,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                             "timeFormatter=time hh:mm:ss\n" +
                             "timeParser=time hh:mm:ss\n" +
                             "twoDigitYear=50\n" +
-                            "validationConverter=collection(text, boolean, number, date-time, value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
+                            "validationConverter=collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
                             "validationFunctions=\n" +
                             "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
                             "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
@@ -1991,7 +1991,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "timeFormatter=time hh:mm:ss\n" +
                 "timeParser=time hh:mm:ss\n" +
                 "twoDigitYear=50\n" +
-                "validationConverter=collection(text, boolean, number, date-time, value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
+                "validationConverter=collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
                 "validationFunctions=\n" +
                 "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
                 "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
