@@ -1067,7 +1067,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithDivideByZeroWithSpreadsheetContext() {
+    public void testEvaluateWithDivideByZeroWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "1/0",
             SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
@@ -1075,7 +1075,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithDivideByZeroWithSpreadsheetEnvironmentContext() {
+    public void testEvaluateWithDivideByZeroWithSpreadsheetEnvironmentContext() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
             "1/0",
             SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
@@ -1083,7 +1083,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAdditionWithSpreadsheetContext() {
+    public void testEvaluateWithAdditionWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "1+2",
             EXPRESSION_NUMBER_KIND.create(3)
@@ -1091,7 +1091,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAdditionWithSpreadsheetEnvironmentContextMissingSpreadsheetId() {
+    public void testEvaluateWithAdditionWithSpreadsheetEnvironmentContextMissingSpreadsheetId() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
             "1+2",
             EXPRESSION_NUMBER_KIND.create(3)
@@ -1099,7 +1099,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAdditionWithMissingCellReferenceWithSpreadsheetContext() {
+    public void testEvaluateWithAdditionWithMissingCellReferenceWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "1+2+A1",
             EXPRESSION_NUMBER_KIND.create(3)
@@ -1107,7 +1107,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAdditionWithMissingCellReferenceWithSpreadsheetEnvironmentContext() {
+    public void testEvaluateWithAdditionWithMissingCellReferenceWithSpreadsheetEnvironmentContext() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
             "1+2+A1",
             EXPRESSION_NUMBER_KIND.create(3)
@@ -1115,7 +1115,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionCellReferenceWithSpreadsheetContext() {
+    public void testEvaluateCellReferenceWithSpreadsheetContext() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -1139,7 +1139,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionCellReferenceWithSpreadsheetEnvironmentContextMissingSpreadsheetId() {
+    public void testEvaluateCellReferenceWithSpreadsheetEnvironmentContextMissingSpreadsheetId() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createSpreadsheetEnvironmentContextEngineContext(false); // includeSpreadsheetId=false
 
@@ -1152,7 +1152,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionCellReferenceWithSpreadsheetEnvironmentContextWithSpreadsheetId() {
+    public void testEvaluateCellReferenceWithSpreadsheetEnvironmentContextWithSpreadsheetId() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createSpreadsheetEnvironmentContextEngineContext(true); // includeSpreadsheetId=true
 
@@ -1176,7 +1176,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionCellReferenceWithSpreadsheetEnvironmentContextWithSpreadsheetId2() {
+    public void testEvaluateCellReferenceWithSpreadsheetEnvironmentContextWithSpreadsheetId2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createSpreadsheetEnvironmentContextEngineContext(true); // includeSpreadsheetId=true
 
