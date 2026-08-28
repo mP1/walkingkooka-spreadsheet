@@ -45,21 +45,6 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
      */
     public final static ConverterInfoSet ALL = SpreadsheetConvertersConverterProvider.INFOS;
 
-    public final static ConverterAliasSet FIND = ALL.aliasSet()
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
-
     public final static ConverterAliasSet FORMATTING = ALL.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON)
@@ -80,6 +65,21 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
+
+    public final static ConverterAliasSet QUERY = ALL.aliasSet()
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
