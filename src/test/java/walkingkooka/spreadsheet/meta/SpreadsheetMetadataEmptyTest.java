@@ -28,8 +28,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.Storages;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -206,7 +204,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(
                 SpreadsheetMetadata.NO_CELL,
                 LOCALE_CONTEXT,
-                LocalDateTime::now
+                HAS_NOW
             )
         );
         this.getMessageAndCheck(
@@ -223,7 +221,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 .spreadsheetParserContext(
                     SpreadsheetMetadata.NO_CELL,
                     LOCALE_CONTEXT,
-                    LocalDateTime::now
+                    HAS_NOW
                 )
         );
         this.getMessageAndCheck(
@@ -289,11 +287,16 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testMarshallWithDefaults() {
         final SpreadsheetMetadata defaultNotEmpty = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
-        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
-
-        this.checkEquals(JsonNode.object()
-                .set(SpreadsheetMetadata.DEFAULTS, context.marshall(defaultNotEmpty)),
-            context.marshall(SpreadsheetMetadata.EMPTY.setDefaults(defaultNotEmpty)));
+        this.checkEquals(
+            JsonNode.object()
+                .set(
+                    SpreadsheetMetadata.DEFAULTS,
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(defaultNotEmpty)
+                ),
+            JSON_NODE_MARSHALL_CONTEXT.marshall(
+                SpreadsheetMetadata.EMPTY.setDefaults(defaultNotEmpty)
+            )
+        );
     }
 
     // TreePrintable....................................................................................................
