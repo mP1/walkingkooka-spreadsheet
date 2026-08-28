@@ -108,6 +108,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.HasText;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -974,6 +975,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testEnvironmentConvertEnvironmentToString() {
+        final Environment environment = Environment.empty();
+
+        this.environmentConvertAndCheck(
+            environment,
+            String.class,
+            ""
+        );
+    }
+
+    @Test
     public void testEnvironmentConvertEnvironmentValueNameToEnvironmentValueName() {
         final EnvironmentValueName<?> name = EnvironmentValueName.with(
             "CurrentPath",
@@ -1045,6 +1057,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 SpreadsheetConverters.text()
             )
         );
+
+        @Override
+        public LineEnding lineEnding() {
+            return LINE_ENDING;
+        }
     };
 
     // expression.......................................................................................................
