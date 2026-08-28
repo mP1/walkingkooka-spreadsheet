@@ -58,7 +58,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.PatchableTesting;
@@ -665,8 +664,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetLocaleDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final Optional<Locale> differentLocale = this.differentLocale();
-        final SpreadsheetCell different = cell.setLocale(differentLocale);
+        final SpreadsheetCell different = cell.setLocale(
+            Optional.of(DIFFERENT_LOCALE)
+        );
         assertNotSame(
             cell,
             different
@@ -683,7 +683,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formatterAndCheck(different);
         this.localeAndCheck(
             different,
-            differentLocale
+            DIFFERENT_LOCALE
         );
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -696,12 +696,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private Optional<Locale> locale() {
         return SpreadsheetCell.NO_LOCALE;
-    }
-
-    private Optional<Locale> differentLocale() {
-        return Optional.ofNullable(
-            Locale.FRANCE
-        );
     }
 
     private void localeAndCheck2(final SpreadsheetCell cell) {
@@ -2564,8 +2558,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.FORMATTER_PROPERTY,
-                    JsonNodeMarshallContexts.basic()
-                        .marshall(formatter)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(formatter)
                 ),
             cell.setFormatter(
                 Optional.of(
@@ -2614,8 +2607,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    JsonNodeMarshallContexts.basic()
-                        .marshall(style)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(style)
                 ),
             cell.setStyle(style)
         );
@@ -2637,8 +2629,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    JsonNodeMarshallContexts.basic()
-                        .marshall(style)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(style)
                 ),
             cell.setStyle(style)
         );
@@ -2663,7 +2654,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .set(SpreadsheetCell.STYLE_PROPERTY, JsonObject.object()
                     .set(
                         JsonPropertyName.with(color.value()),
-                        JsonNodeMarshallContexts.basic().marshall(colorValue)
+                        JSON_NODE_MARSHALL_CONTEXT.marshall(colorValue)
                     )
                 ),
             cell.setStyle(
