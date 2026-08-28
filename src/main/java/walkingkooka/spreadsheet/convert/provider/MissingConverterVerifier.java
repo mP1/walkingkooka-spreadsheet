@@ -1067,6 +1067,24 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 );
 
                 final CurrencyCode currencyCode = context.currencyCode();
+                final LineEnding lineEnding = context.lineEnding();
+
+                verifier.addIfConversionFail(
+                    Environment.empty()
+                        .set(
+                            EnvironmentValueName.CHARSET,
+                            charset
+                        ).set(
+                            EnvironmentValueName.CURRENCY,
+                            Currency.getInstance(
+                                currencyCode.value()
+                            )
+                        ),
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.ENVIRONMENT,
+                    EnvironmentValueName.CHARSET + "=" + context.charset().name() + lineEnding +
+                        EnvironmentValueName.CURRENCY + "=" + currencyCode + lineEnding
+                );
 
                 verifier.addIfConversionFail(
                     EnvironmentValueName.CURRENCY + "=" + currencyCode,
