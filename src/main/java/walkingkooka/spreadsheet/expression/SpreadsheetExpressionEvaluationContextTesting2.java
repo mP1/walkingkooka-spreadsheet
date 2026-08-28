@@ -68,7 +68,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     default void testEvaluateWithEmptyStringReturnsError() {
         this.evaluateAndCheck(
             "",
-            SpreadsheetErrorKind.ERROR.setMessage("End of text, expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
+            SpreadsheetErrorKind.ERROR.setMessage("End of text, expected EXPRESSION")
         );
     }
 
@@ -76,7 +76,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     default void testEvaluateWithWhitespaceStringReturnsError() {
         this.evaluateAndCheck(
             " ",
-            SpreadsheetErrorKind.ERROR.setMessage("Invalid character \' \' expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
+            SpreadsheetErrorKind.ERROR.setMessage("End of text, expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
         );
     }
 

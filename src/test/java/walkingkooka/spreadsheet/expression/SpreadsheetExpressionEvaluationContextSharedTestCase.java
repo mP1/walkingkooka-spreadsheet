@@ -28,9 +28,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.StoragePath;
 
 import java.math.MathContext;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C extends SpreadsheetExpressionEvaluationContextShared> implements SpreadsheetExpressionEvaluationContextTesting2<C>,
     SpreadsheetMetadataTesting,
@@ -318,7 +315,7 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     @Test
     public final void testEvaluateIncompleteExpressionFails() {
         this.evaluateAndCheck(
-            "=1+",
+            "1+",
             SpreadsheetErrorKind.ERROR.setMessage(
                 "End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
             )
@@ -326,63 +323,9 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     }
 
     @Test
-    public final void testEvaluateApostrophe() {
-        this.evaluateAndCheck(
-            "'Hello",
-            "Hello"
-        );
-    }
-
-    @Test
-    public final void testEvaluateDate() {
-        this.evaluateAndCheck(
-            "1999/12/31",
-            LocalDate.of(
-                1999,
-                12,
-                31
-            )
-        );
-    }
-
-    @Test
-    public final void testEvaluateDateTime() {
-        this.evaluateAndCheck(
-            "1999/12/31 12:58",
-            LocalDateTime.of(
-                1999,
-                12,
-                31,
-                12,
-                58
-            )
-        );
-    }
-
-    @Test
-    public final void testEvaluateNumberValue() {
-        this.evaluateAndCheck(
-            "123.5",
-            EXPRESSION_NUMBER_KIND.create(123.5)
-        );
-    }
-
-    @Test
-    public final void testEvaluateTime() {
-        this.evaluateAndCheck(
-            "12:58:59",
-            LocalTime.of(
-                12,
-                58,
-                59
-            )
-        );
-    }
-
-    @Test
     public final void testEvaluateExpression() {
         this.evaluateAndCheck(
-            "=1+2",
+            "1+2",
             EXPRESSION_NUMBER_KIND.create(3)
         );
     }
