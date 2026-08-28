@@ -74,7 +74,6 @@ import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -117,8 +116,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private final static String DIFFERENT_TEXT = "99+99";
     private final static ValueType DIFFERENT_VALUE_TYPE = ValueType.TIME;
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     // with.............................................................................................................
 
@@ -2795,17 +2792,16 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testValuePatch() {
         final ExpressionNumber number = EXPRESSION_NUMBER_KIND.create(123);
-        final JsonNodeMarshallContext marshallContext = JsonNodeMarshallContexts.basic();
 
         this.checkEquals(
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.VALUE_PROPERTY,
-                    marshallContext.marshallWithType(number)
+                    JSON_NODE_MARSHALL_CONTEXT.marshallWithType(number)
                 ),
             SpreadsheetFormula.valuePatch(
                 Optional.of(number),
-                marshallContext
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2846,7 +2842,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 Optional.of(
                     ValueType.with("text123")
                 ),
-                JsonNodeMarshallContexts.basic()
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2858,7 +2854,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setNull(SpreadsheetFormula.VALUE_TYPE_PROPERTY),
             SpreadsheetFormula.valueTypePatch(
                 Optional.empty(),
-                JsonNodeMarshallContexts.basic()
+                JSON_NODE_MARSHALL_CONTEXT
             )
         );
     }
@@ -2964,7 +2960,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             formula,
             SpreadsheetFormula.valueTypePatch(
                 valueType,
-                JsonNodeMarshallContexts.basic()
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             formula.setValueType(valueType)
         );
@@ -2981,7 +2977,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             formula,
             SpreadsheetFormula.valueTypePatch(
                 valueType,
-                JsonNodeMarshallContexts.basic()
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             formula.setValueType(valueType)
         );
