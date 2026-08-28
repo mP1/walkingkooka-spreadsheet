@@ -41,6 +41,7 @@ final class SpreadsheetConvertersStorage extends SpreadsheetConvertersStorageGwt
         converters.addAll(
             Lists.of(
                 SpreadsheetConverters.storageBinaryToStorageValueCsv(),
+                SpreadsheetConverters.storageBinaryToStorageValueEnvironment(),
                 SpreadsheetConverters.storageBinaryToStorageValueExpression(),
                 SpreadsheetConverters.storageBinaryToStorageValueJson(),
                 SpreadsheetConverters.storageBinaryToStorageValueProperties(),
@@ -48,6 +49,7 @@ final class SpreadsheetConvertersStorage extends SpreadsheetConvertersStorageGwt
                 SpreadsheetConverters.storageBinaryToStorageValueTxt(),
                 SpreadsheetConverters.storageBinaryToStorageValueBinary(),
                 SpreadsheetConverters.storageValueToStorageBinaryCsv(),
+                SpreadsheetConverters.storageValueToStorageBinaryEnvironment(),
                 SpreadsheetConverters.storageValueToStorageBinaryExpression(),
                 SpreadsheetConverters.storageValueToStorageBinaryJson(),
                 SpreadsheetConverters.storageValueToStorageBinaryProperties(),
