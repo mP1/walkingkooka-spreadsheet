@@ -206,7 +206,7 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
 
         Object value;
         try {
-            final SpreadsheetFormulaParserToken token = this.parseValueOrExpression(
+            final SpreadsheetFormulaParserToken token = this.parseExpression(
                 TextCursors.charSequence(text)
             );
 
