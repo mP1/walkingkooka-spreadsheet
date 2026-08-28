@@ -43,7 +43,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -56,9 +56,8 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     BinaryTextContextTesting,
     DecimalNumberContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormatterConverter>,
+    HasExpressionNumberKindTesting,
     SpreadsheetEnvironmentContextTesting {
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testFormatBigDecimal() {
