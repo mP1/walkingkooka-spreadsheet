@@ -336,6 +336,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             ENVIRONMENT = namedCollection(
                 "ENVIRONMENT",
                 toEnvironment(),
+                environmentToBinary(),
                 environmentToText(),
                 textToEnvironment(),
                 textToEnvironmentValueName()
