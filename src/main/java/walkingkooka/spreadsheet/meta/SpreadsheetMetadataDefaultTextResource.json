@@ -122,7 +122,7 @@
     "word-wrap": "NORMAL"
   },
   "twoDigitYear": 20,
-  "validationConverter": "collection(text, boolean, number, date-time, value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)",
+  "validationConverter": "collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)",
   "validationFunctions": "@",
   "validationValidators": "absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask",
   "validators": "",
