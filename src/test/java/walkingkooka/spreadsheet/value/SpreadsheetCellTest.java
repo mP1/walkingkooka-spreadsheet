@@ -58,7 +58,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -2390,10 +2389,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         return SpreadsheetCell.unmarshall(jsonNode, context);
     }
 
-    private JsonNodeMarshallContext jsonNodeMarshallContext() {
-        return JsonNodeMarshallContexts.basic();
-    }
-
     private void checkEquals(final JsonNode node,
                              final String expected) {
         this.checkEquals(
@@ -2750,7 +2745,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             .setFormatter(formatter);
 
         final JsonNode patch = cell.formulaPatch(
-            this.jsonNodeMarshallContext()
+            JSON_NODE_MARSHALL_CONTEXT
         );
 
         this.checkEquals(
@@ -2791,7 +2786,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             .setFormatter(formatter);
 
         final JsonNode patch = cell.formatterPatch(
-            this.jsonNodeMarshallContext()
+            JSON_NODE_MARSHALL_CONTEXT
         );
         this.checkEquals(
             patch,
@@ -2816,9 +2811,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             .setFormatter(formatter);
 
-        final JsonNode patch = cell.formatterPatch(
-            this.jsonNodeMarshallContext()
-        );
+        final JsonNode patch = cell.formatterPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
@@ -2854,9 +2847,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             .setParser(parser);
 
-        final JsonNode patch = cell.parserPatch(
-            this.jsonNodeMarshallContext()
-        );
+        final JsonNode patch = cell.parserPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
@@ -2880,9 +2871,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             .setParser(parser);
 
-        final JsonNode patch = cell.parserPatch(
-            this.jsonNodeMarshallContext()
-        );
+        final JsonNode patch = cell.parserPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
@@ -2924,9 +2913,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             )
         );
 
-        final JsonNode patch = cell.stylePatch(
-            this.jsonNodeMarshallContext()
-        );
+        final JsonNode patch = cell.stylePatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
@@ -2969,9 +2956,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             .setValidator(validator);
 
-        final JsonNode patch = cell.validatorPatch(
-            this.jsonNodeMarshallContext()
-        );
+        final JsonNode patch = cell.validatorPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
@@ -2995,9 +2980,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             .setValidator(validator);
 
-        final JsonNode patch = cell.validatorPatch(
-            this.jsonNodeMarshallContext()
-        );
+        final JsonNode patch = cell.validatorPatch(JSON_NODE_MARSHALL_CONTEXT);
+
         this.checkEquals(
             patch,
             "{\n" +
