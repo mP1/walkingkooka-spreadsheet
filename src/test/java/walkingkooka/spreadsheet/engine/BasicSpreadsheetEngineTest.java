@@ -53,7 +53,6 @@ import walkingkooka.math.MathTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -210,7 +209,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -623,14 +621,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public Charset charset() {
-            return StandardCharsets.UTF_8;
+            return BasicSpreadsheetEngineTest.CHARSET;
         }
 
         @Override
         public MediaType detect(final String filename,
                                 final Binary content) {
-            return MediaTypeDetectors.binary()
-                .detect(filename, content);
+            return MEDIA_TYPE_DETECTOR.detect(filename, content);
         }
 
         @Override
@@ -761,21 +758,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             throw new UnsupportedOperationException();
         }
 
-        // HasLineEnding................................................................................................
-
-        @Override
-        public void setLineEnding(final LineEnding lineEnding) {
-            Objects.requireNonNull(lineEnding, "lineEnding");
-            throw new UnsupportedOperationException();
-        }
-
-        // EnvironmentContextDelegator..................................................................................
-
-        @Override
-        public void setUser(final Optional<EmailAddress> user) {
-            Objects.requireNonNull(user, "user");
-            throw new UnsupportedOperationException();
-        }
+        // SpreadsheetEnvironmentContextDelegator.......................................................................
         
         @Override
         public SpreadsheetContext cloneEnvironment() {
@@ -792,17 +775,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 spreadsheetEnvironmentContext,
                 this.spreadsheetProvider
             );
-        }
-
-        @Override
-        public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
-                                            final T value) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            throw new UnsupportedOperationException();
         }
 
         @Override
