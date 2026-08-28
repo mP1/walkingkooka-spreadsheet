@@ -88,6 +88,7 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageValueInfoList;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -393,6 +394,8 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
     );
 
     private static final StoragePath STORAGE_PATH_CSV = StoragePath.parse("/file.csv");
+
+    private static final StoragePath STORAGE_PATH_ENVIRONMENT = StoragePath.parse("/EnvironmentContext.env");
 
     private static final StoragePath STORAGE_PATH_EXPRESSION = StoragePath.parse("/formula.expression.txt");
 
@@ -1660,6 +1663,69 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     );
                 }
 
+                {
+                    final CurrencyCode currencyCode = context.currencyCode();
+                    final Indentation indentation = context.indentation();
+                    final LineEnding lineEnding = context.lineEnding();
+
+                    final Environment environment = Environment.empty()
+                        .set(
+                            EnvironmentValueName.CHARSET,
+                            charset
+                        ).set(
+                            EnvironmentValueName.CURRENCY,
+                            Currency.getInstance(
+                                currencyCode.value()
+                            )
+                        ).set(
+                            EnvironmentValueName.INDENTATION,
+                            indentation
+                        ).set(
+                            EnvironmentValueName.LINE_ENDING,
+                            lineEnding
+                        ).set(
+                            EnvironmentValueName.LOCALE,
+                            locale
+                        );
+
+                    // charset=UTF-8
+                    // currency=AUD
+                    // indentation="  "
+                    // lineEnding=NL
+                    final String environmentText = "charset=" + charset.name() + lineEnding +
+                        "currency=" + currencyCode + lineEnding +
+                        "indentation=" + CharSequences.quoteAndEscape(indentation) + lineEnding +
+                        "lineEnding=" + lineEnding.name() + lineEnding +
+                        "locale=" + locale.toLanguageTag();
+
+                    verifier.addIfConversionFail(
+                        StorageValue.with(
+                            STORAGE_PATH_ENVIRONMENT
+                        ).setValue(
+                            Optional.of(environmentText)
+                        ),
+                        StorageBinary.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_ENVIRONMENT,
+                        IS_STORAGE_BINARY
+                    );
+
+                    verifier.addIfConversionFail(
+                        StorageBinary.with(
+                            STORAGE_PATH_ENVIRONMENT,
+                            Binary.with(
+                                environmentText.getBytes(charset)
+                            )
+                        ),
+                        StorageValue.class,
+                        SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_ENVIRONMENT,
+                        StorageValue.with(
+                            STORAGE_PATH_ENVIRONMENT
+                        ).setValue(
+                            Optional.of(environment)
+                        )
+                    );
+                }
+                
                 {
                     verifier.addIfConversionFail(
                         StorageValue.with(
