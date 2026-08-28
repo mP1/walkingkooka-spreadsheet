@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
@@ -29,7 +30,6 @@ import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyValue;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
@@ -40,17 +40,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
-import walkingkooka.storage.HasUserDirectories;
-import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -65,10 +60,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     DecimalNumberContextDelegator,
     SpreadsheetEnvironmentContextTesting,
     LocaleContextTesting {
-
-    private final static HasUserDirectories HAS_USER_DIRECTORIES = HasUserDirectorieses.fake();
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static Optional<SpreadsheetValidationReference> VALIDATION_REFERENCE = Optional.empty();
 
@@ -377,7 +368,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
-                    ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
+                    Cast.to(MULTIPLIER),
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -412,26 +403,16 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
 
                             @Override
                             public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                                return Optional.of(
-                                    Currency.getInstance(
-                                        currencyCode.value()
-                                    )
-                                );
+                                return CURRENCY_CONTEXT.currencyForCurrencyCode(currencyCode);
                             }
 
                             @Override
                             public Optional<Currency> currencyForLocale(final Locale locale) {
-                                return Optional.of(
-                                    Currency.getInstance(locale)
-                                );
+                                return CURRENCY_CONTEXT.currencyForLocale(locale);
                             }
-                        }.setLocaleContext(
-                            LocaleContexts.jre(
-                                this.locale()
-                            )
-                        ),
+                        }.setLocaleContext(LOCALE_CONTEXT),
                         DATE_TIME_CONTEXT,
-                        this.decimalNumberContext()
+                        DECIMAL_NUMBER_CONTEXT
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),
@@ -463,16 +444,15 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     @Test
     public void testToString() {
         final ExpressionNumberConverterContext converterContext = ExpressionNumberConverterContexts.fake();
-        final JsonNodeMarshallUnmarshallContext marshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.fake();
 
         this.toStringAndCheck(
             JsonNodeConverterContexts.basic(
                 converterContext,
-                marshallUnmarshallContext
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             ),
             converterContext +
                 " " +
-                marshallUnmarshallContext
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         );
     }
 
