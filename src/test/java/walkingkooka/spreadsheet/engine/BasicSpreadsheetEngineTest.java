@@ -1021,7 +1021,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateIncompleteExpressionWithSpreadsheetContextFails() {
         this.evaluateAndCheck(
-            "=1+",
+            "1+",
             SpreadsheetErrorKind.ERROR.setMessage("End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
         );
     }
@@ -1029,7 +1029,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateIncompleteExpressionWithSpreadsheetEnvironmentContextFails2() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "=1+",
+            "1+",
             SpreadsheetErrorKind.ERROR.setMessage("End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
         );
     }
@@ -1037,7 +1037,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateStringLiteralWithSpreadsheetContext() {
         this.evaluateAndCheck(
-            "'Hello World String Literal",
+            "\"Hello World String Literal\"",
             "Hello World String Literal"
         );
     }
@@ -1045,62 +1045,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateStringLiteralWithSpreadsheetEnvironmentContext() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "'Hello World String Literal",
+            "\"Hello World String Literal\"",
             "Hello World String Literal"
-        );
-    }
-
-    @Test
-    public void testEvaluateDateLiteralWithSpreadsheetContext() {
-        this.evaluateAndCheck(
-            "1999/12/31",
-            LocalDate.of(
-                1999,
-                12,
-                31
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateDateLiteralWithSpreadsheetEnvironmentContext() {
-        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "1999/12/31",
-            LocalDate.of(
-                1999,
-                12,
-                31
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateDateTimeLiteralWithSpreadsheetContext() {
-        this.evaluateAndCheck(
-            "1999/12/31 12:58",
-            LocalDateTime.of(
-                1999,
-                12,
-                31,
-                12,
-                58,
-                0
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateDateTimeLiteralWithSpreadsheetEnvironmentContext() {
-        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "1999/12/31 12:58",
-            LocalDateTime.of(
-                1999,
-                12,
-                31,
-                12,
-                58,
-                0
-            )
         );
     }
 
@@ -1121,31 +1067,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateTimeLiteralWithSpreadsheetContext() {
-        this.evaluateAndCheck(
-            "12:58",
-            LocalTime.of(
-                12,
-                58
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateTimeLiteralWithSpreadsheetEnvironmentContext() {
-        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "12:58",
-            LocalTime.of(
-                12,
-                58
-            )
-        );
-    }
-
-    @Test
     public void testEvaluateExpressionWithDivideByZeroWithSpreadsheetContext() {
         this.evaluateAndCheck(
-            "=1/0",
+            "1/0",
             SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
         );
     }
@@ -1153,7 +1077,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateExpressionWithDivideByZeroWithSpreadsheetEnvironmentContext() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "=1/0",
+            "1/0",
             SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
         );
     }
@@ -1161,7 +1085,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateExpressionWithAdditionWithSpreadsheetContext() {
         this.evaluateAndCheck(
-            "=1+2",
+            "1+2",
             EXPRESSION_NUMBER_KIND.create(3)
         );
     }
@@ -1169,7 +1093,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateExpressionWithAdditionWithSpreadsheetEnvironmentContextMissingSpreadsheetId() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "=1+2",
+            "1+2",
             EXPRESSION_NUMBER_KIND.create(3)
         );
     }
@@ -1177,7 +1101,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateExpressionWithAdditionWithMissingCellReferenceWithSpreadsheetContext() {
         this.evaluateAndCheck(
-            "=1+2+A1",
+            "1+2+A1",
             EXPRESSION_NUMBER_KIND.create(3)
         );
     }
@@ -1185,7 +1109,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testEvaluateExpressionWithAdditionWithMissingCellReferenceWithSpreadsheetEnvironmentContext() {
         this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
-            "=1+2+A1",
+            "1+2+A1",
             EXPRESSION_NUMBER_KIND.create(3)
         );
     }
@@ -1208,7 +1132,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.evaluateAndCheck(
             engine,
-            "=1+2+A1",
+            "1+2+A1",
             context,
             EXPRESSION_NUMBER_KIND.create(1 + 2 + 1000)
         );
@@ -1221,7 +1145,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.evaluateAndCheck(
             engine,
-            "=1+2+A1",
+            "1+2+A1",
             context,
             EXPRESSION_NUMBER_KIND.create(1 + 2 + 0)
         );
@@ -1245,7 +1169,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.evaluateAndCheck(
             engine,
-            "=1+2+A1",
+            "1+2+A1",
             context,
             EXPRESSION_NUMBER_KIND.create(1 + 2 + 1000)
         );
@@ -1265,7 +1189,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.evaluateAndCheck(
             engine,
-            "=1+2+A1",
+            "1+2+A1",
             context,
             EXPRESSION_NUMBER_KIND.create(1 + 2 + 1000)
         );
