@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -790,6 +791,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 SpreadsheetComparatorProviders.empty(),
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                     (ProviderContext p) -> Converters.never()
+                ),
+                CurrencyExchangeRaterProviders.currencyExchangeRaters(
+                    EXPRESSION_NUMBER_KIND::parse
                 ),
                 SpreadsheetExporterProviders.empty(),
                 ExpressionFunctionProviders.empty(

@@ -22,6 +22,11 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.CurrencyExchangeRaterContext;
+import walkingkooka.currency.provider.CurrencyExchangeRaterInfoSet;
+import walkingkooka.currency.provider.CurrencyExchangeRaterName;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorInfoSet;
@@ -106,6 +111,26 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
 
     @Override
     public ConverterInfoSet converterInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    // CurrencyExchangeRaterProvider....................................................................................
+
+    @Override
+    public <C extends CurrencyExchangeRaterContext> CurrencyExchangeRater<C> currencyExchangeRater(final CurrencyExchangeRaterSelector selector,
+                                                                                                   final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <C extends CurrencyExchangeRaterContext> CurrencyExchangeRater<C> currencyExchangeRater(final CurrencyExchangeRaterName name,
+                                                                                                   final List<?> values,
+                                                                                                   final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CurrencyExchangeRaterInfoSet currencyExchangeRaterInfos() {
         throw new UnsupportedOperationException();
     }
 

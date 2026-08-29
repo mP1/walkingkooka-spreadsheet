@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
@@ -1268,6 +1269,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             SpreadsheetProviders.basic(
                 SpreadsheetComparatorProviders.fake(),
                 CONVERTER_PROVIDER,
+                CurrencyExchangeRaterProviders.fake(),
                 SpreadsheetExporterProviders.fake(),
                 expressionFunctionProvider,
                 SpreadsheetFormatterProviders.fake(),

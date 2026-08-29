@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
 import walkingkooka.plugin.Provider;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
@@ -34,6 +35,7 @@ import walkingkooka.validation.provider.ValidatorProvider;
  * This should make it easier to pass instances of each around, as aswell as updates when a {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} is updated.
  */
 public interface SpreadsheetProvider extends ConverterProvider,
+    CurrencyExchangeRaterProvider,
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>,
     SpreadsheetComparatorProvider,
     SpreadsheetExporterProvider,

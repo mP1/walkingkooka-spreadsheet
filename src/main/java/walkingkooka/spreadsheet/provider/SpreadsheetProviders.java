@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
@@ -36,6 +37,7 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
      */
     public static SpreadsheetProvider basic(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                             final ConverterProvider converterProvider,
+                                            final CurrencyExchangeRaterProvider currencyExchangeRaterProvider,
                                             final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                             final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                             final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
@@ -46,6 +48,7 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
         return BasicSpreadsheetProvider.with(
             spreadsheetComparatorProvider,
             converterProvider,
+            currencyExchangeRaterProvider,
             spreadsheetExporterProvider,
             expressionFunctionProvider,
             spreadsheetFormatterProvider,

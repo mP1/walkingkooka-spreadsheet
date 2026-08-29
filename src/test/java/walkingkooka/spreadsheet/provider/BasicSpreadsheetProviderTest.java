@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -50,6 +51,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 null,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -67,6 +69,26 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             NullPointerException.class,
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
+                null,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
+                SPREADSHEET_EXPORTER_PROVIDER,
+                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                FORM_HANDLER_PROVIDER,
+                SPREADSHEET_IMPORTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                VALIDATOR_PROVIDER
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullCurrencyExchangeRaterProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetProvider.with(
+                SPREADSHEET_COMPARATOR_PROVIDER,
+                CONVERTER_PROVIDER,
                 null,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -86,6 +108,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -104,6 +127,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 null,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -122,6 +146,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 null,
@@ -140,6 +165,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -158,6 +184,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -176,6 +203,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -194,6 +222,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             () -> BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -210,6 +239,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
         return BasicSpreadsheetProvider.with(
             SPREADSHEET_COMPARATOR_PROVIDER,
             CONVERTER_PROVIDER,
+            CURRENCY_EXCHANGE_RATER_PROVIDER,
             SPREADSHEET_EXPORTER_PROVIDER,
             EXPRESSION_FUNCTION_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
@@ -228,6 +258,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SpreadsheetComparatorProviders.fake(),
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -245,6 +276,25 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 ConverterProviders.fake(),
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
+                SPREADSHEET_EXPORTER_PROVIDER,
+                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                FORM_HANDLER_PROVIDER,
+                SPREADSHEET_IMPORTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                VALIDATOR_PROVIDER
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentCurrencyExchangeRaterProvider() {
+        this.checkNotEquals(
+            BasicSpreadsheetProvider.with(
+                SPREADSHEET_COMPARATOR_PROVIDER,
+                CONVERTER_PROVIDER,
+                CurrencyExchangeRaterProviders.fake(),
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -262,6 +312,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SpreadsheetExporterProviders.fake(),
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -279,6 +330,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 ExpressionFunctionProviders.fake(),
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -296,6 +348,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SpreadsheetFormatterProviders.fake(),
@@ -313,6 +366,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -330,6 +384,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -347,6 +402,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -364,6 +420,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
             BasicSpreadsheetProvider.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
+                CURRENCY_EXCHANGE_RATER_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -386,7 +443,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testToString() {
         this.toStringAndCheck(
             this.createSpreadsheetProvider(),
-            "spreadsheetComparatorProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider converterProvider=SpreadsheetConvertersConverterProvider spreadsheetExporterProvider=SpreadsheetExportSpreadsheetExporterProvider expressionFunctionProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider spreadsheetFormatterProvider=SpreadsheetFormattersSpreadsheetFormatterProvider spreadsheetImporterProvider=SpreadsheetImportSpreadsheetImporterProvider spreadsheetParserProvider=SpreadsheetParserSpreadsheetParserProvider validatorProvider=ValidationValidatorProvider"
+            "spreadsheetComparatorProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider converterProvider=SpreadsheetConvertersConverterProvider currencyExchangeRaterProvider=CurrencyCurrencyExchangeRaterProvider spreadsheetExporterProvider=SpreadsheetExportSpreadsheetExporterProvider expressionFunctionProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider spreadsheetFormatterProvider=SpreadsheetFormattersSpreadsheetFormatterProvider spreadsheetImporterProvider=SpreadsheetImportSpreadsheetImporterProvider spreadsheetParserProvider=SpreadsheetParserSpreadsheetParserProvider validatorProvider=ValidationValidatorProvider"
         );
     }
 
@@ -606,6 +663,10 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-hyperlink url-to-hyperlink\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-image url-to-image\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/value value\n" +
+                "  currencyExchangeRaterProvider\n" +
+                "    CurrencyCurrencyExchangeRaterProvider\n" +
+                "      CurrencyExchangeRaterInfoSet\n" +
+                "        https://github.com/mP1/walkingkooka-currency-provider/CurrencyExchangeRater/properties properties\n" +
                 "  spreadsheetExporterProvider\n" +
                 "    SpreadsheetExportSpreadsheetExporterProvider\n" +
                 "      SpreadsheetExporterInfoSet\n" +

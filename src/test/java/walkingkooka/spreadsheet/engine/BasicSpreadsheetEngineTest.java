@@ -817,6 +817,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         SPREADSHEET_COMPARATOR_PROVIDER,
         CONVERTER_PROVIDER,
+        CURRENCY_EXCHANGE_RATER_PROVIDER,
         SPREADSHEET_EXPORTER_PROVIDER,
         new FakeExpressionFunctionProvider<>() {
 
@@ -5191,6 +5192,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -5280,6 +5282,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -5373,6 +5376,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -5502,6 +5506,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             );
                         }
                     },
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -5624,6 +5629,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -5771,6 +5777,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -5883,6 +5890,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example.com/functions"),
@@ -6086,6 +6094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -6293,6 +6302,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -7135,6 +7145,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     new FakeSpreadsheetFormatterProvider() {
@@ -18066,6 +18077,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example.com/functions"),
@@ -19179,6 +19191,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example.com/functions"),
@@ -25702,6 +25715,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -25787,6 +25801,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -25914,6 +25929,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26044,6 +26060,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26207,6 +26224,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26352,6 +26370,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26559,6 +26578,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26634,6 +26654,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26749,6 +26770,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26858,6 +26880,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -26987,6 +27010,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -27124,6 +27148,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetProviders.basic(
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    CURRENCY_EXCHANGE_RATER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,

@@ -26,6 +26,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
@@ -646,6 +647,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                     SpreadsheetProviders.basic(
                         SpreadsheetComparatorProviders.empty(),
                         converterProvider,
+                        CurrencyExchangeRaterProviders.fake(),
                         SpreadsheetExporterProviders.empty(),
                         EXPRESSION_FUNCTION_PROVIDER,
                         SpreadsheetFormatterProviders.empty(),

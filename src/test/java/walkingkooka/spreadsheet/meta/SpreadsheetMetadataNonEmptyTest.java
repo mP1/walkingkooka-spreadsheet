@@ -33,6 +33,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContexts;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -2031,6 +2032,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             p
                         )
                     ),
+                    CurrencyExchangeRaterProviders.fake(),
                     SpreadsheetExporterProviders.fake(),
                     ExpressionFunctionProviders.fake(),
                     SPREADSHEET_FORMATTER_PROVIDER,
@@ -2081,6 +2083,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             p
                         )
                     ),
+                    CurrencyExchangeRaterProviders.fake(),
                     SpreadsheetExporterProviders.fake(),
                     ExpressionFunctionProviders.fake(),
                     SPREADSHEET_FORMATTER_PROVIDER,

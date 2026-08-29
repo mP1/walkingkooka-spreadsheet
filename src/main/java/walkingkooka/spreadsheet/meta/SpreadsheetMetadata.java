@@ -37,6 +37,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -1565,6 +1566,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 converters,
                 provider
             ),
+            CurrencyExchangeRaterProviders.empty(),
             SpreadsheetExporterProviders.aliases(
                 exporters,
                 provider

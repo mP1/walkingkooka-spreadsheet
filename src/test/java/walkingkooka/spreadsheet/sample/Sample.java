@@ -29,6 +29,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContexts;
@@ -453,6 +454,7 @@ public final class Sample {
                         SpreadsheetProviders.basic(
                             SpreadsheetComparatorProviders.fake(),
                             converterProvider,
+                            CurrencyExchangeRaterProviders.fake(),
                             SpreadsheetExporterProviders.fake(),
                             ExpressionFunctionProviders.fake(),
                             spreadsheetFormatterProvider,

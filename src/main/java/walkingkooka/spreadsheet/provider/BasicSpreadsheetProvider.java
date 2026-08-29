@@ -22,6 +22,8 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderDelegator;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviderDelegator;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviderDelegator;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
@@ -50,6 +52,7 @@ import java.util.Objects;
 final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     SpreadsheetComparatorProviderDelegator,
     ConverterProviderDelegator,
+    CurrencyExchangeRaterProviderDelegator,
     SpreadsheetExporterProviderDelegator,
     ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
     FormHandlerProviderDelegator,
@@ -62,6 +65,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
 
     static BasicSpreadsheetProvider with(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                          final ConverterProvider converterProvider,
+                                         final CurrencyExchangeRaterProvider currencyExchangeRaterProvider,
                                          final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
@@ -72,6 +76,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         return new BasicSpreadsheetProvider(
             Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider"),
             Objects.requireNonNull(converterProvider, "converterProvider"),
+            Objects.requireNonNull(currencyExchangeRaterProvider, "currencyExchangeRaterProvider"),
             Objects.requireNonNull(spreadsheetExporterProvider, "spreadsheetExporterProvider"),
             Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider"),
             Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
@@ -84,6 +89,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
 
     private BasicSpreadsheetProvider(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                      final ConverterProvider converterProvider,
+                                     final CurrencyExchangeRaterProvider currencyExchangeRaterProvider,
                                      final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                      final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                      final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
@@ -95,6 +101,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
 
         this.spreadsheetComparatorProvider = spreadsheetComparatorProvider;
         this.converterProvider = converterProvider;
+        this.currencyExchangeRaterProvider = currencyExchangeRaterProvider;
         this.spreadsheetExporterProvider = spreadsheetExporterProvider;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
@@ -117,6 +124,13 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     }
 
     private final ConverterProvider converterProvider;
+
+    @Override
+    public CurrencyExchangeRaterProvider currencyExchangeRaterProvider() {
+        return this.currencyExchangeRaterProvider;
+    }
+
+    private final CurrencyExchangeRaterProvider currencyExchangeRaterProvider;
 
     @Override
     public ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
@@ -174,6 +188,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         return Objects.hash(
             this.spreadsheetComparatorProvider,
             this.converterProvider,
+            this.currencyExchangeRaterProvider,
             this.spreadsheetExporterProvider,
             this.expressionFunctionProvider,
             this.spreadsheetFormatterProvider,
@@ -194,6 +209,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     private boolean equals0(final BasicSpreadsheetProvider other) {
         return this.spreadsheetComparatorProvider.equals(other.spreadsheetComparatorProvider) &&
             this.converterProvider.equals(other.converterProvider) &&
+            this.currencyExchangeRaterProvider.equals(other.currencyExchangeRaterProvider) &&
             this.spreadsheetExporterProvider.equals(other.spreadsheetExporterProvider) &&
             this.expressionFunctionProvider.equals(other.expressionFunctionProvider) &&
             this.spreadsheetFormatterProvider.equals(other.spreadsheetFormatterProvider) &&
@@ -216,6 +232,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
             .value(this.spreadsheetComparatorProvider)
             .label("converterProvider")
             .value(this.converterProvider)
+            .label("currencyExchangeRaterProvider")
+            .value(this.currencyExchangeRaterProvider)
             .label("spreadsheetExporterProvider")
             .value(this.spreadsheetExporterProvider)
             .label("expressionFunctionProvider")
@@ -247,6 +265,11 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
             this.printTreeLabel(
                 "converterProvider",
                 this.converterProvider,
+                printer
+            );
+            this.printTreeLabel(
+                "currencyExchangeRaterProvider",
+                this.currencyExchangeRaterProvider,
                 printer
             );
             this.printTreeLabel(

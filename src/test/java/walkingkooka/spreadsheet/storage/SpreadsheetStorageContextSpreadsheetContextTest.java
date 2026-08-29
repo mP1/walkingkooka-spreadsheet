@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -70,6 +71,7 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.StoreWatcher;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -88,6 +90,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetStorageContextSpreadsheetContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetStorageContextSpreadsheetContext>,
     CurrencyLocaleContextTesting,
+    HasExpressionNumberKindTesting,
     HasAuditInfoTesting,
     StorageTesting {
 
@@ -1151,6 +1154,9 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
                     SpreadsheetComparatorProviders.empty(),
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         (ProviderContext p) -> Converters.never()
+                    ),
+                    CurrencyExchangeRaterProviders.currencyExchangeRaters(
+                        EXPRESSION_NUMBER_KIND::parse
                     ),
                     SpreadsheetExporterProviders.empty(),
                     ExpressionFunctionProviders.empty(

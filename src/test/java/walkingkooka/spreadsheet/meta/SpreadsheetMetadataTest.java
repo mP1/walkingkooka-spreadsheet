@@ -34,6 +34,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasOptionalLastModifiedTesting;
 import walkingkooka.environment.AuditInfo;
@@ -1336,6 +1337,9 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         return SpreadsheetProviders.basic(
             SpreadsheetComparatorProviders.spreadsheetComparators(),
             ConverterProviders.converters(),
+            CurrencyExchangeRaterProviders.currencyExchangeRaters(
+                EXPRESSION_NUMBER_KIND::parse
+            ),
             SpreadsheetExporterProviders.spreadsheetExport(),
             ExpressionFunctionProviders.basic(
                 Url.parseAbsolute("https://example.com/"),
