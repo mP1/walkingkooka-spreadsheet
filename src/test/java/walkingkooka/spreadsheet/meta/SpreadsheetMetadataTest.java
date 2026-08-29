@@ -80,7 +80,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.BinaryTextContextTesting;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -1340,7 +1339,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             SpreadsheetExporterProviders.spreadsheetExport(),
             ExpressionFunctionProviders.basic(
                 Url.parseAbsolute("https://example.com/"),
-                CaseSensitivity.INSENSITIVE,
+                SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
                 Sets.of(
                     function1
                 )
