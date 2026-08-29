@@ -69,23 +69,7 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
 
     }
 
-    @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector,
-                                                               final ProviderContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                               final List<?> value,
-                                                               final ProviderContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ConverterInfoSet converterInfos() {
-        throw new UnsupportedOperationException();
-    }
+    // SpreadsheetComparatorProvider...................................................................................
 
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
@@ -105,10 +89,52 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
         throw new UnsupportedOperationException();
     }
 
+    // ConverterProvider................................................................................................
+
+    @Override
+    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector,
+                                                               final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                               final List<?> value,
+                                                               final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ConverterInfoSet converterInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    // ExpressionFunctionProvider.......................................................................................
+
+    @Override
+    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                            final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                            final List<?> values,
+                                                                                            final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet expressionFunctionInfos() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public CaseSensitivity expressionFunctionNameCaseSensitivity() {
         throw new UnsupportedOperationException();
     }
+
+    // SpreadsheetExporterProvider......................................................................................
 
     @Override
     public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
@@ -148,6 +174,8 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
         throw new UnsupportedOperationException();
     }
 
+    // SpreadsheetImporterProvider......................................................................................
+
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                    final ProviderContext context) {
@@ -165,6 +193,8 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
     public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
         throw new UnsupportedOperationException();
     }
+
+    // SpreadsheetParserProvider........................................................................................
 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
@@ -194,23 +224,7 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                            final ProviderContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                            final List<?> values,
-                                                                                            final ProviderContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionFunctionInfoSet expressionFunctionInfos() {
-        throw new UnsupportedOperationException();
-    }
+    // ValidatorProvider................................................................................................
 
     @Override
     public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector validatorSelector,
