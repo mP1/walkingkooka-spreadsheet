@@ -19,6 +19,7 @@
 <module>
     <inherits name="walkingkooka.j2cl.java.util.locale.Locale"/>
     <inherits name="walkingkooka.convert.provider.ConvertProvider"/>
+    <inherits name="walkingkooka.currency.provider.CurrencyProvider"/>
     <inherits name="walkingkooka.environment.Environment"/>
     <inherits name="walkingkooka.locale.Locale"/>
     <inherits name="walkingkooka.net.Net"/>
