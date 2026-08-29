@@ -36,9 +36,9 @@ import walkingkooka.validation.provider.ValidatorProviders;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTesting<BasicSpreadsheetProvider>,
-    HashCodeEqualsDefinedTesting2<BasicSpreadsheetProvider>,
-    ToStringTesting<BasicSpreadsheetProvider>,
+public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTesting<SpreadsheetProviderBasic>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetProviderBasic>,
+    ToStringTesting<SpreadsheetProviderBasic>,
     SpreadsheetMetadataTesting,
     TreePrintableTesting {
 
@@ -48,7 +48,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullSpreadsheetComparatorProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 null,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -67,7 +67,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullConverterProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 null,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -86,7 +86,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullCurrencyExchangeRaterProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 null,
@@ -105,7 +105,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullSpreadsheetExporterProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -124,7 +124,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullExpressionFunctionProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -143,7 +143,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullSpreadsheetFormatterProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -162,7 +162,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullFormHandlerProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -181,7 +181,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullSpreadsheetImporterProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -200,7 +200,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullSpreadsheetParserProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -219,7 +219,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testWithNullValidatorProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetProvider.with(
+            () -> SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -235,8 +235,8 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     }
 
     @Override
-    public BasicSpreadsheetProvider createSpreadsheetProvider() {
-        return BasicSpreadsheetProvider.with(
+    public SpreadsheetProviderBasic createSpreadsheetProvider() {
+        return SpreadsheetProviderBasic.with(
             SPREADSHEET_COMPARATOR_PROVIDER,
             CONVERTER_PROVIDER,
             CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -255,7 +255,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentSpreadsheetComparatorProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SpreadsheetComparatorProviders.fake(),
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -273,7 +273,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentConverterProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 ConverterProviders.fake(),
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -291,7 +291,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentCurrencyExchangeRaterProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CurrencyExchangeRaterProviders.fake(),
@@ -309,7 +309,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentSpreadsheetExporterProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -327,7 +327,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentExpressionFunctionProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -345,7 +345,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentSpreadsheetFormatterProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -363,7 +363,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentFormHandlerProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -381,7 +381,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentSpreadsheetImporterProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -399,7 +399,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentSpreadsheetParserProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -417,7 +417,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     @Test
     public void testEqualsDifferentValidatorProvider() {
         this.checkNotEquals(
-            BasicSpreadsheetProvider.with(
+            SpreadsheetProviderBasic.with(
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 CONVERTER_PROVIDER,
                 CURRENCY_EXCHANGE_RATER_PROVIDER,
@@ -433,7 +433,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     }
 
     @Override
-    public BasicSpreadsheetProvider createObject() {
+    public SpreadsheetProviderBasic createObject() {
         return this.createSpreadsheetProvider();
     }
 
@@ -453,7 +453,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     public void testPrintTree() {
         this.treePrintAndCheck(
             this.createSpreadsheetProvider(),
-            "BasicSpreadsheetProvider\n" +
+            "SpreadsheetProviderBasic\n" +
                 "  comparatorProvider\n" +
                 "    SpreadsheetComparatorsSpreadsheetComparatorProvider\n" +
                 "      SpreadsheetComparatorInfoSet\n" +
@@ -755,8 +755,8 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
     // Class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetProvider> type() {
-        return BasicSpreadsheetProvider.class;
+    public Class<SpreadsheetProviderBasic> type() {
+        return SpreadsheetProviderBasic.class;
     }
 
     @Override
