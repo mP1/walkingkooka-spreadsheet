@@ -49,7 +49,7 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetProvider} that delegates all methods to the provided {@link walkingkooka.plugin.Provider}.
  */
-final class BasicSpreadsheetProvider implements SpreadsheetProvider,
+final class SpreadsheetProviderBasic implements SpreadsheetProvider,
     SpreadsheetComparatorProviderDelegator,
     ConverterProviderDelegator,
     CurrencyExchangeRaterProviderDelegator,
@@ -63,7 +63,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     TreePrintable,
     UsesToStringBuilder {
 
-    static BasicSpreadsheetProvider with(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+    static SpreadsheetProviderBasic with(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                          final ConverterProvider converterProvider,
                                          final CurrencyExchangeRaterProvider currencyExchangeRaterProvider,
                                          final SpreadsheetExporterProvider spreadsheetExporterProvider,
@@ -73,7 +73,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                                          final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                          final SpreadsheetParserProvider spreadsheetParserProvider,
                                          final ValidatorProvider validatorProvider) {
-        return new BasicSpreadsheetProvider(
+        return new SpreadsheetProviderBasic(
             Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider"),
             Objects.requireNonNull(converterProvider, "converterProvider"),
             Objects.requireNonNull(currencyExchangeRaterProvider, "currencyExchangeRaterProvider"),
@@ -87,7 +87,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         );
     }
 
-    private BasicSpreadsheetProvider(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+    private SpreadsheetProviderBasic(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                      final ConverterProvider converterProvider,
                                      final CurrencyExchangeRaterProvider currencyExchangeRaterProvider,
                                      final SpreadsheetExporterProvider spreadsheetExporterProvider,
@@ -202,11 +202,11 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof BasicSpreadsheetProvider &&
+            other instanceof SpreadsheetProviderBasic &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final BasicSpreadsheetProvider other) {
+    private boolean equals0(final SpreadsheetProviderBasic other) {
         return this.spreadsheetComparatorProvider.equals(other.spreadsheetComparatorProvider) &&
             this.converterProvider.equals(other.converterProvider) &&
             this.currencyExchangeRaterProvider.equals(other.currencyExchangeRaterProvider) &&

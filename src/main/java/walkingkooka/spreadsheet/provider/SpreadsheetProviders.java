@@ -45,7 +45,7 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
                                             final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                             final SpreadsheetParserProvider spreadsheetParserProvider,
                                             final ValidatorProvider validatorProvider) {
-        return BasicSpreadsheetProvider.with(
+        return SpreadsheetProviderBasic.with(
             spreadsheetComparatorProvider,
             converterProvider,
             currencyExchangeRaterProvider,
