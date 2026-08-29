@@ -35,14 +35,16 @@ abstract class SpreadsheetMetadataPropertyNameConverterSelector extends Spreadsh
         super(name);
     }
 
-    @Override final ConverterSelector checkValueNonNull(final Object value) {
+    @Override //
+    final ConverterSelector checkValueNonNull(final Object value) {
         return this.checkValueType(
             value,
             v -> v instanceof ConverterSelector
         );
     }
 
-    @Override final String expected() {
+    @Override //
+    final String expected() {
         return ConverterSelector.class.getSimpleName();
     }
 
