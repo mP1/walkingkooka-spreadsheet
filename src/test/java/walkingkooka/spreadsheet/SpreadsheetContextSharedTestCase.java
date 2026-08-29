@@ -22,6 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
@@ -128,6 +129,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         SpreadsheetComparatorProviders.empty(),
         ConverterProviders.empty(),
+        CurrencyExchangeRaterProviders.empty(),
         SpreadsheetExporterProviders.empty(),
         ExpressionFunctionProviders.empty(
             SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -1102,6 +1103,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetProvider spreadsheetProvider = SpreadsheetProviders.basic(
             SpreadsheetComparatorProviders.empty(),
             CONVERTER_PROVIDER,
+            CurrencyExchangeRaterProviders.fake(),
             SpreadsheetExporterProviders.empty(),
             ExpressionFunctionProviders.empty(
                 SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY

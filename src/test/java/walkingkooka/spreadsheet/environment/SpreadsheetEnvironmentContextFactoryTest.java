@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.currency.CurrencyLocaleContexts;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
@@ -109,6 +110,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         SpreadsheetComparatorProviders.fake(),
         CONVERTER_PROVIDER,
+        CurrencyExchangeRaterProviders.fake(),
         SpreadsheetExporterProviders.fake(),
         ExpressionFunctionProviders.fake(),
         SpreadsheetFormatterProviders.fake(),

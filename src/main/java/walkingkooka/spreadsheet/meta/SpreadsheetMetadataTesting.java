@@ -26,6 +26,8 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.currency.HasCurrencyTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasNowTesting;
@@ -147,6 +149,10 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     );
 
     SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
+
+    CurrencyExchangeRaterProvider CURRENCY_EXCHANGE_RATER_PROVIDER = CurrencyExchangeRaterProviders.currencyExchangeRaters(
+        (String text) -> EXPRESSION_NUMBER_KIND.parse(text)
+    );
 
     SpreadsheetExporterProvider SPREADSHEET_EXPORTER_PROVIDER = SpreadsheetExporterProviders.spreadsheetExport();
 
@@ -535,6 +541,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SpreadsheetProviders.basic(
             SPREADSHEET_COMPARATOR_PROVIDER,
             CONVERTER_PROVIDER,
+            CURRENCY_EXCHANGE_RATER_PROVIDER,
             SPREADSHEET_EXPORTER_PROVIDER,
             EXPRESSION_FUNCTION_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,

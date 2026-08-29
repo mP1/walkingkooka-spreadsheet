@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProviderTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviderTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviderTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -30,6 +31,7 @@ import walkingkooka.validation.form.provider.FormHandlerProviderTesting2;
 public interface SpreadsheetProviderTesting<T extends SpreadsheetProvider> extends ConverterProviderTesting<T>,
     ExpressionFunctionProviderTesting<T, SpreadsheetExpressionEvaluationContext>,
     SpreadsheetComparatorProviderTesting<T>,
+    CurrencyExchangeRaterProviderTesting<T>,
     SpreadsheetFormatterProviderTesting<T>,
     FormHandlerProviderTesting2<T>,
     SpreadsheetParserProviderTesting<T> {
@@ -41,6 +43,11 @@ public interface SpreadsheetProviderTesting<T extends SpreadsheetProvider> exten
 
     @Override
     default T createSpreadsheetComparatorProvider() {
+        return this.createSpreadsheetProvider();
+    }
+
+    @Override
+    default T createCurrencyExchangeRaterProvider() {
         return this.createSpreadsheetProvider();
     }
 

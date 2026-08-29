@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
@@ -45,6 +46,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextDelegatorTest.TestSpreadsheetStorageDelegatorContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -53,7 +55,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetStorageContextDelegatorTest implements SpreadsheetStorageContextTesting2<TestSpreadsheetStorageDelegatorContext>,
-    CurrencyLocaleContextTesting {
+    CurrencyLocaleContextTesting,
+    HasExpressionNumberKindTesting {
 
     @Override
     public void testSetEnvironmentContextWithEqualEnvironmentContext() {
@@ -144,6 +147,9 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
                         SpreadsheetComparatorProviders.empty(),
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                             (ProviderContext p) -> Converters.never()
+                        ),
+                        CurrencyExchangeRaterProviders.currencyExchangeRaters(
+                            EXPRESSION_NUMBER_KIND::parse
                         ),
                         SpreadsheetExporterProviders.empty(),
                         ExpressionFunctionProviders.empty(

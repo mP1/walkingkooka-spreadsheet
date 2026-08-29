@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderDelegator;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviderDelegator;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviderDelegator;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
@@ -42,6 +44,7 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
     ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
     HasSpreadsheetProvider,
     SpreadsheetComparatorProviderDelegator,
+    CurrencyExchangeRaterProviderDelegator,
     SpreadsheetExporterProviderDelegator,
     SpreadsheetFormatterProviderDelegator,
     FormHandlerProviderDelegator,
@@ -51,6 +54,11 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
 
     @Override
     default ConverterProvider converterProvider() {
+        return this.spreadsheetProvider();
+    }
+
+    @Override
+    default CurrencyExchangeRaterProvider currencyExchangeRaterProvider() {
         return this.spreadsheetProvider();
     }
 

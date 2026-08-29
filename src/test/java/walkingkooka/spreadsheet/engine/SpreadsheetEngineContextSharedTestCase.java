@@ -153,6 +153,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         SPREADSHEET_COMPARATOR_PROVIDER,
         CONVERTER_PROVIDER,
+        CURRENCY_EXCHANGE_RATER_PROVIDER,
         SPREADSHEET_EXPORTER_PROVIDER,
         new ExpressionFunctionProvider<>() {
 

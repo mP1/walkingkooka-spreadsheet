@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.template;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
@@ -291,6 +292,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                                 p
                             )
                         ),
+                        CurrencyExchangeRaterProviders.fake(),
                         SpreadsheetExporterProviders.empty(),
                         new FakeExpressionFunctionProvider<>() {
                             @Override
