@@ -151,7 +151,9 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     };
     
     final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
+        SPREADSHEET_COMPARATOR_PROVIDER,
         CONVERTER_PROVIDER,
+        SPREADSHEET_EXPORTER_PROVIDER,
         new ExpressionFunctionProvider<>() {
 
             @Override
@@ -336,8 +338,6 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
                 return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
             }
         },
-        SPREADSHEET_COMPARATOR_PROVIDER,
-        SPREADSHEET_EXPORTER_PROVIDER,
         SPREADSHEET_FORMATTER_PROVIDER,
         FORM_HANDLER_PROVIDER,
         SPREADSHEET_IMPORTER_PROVIDER,

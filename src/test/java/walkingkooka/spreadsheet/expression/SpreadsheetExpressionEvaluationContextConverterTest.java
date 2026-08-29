@@ -644,10 +644,10 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                     CURRENCY_LOCALE_CONTEXT,
                     spreadsheetEnvironmentContext,
                     SpreadsheetProviders.basic(
-                        converterProvider,
-                        EXPRESSION_FUNCTION_PROVIDER,
                         SpreadsheetComparatorProviders.empty(),
+                        converterProvider,
                         SpreadsheetExporterProviders.empty(),
+                        EXPRESSION_FUNCTION_PROVIDER,
                         SpreadsheetFormatterProviders.empty(),
                         FormHandlerProviders.empty(),
                         SpreadsheetImporterProviders.empty(),

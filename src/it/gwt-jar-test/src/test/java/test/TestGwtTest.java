@@ -438,10 +438,10 @@ public class TestGwtTest extends GWTTestCase {
                         ).setCharset(StandardCharsets.UTF_8),
                         currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
-                            converterProvider,
-                            ExpressionFunctionProviders.fake(),
                             SpreadsheetComparatorProviders.fake(),
+                            converterProvider,
                             SpreadsheetExporterProviders.fake(),
+                            ExpressionFunctionProviders.fake(),
                             spreadsheetFormatterProvider,
                             FormHandlerProviders.fake(),
                             SpreadsheetImporterProviders.fake(),

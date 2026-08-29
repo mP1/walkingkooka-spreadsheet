@@ -48,10 +48,10 @@ import java.util.Objects;
  * A {@link SpreadsheetProvider} that delegates all methods to the provided {@link walkingkooka.plugin.Provider}.
  */
 final class BasicSpreadsheetProvider implements SpreadsheetProvider,
-    ConverterProviderDelegator,
-    ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
     SpreadsheetComparatorProviderDelegator,
+    ConverterProviderDelegator,
     SpreadsheetExporterProviderDelegator,
+    ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
     FormHandlerProviderDelegator,
     SpreadsheetFormatterProviderDelegator,
     SpreadsheetImporterProviderDelegator,
@@ -60,20 +60,20 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     TreePrintable,
     UsesToStringBuilder {
 
-    static BasicSpreadsheetProvider with(final ConverterProvider converterProvider,
-                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                         final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+    static BasicSpreadsheetProvider with(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+                                         final ConverterProvider converterProvider,
                                          final SpreadsheetExporterProvider spreadsheetExporterProvider,
+                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                          final FormHandlerProvider formHandlerProvider,
                                          final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                          final SpreadsheetParserProvider spreadsheetParserProvider,
                                          final ValidatorProvider validatorProvider) {
         return new BasicSpreadsheetProvider(
-            Objects.requireNonNull(converterProvider, "converterProvider"),
-            Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider"),
             Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider"),
+            Objects.requireNonNull(converterProvider, "converterProvider"),
             Objects.requireNonNull(spreadsheetExporterProvider, "spreadsheetExporterProvider"),
+            Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider"),
             Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
             Objects.requireNonNull(formHandlerProvider, "formHandlerProvider"),
             Objects.requireNonNull(spreadsheetImporterProvider, "spreadsheetImporterProvider"),
@@ -82,25 +82,34 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         );
     }
 
-    private BasicSpreadsheetProvider(final ConverterProvider converterProvider,
-                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                     final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+    private BasicSpreadsheetProvider(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+                                     final ConverterProvider converterProvider,
                                      final SpreadsheetExporterProvider spreadsheetExporterProvider,
+                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                      final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                      final FormHandlerProvider formHandlerProvider,
                                      final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                      final SpreadsheetParserProvider spreadsheetParserProvider,
                                      final ValidatorProvider validatorProvider) {
-        this.converterProvider = converterProvider;
-        this.expressionFunctionProvider = expressionFunctionProvider;
+        super();
+
         this.spreadsheetComparatorProvider = spreadsheetComparatorProvider;
+        this.converterProvider = converterProvider;
         this.spreadsheetExporterProvider = spreadsheetExporterProvider;
+        this.expressionFunctionProvider = expressionFunctionProvider;
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
         this.formHandlerProvider = formHandlerProvider;
         this.spreadsheetImporterProvider = spreadsheetImporterProvider;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
         this.validatorProvider = validatorProvider;
     }
+
+    @Override
+    public SpreadsheetComparatorProvider spreadsheetComparatorProvider() {
+        return this.spreadsheetComparatorProvider;
+    }
+
+    private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;
 
     @Override
     public ConverterProvider converterProvider() {
@@ -115,13 +124,6 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     }
 
     private final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
-
-    @Override
-    public SpreadsheetComparatorProvider spreadsheetComparatorProvider() {
-        return this.spreadsheetComparatorProvider;
-    }
-
-    private final SpreadsheetComparatorProvider spreadsheetComparatorProvider;
 
     @Override
     public SpreadsheetExporterProvider spreadsheetExporterProvider() {
@@ -170,10 +172,10 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     @Override
     public int hashCode() {
         return Objects.hash(
-            this.converterProvider,
-            this.expressionFunctionProvider,
             this.spreadsheetComparatorProvider,
+            this.converterProvider,
             this.spreadsheetExporterProvider,
+            this.expressionFunctionProvider,
             this.spreadsheetFormatterProvider,
             this.formHandlerProvider,
             this.spreadsheetImporterProvider,
@@ -190,10 +192,10 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     }
 
     private boolean equals0(final BasicSpreadsheetProvider other) {
-        return this.converterProvider.equals(other.converterProvider) &&
-            this.expressionFunctionProvider.equals(other.expressionFunctionProvider) &&
-            this.spreadsheetComparatorProvider.equals(other.spreadsheetComparatorProvider) &&
+        return this.spreadsheetComparatorProvider.equals(other.spreadsheetComparatorProvider) &&
+            this.converterProvider.equals(other.converterProvider) &&
             this.spreadsheetExporterProvider.equals(other.spreadsheetExporterProvider) &&
+            this.expressionFunctionProvider.equals(other.expressionFunctionProvider) &&
             this.spreadsheetFormatterProvider.equals(other.spreadsheetFormatterProvider) &&
             this.formHandlerProvider.equals(other.formHandlerProvider) &&
             this.spreadsheetImporterProvider.equals(other.spreadsheetImporterProvider) &&
@@ -210,14 +212,14 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.label("converterProvider")
+        builder.label("spreadsheetComparatorProvider")
+            .value(this.spreadsheetComparatorProvider)
+            .label("converterProvider")
             .value(this.converterProvider)
-            .label("expressionFunctionProvider")
-            .value(this.spreadsheetComparatorProvider)
-            .label("spreadsheetComparatorProvider")
-            .value(this.spreadsheetComparatorProvider)
             .label("spreadsheetExporterProvider")
             .value(this.spreadsheetExporterProvider)
+            .label("expressionFunctionProvider")
+            .value(this.spreadsheetComparatorProvider)
             .label("spreadsheetFormatterProvider")
             .value(this.spreadsheetFormatterProvider)
             .label("spreadsheetImporterProvider")
@@ -248,13 +250,13 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 printer
             );
             this.printTreeLabel(
-                "expressionFunctionProvider",
-                this.expressionFunctionProvider,
+                "spreadsheetExporterProvider",
+                this.spreadsheetExporterProvider,
                 printer
             );
             this.printTreeLabel(
-                "spreadsheetExporterProvider",
-                this.spreadsheetExporterProvider,
+                "expressionFunctionProvider",
+                this.expressionFunctionProvider,
                 printer
             );
             this.printTreeLabel(

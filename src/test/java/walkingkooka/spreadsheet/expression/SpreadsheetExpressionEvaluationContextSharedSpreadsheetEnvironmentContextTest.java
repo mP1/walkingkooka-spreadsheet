@@ -1266,10 +1266,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             ),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                expressionFunctionProvider,
                 SpreadsheetComparatorProviders.fake(),
+                CONVERTER_PROVIDER,
                 SpreadsheetExporterProviders.fake(),
+                expressionFunctionProvider,
                 SpreadsheetFormatterProviders.fake(),
                 FormHandlerProviders.fake(),
                 SpreadsheetImporterProviders.fake(),

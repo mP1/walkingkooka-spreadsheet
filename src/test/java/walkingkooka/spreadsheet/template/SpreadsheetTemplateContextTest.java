@@ -283,6 +283,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     CURRENCY_LOCALE_CONTEXT,
                     spreadsheetEnvironmentContext,
                     SpreadsheetProviders.basic(
+                        SpreadsheetComparatorProviders.empty(),
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                             (ProviderContext p) -> METADATA_EN_AU.dateTimeConverter(
                                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -290,6 +291,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                                 p
                             )
                         ),
+                        SpreadsheetExporterProviders.empty(),
                         new FakeExpressionFunctionProvider<>() {
                             @Override
                             public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
@@ -342,8 +344,6 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                                 return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
                             }
                         },
-                        SpreadsheetComparatorProviders.empty(),
-                        SpreadsheetExporterProviders.empty(),
                         SpreadsheetFormatterProviders.empty(),
                         FormHandlerProviders.empty(),
                         SpreadsheetImporterProviders.empty(),

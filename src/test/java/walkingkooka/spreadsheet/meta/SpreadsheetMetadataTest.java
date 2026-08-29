@@ -1335,7 +1335,9 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         };
 
         return SpreadsheetProviders.basic(
+            SpreadsheetComparatorProviders.spreadsheetComparators(),
             ConverterProviders.converters(),
+            SpreadsheetExporterProviders.spreadsheetExport(),
             ExpressionFunctionProviders.basic(
                 Url.parseAbsolute("https://example.com/"),
                 CaseSensitivity.INSENSITIVE,
@@ -1343,8 +1345,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                     function1
                 )
             ),
-            SpreadsheetComparatorProviders.spreadsheetComparators(),
-            SpreadsheetExporterProviders.spreadsheetExport(),
             SpreadsheetFormatterProviders.spreadsheetFormatters(),
             FormHandlerProviders.validation(),
             SpreadsheetImporterProviders.spreadsheetImport(),

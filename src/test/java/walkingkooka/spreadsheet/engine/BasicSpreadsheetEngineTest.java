@@ -815,7 +815,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
+        SPREADSHEET_COMPARATOR_PROVIDER,
         CONVERTER_PROVIDER,
+        SPREADSHEET_EXPORTER_PROVIDER,
         new FakeExpressionFunctionProvider<>() {
 
             @Override
@@ -979,8 +981,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
             }
         },
-        SPREADSHEET_COMPARATOR_PROVIDER,
-        SPREADSHEET_EXPORTER_PROVIDER,
         SPREADSHEET_FORMATTER_PROVIDER,
         FORM_HANDLER_PROVIDER,
         SPREADSHEET_IMPORTER_PROVIDER,
@@ -5189,10 +5189,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -5278,10 +5278,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -5371,10 +5371,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -5479,6 +5479,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     new FakeConverterProvider() {
                         @Override
                         public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
@@ -5501,9 +5502,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             );
                         }
                     },
-                    EXPRESSION_FUNCTION_PROVIDER,
-                    SPREADSHEET_COMPARATOR_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -5606,6 +5606,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     new FakeConverterProvider() {
                         @Override
                         public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
@@ -5623,9 +5624,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
-                    EXPRESSION_FUNCTION_PROVIDER,
-                    SPREADSHEET_COMPARATOR_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -5740,6 +5740,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     new FakeConverterProvider() {
                         @Override
                         public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
@@ -5770,9 +5771,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
-                    EXPRESSION_FUNCTION_PROVIDER,
-                    SPREADSHEET_COMPARATOR_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -5881,7 +5881,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
                     ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example.com/functions"),
                         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
@@ -5912,8 +5914,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             }
                         )
                     ),
-                    SPREADSHEET_COMPARATOR_PROVIDER,
-                    SPREADSHEET_EXPORTER_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -6068,6 +6068,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     new FakeConverterProvider() {
                         @Override
                         public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
@@ -6085,9 +6086,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
-                    EXPRESSION_FUNCTION_PROVIDER,
-                    SPREADSHEET_COMPARATOR_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -6275,6 +6275,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     new FakeConverterProvider() {
                         @Override
                         public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
@@ -6292,9 +6293,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             throw new IllegalArgumentException("Unknown converter " + name);
                         }
                     },
-                    EXPRESSION_FUNCTION_PROVIDER,
-                    SPREADSHEET_COMPARATOR_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -7133,10 +7133,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     new FakeSpreadsheetFormatterProvider() {
 
                         @Override
@@ -18064,7 +18064,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
                     ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example.com/functions"),
                         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
@@ -18100,8 +18102,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             }
                         )
                     ),
-                    SPREADSHEET_COMPARATOR_PROVIDER,
-                    SPREADSHEET_EXPORTER_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -19177,7 +19177,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
+                    SPREADSHEET_COMPARATOR_PROVIDER,
                     CONVERTER_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
                     ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example.com/functions"),
                         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
@@ -19212,8 +19214,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             }
                         )
                     ),
-                    SPREADSHEET_COMPARATOR_PROVIDER,
-                    SPREADSHEET_EXPORTER_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SPREADSHEET_IMPORTER_PROVIDER,
@@ -25700,10 +25700,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -25785,10 +25785,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -25912,10 +25912,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -26042,80 +26042,80 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
-                                    @Override
-                                    public Form<SpreadsheetValidationReference> prepareForm(final Form<SpreadsheetValidationReference> form,
-                                                                                            final SpreadsheetFormHandlerContext context) {
-                                        return form.setFields(
-                                            form.fields()
-                                                .stream()
-                                                .map(f -> f.setValue(cellValue))
-                                                .collect(Collectors.toList())
-                                        );
-                                    }
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                        @Override
+                                        public Form<SpreadsheetValidationReference> prepareForm(final Form<SpreadsheetValidationReference> form,
+                                                                                                final SpreadsheetFormHandlerContext context) {
+                                            return form.setFields(
+                                                form.fields()
+                                                    .stream()
+                                                    .map(f -> f.setValue(cellValue))
+                                                    .collect(Collectors.toList())
+                                            );
+                                        }
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return context.validateFormFields(
-                                            form.fields()
-                                        );
+                                        @Override
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return context.validateFormFields(
+                                                form.fields()
+                                            );
+                                        }
                                     }
-                                }
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
+                        }
+
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
+                                )
                             );
                         }
-
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
-                                )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                new FakeValidatorProvider() {
-                    @Override
-                    public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
-                                                                                                                    final ProviderContext context) {
-                        if (selector.equals(validatorSelector)) {
-                            return new FakeValidator<>() {
-                                @Override
-                                public List<ValidationError<R>> validate(final Object value,
-                                                                         final C context) {
-                                    return Lists.of(
-                                        context.validationError()
-                                            .setMessage(message)
-                                            .setValue(
-                                                Optional.of(value)
-                                            )
-                                    );
-                                }
-                            };
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    new FakeValidatorProvider() {
+                        @Override
+                        public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                        final ProviderContext context) {
+                            if (selector.equals(validatorSelector)) {
+                                return new FakeValidator<>() {
+                                    @Override
+                                    public List<ValidationError<R>> validate(final Object value,
+                                                                             final C context) {
+                                        return Lists.of(
+                                            context.validationError()
+                                                .setMessage(message)
+                                                .setValue(
+                                                    Optional.of(value)
+                                                )
+                                        );
+                                    }
+                                };
+                            }
+                            throw new IllegalArgumentException("Unknown Validator " + selector);
                         }
-                        throw new IllegalArgumentException("Unknown Validator " + selector);
                     }
-                }
-            )
+                )
             ),
             TERMINAL_CONTEXT
         );
@@ -26205,10 +26205,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -26350,10 +26350,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -26557,10 +26557,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -26632,10 +26632,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -26747,10 +26747,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -26856,10 +26856,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -26985,10 +26985,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override
@@ -27122,10 +27122,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 metadata,
                 spreadsheetStoreRepository(),
                 SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_COMPARATOR_PROVIDER,
+                    CONVERTER_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     new FakeFormHandlerProvider() {
                         @Override

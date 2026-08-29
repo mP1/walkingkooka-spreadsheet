@@ -1116,12 +1116,12 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
         );
 
         final SpreadsheetProvider spreadsheetProvider = SpreadsheetProviders.basic(
+            SpreadsheetComparatorProviders.empty(),
             CONVERTER_PROVIDER,
+            SpreadsheetExporterProviders.empty(),
             ExpressionFunctionProviders.empty(
                 SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
             ),
-            SpreadsheetComparatorProviders.empty(),
-            SpreadsheetExporterProviders.empty(),
             SpreadsheetFormatterProviders.empty(),
             FormHandlerProviders.empty(),
             SpreadsheetImporterProviders.empty(),

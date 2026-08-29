@@ -2023,6 +2023,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
+                    SpreadsheetComparatorProviders.fake(),
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         (ProviderContext p) -> metadata.dateTimeConverter(
                             SPREADSHEET_FORMATTER_PROVIDER,
@@ -2030,9 +2031,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             p
                         )
                     ),
-                    ExpressionFunctionProviders.fake(),
-                    SpreadsheetComparatorProviders.fake(),
                     SpreadsheetExporterProviders.fake(),
+                    ExpressionFunctionProviders.fake(),
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SpreadsheetImporterProviders.fake(),
@@ -2073,6 +2073,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
+                    SpreadsheetComparatorProviders.fake(),
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         (ProviderContext p) -> metadata.dateTimeConverter(
                             SPREADSHEET_FORMATTER_PROVIDER,
@@ -2080,9 +2081,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             p
                         )
                     ),
-                    ExpressionFunctionProviders.fake(),
-                    SpreadsheetComparatorProviders.fake(),
                     SpreadsheetExporterProviders.fake(),
+                    ExpressionFunctionProviders.fake(),
                     SPREADSHEET_FORMATTER_PROVIDER,
                     FormHandlerProviders.fake(),
                     SpreadsheetImporterProviders.fake(),

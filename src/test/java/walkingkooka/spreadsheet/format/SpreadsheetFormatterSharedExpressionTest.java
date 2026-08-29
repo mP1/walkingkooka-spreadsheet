@@ -266,9 +266,11 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                         CURRENCY_LOCALE_CONTEXT,
                         spreadsheetEnvironmentContext,
                         SpreadsheetProviders.basic(
+                            SpreadsheetComparatorProviders.empty(),
                             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 (p) -> Converters.never()
                             ),
+                            SpreadsheetExporterProviders.empty(),
                             new FakeSpreadsheetProvider() {
 
                                 @Override
@@ -336,8 +338,6 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                                     return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
                                 }
                             },
-                            SpreadsheetComparatorProviders.empty(),
-                            SpreadsheetExporterProviders.empty(),
                             SpreadsheetFormatterProviders.empty(),
                             FormHandlerProviders.empty(),
                             SpreadsheetImporterProviders.empty(),
