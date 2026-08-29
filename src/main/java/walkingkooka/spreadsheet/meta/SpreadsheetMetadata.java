@@ -1544,11 +1544,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final ConverterAliasSet converters = missing.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
-        final ExpressionFunctionAliasSet functions = missing.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
         final SpreadsheetComparatorAliasSet comparators = missing.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
+        final ConverterAliasSet converters = missing.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
         final SpreadsheetExporterAliasSet exporters = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
         final SpreadsheetFormatterAliasSet formatters = missing.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
+        final ExpressionFunctionAliasSet functions = missing.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
         final FormHandlerAliasSet formHandlers = missing.getOrNull(SpreadsheetMetadataPropertyName.FORM_HANDLERS);
         final SpreadsheetImporterAliasSet importers = missing.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
         final SpreadsheetParserAliasSet parsers = missing.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
@@ -1557,20 +1557,20 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetProviders.basic(
-            ConverterProviders.aliases(
-                converters,
-                provider
-            ),
-            ExpressionFunctionProviders.aliases(
-                functions,
-                provider
-            ),
             SpreadsheetComparatorProviders.aliases(
                 comparators,
                 provider
             ),
+            ConverterProviders.aliases(
+                converters,
+                provider
+            ),
             SpreadsheetExporterProviders.aliases(
                 exporters,
+                provider
+            ),
+            ExpressionFunctionProviders.aliases(
+                functions,
                 provider
             ),
             SpreadsheetFormatterProviders.aliases(

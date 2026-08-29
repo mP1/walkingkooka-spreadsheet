@@ -34,20 +34,20 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetProvider}
      */
-    public static SpreadsheetProvider basic(final ConverterProvider converterProvider,
-                                            final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                            final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+    public static SpreadsheetProvider basic(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
+                                            final ConverterProvider converterProvider,
                                             final SpreadsheetExporterProvider spreadsheetExporterProvider,
+                                            final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                             final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                             final FormHandlerProvider formHandlerProvider,
                                             final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                             final SpreadsheetParserProvider spreadsheetParserProvider,
                                             final ValidatorProvider validatorProvider) {
         return BasicSpreadsheetProvider.with(
-            converterProvider,
-            expressionFunctionProvider,
             spreadsheetComparatorProvider,
+            converterProvider,
             spreadsheetExporterProvider,
+            expressionFunctionProvider,
             spreadsheetFormatterProvider,
             formHandlerProvider,
             spreadsheetImporterProvider,

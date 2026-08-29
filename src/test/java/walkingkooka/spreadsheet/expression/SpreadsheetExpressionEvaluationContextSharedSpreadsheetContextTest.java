@@ -999,10 +999,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     private static SpreadsheetProvider spreadsheetProvider(final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return SpreadsheetProviders.basic(
-            CONVERTER_PROVIDER,
-            expressionFunctionProvider,
             SPREADSHEET_COMPARATOR_PROVIDER,
+            CONVERTER_PROVIDER,
             SPREADSHEET_EXPORTER_PROVIDER,
+            expressionFunctionProvider,
             SPREADSHEET_FORMATTER_PROVIDER,
             FORM_HANDLER_PROVIDER,
             SPREADSHEET_IMPORTER_PROVIDER,

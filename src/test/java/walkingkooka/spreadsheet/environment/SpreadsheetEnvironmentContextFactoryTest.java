@@ -107,10 +107,10 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
-        CONVERTER_PROVIDER,
-        ExpressionFunctionProviders.fake(),
         SpreadsheetComparatorProviders.fake(),
+        CONVERTER_PROVIDER,
         SpreadsheetExporterProviders.fake(),
+        ExpressionFunctionProviders.fake(),
         SpreadsheetFormatterProviders.fake(),
         FormHandlerProviders.fake(),
         SpreadsheetImporterProviders.fake(),

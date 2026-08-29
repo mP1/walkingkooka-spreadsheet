@@ -141,14 +141,14 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
                         spreadsheetEnvironmentContext
                     ),
                     SpreadsheetProviders.basic(
+                        SpreadsheetComparatorProviders.empty(),
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                             (ProviderContext p) -> Converters.never()
                         ),
+                        SpreadsheetExporterProviders.empty(),
                         ExpressionFunctionProviders.empty(
                             SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
                         ),
-                        SpreadsheetComparatorProviders.empty(),
-                        SpreadsheetExporterProviders.empty(),
                         SpreadsheetFormatterProviders.spreadsheetFormatters(),
                         FormHandlerProviders.empty(),
                         SpreadsheetImporterProviders.empty(),

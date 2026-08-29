@@ -533,10 +533,10 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     SpreadsheetProvider SPREADSHEET_PROVIDER = METADATA_EN_AU.spreadsheetProvider(
         SpreadsheetProviders.basic(
-            CONVERTER_PROVIDER,
-            EXPRESSION_FUNCTION_PROVIDER,
             SPREADSHEET_COMPARATOR_PROVIDER,
+            CONVERTER_PROVIDER,
             SPREADSHEET_EXPORTER_PROVIDER,
+            EXPRESSION_FUNCTION_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
             FORM_HANDLER_PROVIDER,
             SPREADSHEET_IMPORTER_PROVIDER,
