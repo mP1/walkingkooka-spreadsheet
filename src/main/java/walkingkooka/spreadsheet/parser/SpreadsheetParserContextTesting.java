@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
-import walkingkooka.text.cursor.parser.ParserContextTesting;
+import walkingkooka.text.cursor.parser.ParserContextTesting2;
 
 /**
  * Mixing testing interface for {@link SpreadsheetParserContext}
  */
-public interface SpreadsheetParserContextTesting<C extends SpreadsheetParserContext> extends ParserContextTesting<C>,
+public interface SpreadsheetParserContextTesting<C extends SpreadsheetParserContext> extends ParserContextTesting2<C>,
     SpreadsheetProviderContextTesting2<C> {
 
     @Override
