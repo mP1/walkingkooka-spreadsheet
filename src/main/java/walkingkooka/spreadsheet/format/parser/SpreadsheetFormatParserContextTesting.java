@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.text.cursor.parser.ParserContextTesting;
+import walkingkooka.text.cursor.parser.ParserContextTesting2;
 
 /**
  * Mixing testing interface for {@link SpreadsheetFormatParserContext}
  */
-public interface SpreadsheetFormatParserContextTesting<C extends SpreadsheetFormatParserContext> extends ParserContextTesting<C> {
+public interface SpreadsheetFormatParserContextTesting<C extends SpreadsheetFormatParserContext> extends ParserContextTesting2<C> {
 
     @Override
     default String typeNameSuffix() {
