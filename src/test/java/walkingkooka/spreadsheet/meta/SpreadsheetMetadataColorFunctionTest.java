@@ -23,14 +23,14 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataColorFunction<Integer, Color>>
-    implements FunctionTesting<SpreadsheetMetadataColorFunction<Integer, Color>, Integer, Optional<Color>>,
+    implements FunctionTesting2<SpreadsheetMetadataColorFunction<Integer, Color>, Integer, Optional<Color>>,
     ToStringTesting<SpreadsheetMetadataColorFunction<Integer, Color>> {
 
     @Test

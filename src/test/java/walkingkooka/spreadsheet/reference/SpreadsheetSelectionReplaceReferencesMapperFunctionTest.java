@@ -20,12 +20,12 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.util.FunctionTesting;
+import walkingkooka.util.FunctionTesting2;
 
 import java.util.Optional;
 
 public final class SpreadsheetSelectionReplaceReferencesMapperFunctionTest implements ClassTesting<SpreadsheetSelectionReplaceReferencesMapperFunction>,
-    FunctionTesting<SpreadsheetSelectionReplaceReferencesMapperFunction, SpreadsheetCellReference, Optional<SpreadsheetCellReference>> {
+    FunctionTesting2<SpreadsheetSelectionReplaceReferencesMapperFunction, SpreadsheetCellReference, Optional<SpreadsheetCellReference>> {
 
     @Test
     public void testRelativeCell() {
