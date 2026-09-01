@@ -79,6 +79,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.tree.json.select.JsonSelectorContext;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
@@ -311,6 +312,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     @Override
     public Set<CurrencyExchange> currencyExchanges() {
         return this.context.currencyExchanges();
+    }
+
+    // HasJsonSelectorContext...........................................................................................
+
+    @Override
+    public JsonSelectorContext jsonSelectorContext() {
+        return this.context.jsonSelectorContext();
     }
 
     // SpreadsheetExpressionEvaluationContext delegate..................................................................

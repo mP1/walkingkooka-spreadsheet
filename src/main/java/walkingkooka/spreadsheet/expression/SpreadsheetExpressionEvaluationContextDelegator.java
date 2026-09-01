@@ -59,6 +59,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.select.JsonSelectorContext;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextDelegator;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextDelegator;
@@ -132,6 +133,14 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default CanEvaluateString canEvaluateString() {
         return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    // HasJsonSelectorContext...........................................................................................
+
+    @Override
+    default JsonSelectorContext jsonSelectorContext() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .jsonSelectorContext();
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................

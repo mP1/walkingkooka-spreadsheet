@@ -81,6 +81,8 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.select.JsonSelector;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
@@ -1193,6 +1195,23 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 StoragePath.parse("/file2"),
                 context.createdAuditInfo()
             )
+        );
+    }
+
+    // HasJsonSelectorContext...........................................................................................
+
+    @Test
+    public void testJsonSelectorContext() {
+        this.checkEquals(
+            Lists.of(
+                JsonNode.string("World")
+            ),
+            JsonSelector.parse("/hello/hello2")
+                .apply(
+                    JsonNode.parse("{\"hello\": {\"hello2\": \"World\"}, \"ignored\": 222}"),
+                    this.createContext()
+                        .jsonSelectorContext()
+                )
         );
     }
 

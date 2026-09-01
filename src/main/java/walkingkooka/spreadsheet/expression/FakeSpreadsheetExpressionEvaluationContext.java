@@ -53,6 +53,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.tree.json.select.JsonSelectorContext;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
@@ -150,6 +151,13 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
 
     @Override
     public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
+        throw new UnsupportedOperationException();
+    }
+
+    // HasJsonSelectorContext...........................................................................................
+
+    @Override
+    public JsonSelectorContext jsonSelectorContext() {
         throw new UnsupportedOperationException();
     }
 
