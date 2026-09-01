@@ -78,6 +78,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.tree.json.select.JsonSelectorContext;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContextDelegator;
 
@@ -220,6 +221,13 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public CanEvaluateString canEvaluateString() {
         return this.context;
+    }
+
+    // HasJsonSelectorContext...........................................................................................
+
+    @Override
+    public JsonSelectorContext jsonSelectorContext() {
+        return this.context.jsonSelectorContext();
     }
 
     // StorageExpressionEvaluationContext...............................................................................

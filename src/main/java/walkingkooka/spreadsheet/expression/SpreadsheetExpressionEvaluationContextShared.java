@@ -29,6 +29,7 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
@@ -65,6 +66,11 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.select.JsonSelectorContext;
+import walkingkooka.tree.json.select.JsonSelectorContexts;
+import walkingkooka.tree.select.NodeSelectorContexts;
+import walkingkooka.tree.select.NodeSelectorExpressionEvaluationContexts;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
@@ -73,6 +79,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 abstract class SpreadsheetExpressionEvaluationContextShared implements SpreadsheetExpressionEvaluationContext,
     SpreadsheetEnvironmentContextDelegator,
@@ -227,6 +234,24 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     @Override
     public final CanEvaluateString canEvaluateString() {
         return this;
+    }
+
+    // HasJsonSelectorContext...........................................................................................
+
+    @Override
+    public JsonSelectorContext jsonSelectorContext() {
+        return JsonSelectorContexts.basic(
+            NodeSelectorContexts.basic(
+                () -> false, // isFinished
+                Predicates.always(), // filter keep all
+                Function.identity(), // mapper
+                (final JsonNode json) -> NodeSelectorExpressionEvaluationContexts.basic(
+                    json,
+                    this.cloneEnvironment() // ExpressionEvaluationContext
+                ),
+                JsonNode.class
+            )
+        );
     }
 
     // LocaleContextDelegator...........................................................................................
