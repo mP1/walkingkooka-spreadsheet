@@ -35,6 +35,7 @@ import walkingkooka.terminal.HasTerminalErrorText;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.text.TextContext;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -616,7 +617,9 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
     // HasTerminalErrorText.............................................................................................
 
     @Override
-    public String terminalErrorText() {
+    public String terminalErrorText(final TextContext context) {
+        Objects.requireNonNull(context, "context");
+
         return this.toString();
     }
 
