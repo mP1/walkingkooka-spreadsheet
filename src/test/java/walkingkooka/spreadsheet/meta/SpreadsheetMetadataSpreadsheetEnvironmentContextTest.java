@@ -752,7 +752,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-environment\n" +
                 "    to-host-address\n" +
                 "    to-json-node\n" +
-                "    to-json-text\n" +
                 "    to-locale\n" +
                 "    to-locale-language-tag\n" +
                 "    to-number\n" +

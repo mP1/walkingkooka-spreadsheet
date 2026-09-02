@@ -844,11 +844,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toJsonNode();
                 break;
-            case TO_JSON_TEXT_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.toJsonText();
-                break;
             case TO_LOCALE_LANGUAGE_TAG_STRING:
                 noParameterCheck(copy);
 
@@ -1566,10 +1561,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_JSON_NODE = ConverterName.with(TO_JSON_NODE_STRING);
 
-    private final static String TO_JSON_TEXT_STRING = "to-json-text";
-
-    final static ConverterName TO_JSON_TEXT = ConverterName.with(TO_JSON_TEXT_STRING);
-
     private final static String TO_LOCALE_STRING = "to-locale";
 
     final static ConverterName TO_LOCALE = ConverterName.with(TO_LOCALE_STRING);
@@ -1802,7 +1793,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_ENVIRONMENT),
             converterInfo(TO_HOST_ADDRESS),
             converterInfo(TO_JSON_NODE),
-            converterInfo(TO_JSON_TEXT),
             converterInfo(TO_LOCALE),
             converterInfo(TO_LOCALE_LANGUAGE_TAG),
             converterInfo(TO_NUMBER),
