@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
-import walkingkooka.terminal.HasTerminalErrorTextTesting;
+import walkingkooka.terminal.HasTerminalErrorTextTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -67,7 +67,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     ThrowableTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetError>,
-    HasTerminalErrorTextTesting,
+    HasTerminalErrorTextTesting2<SpreadsheetError>,
     HasValueTesting {
 
     private final static SpreadsheetErrorKind KIND = SpreadsheetErrorKind.NA;
@@ -1473,14 +1473,19 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
-    // HasTerminalText..................................................................................................
+    // HasTerminalErrorText.............................................................................................
 
     @Test
     public void testHasTerminalErrorText() {
         this.terminalErrorTextAndCheck(
-            this.createObject(),
+            TEXT_CONTEXT,
             KIND + " \"" + MESSAGE + "\" " + VALUE.get()
         );
+    }
+
+    @Override
+    public SpreadsheetError createHasTerminalErrorText() {
+        return this.createObject();
     }
 
     // class............................................................................................................
