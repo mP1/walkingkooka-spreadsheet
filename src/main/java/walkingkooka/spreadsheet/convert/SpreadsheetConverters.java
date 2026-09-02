@@ -466,8 +466,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         toJsonNode(),
         textToJson(),
         textToJsonPointer(),
-        textToJsonSelector(),
-        toJsonText()
+        textToJsonSelector()
     );
 
     /**
@@ -1505,13 +1504,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toJsonNode() {
         return JsonNodeConverters.toJsonNode();
-    }
-
-    /**
-     * {@see JsonNodeConverters#toJsonNodeText}
-     */
-    public static Converter<SpreadsheetConverterContext> toJsonText() {
-        return JsonNodeConverters.toJsonText();
     }
 
     /**

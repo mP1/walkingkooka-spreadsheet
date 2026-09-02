@@ -1356,15 +1356,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithToJsonText() {
-        this.converterAndCheck(
-            "to-json-text",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.toJsonText()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithToLocale() {
         this.converterAndCheck(
             "to-locale",
@@ -1738,7 +1729,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-environment to-environment\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-host-address to-host-address\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-json-node to-json-node\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-json-text to-json-text\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-locale to-locale\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-locale-language-tag to-locale-language-tag\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-number to-number\n" +
