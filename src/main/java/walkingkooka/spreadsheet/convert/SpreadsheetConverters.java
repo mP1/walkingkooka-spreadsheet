@@ -1521,6 +1521,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@see Converters#toMultiLineText}
+     */
+    public static Converter<SpreadsheetConverterContext> toMultiLineText() {
+        return Converters.toMultiLineText();
+    }
+
+    /**
      * A {@link Converter} that handles converting from or to a {@link Number} values
      */
     public static Converter<SpreadsheetConverterContext> toNumber() {
