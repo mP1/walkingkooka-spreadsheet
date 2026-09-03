@@ -91,6 +91,7 @@ import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.MultiLineText;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -2395,6 +2396,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
                     IS_NUMBER
+                );
+            }
+
+            // to-multi-line-text.......................................................................................
+            if (formula) {
+                verifier.addIfConversionFail(
+                    JSON_OBJECT,
+                    MultiLineText.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TO_MULTI_LINE_TEXT
+                    JSON_OBJECT.multiLineText(context)
                 );
             }
 
