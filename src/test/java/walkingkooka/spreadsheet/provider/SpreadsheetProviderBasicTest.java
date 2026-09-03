@@ -645,6 +645,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-json-node to-json-node\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-locale to-locale\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-locale-language-tag to-locale-language-tag\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-multi-line-text to-multi-line-text\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-number to-number\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-properties to-properties\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-string to-string\n" +

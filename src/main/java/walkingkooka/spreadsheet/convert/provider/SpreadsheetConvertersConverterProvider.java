@@ -859,6 +859,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toNumber();
                 break;
+            case TO_MULTI_LINE_TEXT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toMultiLineText();
+                break;
             case TO_PROPERTIES_STRING:
                 noParameterCheck(copy);
 
@@ -1568,7 +1573,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String TO_LOCALE_LANGUAGE_TAG_STRING = "to-locale-language-tag";
 
     final static ConverterName TO_LOCALE_LANGUAGE_TAG = ConverterName.with(TO_LOCALE_LANGUAGE_TAG_STRING);
-    
+
+    private final static String TO_MULTI_LINE_TEXT_STRING = "to-multi-line-text";
+
+    final static ConverterName TO_MULTI_LINE_TEXT = ConverterName.with(TO_MULTI_LINE_TEXT_STRING);
+
     private final static String TO_NUMBER_STRING = "to-number";
 
     final static ConverterName TO_NUMBER = ConverterName.with(TO_NUMBER_STRING);
@@ -1795,6 +1804,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_LOCALE),
             converterInfo(TO_LOCALE_LANGUAGE_TAG),
+            converterInfo(TO_MULTI_LINE_TEXT),
             converterInfo(TO_NUMBER),
             converterInfo(TO_PROPERTIES),
             converterInfo(TO_STRING),
