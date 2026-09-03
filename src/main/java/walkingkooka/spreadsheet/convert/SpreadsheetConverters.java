@@ -1679,6 +1679,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 csv(),
                 tsv(),
                 binaryToText(),
+                toMultiLineText(),
                 Converters.objectToString()
             );
         }

@@ -108,7 +108,9 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.HasText;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.MultiLineText;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -2536,6 +2538,20 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testValueConvertJsonObjectToMultiValueText() {
+        final String text = "{\"Hello\": \"World\" }";
+
+        this.valueConvertAndCheck(
+            JsonNode.parse(text),
+            MultiLineText.with(
+                "{\n" +
+                    "  \"Hello\": \"World\"\n" +
+                    "}"
+            )
+        );
+    }
+
+    @Test
     public void testValueConvertBinaryToString() {
         final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
 
@@ -3132,6 +3148,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testValueConvertStringToMultiValueText() {
+        final String text = "Hello World 123";
+
+        this.valueConvertAndCheck(
+            text,
+            MultiLineText.with(text)
+        );
+    }
+
+    @Test
     public void testValueConvertStringToNumberList() {
         this.valueConvertAndCheck(
             "1,22,333.5",
@@ -3418,6 +3444,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         @Override
         public long dateOffset() {
             return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
+        }
+
+        @Override
+        public Indentation indentation() {
+            return INDENTATION;
+        }
+
+        @Override
+        public LineEnding lineEnding() {
+            return LINE_ENDING;
         }
     };
 
