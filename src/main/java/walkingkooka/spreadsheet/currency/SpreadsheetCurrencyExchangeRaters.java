@@ -19,12 +19,12 @@ package walkingkooka.spreadsheet.currency;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
-public final class SpreadsheetCurrency implements PublicStaticHelper {
+public final class SpreadsheetCurrencyExchangeRaters implements PublicStaticHelper {
 
     /**
      * Stop creation
      */
-    private SpreadsheetCurrency() {
+    private SpreadsheetCurrencyExchangeRaters() {
         throw new UnsupportedOperationException();
     }
 }
