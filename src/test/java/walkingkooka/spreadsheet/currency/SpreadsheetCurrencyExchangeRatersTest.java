@@ -22,13 +22,13 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetCurrencyTest implements PublicStaticHelperTesting<SpreadsheetCurrency> {
+public final class SpreadsheetCurrencyExchangeRatersTest implements PublicStaticHelperTesting<SpreadsheetCurrencyExchangeRaters> {
 
     // PublicStaticHelperTesting........................................................................................
 
     @Override
-    public Class<SpreadsheetCurrency> type() {
-        return SpreadsheetCurrency.class;
+    public Class<SpreadsheetCurrencyExchangeRaters> type() {
+        return SpreadsheetCurrencyExchangeRaters.class;
     }
 
     @Override
