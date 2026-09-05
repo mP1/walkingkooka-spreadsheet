@@ -18,14 +18,47 @@
 
 package walkingkooka.spreadsheet.currency.provider;
 
+import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.CurrencyExchangeRaters;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
+import walkingkooka.props.Properties;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.currency.SpreadsheetCurrencyExchangeRaterContext;
 import walkingkooka.spreadsheet.currency.SpreadsheetCurrencyExchangeRaters;
+import walkingkooka.storage.StorageContext;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.currency.StorageCurrencyExchangeRaters;
+
+import java.util.function.Function;
 
 /**
  * A {@link CurrencyExchangeRaterProvider} for {@link SpreadsheetCurrencyExchangeRaters}.
  */
 public final class SpreadsheetCurrencyExchangeRaterProviders implements PublicStaticHelper {
+
+    /**
+     * {@link CurrencyExchangeRater}
+     */
+    public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> properties(final Properties properties,
+                                                                                            final Function<String, Number> numberParser) {
+        return CurrencyExchangeRaters.properties(
+            properties,
+            numberParser
+        );
+    }
+
+    /**
+     * {@link StorageCurrencyExchangeRaters#storagePathProperties(StoragePath, Function, StorageContext)}
+     */
+    public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> storagePath(final StoragePath storagePath,
+                                                                                             final Function<String, Number> numberParser,
+                                                                                             final StorageContext storageContext) {
+        return StorageCurrencyExchangeRaters.storagePathProperties(
+            storagePath,
+            numberParser,
+            storageContext
+        );
+    }
 
     /**
      * Stop creation
