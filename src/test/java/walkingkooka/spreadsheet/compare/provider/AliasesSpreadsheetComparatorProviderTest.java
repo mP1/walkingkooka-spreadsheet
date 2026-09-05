@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.FakeSpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 
@@ -275,10 +274,5 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
     @Override
     public Class<AliasesSpreadsheetComparatorProvider> type() {
         return AliasesSpreadsheetComparatorProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

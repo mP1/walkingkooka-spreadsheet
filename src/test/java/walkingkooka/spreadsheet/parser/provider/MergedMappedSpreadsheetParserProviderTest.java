@@ -23,7 +23,6 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -188,10 +187,5 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
     @Override
     public Class<MergedMappedSpreadsheetParserProvider> type() {
         return MergedMappedSpreadsheetParserProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

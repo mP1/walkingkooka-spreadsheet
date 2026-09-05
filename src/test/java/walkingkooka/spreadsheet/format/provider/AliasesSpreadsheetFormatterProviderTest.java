@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.tree.text.TextNode;
@@ -438,10 +437,5 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     @Override
     public Class<AliasesSpreadsheetFormatterProvider> type() {
         return AliasesSpreadsheetFormatterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

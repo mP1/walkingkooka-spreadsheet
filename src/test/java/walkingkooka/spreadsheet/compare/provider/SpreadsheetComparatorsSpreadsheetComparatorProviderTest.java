@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
@@ -417,12 +416,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
         return SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE;
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetComparatorsSpreadsheetComparatorProvider> type() {

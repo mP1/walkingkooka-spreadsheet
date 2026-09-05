@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporters;
 
@@ -211,10 +210,5 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
     @Override
     public Class<AliasesSpreadsheetImporterProvider> type() {
         return AliasesSpreadsheetImporterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

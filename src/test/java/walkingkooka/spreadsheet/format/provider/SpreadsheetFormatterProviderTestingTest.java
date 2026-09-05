@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviderTestingTest.TestSpreadsheetFormatterProvider;
@@ -165,12 +164,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         throw new UnsupportedOperationException();
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
+    // Class............................................................................................................
 
     @Override
     public Class<TestSpreadsheetFormatterProvider> type() {

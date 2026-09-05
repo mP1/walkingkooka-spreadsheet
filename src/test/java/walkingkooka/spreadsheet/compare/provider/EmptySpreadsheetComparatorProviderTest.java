@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.compare.provider;
 
-import walkingkooka.reflect.JavaVisibility;
-
 public final class EmptySpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<EmptySpreadsheetComparatorProvider> {
     @Override
     public EmptySpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
@@ -28,10 +26,5 @@ public final class EmptySpreadsheetComparatorProviderTest implements Spreadsheet
     @Override
     public Class<EmptySpreadsheetComparatorProvider> type() {
         return EmptySpreadsheetComparatorProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

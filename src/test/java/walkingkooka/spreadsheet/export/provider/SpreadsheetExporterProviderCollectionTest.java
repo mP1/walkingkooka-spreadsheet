@@ -163,9 +163,4 @@ public final class SpreadsheetExporterProviderCollectionTest implements Spreadsh
     public Class<SpreadsheetExporterProviderCollection> type() {
         return SpreadsheetExporterProviderCollection.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }

@@ -31,7 +31,6 @@ import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -1766,10 +1765,5 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Override
     public Class<SpreadsheetConvertersConverterProvider> type() {
         return SpreadsheetConvertersConverterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

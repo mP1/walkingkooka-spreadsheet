@@ -24,7 +24,6 @@ import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
@@ -4811,10 +4810,5 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Override
     public Class<SpreadsheetFormattersSpreadsheetFormatterProvider> type() {
         return SpreadsheetFormattersSpreadsheetFormatterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

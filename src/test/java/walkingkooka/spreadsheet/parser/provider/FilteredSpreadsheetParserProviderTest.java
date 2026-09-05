@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
@@ -112,10 +111,5 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
     @Override
     public Class<FilteredSpreadsheetParserProvider> type() {
         return FilteredSpreadsheetParserProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

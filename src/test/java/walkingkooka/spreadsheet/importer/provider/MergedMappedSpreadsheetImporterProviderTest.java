@@ -25,7 +25,6 @@ import walkingkooka.net.Url;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.importer.FakeSpreadsheetImporter;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -205,10 +204,5 @@ public final class MergedMappedSpreadsheetImporterProviderTest implements Spread
     @Override
     public Class<MergedMappedSpreadsheetImporterProvider> type() {
         return MergedMappedSpreadsheetImporterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

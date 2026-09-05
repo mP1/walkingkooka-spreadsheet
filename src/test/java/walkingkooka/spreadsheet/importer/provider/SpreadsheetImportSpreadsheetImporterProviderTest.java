@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.importer.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporters;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -95,10 +94,5 @@ public final class SpreadsheetImportSpreadsheetImporterProviderTest implements S
     @Override
     public Class<SpreadsheetImportSpreadsheetImporterProvider> type() {
         return SpreadsheetImportSpreadsheetImporterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

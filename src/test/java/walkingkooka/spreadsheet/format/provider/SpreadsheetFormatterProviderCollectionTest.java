@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -146,10 +145,5 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     @Override
     public Class<SpreadsheetFormatterProviderCollection> type() {
         return SpreadsheetFormatterProviderCollection.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

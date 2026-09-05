@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 
 import java.util.List;
@@ -104,10 +103,5 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
     @Override
     public Class<FilteredSpreadsheetComparatorProvider> type() {
         return FilteredSpreadsheetComparatorProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -24,7 +24,6 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.text.TextNode;
@@ -319,10 +318,5 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
     @Override
     public Class<FilteredMappedSpreadsheetFormatterProvider> type() {
         return FilteredMappedSpreadsheetFormatterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

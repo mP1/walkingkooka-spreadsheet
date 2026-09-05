@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
 public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<EmptySpreadsheetFormatterProvider>,
@@ -69,10 +68,5 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     @Override
     public Class<EmptySpreadsheetFormatterProvider> type() {
         return EmptySpreadsheetFormatterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
