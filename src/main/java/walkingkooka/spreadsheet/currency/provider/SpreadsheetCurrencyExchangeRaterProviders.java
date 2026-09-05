@@ -22,10 +22,19 @@ import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.currency.SpreadsheetCurrencyExchangeRaters;
 
+import java.util.function.Function;
+
 /**
  * A {@link CurrencyExchangeRaterProvider} for {@link SpreadsheetCurrencyExchangeRaters}.
  */
 public final class SpreadsheetCurrencyExchangeRaterProviders implements PublicStaticHelper {
+
+    /**
+     * {@link SpreadsheetCurrencyCurrencyExchangeRaterProvider}
+     */
+    public static CurrencyExchangeRaterProvider spreadsheetCurrency(final Function<String, Number> numberParser) {
+        return SpreadsheetCurrencyCurrencyExchangeRaterProvider.with(numberParser);
+    }
 
     /**
      * Stop creation
