@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRangeReference>
     implements ComparableTesting2<SpreadsheetCellRangeReference>,
     CanReplaceReferencesTesting2<SpreadsheetCellRangeReference>,
-    IterableTesting<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
+    IterableTesting {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -3590,19 +3590,14 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testIterable() {
         this.iterateAndCheck(
-            this.createIterable().iterator(),
+            SpreadsheetSelection.parseCellRange("B2:C3")
+                .iterator(),
             this.b2().reference(),
             this.c2().reference(),
             this.b3().reference(),
             this.c3().reference()
         );
     }
-
-    @Override
-    public SpreadsheetCellRangeReference createIterable() {
-        return SpreadsheetSelection.parseCellRange("B2:C3");
-    }
-
 
     // Comparable.......................................................................................................
 

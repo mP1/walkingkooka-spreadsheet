@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrRowRangeReferenceTestCase<SpreadsheetRowRangeReference, SpreadsheetRowReference>
-    implements IterableTesting<SpreadsheetRowRangeReference, SpreadsheetRowReference>,
+    implements IterableTesting,
     ThrowableTesting {
 
     @Test
@@ -1437,21 +1437,17 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
         );
     }
 
-    // IterableTesting..................................................................................................
+    // Iterable.........................................................................................................
 
     @Test
     public void testIterable() {
         this.iterateUsingHasNextAndCheck(
-            this.createIterable().iterator(),
+            SpreadsheetSelection.parseRowRange("$2:$4")
+                .iterator(),
             SpreadsheetSelection.parseRow("2"),
             SpreadsheetSelection.parseRow("3"),
             SpreadsheetSelection.parseRow("4")
         );
-    }
-
-    @Override
-    public SpreadsheetRowRangeReference createIterable() {
-        return SpreadsheetSelection.parseRowRange("$2:$4");
     }
 
     // defaultAnchor....................................................................................................
