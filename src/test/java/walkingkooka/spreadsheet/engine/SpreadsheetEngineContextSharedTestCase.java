@@ -890,11 +890,6 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     // class............................................................................................................
 
     @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    @Override
     public final String typeNamePrefix() {
         return SpreadsheetEngineContext.class.getSimpleName();
     }

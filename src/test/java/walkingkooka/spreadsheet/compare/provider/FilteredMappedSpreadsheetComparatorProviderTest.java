@@ -24,7 +24,6 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 
@@ -171,10 +170,5 @@ public final class FilteredMappedSpreadsheetComparatorProviderTest implements Sp
     @Override
     public Class<FilteredMappedSpreadsheetComparatorProvider> type() {
         return FilteredMappedSpreadsheetComparatorProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

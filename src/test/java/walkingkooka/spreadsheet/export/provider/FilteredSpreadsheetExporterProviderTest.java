@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 
 import java.util.List;
@@ -105,10 +104,5 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
     @Override
     public Class<FilteredSpreadsheetExporterProvider> type() {
         return FilteredSpreadsheetExporterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

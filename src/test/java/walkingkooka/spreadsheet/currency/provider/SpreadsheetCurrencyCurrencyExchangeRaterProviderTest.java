@@ -216,9 +216,4 @@ public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implemen
     public Class<SpreadsheetCurrencyCurrencyExchangeRaterProvider> type() {
         return SpreadsheetCurrencyCurrencyExchangeRaterProvider.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }

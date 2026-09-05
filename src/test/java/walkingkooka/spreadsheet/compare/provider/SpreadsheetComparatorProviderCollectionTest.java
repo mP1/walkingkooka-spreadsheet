@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -85,10 +84,5 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
     @Override
     public Class<SpreadsheetComparatorProviderCollection> type() {
         return SpreadsheetComparatorProviderCollection.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

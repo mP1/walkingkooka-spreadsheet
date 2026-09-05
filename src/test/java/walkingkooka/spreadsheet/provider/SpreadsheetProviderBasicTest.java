@@ -22,7 +22,6 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
@@ -757,10 +756,5 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
     @Override
     public Class<SpreadsheetProviderBasic> type() {
         return SpreadsheetProviderBasic.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

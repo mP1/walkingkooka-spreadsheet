@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 
 public final class EmptySpreadsheetImporterProviderTest implements SpreadsheetImporterProviderTesting<EmptySpreadsheetImporterProvider> {
 
@@ -52,10 +51,5 @@ public final class EmptySpreadsheetImporterProviderTest implements SpreadsheetIm
     @Override
     public Class<EmptySpreadsheetImporterProvider> type() {
         return EmptySpreadsheetImporterProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
