@@ -17,9 +17,41 @@
 
 package walkingkooka.spreadsheet.currency;
 
+import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.CurrencyExchangeRaters;
+import walkingkooka.props.Properties;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.storage.StorageContext;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.currency.StorageCurrencyExchangeRaters;
+
+import java.util.function.Function;
 
 public final class SpreadsheetCurrencyExchangeRaters implements PublicStaticHelper {
+
+    /**
+     * {@link CurrencyExchangeRater}
+     */
+    public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> properties(final Properties properties,
+                                                                                            final Function<String, Number> numberParser) {
+        return CurrencyExchangeRaters.properties(
+            properties,
+            numberParser
+        );
+    }
+
+    /**
+     * {@link StorageCurrencyExchangeRaters#storagePathProperties(StoragePath, Function, StorageContext)}
+     */
+    public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> storagePathProperties(final StoragePath storagePath,
+                                                                                                       final Function<String, Number> numberParser,
+                                                                                                       final StorageContext storageContext) {
+        return StorageCurrencyExchangeRaters.storagePathProperties(
+            storagePath,
+            numberParser,
+            storageContext
+        );
+    }
 
     /**
      * Stop creation
