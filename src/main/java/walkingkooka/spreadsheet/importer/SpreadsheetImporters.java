@@ -34,10 +34,10 @@ public final class SpreadsheetImporters implements PublicStaticHelper {
     }
 
     /**
-     * {@see EmptySpreadsheetImporter}
+     * {@see SpreadsheetImporterEmpty}
      */
     public static SpreadsheetImporter empty() {
-        return EmptySpreadsheetImporter.INSTANCE;
+        return SpreadsheetImporterEmpty.INSTANCE;
     }
 
     /**

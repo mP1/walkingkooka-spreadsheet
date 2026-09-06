@@ -150,7 +150,7 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
     public void testToString() {
         this.toStringAndCheck(
             this.createObject(),
-            "collection(EmptySpreadsheetImporter,EmptySpreadsheetImporter)"
+            "collection(SpreadsheetImporterEmpty,SpreadsheetImporterEmpty)"
         );
     }
 

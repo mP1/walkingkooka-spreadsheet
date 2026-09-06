@@ -26,11 +26,11 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetImporter} that cannot import and always fails.
  */
-final class EmptySpreadsheetImporter implements SpreadsheetImporter {
+final class SpreadsheetImporterEmpty implements SpreadsheetImporter {
 
-    final static EmptySpreadsheetImporter INSTANCE = new EmptySpreadsheetImporter();
+    final static SpreadsheetImporterEmpty INSTANCE = new SpreadsheetImporterEmpty();
 
-    private EmptySpreadsheetImporter() {
+    private SpreadsheetImporterEmpty() {
         super();
     }
 
