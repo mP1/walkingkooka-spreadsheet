@@ -64,7 +64,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<BasicSpreadsheetFormatterContext>,
+public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterContextBasic>,
     SpreadsheetEnvironmentContextTesting,
     SpreadsheetLabelNameResolverTesting {
 
@@ -126,7 +126,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
         @Override
         public String toString() {
-            return BasicSpreadsheetFormatterContextTest.class.getSimpleName() + ".formatter()";
+            return SpreadsheetFormatterContextBasicTest.class.getSimpleName() + ".formatter()";
         }
     };
 
@@ -281,7 +281,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullCellFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 null,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
@@ -299,7 +299,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullNumberToColorFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 null,
                 NAME_TO_COLOR,
@@ -317,7 +317,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullNameToColorFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 NUMBER_TO_COLOR,
                 null,
@@ -335,7 +335,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidCellCharacterWidthFails() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
@@ -353,7 +353,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidCellCharacterWidthFails2() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
@@ -371,7 +371,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
@@ -389,7 +389,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullConverterContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
@@ -407,7 +407,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullSpreadsheetFormatterProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
@@ -425,7 +425,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithNullProviderContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
+            () -> SpreadsheetFormatterContextBasic.with(
                 CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
@@ -531,8 +531,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Override
-    public BasicSpreadsheetFormatterContext createContext() {
-        return BasicSpreadsheetFormatterContext.with(
+    public SpreadsheetFormatterContextBasic createContext() {
+        return SpreadsheetFormatterContextBasic.with(
             CELL,
             NUMBER_TO_COLOR,
             NAME_TO_COLOR,
@@ -620,7 +620,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetFormatterContext> type() {
-        return BasicSpreadsheetFormatterContext.class;
+    public Class<SpreadsheetFormatterContextBasic> type() {
+        return SpreadsheetFormatterContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

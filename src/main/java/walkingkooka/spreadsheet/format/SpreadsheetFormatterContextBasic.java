@@ -40,10 +40,10 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetFormatterContext} that basically delegates each of its methods to a dependency given at create time.
  */
-final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
+final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterContext,
     SpreadsheetConverterContextDelegator {
 
-    static BasicSpreadsheetFormatterContext with(final Optional<SpreadsheetCell> cell,
+    static SpreadsheetFormatterContextBasic with(final Optional<SpreadsheetCell> cell,
                                                  final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int cellCharacterWidth,
@@ -64,7 +64,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        return new BasicSpreadsheetFormatterContext(
+        return new SpreadsheetFormatterContextBasic(
             cell,
             numberToColor,
             nameToColor,
@@ -77,7 +77,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         );
     }
 
-    private BasicSpreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
+    private SpreadsheetFormatterContextBasic(final Optional<SpreadsheetCell> cell,
                                              final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int cellCharacterWidth,
@@ -103,7 +103,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.providerContext = providerContext;
     }
 
-    // BasicSpreadsheetFormatterContext................................................................................
+    // SpreadsheetFormatterContextBasic................................................................................
 
     @Override
     public Optional<SpreadsheetCell> cell() {
@@ -226,7 +226,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     private SpreadsheetFormatterContext setConverterContext(final SpreadsheetConverterContext context) {
         return this.spreadsheetConverterContext.equals(context) ?
             this :
-            new BasicSpreadsheetFormatterContext(
+            new SpreadsheetFormatterContextBasic(
                 this.cell,
                 this.numberToColor,
                 this.nameToColor,

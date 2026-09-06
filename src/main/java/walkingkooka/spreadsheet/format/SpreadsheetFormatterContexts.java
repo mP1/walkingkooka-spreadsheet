@@ -31,7 +31,7 @@ import java.util.function.Function;
 public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetFormatterContext}
+     * {@see SpreadsheetFormatterContextBasic}
      */
     public static SpreadsheetFormatterContext basic(final Optional<SpreadsheetCell> cell,
                                                     final Function<Integer, Optional<Color>> numberToColor,
@@ -42,7 +42,7 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
                                                     final SpreadsheetConverterContext spreadsheetConverterContext,
                                                     final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                     final ProviderContext providerContext) {
-        return BasicSpreadsheetFormatterContext.with(
+        return SpreadsheetFormatterContextBasic.with(
             cell,
             numberToColor,
             nameToColor,
