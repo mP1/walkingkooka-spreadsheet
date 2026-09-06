@@ -80,4 +80,9 @@ public final class SpreadsheetConverterSpreadsheetBooleanToTextTest extends Spre
     public Class<SpreadsheetConverterBooleanToText> type() {
         return SpreadsheetConverterBooleanToText.class;
     }
+
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
 }
