@@ -26,11 +26,11 @@ import java.util.function.BiFunction;
 public final class SpreadsheetComparatorContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetComparatorContext}
+     * {@see SpreadsheetComparatorContextBasic}
      */
     public static SpreadsheetComparatorContext basic(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
                                                      final SpreadsheetConverterContext context) {
-        return BasicSpreadsheetComparatorContext.with(
+        return SpreadsheetComparatorContextBasic.with(
             spreadsheetExpressionEvaluationContextFactory,
             context
         );
