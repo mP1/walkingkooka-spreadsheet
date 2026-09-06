@@ -2714,22 +2714,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             SpreadsheetExporterAliasSet.EMPTY
         );
         properties.put(
-            SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-            ConverterSelector.parse("basic")
-        );
-        properties.put(
-            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
-            SpreadsheetExpressionFunctions.parseAliasSet("find-something-something")
-        );
-        properties.put(
-            SpreadsheetMetadataPropertyName.QUERY_HIGHLIGHTING,
-            false
-        );
-        properties.put(
-            SpreadsheetMetadataPropertyName.QUERY,
-            SpreadsheetCellQuery.parse("help()")
-        );
-        properties.put(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             ConverterSelector.parse("basic")
         );
@@ -2780,6 +2764,22 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             PluginNameSet.parse("test-plugin-111,test-plugin-222")
         );
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
+        properties.put(
+            SpreadsheetMetadataPropertyName.QUERY,
+            SpreadsheetCellQuery.parse("help()")
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+            ConverterSelector.parse("basic")
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("find-something-something")
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.QUERY_HIGHLIGHTING,
+            false
+        );
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
