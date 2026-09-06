@@ -23,11 +23,11 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 public final class SpreadsheetMetadataContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetMetadataContext}
+     * {@see SpreadsheetMetadataContextBasic}
      */
     public static SpreadsheetMetadataContext basic(final SpreadsheetMetadataCreator createMetadata,
                                                    final SpreadsheetMetadataStore store) {
-        return BasicSpreadsheetMetadataContext.with(
+        return SpreadsheetMetadataContextBasic.with(
             createMetadata,
             store
         );

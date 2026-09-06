@@ -27,17 +27,17 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-final class BasicSpreadsheetMetadataContext implements SpreadsheetMetadataContext {
+final class SpreadsheetMetadataContextBasic implements SpreadsheetMetadataContext {
 
-    static BasicSpreadsheetMetadataContext with(final SpreadsheetMetadataCreator createMetadata,
+    static SpreadsheetMetadataContextBasic with(final SpreadsheetMetadataCreator createMetadata,
                                                 final SpreadsheetMetadataStore store) {
-        return new BasicSpreadsheetMetadataContext(
+        return new SpreadsheetMetadataContextBasic(
             Objects.requireNonNull(createMetadata, "createMetadata"),
             Objects.requireNonNull(store, "store")
         );
     }
 
-    private BasicSpreadsheetMetadataContext(final SpreadsheetMetadataCreator createMetadata,
+    private SpreadsheetMetadataContextBasic(final SpreadsheetMetadataCreator createMetadata,
                                             final SpreadsheetMetadataStore store) {
         super();
 
@@ -118,11 +118,11 @@ final class BasicSpreadsheetMetadataContext implements SpreadsheetMetadataContex
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof BasicSpreadsheetMetadataContext &&
+            other instanceof SpreadsheetMetadataContextBasic &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final BasicSpreadsheetMetadataContext other) {
+    private boolean equals0(final SpreadsheetMetadataContextBasic other) {
         return this.createMetadata.equals(other.createMetadata) &&
             this.store.equals(other.store);
     }
