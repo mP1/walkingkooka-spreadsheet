@@ -41,9 +41,9 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetViewportNavigationContextTest implements ClassTesting<BasicSpreadsheetViewportNavigationContext>,
-    SpreadsheetViewportNavigationContextTesting2<BasicSpreadsheetViewportNavigationContext>,
-    ToStringTesting<BasicSpreadsheetViewportNavigationContext> {
+public final class SpreadsheetViewportNavigationContextBasicTest implements ClassTesting<SpreadsheetViewportNavigationContextBasic>,
+    SpreadsheetViewportNavigationContextTesting2<SpreadsheetViewportNavigationContextBasic>,
+    ToStringTesting<SpreadsheetViewportNavigationContextBasic> {
 
     private final static SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -67,7 +67,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullIsColumnHiddenFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext.with(
+            () -> SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 null,
                 COLUMN_TO_WIDTH,
@@ -82,7 +82,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullColumnToWidthFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext.with(
+            () -> SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 null,
@@ -97,7 +97,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullisRowHiddenFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext.with(
+            () -> SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -112,7 +112,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullRowToHeightFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext.with(
+            () -> SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -127,7 +127,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullViewportToWindowFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext.with(
+            () -> SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -142,7 +142,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testIsColumnHidden() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
 
-        final BasicSpreadsheetViewportNavigationContext context = BasicSpreadsheetViewportNavigationContext.with(
+        final SpreadsheetViewportNavigationContextBasic context = SpreadsheetViewportNavigationContextBasic.with(
             SPREADSHEET_LABEL_NAME_RESOLVER,
             Predicates.is(column),
             COLUMN_TO_WIDTH,
@@ -167,7 +167,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testIsRowHidden() {
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
 
-        final BasicSpreadsheetViewportNavigationContext context = BasicSpreadsheetViewportNavigationContext.with(
+        final SpreadsheetViewportNavigationContextBasic context = SpreadsheetViewportNavigationContextBasic.with(
             SPREADSHEET_LABEL_NAME_RESOLVER,
             IS_COLUMN_HIDDEN,
             COLUMN_TO_WIDTH,
@@ -273,7 +273,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void moveLeftAndCheck(final String hiddenColumns,
                                   final String column) {
         this.moveLeftColumnAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
@@ -289,7 +289,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final String column,
                                   final String expected) {
         this.moveLeftColumnAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
@@ -376,7 +376,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void moveRightAndCheck(final String hiddenColumns,
                                    final String column) {
         this.moveRightColumnAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
@@ -392,7 +392,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                    final String column,
                                    final String expected) {
         this.moveRightColumnAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
@@ -489,7 +489,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void moveUpAndCheck(final String hiddenRows,
                                 final String row) {
         this.moveUpRowAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -505,7 +505,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                 final String row,
                                 final String expected) {
         this.moveUpRowAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -592,7 +592,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void downRowAndCheck(final String hiddenRows,
                                  final String row) {
         this.moveDownRowAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -732,7 +732,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         this.moveLeftPixelsAndCheck(
             start,
             pixels,
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns,
                 columnToWidth,
@@ -880,7 +880,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         this.moveRightPixelsAndCheck(
             start,
             pixels,
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns,
                 columnToWidth,
@@ -1020,7 +1020,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         this.moveUpPixelsAndCheck(
             start,
             pixels,
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN, // columns hidden
                 COLUMN_TO_WIDTH,
@@ -1123,7 +1123,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                  final String row,
                                  final String expected) {
         this.moveDownRowAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -1185,7 +1185,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         this.moveDownPixelsAndCheck(
             start,
             pixels,
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN, // hidden columns
                 COLUMN_TO_WIDTH,
@@ -1266,7 +1266,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            BasicSpreadsheetViewportNavigationContext.with(
+            SpreadsheetViewportNavigationContextBasic.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 IS_COLUMN_HIDDEN,
                 COLUMN_TO_WIDTH,
@@ -1279,8 +1279,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Override
-    public BasicSpreadsheetViewportNavigationContext createContext() {
-        return BasicSpreadsheetViewportNavigationContext.with(
+    public SpreadsheetViewportNavigationContextBasic createContext() {
+        return SpreadsheetViewportNavigationContextBasic.with(
             SPREADSHEET_LABEL_NAME_RESOLVER,
             IS_COLUMN_HIDDEN,
             COLUMN_TO_WIDTH,
@@ -1291,12 +1291,17 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Override
-    public Class<BasicSpreadsheetViewportNavigationContext> type() {
-        return BasicSpreadsheetViewportNavigationContext.class;
+    public Class<SpreadsheetViewportNavigationContextBasic> type() {
+        return SpreadsheetViewportNavigationContextBasic.class;
     }
 
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

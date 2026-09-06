@@ -28,15 +28,15 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext {
+final class SpreadsheetViewportNavigationContextBasic implements SpreadsheetViewportNavigationContext {
 
-    static BasicSpreadsheetViewportNavigationContext with(final SpreadsheetLabelNameResolver labelNameResolver,
+    static SpreadsheetViewportNavigationContextBasic with(final SpreadsheetLabelNameResolver labelNameResolver,
                                                           final Predicate<SpreadsheetColumnReference> isColumnHidden,
                                                           final Function<SpreadsheetColumnReference, Double> columnToWidth,
                                                           final Predicate<SpreadsheetRowReference> isRowHidden,
                                                           final Function<SpreadsheetRowReference, Double> rowToHeight,
                                                           final Function<SpreadsheetViewport, SpreadsheetViewportWindows> viewportToWindows) {
-        return new BasicSpreadsheetViewportNavigationContext(
+        return new SpreadsheetViewportNavigationContextBasic(
             Objects.requireNonNull(labelNameResolver, "labelNameResolver"),
             Objects.requireNonNull(isColumnHidden, "isColumnHidden"),
             Objects.requireNonNull(columnToWidth, "columnToWidth"),
@@ -46,7 +46,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         );
     }
 
-    private BasicSpreadsheetViewportNavigationContext(final SpreadsheetLabelNameResolver labelNameResolver,
+    private SpreadsheetViewportNavigationContextBasic(final SpreadsheetLabelNameResolver labelNameResolver,
                                                       final Predicate<SpreadsheetColumnReference> isColumnHidden,
                                                       final Function<SpreadsheetColumnReference, Double> columnToWidth,
                                                       final Predicate<SpreadsheetRowReference> isRowHidden,
