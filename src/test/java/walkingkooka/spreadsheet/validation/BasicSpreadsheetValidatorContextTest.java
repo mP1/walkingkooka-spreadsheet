@@ -42,36 +42,6 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
         );
     }
 
-    @Override
-    public void testRemoveEnvironmentValueWithNowFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetEnvironmentValueWithNowFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLineEndingWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLocaleWithDifferent() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLocaleWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetUserWithDifferentAndWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testSetValidationReferenceSameDifferentKind() {
         final BasicSpreadsheetValidatorContext context = this.createContext();
