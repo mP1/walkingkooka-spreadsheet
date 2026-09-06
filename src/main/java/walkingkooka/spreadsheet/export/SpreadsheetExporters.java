@@ -48,10 +48,10 @@ public final class SpreadsheetExporters implements PublicStaticHelper {
     }
 
     /**
-     * {@see JsonSpreadsheetExporter}
+     * {@see SpreadsheetExporterJson}
      */
     public static SpreadsheetExporter json() {
-        return JsonSpreadsheetExporter.INSTANCE;
+        return SpreadsheetExporterJson.INSTANCE;
     }
 
     /**
