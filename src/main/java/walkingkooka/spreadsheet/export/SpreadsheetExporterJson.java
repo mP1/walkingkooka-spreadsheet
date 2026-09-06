@@ -40,14 +40,14 @@ import java.util.stream.Collectors;
 /**
  * Uses the given {@link SpreadsheetCellValueKind} to determine which parts of each {@link SpreadsheetCell} to convert to JSON.
  */
-final class JsonSpreadsheetExporter implements SpreadsheetExporter {
+final class SpreadsheetExporterJson implements SpreadsheetExporter {
 
     /**
      * Singleton
      */
-    final static JsonSpreadsheetExporter INSTANCE = new JsonSpreadsheetExporter();
+    final static SpreadsheetExporterJson INSTANCE = new SpreadsheetExporterJson();
 
-    private JsonSpreadsheetExporter() {
+    private SpreadsheetExporterJson() {
         super();
     }
 
