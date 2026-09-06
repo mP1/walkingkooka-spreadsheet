@@ -27,9 +27,9 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetLabelNameSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetLabelNameSpreadsheetParser>,
-    ClassTesting2<SpreadsheetLabelNameSpreadsheetParser>,
-    ToStringTesting<SpreadsheetLabelNameSpreadsheetParser> {
+public final class SpreadsheetFormulaParserSpreadsheetLabelNameTest implements SpreadsheetParserTesting2<SpreadsheetFormulaParserSpreadsheetLabelName>,
+    ClassTesting2<SpreadsheetFormulaParserSpreadsheetLabelName>,
+    ToStringTesting<SpreadsheetFormulaParserSpreadsheetLabelName> {
 
     @Test
     public void testParseWrongFirstCharFail() {
@@ -137,8 +137,8 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     }
 
     @Override
-    public SpreadsheetLabelNameSpreadsheetParser createParser() {
-        return SpreadsheetLabelNameSpreadsheetParser.INSTANCE;
+    public SpreadsheetFormulaParserSpreadsheetLabelName createParser() {
+        return SpreadsheetFormulaParserSpreadsheetLabelName.INSTANCE;
     }
 
     @Override
@@ -160,7 +160,7 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetLabelNameSpreadsheetParser.INSTANCE,
+            SpreadsheetFormulaParserSpreadsheetLabelName.INSTANCE,
             "LABEL"
         );
     }
@@ -168,8 +168,8 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetLabelNameSpreadsheetParser> type() {
-        return SpreadsheetLabelNameSpreadsheetParser.class;
+    public Class<SpreadsheetFormulaParserSpreadsheetLabelName> type() {
+        return SpreadsheetFormulaParserSpreadsheetLabelName.class;
     }
 
     @Override

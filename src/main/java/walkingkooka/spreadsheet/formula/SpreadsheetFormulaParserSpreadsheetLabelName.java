@@ -44,18 +44,18 @@ import java.util.Optional;
  * A {@link SpreadsheetParser} that consumes a {@link LabelSpreadsheetFormulaParserToken} matching a label.
  * Note {@link #tokens(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TOKENS}.
  */
-final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
+final class SpreadsheetFormulaParserSpreadsheetLabelName implements SpreadsheetParser,
     RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetLabelNameSpreadsheetParser INSTANCE = new SpreadsheetLabelNameSpreadsheetParser();
+    final static SpreadsheetFormulaParserSpreadsheetLabelName INSTANCE = new SpreadsheetFormulaParserSpreadsheetLabelName();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetLabelNameSpreadsheetParser() {
+    private SpreadsheetFormulaParserSpreadsheetLabelName() {
         super();
     }
 
