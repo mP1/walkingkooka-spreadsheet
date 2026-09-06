@@ -58,10 +58,10 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Optional;
 
-public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTesting<JsonSpreadsheetImporter>,
+public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTesting<SpreadsheetImporterJson>,
     SpreadsheetMetadataTesting,
-    ToStringTesting<JsonSpreadsheetImporter>,
-    ClassTesting2<JsonSpreadsheetImporter> {
+    ToStringTesting<SpreadsheetImporterJson>,
+    ClassTesting2<SpreadsheetImporterJson> {
 
     private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
         DateTimeSymbols.fromDateFormatSymbols(
@@ -347,8 +347,8 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
 
     @Override
-    public JsonSpreadsheetImporter createSpreadsheetImporter() {
-        return JsonSpreadsheetImporter.INSTANCE;
+    public SpreadsheetImporterJson createSpreadsheetImporter() {
+        return SpreadsheetImporterJson.INSTANCE;
     }
 
     @Override
@@ -363,16 +363,16 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            JsonSpreadsheetImporter.INSTANCE,
-            JsonSpreadsheetImporter.class.getSimpleName()
+            SpreadsheetImporterJson.INSTANCE,
+            SpreadsheetImporterJson.class.getSimpleName()
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<JsonSpreadsheetImporter> type() {
-        return JsonSpreadsheetImporter.class;
+    public Class<SpreadsheetImporterJson> type() {
+        return SpreadsheetImporterJson.class;
     }
 
     @Override

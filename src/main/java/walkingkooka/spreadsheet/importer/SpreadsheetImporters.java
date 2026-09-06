@@ -48,10 +48,10 @@ public final class SpreadsheetImporters implements PublicStaticHelper {
     }
 
     /**
-     * {@see JsonSpreadsheetImporter}
+     * {@see SpreadsheetImporterJson}
      */
     public static SpreadsheetImporter json() {
-        return JsonSpreadsheetImporter.INSTANCE;
+        return SpreadsheetImporterJson.INSTANCE;
     }
 
     /**
