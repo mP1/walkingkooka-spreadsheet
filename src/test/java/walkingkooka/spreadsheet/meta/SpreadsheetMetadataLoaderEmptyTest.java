@@ -22,9 +22,9 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class EmptySpreadsheetMetadataLoaderTest implements SpreadsheetMetadataLoaderTesting2<EmptySpreadsheetMetadataLoader>,
-    ToStringTesting<EmptySpreadsheetMetadataLoader>,
-    ClassTesting<EmptySpreadsheetMetadataLoader> {
+public final class SpreadsheetMetadataLoaderEmptyTest implements SpreadsheetMetadataLoaderTesting2<SpreadsheetMetadataLoaderEmpty>,
+    ToStringTesting<SpreadsheetMetadataLoaderEmpty>,
+    ClassTesting<SpreadsheetMetadataLoaderEmpty> {
 
     @Test
     public void testLoadSpreadsheetMetadata() {
@@ -35,8 +35,8 @@ public final class EmptySpreadsheetMetadataLoaderTest implements SpreadsheetMeta
     }
 
     @Override
-    public EmptySpreadsheetMetadataLoader createSpreadsheetMetadataLoader() {
-        return EmptySpreadsheetMetadataLoader.INSTANCE;
+    public SpreadsheetMetadataLoaderEmpty createSpreadsheetMetadataLoader() {
+        return SpreadsheetMetadataLoaderEmpty.INSTANCE;
     }
 
     // toString.........................................................................................................
@@ -45,15 +45,15 @@ public final class EmptySpreadsheetMetadataLoaderTest implements SpreadsheetMeta
     public void testToString() {
         this.toStringAndCheck(
             this.createSpreadsheetMetadataLoader(),
-            "EmptySpreadsheetMetadataLoader"
+            "SpreadsheetMetadataLoaderEmpty"
         );
     }
 
     // class...........................................................................................................
 
     @Override
-    public Class<EmptySpreadsheetMetadataLoader> type() {
-        return EmptySpreadsheetMetadataLoader.class;
+    public Class<SpreadsheetMetadataLoaderEmpty> type() {
+        return SpreadsheetMetadataLoaderEmpty.class;
     }
 
     @Override
