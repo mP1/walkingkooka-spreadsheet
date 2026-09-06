@@ -20,8 +20,9 @@ package walkingkooka.spreadsheet.export;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.datetime.DateTimeContextTesting;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
@@ -41,13 +42,13 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.ValidatorSelector;
 
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTesting2<SpreadsheetExporterJson>,
-    SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting,
+    DateTimeContextTesting,
+    HasDateTimeSymbolsTesting,
+    DecimalNumberContextTesting {
 
     private static final SpreadsheetCell CELL_A1 = SpreadsheetSelection.A1.setFormula(
         SpreadsheetFormula.EMPTY.setText("=1+2")
@@ -58,25 +59,8 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             SpreadsheetFormula.EMPTY.setText("=333")
         );
 
-    private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
-        DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(LOCALE)
-        )
-    );
-
-    private final static Optional<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = Optional.of(
-        DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(LOCALE)
-        )
-    );
-
     private final static Optional<SpreadsheetFormatterSelector> FORMATTER = Optional.of(
         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
-    );
-
-    private final static Optional<Locale> OPTIONAL_LOCALE = Optional.of(
-        Locale.forLanguageTag("en-AU")
     );
 
     private final static Optional<SpreadsheetParserSelector> PARSER = Optional.of(
@@ -107,8 +91,8 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
                     CELL_A1.setCurrency(OPTIONAL_CURRENCY)
-                        .setDateTimeSymbols(DATE_TIME_SYMBOLS)
-                        .setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS)
+                        .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
+                        .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
                         .setFormatter(FORMATTER)
                         .setLocale(OPTIONAL_LOCALE)
                         .setParser(PARSER)
@@ -260,7 +244,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    CELL_A1.setDateTimeSymbols(DATE_TIME_SYMBOLS),
+                    CELL_A1.setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS),
                     CELL_A2
                 )
             ),
@@ -331,7 +315,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    CELL_A1.setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS),
+                    CELL_A1.setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS),
                     CELL_A2
                 )
             ),
