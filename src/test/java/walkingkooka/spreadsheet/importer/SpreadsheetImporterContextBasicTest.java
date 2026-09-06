@@ -23,21 +23,21 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImporterContextTesting2<BasicSpreadsheetImporterContext>,
+public final class SpreadsheetImporterContextBasicTest implements SpreadsheetImporterContextTesting2<SpreadsheetImporterContextBasic>,
     JsonNodeUnmarshallContextTesting,
-    ToStringTesting<BasicSpreadsheetImporterContext> {
+    ToStringTesting<SpreadsheetImporterContextBasic> {
 
     @Test
     public void testWithNullJsonNodeUnmarshallContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetImporterContext.with(null)
+            () -> SpreadsheetImporterContextBasic.with(null)
         );
     }
 
     @Override
-    public BasicSpreadsheetImporterContext createContext() {
-        return BasicSpreadsheetImporterContext.with(JSON_NODE_UNMARSHALL_CONTEXT);
+    public SpreadsheetImporterContextBasic createContext() {
+        return SpreadsheetImporterContextBasic.with(JSON_NODE_UNMARSHALL_CONTEXT);
     }
 
     // toString.........................................................................................................
@@ -53,7 +53,12 @@ public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImp
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetImporterContext> type() {
-        return BasicSpreadsheetImporterContext.class;
+    public Class<SpreadsheetImporterContextBasic> type() {
+        return SpreadsheetImporterContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

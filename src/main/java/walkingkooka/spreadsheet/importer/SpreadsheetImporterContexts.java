@@ -26,10 +26,10 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetImporterContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetImporterContext}
+     * {@see SpreadsheetImporterContextBasic}
      */
     public static SpreadsheetImporterContext basic(final JsonNodeUnmarshallContext context) {
-        return BasicSpreadsheetImporterContext.with(context);
+        return SpreadsheetImporterContextBasic.with(context);
     }
 
     /**
