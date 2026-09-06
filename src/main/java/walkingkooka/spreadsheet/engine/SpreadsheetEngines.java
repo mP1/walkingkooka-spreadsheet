@@ -25,10 +25,10 @@ import java.util.function.Function;
 public final class SpreadsheetEngines implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetEngine}
+     * {@see SpreadsheetEngineBasic}
      */
     public static SpreadsheetEngine basic() {
-        return BasicSpreadsheetEngine.INSTANCE;
+        return SpreadsheetEngineBasic.INSTANCE;
     }
 
     /**

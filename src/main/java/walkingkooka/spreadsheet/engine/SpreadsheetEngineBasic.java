@@ -1,0 +1,2573 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.engine;
+
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparators;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetFormHandlerContext;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetFormHandlerContexts;
+import walkingkooka.spreadsheet.value.HasSpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
+import walkingkooka.spreadsheet.value.SpreadsheetColumnOrRow;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
+import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContext;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContexts;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
+import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionPurityContext;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.Validator;
+import walkingkooka.validation.ValueType;
+import walkingkooka.validation.form.DuplicateFormFieldReferencesException;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormField;
+import walkingkooka.validation.form.FormHandler;
+import walkingkooka.validation.form.FormName;
+import walkingkooka.validation.provider.ValidatorSelector;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+/**
+ * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating cells.
+ */
+final class SpreadsheetEngineBasic implements SpreadsheetEngine {
+
+    /**
+     * Singleton
+     */
+    final static SpreadsheetEngineBasic INSTANCE = new SpreadsheetEngineBasic();
+
+    /**
+     * A safe maximum to query labels for a {@link walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference}.
+     * Maybe this should be moved into context or made a variable somewhere
+     */
+    final static int FIND_LABELS_WITH_REFERENCE_COUNT = Integer.MAX_VALUE;
+
+    /**
+     * A safe maximum to limit finding of references when satisfying {@link SpreadsheetDeltaProperties#REFERENCES}.
+     */
+    final static int FIND_REFERENCES_COUNT = Integer.MAX_VALUE;
+
+    /**
+     * Private ctor.
+     */
+    private SpreadsheetEngineBasic() {
+        super();
+    }
+
+    // EVALUATE.........................................................................................................
+
+    @Override
+    public Object evaluate(final String expression,
+                           final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(context, "context");
+
+        final Object value;
+
+        final SpreadsheetId spreadsheetIdOrNull = context.environmentValue(SpreadsheetEngineContext.SPREADSHEET_ID)
+            .orElse(null);
+        if (null == spreadsheetIdOrNull) {
+            value = context.spreadsheetExpressionEvaluationContext(
+                SpreadsheetExpressionEvaluationContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.empty()
+            ).evaluate(expression);
+        } else {
+            // SpreadsheetEngineBasicChanges will fail when stores are not available because SpreadsheetId is missing
+            final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.IMMEDIATE.changes(
+                this,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                Sets.of(SpreadsheetDeltaProperties.CELLS),
+                context
+            );
+
+            try {
+                value = context.spreadsheetExpressionEvaluationContext(
+                    SpreadsheetExpressionEvaluationContext.NO_CELL,
+                    changes
+                ).evaluate(expression);
+
+                // finish evaluating loaded cells
+                changes.commit();
+
+                this.prepareResponse(
+                    changes,
+                    context
+                );
+            } finally {
+                changes.close();
+            }
+        }
+
+        return value;
+    }
+
+    // LOAD CELL........................................................................................................
+
+    /**
+     * Loads the selected {@link SpreadsheetSelection cells} honouring the {@link SpreadsheetEngineEvaluation} which may
+     * result in loading and evaluating other cells. Note if the cells were not found and labels are requested the
+     * labels will be loaded and present in the {@link SpreadsheetDelta}.
+     */
+    @Override
+    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                      final SpreadsheetEngineEvaluation evaluation,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(evaluation, "evaluation");
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            evaluation,
+            deltaProperties,
+            context
+        );
+
+        try {
+            if (selection.isLabelName()) {
+                changes.getOrCreateLabelCache(
+                    selection.toLabelName(),
+                    SpreadsheetEngineBasicChangesCacheStatusLabel.UNLOADED
+                );
+            }
+
+            this.loadCellRange(
+                context.resolveIfLabelOrFail(selection)
+                    .toCellRange(),
+                changes,
+                context
+            );
+
+            // finish evaluating loaded cells
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // LOAD MULTIPLE CELL RANGES........................................................................................
+
+    @Override
+    public SpreadsheetDelta loadMultipleCellRanges(final Set<SpreadsheetCellRangeReference> cellRanges,
+                                                   final SpreadsheetEngineEvaluation evaluation,
+                                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                   final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cellRanges, "cellRanges");
+        Objects.requireNonNull(evaluation, "evaluation");
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            evaluation,
+            deltaProperties,
+            context
+        );
+
+        try {
+            for (final SpreadsheetCellRangeReference cellRange : cellRanges) {
+                this.loadCellRange(
+                    cellRange,
+                    changes,
+                    context
+                );
+            }
+
+            // finish evaluating loaded cells
+            changes.commit();
+
+            final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(cellRanges);
+
+            return this.prepareResponse(
+                changes,
+                window,
+                context
+            ).setWindow(window);
+        } finally {
+            changes.close();
+        }
+    }
+
+    private void loadCellRange(final SpreadsheetCellRangeReference cellRange,
+                               final SpreadsheetEngineBasicChanges changes,
+                               final SpreadsheetEngineContext context) {
+        if (cellRange.count() == 1) {
+            this.loadCell(
+                cellRange.toCell(),
+                changes,
+                context
+            );
+        } else {
+            final SpreadsheetCellStore store = context.storeRepository()
+                .cells();
+
+            if (changes.deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
+                for (final SpreadsheetCellReference cell : cellRange) {
+                    changes.getOrCreateCellCache(
+                        cell,
+                        SpreadsheetEngineBasicChangesCacheStatusCell.DELETED
+                    );
+                }
+            }
+
+            final Set<SpreadsheetCell> spreadsheetCells = store.loadCellRange(cellRange);
+            for (final SpreadsheetCell spreadsheetCell : spreadsheetCells) {
+                final SpreadsheetEngineBasicChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                    spreadsheetCell.reference(),
+                    SpreadsheetEngineBasicChangesCacheStatusCell.UNLOADED
+                );
+                cache.loading(spreadsheetCell);
+            }
+        }
+    }
+
+    private void loadCell(final SpreadsheetCellReference cell,
+                          final SpreadsheetEngineBasicChanges changes,
+                          final SpreadsheetEngineContext context) {
+        final SpreadsheetCellStore store = context.storeRepository()
+            .cells();
+
+        final SpreadsheetEngineBasicChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+            cell,
+            SpreadsheetEngineBasicChangesCacheStatusCell.UNLOADED
+        );
+        cache.loadingOrMissing(
+            store.load(cell)
+                .orElse(null)
+        );
+    }
+
+    // SAVE CELL........................................................................................................
+
+    /**
+     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
+                                     final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            final SpreadsheetEngineBasicChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                cell.reference(),
+                SpreadsheetEngineBasicChangesCacheStatusCell.SAVING
+            );
+            cache.saving(cell);
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // SAVE CELLS.......................................................................................................
+
+    /**
+     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public SpreadsheetDelta saveCells(final Set<SpreadsheetCell> cells,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
+        Objects.requireNonNull(context, "context");
+
+        // save all cells.
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            for (final SpreadsheetCell cell : cells) {
+                final SpreadsheetEngineBasicChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                    cell.reference(),
+                    SpreadsheetEngineBasicChangesCacheStatusCell.SAVING
+                );
+                cache.saving(cell);
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // DELETE CELL....................................................................................................
+
+    /**
+     * DELETE the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public SpreadsheetDelta deleteCells(final SpreadsheetSelection selection,
+                                        final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            context.storeRepository()
+                .cells()
+                .deleteCells(
+                    context.resolveIfLabelOrFail(selection)
+                        .toCellRange()
+                );
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // FILL CELLS.......................................................................................................
+
+    @Override
+    public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
+                                      final SpreadsheetCellRangeReference from,
+                                      final SpreadsheetCellRangeReference to,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
+        Objects.requireNonNull(from, "parse");
+        Objects.requireNonNull(to, "to");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            SpreadsheetEngineBasicFillCells.execute(
+                cells,
+                from,
+                to,
+                this,
+                changes,
+                context
+            );
+
+            changes.commit();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    // FILTER CELLS....................................................................................................
+
+    @Override
+    public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                            final ValueType valueType,
+                                            final Expression expression,
+                                            final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
+        Objects.requireNonNull(valueType, "valueType");
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            return cells.stream()
+                .filter(
+                    SpreadsheetEngineBasicFilterCellsPredicate.with(
+                        valueType,
+                        expression,
+                        context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.QUERY),
+                        changes
+                    )
+                ).collect(Collectors.toCollection(Sets::ordered));
+        } finally {
+            changes.close();
+        }
+    }
+
+    // FIND CELLS WITH REFERENCE........................................................................................
+
+    @Override
+    public SpreadsheetDelta findCellsWithReference(final SpreadsheetExpressionReference reference,
+                                                   final int offset,
+                                                   final int count,
+                                                   final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(reference, "reference");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        return this.findCellsWithReferenceWithCellOrCellRange(
+            context.resolveIfLabelOrFail(reference)
+                .toCellOrCellRange(),
+            offset,
+            count,
+            context
+        );
+    }
+
+    private SpreadsheetDelta findCellsWithReferenceWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                       final int offset,
+                                                                       final int count,
+                                                                       final SpreadsheetEngineContext context) {
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+            FIND_CELLS_WITH_REFERENCE_DELTA_PROPERTIES,
+            context
+        );
+
+        try {
+            for (final SpreadsheetCellReference cell : context.storeRepository()
+                .cellReferences()
+                .findCellsWithCellOrCellRange(
+                    cellOrCellRange,
+                    offset,
+                    count
+                )) {
+                changes.getOrCreateCellCache(
+                    cell,
+                    SpreadsheetEngineBasicChangesCacheStatusCell.UNLOADED
+                );
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    private final static Set<SpreadsheetDeltaProperties> FIND_CELLS_WITH_REFERENCE_DELTA_PROPERTIES = Sets.of(
+        SpreadsheetDeltaProperties.CELLS,
+        SpreadsheetDeltaProperties.REFERENCES
+    );
+
+    // findFormulaReferences............................................................................................
+
+    @Override
+    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference cell,
+                                                  final int offset,
+                                                  final int count,
+                                                  final Set<SpreadsheetDeltaProperties> properties,
+                                                  final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(properties, "properties");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            properties,
+            context
+        );
+
+        try {
+            final SpreadsheetStoreRepository repository = context.storeRepository();
+            final SpreadsheetCellReferencesStore cellReferencesStore = repository.cellReferences();
+
+            int skipCount = 0;
+            int loadedCount = 0;
+
+            // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferencesStore.loadReferences(SpreadsheetCellReference, int offset, int count)
+            for (final SpreadsheetCellReference reference : cellReferencesStore.findValuesById(
+                cell,
+                0, // offset
+                FIND_REFERENCES_COUNT // count
+            )) {
+                if (skipCount < offset) {
+                    skipCount++;
+                    continue;
+                }
+
+                if (loadedCount >= count) {
+                    break;
+                }
+
+                changes.getOrCreateCellCache(
+                    reference.toCell(),
+                    SpreadsheetEngineBasicChangesCacheStatusCell.UNLOADED
+                );
+
+                loadedCount++;
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // QUERY CELLS......................................................................................................
+
+    @Override
+    public SpreadsheetDelta queryCells(final SpreadsheetCellRangeReference cellRange,
+                                       final SpreadsheetCellRangeReferencePath path,
+                                       final int offset,
+                                       final int count,
+                                       final ValueType valueType,
+                                       final Expression expression,
+                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cellRange, "cellRange");
+        Objects.requireNonNull(path, "path");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(valueType, "valueType");
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+            deltaProperties,
+            context
+        );
+
+        try {
+            // this will be used to filter individual cells matching the find range and type.
+            final Predicate<SpreadsheetCell> filterPredicate = SpreadsheetEngineBasicFilterCellsPredicate.with(
+                valueType,
+                expression,
+                context.setSpreadsheetMetadataMode(
+                    SpreadsheetMetadataMode.QUERY
+                ),
+                changes
+            );
+
+            final Set<SpreadsheetCell> found = SortedSets.tree(
+                SpreadsheetCellReference.cellComparator(
+                    path.comparator()
+                )
+            );
+
+            final SpreadsheetCellStore store = context.storeRepository()
+                .cells();
+            int loadOffset = 0;
+            int skipOffset = 0;
+
+            for (; ; ) {
+                final int maxLeft = count - found.size();
+                if (maxLeft <= 0) {
+                    break;
+                }
+
+                final Collection<SpreadsheetCell> loaded = store.loadCellRange(
+                    cellRange,
+                    path,
+                    loadOffset,
+                    maxLeft
+                );
+                if (loaded.isEmpty()) {
+                    break;
+                }
+
+                for (final SpreadsheetCell possible : loaded) {
+                    loadOffset++;
+
+                    final SpreadsheetCell loadedAndEval = this.evaluateValidateFormatAndStyle(
+                        possible,
+                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        changes, // SpreadsheetExpressionReferenceLoader
+                        context
+                    );
+
+                    if (filterPredicate.test(loadedAndEval)) {
+                        if (skipOffset >= offset) {
+                            found.add(loadedAndEval);
+                            changes.onCellLoading(loadedAndEval);
+                        }
+                        skipOffset++;
+                    }
+                }
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // SORT CELLS.......................................................................................................
+
+    @Override
+    public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
+                                      final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cellRange, "cellRange");
+        Objects.requireNonNull(comparators, "comparators");
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
+
+        return this.sortCells0(
+            cellRange,
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparators),
+            deltaProperties,
+            context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.FORMULA)
+        );
+    }
+
+    private SpreadsheetDelta sortCells0(final SpreadsheetCellRangeReference cellRange,
+                                        final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparators,
+                                        final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                        final SpreadsheetEngineContext context) {
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+            deltaProperties,
+            context
+        );
+        try {
+            final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+            final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+            for (final SpreadsheetCell cell : cellStore.loadCellRange(cellRange)) {
+
+                final SpreadsheetCell evaluated = this.parseFormulaEvaluateValidateFormatStyleAndSave(
+                    cell,
+                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                    changes, // SpreadsheetExpressionReferenceLoader
+                    context
+                );
+                loaded.add(evaluated);
+            }
+
+            final SpreadsheetCellRange range = cellRange.setValue(loaded);
+
+            final Map<SpreadsheetCell, SpreadsheetCell> movedFromTo = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
+
+            this.sortCells1(
+                range,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparators),
+                movedFromTo::put,
+                context
+            );
+
+            // delete old cells...
+            for (final SpreadsheetCell cell : movedFromTo.keySet()) {
+                cellStore.delete(cell.reference());
+            }
+
+            // save moved cells
+            for (final SpreadsheetCell to : movedFromTo.values()) {
+                final SpreadsheetCell saved = this.parseFormulaEvaluateValidateFormatStyleAndSave(
+                    to,
+                    SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                    changes, // SpreadsheetExpressionReferenceLoader
+                    context
+                );
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    private void sortCells1(final SpreadsheetCellRange cells,
+                            final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList columnOrRowAndComparatorNames,
+                            final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo,
+                            final SpreadsheetEngineContext context) {
+
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+
+        final ProviderContext providerContext = context.providerContext();
+
+        final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators = columnOrRowAndComparatorNames.stream()
+            .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                    n.columnOrRow(),
+                    n.comparatorNames()
+                        .stream()
+                        .map(
+                            nn -> context.spreadsheetComparator(
+                                nn,
+                                Lists.empty(),
+                                providerContext
+                            )
+                        ).collect(Collectors.toList())
+                )
+            ).collect(Collectors.toList());
+
+        final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory = (Object left, Object right) -> {
+            SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = context.spreadsheetExpressionEvaluationContext(
+                SpreadsheetEngineContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.empty()
+            );
+
+            spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.addLocalVariable(
+                SpreadsheetComparatorContext.LEFT,
+                Optional.ofNullable(left)
+            );
+
+            spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.addLocalVariable(
+                SpreadsheetComparatorContext.RIGHT,
+                Optional.ofNullable(right)
+            );
+
+            return spreadsheetExpressionEvaluationContext;
+        };
+
+        cells.sort(
+            comparators,
+            movedFromTo, // moved cells
+            metadata.sortSpreadsheetComparatorContext(
+                context, // CanParseEnvironmentValueName
+                context, // HasUserDirectories
+                context, // ConverterProvider
+                context, // mediaTypeDetector
+                context.multiplier(), // multiplier
+                context, // SpreadsheetLabelNameResolver
+                spreadsheetExpressionEvaluationContextFactory,
+                context, // SpreadsheetProvider
+                context, // BinaryTextContext
+                context, // CurrencyLocaleContext
+                providerContext// ProviderContext
+            )
+        );
+    }
+
+    // LOAD COLUMNS.....................................................................................................
+
+    @Override
+    public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
+                                       final SpreadsheetEngineContext context) {
+        return SpreadsheetDelta.EMPTY
+            .setColumns(
+                toSet(
+                    context.storeRepository()
+                        .columns()
+                        .load(column)
+                )
+            );
+    }
+
+    // SAVE COLUMN.....................................................................................................
+
+    /**
+     * Saves the {@link SpreadsheetColumn} and then loads and saves all the cells in that column.
+     */
+    @Override
+    public SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(column, "column");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            final SpreadsheetStoreRepository repo = context.storeRepository();
+            repo.columns()
+                .save(column);
+
+            // load cells in column and save them again, this will re-evaluate as necessary.
+            final SpreadsheetCellStore cells = repo.cells();
+            for (final SpreadsheetCell cell : cells.column(column.reference())) {
+                final SpreadsheetEngineBasicChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                    cell.reference(),
+                    SpreadsheetEngineBasicChangesCacheStatusCell.REFERENCE_UNLOADED // Maybe should be LOADING so cell appears in response
+                );
+                cache.loading(cell);
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    // LOAD ROW.........................................................................................................
+
+    @Override
+    public SpreadsheetDelta loadRow(final SpreadsheetRowReference row,
+                                    final SpreadsheetEngineContext context) {
+        return SpreadsheetDelta.EMPTY
+            .setRows(
+                toSet(
+                    context.storeRepository()
+                        .rows()
+                        .load(row)
+                )
+            );
+    }
+
+    // SAVE ROW.........................................................................................................
+
+    /**
+     * Saves the {@link SpreadsheetRow} and then loads and saves all the cells in that row.
+     */
+    @Override
+    public SpreadsheetDelta saveRow(final SpreadsheetRow row,
+                                    final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(row, "row");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            final SpreadsheetStoreRepository repo = context.storeRepository();
+            repo.rows()
+                .save(row);
+
+            // load cells in row and save them again, this will re-evaluate as necessary.
+            final SpreadsheetCellStore cells = repo.cells();
+            for (final SpreadsheetCell cell : cells.row(row.reference())) {
+                final SpreadsheetEngineBasicChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                    cell.reference(),
+                    SpreadsheetEngineBasicChangesCacheStatusCell.REFERENCE_UNLOADED // Maybe should be LOADING so cell appears in response
+                );
+                cache.loading(cell);
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    // DELETE / INSERT / COLUMN / ROW ..................................................................................
+
+    @Override
+    public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
+                                          final int count,
+                                          final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(column, "column");
+        SpreadsheetEngine.checkCount(count);
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            SpreadsheetEngineBasicDeleteOrInsertColumnOrRowColumnOrRowColumn.with(
+                column.value(),
+                count,
+                this,
+                context
+            ).delete();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta deleteRows(final SpreadsheetRowReference row,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(row, "row");
+        SpreadsheetEngine.checkCount(count);
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            SpreadsheetEngineBasicDeleteOrInsertColumnOrRowColumnOrRowRow.with(
+                    row.value(),
+                    count,
+                    this,
+                    context
+                )
+                .delete();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta insertColumns(final SpreadsheetColumnReference column,
+                                          final int count,
+                                          final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(column, "column");
+        SpreadsheetEngine.checkCount(count);
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            SpreadsheetEngineBasicDeleteOrInsertColumnOrRowColumnOrRowColumn.with(
+                    column.value(),
+                    count,
+                    this,
+                    context
+                )
+                .insert();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(row, "row");
+        SpreadsheetEngine.checkCount(count);
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            SpreadsheetEngineBasicDeleteOrInsertColumnOrRowColumnOrRowRow.with(
+                    row.value(),
+                    count,
+                    this,
+                    context
+                )
+                .insert();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    // FORM.............................................................................................................
+
+    @Override
+    public SpreadsheetDelta loadForm(final FormName name,
+                                     final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            Form<SpreadsheetValidationReference> form = context.storeRepository()
+                .forms()
+                .load(name)
+                .orElse(null);
+
+            SpreadsheetDelta delta = this.prepareResponse(
+                changes,
+                context
+            );
+
+            // form loaded, add to SpreadsheetDelta#forms
+            if (null != form) {
+                delta = delta.setForms(
+                    Sets.of(form)
+                );
+            }
+
+            return delta;
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta saveForm(final Form<SpreadsheetValidationReference> form,
+                                     final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(form, "form");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            final Form<SpreadsheetValidationReference> savedForm = context.storeRepository()
+                .forms()
+                .save(form);
+
+            for (final FormField<SpreadsheetValidationReference> field : savedForm.fields()) {
+                SpreadsheetEngineBasicLoadFormSpreadsheetSelectionVisitor.acceptFormField(
+                    field,
+                    changes
+                );
+            }
+
+            final Map<SpreadsheetValidationReference, Integer> cellOrLabelToCount = SpreadsheetSelectionMaps.spreadsheetValidationReference();
+
+            for (final FormField<SpreadsheetValidationReference> field : form.fields()) {
+                final SpreadsheetValidationReference cellOrLabel = field.reference();
+
+                Integer count = cellOrLabelToCount.get(cellOrLabel);
+                if (null == count) {
+                    count = 0;
+                }
+                count++;
+
+                cellOrLabelToCount.put(
+                    cellOrLabel,
+                    count
+                );
+            }
+
+            final Set<SpreadsheetValidationReference> duplicates = SortedSets.tree(SpreadsheetValidationReference.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+            for (final Map.Entry<SpreadsheetValidationReference, Integer> cellOrLabelAndCount : cellOrLabelToCount.entrySet()) {
+                final SpreadsheetValidationReference cellOrLabel = cellOrLabelAndCount.getKey();
+                int count = cellOrLabelAndCount.getValue();
+
+                if (cellOrLabel.isLabelName()) {
+                    final SpreadsheetLabelName labelName = cellOrLabel.toLabelName();
+                    final SpreadsheetSelection labelNameTarget = context.resolveLabel(labelName)
+                        .orElse(null);
+                    if (null != labelNameTarget) {
+                        final Integer cellCount = cellOrLabelToCount.get(labelNameTarget);
+                        if (null != cellCount) {
+                            count = count + cellCount;
+
+                            if (count > 1) {
+                                duplicates.add(
+                                    labelNameTarget.toValidationReference()
+                                );
+                            }
+                        }
+                    }
+                }
+
+                if (count > 1) {
+                    duplicates.add(cellOrLabel);
+                }
+            }
+
+            if (false == duplicates.isEmpty()) {
+                throw new DuplicateFormFieldReferencesException(duplicates);
+            }
+
+            return this.prepareResponse(
+                changes,
+                context
+            ).setForms(
+                Sets.of(savedForm)
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta deleteForm(final FormName name,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            context.storeRepository()
+                .forms()
+                .delete(name);
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta loadForms(final int offset,
+                                      final int count,
+                                      final SpreadsheetEngineContext context) {
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            final List<Form<SpreadsheetValidationReference>> forms = context.storeRepository()
+                .forms()
+                .values(
+                    offset,
+                    count
+                );
+
+            return this.prepareResponse(
+                changes,
+                context
+            ).setForms(
+                new HashSet<>(forms)
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta prepareForm(final FormName name,
+                                        final SpreadsheetExpressionReference selection,
+                                        final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            Form<SpreadsheetValidationReference> form = context.storeRepository()
+                .forms()
+                .load(name)
+                .orElseThrow(() -> new IllegalArgumentException("Form not found"));
+
+            final SpreadsheetCellRangeReference cellRange = context.resolveIfLabelOrFail(selection)
+                .toCellRange();
+
+            // verify the selected range is a column or row.
+            final int width = cellRange.width();
+            final int height = cellRange.height();
+            if (1 != width && 1 != height) {
+                throw new IllegalArgumentException("Form cell range must be either a column or row");
+            }
+
+            SpreadsheetCellReference cell = cellRange.toCell();
+            final int columnDelta = width == 1 ?
+                0 :
+                1;
+            final int rowDelta = height == 1 ?
+                0 :
+                1;
+
+            {
+                // fix the reference for each field.
+                final List<FormField<SpreadsheetValidationReference>> fields = Lists.array();
+
+                for (final FormField<SpreadsheetValidationReference> field : form.fields()) {
+                    fields.add(
+                        field.setReference(cell)
+                    );
+
+                    cell = cell.add(
+                        columnDelta,
+                        rowDelta
+                    );
+                }
+
+                form = form.setFields(fields);
+            }
+
+            // Create FormHandlerContext and prepare fields.
+            final FormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
+                form.handler()
+                    .orElseGet(
+                        () -> context.spreadsheetMetadata()
+                            .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
+                    ),
+                context.providerContext()
+            );
+
+            final SpreadsheetFormHandlerContext formHandlerContext = this.formHandlerContext(
+                form,
+                context
+            );
+
+            form = handler.prepareForm(
+                form,
+                formHandlerContext
+            );
+
+            form = form.setErrors(
+                handler.validateForm(
+                    form,
+                    formHandlerContext
+                )
+            );
+
+            return this.prepareResponse(
+                changes,
+                context
+            ).setForms(
+                Sets.of(form)
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
+                                       final SpreadsheetExpressionReference selection,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(form, "form");
+        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+        try {
+            Form<SpreadsheetValidationReference> loaded = context.storeRepository()
+                .forms()
+                .load(form.name())
+                .orElseThrow(() -> new IllegalArgumentException("Form not found"));
+
+            final SpreadsheetCellRangeReference cellRange = context.resolveIfLabelOrFail(selection)
+                .toCellRange();
+
+            // verify the selected range is a column or row.
+            final int width = cellRange.width();
+            final int height = cellRange.height();
+            if (1 != width && 1 != height) {
+                throw new IllegalArgumentException("Form cell range must be either a column or row");
+            }
+
+            {
+                SpreadsheetCellReference cell = cellRange.toCell();
+                final int columnDelta = width == 1 ?
+                    0 :
+                    1;
+                final int rowDelta = height == 1 ?
+                    0 :
+                    1;
+
+                // build a map of submitted form fields.
+                final Map<SpreadsheetValidationReference, FormField<SpreadsheetValidationReference>> referenceToFields = SpreadsheetSelectionMaps.spreadsheetValidationReference();
+
+                for (final FormField<SpreadsheetValidationReference> field : form.fields()) {
+                    referenceToFields.put(
+                        field.reference(),
+                        field
+                    );
+                }
+
+                // fix the reference for each field & copy the values from the submitted form.
+                final List<FormField<SpreadsheetValidationReference>> fields = Lists.array();
+
+                for (FormField<SpreadsheetValidationReference> field : loaded.fields()) {
+                    field = field.setReference(cell);
+
+                    final FormField<SpreadsheetValidationReference> submittedField = referenceToFields.get(cell);
+                    if (null != submittedField) {
+                        field = field.setValue(
+                            submittedField.value()
+                        );
+                    }
+
+                    fields.add(field);
+
+                    cell = cell.add(
+                        columnDelta,
+                        rowDelta
+                    );
+                }
+
+                loaded = loaded.setFields(fields);
+            }
+
+            // Create FormHandlerContext and prepare fields.
+            final FormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
+                form.handler()
+                    .orElseGet(
+                        () -> context.spreadsheetMetadata()
+                            .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
+                    ),
+                context.providerContext()
+            );
+
+            final SpreadsheetFormHandlerContext formHandlerContext = this.formHandlerContext(
+                form,
+                context
+            );
+
+            final List<ValidationError<SpreadsheetValidationReference>> errors = handler.validateForm(
+                form,
+                formHandlerContext
+            );
+            loaded = loaded.setErrors(errors);
+
+            return handler.submitForm(
+                loaded,
+                formHandlerContext
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta findFormsByName(final String text,
+                                            final int offset,
+                                            final int count,
+                                            final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(text, "text");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.EMPTY.setForms(
+            context.storeRepository()
+                .forms()
+                .findFormsByName(
+                    text,
+                    offset,
+                    count
+                )
+        );
+    }
+
+    private SpreadsheetFormHandlerContext formHandlerContext(final Form<SpreadsheetValidationReference> form,
+                                                             final SpreadsheetEngineContext context) {
+        return SpreadsheetFormHandlerContexts.basic(
+            form,
+            SpreadsheetExpressionReferenceLoaders.spreadsheetStoreRepository(context.storeRepository()),
+            (Set<SpreadsheetCell> cells) -> this.saveCells(cells, context), // cellsSaver
+            context
+        );
+    }
+
+    // SAVE LABEL.......................................................................................................
+
+    @Override
+    public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(mapping, "mapping");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            final SpreadsheetLabelMapping saved = context.storeRepository()
+                .labels()
+                .save(mapping);
+
+            changes.onLabelSaved(saved);
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // DELETE LABEL.....................................................................................................
+
+    @Override
+    public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
+                                        final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(label, "label");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            context.storeRepository()
+                .labels()
+                .delete(label);
+
+            changes.commit();
+
+            return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
+        }
+    }
+
+    // LOAD LABEL.......................................................................................................
+
+    @Override
+    public SpreadsheetDelta loadLabel(final SpreadsheetLabelName label,
+                                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(label, "label");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            final SpreadsheetLabelMapping loaded = context.storeRepository()
+                .labels()
+                .load(label)
+                .orElse(null);
+
+            if (null != loaded) {
+                changes.getOrCreateLabelCache(
+                    loaded.label(),
+                    SpreadsheetEngineBasicChangesCacheStatusLabel.UNLOADED
+                );
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                SpreadsheetViewportWindows.EMPTY, // dont want to load any *extra* labels
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // LOAD LABELS......................................................................................................
+
+    @Override
+    public SpreadsheetDelta loadLabels(final int offset,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetEngineBasicChanges changes = SpreadsheetEngineBasicChangesMode.BATCH.changes(
+            this,
+            context
+        );
+
+        try {
+            final List<SpreadsheetLabelMapping> mappings = context.storeRepository()
+                .labels()
+                .values(
+                    offset,
+                    count
+                );
+            for (final SpreadsheetLabelMapping mapping : mappings) {
+                changes.getOrCreateLabelCache(
+                    mapping.label(),
+                    SpreadsheetEngineBasicChangesCacheStatusLabel.UNLOADED
+                );
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                changes,
+                SpreadsheetViewportWindows.EMPTY, // dont want to load any *extra* labels
+                context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // FIND LABELS BY NAME..............................................................................................
+
+    @Override
+    public SpreadsheetDelta findLabelsByName(final String text,
+                                             final int offset,
+                                             final int count,
+                                             final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(text, "text");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.EMPTY.setLabels(
+            context.storeRepository()
+                .labels()
+                .findLabelsByName(
+                    text,
+                    offset,
+                    count
+                )
+        );
+    }
+
+    // FIND LABELS WITH REFERENCE.......................................................................................
+
+    @Override
+    public SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
+                                                    final int offset,
+                                                    final int count,
+                                                    final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(reference, "reference");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.EMPTY.setLabels(
+            context.storeRepository()
+                .labels()
+                .findLabelsWithReference(
+                    reference,
+                    offset,
+                    count
+                )
+        );
+    }
+
+    // PARSE FORMULA....................................................................................................
+
+    /**
+     * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineEvaluation}
+     */
+    SpreadsheetCell parseFormulaEvaluateValidateFormatStyleAndSave(final SpreadsheetCell cell,
+                                                                   final SpreadsheetEngineEvaluation evaluation,
+                                                                   final SpreadsheetExpressionReferenceLoader loader,
+                                                                   final SpreadsheetEngineContext context) {
+        SpreadsheetCell styled = evaluation.parseFormulaEvaluateAndStyle(
+            cell,
+            this,
+            loader,
+            context
+        );
+        if (cell.equals(styled)) {
+            styled = cell; // identity could have changed if evaluation=FORCE_RECOMPUTE returning an equal cell
+        }
+
+        context.storeRepository()
+            .cells()
+            .save(styled); // update cells enabling caching of parsing and value and errors.
+
+        return styled;
+    }
+
+    // Visible for SpreadsheetEngineEvaluation only called by COMPUTE_IF_NECESSARY & FORCE_RECOMPUTE
+    SpreadsheetCell parseFormulaEvaluateValidateFormatAndStyle(final SpreadsheetCell cell,
+                                                               final SpreadsheetEngineEvaluation evaluation,
+                                                               final SpreadsheetExpressionReferenceLoader loader,
+                                                               final SpreadsheetEngineContext context) {
+        final SpreadsheetCell formulaParsed = this.parseFormulaIfNecessary(
+            cell,
+            Function.identity(),
+            context
+        );
+
+        return this.evaluateValidateFormatAndStyle(
+            formulaParsed,
+            evaluation,
+            loader,
+            context
+        );
+    }
+
+    /**
+     * Parsers the formula for this cell, and sets its expression or error if parsing fails.
+     */
+    SpreadsheetCell parseFormulaIfNecessary(final SpreadsheetCell cell,
+                                            final Function<SpreadsheetFormulaParserToken, SpreadsheetFormulaParserToken> postTokenHandler,
+                                            final SpreadsheetEngineContext context) {
+        SpreadsheetCell parsed = cell;
+        SpreadsheetFormula formula = cell.formula();
+
+        try {
+            final String formulaText = formula.text();
+            if (false == formulaText.isEmpty()) {
+
+                // if a token is NOT present parse the formula text
+                SpreadsheetFormulaParserToken token = formula.token()
+                    .orElse(null);
+                if (null == token) {
+                    try {
+                        token = context.parseFormula(
+                            TextCursors.charSequence(formulaText),
+                            Optional.of(cell)
+                        );
+                        formula = SpreadsheetFormula.EMPTY.setText(
+                            formulaText
+                        );
+                    } catch (final UnsupportedOperationException rethrow) {
+                        throw rethrow;
+                    } catch (final RuntimeException cause) {
+                        formula = SpreadsheetFormula.EMPTY.setText(
+                            formulaText
+                        ).setValue(
+                            Optional.of(
+                                SpreadsheetErrorKind.translate(cause)
+                            )
+                        );
+                    }
+
+                }
+                if (null != token) {
+                    token = postTokenHandler.apply(token);
+                    formula = formula.setToken(
+                        Optional.of(token)
+                    );
+                }
+                // if expression is absent, convert token into expression
+                if (null != token && false == formula.expression().isPresent()) {
+                    formula = formula.setExpression(
+                        context.toExpression(token)
+                    );
+                }
+
+                parsed = parsed.setFormula(formula);
+            }
+
+            //if error formatValueAndStyle
+            if (formula.error().isPresent()) {
+                parsed = context.formatValueAndStyle(
+                    parsed,
+                    Optional.empty()
+                );
+            }
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException failed) {
+            parsed = setError(
+                parsed.setFormula(formula),
+                failed,
+                SpreadsheetErrorKind.VALUE
+            );
+        }
+
+        return parsed;
+    }
+
+    // EVAL ............................................................................................................
+
+    /**
+     * This is only called if the formula was parsed an {@link Expression} exists ready for evaluation.
+     */
+    private SpreadsheetCell evaluateValidateFormatAndStyle(final SpreadsheetCell cell,
+                                                           final SpreadsheetEngineEvaluation evaluation,
+                                                           final SpreadsheetExpressionReferenceLoader loader,
+                                                           final SpreadsheetEngineContext context) {
+        SpreadsheetCell result = cell;
+
+        // special case formula.text is empty but value is present
+        boolean validate = true;
+
+        // evaluate Expression if one is present.
+        final SpreadsheetFormula formula = cell.formula();
+
+        if (false == formula.text().isEmpty()) {
+            final Optional<Expression> maybeExpression = formula.expression();
+            if (maybeExpression.isPresent()) {
+                try {
+                    result = cell.setFormula(
+                        formula.setValue(
+                            evaluation.evaluate(
+                                this,
+                                cell,
+                                loader,
+                                context
+                            )
+                        ).setValueIfError(context)
+                    );
+                } catch (final UnsupportedOperationException rethrow) {
+                    throw rethrow;
+                } catch (final RuntimeException cause) {
+                    // translate runtime exception/error into SpreadsheetError and SpreadsheetCell#setValue
+                    final SpreadsheetError error = SpreadsheetErrorKind.translate(cause);
+                    final Optional<Object> valueReplacingError = error.replaceWithValueIfPossible(context);
+
+                    result = context.formatValueAndStyle(
+                        cell.setFormula(
+                            cell.formula()
+                                .setValue(
+                                    valueReplacingError.isPresent() ?
+                                        valueReplacingError :
+                                        Optional.of(error)
+                                )
+                        ),
+                        Optional.empty() // ignore cell formatter
+                    );
+
+                    validate = false;
+                }
+            }
+        }
+
+        // if only value (no Expression) OR Expression resulted in a value and not an error then validate
+        if (validate) {
+            result = validate(
+                result,
+                loader,
+                context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.VALIDATION)
+            );
+        }
+
+        if (validate) {
+            result = formatValueAndStyle(
+                result,
+                context
+            );
+        }
+
+        return result;
+    }
+
+    private static SpreadsheetCell validate(final SpreadsheetCell cell,
+                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                            final SpreadsheetEngineContext context) {
+        SpreadsheetCell validated = cell;
+
+        final ValidatorSelector validatorSelector = cell.validator()
+            .orElse(null);
+        if (null != validatorSelector) {
+            try {
+                validated = validateWithValidator(
+                    cell,
+                    validatorSelector,
+                    spreadsheetExpressionReferenceLoader, // SpreadsheetExpressionReferenceLoader
+                    context // context
+                );
+            } catch (final UnsupportedOperationException rethrow) {
+                throw rethrow;
+            } catch (final RuntimeException cause) {
+                validated = setError(
+                    validated,
+                    cause,
+                    SpreadsheetErrorKind.VALIDATION
+                );
+            }
+        }
+
+        return validated;
+    }
+
+    private static SpreadsheetCell validateWithValidator(final SpreadsheetCell cell,
+                                                         final ValidatorSelector validatorSelector,
+                                                         final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                         final SpreadsheetEngineContext context) {
+        final ProviderContext providerContext = context.providerContext();
+        final Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext> validator = context.validator(
+            validatorSelector,
+            providerContext
+        );
+
+        final SpreadsheetFormula formula = cell.formula();
+        final Optional<Object> value = formula.errorOrValue();
+
+        return cell.setFormula(
+            formula.setError(
+                SpreadsheetError.validationErrors(
+                    validator.validate(
+                        value.orElse(null), // unwrap Optionals
+                        context.spreadsheetMetadata()
+                            .spreadsheetValidatorContext(
+                                cell.reference(), // reference
+                                (final ValidatorSelector v) -> context.validator(
+                                    v,
+                                    providerContext
+                                ),
+                                (final Object v,
+                                 final SpreadsheetValidationReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
+                                    Optional.of(cell),
+                                    spreadsheetExpressionReferenceLoader
+                                ).addLocalVariable(
+                                    SpreadsheetValidatorContext.VALUE,
+                                    Optional.ofNullable(value)
+                                ),
+                                context, // CanParseEnvironmentValueName
+                                context, // HasUserDirectories
+                                context, // SpreadsheetLabelNameResolver
+                                context, // MediaTypeDetector
+                                context.multiplier(), // multiplier
+                                context, // SpreadsheetMetadataLoader,
+                                context, // ConverterProvider
+                                context, // BinaryTextContext
+                                context, // CurrencyLocaleContext
+                                providerContext // ProviderContext
+                            )
+                    )
+                )
+            )
+        );
+    }
+
+    private static SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
+                                                       final SpreadsheetEngineContext context) {
+        SpreadsheetCell formatted;
+
+        try {
+            formatted = context.formatValueAndStyle(
+                cell,
+                cell.formatter()
+            );
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException cause) {
+            formatted = setError(
+                cell,
+                cause,
+                SpreadsheetErrorKind.FORMATTING
+            );
+        }
+
+        return formatted;
+    }
+
+    private static SpreadsheetCell setError(final SpreadsheetCell cell,
+                                            final RuntimeException cause,
+                                            final SpreadsheetErrorKind kind) {
+        final SpreadsheetError error;
+
+        if (cause instanceof HasSpreadsheetError) {
+            error = ((HasSpreadsheetError) cause).spreadsheetError()
+                .setKind(kind);
+        } else {
+            final String messageOrNull = cause.getMessage();
+
+            final String message = CharSequences.isNullOrEmpty(messageOrNull) ?
+                cause.getClass().getName() :
+                messageOrNull;
+            error = kind.setMessage(message);
+        }
+
+        final SpreadsheetFormula formula = cell.formula();
+        return cell.setFormula(
+            kind.isExpression() ?
+                formula.setValue(
+                    Optional.of(error)
+                ) :
+                formula.setError(
+                    Optional.of(error)
+                )
+        );
+    }
+
+    // SpreadsheetEngineEvaluation #evaluateCellXXX.....................................................................
+
+    /**
+     * If a formatted value is present and the {@link Expression#isPure(ExpressionPurityContext)} then return
+     * the current {@link SpreadsheetFormula#value()} otherwise evaluate the expression again.
+     */
+    // SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
+    Optional<Object> evaluateCellIfNecessary(final SpreadsheetCell cell,
+                                             final SpreadsheetExpressionReferenceLoader loader,
+                                             final SpreadsheetEngineContext context) {
+        return cell.formattedValue().isPresent() && expressionRequired(cell).isPure(context) ?
+            cell.formula()
+                .value() :
+            this.evaluateCell(
+                cell,
+                loader,
+                context
+            );
+    }
+
+    /**
+     * Unconditionally evaluate the {@link Expression} returning the value.
+     */
+    // SpreadsheetEngineEvaluation#FORCE_RECOMPUTE
+    Optional<Object> evaluateCell(final SpreadsheetCell cell,
+                                  final SpreadsheetExpressionReferenceLoader loader,
+                                  final SpreadsheetEngineContext context) {
+
+        return Optional.ofNullable(
+            expressionRequired(cell)
+                .toValue(
+                    context.spreadsheetExpressionEvaluationContext(
+                        Optional.of(cell),
+                        loader
+                    )
+                )
+        );
+    }
+
+    private static Expression expressionRequired(final SpreadsheetCell cell) {
+        return cell.formula()
+            .expression()
+            .orElseThrow(() -> new IllegalStateException(
+                    "Formula of " +
+                        CharSequences.quoteAndEscape(cell.reference().toString()) +
+                        " missing expected expression"
+                )
+            );
+    }
+
+    // prepareResponse..................................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
+     */
+    private SpreadsheetDelta prepareResponse(final SpreadsheetEngineBasicChanges changes,
+                                             final SpreadsheetEngineContext context) {
+        changes.commit();
+
+        return this.prepareResponse(
+            changes,
+            changes.changesCellRange()
+                .map(
+                    r -> SpreadsheetViewportWindows.with(
+                        Sets.of(r)
+                    )
+                ).orElse(SpreadsheetViewportWindows.EMPTY),
+            context
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for the
+     * given {@link SpreadsheetViewportWindows}. Labels must be loaded for the entire {@link SpreadsheetViewportWindows},
+     * because {@link SpreadsheetLabelMapping} may exist for missing/empty cells which are not present in either
+     * {@link SpreadsheetDelta#cells} or {@link SpreadsheetDelta#deletedColumns}.
+     */
+    private SpreadsheetDelta prepareResponse(final SpreadsheetEngineBasicChanges changes,
+                                             final SpreadsheetViewportWindows window,
+                                             final SpreadsheetEngineContext context) {
+        return SpreadsheetEngineBasicPrepareResponse.prepare(
+            this,
+            changes,
+            window,
+            context
+        );
+    }
+
+    // columnWidth......................................................................................................
+
+    @Override
+    public double columnWidth(final SpreadsheetColumnReference columnReference,
+                              final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(columnReference, "column");
+        Objects.requireNonNull(context, "context");
+
+        double columnWidth = 0;
+
+        final SpreadsheetStoreRepository repo = context.storeRepository();
+        final Optional<SpreadsheetColumn> column = repo.columns()
+            .load(columnReference);
+
+        if (false == column.isPresent() || false == column.get().hidden()) {
+            columnWidth = context.storeRepository()
+                .cells()
+                .maxColumnWidth(columnReference);
+            if (0 == columnWidth) {
+                columnWidth = columnWidthOrRowHeight(
+                    TextStylePropertyName.WIDTH,
+                    context
+                );
+            }
+        }
+
+        return columnWidth;
+    }
+
+    @Override
+    public double rowHeight(final SpreadsheetRowReference rowReference,
+                            final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(rowReference, "row");
+        Objects.requireNonNull(context, "context");
+
+        double rowHeight = 0;
+
+        final SpreadsheetStoreRepository repo = context.storeRepository();
+        final Optional<SpreadsheetRow> row = repo.rows()
+            .load(rowReference);
+
+        if (false == row.isPresent() || false == row.get().hidden()) {
+            rowHeight = context.storeRepository()
+                .cells()
+                .maxRowHeight(rowReference);
+            if (0 == rowHeight) {
+                rowHeight = columnWidthOrRowHeight(
+                    TextStylePropertyName.HEIGHT,
+                    context
+                );
+            }
+        }
+
+        return rowHeight;
+    }
+
+    /**
+     * Gets the double value for the given {@link TextStylePropertyName} which is either WIDTH or HEIGHT>
+     */
+    private double columnWidthOrRowHeight(final TextStylePropertyName<Length<?>> propertyName,
+                                          final SpreadsheetEngineContext context) {
+        return context.spreadsheetMetadata()
+            .getEffectiveStylePropertyOrFail(propertyName)
+            .value();
+    }
+
+    @Override
+    public int columnCount(final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return context.storeRepository()
+            .cells()
+            .columnCount();
+    }
+
+    @Override
+    public int rowCount(final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return context.storeRepository()
+            .cells()
+            .rowCount();
+    }
+
+    // WINDOW...........................................................................................................
+
+    @Override
+    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
+                                             final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(viewport, "viewport");
+        Objects.requireNonNull(context, "context");
+
+        return this.window0(
+            viewport,
+            true, // windowsNotViewport
+            context
+        ).windows.get();
+    }
+
+    private SpreadsheetEngineBasicWindow window0(final SpreadsheetViewport viewport,
+                                                 final boolean windowsNotViewport,
+                                                 final SpreadsheetEngineContext context) {
+        return this.windowNonLabelSelection(
+            viewport.rectangle(),
+            viewport.includeFrozenColumnsRows(),
+            viewport.anchoredSelection()
+                .map(a -> context.resolveIfLabelOrFail(
+                        a.selection()
+                    ).setAnchorOrDefault(a.anchor()) // restore anchor after the label was replaced by a cell/cell-range
+                ),
+            windowsNotViewport,
+            context
+        );
+    }
+
+    private SpreadsheetEngineBasicWindow windowNonLabelSelection(final SpreadsheetViewportRectangle viewportRectangle,
+                                                                 final boolean includeFrozenColumnsRows,
+                                                                 final Optional<AnchoredSpreadsheetSelection> maybeAnchoredSelection,
+                                                                 final boolean windowsNotViewport,
+                                                                 final SpreadsheetEngineContext context) {
+        final double viewportRectangleWidth = viewportRectangle.width();
+        final double viewportRectangleHeight = viewportRectangle.height();
+
+        double viewportWidth = 0;
+        double viewportHeight = 0;
+
+        SpreadsheetColumnRangeReference frozenColumns = null;
+        SpreadsheetRowRangeReference frozenRows = null;
+
+        // frozen columns/rows ignore the viewport home
+        if (includeFrozenColumnsRows) {
+            final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+            // compute actual frozenColumns, metadata.FROZEN_COLUMNS might be higher than requested width...............
+
+            frozenColumns = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS)
+                .orElse(null);
+            if (null != frozenColumns) {
+                final SpreadsheetColumnReference lastFrozenColumn = frozenColumns.end();
+
+                final SpreadsheetColumnReference leftColumn = SpreadsheetReferenceKind.RELATIVE.firstColumn();
+                SpreadsheetColumnReference rightColumn = leftColumn;
+
+                do {
+                    final double columnWidth = this.columnWidth(rightColumn, context);
+                    viewportWidth = viewportWidth + columnWidth;
+                    if (viewportWidth >= viewportRectangleWidth) {
+                        break;
+                    }
+
+                    if (rightColumn.equalsIgnoreReferenceKind(lastFrozenColumn)) {
+                        break;
+                    }
+                    rightColumn = rightColumn.addSaturated(1);
+                } while (rightColumn.isNotLast());
+
+                frozenColumns = leftColumn.columnRange(rightColumn);
+            }
+
+            // compute actual frozenRows, metadata.FROZEN_ROWS might be higher than requested height....................
+            frozenRows = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_ROWS)
+                .orElse(null);
+
+            if (null != frozenRows) {
+                final SpreadsheetRowReference lastFrozenRow = frozenRows.end();
+
+                final SpreadsheetRowReference topRow = SpreadsheetReferenceKind.RELATIVE.firstRow();
+                SpreadsheetRowReference bottomRow = topRow;
+
+                do {
+                    final double rowHeight = this.rowHeight(bottomRow, context);
+                    viewportHeight = viewportHeight + rowHeight;
+                    if (viewportHeight >= viewportRectangleHeight) {
+                        break;
+                    }
+
+                    if (bottomRow.equalsIgnoreReferenceKind(lastFrozenRow)) {
+                        break;
+                    }
+                    bottomRow = bottomRow.addSaturated(1);
+                } while (bottomRow.isNotLast());
+
+                frozenRows = topRow.rowRange(bottomRow);
+            }
+        }
+
+        // non frozen viewport
+        SpreadsheetCellReference nonFrozenHome = context.resolveIfLabelOrFail(
+            viewportRectangle.home()
+        ).toCell();
+
+        // handle cases such as selection anchor being in a partially visible last column/row
+        SpreadsheetColumnReference left = nonFrozenHome.column();
+        SpreadsheetColumnReference right = null;
+
+        if (viewportWidth < viewportRectangleWidth) {
+            right = left;
+
+            while (right.isNotLast()) {
+                viewportWidth = viewportWidth + this.columnWidth(right, context);
+                if (viewportWidth >= viewportRectangleWidth) {
+                    break;
+                }
+                right = right.addSaturated(1);
+            }
+
+            // $right might have hit last column, therefore need to move left
+            if (viewportWidth < viewportRectangleWidth) {
+                while (left.isNotFirst()) {
+                    viewportWidth = viewportWidth + this.columnWidth(left, context);
+                    if (viewportWidth >= viewportRectangleWidth) {
+                        break;
+                    }
+                    left = left.addSaturated(-1);
+                }
+            }
+        }
+
+        SpreadsheetRowReference top = nonFrozenHome.row();
+        SpreadsheetRowReference bottom = null;
+
+        if (viewportHeight < viewportRectangleHeight) {
+            bottom = top;
+
+            while (bottom.isNotLast()) {
+                viewportHeight = viewportHeight + this.rowHeight(bottom, context);
+                if (viewportHeight >= viewportRectangleHeight) {
+                    break;
+                }
+                bottom = bottom.addSaturated(1);
+            }
+
+            // $bottom might have hit last row, therefore need to move up
+            if (viewportHeight < viewportRectangleHeight) {
+                while (top.isNotFirst()) {
+                    viewportHeight = viewportHeight + this.rowHeight(top, context);
+                    if (viewportHeight >= viewportRectangleHeight) {
+                        break;
+                    }
+                    top = top.addSaturated(-1);
+                }
+            }
+        }
+
+        // might need to pan if selection is in last column/last row
+        if (maybeAnchoredSelection.isPresent()) {
+            final AnchoredSpreadsheetSelection anchoredSpreadsheetSelection = maybeAnchoredSelection.get();
+            final SpreadsheetSelection selection = anchoredSpreadsheetSelection.anchor()
+                .opposite()
+                .selection(anchoredSpreadsheetSelection.selection());
+
+            if (selection.isCellOrCellRange() || selection.isColumnOrColumnRange()) {
+                if (selection.toColumn().equalsIgnoreReferenceKind(right)) {
+
+                    while (viewportWidth > viewportRectangleWidth) {
+                        viewportWidth = viewportWidth - this.columnWidth(left, context);
+                        left = left.addSaturated(+1);
+                    }
+
+                    while (viewportWidth < viewportRectangleWidth) {
+                        viewportWidth = viewportWidth + this.columnWidth(right, context);
+                        right = right.addSaturated(+1);
+                    }
+                }
+            }
+            if (selection.isCellOrCellRange() || selection.isRowOrRowRange()) {
+                if (selection.toRow().equalsIgnoreReferenceKind(bottom)) {
+                    while (viewportHeight > viewportRectangleHeight) {
+                        viewportHeight = viewportHeight - this.rowHeight(top, context);
+                        top = top.addSaturated(+1);
+                    }
+
+                    while (viewportHeight < viewportRectangleHeight) {
+                        viewportHeight = viewportHeight + this.rowHeight(bottom, context);
+                        bottom = bottom.addSaturated(+1);
+                    }
+
+                }
+            }
+        }
+
+        if (null != right && null != frozenColumns) {
+            final SpreadsheetColumnReference frozenRight = frozenColumns.end();
+            if (frozenRight.compareTo(nonFrozenHome.column()) >= 0) {
+                right = frozenRight.addSaturated(+1 + right.value() - left.value());
+                left = frozenRight.addSaturated(+1);
+            }
+        }
+        if (null != bottom && null != frozenRows) {
+            final SpreadsheetRowReference frozenBottom = frozenRows.end();
+            if (frozenBottom.compareTo(nonFrozenHome.row()) >= 0) {
+                bottom = frozenBottom.addSaturated(+1 + bottom.value() - top.value());
+                top = frozenBottom.addSaturated(+1);
+            }
+        }
+
+        final SpreadsheetEngineBasicWindow spreadsheetEngineBasicWindow;
+
+        if (windowsNotViewport) {
+            final Set<SpreadsheetCellRangeReference> windows = Sets.ordered();
+
+            if (null != frozenColumns && null != frozenRows) {
+                // FCR fr fr fr
+                // fc  n  n  n
+                // fc  n  n  n
+                windows.add(
+                    frozenColumns.setRowRange(frozenRows)
+                );
+            }
+
+            if (null != frozenRows && null != right) {
+                // fcr FR FR FR
+                // fc  n  n  n
+                // fc  n  n  n
+                windows.add(
+                    frozenRows.setColumnRange(
+                        left.columnRange(right)
+                    )
+                );
+            }
+
+            if (null != frozenColumns && null != bottom) {
+                // fcr fr fr fr
+                // FC  n  n  n
+                // FC  n  n  n
+                windows.add(
+                    frozenColumns.setRowRange(
+                        top.rowRange(bottom)
+                    )
+                );
+            }
+
+            if (null != right && null != bottom) {
+                windows.add(
+                    left.setRow(top)
+                        .cellRange(
+                            right.setRow(bottom)
+                        )
+                );
+            }
+
+            spreadsheetEngineBasicWindow = SpreadsheetEngineBasicWindow.with(
+                Optional.empty(),
+                Optional.of(
+                    SpreadsheetViewportWindows.with(windows)
+                )
+            );
+        } else {
+            spreadsheetEngineBasicWindow = SpreadsheetEngineBasicWindow.with(
+                Optional.of(
+                    left.setRow(top)
+                        .viewportRectangle(
+                            viewportWidth,
+                            viewportHeight
+                        ).viewport()
+                        .setAnchoredSelection(maybeAnchoredSelection)
+                ),
+                Optional.empty()
+            );
+        }
+
+        return spreadsheetEngineBasicWindow;
+    }
+
+    // navigate.........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
+                                                  final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(viewport, "viewport");
+        Objects.requireNonNull(context, "context");
+
+        Optional<SpreadsheetViewport> result;
+
+        final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.anchoredSelection();
+        if (maybeAnchored.isPresent()) {
+            final AnchoredSpreadsheetSelection anchoredBefore = maybeAnchored.get();
+            final SpreadsheetSelection selection = anchoredBefore.selection();
+
+            // special case for label selections. Try restore label if after navigation the selection is equivalent to label
+            if (selection.isLabelName()) {
+                result = this.navigate0(
+                    viewport,
+                    context
+                );
+
+                if (result.isPresent()) {
+                    SpreadsheetViewport viewportResult = result.get();
+                    final Optional<AnchoredSpreadsheetSelection> resultMaybeAnchored = viewportResult.anchoredSelection();
+                    if (resultMaybeAnchored.isPresent()) {
+                        final AnchoredSpreadsheetSelection resultAnchored = resultMaybeAnchored.get();
+                        final SpreadsheetSelection resultSelection = resultAnchored.selection();
+
+                        if (resultSelection.equalsIgnoreReferenceKind(
+                            context.resolveIfLabel(selection)
+                                .orElse(null)
+                        )) {
+                            result = Optional.of(
+                                // restore the original label
+                                viewportResult.setAnchoredSelection(maybeAnchored)
+                            );
+                        }
+                    }
+                }
+            } else {
+                result = this.navigate0(
+                    viewport,
+                    context
+                );
+            }
+        } else {
+            result = this.navigate0(
+                viewport,
+                context
+            );
+        }
+
+        return result;
+    }
+
+    private Optional<SpreadsheetViewport> navigate0(final SpreadsheetViewport viewport,
+                                                    final SpreadsheetEngineContext context) {
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+
+        return this.navigate1(
+            viewport,
+            SpreadsheetViewportNavigationContexts.basic(
+                context, // SpreadsheetLabelNameResolver
+                repository.columns()::isHidden,
+                (c) -> this.columnWidth(c, context),
+                repository.rows()::isHidden,
+                (r) -> this.rowHeight(r, context),
+                (v) -> this.window(v, context)
+            )
+        ).map(
+            v -> this.window0(
+                v,
+                false, // windowsNotViewport
+                context
+            ).viewport.get()
+        );
+    }
+
+    private Optional<SpreadsheetViewport> navigate1(final SpreadsheetViewport viewport,
+                                                    final SpreadsheetViewportNavigationContext context) {
+        final List<SpreadsheetViewportNavigation> navigations = viewport.navigations()
+            .compact();
+
+        SpreadsheetViewport navigating = viewport;
+
+        // always process navigations even when without selection
+        for (final SpreadsheetViewportNavigation navigation : navigations) {
+            navigating = navigation.update(
+                navigating,
+                context
+            );
+        }
+
+        SpreadsheetViewportRectangle rectangle = navigating.rectangle();
+        SpreadsheetCellReference home = rectangle.home();
+        if (false == context.isColumnHidden(home.column()) && false == context.isRowHidden(home.row())) {
+            final AnchoredSpreadsheetSelection anchored = navigating.anchoredSelection()
+                .orElse(null);
+            if (null != anchored) {
+                final SpreadsheetSelection selectionNotLabel = context.resolveIfLabel(
+                    anchored.selection()
+                ).orElse(null);
+
+                if (null == selectionNotLabel || selectionNotLabel.isHidden(context::isColumnHidden, context::isRowHidden)) {
+                    // selection is hidden clear it.
+                    navigating = navigating.clearAnchoredSelection();
+                }
+            }
+        }
+
+        return Optional.of(
+            navigating.setRectangle(rectangle)
+                .setNavigations(SpreadsheetViewport.NO_NAVIGATION)
+        );
+    }
+
+    // j2cl helpers....................................................................................................
+
+    // The J2CL Optional does not support map.
+    static <V extends SpreadsheetColumnOrRow<R>, R extends SpreadsheetSelection & Comparable<R>> Set<V> toSet(final Optional<V> columnOrRow) {
+        return columnOrRow.isPresent() ?
+            Sets.of(columnOrRow.get()) :
+            Sets.empty();
+    }
+
+    // Object...........................................................................................................
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
