@@ -28,7 +28,7 @@ import java.util.function.Predicate;
 public final class SpreadsheetViewportNavigationContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetViewportNavigationContext}
+     * {@see SpreadsheetViewportNavigationContextBasic}
      */
     public static SpreadsheetViewportNavigationContext basic(final SpreadsheetLabelNameResolver labelNameResolver,
                                                              final Predicate<SpreadsheetColumnReference> isColumnHidden,
@@ -36,7 +36,7 @@ public final class SpreadsheetViewportNavigationContexts implements PublicStatic
                                                              final Predicate<SpreadsheetRowReference> isRowHidden,
                                                              final Function<SpreadsheetRowReference, Double> rowToHeight,
                                                              final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
-        return BasicSpreadsheetViewportNavigationContext.with(
+        return SpreadsheetViewportNavigationContextBasic.with(
             labelNameResolver,
             isColumnHidden,
             columnToWidth,
