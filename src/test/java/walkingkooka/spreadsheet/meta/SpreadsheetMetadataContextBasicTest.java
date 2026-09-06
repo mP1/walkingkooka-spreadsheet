@@ -19,29 +19,21 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.store.StoreWatcher;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataContextBasicTest implements SpreadsheetMetadataContextTesting2<SpreadsheetMetadataContextBasic>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetMetadataContextBasic> {
-
-    private final static LocalDateTime NOW = LocalDateTime.of(
-        1999,
-        12,
-        31,
-        12,
-        58,
-        59
-    );
+    HashCodeEqualsDefinedTesting2<SpreadsheetMetadataContextBasic>,
+    HasNowTesting {
 
     private final static SpreadsheetMetadataCreator CREATE_METADATA =
         (e, dl) ->
