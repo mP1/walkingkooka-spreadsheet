@@ -35,13 +35,13 @@ import java.util.Optional;
 /**
  * Base class for either a column or row reference {@link SpreadsheetParser}.
  */
-abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements SpreadsheetParser,
+abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReference implements SpreadsheetParser,
     RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Package private ctor use singleton
      */
-    SpreadsheetColumnOrRowReferenceSpreadsheetParser(final boolean required) {
+    SpreadsheetFormulaParserSpreadsheetColumnOrRowReference(final boolean required) {
         super();
         this.required = required;
     }

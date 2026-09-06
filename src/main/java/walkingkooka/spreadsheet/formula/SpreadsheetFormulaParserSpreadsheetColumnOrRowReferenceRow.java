@@ -31,19 +31,19 @@ import java.util.Optional;
 /**
  * A {@link Parser} that consumes a {@link RowSpreadsheetFormulaParserToken}
  */
-final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOrRowReferenceSpreadsheetParser {
+final class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow extends SpreadsheetFormulaParserSpreadsheetColumnOrRowReference {
 
     /**
      * Singleton
      */
-    final static SpreadsheetRowReferenceSpreadsheetParser INSTANCE = new SpreadsheetRowReferenceSpreadsheetParser(
+    final static SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow INSTANCE = new SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow(
         true // REQUIRED
     );
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetRowReferenceSpreadsheetParser(final boolean required) {
+    private SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow(final boolean required) {
         super(required);
     }
 
@@ -72,19 +72,19 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
     );
 
     @Override
-    public SpreadsheetRowReferenceSpreadsheetParser optional() {
+    public SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow optional() {
         return this.setRequired(false);
     }
 
     @Override
-    public SpreadsheetRowReferenceSpreadsheetParser required() {
+    public SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow required() {
         return this.setRequired(true);
     }
 
-    private SpreadsheetRowReferenceSpreadsheetParser setRequired(final boolean required) {
+    private SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow setRequired(final boolean required) {
         return required == this.isRequired() ?
             this :
-            new SpreadsheetRowReferenceSpreadsheetParser(required);
+            new SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow(required);
     }
 
     @Override

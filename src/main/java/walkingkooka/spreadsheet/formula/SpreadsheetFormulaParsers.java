@@ -174,10 +174,10 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     // column...........................................................................................................
 
     /**
-     * {@see SpreadsheetColumnReferenceSpreadsheetParser}
+     * {@see SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn}
      */
     public static SpreadsheetParser column() {
-        return SpreadsheetColumnReferenceSpreadsheetParser.INSTANCE;
+        return SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn.INSTANCE;
     }
 
     // conditionRight...................................................................................................
@@ -394,10 +394,10 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static final SpreadsheetParser NAMED_FUNCTION_PARSER;
 
     /**
-     * {@see SpreadsheetRowReferenceSpreadsheetParser}
+     * {@see SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow}
      */
     public static SpreadsheetParser row() {
-        return SpreadsheetRowReferenceSpreadsheetParser.INSTANCE;
+        return SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceRow.INSTANCE;
     }
 
     /**
@@ -808,7 +808,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     public static int columnLetterValue(final char c) {
         final int digit = Character.toUpperCase(c) - 'A';
         return digit >= 0 &&
-            digit < SpreadsheetColumnReferenceSpreadsheetParser.RADIX ?
+            digit < SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn.RADIX ?
             digit + 1 :
             -1;
     }
