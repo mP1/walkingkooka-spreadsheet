@@ -24,8 +24,8 @@ import walkingkooka.net.header.MediaType;
 
 import java.util.Optional;
 
-public final class EmptySpreadsheetImporterTest implements SpreadsheetImporterTesting<EmptySpreadsheetImporter>,
-    ToStringTesting<EmptySpreadsheetImporter> {
+public final class SpreadsheetImporterEmptyTest implements SpreadsheetImporterTesting<SpreadsheetImporterEmpty>,
+    ToStringTesting<SpreadsheetImporterEmpty> {
 
     @Test
     public void testCanImportFalse() {
@@ -53,8 +53,8 @@ public final class EmptySpreadsheetImporterTest implements SpreadsheetImporterTe
     }
 
     @Override
-    public EmptySpreadsheetImporter createSpreadsheetImporter() {
-        return EmptySpreadsheetImporter.INSTANCE;
+    public SpreadsheetImporterEmpty createSpreadsheetImporter() {
+        return SpreadsheetImporterEmpty.INSTANCE;
     }
 
     @Override
@@ -65,15 +65,15 @@ public final class EmptySpreadsheetImporterTest implements SpreadsheetImporterTe
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            EmptySpreadsheetImporter.INSTANCE,
-            "EmptySpreadsheetImporter"
+            SpreadsheetImporterEmpty.INSTANCE,
+            "SpreadsheetImporterEmpty"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<EmptySpreadsheetImporter> type() {
-        return EmptySpreadsheetImporter.class;
+    public Class<SpreadsheetImporterEmpty> type() {
+        return SpreadsheetImporterEmpty.class;
     }
 }
