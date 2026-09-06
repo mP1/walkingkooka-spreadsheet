@@ -40,7 +40,7 @@ public enum SpreadsheetEngineEvaluation {
     CLEAR_VALUE_ERROR_SKIP_EVALUATE {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineBasic engine,
                                                      final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return context.storeRepository()
@@ -49,7 +49,7 @@ public enum SpreadsheetEngineEvaluation {
         }
 
         @Override
-        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+        Optional<Object> evaluate(final SpreadsheetEngineBasic engine,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
@@ -63,14 +63,14 @@ public enum SpreadsheetEngineEvaluation {
     SKIP_EVALUATE {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineBasic engine,
                                                      final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return cell;
         }
 
         @Override
-        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+        Optional<Object> evaluate(final SpreadsheetEngineBasic engine,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
@@ -85,7 +85,7 @@ public enum SpreadsheetEngineEvaluation {
     FORCE_RECOMPUTE {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineBasic engine,
                                                      final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             // clear value and error to allow evaluation to continue.
@@ -101,7 +101,7 @@ public enum SpreadsheetEngineEvaluation {
         }
 
         @Override
-        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+        Optional<Object> evaluate(final SpreadsheetEngineBasic engine,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
@@ -119,7 +119,7 @@ public enum SpreadsheetEngineEvaluation {
     COMPUTE_IF_NECESSARY {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineBasic engine,
                                                      final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return engine.parseFormulaEvaluateValidateFormatAndStyle(
@@ -131,7 +131,7 @@ public enum SpreadsheetEngineEvaluation {
         }
 
         @Override
-        Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+        Optional<Object> evaluate(final SpreadsheetEngineBasic engine,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
@@ -150,14 +150,14 @@ public enum SpreadsheetEngineEvaluation {
     }
 
     abstract SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
-                                                          final BasicSpreadsheetEngine engine,
+                                                          final SpreadsheetEngineBasic engine,
                                                           final SpreadsheetExpressionReferenceLoader loader,
                                                           final SpreadsheetEngineContext context);
 
     /**
      * This method is only really executed by {@link #COMPUTE_IF_NECESSARY} and {@link #FORCE_RECOMPUTE}.
      */
-    abstract Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
+    abstract Optional<Object> evaluate(final SpreadsheetEngineBasic engine,
                                        final SpreadsheetCell cell,
                                        final SpreadsheetExpressionReferenceLoader loader,
                                        final SpreadsheetEngineContext context);
