@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -135,6 +136,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitCurrency(final Currency currency) {
+        // nop
+    }
+
+    protected void visitCurrencyExchangeRaters(final CurrencyExchangeRaterAliasSet aliases) {
         // nop
     }
 

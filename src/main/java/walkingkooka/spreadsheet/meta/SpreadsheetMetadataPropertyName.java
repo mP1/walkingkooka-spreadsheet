@@ -27,6 +27,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
@@ -157,6 +158,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     public static final SpreadsheetMetadataPropertyName<Currency> CURRENCY = registerConstant(
         SpreadsheetMetadataPropertyNameCurrency.instance()
+    );
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency-exchange-raters</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<CurrencyExchangeRaterAliasSet> CURRENCY_EXCHANGE_RATERS = registerConstant(
+        SpreadsheetMetadataPropertyNameCurrencyExchangeRaterAliasSetCurrencyExchangeRaters.instance()
     );
 
     /**

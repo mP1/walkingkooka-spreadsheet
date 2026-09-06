@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -107,6 +108,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitConverters(final ConverterAliasSet aliases) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitCurrencyExchangeRaters(final CurrencyExchangeRaterAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 
