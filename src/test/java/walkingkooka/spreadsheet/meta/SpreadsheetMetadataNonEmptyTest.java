@@ -2718,6 +2718,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             ConverterSelector.parse("basic")
         );
         properties.put(
+            SpreadsheetMetadataPropertyName.FORMATTING_CURRENCY_EXCHANGE_RATER,
+            ConverterSelector.parse("formatting-currency-exchange-rater")
+        );
+        properties.put(
             SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
@@ -2734,6 +2738,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             ConverterSelector.parse("collection(text, number, date-time, basic, value, boolean)")
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.FORMULA_CURRENCY_EXCHANGE_RATER,
+            ConverterSelector.parse("formula-currency-exchange-rater")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
@@ -2786,6 +2794,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             ConverterSelector.parse("basic")
         );
         properties.put(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CURRENCY_EXCHANGE_RATER,
+            ConverterSelector.parse("scripting-currency-exchange-rater")
+        );
+        properties.put(
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
@@ -2829,6 +2841,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
             ConverterSelector.parse("validator-converter-123")
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.VALIDATION_CURRENCY_EXCHANGE_RATER,
+            ConverterSelector.parse("validation-currency-exchange-rater")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,

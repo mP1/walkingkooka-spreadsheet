@@ -24,6 +24,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.HasCurrencyTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -399,6 +400,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitFormattingCurrencyExchangeRater() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormattingCurrencyExchangeRater(final CurrencyExchangeRaterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.FORMATTING_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("basic")
+        );
+    }
+
+    @Test
     public void testvisitFormattingFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -434,6 +448,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             ConverterSelector.parse("basic")
+        );
+    }
+
+    @Test
+    public void testVisitFormulaCurrencyExchangeRater() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormulaCurrencyExchangeRater(final CurrencyExchangeRaterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.FORMULA_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("basic")
         );
     }
 
@@ -649,6 +676,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             ConverterSelector.parse("hello")
+        );
+    }
+
+    @Test
+    public void testVisitScriptingCurrencyExchangeRater() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitScriptingCurrencyExchangeRater(final CurrencyExchangeRaterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("basic")
         );
     }
 
@@ -884,6 +924,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
             ConverterSelector.parse("hello-converter")
+        );
+    }
+
+    @Test
+    public void testVisitValidationCurrencyExchangeRater() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitValidationCurrencyExchangeRater(final CurrencyExchangeRaterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.VALIDATION_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("basic")
         );
     }
 

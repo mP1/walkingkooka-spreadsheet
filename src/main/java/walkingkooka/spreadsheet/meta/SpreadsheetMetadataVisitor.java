@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -199,6 +200,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitFormattingCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
+        // nop
+    }
+
     protected void visitFormattingFunctions(final ExpressionFunctionAliasSet functions) {
         // nop
     }
@@ -208,6 +213,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitFormulaConverter(final ConverterSelector selector) {
+        // nop
+    }
+
+    protected void visitFormulaCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
         // nop
     }
 
@@ -296,6 +305,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitScriptingCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
+        // nop
+    }
+
     protected void visitScriptingFunctions(final ExpressionFunctionAliasSet aliases) {
         // nop
     }
@@ -357,6 +370,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitValidationConverter(final ConverterSelector selector) {
+        // nop
+    }
+
+    protected void visitValidationCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
         // nop
     }
 

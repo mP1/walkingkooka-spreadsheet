@@ -28,6 +28,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
@@ -243,6 +244,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMATTING_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormatting.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formattingCurrencyExchangeRater</code>.
+     */
+    public static final SpreadsheetMetadataPropertyName<CurrencyExchangeRaterSelector> FORMATTING_CURRENCY_EXCHANGE_RATER = registerConstant(SpreadsheetMetadataPropertyNameCurrencyExchangeRaterSelectorFormatting.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>formattingFunctions</code>.
      * an expression while formatting.
      */
@@ -257,6 +263,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>formulaConverter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormula.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formulaCurrencyExchangeRater</code>.
+     */
+    public static final SpreadsheetMetadataPropertyName<CurrencyExchangeRaterSelector> FORMULA_CURRENCY_EXCHANGE_RATER = registerConstant(SpreadsheetMetadataPropertyNameCurrencyExchangeRaterSelectorFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>formulaFunctions</code>.
@@ -349,6 +360,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> SCRIPTING_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorScripting.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>scriptingCurrencyExchangeRater</code>.
+     */
+    public static final SpreadsheetMetadataPropertyName<CurrencyExchangeRaterSelector> SCRIPTING_CURRENCY_EXCHANGE_RATER = registerConstant(SpreadsheetMetadataPropertyNameCurrencyExchangeRaterSelectorScripting.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>scriptingFunctions</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> SCRIPTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetScripting.instance());
@@ -422,6 +438,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>validationConverter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> VALIDATION_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorValidation.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>validationCurrencyExchangeRater</code>.
+     */
+    public static final SpreadsheetMetadataPropertyName<CurrencyExchangeRaterSelector> VALIDATION_CURRENCY_EXCHANGE_RATER = registerConstant(SpreadsheetMetadataPropertyNameCurrencyExchangeRaterSelectorValidation.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>validationFunctions</code>.

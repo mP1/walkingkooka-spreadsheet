@@ -910,11 +910,17 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  formattingConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, style, text-node, template, net, basic)\"\n" +
+                "  formattingCurrencyExchangeRater\n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
                 "  formattingFunctions\n" +
                 "  formHandlers\n" +
                 "  formulaConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "  formulaCurrencyExchangeRater\n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
                 "  formulaFunctions\n" +
                 "  functions\n" +
                 "  homeDirectory\n" +
@@ -968,6 +974,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  scriptingConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "  scriptingCurrencyExchangeRater\n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
                 "  scriptingFunctions\n" +
                 "  serverUrl\n" +
                 "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
@@ -1008,6 +1017,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  validationConverter\n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\"\n" +
+                "  validationCurrencyExchangeRater\n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
                 "  validationFunctions\n" +
                 "  validationValidators\n" +
                 "    absolute-url\n" +
