@@ -31,8 +31,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMetadataContextTesting2<BasicSpreadsheetMetadataContext>,
-    HashCodeEqualsDefinedTesting2<BasicSpreadsheetMetadataContext> {
+public final class SpreadsheetMetadataContextBasicTest implements SpreadsheetMetadataContextTesting2<SpreadsheetMetadataContextBasic>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetMetadataContextBasic> {
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -61,7 +61,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
     public void testWithNullCreateMetadataFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetMetadataContext.with(
+            () -> SpreadsheetMetadataContextBasic.with(
                 null,
                 STORE
             )
@@ -72,7 +72,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
     public void testWithNullStoreFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetMetadataContext.with(
+            () -> SpreadsheetMetadataContextBasic.with(
                 CREATE_METADATA,
                 null
             )
@@ -83,7 +83,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
 
     @Test
     public void testCreateMetadata() {
-        final BasicSpreadsheetMetadataContext context = this.createContext();
+        final SpreadsheetMetadataContextBasic context = this.createContext();
 
         final EmailAddress user = EmailAddress.parse("user@example.com");
         final Optional<Locale> locale = Optional.of(Locale.FRENCH);
@@ -109,7 +109,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
 
     @Test
     public void testAddWatcherAndSave() {
-        final BasicSpreadsheetMetadataContext context = this.createContext();
+        final SpreadsheetMetadataContextBasic context = this.createContext();
 
         this.fired = true;
 
@@ -118,7 +118,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
                 @Override
                 public void onValueChange(final Optional<SpreadsheetMetadata> oldValue,
                                           final Optional<SpreadsheetMetadata> newValue) {
-                    BasicSpreadsheetMetadataContextTest.this.fired = true;
+                    SpreadsheetMetadataContextBasicTest.this.fired = true;
                 }
             }
         );
@@ -141,8 +141,8 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
     private boolean fired;
 
     @Override
-    public BasicSpreadsheetMetadataContext createContext() {
-        return BasicSpreadsheetMetadataContext.with(
+    public SpreadsheetMetadataContextBasic createContext() {
+        return SpreadsheetMetadataContextBasic.with(
             CREATE_METADATA,
             SpreadsheetMetadataStores.treeMap()
         );
@@ -153,7 +153,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
     @Test
     public void testEqualsDifferentCreateMetadataFunction() {
         this.checkNotEquals(
-            BasicSpreadsheetMetadataContext.with(
+            SpreadsheetMetadataContextBasic.with(
                 (e, l) -> {
                     throw new UnsupportedOperationException();
                 },
@@ -165,7 +165,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
     @Test
     public void testEqualsDifferentMetadataStore() {
         this.checkNotEquals(
-            BasicSpreadsheetMetadataContext.with(
+            SpreadsheetMetadataContextBasic.with(
                 CREATE_METADATA,
                 SpreadsheetMetadataStores.fake()
             )
@@ -173,14 +173,19 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
     }
 
     @Override
-    public BasicSpreadsheetMetadataContext createObject() {
+    public SpreadsheetMetadataContextBasic createObject() {
         return this.createContext();
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetMetadataContext> type() {
-        return BasicSpreadsheetMetadataContext.class;
+    public Class<SpreadsheetMetadataContextBasic> type() {
+        return SpreadsheetMetadataContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
