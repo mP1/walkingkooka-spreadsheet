@@ -24,8 +24,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 
-public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTesting2<EmptySpreadsheetExporter>,
-    ToStringTesting<EmptySpreadsheetExporter> {
+public final class SpreadsheetExporterEmptyTest implements SpreadsheetExporterTesting2<SpreadsheetExporterEmpty>,
+    ToStringTesting<SpreadsheetExporterEmpty> {
 
     @Test
     public void testCanExportFalse() {
@@ -52,8 +52,8 @@ public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTe
     }
 
     @Override
-    public EmptySpreadsheetExporter createSpreadsheetExporter() {
-        return EmptySpreadsheetExporter.INSTANCE;
+    public SpreadsheetExporterEmpty createSpreadsheetExporter() {
+        return SpreadsheetExporterEmpty.INSTANCE;
     }
 
     @Override
@@ -64,15 +64,15 @@ public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTe
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            EmptySpreadsheetExporter.INSTANCE,
-            "EmptySpreadsheetExporter"
+            SpreadsheetExporterEmpty.INSTANCE,
+            "SpreadsheetExporterEmpty"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<EmptySpreadsheetExporter> type() {
-        return EmptySpreadsheetExporter.class;
+    public Class<SpreadsheetExporterEmpty> type() {
+        return SpreadsheetExporterEmpty.class;
     }
 }

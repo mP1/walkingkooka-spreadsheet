@@ -153,7 +153,7 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
     public void testToString() {
         this.toStringAndCheck(
             this.createObject(),
-            "collection(EmptySpreadsheetExporter,EmptySpreadsheetExporter)"
+            "collection(SpreadsheetExporterEmpty,SpreadsheetExporterEmpty)"
         );
     }
 

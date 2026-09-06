@@ -26,11 +26,11 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetExporter} that cannot export and always fails.
  */
-final class EmptySpreadsheetExporter implements SpreadsheetExporter {
+final class SpreadsheetExporterEmpty implements SpreadsheetExporter {
 
-    final static EmptySpreadsheetExporter INSTANCE = new EmptySpreadsheetExporter();
+    final static SpreadsheetExporterEmpty INSTANCE = new SpreadsheetExporterEmpty();
 
-    private EmptySpreadsheetExporter() {
+    private SpreadsheetExporterEmpty() {
         super();
     }
 
