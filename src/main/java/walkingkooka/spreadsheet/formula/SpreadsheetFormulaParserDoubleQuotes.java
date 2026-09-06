@@ -42,15 +42,15 @@ import java.util.Optional;
  *  ="The movie """ &B5 &""" is good."
  * </pre>
  */
-final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserContext>,
+final class SpreadsheetFormulaParserDoubleQuotes implements Parser<SpreadsheetParserContext>,
     RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton instance
      */
-    static final SpreadsheetDoubleQuotesParser INSTANCE = new SpreadsheetDoubleQuotesParser();
+    static final SpreadsheetFormulaParserDoubleQuotes INSTANCE = new SpreadsheetFormulaParserDoubleQuotes();
 
-    private SpreadsheetDoubleQuotesParser() {
+    private SpreadsheetFormulaParserDoubleQuotes() {
         super();
     }
 
