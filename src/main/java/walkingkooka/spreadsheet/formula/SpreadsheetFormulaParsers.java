@@ -585,7 +585,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return TEXT;
     }
 
-    private final static Parser<SpreadsheetParserContext> TEXT = SpreadsheetDoubleQuotesParser.INSTANCE.setToString(TEXT_IDENTIFIER.value());
+    private final static Parser<SpreadsheetParserContext> TEXT = SpreadsheetFormulaParserDoubleQuotes.INSTANCE.setToString(TEXT_IDENTIFIER.value());
 
     /**
      * Value literals such as apostrophe string, boolean literals "true" or "false", number, date, date-time, time or equals-sign and expression.
