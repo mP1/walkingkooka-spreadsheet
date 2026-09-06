@@ -21,6 +21,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -192,6 +193,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitFormattingCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitFormattingFunctions(final ExpressionFunctionAliasSet functions) {
         throw new UnsupportedOperationException();
     }
@@ -203,6 +209,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitFormulaConverter(final ConverterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFormulaCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
         throw new UnsupportedOperationException();
     }
 
@@ -313,6 +324,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitScriptingCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitScriptingFunctions(final ExpressionFunctionAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
@@ -374,6 +390,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitValidationConverter(final ConverterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitValidationCurrencyExchangeRater(final CurrencyExchangeRaterSelector selector) {
         throw new UnsupportedOperationException();
     }
 
