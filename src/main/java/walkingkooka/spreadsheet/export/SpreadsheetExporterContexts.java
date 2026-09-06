@@ -28,11 +28,11 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 public final class SpreadsheetExporterContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetExporterContext}
+     * {@see SpreadsheetExporterContextBasic}
      */
     public static SpreadsheetExporterContext basic(final SpreadsheetMetadata spreadsheetMetadata,
                                                    final JsonNodeMarshallContext context) {
-        return BasicSpreadsheetExporterContext.with(
+        return SpreadsheetExporterContextBasic.with(
             spreadsheetMetadata,
             context
         );
