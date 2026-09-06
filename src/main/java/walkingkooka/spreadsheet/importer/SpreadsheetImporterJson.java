@@ -52,14 +52,14 @@ import java.util.stream.Collectors;
 /**
  * The {@link SpreadsheetImporter} half that consumes a {@link WebEntity} holding the output of JsonSpreadsheetExporter.
  */
-final class JsonSpreadsheetImporter implements SpreadsheetImporter {
+final class SpreadsheetImporterJson implements SpreadsheetImporter {
 
     /**
      * Singleton
      */
-    final static JsonSpreadsheetImporter INSTANCE = new JsonSpreadsheetImporter();
+    final static SpreadsheetImporterJson INSTANCE = new SpreadsheetImporterJson();
 
-    private JsonSpreadsheetImporter() {
+    private SpreadsheetImporterJson() {
         super();
     }
 
