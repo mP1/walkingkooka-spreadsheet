@@ -23,14 +23,14 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetMetadataLoader} that always returns nothing.
  */
-final class EmptySpreadsheetMetadataLoader implements SpreadsheetMetadataLoader {
+final class SpreadsheetMetadataLoaderEmpty implements SpreadsheetMetadataLoader {
 
     /**
      * A singleton
      */
-    final static EmptySpreadsheetMetadataLoader INSTANCE = new EmptySpreadsheetMetadataLoader();
+    final static SpreadsheetMetadataLoaderEmpty INSTANCE = new SpreadsheetMetadataLoaderEmpty();
 
-    private EmptySpreadsheetMetadataLoader() {
+    private SpreadsheetMetadataLoaderEmpty() {
         super();
     }
 
