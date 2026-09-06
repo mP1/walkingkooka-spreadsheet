@@ -33,6 +33,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContexts;
+import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
@@ -2686,6 +2687,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
             SpreadsheetMetadataPropertyName.CURRENCY,
             CURRENCY
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.CURRENCY_EXCHANGE_RATERS,
+            CurrencyExchangeRaterAliasSet.parse("properties, storage-path-properties")
         );
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());
