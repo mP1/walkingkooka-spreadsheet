@@ -30,15 +30,15 @@ import java.util.Optional;
 /**
  * This {@link Parser} attempts to match the {@link SpreadsheetParserContext#valueSeparator()} and then creates a {@link ValueSeparatorSymbolSpreadsheetFormulaParserToken}.
  */
-final class SpreadsheetFormulaParsersValueSeparatorParser implements Parser<SpreadsheetParserContext>,
+final class SpreadsheetFormulaParserValueSeparator implements Parser<SpreadsheetParserContext>,
     RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetFormulaParsersValueSeparatorParser INSTANCE = new SpreadsheetFormulaParsersValueSeparatorParser();
+    final static SpreadsheetFormulaParserValueSeparator INSTANCE = new SpreadsheetFormulaParserValueSeparator();
 
-    private SpreadsheetFormulaParsersValueSeparatorParser() {
+    private SpreadsheetFormulaParserValueSeparator() {
         super();
     }
 

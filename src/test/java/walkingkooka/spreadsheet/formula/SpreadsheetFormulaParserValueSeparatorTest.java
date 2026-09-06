@@ -23,9 +23,9 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.ValueSeparatorSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 
-public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends SpreadsheetParserTestCase<SpreadsheetFormulaParsersValueSeparatorParser,
+public final class SpreadsheetFormulaParserValueSeparatorTest extends SpreadsheetParserTestCase<SpreadsheetFormulaParserValueSeparator,
     ValueSeparatorSymbolSpreadsheetFormulaParserToken>
-    implements ToStringTesting<SpreadsheetFormulaParsersValueSeparatorParser> {
+    implements ToStringTesting<SpreadsheetFormulaParserValueSeparator> {
 
     @Test
     public void testIncorrectCharacterFails() {
@@ -78,7 +78,7 @@ public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends Spr
         final String text = c + "";
 
         this.parseAndCheck(
-            SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE,
+            SpreadsheetFormulaParserValueSeparator.INSTANCE,
             new FakeSpreadsheetParserContext() {
                 @Override
                 public char valueSeparator() {
@@ -97,12 +97,17 @@ public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends Spr
     }
 
     @Override
-    public SpreadsheetFormulaParsersValueSeparatorParser createParser() {
-        return SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE;
+    public SpreadsheetFormulaParserValueSeparator createParser() {
+        return SpreadsheetFormulaParserValueSeparator.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetFormulaParsersValueSeparatorParser> type() {
-        return SpreadsheetFormulaParsersValueSeparatorParser.class;
+    public Class<SpreadsheetFormulaParserValueSeparator> type() {
+        return SpreadsheetFormulaParserValueSeparator.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
