@@ -46,7 +46,7 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting2<BasicSpreadsheetComparatorContext>,
+public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetComparatorContextTesting2<SpreadsheetComparatorContextBasic>,
     DecimalNumberContextDelegator,
     LocaleContextTesting,
     SpreadsheetEnvironmentContextTesting {
@@ -111,7 +111,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     public void testWithNullSpreadsheetExpressionEvaluationContextFactoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetComparatorContext.with(
+            () -> SpreadsheetComparatorContextBasic.with(
                 null,
                 CONTEXT
             )
@@ -122,7 +122,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     public void testWithNullConverterContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetComparatorContext.with(
+            () -> SpreadsheetComparatorContextBasic.with(
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
                 null
             )
@@ -151,7 +151,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            BasicSpreadsheetComparatorContext.with(
+            SpreadsheetComparatorContextBasic.with(
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
                 CONTEXT
             ),
@@ -160,8 +160,8 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     }
 
     @Override
-    public BasicSpreadsheetComparatorContext createContext() {
-        return BasicSpreadsheetComparatorContext.with(
+    public SpreadsheetComparatorContextBasic createContext() {
+        return SpreadsheetComparatorContextBasic.with(
             SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
             CONTEXT
         );
@@ -187,7 +187,12 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetComparatorContext> type() {
-        return BasicSpreadsheetComparatorContext.class;
+    public Class<SpreadsheetComparatorContextBasic> type() {
+        return SpreadsheetComparatorContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -28,18 +28,18 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorContext,
+final class SpreadsheetComparatorContextBasic implements SpreadsheetComparatorContext,
     SpreadsheetConverterContextDelegator {
 
-    static BasicSpreadsheetComparatorContext with(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
+    static SpreadsheetComparatorContextBasic with(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
                                                   final SpreadsheetConverterContext context) {
-        return new BasicSpreadsheetComparatorContext(
+        return new SpreadsheetComparatorContextBasic(
             Objects.requireNonNull(spreadsheetExpressionEvaluationContextFactory, "spreadsheetExpressionEvaluationContextFactory"),
             Objects.requireNonNull(context, "context")
         );
     }
 
-    private BasicSpreadsheetComparatorContext(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
+    private SpreadsheetComparatorContextBasic(final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
                                               final SpreadsheetConverterContext context) {
         super();
 
@@ -66,7 +66,7 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
         final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
         return before == after ?
             this :
-            new BasicSpreadsheetComparatorContext(
+            new SpreadsheetComparatorContextBasic(
                 this.spreadsheetExpressionEvaluationContextFactory,
                 after
             );
@@ -78,7 +78,7 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
         final SpreadsheetConverterContext after = before.setPreProcessor(processor);
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetComparatorContext(
+            new SpreadsheetComparatorContextBasic(
                 this.spreadsheetExpressionEvaluationContextFactory,
                 after
             );
