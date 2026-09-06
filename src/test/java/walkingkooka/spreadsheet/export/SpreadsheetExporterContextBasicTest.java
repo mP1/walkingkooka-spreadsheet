@@ -24,14 +24,14 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExporterContextTesting2<BasicSpreadsheetExporterContext>,
-    ToStringTesting<BasicSpreadsheetExporterContext> {
+public final class SpreadsheetExporterContextBasicTest implements SpreadsheetExporterContextTesting2<SpreadsheetExporterContextBasic>,
+    ToStringTesting<SpreadsheetExporterContextBasic> {
 
     @Test
     public void testWithNullSpreadsheetMetadataFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetExporterContext.with(
+            () -> SpreadsheetExporterContextBasic.with(
                 null,
                 JsonNodeMarshallContexts.fake()
             )
@@ -42,7 +42,7 @@ public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExp
     public void testWithNullJsonNodeMarshallContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetExporterContext.with(
+            () -> SpreadsheetExporterContextBasic.with(
                 SpreadsheetMetadata.EMPTY,
                 null
             )
@@ -50,8 +50,8 @@ public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExp
     }
 
     @Override
-    public BasicSpreadsheetExporterContext createContext() {
-        return BasicSpreadsheetExporterContext.with(
+    public SpreadsheetExporterContextBasic createContext() {
+        return SpreadsheetExporterContextBasic.with(
             SpreadsheetMetadata.EMPTY,
             JsonNodeMarshallContexts.basic()
         );
@@ -73,7 +73,12 @@ public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExp
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetExporterContext> type() {
-        return BasicSpreadsheetExporterContext.class;
+    public Class<SpreadsheetExporterContextBasic> type() {
+        return SpreadsheetExporterContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -24,18 +24,18 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 
 import java.util.Objects;
 
-final class BasicSpreadsheetExporterContext implements SpreadsheetExporterContext,
+final class SpreadsheetExporterContextBasic implements SpreadsheetExporterContext,
     JsonNodeMarshallContextDelegator {
 
-    static BasicSpreadsheetExporterContext with(final SpreadsheetMetadata spreadsheetMetadata,
+    static SpreadsheetExporterContextBasic with(final SpreadsheetMetadata spreadsheetMetadata,
                                                 final JsonNodeMarshallContext context) {
-        return new BasicSpreadsheetExporterContext(
+        return new SpreadsheetExporterContextBasic(
             Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata"),
             Objects.requireNonNull(context, "context")
         );
     }
 
-    private BasicSpreadsheetExporterContext(final SpreadsheetMetadata spreadsheetMetadata,
+    private SpreadsheetExporterContextBasic(final SpreadsheetMetadata spreadsheetMetadata,
                                             final JsonNodeMarshallContext context) {
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.context = context;
@@ -57,7 +57,7 @@ final class BasicSpreadsheetExporterContext implements SpreadsheetExporterContex
 
         return before.equals(after) ?
             this :
-            BasicSpreadsheetExporterContext.with(
+            SpreadsheetExporterContextBasic.with(
                 this.spreadsheetMetadata,
                 after
             );
