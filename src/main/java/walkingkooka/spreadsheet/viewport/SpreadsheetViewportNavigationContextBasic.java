@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.viewport;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -28,7 +30,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-final class SpreadsheetViewportNavigationContextBasic implements SpreadsheetViewportNavigationContext {
+final class SpreadsheetViewportNavigationContextBasic implements SpreadsheetViewportNavigationContext,
+    UsesToStringBuilder {
 
     static SpreadsheetViewportNavigationContextBasic with(final SpreadsheetLabelNameResolver labelNameResolver,
                                                           final Predicate<SpreadsheetColumnReference> isColumnHidden,
@@ -271,8 +274,28 @@ final class SpreadsheetViewportNavigationContextBasic implements SpreadsheetView
 
     private final Function<SpreadsheetViewport, SpreadsheetViewportWindows> viewportToWindows;
 
+    // Object...........................................................................................................
+
     @Override
     public String toString() {
-        return this.labelNameResolver + " " + this.isColumnHidden + " " + this.columnToWidth + " " + this.isRowHidden + " " + this.rowToHeight + " " + this.viewportToWindows;
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder b) {
+        b.label("labelNameResolver")
+            .value(this.labelNameResolver)
+            .label("isColumnHidden")
+            .value(this.isColumnHidden)
+            .label("columnToWidth")
+            .value(this.columnToWidth)
+            .label("isRowHidden")
+            .value(this.isRowHidden)
+            .label("rowToHeight")
+            .value(this.rowToHeight)
+            .label("viewportToWindows")
+            .value(this.viewportToWindows);
     }
 }
