@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 
-public final class SpreadsheetConverterSpreadsheetBooleanToTextTest extends SpreadsheetConverterTestCase<SpreadsheetConverterBooleanToText> {
+public final class SpreadsheetConverterBooleanToTextTest extends SpreadsheetConverterTestCase<SpreadsheetConverterBooleanToText> {
 
     @Test
     public void testConvertBooleanTrueToString() {
@@ -79,10 +79,5 @@ public final class SpreadsheetConverterSpreadsheetBooleanToTextTest extends Spre
     @Override
     public Class<SpreadsheetConverterBooleanToText> type() {
         return SpreadsheetConverterBooleanToText.class;
-    }
-
-    @Override
-    public void testTestNaming() {
-        throw new UnsupportedOperationException();
     }
 }
