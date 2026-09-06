@@ -328,7 +328,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
 
     private static void functions(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
         predefined.put(FUNCTION_NAME_IDENTIFIER, functionName());
-        predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE);
+        predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, SpreadsheetFormulaParserValueSeparator.INSTANCE);
     }
 
     private static final EbnfIdentifierName FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("FUNCTION_NAME");
