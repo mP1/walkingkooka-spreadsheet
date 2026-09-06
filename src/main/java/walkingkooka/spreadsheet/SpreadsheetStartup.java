@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.provider.ConvertProviderStartup;
 import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.currency.provider.CurrencyProviderStartup;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginStartup;
@@ -155,6 +156,8 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                 )
             )
         );
+
+        CurrencyProviderStartup.init();
 
         {
             SpreadsheetExporterAliasSet.EMPTY.size();
