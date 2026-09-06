@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 
-public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<SpreadsheetColumnReferenceSpreadsheetParser> {
+public final class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumnTest extends SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase<SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn> {
 
     private final static int A_VALUE = 1;
     private final static String A_TEXT = "A";
@@ -229,12 +229,12 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
     }
 
     @Override
-    public SpreadsheetColumnReferenceSpreadsheetParser createParser() {
-        return SpreadsheetColumnReferenceSpreadsheetParser.INSTANCE;
+    public SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn createParser() {
+        return SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetColumnReferenceSpreadsheetParser> type() {
-        return SpreadsheetColumnReferenceSpreadsheetParser.class;
+    public Class<SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn> type() {
+        return SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceColumn.class;
     }
 }

@@ -27,9 +27,9 @@ import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P extends SpreadsheetColumnOrRowReferenceSpreadsheetParser> implements SpreadsheetParserTesting2<P>, ClassTesting2<P> {
+public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase<P extends SpreadsheetFormulaParserSpreadsheetColumnOrRowReference> implements SpreadsheetParserTesting2<P>, ClassTesting2<P> {
 
-    SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase() {
+    SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase() {
         super();
     }
 
