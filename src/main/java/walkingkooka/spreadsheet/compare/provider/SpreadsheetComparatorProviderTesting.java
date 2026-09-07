@@ -255,7 +255,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                                                     final SpreadsheetComparatorInfo... expected) {
         this.spreadsheetComparatorInfosAndCheck(
             provider,
-            SpreadsheetComparatorInfoSet.with(
+            SpreadsheetComparatorInfoSet.EMPTY.setElements(
                 Sets.of(
                     expected
                 )

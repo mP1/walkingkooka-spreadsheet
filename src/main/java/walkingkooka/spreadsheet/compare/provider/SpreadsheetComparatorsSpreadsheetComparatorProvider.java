@@ -197,7 +197,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
 
     @Override
     public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-        return SpreadsheetComparatorInfoSet.with(
+        return SpreadsheetComparatorInfoSet.EMPTY.setElements(
             NAME_TO_COMPARATOR.keySet()
                 .stream()
                 .map(n -> SpreadsheetComparatorInfo.with(

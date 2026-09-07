@@ -90,7 +90,7 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
 
     @Override
     public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-        return SpreadsheetComparatorInfoSet.with(
+        return SpreadsheetComparatorInfoSet.EMPTY.setElements(
             this.providers.infos()
         );
     }

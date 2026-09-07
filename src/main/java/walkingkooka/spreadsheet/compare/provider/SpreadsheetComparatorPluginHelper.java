@@ -103,7 +103,7 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
 
     @Override
     public SpreadsheetComparatorInfoSet infoSet(final Set<SpreadsheetComparatorInfo> infos) {
-        return SpreadsheetComparatorInfoSet.with(infos);
+        return SpreadsheetComparatorInfoSet.EMPTY.setElements(infos);
     }
 
     @Override

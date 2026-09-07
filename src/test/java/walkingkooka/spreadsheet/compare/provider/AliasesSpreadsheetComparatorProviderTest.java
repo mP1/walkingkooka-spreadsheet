@@ -257,7 +257,7 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
 
                 @Override
                 public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-                    return SpreadsheetComparatorInfoSet.with(
+                    return SpreadsheetComparatorInfoSet.EMPTY.setElements(
                         Sets.of(
                             INFO1,
                             INFO2,
