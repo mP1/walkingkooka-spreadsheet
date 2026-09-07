@@ -129,7 +129,7 @@ final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetPar
 
     @Override
     public SpreadsheetParserAliasSet aliasSet(final SortedSet<SpreadsheetParserAlias> aliases) {
-        return SpreadsheetParserAliasSet.with(aliases);
+        return SpreadsheetParserAliasSet.EMPTY.setElements(aliases);
     }
 
     @Override

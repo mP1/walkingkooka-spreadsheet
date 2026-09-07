@@ -72,13 +72,6 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
         );
     }
 
-    /**
-     * Factory that creates {@link SpreadsheetParserAliasSet} with the given aliases.
-     */
-    public static SpreadsheetParserAliasSet with(final Collection<SpreadsheetParserAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     private SpreadsheetParserAliasSet(final PluginAliasSet<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
