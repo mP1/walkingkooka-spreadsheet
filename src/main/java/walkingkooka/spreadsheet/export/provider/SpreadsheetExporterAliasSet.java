@@ -63,13 +63,6 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetExporterAliasSet} with the given aliases.
-     */
-    public static SpreadsheetExporterAliasSet with(final Collection<SpreadsheetExporterAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     public static SpreadsheetExporterAliasSet parse(final String text) {
         return new SpreadsheetExporterAliasSet(
             PluginAliasSet.parse(

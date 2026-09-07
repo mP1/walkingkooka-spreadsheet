@@ -129,7 +129,7 @@ final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetE
 
     @Override
     public SpreadsheetExporterAliasSet aliasSet(final SortedSet<SpreadsheetExporterAlias> aliases) {
-        return SpreadsheetExporterAliasSet.with(aliases);
+        return SpreadsheetExporterAliasSet.EMPTY.setElements(aliases);
     }
 
     @Override
