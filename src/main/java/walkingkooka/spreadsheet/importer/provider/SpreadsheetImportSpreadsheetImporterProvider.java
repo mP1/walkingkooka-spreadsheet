@@ -69,8 +69,6 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
     private SpreadsheetImporter spreadsheetImporter0(final SpreadsheetImporterName name,
                                                      final List<?> values,
                                                      final ProviderContext context) {
-        final int count = values.size();
-
         final SpreadsheetImporter importer;
 
         switch (name.value()) {
@@ -82,15 +80,13 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
                 );
                 break;
             case SpreadsheetImporterName.EMPTY_STRING:
-                if (0 != count) {
-                    throw new IllegalArgumentException("Got " + count + " expected 0 values");
-                }
+                this.noParameterCheck(values);
+
                 importer = SpreadsheetImporters.empty();
                 break;
             case SpreadsheetImporterName.JSON_STRING:
-                if (0 != count) {
-                    throw new IllegalArgumentException("Got " + count + " expected 0 values");
-                }
+                this.noParameterCheck(values);
+
                 importer = SpreadsheetImporters.json();
                 break;
             default:

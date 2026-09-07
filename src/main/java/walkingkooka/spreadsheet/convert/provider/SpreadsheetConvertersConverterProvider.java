@@ -95,27 +95,27 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
         final String nameString = name.value();
         switch (nameString) {
             case BASIC_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.basic();
                 break;
             case BINARY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.binary();
                 break;
             case BINARY_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.binaryToText();
                 break;
             case BOOLEAN_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.booleans();
                 break;
             case BOOLEAN_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.booleanToText();
                 break;
@@ -133,804 +133,807 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
                 converter = SpreadsheetConverters.collectionTo();
                 break;
             case COLOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.color();
                 break;
             case COLOR_TO_COLOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.colorToColor();
                 break;
             case COLOR_TO_NUMBER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.colorToNumber();
                 break;
             case CSV_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.csv();
                 break;
             case CURRENCY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.currency();
                 break;
             case CURRENCY_CODE_TO_CURRENCY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.currencyCodeToCurrency();
                 break;
             case CURRENCY_VALUE_TO_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.currencyValueTo();
                 break;
             case CURRENCY_VALUE_TO_NUMBER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.currencyValueToNumber();
                 break;
             case DATE_TIME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = this.dateTime.apply(context);
                 break;
             case DATE_TIME_SYMBOLS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.dateTimeSymbols();
                 break;
             case DECIMAL_NUMBER_SYMBOLS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.decimalNumberSymbols();
                 break;
             case ENVIRONMENT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.environment();
                 break;
             case ENVIRONMENT_TO_BINARY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.environmentToBinary();
                 break;
             case ENVIRONMENT_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.environmentToText();
                 break;
             case ERROR_TO_ERROR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.errorToError();
                 break;
             case ERROR_THROWING_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.errorThrowing();
                 break;
             case ERROR_TO_NUMBER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.errorToNumber();
                 break;
             case EXPRESSION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.expression();
                 break;
             case FORMAT_PATTERN_TO_STRING_STRING:
-                parameterCountCheck(copy, 1);
+                this.parameterCountCheck(
+                    copy,
+                    1
+                );
 
                 converter = SpreadsheetConverters.formatPatternToString(
                     copy.get(0).toString()
                 );
                 break;
             case FORM_AND_VALIDATION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.formAndValidation();
                 break;
             case HAS_FORMATTER_SELECTOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
                 break;
             case HAS_PARSER_SELECTOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.hasSpreadsheetParserSelector();
                 break;
             case HAS_SPREADSHEET_SELECTION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.hasSpreadsheetSelection();
                 break;
             case TO_STYLE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toStyle();
                 break;
             case TO_TEXT_NODE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toTextNode();
                 break;
             case HAS_VALIDATOR_SELECTOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.hasValidatorSelector();
                 break;
             case JSON_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.json();
                 break;
             case JSON_TO_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.jsonTo();
                 break;
             case LOCALE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.locale();
                 break;
             case LOCALE_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.locale();
                 break;
             case NET_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.net();
                 break;
             case NUMBER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.number();
                 break;
             case NUMBER_TO_COLOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.numberToColor();
                 break;
             case NUMBER_TO_CURRENCY_VALUE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.numberToCurrencyValue();
                 break;
             case NUMBER_TO_NUMBER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.numberToNumber();
                 break;
             case NUMBER_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.numberToText();
                 break;
             case NULL_TO_NUMBER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.nullToNumber();
                 break;
             case OPTIONAL_TO_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.optionalTo();
                 break;
             case PLUGINS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.plugins();
                 break;
             case PROPERTIES_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.properties();
                 break;
             case PROPERTIES_TO_DATE_TIME_SYMBOLS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.propertiesToDateTimeSymbols();
                 break;
             case PROPERTIES_TO_DECIMAL_NUMBER_SYMBOLS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.propertiesToDecimalNumberSymbols();
                 break;
             case PROPERTIES_TO_SPREADSHEET_METADATA_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.propertiesToSpreadsheetMetadata();
                 break;
             case PROPERTIES_TO_TEXT_STYLE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.propertiesToTextStyle();
                 break;
             case SPREADSHEET_CELL_SET_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetCellSet();
                 break;
             case SPREADSHEET_ID_TO_SPREADSHEET_METADATA_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetIdToSpreadsheetMetadata();
                 break;
             case SPREADSHEET_METADATA_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetMetadata();
                 break;
             case SPREADSHEET_SELECTION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetSelection();
                 break;
             case SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetSelectionToSpreadsheetSelection();
                 break;
             case SPREADSHEET_SELECTION_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetSelectionToText();
                 break;
             case STORAGE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storage();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_BINARY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueBinary();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_CSV_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueCsv();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_ENVIRONMENT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueEnvironment();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_EXPRESSION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueExpression();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_JSON_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueJson();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueProperties();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_TSV_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueTsv();
                 break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_TXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageBinaryToStorageValueTxt();
                 break;
             case STORAGE_VALUE_INFO_LIST_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueInfoListToText();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_BINARY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryBinary();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_CSV_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryCsv();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_ENVIRONMENT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryEnvironment();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_EXPRESSION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryExpression();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_JSON_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryJson();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_PROPERTIES_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryProperties();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_TSV_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryTsv();
                 break;
             case STORAGE_VALUE_TO_STORAGE_BINARY_TXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.storageValueToStorageBinaryTxt();
                 break;
             case STYLE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.style();
                 break;
             case SYSTEM_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.system();
                 break;
             case TEMPLATE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.template();
                 break;
             case TEXT_NODE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textNode();
                 break;
             case TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.text();
                 break;
             case TEXT_TO_BINARY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToBinary();
                 break;
             case TEXT_TO_BOOLEAN_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToBooleanList();
                 break;
             case TEXT_TO_BORDER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToBorder();
                 break;
             case TEXT_TO_CHARSET_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToCharset();
                 break;
             case TEXT_TO_COLOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToColor();
                 break;
             case TEXT_TO_CSV_STRING_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToCsvStringList();
                 break;
             case TEXT_TO_CSV_STRING_SET_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToCsvStringSet();
                 break;
             case TEXT_TO_CURRENCY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToCurrency();
                 break;
             case TEXT_TO_CURRENCY_CODE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToCurrencyCode();
                 break;
             case TEXT_TO_CURRENCY_VALUE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToCurrencyValue();
                 break;
             case TEXT_TO_DATE_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToDateList();
                 break;
             case TEXT_TO_DATE_TIME_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToDateTimeList();
                 break;
             case TEXT_TO_EMAIL_ADDRESS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToEmailAddress();
                 break;
             case TEXT_TO_ENVIRONMENT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToEnvironment();
                 break;
             case TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToEnvironmentValueName();
                 break;
             case TEXT_TO_ERROR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetError();
                 break;
             case TEXT_TO_EXPRESSION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToExpression();
                 break;
             case TEXT_TO_FLAG_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToFlag();
                 break;
             case TEXT_TO_FORM_NAME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToFormName();
                 break;
             case TEXT_TO_HAS_HOST_ADDRESS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToHasHostAddress();
                 break;
             case TEXT_TO_HOST_ADDRESS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToHostAddress();
                 break;
             case TEXT_TO_INDENTATION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToIndentation();
                 break;
             case TEXT_TO_JSON_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToJson();
                 break;
             case TEXT_TO_JSON_POINTER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToJsonPointer();
                 break;
             case TEXT_TO_JSON_SELECTOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToJsonSelector();
                 break;
             case TEXT_TO_LINE_ENDING_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToLineEnding();
                 break;
             case TEXT_TO_LOCALE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToLocale();
                 break;
             case TEXT_TO_LOCALE_LANGUAGE_TAG_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToLocaleLanguageTag();
                 break;
             case TEXT_TO_MARGIN_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToMargin();
                 break;
             case TEXT_TO_MEDIA_TYPE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToMediaType();
                 break;
             case TEXT_TO_NUMBER_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToNumberList();
                 break;
             case TEXT_TO_OBJECT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToObject();
                 break;
             case TEXT_TO_PADDING_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToPadding();
                 break;
             case TEXT_TO_PATH_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = textToPathConverter();
                 break;
             case TEXT_TO_PROPERTIES_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToProperties();
                 break;
             case TEXT_TO_SPREADSHEET_COLOR_NAME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetColorName();
                 break;
             case TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetFormatterSelector();
                 break;
             case TEXT_TO_SPREADSHEET_ID_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetId();
                 break;
             case TEXT_TO_SPREADSHEET_METADATA_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetMetadata();
                 break;
             case TEXT_TO_SPREADSHEET_METADATA_COLOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetMetadataColor();
                 break;
             case TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetMetadataPropertyName();
                 break;
             case TEXT_TO_SPREADSHEET_NAME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetName();
                 break;
             case TEXT_TO_SPREADSHEET_SELECTION_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetSelection();
                 break;
             case TEXT_TO_SPREADSHEET_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetText();
                 break;
             case TEXT_TO_STORAGE_PATH_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToStoragePath();
                 break;
             case TEXT_TO_STRING_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToStringList();
                 break;
             case TEXT_TO_TEMPLATE_VALUE_NAME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTemplateValueName();
                 break;
             case TEXT_TO_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToText();
                 break;
             case TEXT_TO_TEXT_NODE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTextNode();
                 break;
             case TEXT_TO_TEXT_STYLE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTextStyle();
                 break;
             case TEXT_TO_TEXT_STYLE_PROPERTY_NAME_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTextStylePropertyName();
                 break;
             case TEXT_TO_TIME_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTimeList();
                 break;
             case TEXT_TO_TSV_STRING_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTsvStringList();
                 break;
             case TEXT_TO_TSV_STRING_SET_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTsvStringSet();
                 break;
             case TEXT_TO_URL_FRAGMENT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToUrlFragment();
                 break;
             case TEXT_TO_URL_QUERY_STRING_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToUrlQueryString();
                 break;
             case TEXT_TO_URL_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToUrl();
                 break;
             case TEXT_TO_VALIDATION_ERROR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToValidationError();
                 break;
             case TEXT_TO_VALIDATOR_SELECTOR_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToValidatorSelector();
                 break;
             case TEXT_TO_VALUE_TYPE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToValueType();
                 break;
             case TEXT_TO_ZONE_OFFSET_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToZoneOffset();
                 break;
             case TO_BINARY_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toBinary();
                 break;
             case TO_BOOLEAN_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toBoolean();
                 break;
             case TO_CSV_STRING_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toCsvStringList();
                 break;
             case TO_DATE_TIME_SYMBOLS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toDateTimeSymbols();
                 break;
             case TO_DECIMAL_NUMBER_SYMBOLS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toDecimalNumberSymbols();
                 break;
             case TO_ENVIRONMENT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toEnvironment();
                 break;
             case TO_HOST_ADDRESS_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toHostAddress();
                 break;
             case TO_JSON_NODE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toJsonNode();
                 break;
             case TO_LOCALE_LANGUAGE_TAG_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toLocaleLanguageTag();
                 break;
             case TO_LOCALE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toLocale();
                 break;
             case TO_NUMBER_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toNumber();
                 break;
             case TO_MULTI_LINE_TEXT_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toMultiLineText();
                 break;
             case TO_PROPERTIES_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toProperties();
                 break;
             case TO_STRING_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.objectToString();
                 break;
             case TO_STYLEABLE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toStyleable();
                 break;
             case TO_TSV_STRING_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toTsvStringList();
                 break;
             case TO_VALIDATION_CHECKBOX_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toValidationCheckbox();
                 break;
             case TO_VALIDATION_CHOICE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toValidationChoice();
                 break;
             case TO_VALIDATION_CHOICE_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toValidationChoiceList();
                 break;
             case TO_VALIDATION_ERROR_LIST_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toValidationErrorList();
                 break;
             case TO_VALUE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toValue();
                 break;
             case TSV_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.tsv();
                 break;
             case URL_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.url();
                 break;
             case URL_TO_HYPERLINK_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.urlToHyperlink();
                 break;
             case URL_TO_IMAGE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.urlToImage();
                 break;
             case VALUE_STRING:
-                noParameterCheck(copy);
+                this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.value();
                 break;
@@ -951,20 +954,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
      * The {@link Function} that supplies the {@link Converter} when a request comes through for {@link #DATE_TIME}.
      */
     private final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime;
-
-    private static void noParameterCheck(final List<?> values) {
-        parameterCountCheck(
-            values,
-            0
-        );
-    }
-
-    private static void parameterCountCheck(final List<?> values,
-                                            final int expected) {
-        if (expected != values.size()) {
-            throw new IllegalArgumentException("Expected " + expected + " values got " + values.size() + " " + values);
-        }
-    }
 
     /**
      * The shadowed method in {@link SpreadsheetConvertersConverterProviderGwt#textToPathConverter()} throws an exception

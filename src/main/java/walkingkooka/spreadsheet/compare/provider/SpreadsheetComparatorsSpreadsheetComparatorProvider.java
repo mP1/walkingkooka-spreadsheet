@@ -77,66 +77,73 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
 
         switch (name.value().toLowerCase()) {
             case SpreadsheetComparatorName.BACKGROUND_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.backgroundColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.BORDER_BOTTOM_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.borderBottomColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.BORDER_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.borderColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.BORDER_LEFT_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.borderLeftColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.BORDER_RIGHT_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.borderRightColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.BORDER_TOP_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.borderTopColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.color(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.CUSTOM_LIST_STRING:
@@ -150,21 +157,23 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                 );
                 break;
             case SpreadsheetComparatorName.OUTLINE_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.outlineColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             case SpreadsheetComparatorName.TEXT_DECORATION_COLOR_STRING:
-                if(values.size() != 1) {
-                    throw new IllegalArgumentException("Expected only 1 value");
-                }
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 comparator = SpreadsheetComparators.textDecorationColor(
-                    (String)values.get(0)
+                    (String) values.get(0)
                 );
                 break;
             default:
@@ -178,9 +187,9 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
                     }
                     comparator = comparator.reversed();
                 }
-                if (false == values.isEmpty()) {
-                    throw new IllegalArgumentException("Got " + values + " expected none");
-                }
+                this.noParameterCheck(
+                    values
+                );
         }
 
         return comparator;
