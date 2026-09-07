@@ -324,6 +324,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),
+                ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
             LOCALE_CONTEXT

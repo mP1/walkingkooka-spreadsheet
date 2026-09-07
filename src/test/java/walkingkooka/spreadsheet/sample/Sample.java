@@ -31,6 +31,7 @@ import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
@@ -42,6 +43,7 @@ import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
@@ -52,6 +54,8 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -81,11 +85,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.StorageEnvironmentContexts;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
-import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -116,11 +120,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class Sample {
 
+    private final static Currency CURRENCY = Currency.getInstance("AUD");
+
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
+    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    private final static HasNow HAS_NOW = () -> LocalDateTime.of(
+        1999,
+        12,
+        13,
+        12,
+        58,
+        59
+    );
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.fake();
+
 
     public static void main(final String[] args) {
         final Sample sample = new Sample();
@@ -232,8 +250,10 @@ public final class Sample {
                         LocalDateTime.of(2000, 1, 2, 3, 4, 5)
                     )
                 ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
-                .set(SpreadsheetMetadataPropertyName.CURRENCY, Currency.getInstance("AUD"))
                 .set(
+                    SpreadsheetMetadataPropertyName.CURRENCY,
+                    CURRENCY
+                ).set(
                     SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                     DecimalNumberSymbols.with(
                         '-',
@@ -262,8 +282,7 @@ public final class Sample {
                 .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection(text, boolean, number, date-time, basic, locale, value, error-throwing, color, expression, environment, currency, template, net)"))
                 .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
                 .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
@@ -306,9 +325,28 @@ public final class Sample {
             )
         );
 
-        final LineEnding lineEnding = LineEnding.NL;
         final CurrencyContext currencyContext = CurrencyContexts.fake();
         final ProviderContext providerContext = ProviderContexts.fake();
+
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.readOnly(
+            Predicates.always(),
+            SpreadsheetEnvironmentContexts.basic(
+                Storages.fake(),
+                StorageEnvironmentContexts.basic(
+                    EnvironmentContexts.map(
+                        StandardCharsets.UTF_8,
+                        CURRENCY,
+                        Indentation.SPACES2,
+                        LineEnding.NL,
+                        LOCALE,
+                        LocalDateTime::now,
+                        Optional.of(
+                            EmailAddress.parse("user@example.com")
+                        )
+                    )
+                )
+            )
+        );
 
         return new FakeSpreadsheetEngineContext() {
 
@@ -378,18 +416,13 @@ public final class Sample {
                             SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                            this, // CanParseEnvironmentValue
-                            HasUserDirectorieses.empty(),
                             LABEL_NAME_RESOLVER,
                             MEDIA_TYPE_DETECTOR,
                             BinaryNumberConverterFunctions.fake(),
                             SpreadsheetMetadataLoaders.fake(),
                             converterProvider,
-                            TextPrinting.with(
-                                Indentation.SPACES2,
-                                lineEnding
-                            ).setCharset(StandardCharsets.UTF_8),
                             currencyContext.setLocaleContext(this.localeContext),
+                            spreadsheetEnvironmentContext,
                             providerContext
                         ),
                         EnvironmentContexts.fake(),
@@ -440,17 +473,12 @@ public final class Sample {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
-                        this, // CanParseEnvironmentValue
-                        HasUserDirectorieses.empty(),
                         LABEL_NAME_RESOLVER,
                         MEDIA_TYPE_DETECTOR,
                         BinaryNumberConverterFunctions.fake(),
                         SpreadsheetMetadataLoaders.fake(),
-                        TextPrinting.with(
-                            Indentation.SPACES2,
-                            lineEnding
-                        ).setCharset(StandardCharsets.UTF_8),
                         currencyContext.setLocaleContext(this.localeContext),
+                        spreadsheetEnvironmentContext,
                         SpreadsheetProviders.basic(
                             SpreadsheetComparatorProviders.fake(),
                             converterProvider,

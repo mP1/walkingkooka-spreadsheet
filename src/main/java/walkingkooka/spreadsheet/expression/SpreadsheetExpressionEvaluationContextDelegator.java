@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
@@ -213,6 +214,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default HasUserDirectories hasUserDirectories() {
         return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    @Override
+    default Optional<EmailAddress> user() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .user();
     }
 
     @Override

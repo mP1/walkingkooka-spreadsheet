@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -100,15 +99,13 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             SpreadsheetMetadata.NO_CELL,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
-            SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-            HasUserDirectorieses.empty(), // no current working directory
             SPREADSHEET_LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
             CONVERTER_PROVIDER,
-            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             PROVIDER_CONTEXT
         );
 
@@ -297,14 +294,12 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },
-            SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-            HAS_USER_DIRECTORIES,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
-            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );

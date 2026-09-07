@@ -21,6 +21,7 @@ import walkingkooka.Binary;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -67,6 +68,11 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
 
     @Override
     public Optional<StoragePath> homeDirectory() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
         throw new UnsupportedOperationException();
     }
 

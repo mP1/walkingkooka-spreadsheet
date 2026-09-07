@@ -531,15 +531,13 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SpreadsheetMetadata.NO_CELL,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-        SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME, // CanParseEnvironmentValueName
-        HAS_USER_DIRECTORIES,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
         CONVERTER_PROVIDER,
-        BINARY_TEXT_CONTEXT,
         CURRENCY_LOCALE_CONTEXT,
+        SPREADSHEET_ENVIRONMENT_CONTEXT,
         PROVIDER_CONTEXT
     );
 
@@ -574,14 +572,12 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-        SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME, // CanParseEnvironmentValueName
-        HAS_USER_DIRECTORIES,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
-        BINARY_TEXT_CONTEXT,
         CURRENCY_LOCALE_CONTEXT,
+        SPREADSHEET_ENVIRONMENT_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
     );
@@ -589,14 +585,12 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-        SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-        HAS_USER_DIRECTORIES,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
-        BINARY_TEXT_CONTEXT,
         CURRENCY_LOCALE_CONTEXT,
+        SPREADSHEET_ENVIRONMENT_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
     );

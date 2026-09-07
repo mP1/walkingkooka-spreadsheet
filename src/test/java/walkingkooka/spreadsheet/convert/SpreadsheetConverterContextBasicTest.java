@@ -416,6 +416,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),
+                ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             ),
             LOCALE_CONTEXT
@@ -448,9 +449,12 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         this.toStringAndCheck(
             JsonNodeConverterContexts.basic(
                 converterContext,
+                ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             ),
             converterContext +
+                " " +
+                ENVIRONMENT_CONTEXT +
                 " " +
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         );

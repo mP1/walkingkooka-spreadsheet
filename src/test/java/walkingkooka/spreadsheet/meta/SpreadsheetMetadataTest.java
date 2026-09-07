@@ -865,15 +865,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 null,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -887,15 +885,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 null,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -909,59 +905,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 null,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullCanParseEnvironmentValueNameFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                null,
-                HAS_USER_DIRECTORIES,
-                LABEL_NAME_RESOLVER,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                SPREADSHEET_METADATA_LOADER,
-                CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
-                CURRENCY_LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullHasUserDirectoriesFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                null,
-                LABEL_NAME_RESOLVER,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                SPREADSHEET_METADATA_LOADER,
-                CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
-                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -975,15 +925,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 null,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -997,15 +945,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 null,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -1019,15 +965,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -1041,15 +985,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -1063,37 +1005,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 null,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullBinaryTextContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
-                LABEL_NAME_RESOLVER,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                SPREADSHEET_METADATA_LOADER,
-                CONVERTER_PROVIDER,
-                null,
-                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -1107,14 +1025,32 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
+                null,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullSpreadsheetEnvironmentContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                LABEL_NAME_RESOLVER,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
+                CONVERTER_PROVIDER,
+                CURRENCY_LOCALE_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
             )
@@ -1129,15 +1065,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null
             )
         );
@@ -1151,15 +1085,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -1229,15 +1161,13 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             Optional.of(cell),
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-            HAS_USER_DIRECTORIES,
             LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
             ConverterProviders.converters(),
-            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             PROVIDER_CONTEXT
         );
 

@@ -28,6 +28,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
@@ -349,6 +350,12 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     public final LocalDateTime now() {
         return this.spreadsheetEnvironmentContext()
             .now(); // inherit unrelated defaults
+    }
+
+    @Override
+    public final Optional<EmailAddress> user() {
+        return this.spreadsheetEnvironmentContext()
+            .user(); // inherit unrelated defaults
     }
 
     @Override

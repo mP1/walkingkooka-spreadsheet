@@ -258,6 +258,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         ),
                         ExpressionNumberKind.BIG_DECIMAL
                     ),
+                    ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
                 LOCALE_CONTEXT

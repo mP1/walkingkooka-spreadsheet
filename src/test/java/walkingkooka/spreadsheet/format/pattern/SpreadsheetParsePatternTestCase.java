@@ -892,6 +892,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),
+                ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
             LocaleContexts.fake()

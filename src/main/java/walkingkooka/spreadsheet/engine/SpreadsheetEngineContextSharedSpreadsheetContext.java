@@ -145,14 +145,12 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
-                    this, // CanParseEnvironmentValueName
-                    this, // HasUserDirectories
                     this.spreadsheetLabelNameResolver,
                     spreadsheetContext, // MediaTypeDetector
                     spreadsheetContext.multiplier(),
                     spreadsheetContext, // SpreadsheetMetadataLoader
-                    spreadsheetContext, // BinaryTextContext
                     spreadsheetContext, // CurrencyLocaleContext
+                    spreadsheetContext, // SpreadsheetEnvironmentContext
                     spreadsheetContext, // SpreadsheetProvider
                     spreadsheetContext.providerContext()
                 );
@@ -328,14 +326,12 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
-                this, // CanParseEnvironmentValueName
-                this, // HasUserDirectories
                 this, // SpreadsheetLabelNameResolver,
                 context, // MediaTypeDetector
                 context.multiplier(),
                 context, // SpreadsheetMetadataContext
-                context, // BinaryTextContext
                 context, // CurrencyLocaleContext
+                context, // SpreadsheetEnvironmentContext
                 context, // spreadsheetProvider,
                 context.providerContext() // ProviderContext
             );
