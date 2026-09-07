@@ -1989,7 +1989,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         return INFOS;
     }
 
-    private final static SpreadsheetFormatterInfoSet INFOS = SpreadsheetFormatterInfoSet.with(
+    private final static SpreadsheetFormatterInfoSet INFOS = SpreadsheetFormatterInfoSet.EMPTY.setElements(
         Sets.of(
             spreadsheetFormatterInfo(SpreadsheetFormatterName.ACCOUNTING),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),

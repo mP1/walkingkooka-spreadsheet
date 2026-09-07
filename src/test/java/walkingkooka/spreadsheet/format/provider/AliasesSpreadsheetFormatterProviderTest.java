@@ -150,7 +150,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
                     @Override
                     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.with(
+                        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -184,7 +184,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
                     @Override
                     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.with(
+                        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -219,7 +219,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
                     @Override
                     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.with(
+                        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -243,7 +243,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
                     @Override
                     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.with(
+                        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -290,7 +290,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
                     @Override
                     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.with(
+                        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -339,7 +339,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
                     @Override
                     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.with(
+                        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO2
                             )
@@ -420,7 +420,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
                 @Override
                 public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                    return SpreadsheetFormatterInfoSet.with(
+                    return SpreadsheetFormatterInfoSet.EMPTY.setElements(
                         Sets.of(
                             INFO1,
                             INFO2,

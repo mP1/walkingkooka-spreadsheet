@@ -115,7 +115,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
 
     @Override
     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-        return SpreadsheetFormatterInfoSet.with(
+        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
             this.providers.infos()
         );
     }

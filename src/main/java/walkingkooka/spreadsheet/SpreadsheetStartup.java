@@ -173,7 +173,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         {
             SpreadsheetFormatterAliasSet.EMPTY.size();
-            SpreadsheetFormatterInfoSet.with(
+            SpreadsheetFormatterInfoSet.EMPTY.setElements(
                 Lists.of(
                     SpreadsheetFormatterInfo.with(
                         url,

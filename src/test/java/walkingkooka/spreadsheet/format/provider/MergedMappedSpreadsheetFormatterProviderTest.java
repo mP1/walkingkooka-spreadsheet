@@ -253,7 +253,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
         final SpreadsheetFormatterInfoSet spreadsheetFormatPattern = SpreadsheetFormatterProviders.spreadsheetFormatters()
             .spreadsheetFormatterInfos();
 
-        final SpreadsheetFormatterInfoSet withRename = SpreadsheetFormatterInfoSet.with(
+        final SpreadsheetFormatterInfoSet withRename = SpreadsheetFormatterInfoSet.EMPTY.setElements(
             spreadsheetFormatPattern.stream()
                 .map(
                     i -> i.name().equals(SpreadsheetFormatterName.DATE) ?
@@ -280,7 +280,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
         return MergedMappedSpreadsheetFormatterProvider.with(
-            SpreadsheetFormatterInfoSet.with(
+            SpreadsheetFormatterInfoSet.EMPTY.setElements(
                 Sets.of(
                     SpreadsheetFormatterInfo.with(
                         url("date"),
