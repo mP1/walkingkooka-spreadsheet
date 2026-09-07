@@ -59,7 +59,7 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
 
     @Override
     public SpreadsheetExporterInfoSet createSet() {
-        return SpreadsheetExporterInfoSet.with(
+        return SpreadsheetExporterInfoSet.EMPTY.setElements(
             Sets.of(
                 this.info()
             )
@@ -87,7 +87,7 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
     @Test
     public void testMarshallNotEmpty2() {
         this.marshallAndCheck(
-            SpreadsheetExporterInfoSet.with(
+            SpreadsheetExporterInfoSet.EMPTY.setElements(
                 Sets.of(
                     SpreadsheetExporterInfo.with(
                         Url.parseAbsolute("https://example.com/test123"),
@@ -114,7 +114,7 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
 
     @Override
     public SpreadsheetExporterInfoSet createJsonNodeMarshallingValue() {
-        return SpreadsheetExporterInfoSet.with(
+        return SpreadsheetExporterInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetExporterInfo.with(
                     Url.parseAbsolute("https://example.com/test111"),

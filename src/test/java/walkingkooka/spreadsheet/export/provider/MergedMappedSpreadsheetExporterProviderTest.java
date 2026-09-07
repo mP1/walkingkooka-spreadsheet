@@ -164,7 +164,7 @@ public final class MergedMappedSpreadsheetExporterProviderTest implements Spread
 
             @Override
             public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
-                return SpreadsheetExporterInfoSet.with(
+                return SpreadsheetExporterInfoSet.EMPTY.setElements(
                     Sets.of(
                         SpreadsheetExporterInfo.with(
                             RENAMED_URL,

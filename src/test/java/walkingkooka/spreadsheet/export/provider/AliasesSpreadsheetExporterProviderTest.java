@@ -193,7 +193,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
 
                 @Override
                 public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
-                    return SpreadsheetExporterInfoSet.with(
+                    return SpreadsheetExporterInfoSet.EMPTY.setElements(
                         Sets.of(
                             INFO1,
                             INFO2,
