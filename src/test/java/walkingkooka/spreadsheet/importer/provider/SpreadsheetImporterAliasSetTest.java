@@ -27,7 +27,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLikeTesting<SpreadsheetImporterName,
     SpreadsheetImporterInfo,
@@ -38,24 +37,6 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
     HashCodeEqualsDefinedTesting2<SpreadsheetImporterAliasSet>,
     ToStringTesting<SpreadsheetImporterAliasSet>,
     JsonNodeMarshallerTesting<SpreadsheetImporterAliasSet> {
-
-    // with.............................................................................................................
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetImporterAliasSet.with(null)
-        );
-    }
-
-    @Test
-    public void testWithEmpty() {
-        assertSame(
-            SpreadsheetImporterAliasSet.EMPTY,
-            SpreadsheetImporterAliasSet.with(SortedSets.empty())
-        );
-    }
 
     // name.............................................................................................................
 
@@ -93,6 +74,14 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
             this.createSet(),
             SpreadsheetImporterName.with("custom-alias"),
             SpreadsheetImporterSelector.parse("custom(1)")
+        );
+    }
+
+    @Test
+    public void testSetElementsWithEmpty() {
+        assertSame(
+            SpreadsheetImporterAliasSet.EMPTY,
+            SpreadsheetImporterAliasSet.EMPTY.setElements(SortedSets.empty())
         );
     }
 

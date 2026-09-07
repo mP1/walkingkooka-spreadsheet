@@ -63,13 +63,6 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetImporterAliasSet} with the given aliases.
-     */
-    public static SpreadsheetImporterAliasSet with(final Collection<SpreadsheetImporterAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     public static SpreadsheetImporterAliasSet parse(final String text) {
         return new SpreadsheetImporterAliasSet(
             PluginAliasSet.parse(
