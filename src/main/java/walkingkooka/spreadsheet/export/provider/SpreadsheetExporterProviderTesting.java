@@ -257,7 +257,7 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                                   final SpreadsheetExporterInfo... expected) {
         this.spreadsheetExporterInfosAndCheck(
             provider,
-            SpreadsheetExporterInfoSet.with(
+            SpreadsheetExporterInfoSet.EMPTY.setElements(
                 Sets.of(
                     expected
                 )

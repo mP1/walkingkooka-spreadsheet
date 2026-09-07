@@ -103,7 +103,7 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
         return INFOS;
     }
 
-    private final static SpreadsheetExporterInfoSet INFOS = SpreadsheetExporterInfoSet.with(
+    private final static SpreadsheetExporterInfoSet INFOS = SpreadsheetExporterInfoSet.EMPTY.setElements(
         Sets.of(
             spreadsheetExporterInfo(SpreadsheetExporterName.COLLECTION),
             spreadsheetExporterInfo(SpreadsheetExporterName.EMPTY),

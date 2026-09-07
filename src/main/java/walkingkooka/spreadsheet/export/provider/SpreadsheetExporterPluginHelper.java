@@ -103,7 +103,7 @@ final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetE
 
     @Override
     public SpreadsheetExporterInfoSet infoSet(final Set<SpreadsheetExporterInfo> infos) {
-        return SpreadsheetExporterInfoSet.with(infos);
+        return SpreadsheetExporterInfoSet.EMPTY.setElements(infos);
     }
 
     @Override
