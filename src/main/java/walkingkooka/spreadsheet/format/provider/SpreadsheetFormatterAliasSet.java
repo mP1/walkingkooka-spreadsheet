@@ -69,13 +69,6 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
         );
     }
 
-    /**
-     * Factory that creates {@link SpreadsheetFormatterAliasSet} with the given aliases.
-     */
-    public static SpreadsheetFormatterAliasSet with(final Collection<SpreadsheetFormatterAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     private SpreadsheetFormatterAliasSet(final PluginAliasSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias, SpreadsheetFormatterAliasSet> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
