@@ -129,7 +129,7 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
 
     @Override
     public SpreadsheetComparatorAliasSet aliasSet(final SortedSet<SpreadsheetComparatorAlias> aliases) {
-        return SpreadsheetComparatorAliasSet.with(aliases);
+        return SpreadsheetComparatorAliasSet.EMPTY.setElements(aliases);
     }
 
     @Override
