@@ -72,13 +72,6 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
         );
     }
 
-    /**
-     * Factory that creates {@link SpreadsheetComparatorAliasSet} with the given aliases.
-     */
-    public static SpreadsheetComparatorAliasSet with(final Collection<SpreadsheetComparatorAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     private SpreadsheetComparatorAliasSet(final PluginAliasSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }

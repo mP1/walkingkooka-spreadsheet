@@ -27,7 +27,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLikeTesting<SpreadsheetComparatorName,
     SpreadsheetComparatorInfo,
@@ -38,24 +37,6 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     HashCodeEqualsDefinedTesting2<SpreadsheetComparatorAliasSet>,
     ToStringTesting<SpreadsheetComparatorAliasSet>,
     JsonNodeMarshallerTesting<SpreadsheetComparatorAliasSet> {
-
-    // with.............................................................................................................
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetComparatorAliasSet.with(null)
-        );
-    }
-
-    @Test
-    public void testWithEmpty() {
-        assertSame(
-            SpreadsheetComparatorAliasSet.EMPTY,
-            SpreadsheetComparatorAliasSet.with(SortedSets.empty())
-        );
-    }
 
     // name.............................................................................................................
 
@@ -93,6 +74,14 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
             this.createSet(),
             SpreadsheetComparatorName.with("custom-alias"),
             SpreadsheetComparatorSelector.parse("custom(1)")
+        );
+    }
+
+    @Test
+    public void testSetElementsWithEmpty() {
+        assertSame(
+            SpreadsheetComparatorAliasSet.EMPTY,
+            SpreadsheetComparatorAliasSet.EMPTY.setElements(SortedSets.empty())
         );
     }
 
