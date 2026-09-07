@@ -140,7 +140,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
         final SpreadsheetParserInfoSet spreadsheetParserPattern = SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER)
             .spreadsheetParserInfos();
 
-        final SpreadsheetParserInfoSet withRename = SpreadsheetParserInfoSet.with(
+        final SpreadsheetParserInfoSet withRename = SpreadsheetParserInfoSet.EMPTY.setElements(
             spreadsheetParserPattern.stream()
                 .map(
                     i -> i.name()

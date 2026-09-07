@@ -505,7 +505,7 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
         return INFOS;
     }
 
-    private final static SpreadsheetParserInfoSet INFOS = SpreadsheetParserInfoSet.with(
+    private final static SpreadsheetParserInfoSet INFOS = SpreadsheetParserInfoSet.EMPTY.setElements(
         Sets.of(
             spreadsheetParserInfo(SpreadsheetParserName.DATE),
             spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME),

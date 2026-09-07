@@ -30,7 +30,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -52,23 +51,6 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
                 SpreadsheetParserInfo::parse
             )
         );
-    }
-
-    public static SpreadsheetParserInfoSet with(final Collection<SpreadsheetParserInfo> infos) {
-        SpreadsheetParserInfoSet with;
-
-        if (infos instanceof SpreadsheetParserInfoSet) {
-            with = (SpreadsheetParserInfoSet) infos;
-        } else {
-            final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet = PluginInfoSet.with(
-                Objects.requireNonNull(infos, "infos")
-            );
-            with = pluginInfoSet.isEmpty() ?
-                EMPTY :
-                new SpreadsheetParserInfoSet(pluginInfoSet);
-        }
-
-        return with;
     }
 
     private SpreadsheetParserInfoSet(final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet) {
@@ -167,7 +149,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
 
     @Override
     public SpreadsheetParserInfoSet setElements(final Collection<SpreadsheetParserInfo> infos) {
-        final SpreadsheetParserInfoSet after;
+        SpreadsheetParserInfoSet after;
 
         if (infos instanceof SpreadsheetParserInfoSet) {
             after = (SpreadsheetParserInfoSet) infos;
@@ -175,7 +157,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
             after = new SpreadsheetParserInfoSet(
                 this.pluginInfoSet.setElements(infos)
             );
-            return this.pluginInfoSet.equals(infos) ?
+            after = this.equals(after) ?
                 this :
                 after;
 
@@ -231,7 +213,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     // @VisibleForTesting
     static SpreadsheetParserInfoSet unmarshall(final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             context.unmarshallSet(
                 node,
                 SpreadsheetParserInfo.class
