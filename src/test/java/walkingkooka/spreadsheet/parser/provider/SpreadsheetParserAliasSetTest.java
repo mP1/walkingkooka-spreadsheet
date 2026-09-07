@@ -27,7 +27,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTesting<SpreadsheetParserName,
     SpreadsheetParserInfo,
@@ -38,24 +37,6 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     HashCodeEqualsDefinedTesting2<SpreadsheetParserAliasSet>,
     ToStringTesting<SpreadsheetParserAliasSet>,
     JsonNodeMarshallerTesting<SpreadsheetParserAliasSet> {
-
-    // with.............................................................................................................
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetParserAliasSet.with(null)
-        );
-    }
-
-    @Test
-    public void testWithEmpty() {
-        assertSame(
-            SpreadsheetParserAliasSet.EMPTY,
-            SpreadsheetParserAliasSet.with(SortedSets.empty())
-        );
-    }
 
     // name.............................................................................................................
 
@@ -93,6 +74,14 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
             this.createSet(),
             SpreadsheetParserName.with("custom-alias"),
             SpreadsheetParserSelector.parse("custom(1)")
+        );
+    }
+
+    @Test
+    public void testSetElementsWithEmpty() {
+        assertSame(
+            SpreadsheetParserAliasSet.EMPTY,
+            SpreadsheetParserAliasSet.EMPTY.setElements(SortedSets.empty())
         );
     }
 
