@@ -25728,7 +25728,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/unknown-form-handler"),
@@ -25839,7 +25839,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -25965,7 +25965,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -26098,7 +26098,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -26264,7 +26264,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -26410,7 +26410,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -26591,7 +26591,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -26667,7 +26667,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/unknown-form-handler"),
@@ -26802,7 +26802,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -26912,7 +26912,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -27042,7 +27042,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
@@ -27183,7 +27183,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
                         @Override
                         public FormHandlerInfoSet formHandlerInfos() {
-                            return FormHandlerInfoSet.with(
+                            return FormHandlerInfoSet.EMPTY.setElements(
                                 Sets.of(
                                     FormHandlerInfo.with(
                                         Url.parseAbsolute("https://example.com/FormHandler"),
