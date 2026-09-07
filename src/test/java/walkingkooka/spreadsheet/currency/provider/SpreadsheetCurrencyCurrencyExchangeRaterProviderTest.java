@@ -34,7 +34,6 @@ import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.props.Properties;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.currency.SpreadsheetCurrencyExchangeRaters;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StorageContexts;
@@ -164,6 +163,15 @@ public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implemen
     }
 
     @Test
+    public void testCurrencyExchangeRaterWithEmpty() {
+        this.currencyExchangeRaterAndCheck(
+            "empty",
+            PROVIDER_CONTEXT,
+            SpreadsheetCurrencyExchangeRaters.empty()
+        );
+    }
+
+    @Test
     public void testCurrencyExchangeRaterWithPropertiesNameAndValues() {
         this.currencyExchangeRaterAndCheck(
             CurrencyExchangeRaterName.with("properties"),
@@ -200,6 +208,7 @@ public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implemen
             this.createCurrencyExchangeRaterProvider()
                 .currencyExchangeRaterInfos(),
             "CurrencyExchangeRaterInfoSet\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/empty empty\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/properties properties\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/storage-path-properties storage-path-properties\n"
         );

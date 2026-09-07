@@ -89,6 +89,14 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
         final String nameString = name.value();
 
         switch (nameString) {
+            case EMPTY_STRING:
+                parameterCountCheck(
+                    copy,
+                    0
+                );
+
+                currencyExchangeRater = SpreadsheetCurrencyExchangeRaters.empty();
+                break;
             case PROPERTIES_STRING:
                 parameterCountCheck(
                     copy,
@@ -141,6 +149,10 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
         }
     }
 
+    private final static String EMPTY_STRING = "empty";
+
+    final static CurrencyExchangeRaterName EMPTY = CurrencyExchangeRaterName.with(EMPTY_STRING);
+
     private final static String PROPERTIES_STRING = "properties";
 
     final static CurrencyExchangeRaterName PROPERTIES = CurrencyExchangeRaterName.with(PROPERTIES_STRING);
@@ -157,6 +169,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
     // @see SpreadsheetCurrencyExchangeRaters constants
     final static CurrencyExchangeRaterInfoSet INFOS = CurrencyExchangeRaterInfoSet.with(
         Sets.of(
+            currencyExchangeRaterInfo(EMPTY),
             currencyExchangeRaterInfo(PROPERTIES),
             currencyExchangeRaterInfo(STORAGE_PATH_PROPERTIES)
         )

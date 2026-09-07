@@ -30,6 +30,13 @@ import java.util.function.Function;
 public final class SpreadsheetCurrencyExchangeRaters implements PublicStaticHelper {
 
     /**
+     * {@link CurrencyExchangeRaters#empty()}
+     */
+    public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> empty() {
+        return CurrencyExchangeRaters.empty();
+    }
+
+    /**
      * {@link CurrencyExchangeRater}
      */
     public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> properties(final Properties properties,
