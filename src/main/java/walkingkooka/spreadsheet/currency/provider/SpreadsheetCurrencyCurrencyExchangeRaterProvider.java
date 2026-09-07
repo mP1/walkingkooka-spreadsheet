@@ -153,7 +153,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
     }
 
     // @see SpreadsheetCurrencyExchangeRaters constants
-    final static CurrencyExchangeRaterInfoSet INFOS = CurrencyExchangeRaterInfoSet.with(
+    final static CurrencyExchangeRaterInfoSet INFOS = CurrencyExchangeRaterInfoSet.EMPTY.setElements(
         Sets.of(
             currencyExchangeRaterInfo(EMPTY),
             currencyExchangeRaterInfo(PROPERTIES),
