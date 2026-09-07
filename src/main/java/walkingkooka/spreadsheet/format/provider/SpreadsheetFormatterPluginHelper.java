@@ -130,7 +130,7 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
 
     @Override
     public SpreadsheetFormatterAliasSet aliasSet(final SortedSet<SpreadsheetFormatterAlias> aliases) {
-        return SpreadsheetFormatterAliasSet.with(aliases);
+        return SpreadsheetFormatterAliasSet.EMPTY.setElements(aliases);
     }
 
     @Override
