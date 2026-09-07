@@ -173,7 +173,7 @@ public final class MergedMappedSpreadsheetImporterProviderTest implements Spread
 
             @Override
             public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
-                return SpreadsheetImporterInfoSet.with(
+                return SpreadsheetImporterInfoSet.EMPTY.setElements(
                     Sets.of(
                         SpreadsheetImporterInfo.with(
                             RENAMED_URL,

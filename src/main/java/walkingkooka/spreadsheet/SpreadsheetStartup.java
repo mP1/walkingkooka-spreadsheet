@@ -185,7 +185,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         {
             SpreadsheetImporterAliasSet.EMPTY.size();
-            SpreadsheetImporterInfoSet.with(
+            SpreadsheetImporterInfoSet.EMPTY.setElements(
                 Lists.of(
                     SpreadsheetImporterInfo.with(
                         url,

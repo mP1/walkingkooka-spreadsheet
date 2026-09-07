@@ -97,7 +97,7 @@ final class SpreadsheetImporterProviderCollection implements SpreadsheetImporter
 
     @Override
     public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
-        return SpreadsheetImporterInfoSet.with(
+        return SpreadsheetImporterInfoSet.EMPTY.setElements(
             this.providers.infos()
         );
     }
