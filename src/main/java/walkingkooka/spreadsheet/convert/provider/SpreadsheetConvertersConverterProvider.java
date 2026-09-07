@@ -1641,7 +1641,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     }
 
     // @see SpreadsheetConverters constants
-    final static ConverterInfoSet INFOS = ConverterInfoSet.with(
+    final static ConverterInfoSet INFOS = ConverterInfoSet.EMPTY.setElements(
         Sets.of(
             converterInfo(BASIC),
             converterInfo(BINARY),
