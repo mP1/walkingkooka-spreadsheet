@@ -1274,7 +1274,18 @@ public final class SpreadsheetViewportNavigationContextBasicTest implements Clas
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
             ),
-            SPREADSHEET_LABEL_NAME_RESOLVER + " " + IS_COLUMN_HIDDEN + " " + COLUMN_TO_WIDTH + " " + IS_ROW_HIDDEN + " " + ROW_TO_HEIGHT + " " + WINDOWS_FUNCTION
+            "labelNameResolver=" +
+                SPREADSHEET_LABEL_NAME_RESOLVER +
+                " isColumnHidden=" +
+                IS_COLUMN_HIDDEN +
+                " columnToWidth=" +
+                COLUMN_TO_WIDTH +
+                " isRowHidden=" +
+                IS_ROW_HIDDEN +
+                " rowToHeight=" +
+                ROW_TO_HEIGHT +
+                " viewportToWindows=" +
+                WINDOWS_FUNCTION
         );
     }
 
