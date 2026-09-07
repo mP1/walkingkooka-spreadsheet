@@ -81,7 +81,7 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
 
     @Test
     public void testMarshallNotEmpty2() {
-        final SpreadsheetComparatorInfoSet set = SpreadsheetComparatorInfoSet.with(
+        final SpreadsheetComparatorInfoSet set = SpreadsheetComparatorInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetComparatorInfo.with(
                     Url.parseAbsolute("https://example.com/test123"),
@@ -111,7 +111,7 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
 
     @Override
     public SpreadsheetComparatorInfoSet createJsonNodeMarshallingValue() {
-        return SpreadsheetComparatorInfoSet.with(
+        return SpreadsheetComparatorInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetComparatorInfo.with(
                     Url.parseAbsolute("https://example.com/test111"),

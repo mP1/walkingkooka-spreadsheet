@@ -187,7 +187,7 @@ public final class MergedMappedSpreadsheetComparatorProviderTest implements Spre
 
                 @Override
                 public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-                    return SpreadsheetComparatorInfoSet.with(
+                    return SpreadsheetComparatorInfoSet.EMPTY.setElements(
                         Sets.of(
                             SpreadsheetComparatorInfo.with(
                                 RENAMED_URL,

@@ -132,7 +132,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
             SpreadsheetComparatorNameList.EMPTY.size();
 
             SpreadsheetComparatorAliasSet.EMPTY.size();
-            SpreadsheetComparatorInfoSet.with(
+            SpreadsheetComparatorInfoSet.EMPTY.setElements(
                 Lists.of(
                     SpreadsheetComparatorInfo.with(
                         url,

@@ -30,7 +30,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -52,23 +51,6 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
                 SpreadsheetComparatorInfo::parse
             )
         );
-    }
-
-    public static SpreadsheetComparatorInfoSet with(final Collection<SpreadsheetComparatorInfo> infos) {
-        SpreadsheetComparatorInfoSet with;
-
-        if (infos instanceof SpreadsheetComparatorInfoSet) {
-            with = (SpreadsheetComparatorInfoSet) infos;
-        } else {
-            final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet = PluginInfoSet.with(
-                Objects.requireNonNull(infos, "infos")
-            );
-            with = pluginInfoSet.isEmpty() ?
-                EMPTY :
-                new SpreadsheetComparatorInfoSet(pluginInfoSet);
-        }
-
-        return with;
     }
 
     private SpreadsheetComparatorInfoSet(final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet) {
@@ -166,16 +148,16 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     @Override
-    public SpreadsheetComparatorInfoSet setElements(final Collection<SpreadsheetComparatorInfo> aliases) {
-        final SpreadsheetComparatorInfoSet after;
+    public SpreadsheetComparatorInfoSet setElements(final Collection<SpreadsheetComparatorInfo> infos) {
+        SpreadsheetComparatorInfoSet after;
 
-        if (aliases instanceof SpreadsheetComparatorInfoSet) {
-            after = (SpreadsheetComparatorInfoSet) aliases;
+        if (infos instanceof SpreadsheetComparatorInfoSet) {
+            after = (SpreadsheetComparatorInfoSet) infos;
         } else {
             after = new SpreadsheetComparatorInfoSet(
-                this.pluginInfoSet.setElements(aliases)
+                this.pluginInfoSet.setElements(infos)
             );
-            return this.pluginInfoSet.equals(aliases) ?
+            after = this.equals(after) ?
                 this :
                 after;
 
@@ -231,7 +213,7 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     // @VisibleForTesting
     static SpreadsheetComparatorInfoSet unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             context.unmarshallSet(
                 node,
                 SpreadsheetComparatorInfo.class
