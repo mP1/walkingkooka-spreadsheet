@@ -295,7 +295,7 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
         return FilteredMappedSpreadsheetFormatterProvider.with(
-            SpreadsheetFormatterInfoSet.with(
+            SpreadsheetFormatterInfoSet.EMPTY.setElements(
                 Sets.of(
                     SpreadsheetFormatterInfo.with(
                         url("automatic"),

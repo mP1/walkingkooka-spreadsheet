@@ -104,7 +104,7 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
 
     @Override
     public SpreadsheetFormatterInfoSet infoSet(final Set<SpreadsheetFormatterInfo> infos) {
-        return SpreadsheetFormatterInfoSet.with(infos);
+        return SpreadsheetFormatterInfoSet.EMPTY.setElements(infos);
     }
 
     @Override

@@ -458,7 +458,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
 
     default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterInfo... expected) {
         this.spreadsheetFormatterInfosAndCheck(
-            SpreadsheetFormatterInfoSet.with(
+            SpreadsheetFormatterInfoSet.EMPTY.setElements(
                 Sets.of(
                     expected
                 )
@@ -470,7 +470,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                                                    final SpreadsheetFormatterInfo... expected) {
         this.spreadsheetFormatterInfosAndCheck(
             provider,
-            SpreadsheetFormatterInfoSet.with(
+            SpreadsheetFormatterInfoSet.EMPTY.setElements(
                 Sets.of(
                     expected
                 )

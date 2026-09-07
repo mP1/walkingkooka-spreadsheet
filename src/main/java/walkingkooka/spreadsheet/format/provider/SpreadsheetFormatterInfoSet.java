@@ -30,7 +30,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -52,23 +51,6 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
                 SpreadsheetFormatterInfo::parse
             )
         );
-    }
-
-    public static SpreadsheetFormatterInfoSet with(final Collection<SpreadsheetFormatterInfo> infos) {
-        SpreadsheetFormatterInfoSet with;
-
-        if (infos instanceof SpreadsheetFormatterInfoSet) {
-            with = (SpreadsheetFormatterInfoSet) infos;
-        } else {
-            final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet = PluginInfoSet.with(
-                Objects.requireNonNull(infos, "infos")
-            );
-            with = pluginInfoSet.isEmpty() ?
-                EMPTY :
-                new SpreadsheetFormatterInfoSet(pluginInfoSet);
-        }
-
-        return with;
     }
 
     private SpreadsheetFormatterInfoSet(final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet) {
@@ -166,19 +148,18 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     @Override
-    public SpreadsheetFormatterInfoSet setElements(final Collection<SpreadsheetFormatterInfo> aliases) {
-        final SpreadsheetFormatterInfoSet after;
+    public SpreadsheetFormatterInfoSet setElements(final Collection<SpreadsheetFormatterInfo> infos) {
+        SpreadsheetFormatterInfoSet after;
 
-        if (aliases instanceof SpreadsheetFormatterInfoSet) {
-            after = (SpreadsheetFormatterInfoSet) aliases;
+        if (infos instanceof SpreadsheetFormatterInfoSet) {
+            after = (SpreadsheetFormatterInfoSet) infos;
         } else {
             after = new SpreadsheetFormatterInfoSet(
-                this.pluginInfoSet.setElements(aliases)
+                this.pluginInfoSet.setElements(infos)
             );
-            return this.pluginInfoSet.equals(aliases) ?
+            after = this.equals(after) ?
                 this :
                 after;
-
         }
 
         return after;
@@ -231,7 +212,7 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     // @VisibleForTesting
     static SpreadsheetFormatterInfoSet unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             context.unmarshallSet(
                 node,
                 SpreadsheetFormatterInfo.class

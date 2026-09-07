@@ -95,7 +95,7 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
 
     @Test
     public void testMarshallNotEmpty2() {
-        final SpreadsheetFormatterInfoSet set = SpreadsheetFormatterInfoSet.with(
+        final SpreadsheetFormatterInfoSet set = SpreadsheetFormatterInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetFormatterInfo.with(
                     Url.parseAbsolute("https://example.com/test123"),
@@ -125,7 +125,7 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
 
     @Override
     public SpreadsheetFormatterInfoSet createJsonNodeMarshallingValue() {
-        return SpreadsheetFormatterInfoSet.with(
+        return SpreadsheetFormatterInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetFormatterInfo.with(
                     Url.parseAbsolute("https://example.com/test111"),
