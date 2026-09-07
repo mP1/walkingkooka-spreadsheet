@@ -197,7 +197,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         {
             SpreadsheetParserAliasSet.EMPTY.size();
-            SpreadsheetParserInfoSet.with(
+            SpreadsheetParserInfoSet.EMPTY.setElements(
                 Lists.of(
                     SpreadsheetParserInfo.with(
                         url,

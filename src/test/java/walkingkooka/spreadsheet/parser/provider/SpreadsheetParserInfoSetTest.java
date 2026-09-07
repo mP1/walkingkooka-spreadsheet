@@ -60,7 +60,7 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
 
     @Override
     public SpreadsheetParserInfoSet createSet() {
-        return SpreadsheetParserInfoSet.with(
+        return SpreadsheetParserInfoSet.EMPTY.setElements(
             Sets.of(
                 this.info(),
                 SpreadsheetParserInfo.parse("https://example.com/parser-222 parser-222")
@@ -97,7 +97,7 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
 
     @Test
     public void testMarshallNotEmpty2() {
-        final SpreadsheetParserInfoSet set = SpreadsheetParserInfoSet.with(
+        final SpreadsheetParserInfoSet set = SpreadsheetParserInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetParserInfo.with(
                     Url.parseAbsolute("https://example.com/test123"),
@@ -127,7 +127,7 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
 
     @Override
     public SpreadsheetParserInfoSet createJsonNodeMarshallingValue() {
-        return SpreadsheetParserInfoSet.with(
+        return SpreadsheetParserInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetParserInfo.with(
                     Url.parseAbsolute("https://example.com/test111"),

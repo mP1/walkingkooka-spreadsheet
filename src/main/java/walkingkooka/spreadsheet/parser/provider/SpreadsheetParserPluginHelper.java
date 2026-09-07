@@ -103,7 +103,7 @@ final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetPar
 
     @Override
     public SpreadsheetParserInfoSet infoSet(final Set<SpreadsheetParserInfo> infos) {
-        return SpreadsheetParserInfoSet.with(infos);
+        return SpreadsheetParserInfoSet.EMPTY.setElements(infos);
     }
 
     @Override

@@ -114,7 +114,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
 
     @Override
     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-        return SpreadsheetParserInfoSet.with(
+        return SpreadsheetParserInfoSet.EMPTY.setElements(
             this.providers.infos()
         );
     }

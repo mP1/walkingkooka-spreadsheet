@@ -150,7 +150,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
                     @Override
                     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.with(
+                        return SpreadsheetParserInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -184,7 +184,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
                     @Override
                     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.with(
+                        return SpreadsheetParserInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -219,7 +219,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
                     @Override
                     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.with(
+                        return SpreadsheetParserInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -243,7 +243,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
                     @Override
                     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.with(
+                        return SpreadsheetParserInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -275,7 +275,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
                     @Override
                     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.with(
+                        return SpreadsheetParserInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO1
                             )
@@ -310,7 +310,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
                     @Override
                     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.with(
+                        return SpreadsheetParserInfoSet.EMPTY.setElements(
                             Sets.of(
                                 INFO2
                             )
@@ -383,7 +383,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
                 @Override
                 public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                    return SpreadsheetParserInfoSet.with(
+                    return SpreadsheetParserInfoSet.EMPTY.setElements(
                         Sets.of(
                             INFO1,
                             INFO2,
