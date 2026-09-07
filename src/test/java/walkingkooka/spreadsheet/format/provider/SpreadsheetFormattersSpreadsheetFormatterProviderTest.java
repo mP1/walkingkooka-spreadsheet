@@ -149,14 +149,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     ),
                     TERMINAL_CONTEXT
                 ),
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             ),
@@ -4753,14 +4751,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 )
             ),
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-            SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-            HAS_USER_DIRECTORIES,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
-            BINARY_TEXT_CONTEXT,
             CURRENCY_LOCALE_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );

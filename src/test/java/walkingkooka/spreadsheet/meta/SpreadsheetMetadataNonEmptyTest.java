@@ -1432,6 +1432,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ),
                         metadata.expressionNumberKind()
                     ),
+                    ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
                 LocaleContexts.jre(locale)
@@ -2016,14 +2017,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetComparatorProviders.fake(),
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2067,14 +2066,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> v) -> {
                     throw new UnsupportedOperationException();
                 },
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetComparatorProviders.fake(),
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2419,15 +2416,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                  final SpreadsheetValidationReference c) -> {
                     throw new UnsupportedOperationException();
                 },
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 ConverterProviders.converters(),
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             );
 

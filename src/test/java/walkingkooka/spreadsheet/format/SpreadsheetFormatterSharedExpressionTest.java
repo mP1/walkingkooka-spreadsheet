@@ -204,6 +204,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),
+                ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
             LocaleContexts.fake()

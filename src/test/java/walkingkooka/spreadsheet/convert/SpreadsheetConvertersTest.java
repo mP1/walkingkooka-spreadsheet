@@ -4373,6 +4373,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),
+                ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
             LOCALE_CONTEXT
@@ -4805,6 +4806,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ),
                     kind
                 ),
+                ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
             LocaleContexts.fake()

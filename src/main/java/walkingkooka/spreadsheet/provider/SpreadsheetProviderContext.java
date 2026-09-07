@@ -270,6 +270,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                     ),
                     ExpressionNumberKind.DEFAULT
                 ),
+                storageEnvironmentContext, // EnvironmentContext
                 this.jsonNodeMarshallUnmarshallContext
             ),
             currencyLocaleContext

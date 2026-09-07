@@ -36,6 +36,7 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ClassTesting;
@@ -373,6 +374,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public Optional<StoragePath> homeDirectory() {
             return OPTIONAL_HOME_DIRECTORY;
+        }
+
+        @Override
+        public Optional<EmailAddress> user() {
+            return OPTIONAL_USER;
         }
 
         @Override

@@ -164,6 +164,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),
+                ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
             LocaleContexts.fake()

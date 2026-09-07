@@ -264,15 +264,13 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     this.cell,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
-                    this, // CanParseEnvironmentValueName
-                    this, // HasUserDirectories
                     this.spreadsheetLabelNameResolver,
                     spreadsheetContext, // MediaTypeDetector
                     spreadsheetContext.multiplier(),
                     spreadsheetContext, // SpreadsheetMetadataLoader
                     spreadsheetContext, // SpreadsheetProvider, // SpreadsheetConverterProvider
-                    spreadsheetContext, // BinaryTextContext
                     spreadsheetContext, // CurrencyLocaleContext
+                    spreadsheetContext, // SpreadsheetEnvironmentContext
                     spreadsheetContext.providerContext()
                 );
         }
@@ -345,14 +343,12 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
-                this, // CanParseEnvironmentValueName
-                this, // HasUserDirectories
                 this.spreadsheetLabelNameResolver,
                 spreadsheetContext, // MediaTypeDetector
                 spreadsheetContext.multiplier(),
                 spreadsheetContext, // SpreadsheetMetadataLoader
-                spreadsheetContext, // BinaryTextContext
                 spreadsheetContext, // CurrencyLocaleContext
+                spreadsheetContext, // SpreadsheetEnvironmentContext
                 spreadsheetContext, // SpreadsheetProvider
                 spreadsheetContext.providerContext() // ProviderContext
             );

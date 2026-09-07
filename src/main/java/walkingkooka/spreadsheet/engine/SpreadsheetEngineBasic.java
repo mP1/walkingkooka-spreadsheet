@@ -844,16 +844,14 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
             comparators,
             movedFromTo, // moved cells
             metadata.sortSpreadsheetComparatorContext(
-                context, // CanParseEnvironmentValueName
-                context, // HasUserDirectories
                 context, // ConverterProvider
                 context, // mediaTypeDetector
                 context.multiplier(), // multiplier
                 context, // SpreadsheetLabelNameResolver
                 spreadsheetExpressionEvaluationContextFactory,
                 context, // SpreadsheetProvider
-                context, // BinaryTextContext
                 context, // CurrencyLocaleContext
+                context, // SpreadsheetEnvironmentContext
                 providerContext// ProviderContext
             )
         );
@@ -1919,15 +1917,13 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                                     SpreadsheetValidatorContext.VALUE,
                                     Optional.ofNullable(value)
                                 ),
-                                context, // CanParseEnvironmentValueName
-                                context, // HasUserDirectories
                                 context, // SpreadsheetLabelNameResolver
                                 context, // MediaTypeDetector
                                 context.multiplier(), // multiplier
                                 context, // SpreadsheetMetadataLoader,
                                 context, // ConverterProvider
-                                context, // BinaryTextContext
                                 context, // CurrencyLocaleContext
+                                context, // SpreadsheetEnvironmentContext
                                 providerContext // ProviderContext
                             )
                     )

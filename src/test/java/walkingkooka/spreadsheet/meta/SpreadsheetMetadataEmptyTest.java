@@ -245,15 +245,13 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                  final SpreadsheetValidationReference cellOrLabel) -> {
                     throw new UnsupportedOperationException();
                 },
-                SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
-                HAS_USER_DIRECTORIES,
                 LABEL_NAME_RESOLVER,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
                 CONVERTER_PROVIDER,
-                BINARY_TEXT_CONTEXT,
                 CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );

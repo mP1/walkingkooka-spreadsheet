@@ -278,7 +278,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     public SpreadsheetConverterContext spreadsheetConverterContext() {
         if (null == this.spreadsheetConverterContext) {
-            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContext.environmentContextMissingValues();
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
+            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
             Converter<SpreadsheetConverterContext> converter;
             try {
@@ -326,7 +327,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
             missing.reportIfMissing();
 
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
@@ -355,6 +355,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         ),
                         expressionNumberKind
                     ),
+                    spreadsheetEnvironmentContext,
                     JsonNodeMarshallUnmarshallContexts.basic(
                         jsonNodeMarshallContext,
                         jsonNodeUnmarshallContext

@@ -111,8 +111,6 @@ import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
-import walkingkooka.storage.HasUserDirectories;
-import walkingkooka.text.BinaryTextContext;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -1018,29 +1016,25 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
      */
-    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final CanParseEnvironmentValueName canParseEnvironmentValueName,
-                                                                               final HasUserDirectories hasUserDirectories,
-                                                                               final SpreadsheetLabelNameResolver resolveIfLabel,
+    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                                final MediaTypeDetector mediaTypeDetector,
                                                                                final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                                final BiFunction<Object, Object, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContextFactory,
                                                                                final SpreadsheetProvider spreadsheetProvider,
-                                                                               final BinaryTextContext binaryTextContext,
                                                                                final CurrencyLocaleContext currencyLocaleContext,
+                                                                               final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                final ProviderContext providerContext) {
         return this.spreadsheetComparatorContext(
             spreadsheetExpressionEvaluationContextFactory,
             this.sortSpreadsheetConverterContext(
                 resolveIfLabel,
-                canParseEnvironmentValueName,
                 spreadsheetProvider, // ConverterProvider
-                hasUserDirectories,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
-                binaryTextContext,
                 currencyLocaleContext,
+                spreadsheetEnvironmentContext,
                 providerContext // ProviderContext
             )
         );
@@ -1050,28 +1044,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetConverterContext} to be used when doing a sort.
      */
     private SpreadsheetConverterContext sortSpreadsheetConverterContext(final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                        final CanParseEnvironmentValueName canParseEnvironmentValueName,
                                                                         final ConverterProvider converterProvider,
-                                                                        final HasUserDirectories hasUserDirectories,
                                                                         final MediaTypeDetector mediaTypeDetector,
                                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                         final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
-                                                                        final BinaryTextContext binaryTextContext,
                                                                         final CurrencyLocaleContext currencyLocaleContext,
+                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
             NO_CELL,
             NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-            canParseEnvironmentValueName,
-            hasUserDirectories,
             labelNameResolver,
             mediaTypeDetector,
             multiplier,
             spreadsheetMetadataLoader,
             converterProvider,
-            binaryTextContext,
             currencyLocaleContext,
+            spreadsheetEnvironmentContext,
             providerContext
         );
     }
@@ -1097,28 +1087,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetConverterContext spreadsheetConverterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Optional<SpreadsheetValidationReference> validationReference,
                                                                          final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
-                                                                         final CanParseEnvironmentValueName canParseEnvironmentValueName,
-                                                                         final HasUserDirectories hasUserDirectories,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
-                                                                         final BinaryTextContext binaryTextContext,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
+                                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
-        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
-        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
-        Objects.requireNonNull(binaryTextContext, "binaryTextContext");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
+        Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
@@ -1169,7 +1155,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
         try {
             jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext(
-                canParseEnvironmentValueName,
+                spreadsheetEnvironmentContext, // CanParseEnvironmentValueName
                 currencyLocaleContext // CurrencyCodeLanguageTagContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1184,7 +1170,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
-            hasUserDirectories,
+            spreadsheetEnvironmentContext, // HasUserDirectories,
             Optional.of(this),
             validationReference,
             converter,
@@ -1202,13 +1188,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         valueSeparator, // valueSeparator
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(),
-                        binaryTextContext,
+                        spreadsheetEnvironmentContext, // BinaryTextContext,
                         currencyLocaleContext,
                         dateTimeContext,
                         decimalNumberContext
                     ),
                     expressionNumberKind
                 ),
+                spreadsheetEnvironmentContext, // EnvironmentContext
                 JsonNodeMarshallUnmarshallContexts.basic(
                     jsonNodeMarshallContext,
                     jsonNodeUnmarshallContext
@@ -1271,26 +1258,22 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                                                                         final CanParseEnvironmentValueName canParseEnvironmentValueName,
-                                                                         final HasUserDirectories hasUserDirectories,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
-                                                                         final BinaryTextContext binaryTextContext,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
+                                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
-        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
-        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
-        Objects.requireNonNull(binaryTextContext, "binaryTextContext");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
+        Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -1313,15 +1296,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 cell,
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                canParseEnvironmentValueName,
-                hasUserDirectories,
                 labelNameResolver,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 spreadsheetProvider,
-                binaryTextContext,
                 currencyLocaleContext,
+                spreadsheetEnvironmentContext,
                 providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1353,28 +1334,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Optional<SpreadsheetCell> cell,
                                                                                                        final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                                                                                                       final CanParseEnvironmentValueName canParseEnvironmentValueName,
-                                                                                                       final HasUserDirectories hasUserDirectories,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final MediaTypeDetector mediaTypeDetector,
                                                                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                                        final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
-                                                                                                       final BinaryTextContext binaryTextContext,
                                                                                                        final CurrencyLocaleContext currencyLocaleContext,
+                                                                                                       final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
             this.spreadsheetFormatterContext(
                 cell,
                 spreadsheetExpressionEvaluationContext,
-                canParseEnvironmentValueName,
-                hasUserDirectories,
                 labelNameResolver,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
-                binaryTextContext,
                 currencyLocaleContext,
+                spreadsheetEnvironmentContext,
                 spreadsheetProvider,
                 providerContext
             ),
@@ -1474,28 +1451,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetValidationReference cellOrLabel,
                                                                          final Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
                                                                          final BiFunction<Object, SpreadsheetValidationReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
-                                                                         final CanParseEnvironmentValueName canParseEnvironmentValueName,
-                                                                         final HasUserDirectories hasUserDirectories,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final MediaTypeDetector mediaTypeDetector,
                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                                          final ConverterProvider converterProvider,
-                                                                         final BinaryTextContext binaryTextContext,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
+                                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
         Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
-        Objects.requireNonNull(canParseEnvironmentValueName, "canParseEnvironmentValueName");
-        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(converterProvider, "converterProvider");
-        Objects.requireNonNull(binaryTextContext, "binaryTextContext");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
+        Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
@@ -1506,15 +1479,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 NO_CELL,
                 Optional.of(cellOrLabel), // validationReference
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                canParseEnvironmentValueName,
-                hasUserDirectories,
                 labelNameResolver,
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataLoader,
                 converterProvider,
-                binaryTextContext,
                 currencyLocaleContext,
+                spreadsheetEnvironmentContext,
                 providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
