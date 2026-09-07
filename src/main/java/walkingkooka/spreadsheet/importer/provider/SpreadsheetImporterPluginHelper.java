@@ -129,7 +129,7 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
 
     @Override
     public SpreadsheetImporterAliasSet aliasSet(final SortedSet<SpreadsheetImporterAlias> aliases) {
-        return SpreadsheetImporterAliasSet.with(aliases);
+        return SpreadsheetImporterAliasSet.EMPTY.setElements(aliases);
     }
 
     @Override
