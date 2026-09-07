@@ -96,7 +96,7 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
 
     @Test
     public void testMarshallNotEmpty2() {
-        final SpreadsheetImporterInfoSet set = SpreadsheetImporterInfoSet.with(
+        final SpreadsheetImporterInfoSet set = SpreadsheetImporterInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetImporterInfo.with(
                     Url.parseAbsolute("https://example.com/test123"),
@@ -126,7 +126,7 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
 
     @Override
     public SpreadsheetImporterInfoSet createJsonNodeMarshallingValue() {
-        return SpreadsheetImporterInfoSet.with(
+        return SpreadsheetImporterInfoSet.EMPTY.setElements(
             Sets.of(
                 SpreadsheetImporterInfo.with(
                     Url.parseAbsolute("https://example.com/test111"),

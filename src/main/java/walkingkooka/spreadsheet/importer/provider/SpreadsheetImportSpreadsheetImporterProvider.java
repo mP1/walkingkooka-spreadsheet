@@ -103,7 +103,7 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
         return INFOS;
     }
 
-    private final static SpreadsheetImporterInfoSet INFOS = SpreadsheetImporterInfoSet.with(
+    private final static SpreadsheetImporterInfoSet INFOS = SpreadsheetImporterInfoSet.EMPTY.setElements(
         Sets.of(
             spreadsheetImporterInfo(SpreadsheetImporterName.COLLECTION),
             spreadsheetImporterInfo(SpreadsheetImporterName.EMPTY),

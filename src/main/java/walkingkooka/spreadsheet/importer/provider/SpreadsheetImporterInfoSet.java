@@ -30,7 +30,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -52,23 +51,6 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
                 SpreadsheetImporterInfo::parse
             )
         );
-    }
-
-    public static SpreadsheetImporterInfoSet with(final Collection<SpreadsheetImporterInfo> infos) {
-        SpreadsheetImporterInfoSet with;
-
-        if (infos instanceof SpreadsheetImporterInfoSet) {
-            with = (SpreadsheetImporterInfoSet) infos;
-        } else {
-            final PluginInfoSet<SpreadsheetImporterName, SpreadsheetImporterInfo> pluginInfoSet = PluginInfoSet.with(
-                Objects.requireNonNull(infos, "infos")
-            );
-            with = pluginInfoSet.isEmpty() ?
-                EMPTY :
-                new SpreadsheetImporterInfoSet(pluginInfoSet);
-        }
-
-        return with;
     }
 
     private SpreadsheetImporterInfoSet(final PluginInfoSet<SpreadsheetImporterName, SpreadsheetImporterInfo> pluginInfoSet) {
@@ -166,19 +148,18 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
     }
 
     @Override
-    public SpreadsheetImporterInfoSet setElements(final Collection<SpreadsheetImporterInfo> aliases) {
-        final SpreadsheetImporterInfoSet after;
+    public SpreadsheetImporterInfoSet setElements(final Collection<SpreadsheetImporterInfo> infos) {
+        SpreadsheetImporterInfoSet after;
 
-        if (aliases instanceof SpreadsheetImporterInfoSet) {
-            after = (SpreadsheetImporterInfoSet) aliases;
+        if (infos instanceof SpreadsheetImporterInfoSet) {
+            after = (SpreadsheetImporterInfoSet) infos;
         } else {
             after = new SpreadsheetImporterInfoSet(
-                this.pluginInfoSet.setElements(aliases)
+                this.pluginInfoSet.setElements(infos)
             );
-            return this.pluginInfoSet.equals(aliases) ?
+            after = this.equals(after) ?
                 this :
                 after;
-
         }
 
         return after;
@@ -231,7 +212,7 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
     // @VisibleForTesting
     static SpreadsheetImporterInfoSet unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             context.unmarshallSet(
                 node,
                 SpreadsheetImporterInfo.class

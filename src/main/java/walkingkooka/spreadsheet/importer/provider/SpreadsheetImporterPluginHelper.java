@@ -103,7 +103,7 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
 
     @Override
     public SpreadsheetImporterInfoSet infoSet(final Set<SpreadsheetImporterInfo> infos) {
-        return SpreadsheetImporterInfoSet.with(infos);
+        return SpreadsheetImporterInfoSet.EMPTY.setElements(infos);
     }
 
     @Override
