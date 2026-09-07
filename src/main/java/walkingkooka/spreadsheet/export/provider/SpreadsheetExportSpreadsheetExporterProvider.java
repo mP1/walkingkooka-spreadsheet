@@ -69,8 +69,6 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
     private SpreadsheetExporter spreadsheetExporter0(final SpreadsheetExporterName name,
                                                      final List<?> values,
                                                      final ProviderContext context) {
-        final int count = values.size();
-
         final SpreadsheetExporter exporter;
 
         switch (name.value()) {
@@ -82,15 +80,13 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
                 );
                 break;
             case SpreadsheetExporterName.EMPTY_STRING:
-                if (0 != count) {
-                    throw new IllegalArgumentException("Got " + count + " expected 0 values");
-                }
+                this.noParameterCheck(values);
+
                 exporter = SpreadsheetExporters.empty();
                 break;
             case SpreadsheetExporterName.JSON_STRING:
-                if (0 != count) {
-                    throw new IllegalArgumentException("Got " + count + " expected 0 values");
-                }
+                this.noParameterCheck(values);
+
                 exporter = SpreadsheetExporters.json();
                 break;
             default:

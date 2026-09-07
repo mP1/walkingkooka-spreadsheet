@@ -207,7 +207,10 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 break;
             case SpreadsheetFormatterName.BADGE_ERROR_STRING:
-                parameterCountCheck(1, count);
+                this.parameterCountCheck(
+                    values,
+                    1
+                );
 
                 formatter = SpreadsheetFormatters.badgeError(
                     (SpreadsheetFormatter) copy.get(0)
@@ -222,17 +225,20 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 break;
             case SpreadsheetFormatterName.CURRENCY_STRING:
                 formatter = currency(
-                    values,
+                    copy,
                     context
                 );
                 break;
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.defaultText();
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
-                parameterCountCheck(1, count);
+                this.parameterCountCheck(
+                    copy,
+                    1
+                );
 
                 formatter = expressionFormatter(
                     copy.get(0),
@@ -240,65 +246,68 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.FULL_DATE_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.date(
                     DateFormatKind.FULL
                 );
                 break;
             case SpreadsheetFormatterName.FULL_DATE_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.dateTime(DateFormatKind.FULL);
                 break;
             case SpreadsheetFormatterName.FULL_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.time(DateFormatKind.FULL);
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.general();
                 break;
             case SpreadsheetFormatterName.HYPERLINKING_STRING:
-                parameterCountCheck(1, count);
+                this.parameterCountCheck(
+                    copy,
+                    1
+                );
 
                 formatter = SpreadsheetFormatters.hyperlinking(
                     (SpreadsheetFormatter) copy.get(0)
                 );
                 break;
             case SpreadsheetFormatterName.LONG_DATE_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.date(
                     DateFormatKind.LONG
                 );
                 break;
             case SpreadsheetFormatterName.LONG_DATE_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.dateTime(DateFormatKind.LONG);
                 break;
             case SpreadsheetFormatterName.LONG_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.time(DateFormatKind.LONG);
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.date(
                     DateFormatKind.MEDIUM
                 );
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.dateTime(DateFormatKind.MEDIUM);
                 break;
             case SpreadsheetFormatterName.MEDIUM_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.time(DateFormatKind.MEDIUM);
                 break;
@@ -315,17 +324,17 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.date(DateFormatKind.SHORT);
                 break;
             case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.dateTime(DateFormatKind.SHORT);
                 break;
             case SpreadsheetFormatterName.SHORT_TIME_STRING:
-                parameterCountCheck(count);
+                this.noParameterCheck(copy);
 
                 formatter = SpreadsheetFormatters.time(DateFormatKind.SHORT);
                 break;
@@ -334,8 +343,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if (null == kind) {
                     throw new IllegalArgumentException("Unknown formatter " + name);
                 }
-                parameterCountCheck(
-                    count,
+                this.parameterCountCheck(
+                    copy,
                     1
                 );
                 formatter = kind.parse(
@@ -344,20 +353,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         }
 
         return formatter;
-    }
-
-    private static void parameterCountCheck(final int count) {
-        parameterCountCheck(
-            count,
-            0
-        );
-    }
-
-    private static void parameterCountCheck(final int count,
-                                            final int expected) {
-        if (expected != count) {
-            throw new IllegalArgumentException("Expected " + expected + " value(s) got " + count);
-        }
     }
 
     private static SpreadsheetFormatter accounting(final List<?> values,

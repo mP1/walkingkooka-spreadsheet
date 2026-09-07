@@ -90,7 +90,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
 
         switch (nameString) {
             case EMPTY_STRING:
-                parameterCountCheck(
+                this.parameterCountCheck(
                     copy,
                     0
                 );
@@ -98,7 +98,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
                 currencyExchangeRater = SpreadsheetCurrencyExchangeRaters.empty();
                 break;
             case PROPERTIES_STRING:
-                parameterCountCheck(
+                this.parameterCountCheck(
                     copy,
                     1
                 );
@@ -112,7 +112,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
                 );
                 break;
             case STORAGE_PATH_PROPERTIES_STRING:
-                parameterCountCheck(
+                this.parameterCountCheck(
                     copy,
                     1
                 );
@@ -134,20 +134,6 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
     }
 
     private final Function<String, Number> numberParser;
-
-    private static void noParameterCheck(final List<?> values) {
-        parameterCountCheck(
-            values,
-            0
-        );
-    }
-
-    private static void parameterCountCheck(final List<?> values,
-                                            final int expected) {
-        if (expected != values.size()) {
-            throw new IllegalArgumentException("Expected " + expected + " values got " + values.size() + " " + values);
-        }
-    }
 
     private final static String EMPTY_STRING = "empty";
 
