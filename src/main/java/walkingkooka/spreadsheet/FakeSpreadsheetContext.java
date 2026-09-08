@@ -326,7 +326,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
-    public Set<Locale> findByLocaleText(final String text,
+    public Set<Locale> findLocaleByText(final String text,
                                         final int offset,
                                         final int count) {
         throw new UnsupportedOperationException();
