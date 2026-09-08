@@ -36,7 +36,7 @@ import walkingkooka.naming.HasOptionalNameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
-import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
@@ -84,7 +84,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     JsonNodeMarshallerTesting<SpreadsheetMetadata>,
     LocaleContextTesting,
     MediaTypeDetectorTesting,
-    HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
+    HateosResourceTesting2<SpreadsheetMetadata, SpreadsheetId>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetMetadata>,
     TreePrintableTesting,
