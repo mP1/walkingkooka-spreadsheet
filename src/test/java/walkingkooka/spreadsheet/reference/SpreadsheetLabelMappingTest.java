@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
 import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -420,15 +419,10 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         );
     }
 
-    // ClassTesting...............................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetLabelMapping> type() {
         return SpreadsheetLabelMapping.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }
