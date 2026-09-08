@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.storage.convert.StorageConverterContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
-import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
@@ -34,7 +33,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
  */
 public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext,
-    JsonNodeConverterContext,
     HasConverter<SpreadsheetConverterContext>,
     HasSpreadsheetMetadata,
     SpreadsheetLabelNameResolver,
