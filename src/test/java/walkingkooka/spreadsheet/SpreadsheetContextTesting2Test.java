@@ -304,10 +304,10 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
         }
 
         @Override
-        public Set<CurrencyCode> findByCurrencyText(final String text,
+        public Set<CurrencyCode> findCurrencyByText(final String text,
                                                     final int offset,
                                                     final int count) {
-            return CURRENCY_CONTEXT.findByCurrencyText(
+            return CURRENCY_CONTEXT.findCurrencyByText(
                 text,
                 offset,
                 count
