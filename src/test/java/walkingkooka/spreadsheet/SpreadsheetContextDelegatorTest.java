@@ -242,10 +242,10 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             }
 
             @Override
-            public Set<Locale> findByLocaleText(final String text,
+            public Set<Locale> findLocaleByText(final String text,
                                                 final int offset,
                                                 final int count) {
-                return LOCALE_CONTEXT.findByLocaleText(
+                return LOCALE_CONTEXT.findLocaleByText(
                     text,
                     offset,
                     count

@@ -1232,17 +1232,17 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     }
 
     @Override
-    public void testFindByLocaleTextWithNullTextFails() {
+    public void testFindLocaleByTextWithNullTextFails() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testFindByLocaleTextWithNegativeOffsetFails() {
+    public void testFindLocaleByTextWithNegativeOffsetFails() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testFindByLocaleTextWithInvalidCountFails() {
+    public void testFindLocaleByTextWithInvalidCountFails() {
         throw new UnsupportedOperationException();
     }
 
