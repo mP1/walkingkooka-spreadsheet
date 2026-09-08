@@ -32,7 +32,6 @@ import walkingkooka.math.HasOptionalDecimalNumberSymbolsTesting;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
 import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -3870,10 +3869,5 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public Class<SpreadsheetCell> type() {
         return SpreadsheetCell.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }
