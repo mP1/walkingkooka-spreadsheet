@@ -24,7 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellReference>
     implements ComparableTesting2<SpreadsheetCellReference>,
-    HateosResourceTesting<SpreadsheetCellReference, String>,
+    HateosResourceTesting2<SpreadsheetCellReference, String>,
     CanReplaceReferencesTesting2<SpreadsheetCellReference>,
     ValidationReferenceTesting,
     ThrowableTesting {

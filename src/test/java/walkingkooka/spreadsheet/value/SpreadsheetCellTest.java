@@ -30,7 +30,7 @@ import walkingkooka.datetime.HasOptionalDateTimeSymbolsTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasOptionalDecimalNumberSymbolsTesting;
 import walkingkooka.net.header.HasContentTypeTesting;
-import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
@@ -108,7 +108,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     ParseStringTesting<SpreadsheetCell>,
     JsonNodeMarshallerTesting<SpreadsheetCell>,
     HasSpreadsheetReferenceTesting,
-    HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
+    HateosResourceTesting2<SpreadsheetCell, SpreadsheetCellReference>,
     PatchableTesting<SpreadsheetCell>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetCell>,
