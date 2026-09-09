@@ -95,6 +95,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         return TestSpreadsheetContextDelegator.class;
     }
 
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     final static class TestSpreadsheetContextDelegator implements SpreadsheetContextDelegator {
 
         @Override

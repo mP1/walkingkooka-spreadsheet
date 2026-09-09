@@ -123,4 +123,9 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
     public Class<TestSpreadsheetFormatterProviderSamplesContextDelegator> type() {
         return TestSpreadsheetFormatterProviderSamplesContextDelegator.class;
     }
+
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
 }

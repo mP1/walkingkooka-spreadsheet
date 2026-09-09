@@ -44,6 +44,11 @@ public final class SpreadsheetMetadataContextDelegatorTest implements Spreadshee
         return TestSpreadsheetMetadataContextDelegator.class;
     }
 
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     static class TestSpreadsheetMetadataContextDelegator implements SpreadsheetMetadataContextDelegator {
 
         @Override
