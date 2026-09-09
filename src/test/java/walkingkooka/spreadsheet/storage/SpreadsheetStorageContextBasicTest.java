@@ -28,7 +28,6 @@ import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
@@ -1107,7 +1106,6 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(
-            PluginStores.fake(),
             StorageContexts.basic(
                 CONVERTER_LIKE,
                 MEDIA_TYPE_DETECTOR,

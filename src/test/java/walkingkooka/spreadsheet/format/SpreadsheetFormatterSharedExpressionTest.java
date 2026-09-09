@@ -33,7 +33,6 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -350,7 +349,6 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                             ValidatorProviders.empty()
                         ),
                         ProviderContexts.basic(
-                            PluginStores.fake(),
                             StorageContexts.basic(
                                 CONVERTER_LIKE,
                                 MEDIA_TYPE_DETECTOR,
