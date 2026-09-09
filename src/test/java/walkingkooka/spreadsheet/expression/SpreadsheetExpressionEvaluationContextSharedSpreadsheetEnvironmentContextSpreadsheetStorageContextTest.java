@@ -26,7 +26,6 @@ import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
@@ -1091,7 +1090,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final ProviderContext providerContext = ProviderContexts.basic(
-            PluginStores.fake(),
             StorageContexts.basic(
                 CONVERTER_LIKE,
                 MEDIA_TYPE_DETECTOR,

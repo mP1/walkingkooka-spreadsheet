@@ -34,7 +34,6 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
@@ -657,7 +656,6 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                         ValidatorProviders.empty()
                     ),
                     ProviderContexts.basic(
-                        PluginStores.fake(),
                         StorageContexts.basic(
                             CONVERTER_LIKE,
                             MEDIA_TYPE_DETECTOR,

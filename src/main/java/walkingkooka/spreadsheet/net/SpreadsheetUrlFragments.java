@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.net;
 
 import walkingkooka.net.UrlFragment;
-import walkingkooka.plugin.store.Plugin;
 import walkingkooka.reflect.PublicStaticHelper;
 
 /**
@@ -35,10 +34,6 @@ public final class SpreadsheetUrlFragments implements PublicStaticHelper {
     public static final UrlFragment FORMATTER = UrlFragment.with("formatter");
 
     public static final UrlFragment PARSER = UrlFragment.with("parser");
-
-    public static final UrlFragment PLUGIN = UrlFragment.with(
-        Plugin.HATEOS_RESOURCE_NAME.value()
-    );
 
     /**
      * Stop creation

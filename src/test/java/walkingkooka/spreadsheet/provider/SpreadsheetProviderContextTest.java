@@ -31,8 +31,6 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContextTesting;
-import walkingkooka.plugin.store.PluginStore;
-import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
@@ -55,8 +53,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
 
-    private final static PluginStore PLUGIN_STORE = PluginStores.fake();
-
     private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with(
         "Hello",
         String.class
@@ -73,7 +69,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             () -> SpreadsheetProviderContext.with(
                 null,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -88,23 +83,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
-                null,
-                PLUGIN_STORE,
-                STORAGE,
-                CURRENCY_LOCALE_CONTEXT,
-                STORAGE_ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullPluginStoreFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetProviderContext.with(
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
                 null,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -121,7 +99,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             () -> SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -137,7 +114,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             () -> SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 null,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -153,7 +129,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             () -> SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 null,
@@ -169,7 +144,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             () -> SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -296,7 +270,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         return SpreadsheetProviderContext.with(
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
-            PLUGIN_STORE,
             STORAGE,
             CURRENCY_LOCALE_CONTEXT,
             storageEnvironmentContext,
@@ -334,7 +307,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             SpreadsheetProviderContext.with(
                 MediaTypeDetectors.fake(),
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -349,22 +321,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.fake(),
-                PLUGIN_STORE,
-                STORAGE,
-                CURRENCY_LOCALE_CONTEXT,
-                STORAGE_ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentPluginStore() {
-        this.checkNotEquals(
-            SpreadsheetProviderContext.with(
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                PluginStores.fake(),
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -379,7 +335,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 Storages.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -394,7 +349,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CurrencyContexts.fake()
                     .setLocaleContext(
@@ -412,7 +366,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT,
@@ -427,7 +380,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,
@@ -458,8 +410,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 MEDIA_TYPE_DETECTOR +
                 " multiplier=" +
                 MULTIPLIER +
-                " pluginStore=" +
-                PLUGIN_STORE +
                 " storageEnvironmentContext=" +
                 storageEnvironmentContext
         );
@@ -474,7 +424,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             SpreadsheetProviderContext.with(
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
-                PLUGIN_STORE,
                 STORAGE,
                 CURRENCY_LOCALE_CONTEXT,
                 STORAGE_ENVIRONMENT_CONTEXT,

@@ -46,7 +46,6 @@ import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
@@ -431,7 +430,6 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SpreadsheetProviderContexts.spreadsheet(
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
-            PluginStores.fake(),
             Cast.to(STORAGE_SPREADSHEET_STORAGE_CONTEXT),
             CURRENCY_LOCALE_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
