@@ -205,4 +205,9 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
     public Class<TestSpreadsheetEnvironmentContext> type() {
         return TestSpreadsheetEnvironmentContext.class;
     }
+
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
 }

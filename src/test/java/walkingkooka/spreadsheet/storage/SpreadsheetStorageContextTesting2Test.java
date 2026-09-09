@@ -81,6 +81,11 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         return TestSpreadsheetStorageContext.class;
     }
 
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     final static class TestSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentContext implements SpreadsheetStorageContext,
         SpreadsheetMetadataContextDelegator {
 

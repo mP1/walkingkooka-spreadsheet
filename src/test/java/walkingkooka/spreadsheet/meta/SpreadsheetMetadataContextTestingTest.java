@@ -100,4 +100,9 @@ public final class SpreadsheetMetadataContextTestingTest implements SpreadsheetM
     public Class<TestSpreadsheetMetadataContext> type() {
         return TestSpreadsheetMetadataContext.class;
     }
+
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
 }

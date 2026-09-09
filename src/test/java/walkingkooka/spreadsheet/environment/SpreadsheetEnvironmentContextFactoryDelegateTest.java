@@ -66,6 +66,11 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
         return TestSpreadsheetEnvironmentContextFactoryDelegate.class;
     }
 
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     final static class TestSpreadsheetEnvironmentContextFactoryDelegate implements SpreadsheetEnvironmentContextFactoryDelegate {
 
         @Override

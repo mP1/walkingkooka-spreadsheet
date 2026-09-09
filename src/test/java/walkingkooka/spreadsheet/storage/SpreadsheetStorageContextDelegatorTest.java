@@ -93,6 +93,11 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
         return TestSpreadsheetStorageDelegatorContext.class;
     }
 
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     final static class TestSpreadsheetStorageDelegatorContext implements SpreadsheetStorageContextDelegator {
 
         @Override

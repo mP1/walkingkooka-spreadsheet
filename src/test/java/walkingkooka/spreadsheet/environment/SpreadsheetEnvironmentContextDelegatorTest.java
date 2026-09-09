@@ -95,6 +95,11 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
         return TestSpreadsheetEnvironmentContextDelegator.class;
     }
 
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     final static class TestSpreadsheetEnvironmentContextDelegator implements SpreadsheetEnvironmentContextDelegator {
 
         @Override

@@ -347,4 +347,9 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
     public Class<TestSpreadsheetContext> type() {
         return TestSpreadsheetContext.class;
     }
+
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
 }

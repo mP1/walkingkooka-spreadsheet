@@ -141,6 +141,11 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
         return TestSpreadsheetFormatterContext.class;
     }
 
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     static class TestSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
         SpreadsheetConverterContextDelegator {
 

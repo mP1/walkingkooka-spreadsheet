@@ -178,4 +178,9 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
     public Class<TestSpreadsheetValidatorContext> type() {
         return TestSpreadsheetValidatorContext.class;
     }
+
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
 }
