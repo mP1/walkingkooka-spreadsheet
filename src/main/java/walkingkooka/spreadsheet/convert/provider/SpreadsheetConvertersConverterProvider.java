@@ -287,6 +287,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.locale();
                 break;
+            case LOGGING_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.logging();
+                break;
             case NET_STRING:
                 this.noParameterCheck(copy);
 
@@ -1112,6 +1117,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName LOCALE_TO_TEXT = ConverterName.with(LOCALE_TO_TEXT_STRING);
 
+    private final static String LOGGING_STRING = "logging";
+
+    final static ConverterName LOGGING = ConverterName.with(LOGGING_STRING);
+    
     private final static String NET_STRING = "net";
 
     final static ConverterName NET = ConverterName.with(NET_STRING);
@@ -1688,6 +1697,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
             converterInfo(LOCALE_TO_TEXT),
+            converterInfo(LOGGING),
             converterInfo(NET),
             converterInfo(NULL_TO_NUMBER),
             converterInfo(NUMBER),

@@ -505,6 +505,19 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         return Converters.localeToString();
     }
 
+
+    public static Converter<SpreadsheetConverterContext> logging() {
+        if (null == LOGGING) {
+            LOGGING = namedCollection(
+                "LOGGING",
+                textToLoggingLevel()
+            );
+        }
+        return LOGGING;
+    }
+
+    private static Converter<SpreadsheetConverterContext> LOGGING;
+
     /**
      * {@link NetConverters#net()}
      */
