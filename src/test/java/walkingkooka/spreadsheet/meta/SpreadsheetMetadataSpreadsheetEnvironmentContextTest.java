@@ -640,6 +640,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    json-to\n" +
                 "    locale\n" +
                 "    locale-to-text\n" +
+                "    logging\n" +
                 "    net\n" +
                 "    null-to-number\n" +
                 "    number\n" +
