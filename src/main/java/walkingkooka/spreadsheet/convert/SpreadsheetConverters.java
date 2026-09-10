@@ -1185,6 +1185,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@see Converters#textToLoggingLevel}
+     */
+    public static Converter<SpreadsheetConverterContext> textToLoggingLevel() {
+        return Converters.textToLoggingLevel();
+    }
+
+    /**
      * {@link TreeTextConverters#textToMargin()}
      */
     public static Converter<SpreadsheetConverterContext> textToMargin() {

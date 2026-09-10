@@ -1033,6 +1033,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToLoggingLevel() {
+        this.converterAndCheck(
+            "text-to-logging-level",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToLoggingLevel()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToMargin() {
         this.converterAndCheck(
             "text-to-margin",
@@ -1697,6 +1706,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-line-ending text-to-line-ending\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-locale text-to-locale\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-locale-language-tag text-to-locale-language-tag\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-logging-level text-to-logging-level\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-margin text-to-margin\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-media-type text-to-media-type\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-number-list text-to-number-list\n" +

@@ -642,6 +642,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.textToLocaleLanguageTag();
                 break;
+            case TEXT_TO_LOGGING_LEVEL_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToLoggingLevel();
+                break;
             case TEXT_TO_MARGIN_STRING:
                 this.noParameterCheck(copy);
 
@@ -1391,6 +1396,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TEXT_TO_LOCALE_LANGUAGE_TAG = ConverterName.with(TEXT_TO_LOCALE_LANGUAGE_TAG_STRING);
 
+    private final static String TEXT_TO_LOGGING_LEVEL_STRING = "text-to-logging-level";
+
+    final static ConverterName TEXT_TO_LOGGING_LEVEL = ConverterName.with(TEXT_TO_LOGGING_LEVEL_STRING);
+
     private final static String TEXT_TO_MARGIN_STRING = "text-to-margin";
 
     final static ConverterName TEXT_TO_MARGIN = ConverterName.with(TEXT_TO_MARGIN_STRING);
@@ -1750,6 +1759,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_LINE_ENDING),
             converterInfo(TEXT_TO_LOCALE),
             converterInfo(TEXT_TO_LOCALE_LANGUAGE_TAG),
+            converterInfo(TEXT_TO_LOGGING_LEVEL),
             converterInfo(TEXT_TO_MARGIN),
             converterInfo(TEXT_TO_MEDIA_TYPE),
             converterInfo(TEXT_TO_NUMBER_LIST),
