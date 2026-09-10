@@ -46,6 +46,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.Environment;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
@@ -1278,6 +1279,25 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     LocaleLanguageTag.class,
                     SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
                     LocaleLanguageTag.fromLocale(locale)
+                );
+            }
+        }
+
+        // logging...................................................................................................
+        {
+            if (scripting) {
+                verifier.addIfConversionFail(
+                    "DEBUG",
+                    LoggingLevel.class,
+                    SpreadsheetConvertersConverterProvider.LOGGING,
+                    LoggingLevel.DEBUG
+                );
+
+                verifier.addIfConversionFail(
+                    "INFO",
+                    LoggingLevel.class,
+                    SpreadsheetConvertersConverterProvider.LOGGING,
+                    LoggingLevel.INFO
                 );
             }
         }

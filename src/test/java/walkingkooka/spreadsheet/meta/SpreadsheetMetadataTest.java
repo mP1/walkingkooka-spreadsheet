@@ -1733,7 +1733,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "queryConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, basic)\n" +
                                 "queryFunctions=\n" +
                                 "roundingMode=HALF_UP\n" +
-                                "scriptingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
+                                "scriptingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
                                 "scriptingCurrencyExchangeRater=storage-path-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "scriptingFunctions=\n" +
                                 "showFormulaEditor=true\n" +
@@ -1915,7 +1915,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "queryConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, basic)\n" +
                 "queryFunctions=\n" +
                 "roundingMode=HALF_UP\n" +
-                "scriptingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
+                "scriptingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
                 "scriptingCurrencyExchangeRater=storage-path-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                 "scriptingFunctions=\n" +
                 "showFormulaEditor=true\n" +
