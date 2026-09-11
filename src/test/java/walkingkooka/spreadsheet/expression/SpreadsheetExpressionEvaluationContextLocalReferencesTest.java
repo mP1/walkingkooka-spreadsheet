@@ -32,6 +32,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleContextTesting;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
@@ -753,6 +754,16 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
+        public LoggingLevel loggingLevel() {
+            return this.spreadsheetEnvironmentContext.loggingLevel();
+        }
+
+        @Override
+        public void setLoggingLevel(final LoggingLevel loggingLevel) {
+            this.spreadsheetEnvironmentContext.setLoggingLevel(loggingLevel);
+        }
+        
+        @Override
         public LocalDateTime now() {
             return this.spreadsheetEnvironmentContext.now();
         }
@@ -847,14 +858,12 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
         @Override
         public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            throw new UnsupportedOperationException();
+            return this.spreadsheetEnvironmentContext.addEnvironmentWatcher(watcher);
         }
 
         @Override
         public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            throw new UnsupportedOperationException();
+            return this.spreadsheetEnvironmentContext.addEnvironmentWatcherOnce(watcher);
         }
 
         @Override
@@ -1252,6 +1261,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     }
 
     @Override
+    public void testLogWithNullLoggingLevelFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetCurrencyWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
@@ -1273,6 +1287,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
     @Override
     public void testSetLocaleWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetLoggingLevelWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 

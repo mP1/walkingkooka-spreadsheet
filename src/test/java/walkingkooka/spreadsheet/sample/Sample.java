@@ -36,6 +36,8 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.logging.CanLogs;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
@@ -334,11 +336,13 @@ public final class Sample {
                 Storages.fake(),
                 StorageEnvironmentContexts.basic(
                     EnvironmentContexts.map(
+                        CanLogs.nullCanLog(),
                         StandardCharsets.UTF_8,
                         CURRENCY,
                         Indentation.SPACES2,
                         LineEnding.NL,
                         LOCALE,
+                        LoggingLevel.NONE,
                         LocalDateTime::now,
                         Optional.of(
                             EmailAddress.parse("user@example.com")

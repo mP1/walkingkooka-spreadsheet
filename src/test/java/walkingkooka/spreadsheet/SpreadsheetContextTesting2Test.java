@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -119,6 +120,16 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
         }
 
         @Override
+        public LoggingLevel loggingLevel() {
+            return this.spreadsheetEnvironmentContext.loggingLevel();
+        }
+
+        @Override
+        public void setLoggingLevel(final LoggingLevel loggingLevel) {
+            this.spreadsheetEnvironmentContext.setLoggingLevel(loggingLevel);
+        }
+
+        @Override
         public LocalDateTime now() {
             return this.spreadsheetEnvironmentContext.now();
         }
@@ -194,6 +205,17 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
         @Override
         public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
             return this.spreadsheetEnvironmentContext.parseEnvironmentValueName(name);
+        }
+
+        @Override
+        public void log(final LoggingLevel loggingLevel,
+                        final String message,
+                        final Throwable throwable) {
+            this.spreadsheetEnvironmentContext.log(
+                loggingLevel,
+                message,
+                throwable
+            );
         }
 
         private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
