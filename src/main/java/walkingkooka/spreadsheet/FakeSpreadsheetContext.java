@@ -26,6 +26,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -253,6 +254,18 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
         throw new UnsupportedOperationException();
     }
 
+    // HasLoggingLevel..................................................................................................
+
+    @Override
+    public LoggingLevel loggingLevel() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setLoggingLevel(final LoggingLevel loggingLevel) {
+        throw new UnsupportedOperationException();
+    }
+
     // CurrencyContext..................................................................................................
 
     @Override
@@ -389,6 +402,95 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
         throw new UnsupportedOperationException();
     }
 
+    // LoggingContext...................................................................................................
+    
+    @Override
+    public void debug(final String message) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void debug(final String message,
+                      final Throwable throwable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void info(final String message) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void info(final String message,
+                     final Throwable throwable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void warn(final String message) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void warn(final String message,
+                     final Throwable throwable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void error(final String message) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void error(final String message,
+                      final Throwable throwable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void log(final LoggingLevel level,
+                    final String message) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void log(final LoggingLevel level,
+                    final String message,
+                    final Throwable throwable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isInfoEnabled() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isErrorEnabled() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isNoneEnabled() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isLoggingEnabled(final LoggingLevel level) {
+        throw new UnsupportedOperationException();
+    }
+    
     // HasProviderContext...............................................................................................
 
     @Override

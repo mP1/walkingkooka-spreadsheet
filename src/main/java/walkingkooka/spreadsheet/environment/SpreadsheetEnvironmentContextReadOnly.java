@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
+import walkingkooka.logging.LoggingContext;
+import walkingkooka.logging.LoggingContextDelegator;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -46,6 +49,7 @@ import java.util.function.Predicate;
  * throwing {@link UnsupportedOperationException}.
  */
 final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironmentContext,
+    LoggingContextDelegator,
     TreePrintable {
 
     static SpreadsheetEnvironmentContextReadOnly with(final Predicate<EnvironmentValueName<?>> readOnlyFilter,
@@ -232,6 +236,19 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
     }
 
     @Override
+    public LoggingLevel loggingLevel() {
+        return LOGGING_LEVEL.getEnvironmentValueOrFail(this);
+    }
+
+    @Override
+    public void setLoggingLevel(final LoggingLevel loggingLevel) {
+        LOGGING_LEVEL.setEnvironmentValue(
+            loggingLevel,
+            this
+        );
+    }
+
+    @Override
     public LocalDateTime now() {
         return NOW.getEnvironmentValueOrFail(this);
     }
@@ -301,6 +318,13 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
     }
 
     private final SpreadsheetEnvironmentContext context;
+
+    // LoggingContextDelegator..........................................................................................
+
+    @Override
+    public LoggingContext loggingContext() {
+        return this.context;
+    }
 
     // Object...........................................................................................................
 

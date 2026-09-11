@@ -204,6 +204,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
+            SpreadsheetEnvironmentContext.LOGGING_LEVEL,
             SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
@@ -230,6 +231,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
+            SpreadsheetEnvironmentContext.LOGGING_LEVEL,
             SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SpreadsheetEnvironmentContext.TIME_OFFSET,
@@ -271,6 +273,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
+            SpreadsheetEnvironmentContext.LOGGING_LEVEL,
             SpreadsheetEnvironmentContext.NOW,
             SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName(),
             SpreadsheetEnvironmentContext.SERVER_URL,
@@ -520,7 +523,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=  , lineEnding=\\n, locale=en_AU, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=  , lineEnding=\\n, locale=en_AU, loggingLevel=NONE, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -937,6 +940,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    \"\\n\"\n" +
                 "  locale\n" +
                 "    en_AU (java.util.Locale)\n" +
+                "  loggingLevel\n" +
+                "    NONE\n" +
                 "  now\n" +
                 "    1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
                 "  numberFormatter\n" +

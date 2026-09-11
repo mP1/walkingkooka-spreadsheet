@@ -27,6 +27,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -486,6 +487,18 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext impleme
 
     @Override
     public void setLineEnding(final LineEnding lineEnding) {
+        throw new UnsupportedOperationException();
+    }
+
+    // HasLoggingLevel..................................................................................................
+
+    @Override
+    public LoggingLevel loggingLevel() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setLoggingLevel(final LoggingLevel loggingLevel) {
         throw new UnsupportedOperationException();
     }
 

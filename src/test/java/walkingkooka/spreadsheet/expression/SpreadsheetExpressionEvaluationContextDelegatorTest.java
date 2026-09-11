@@ -125,6 +125,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
+    public void testSetLoggingLevelWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetObjectPostProcessor() {
         throw new UnsupportedOperationException();
     }
