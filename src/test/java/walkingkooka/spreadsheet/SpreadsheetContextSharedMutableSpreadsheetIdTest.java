@@ -24,6 +24,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.logging.CanLog;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
@@ -46,6 +47,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
@@ -460,17 +462,23 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     }
 
     @Override
-    public SpreadsheetContextSharedMutableSpreadsheetId createContext() {
-        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+    SpreadsheetContextSharedMutableSpreadsheetId createContext(final CanLog canLog) {
+        final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.basic(
+            STORAGE_ENVIRONMENT_CONTEXT.environment()
+                .setCanLog(canLog)
+                .environmentContext()
+                .cloneEnvironment()
+        );
 
         storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
-            SpreadsheetContextSharedMutableSpreadsheetIdTest.SERVER_URL
+            SERVER_URL
         );
         storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-            SpreadsheetContextSharedMutableSpreadsheetIdTest.SPREADSHEET_ID
+            SPREADSHEET_ID
         );
+
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
                 STORAGE,

@@ -22,6 +22,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.logging.CanLog;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpHandlerContext;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -46,6 +47,7 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
@@ -392,8 +394,13 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     }
 
     @Override
-    public SpreadsheetContextSharedFixedSpreadsheetId createContext() {
-        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+    SpreadsheetContextSharedFixedSpreadsheetId createContext(final CanLog canLog) {
+        final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.basic(
+            STORAGE_ENVIRONMENT_CONTEXT.environment()
+                .setCanLog(canLog)
+                .environmentContext()
+                .cloneEnvironment()
+        );
 
         storageEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
