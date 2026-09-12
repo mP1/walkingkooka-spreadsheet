@@ -26,6 +26,9 @@ import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.logging.CanLog;
+import walkingkooka.logging.CanLogs;
+import walkingkooka.logging.LoggingLevel;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -52,6 +55,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.printer.Printers;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -412,6 +416,83 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         );
     }
 
+    // logXXX...........................................................................................................
+
+    private final static String MESSAGE1 = "Message111";
+    private final static String MESSAGE2 = "Message222";
+    private final static String MESSAGE3 = "Message333";
+    private final static String MESSAGE4 = "Message444";
+
+    @Test
+    public final void testLogDisabled() {
+        final C context = this.createContext(
+            CanLogs.fake()
+        );
+
+        this.isLoggingEnabledAndCheck(
+            context,
+            LoggingLevel.DEBUG,
+            false
+        );
+
+        context.debug(MESSAGE1);
+    }
+
+    @Test
+    public final void testLogEnabled() {
+        final StringBuilder b = new StringBuilder();
+
+        final C context = this.createContext(b);
+        context.setLoggingLevel(LoggingLevel.DEBUG);
+
+        this.isLoggingEnabledAndCheck(
+            context,
+            LoggingLevel.DEBUG,
+            true
+        );
+
+        context.debug(MESSAGE1);
+
+        this.checkEquals(
+            MESSAGE1 + LINE_ENDING,
+            b.toString()
+        );
+    }
+
+    @Test
+    public final void testLoggingLevelChanged() {
+        final StringBuilder b = new StringBuilder();
+
+        final C context = this.createContext(b);
+
+        context.setLoggingLevel(LoggingLevel.INFO);
+        context.debug(MESSAGE1);
+        context.info(MESSAGE2);
+
+        context.setLoggingLevel(LoggingLevel.WARN);
+        context.warn(MESSAGE3);
+
+        context.setLoggingLevel(LoggingLevel.NONE);
+        context.warn(MESSAGE4);
+
+        this.checkEquals(
+            MESSAGE2 + LINE_ENDING +
+                MESSAGE3 + LINE_ENDING,
+            b.toString()
+        );
+    }
+
+    final C createContext(final StringBuilder b) {
+        return this.createContext(
+            CanLogs.printer(
+                Printers.stringBuilder(
+                    b,
+                    LINE_ENDING
+                )
+            )
+        );
+    }
+
     // storage..........................................................................................................
 
     @Test
@@ -436,6 +517,29 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     }
 
     // createContext....................................................................................................
+
+    @Override
+    public final C createContext() {
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
+        return this.createContext(
+            SpreadsheetEnvironmentContexts.basic(
+                STORAGE,
+                storageEnvironmentContext
+            )
+        );
+    }
+
+    abstract C createContext(final CanLog canLog);
 
     abstract C createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext);
 
