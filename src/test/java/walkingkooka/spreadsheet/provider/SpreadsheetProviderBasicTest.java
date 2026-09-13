@@ -442,7 +442,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
     public void testToString() {
         this.toStringAndCheck(
             this.createSpreadsheetProvider(),
-            "spreadsheetComparatorProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider converterProvider=SpreadsheetConvertersConverterProvider currencyExchangeRaterProvider=CurrencyCurrencyExchangeRaterProvider spreadsheetExporterProvider=SpreadsheetExportSpreadsheetExporterProvider expressionFunctionProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider spreadsheetFormatterProvider=SpreadsheetFormattersSpreadsheetFormatterProvider spreadsheetImporterProvider=SpreadsheetImportSpreadsheetImporterProvider spreadsheetParserProvider=SpreadsheetParserSpreadsheetParserProvider validatorProvider=ValidationValidatorProvider"
+            "spreadsheetComparatorProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider converterProvider=SpreadsheetConvertersConverterProvider currencyExchangeRaterProvider=SpreadsheetCurrencyCurrencyExchangeRaterProvider spreadsheetExporterProvider=SpreadsheetExportSpreadsheetExporterProvider expressionFunctionProvider=SpreadsheetComparatorsSpreadsheetComparatorProvider spreadsheetFormatterProvider=SpreadsheetFormattersSpreadsheetFormatterProvider spreadsheetImporterProvider=SpreadsheetImportSpreadsheetImporterProvider spreadsheetParserProvider=SpreadsheetParserSpreadsheetParserProvider validatorProvider=ValidationValidatorProvider"
         );
     }
 
@@ -665,10 +665,11 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-image url-to-image\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/value value\n" +
                 "  currencyExchangeRaterProvider\n" +
-                "    CurrencyCurrencyExchangeRaterProvider\n" +
+                "    SpreadsheetCurrencyCurrencyExchangeRaterProvider\n" +
                 "      CurrencyExchangeRaterInfoSet\n" +
-                "        https://github.com/mP1/walkingkooka-currency-provider/CurrencyExchangeRater/empty empty\n" +
-                "        https://github.com/mP1/walkingkooka-currency-provider/CurrencyExchangeRater/properties properties\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/empty empty\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/properties properties\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/storage-path-properties storage-path-properties\n" +
                 "  spreadsheetExporterProvider\n" +
                 "    SpreadsheetExportSpreadsheetExporterProvider\n" +
                 "      SpreadsheetExporterInfoSet\n" +

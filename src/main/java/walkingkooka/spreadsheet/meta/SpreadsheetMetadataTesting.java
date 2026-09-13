@@ -27,7 +27,6 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
-import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.HasDateTimeSymbolsTesting;
@@ -54,6 +53,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -150,7 +150,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
 
-    CurrencyExchangeRaterProvider CURRENCY_EXCHANGE_RATER_PROVIDER = CurrencyExchangeRaterProviders.currencyExchangeRaters(
+    CurrencyExchangeRaterProvider CURRENCY_EXCHANGE_RATER_PROVIDER = SpreadsheetCurrencyExchangeRaterProviders.spreadsheetCurrency(
         (String text) -> EXPRESSION_NUMBER_KIND.parse(text)
     );
 
