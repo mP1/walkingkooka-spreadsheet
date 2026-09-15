@@ -25,7 +25,10 @@ import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
+import walkingkooka.currency.CurrencyExchangeRater;
 import walkingkooka.currency.HasOptionalCurrency;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
+import walkingkooka.currency.provider.HasOptionalCurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasOptionalDateTimeSymbols;
 import walkingkooka.locale.LocaleLanguageTag;
@@ -88,6 +91,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     CanReplaceReferences<SpreadsheetCell>,
     HasContentType,
     HasOptionalCurrency,
+    HasOptionalCurrencyExchangeRaterSelector,
     HasOptionalDateTimeSymbols,
     HasOptionalDecimalNumberSymbols,
     HasOptionalLocale,
@@ -108,6 +112,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * A {@link Comparator} that only uses the {@link SpreadsheetCell#reference()}.
      */
     public static final Comparator<SpreadsheetCell> REFERENCE_COMPARATOR = Comparator.comparing(SpreadsheetCell::reference);
+
+    /**
+     * Holds an absent {@link CurrencyExchangeRaterSelector}.
+     */
+    public final static Optional<CurrencyExchangeRaterSelector> NO_CURRENCY_EXCHANGE_RATER = NO_CURRENCY_EXCHANGE_RATER_SELECTOR;
 
     /**
      * Holds an absent {@link DateTimeSymbols}
@@ -158,6 +167,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             checkReference(reference),
             checkFormula(formula),
             NO_CURRENCY,
+            NO_CURRENCY_EXCHANGE_RATER_SELECTOR,
             NO_DATETIME_SYMBOLS,
             NO_DECIMAL_NUMBER_SYMBOLS,
             NO_LOCALE,
@@ -175,6 +185,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private SpreadsheetCell(final SpreadsheetCellReference reference,
                             final SpreadsheetFormula formula,
                             final Optional<Currency> currency,
+                            final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater,
                             final Optional<DateTimeSymbols> dateTimeSymbols,
                             final Optional<DecimalNumberSymbols> decimalNumberSymbols,
                             final Optional<Locale> locale,
@@ -189,6 +200,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         this.formula = formula;
         
         this.currency = currency;
+        this.currencyExchangeRater = currencyExchangeRater;
         this.dateTimeSymbols = dateTimeSymbols;
         this.decimalNumberSymbols = decimalNumberSymbols;
         this.locale = locale;
@@ -225,6 +237,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 checkReference(reference),
                 this.formula,
                 this.currency,
+                this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -264,6 +277,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 formula,
                 this.currency,
+                this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -322,6 +336,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.reference,
             this.formula,
             currency,
+            this.currencyExchangeRater,
             this.dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
@@ -337,6 +352,52 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private final Optional<Currency> currency;
 
+    // currencyExchangeRater............................................................................................
+
+    public Optional<CurrencyExchangeRaterSelector> currencyExchangeRater() {
+        return this.currencyExchangeRater;
+    }
+
+    /**
+     * Returns a {@link SpreadsheetCell} with the given {@link CurrencyExchangeRaterSelector}. If the formula has a token or
+     * expression they will be cleared.
+     */
+    public SpreadsheetCell setCurrencyExchangeRater(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater) {
+        return this.currencyExchangeRater.equals(currencyExchangeRater) ?
+            this :
+            this.replaceCurrencyExchangeRater(
+                Objects.requireNonNull(currencyExchangeRater, "currencyExchangeRater")
+            );
+    }
+
+    private SpreadsheetCell replaceCurrencyExchangeRater(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater) {
+        return this.replace(
+            this.reference,
+            this.formula,
+            this.currency,
+            currencyExchangeRater,
+            this.dateTimeSymbols,
+            this.decimalNumberSymbols,
+            this.locale,
+            this.formatter,
+            this.parser,
+            this.style,
+            this.validator
+        );
+    }
+
+    /**
+     * An optional {@link CurrencyExchangeRaterSelector} which will override the default {@link CurrencyExchangeRaterSelector}.
+     */
+    private final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater;
+
+    // HasOptionalCurrencyExchangeRaterSelector.........................................................................
+
+    @Override
+    public Optional<CurrencyExchangeRaterSelector> currencyExchangeRaterSelector() {
+        return this.currencyExchangeRater;
+    }
+    
     // dateTimeSymbols..................................................................................................
 
     @Override
@@ -361,6 +422,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.reference,
             this.formula,
             this.currency,
+            this.currencyExchangeRater,
             dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
@@ -400,6 +462,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.reference,
             this.formula,
             this.currency,
+            this.currencyExchangeRater,
             this.dateTimeSymbols,
             decimalNumberSymbols,
             this.locale,
@@ -429,6 +492,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 this.formula,
                 this.currency,
+                this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 Objects.requireNonNull(locale, "locale"),
@@ -454,6 +518,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 this.formula,
                 this.currency,
+                this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -502,6 +567,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             formula.setToken(SpreadsheetFormula.NO_TOKEN)
                 .setText(formula.text()),
             this.currency,
+            this.currencyExchangeRater,
             this.dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
@@ -537,6 +603,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 this.formula,
                 this.currency,
+                this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -575,6 +642,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 this.formula,
                 this.currency,
+                this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -604,6 +672,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 reference,
                 this.formula,
                 this.currency,
+                this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -641,6 +710,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
                                     final Optional<Currency> currency,
+                                    final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater,
                                     final Optional<DateTimeSymbols> dateTimeSymbols,
                                     final Optional<DecimalNumberSymbols> decimalNumberSymbols,
                                     final Optional<Locale> locale,
@@ -652,6 +722,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             reference,
             formula,
             currency,
+            currencyExchangeRater,
             dateTimeSymbols,
             decimalNumberSymbols,
             locale,
@@ -672,6 +743,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public boolean isEmpty() {
         return this.formula.isEmpty() &&
             false == this.currency.isPresent() &&
+            false == this.currencyExchangeRater.isPresent() &&
             false == this.dateTimeSymbols.isPresent() &&
             false == this.decimalNumberSymbols.isPresent() &&
             false == this.locale.isPresent() &&
@@ -732,6 +804,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         context.unmarshallOptional(
                             propertyAndValue,
                             Currency.class
+                        )
+                    );
+                    break;
+                case CURRENCY_EXCHANGE_RATER_PROPERTY_STRING:
+                    patched = patched.setCurrencyExchangeRater(
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            CurrencyExchangeRaterSelector.class
                         )
                     );
                     break;
@@ -827,6 +907,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.makePatch(
             CURRENCY_PROPERTY,
             context.marshallOptional(this.currency)
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
+     * a {@link CurrencyExchangeRater}.
+     */
+    public JsonNode currencyExchangeRaterPatch(final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return this.makePatch(
+            CURRENCY_EXCHANGE_RATER_PROPERTY,
+            context.marshallOptional(this.currencyExchangeRater)
         );
     }
     
@@ -1149,6 +1242,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
 
             this.printTreeLabel(
+                "currencyExchangeRater",
+                this.currencyExchangeRater,
+                printer
+            );
+
+            this.printTreeLabel(
                 "dateTimeSymbols",
                 this.dateTimeSymbols,
                 printer
@@ -1266,6 +1365,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                                         final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
         Optional<Currency> currency = NO_CURRENCY;
+        Optional<CurrencyExchangeRaterSelector> currencyExchangeRater = NO_CURRENCY_EXCHANGE_RATER;
         Optional<DateTimeSymbols> dateTimeSymbols = NO_DATETIME_SYMBOLS;
         Optional<DecimalNumberSymbols> decimalNumberSymbols = NO_DECIMAL_NUMBER_SYMBOLS;
         Optional<SpreadsheetFormatterSelector> formatter = NO_FORMATTER;
@@ -1286,6 +1386,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     currency = context.unmarshallOptional(
                         child,
                         Currency.class
+                    );
+                    break;
+                case CURRENCY_EXCHANGE_RATER_PROPERTY_STRING:
+                    currencyExchangeRater = context.unmarshallOptional(
+                        child,
+                        CurrencyExchangeRaterSelector.class
                     );
                     break;
                 case DATE_TIME_SYMBOLS_PROPERTY_STRING:
@@ -1346,6 +1452,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             reference,
             formula,
             currency,
+            currencyExchangeRater,
             dateTimeSymbols,
             decimalNumberSymbols,
             locale,
@@ -1395,6 +1502,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
             object = object.set(
                 CURRENCY_PROPERTY,
                 context.marshallOptional(this.currency)
+            );
+        }
+
+        if (this.currencyExchangeRater.isPresent()) {
+            object = object.set(
+                CURRENCY_EXCHANGE_RATER_PROPERTY,
+                context.marshallOptional(this.currencyExchangeRater)
             );
         }
 
@@ -1461,6 +1575,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String CURRENCY_PROPERTY_STRING = "currency";
 
+    private final static String CURRENCY_EXCHANGE_RATER_PROPERTY_STRING = "currencyExchangeRater";
+
     private final static String DATE_TIME_SYMBOLS_PROPERTY_STRING = "dateTimeSymbols";
 
     private final static String DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING = "decimalNumberSymbols";
@@ -1482,6 +1598,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
 
     final static JsonPropertyName CURRENCY_PROPERTY = JsonPropertyName.with(CURRENCY_PROPERTY_STRING);
+
+    final static JsonPropertyName CURRENCY_EXCHANGE_RATER_PROPERTY = JsonPropertyName.with(CURRENCY_EXCHANGE_RATER_PROPERTY_STRING);
 
     final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_PROPERTY_STRING);
 
@@ -1516,6 +1634,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.reference,
             this.formula,
             this.currency,
+            this.currencyExchangeRater,
             this.dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
@@ -1538,6 +1657,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.reference.equals(other.reference()) &&
             this.formula.equals(other.formula()) &&
             this.currency.equals(other.currency) &&
+            this.currencyExchangeRater.equals(other.currencyExchangeRater) &&
             this.dateTimeSymbols.equals(other.dateTimeSymbols) &&
             this.decimalNumberSymbols.equals(other.decimalNumberSymbols) &&
             this.locale.equals(other.locale) &&
@@ -1559,6 +1679,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
             .value(this.formula)
             .label("currency")
             .value(this.currency.map(Object::toString))
+            .label("currencyExchangeRater")
+            .value(this.currencyExchangeRater.map(Object::toString))
             .label("dateTimeSymbols")
             .value(this.dateTimeSymbols.map(Object::toString))
             .label("decimalNumberSymbols")
