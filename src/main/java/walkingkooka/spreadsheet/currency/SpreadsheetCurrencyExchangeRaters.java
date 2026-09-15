@@ -50,9 +50,9 @@ public final class SpreadsheetCurrencyExchangeRaters implements PublicStaticHelp
     /**
      * {@link StorageCurrencyExchangeRaters#storageProperties(StoragePath, Function, StorageContext)}
      */
-    public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> storagePathProperties(final StoragePath storagePath,
-                                                                                                       final Function<String, Number> numberParser,
-                                                                                                       final StorageContext storageContext) {
+    public static CurrencyExchangeRater<SpreadsheetCurrencyExchangeRaterContext> storageProperties(final StoragePath storagePath,
+                                                                                                   final Function<String, Number> numberParser,
+                                                                                                   final StorageContext storageContext) {
         return StorageCurrencyExchangeRaters.storageProperties(
             storagePath,
             numberParser,

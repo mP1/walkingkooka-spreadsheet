@@ -117,7 +117,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
                     1
                 );
 
-                currencyExchangeRater = SpreadsheetCurrencyExchangeRaters.storagePathProperties(
+                currencyExchangeRater = SpreadsheetCurrencyExchangeRaters.storageProperties(
                     context.convertOrFail(
                         copy.get(0),
                         StoragePath.class
@@ -143,7 +143,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
 
     final static CurrencyExchangeRaterName PROPERTIES = CurrencyExchangeRaterName.with(PROPERTIES_STRING);
 
-    private final static String STORAGE_PATH_PROPERTIES_STRING = "storage-path-properties";
+    private final static String STORAGE_PATH_PROPERTIES_STRING = "storage-properties";
 
     final static CurrencyExchangeRaterName STORAGE_PATH_PROPERTIES = CurrencyExchangeRaterName.with(STORAGE_PATH_PROPERTIES_STRING);
 
