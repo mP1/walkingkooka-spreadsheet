@@ -669,7 +669,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "      CurrencyExchangeRaterInfoSet\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/empty empty\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/properties properties\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/storage-path-properties storage-path-properties\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/storage-properties storage-properties\n" +
                 "  spreadsheetExporterProvider\n" +
                 "    SpreadsheetExportSpreadsheetExporterProvider\n" +
                 "      SpreadsheetExporterInfoSet\n" +

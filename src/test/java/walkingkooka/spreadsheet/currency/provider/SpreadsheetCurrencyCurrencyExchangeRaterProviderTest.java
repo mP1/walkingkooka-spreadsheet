@@ -190,12 +190,12 @@ public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implemen
     @Test
     public void testCurrencyExchangeRaterWithStoragePathPropertiesNameAndValues() {
         this.currencyExchangeRaterAndCheck(
-            CurrencyExchangeRaterName.with("storage-path-properties"),
+            CurrencyExchangeRaterName.with("storage-properties"),
             Lists.of(
                 PROPERTIES_STORAGE_PATH
             ),
             PROVIDER_CONTEXT,
-            SpreadsheetCurrencyExchangeRaters.storagePathProperties(
+            SpreadsheetCurrencyExchangeRaters.storageProperties(
                 PROPERTIES_STORAGE_PATH,
                 NUMBER_PARSER,
                 PROVIDER_CONTEXT
@@ -211,7 +211,7 @@ public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implemen
             "CurrencyExchangeRaterInfoSet\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/empty empty\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/properties properties\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/storage-path-properties storage-path-properties\n"
+                "  https://github.com/mP1/walkingkooka-spreadsheet/CurrencyExchangeRater/storage-properties storage-properties\n"
         );
     }
 

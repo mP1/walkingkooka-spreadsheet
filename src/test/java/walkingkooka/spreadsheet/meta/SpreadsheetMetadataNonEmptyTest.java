@@ -2685,7 +2685,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.CURRENCY_EXCHANGE_RATERS,
-            CurrencyExchangeRaterAliasSet.parse("properties, storage-path-properties")
+            CurrencyExchangeRaterAliasSet.parse("properties, storage-properties")
         );
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());

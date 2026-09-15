@@ -250,7 +250,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             ConverterSelector.parse("collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, style, text-node, template, net, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CURRENCY_EXCHANGE_RATER,
-            CurrencyExchangeRaterSelector.parse("storage-path-properties(\"/samples/CurrencyExchangeRates.properties\")")
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -266,7 +266,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             ConverterSelector.parse("collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_CURRENCY_EXCHANGE_RATER,
-            CurrencyExchangeRaterSelector.parse("storage-path-properties(\"/samples/CurrencyExchangeRates.properties\")")
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -308,7 +308,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             )
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_CURRENCY_EXCHANGE_RATER,
-            CurrencyExchangeRaterSelector.parse("storage-path-properties(\"/samples/CurrencyExchangeRates.properties\")")
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -357,7 +357,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             ConverterSelector.parse("collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CURRENCY_EXCHANGE_RATER,
-            CurrencyExchangeRaterSelector.parse("storage-path-properties(\"/samples/CurrencyExchangeRates.properties\")")
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
