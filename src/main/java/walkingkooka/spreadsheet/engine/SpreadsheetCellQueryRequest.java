@@ -115,7 +115,7 @@ public final class SpreadsheetCellQueryRequest implements HasUrlFragment,
             }
         }
 
-        if (false == cursor.isEmpty()) {
+        if (cursor.isNotEmpty()) {
             throw new IllegalArgumentException("Invalid query got " + CharSequences.quoteAndEscape(text));
         }
 

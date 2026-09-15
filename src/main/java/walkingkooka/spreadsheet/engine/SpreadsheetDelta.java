@@ -966,7 +966,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final OptionalInt rowCount = this.rowCount;
 
         final SpreadsheetDelta delta;
-        if (false == window.isEmpty()) {
+        if (window.isNotEmpty()) {
             delta = SpreadsheetDeltaWindowed.withWindowed(
                 viewport,
                 filteredCells,
