@@ -340,6 +340,14 @@ listed [HERE](https://github.com/mP1/walkingkooka-spreadsheet-expression-functio
   *DONE*
 - Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/16)
 
+### [CurrencyExchangeRater](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/currency/provider/SpreadsheetCurrencyExchangeRaterProviders.java)
+
+A collection of `CurrencyExchangeRater` which provide currency exchange services.
+
+- [empty](https://github.com/mP1/walkingkooka-currency/blob/master/src/main/java/walkingkooka/currency/CurrencyExchangeRaterEmpty.java)
+- [properties](https://github.com/mP1/walkingkooka-currency/blob/master/src/main/java/walkingkooka/currency/CurrencyExchangeRaterProperties.java)
+- [storage-properties](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/currency/provider/SpreadsheetCurrencyCurrencyExchangeRaterProvider.java)
+
 ### [SpreadsheetFormatter](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatter.java)
 
 A `SpreadsheetFormatter` is used to format the cell value into text that is displayed within the grid of cells.
