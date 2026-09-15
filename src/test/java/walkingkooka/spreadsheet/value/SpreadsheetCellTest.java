@@ -153,6 +153,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(cell);
         this.formulaAndCheck(cell);
+        this.currencyAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheck(cell);
@@ -174,6 +175,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             reference.toRelative()
         );
         this.formulaAndCheck(cell);
+        this.currencyAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
