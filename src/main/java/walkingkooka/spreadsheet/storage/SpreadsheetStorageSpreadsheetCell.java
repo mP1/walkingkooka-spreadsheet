@@ -19,12 +19,12 @@ package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.collection.SpreadsheetCellSet;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageName;
 import walkingkooka.storage.StoragePath;
