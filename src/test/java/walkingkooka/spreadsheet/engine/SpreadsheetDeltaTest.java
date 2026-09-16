@@ -2215,13 +2215,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // currencyExchangeRaterSelectorPatch...............................................................................
+    // currencyExchangeRaterPatch.......................................................................................
 
     @Test
-    public void testCurrencyExchangeRaterSelectorPatchWithNullPatternFails() {
+    public void testCurrencyExchangeRaterPatchWithNullPatternFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetDelta.currencyExchangeRaterSelectorPatch(
+            () -> SpreadsheetDelta.currencyExchangeRaterPatch(
                 null,
                 JSON_NODE_MARSHALL_CONTEXT
             )
@@ -2229,10 +2229,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testCurrencyExchangeRaterSelectorPatchWithNullContextFails() {
+    public void testCurrencyExchangeRaterPatchWithNullContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetDelta.currencyExchangeRaterSelectorPatch(
+            () -> SpreadsheetDelta.currencyExchangeRaterPatch(
                 Optional.of(
                     CURRENCY_EXCHANGE_RATER
                 ),
@@ -2242,10 +2242,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testCurrencyExchangeRaterSelectorPatch() {
+    public void testCurrencyExchangeRaterPatch() {
         final Optional<CurrencyExchangeRaterSelector> selector = Optional.of(CURRENCY_EXCHANGE_RATER);
 
-        this.currencyExchangeRaterSelectorPatchAndCheck(
+        this.currencyExchangeRaterPatchAndCheck(
             selector,
             JsonNode.object()
                 .set(
@@ -2256,10 +2256,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testCurrencyExchangeRaterSelectorPatchWithEmpty() {
+    public void testCurrencyExchangeRaterPatchWithEmpty() {
         final Optional<CurrencyExchangeRaterSelector> selector = Optional.empty();
 
-        this.currencyExchangeRaterSelectorPatchAndCheck(
+        this.currencyExchangeRaterPatchAndCheck(
             selector,
             JsonNode.object()
                 .set(
@@ -2269,11 +2269,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    private void currencyExchangeRaterSelectorPatchAndCheck(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRaterSelector,
-                                                            final JsonNode expected) {
+    private void currencyExchangeRaterPatchAndCheck(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRaterSelector,
+                                                    final JsonNode expected) {
         this.checkEquals(
             expected,
-            SpreadsheetDelta.currencyExchangeRaterSelectorPatch(
+            SpreadsheetDelta.currencyExchangeRaterPatch(
                 currencyExchangeRaterSelector,
                 JSON_NODE_MARSHALL_CONTEXT
             )
