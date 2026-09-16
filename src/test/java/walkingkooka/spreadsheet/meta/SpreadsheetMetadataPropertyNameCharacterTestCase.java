@@ -28,24 +28,24 @@ public abstract class SpreadsheetMetadataPropertyNameCharacterTestCase<N extends
     }
 
     @Test
-    public final void testAllControlCharactersFails() {
+    public final void testCheckValueWithAllControlCharactersFails() {
         for (int i = Character.MIN_VALUE; i < 0x20; i++) {
             this.checkValueFails2((char) i);
         }
     }
 
     @Test
-    public final void testAllWhitespaceFails() {
+    public final void testCheckValueWithAllWhitespaceFails() {
         this.checkValueFails2(Character::isWhitespace);
     }
 
     @Test
-    public final void testAllLettersFails() {
+    public final void testCheckValueWithAllLettersFails() {
         this.checkValueFails2(Character::isLetter);
     }
 
     @Test
-    public final void testAllDigitsFails() {
+    public final void testCheckValueWithAllDigitsFails() {
         this.checkValueFails2(Character::isDigit);
     }
 
@@ -67,22 +67,22 @@ public abstract class SpreadsheetMetadataPropertyNameCharacterTestCase<N extends
     }
 
     @Test
-    public final void testSemiColon() {
+    public final void testCheckValueWithSemiColon() {
         this.checkValue(';');
     }
 
     @Test
-    public final void testDollarSign() {
+    public final void testCheckValueWithDollarSign() {
         this.checkValue('$');
     }
 
     @Test
-    public final void testDecimalPoint() {
+    public final void testCheckValueWithDecimalPoint() {
         this.checkValue('.');
     }
 
     @Test
-    public final void testAllSymbols() {
+    public final void testCheckValueWithAllSymbols() {
         for (int i = Character.MIN_VALUE; i < Character.MAX_VALUE; i++) {
             final char c = (char) i;
             if (c < 0x20) {
@@ -101,11 +101,13 @@ public abstract class SpreadsheetMetadataPropertyNameCharacterTestCase<N extends
         }
     }
 
-    @Override final Character propertyValue() {
+    @Override //
+    final Character propertyValue() {
         return '$';
     }
 
-    @Override final String propertyValueType() {
+    @Override //
+    final String propertyValueType() {
         return Character.class.getSimpleName() + " symbol, not control character, whitespace, letter or digit";
     }
 }
