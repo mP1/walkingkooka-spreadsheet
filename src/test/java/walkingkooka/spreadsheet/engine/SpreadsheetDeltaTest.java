@@ -23,6 +23,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
@@ -650,6 +651,153 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             beforePatchCells.add(cell);
             patchedCells.add(
                 cell.setCurrency(cellAndCurrency.getValue())
+            );
+        }
+
+        this.patchAndCheck(
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+
+    // cellsCurrencyExchangeRaterPatch..................................................................................
+
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-111");
+
+    private final static CurrencyExchangeRaterSelector DIFFERENT_CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-222");
+
+    @Test
+    public void testCellsCurrencyExchangeRaterPatchWithNullCellsToCurrencyExchangeRaterFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsCurrencyExchangeRaterPatch(
+                null,
+                JSON_NODE_MARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyExchangeRaterPatchWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsCurrencyExchangeRaterPatch(
+                Maps.empty(),
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyExchangeRaterPatch() {
+        this.cellsCurrencyExchangeRaterPatchAndCheck(
+            Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(CURRENCY_EXCHANGE_RATER)
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                        .set(
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currencyExchangeRater"),
+                                    marshall(CURRENCY_EXCHANGE_RATER)
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyExchangeRaterPatchEmptyCells() {
+        this.cellsCurrencyExchangeRaterPatchAndCheck(
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyExchangeRaterPatchMultipleCells() {
+        final CurrencyExchangeRaterSelector currencyExchangeRater = null;
+
+        final Map<SpreadsheetCellReference, Optional<CurrencyExchangeRaterSelector>> cellToCurrencyExchangeRater = Maps.of(
+            SpreadsheetSelection.A1,
+            Optional.of(CURRENCY_EXCHANGE_RATER),
+            SpreadsheetSelection.parseCell("A2"),
+            Optional.of(DIFFERENT_CURRENCY_EXCHANGE_RATER),
+            SpreadsheetSelection.parseCell("A3"),
+            Optional.ofNullable(currencyExchangeRater)
+        );
+
+        this.cellsCurrencyExchangeRaterPatchAndCheck(
+            cellToCurrencyExchangeRater,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                        .set(
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currencyExchangeRater"),
+                                    marshall(CURRENCY_EXCHANGE_RATER)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currencyExchangeRater"),
+                                    marshall(DIFFERENT_CURRENCY_EXCHANGE_RATER)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A3"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currencyExchangeRater"),
+                                    marshall(null)
+                                )
+                        )
+                )
+        );
+    }
+
+    private void cellsCurrencyExchangeRaterPatchAndCheck(final Map<SpreadsheetCellReference, Optional<CurrencyExchangeRaterSelector>> cellToCurrencyExchangeRater,
+                                                         final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsCurrencyExchangeRaterPatch(
+            cellToCurrencyExchangeRater,
+            JSON_NODE_MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+            expected,
+            patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final TextStyle style = TextStyle.EMPTY.set(
+            TextStylePropertyName.COLOR,
+            Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<CurrencyExchangeRaterSelector>> cellAndCurrencyExchangeRater : cellToCurrencyExchangeRater.entrySet()) {
+            final SpreadsheetCellReference cellReference = cellAndCurrencyExchangeRater.getKey();
+
+            final SpreadsheetCell cell = cellReference.setFormula(
+                SpreadsheetFormula.EMPTY.setText("'Patched over")
+            ).setStyle(style);
+
+            beforePatchCells.add(cell);
+            patchedCells.add(
+                cell.setCurrencyExchangeRater(cellAndCurrencyExchangeRater.getValue())
             );
         }
 

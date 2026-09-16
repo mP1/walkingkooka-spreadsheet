@@ -25,6 +25,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.predicate.Predicates;
@@ -1102,6 +1103,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
             cellToCurrency,
             CURRENCY_PROPERTY,
+            context::marshallOptional
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsCurrencyExchangeRaterPatch(final Map<SpreadsheetCellReference, Optional<CurrencyExchangeRaterSelector>> cellToCurrencyExchangeRater,
+                                                           final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToCurrencyExchangeRater, "cellToCurrencyExchangeRater");
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.cellsPatchFromMap(
+            cellToCurrencyExchangeRater,
+            CURRENCY_EXCHANGE_RATER_PROPERTY,
             context::marshallOptional
         );
     }
@@ -3029,6 +3045,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // @VisibleForTesting
     final static JsonPropertyName CURRENCY_PROPERTY = JsonPropertyName.with(CURRENCY_STRING);
+
+    private final static String CURRENCY_EXCHANGE_RATER_STRING = "currencyExchangeRater";
+
+    // @VisibleForTesting
+    final static JsonPropertyName CURRENCY_EXCHANGE_RATER_PROPERTY = JsonPropertyName.with(CURRENCY_EXCHANGE_RATER_STRING);
 
     private final static String DATE_TIME_SYMBOLS_STRING = "dateTimeSymbols";
 
