@@ -18,14 +18,12 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
-
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 
 
-public final class SpreadsheetMetadataPropertyNameDecimalNumberSymbolsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameDecimalNumberSymbols, DecimalNumberSymbols> {
+public final class SpreadsheetMetadataPropertyNameDecimalNumberSymbolsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameDecimalNumberSymbols, DecimalNumberSymbols>
+    implements HasDecimalNumberSymbolsTesting {
 
     @Test
     public void testCheckValueWithInvalidDecimalNumberSymbolsFails() {
@@ -38,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameDecimalNumberSymbolsTest exten
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
+            LOCALE_CONTEXT,
             this.propertyValue()
         );
     }
@@ -58,10 +56,7 @@ public final class SpreadsheetMetadataPropertyNameDecimalNumberSymbolsTest exten
 
     @Override
     DecimalNumberSymbols propertyValue() {
-        return DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(Locale.ENGLISH)
-        );
+        return DECIMAL_NUMBER_SYMBOLS;
     }
 
     @Override
