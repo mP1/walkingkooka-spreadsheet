@@ -517,6 +517,149 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsCurrencyPatch...............................................................................................
+
+    @Test
+    public void testCellsCurrencyPatchWithNullCellsToCurrencyFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsCurrencyPatch(
+                null,
+                JSON_NODE_MARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyPatchWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsCurrencyPatch(
+                Maps.empty(),
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyPatch() {
+        this.cellsCurrencyPatchAndCheck(
+            Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(CURRENCY)
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                        .set(
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currency"),
+                                    marshall(CURRENCY)
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyPatchEmptyCells() {
+        this.cellsCurrencyPatchAndCheck(
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
+        );
+    }
+
+    @Test
+    public void testCellsCurrencyPatchMultipleCells() {
+        final Currency currency = null;
+
+        final Map<SpreadsheetCellReference, Optional<Currency>> cellToCurrency = Maps.of(
+            SpreadsheetSelection.A1,
+            Optional.of(CURRENCY),
+            SpreadsheetSelection.parseCell("A2"),
+            Optional.of(DIFFERENT_CURRENCY),
+            SpreadsheetSelection.parseCell("A3"),
+            Optional.ofNullable(currency)
+        );
+
+        this.cellsCurrencyPatchAndCheck(
+            cellToCurrency,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                        .set(
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currency"),
+                                    marshall(CURRENCY)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currency"),
+                                    marshall(DIFFERENT_CURRENCY)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A3"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("currency"),
+                                    marshall(null)
+                                )
+                        )
+                )
+        );
+    }
+
+    private void cellsCurrencyPatchAndCheck(final Map<SpreadsheetCellReference, Optional<Currency>> cellToCurrency,
+                                            final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsCurrencyPatch(
+            cellToCurrency,
+            JSON_NODE_MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+            expected,
+            patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final TextStyle style = TextStyle.EMPTY.set(
+            TextStylePropertyName.COLOR,
+            Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<Currency>> cellAndCurrency : cellToCurrency.entrySet()) {
+            final SpreadsheetCellReference cellReference = cellAndCurrency.getKey();
+
+            final SpreadsheetCell cell = cellReference.setFormula(
+                SpreadsheetFormula.EMPTY.setText("'Patched over")
+            ).setStyle(style);
+
+            beforePatchCells.add(cell);
+            patchedCells.add(
+                cell.setCurrency(cellAndCurrency.getValue())
+            );
+        }
+
+        this.patchAndCheck(
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+    
     // cellsDateTimeSymbolsPatch........................................................................................
 
     @Test
