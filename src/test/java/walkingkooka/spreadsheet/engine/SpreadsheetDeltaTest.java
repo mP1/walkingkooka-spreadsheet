@@ -25,7 +25,9 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
@@ -76,6 +78,8 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
+    HasDateTimeSymbolsTesting,
+    HasDecimalNumberSymbolsTesting,
     JsonNodeMarshallContextTesting,
     JsonNodeUnmarshallContextTesting,
     PatchableTesting<SpreadsheetDelta>,
@@ -90,26 +94,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     private final static Optional<CurrencyExchangeRaterSelector> OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER = Optional.of(DIFFERENT_CURRENCY_EXCHANGE_RATER);
 
-    private static final DateTimeSymbols DATE_TIME_SYMBOLS_ENGLISH = DateTimeSymbols.fromDateFormatSymbols(
-        new DateFormatSymbols(Locale.ENGLISH)
-    );
-
-    private static final DateTimeSymbols DATE_TIME_SYMBOLS_FRANCE = DateTimeSymbols.fromDateFormatSymbols(
-        new DateFormatSymbols(Locale.FRANCE)
-    );
-
     private static final DateTimeSymbols DATE_TIME_SYMBOLS_GERMANY = DateTimeSymbols.fromDateFormatSymbols(
         new DateFormatSymbols(Locale.GERMANY)
-    );
-
-    private static final DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS_ENGLISH = DecimalNumberSymbols.fromDecimalFormatSymbols(
-        '+',
-        new DecimalFormatSymbols(Locale.ENGLISH)
-    );
-
-    private static final DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS_FRANCE = DecimalNumberSymbols.fromDecimalFormatSymbols(
-        '+',
-        new DecimalFormatSymbols(Locale.FRANCE)
     );
 
     private static final DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS_GERMANY = DecimalNumberSymbols.fromDecimalFormatSymbols(
@@ -841,7 +827,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.cellsDateTimeSymbolsPatchAndCheck(
             Maps.of(
                 SpreadsheetSelection.A1,
-                Optional.of(DATE_TIME_SYMBOLS_FRANCE)
+                Optional.of(DIFFERENT_DATE_TIME_SYMBOLS)
             ),
             JsonNode.object()
                 .set(
@@ -852,7 +838,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("dateTimeSymbols"),
-                                    marshall(DATE_TIME_SYMBOLS_FRANCE)
+                                    marshall(DIFFERENT_DATE_TIME_SYMBOLS)
                                 )
                         )
                 )
@@ -877,7 +863,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToSymbols = Maps.of(
             SpreadsheetSelection.A1,
-            Optional.of(DATE_TIME_SYMBOLS_FRANCE),
+            Optional.of(DIFFERENT_DATE_TIME_SYMBOLS),
             SpreadsheetSelection.parseCell("A2"),
             Optional.of(DATE_TIME_SYMBOLS_GERMANY),
             SpreadsheetSelection.parseCell("A3"),
@@ -895,7 +881,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("dateTimeSymbols"),
-                                    marshall(DATE_TIME_SYMBOLS_FRANCE)
+                                    marshall(DIFFERENT_DATE_TIME_SYMBOLS)
                                 )
                         ).set(
                             JsonPropertyName.with("A2"),
@@ -985,7 +971,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.cellsDecimalNumberSymbolsPatchAndCheck(
             Maps.of(
                 SpreadsheetSelection.A1,
-                Optional.of(DECIMAL_NUMBER_SYMBOLS_FRANCE)
+                Optional.of(DIFFERENT_DECIMAL_NUMBER_SYMBOLS)
             ),
             JsonNode.object()
                 .set(
@@ -996,7 +982,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("decimalNumberSymbols"),
-                                    marshall(DECIMAL_NUMBER_SYMBOLS_FRANCE)
+                                    marshall(DIFFERENT_DECIMAL_NUMBER_SYMBOLS)
                                 )
                         )
                 )
@@ -1021,7 +1007,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToSymbols = Maps.of(
             SpreadsheetSelection.A1,
-            Optional.of(DECIMAL_NUMBER_SYMBOLS_FRANCE),
+            Optional.of(DIFFERENT_DECIMAL_NUMBER_SYMBOLS),
             SpreadsheetSelection.parseCell("A2"),
             Optional.of(DECIMAL_NUMBER_SYMBOLS_GERMANY),
             SpreadsheetSelection.parseCell("A3"),
@@ -1039,7 +1025,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("decimalNumberSymbols"),
-                                    marshall(DECIMAL_NUMBER_SYMBOLS_FRANCE)
+                                    marshall(DIFFERENT_DECIMAL_NUMBER_SYMBOLS)
                                 )
                         ).set(
                             JsonPropertyName.with("A2"),
@@ -2303,7 +2289,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.dateTimeSymbolsPatch(
                 Optional.of(
-                    DATE_TIME_SYMBOLS_FRANCE
+                    DIFFERENT_DATE_TIME_SYMBOLS
                 ),
                 null
             )
@@ -2313,7 +2299,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testDateTimeSymbolsPatch() {
         final Optional<DateTimeSymbols> symbols = Optional.of(
-            DATE_TIME_SYMBOLS_FRANCE
+            DIFFERENT_DATE_TIME_SYMBOLS
         );
 
         this.checkEquals(
@@ -2367,7 +2353,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             NullPointerException.class,
             () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
                 Optional.of(
-                    DECIMAL_NUMBER_SYMBOLS_FRANCE
+                    DIFFERENT_DECIMAL_NUMBER_SYMBOLS
                 ),
                 null
             )
@@ -2377,7 +2363,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testDecimalNumberSymbolsPatch() {
         final Optional<DecimalNumberSymbols> symbols = Optional.of(
-            DECIMAL_NUMBER_SYMBOLS_FRANCE
+            DIFFERENT_DECIMAL_NUMBER_SYMBOLS
         );
 
         this.checkEquals(
@@ -3315,7 +3301,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
             .setDateTimeSymbols(
-                Optional.of(DATE_TIME_SYMBOLS_ENGLISH)
+                Optional.of(DATE_TIME_SYMBOLS)
             );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
             .setFormula(SpreadsheetFormula.EMPTY)
@@ -3354,7 +3340,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
             .setDecimalNumberSymbols(
-                Optional.of(DECIMAL_NUMBER_SYMBOLS_ENGLISH)
+                Optional.of(DECIMAL_NUMBER_SYMBOLS)
             );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
             .setFormula(SpreadsheetFormula.EMPTY)
@@ -3368,7 +3354,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             );
 
         final Optional<DecimalNumberSymbols> symbols = Optional.of(
-            DECIMAL_NUMBER_SYMBOLS_FRANCE
+            DIFFERENT_DECIMAL_NUMBER_SYMBOLS
         );
 
         final SpreadsheetDelta after = before.setCells(
@@ -4531,7 +4517,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setFormula(SpreadsheetFormula.EMPTY)
             .setDateTimeSymbols(
                 Optional.of(
-                    DATE_TIME_SYMBOLS_ENGLISH
+                    DATE_TIME_SYMBOLS
                 )
             );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -4546,7 +4532,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             );
 
         final Optional<DateTimeSymbols> symbols1 = Optional.of(
-            DATE_TIME_SYMBOLS_FRANCE
+            DIFFERENT_DATE_TIME_SYMBOLS
         );
         final Optional<DateTimeSymbols> symbols2 = Optional.of(
             DATE_TIME_SYMBOLS_GERMANY
@@ -4581,7 +4567,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setFormula(SpreadsheetFormula.EMPTY)
             .setDecimalNumberSymbols(
                 Optional.of(
-                    DECIMAL_NUMBER_SYMBOLS_ENGLISH
+                    DECIMAL_NUMBER_SYMBOLS
                 )
             );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
@@ -4596,7 +4582,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             );
 
         final Optional<DecimalNumberSymbols> symbols1 = Optional.of(
-            DECIMAL_NUMBER_SYMBOLS_FRANCE
+            DIFFERENT_DECIMAL_NUMBER_SYMBOLS
         );
         final Optional<DecimalNumberSymbols> symbols2 = Optional.of(
             DECIMAL_NUMBER_SYMBOLS_GERMANY
