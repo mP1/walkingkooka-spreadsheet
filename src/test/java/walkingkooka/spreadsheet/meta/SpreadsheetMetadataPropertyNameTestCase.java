@@ -32,8 +32,7 @@ import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.naming.HasNameTesting;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -52,7 +51,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
+public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements PackagePrivateClassTesting<N>,
     TypeNameTesting<N>,
     CurrencyContextTesting,
     CurrencyLocaleContextTesting,
@@ -331,13 +330,6 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     abstract V propertyValue();
 
     abstract String propertyValueType();
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 
     // TypeNameTesting..................................................................................................
 
