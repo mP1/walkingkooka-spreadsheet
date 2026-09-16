@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -86,6 +87,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     TreePrintableTesting,
     ThrowableTesting {
 
+    private final static SpreadsheetCellReference A2 = SpreadsheetSelection.parseCell("A2");
+
+    private final static SpreadsheetCellReference A3 = SpreadsheetSelection.parseCell("A3");
+
+    private final static SpreadsheetCellReference B1 = SpreadsheetSelection.parseCell("B1");
+
+    private final static SpreadsheetCellReference B2 = SpreadsheetSelection.parseCell("B2");
+
+    private final static SpreadsheetCellReference Z99 = SpreadsheetSelection.parseCell("Z99");
+
+    private final static SpreadsheetCellRangeReference A1A2 = SpreadsheetSelection.parseCellRange("A1:A2");
+
+    private final static SpreadsheetCellRangeReference A1A3 = SpreadsheetSelection.parseCellRange("A1:A3");
+
+    private final static SpreadsheetCellRangeReference A1B2 = SpreadsheetSelection.parseCellRange("A1:B2");
+
     private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-111");
 
     private final static CurrencyExchangeRaterSelector DIFFERENT_CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-222");
@@ -94,13 +111,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     private final static Optional<CurrencyExchangeRaterSelector> OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER = Optional.of(DIFFERENT_CURRENCY_EXCHANGE_RATER);
 
-    private static final DateTimeSymbols DATE_TIME_SYMBOLS_GERMANY = DateTimeSymbols.fromDateFormatSymbols(
+    private final static DateTimeSymbols DATE_TIME_SYMBOLS_GERMANY = DateTimeSymbols.fromDateFormatSymbols(
         new DateFormatSymbols(Locale.GERMANY)
     );
 
-    private static final DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS_GERMANY = DecimalNumberSymbols.fromDecimalFormatSymbols(
+    private final static DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS_GERMANY = DecimalNumberSymbols.fromDecimalFormatSymbols(
         '+',
         new DecimalFormatSymbols(Locale.GERMANY)
+    );
+
+    private final static SpreadsheetRow ROW = SpreadsheetSelection.parseRow("1")
+            .row()
+            .setHidden(true);
+
+    private static final TextStyle STYLE = TextStyle.EMPTY.set(
+        TextStylePropertyName.COLOR,
+        Color.BLACK
     );
 
     @Test
@@ -212,7 +238,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     this.cell()
                 )
             ),
-            SpreadsheetSelection.parseCell("B2"),
+            B2,
             Optional.empty()
         );
     }
@@ -342,49 +368,39 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testRowNotFound() {
-        final SpreadsheetRow row = this.row();
-
         this.rowAndCheck(
             SpreadsheetDelta.EMPTY.setRows(
-                Sets.of(row)
+                Sets.of(ROW)
             ),
-            row.reference().add(1),
+            ROW.reference()
+                .add(1),
             Optional.empty()
         );
     }
 
     @Test
     public void testRowFound() {
-        final SpreadsheetRow row = this.row();
-
         this.rowAndCheck(
             SpreadsheetDelta.EMPTY.setRows(
-                Sets.of(row)
+                Sets.of(ROW)
             ),
-            row.reference(),
-            Optional.of(row)
+            ROW.reference(),
+            Optional.of(ROW)
         );
     }
 
     @Test
     public void testRowFoundDifferentKind() {
-        final SpreadsheetRow row = this.row();
-        final SpreadsheetRowReference reference = row.reference();
+        final SpreadsheetRowReference reference = ROW.reference();
         this.checkEquals(reference.toRelative(), reference, "reference should be relative");
 
         this.rowAndCheck(
             SpreadsheetDelta.EMPTY.setRows(
-                Sets.of(row)
+                Sets.of(ROW)
             ),
             reference.toRelative(),
-            Optional.of(row)
+            Optional.of(ROW)
         );
-    }
-
-    private SpreadsheetRow row() {
-        return SpreadsheetSelection.parseRow("1")
-            .row()
-            .setHidden(true);
     }
 
     private void rowAndCheck(final SpreadsheetDelta delta,
@@ -464,8 +480,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> cells = Sets.of(
             SpreadsheetSelection.A1.setFormula(formula1),
-            SpreadsheetSelection.parseCell("A2")
-                .setFormula(formula2)
+            A2.setFormula(formula2)
         );
 
         this.cellsPatchAndCheck(
@@ -578,9 +593,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Map<SpreadsheetCellReference, Optional<Currency>> cellToCurrency = Maps.of(
             SpreadsheetSelection.A1,
             Optional.of(CURRENCY),
-            SpreadsheetSelection.parseCell("A2"),
+            A2,
             Optional.of(DIFFERENT_CURRENCY),
-            SpreadsheetSelection.parseCell("A3"),
+            A3,
             Optional.ofNullable(currency)
         );
 
@@ -630,17 +645,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<Currency>> cellAndCurrency : cellToCurrency.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndCurrency.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Patched over")
-            ).setStyle(style);
+            ).setStyle(STYLE);
 
             beforePatchCells.add(cell);
             patchedCells.add(
@@ -684,7 +695,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.cellsCurrencyExchangeRaterPatchAndCheck(
             Maps.of(
                 SpreadsheetSelection.A1,
-                Optional.of(CURRENCY_EXCHANGE_RATER)
+                OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER
             ),
             JsonNode.object()
                 .set(
@@ -695,7 +706,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("currencyExchangeRater"),
-                                    marshall(CURRENCY_EXCHANGE_RATER)
+                                    marshall(DIFFERENT_CURRENCY_EXCHANGE_RATER)
                                 )
                         )
                 )
@@ -720,10 +731,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Map<SpreadsheetCellReference, Optional<CurrencyExchangeRaterSelector>> cellToCurrencyExchangeRater = Maps.of(
             SpreadsheetSelection.A1,
-            Optional.of(CURRENCY_EXCHANGE_RATER),
-            SpreadsheetSelection.parseCell("A2"),
-            Optional.of(DIFFERENT_CURRENCY_EXCHANGE_RATER),
-            SpreadsheetSelection.parseCell("A3"),
+            OPTIONAL_CURRENCY_EXCHANGE_RATER,
+            A2,
+            OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER,
+            A3,
             Optional.ofNullable(currencyExchangeRater)
         );
 
@@ -773,17 +784,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<CurrencyExchangeRaterSelector>> cellAndCurrencyExchangeRater : cellToCurrencyExchangeRater.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndCurrencyExchangeRater.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Patched over")
-            ).setStyle(style);
+            ).setStyle(STYLE);
 
             beforePatchCells.add(cell);
             patchedCells.add(
@@ -864,9 +871,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToSymbols = Maps.of(
             SpreadsheetSelection.A1,
             Optional.of(DIFFERENT_DATE_TIME_SYMBOLS),
-            SpreadsheetSelection.parseCell("A2"),
+            A2,
             Optional.of(DATE_TIME_SYMBOLS_GERMANY),
-            SpreadsheetSelection.parseCell("A3"),
+            A3,
             Optional.ofNullable(symbols3)
         );
 
@@ -916,17 +923,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellAndDateTimeSymbols : cellToDateTimeSymbols.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndDateTimeSymbols.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Patched over")
-            ).setStyle(style);
+            ).setStyle(STYLE);
 
 
             beforePatchCells.add(cell);
@@ -1008,9 +1011,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToSymbols = Maps.of(
             SpreadsheetSelection.A1,
             Optional.of(DIFFERENT_DECIMAL_NUMBER_SYMBOLS),
-            SpreadsheetSelection.parseCell("A2"),
+            A2,
             Optional.of(DECIMAL_NUMBER_SYMBOLS_GERMANY),
-            SpreadsheetSelection.parseCell("A3"),
+            A3,
             Optional.ofNullable(symbols3)
         );
 
@@ -1060,17 +1063,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellAndDecimalNumberSymbols : cellToDecimalNumberSymbols.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndDecimalNumberSymbols.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Patched over")
-            ).setStyle(style);
+            ).setStyle(STYLE);
 
 
             beforePatchCells.add(cell);
@@ -1105,7 +1104,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             Maps.of(
                 SpreadsheetSelection.A1,
                 formulaText1,
-                SpreadsheetSelection.parseCell("A2"),
+                A2,
                 formulaText2
             ),
             "{\n" +
@@ -1136,10 +1135,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, String> cellAndFormulaText : cellToFormulaTexts.entrySet()) {
             final SpreadsheetCellReference cell = cellAndFormulaText.getKey();
@@ -1148,14 +1143,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
             beforePatchCells.add(
                 cell.setFormula(formula)
-                    .setStyle(style)
+                    .setStyle(STYLE)
             );
             patchedCells.add(
                 cell.setFormula(
                     formula.setText(
                         cellAndFormulaText.getValue()
                     )
-                ).setStyle(style)
+                ).setStyle(STYLE)
             );
         }
 
@@ -1273,7 +1268,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> cellToFormatter = Maps.of(
             SpreadsheetSelection.A1,
             formatter1,
-            SpreadsheetSelection.parseCell("A2"),
+            A2,
             formatter2
         );
 
@@ -1416,9 +1411,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Map<SpreadsheetCellReference, Optional<Locale>> cellToSymbols = Maps.of(
             SpreadsheetSelection.A1,
             Optional.of(locale1),
-            SpreadsheetSelection.parseCell("A2"),
+            A2,
             Optional.of(locale2),
-            SpreadsheetSelection.parseCell("A3"),
+            A3,
             Optional.ofNullable(locale3)
         );
 
@@ -1468,17 +1463,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<Locale>> cellAndLocale : cellToLocale.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndLocale.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Patched over")
-            ).setStyle(style);
+            ).setStyle(STYLE);
 
 
             beforePatchCells.add(cell);
@@ -1599,7 +1590,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellToParsers = Maps.of(
             SpreadsheetSelection.A1,
             parserSelector1,
-            SpreadsheetSelection.parseCell("A2"),
+            A2,
             parserSelector2
         );
 
@@ -1699,15 +1690,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testCellsStylePatch() {
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
-
         this.cellsStylePatchAndCheck(
             Maps.of(
                 SpreadsheetSelection.A1,
-                style
+                STYLE
             ),
             JsonNode.object()
                 .set(
@@ -1718,7 +1704,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("style"),
-                                    marshall(style)
+                                    marshall(STYLE)
                                 )
                         )
                 )
@@ -1739,10 +1725,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testCellsStylePatchMultipleCells() {
-        final TextStyle style1 = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
         final TextStyle style2 = TextStyle.EMPTY.set(
             TextStylePropertyName.COLOR,
             Color.WHITE
@@ -1750,8 +1732,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Map<SpreadsheetCellReference, TextStyle> cellToStyles = Maps.of(
             SpreadsheetSelection.A1,
-            style1,
-            SpreadsheetSelection.parseCell("A2"),
+            STYLE,
+            A2,
             style2
         );
 
@@ -1766,7 +1748,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("style"),
-                                    marshall(style1)
+                                    marshall(STYLE)
                                 )
                         ).set(
                             JsonPropertyName.with("A2"),
@@ -1925,9 +1907,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators = Maps.of(
             SpreadsheetSelection.A1,
             validatorSelector1,
-            SpreadsheetSelection.parseCell("A2"),
+            A2,
             validatorSelector2,
-            SpreadsheetSelection.parseCell("A3"),
+            A3,
             validatorSelector3
         );
 
@@ -2043,7 +2025,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             Maps.of(
                 SpreadsheetSelection.A1,
                 value1,
-                SpreadsheetSelection.parseCell("A2"),
+                A2,
                 value2
             ),
             "{\n" +
@@ -2080,10 +2062,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<Object>> cellAndValue : cellToValues.entrySet()) {
             final SpreadsheetCellReference cell = cellAndValue.getKey();
@@ -2092,14 +2070,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
             beforePatchCells.add(
                 cell.setFormula(formula)
-                    .setStyle(style)
+                    .setStyle(STYLE)
             );
             patchedCells.add(
                 cell.setFormula(
                     formula.setValue(
                         cellAndValue.getValue()
                     )
-                ).setStyle(style)
+                ).setStyle(STYLE)
             );
         }
 
@@ -2143,7 +2121,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             Maps.of(
                 SpreadsheetSelection.A1,
                 valueType1,
-                SpreadsheetSelection.parseCell("A2"),
+                A2,
                 valueType2
             ),
             "{\n" +
@@ -2177,10 +2155,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<ValueType>> cellAndValueType : cellToValueTypes.entrySet()) {
             final SpreadsheetCellReference cell = cellAndValueType.getKey();
@@ -2189,12 +2163,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
             beforePatchCells.add(
                 cell.setFormula(formula)
-                    .setStyle(style)
+                    .setStyle(STYLE)
             );
             patchedCells.add(
                 cell.setFormula(
                     formula.setValueType(cellAndValueType.getValue())
-                ).setStyle(style)
+                ).setStyle(STYLE)
             );
         }
 
@@ -2233,14 +2207,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testCurrencyExchangeRaterPatch() {
-        final Optional<CurrencyExchangeRaterSelector> selector = Optional.of(CURRENCY_EXCHANGE_RATER);
-
         this.currencyExchangeRaterPatchAndCheck(
-            selector,
+            OPTIONAL_CURRENCY_EXCHANGE_RATER,
             JsonNode.object()
                 .set(
                     SpreadsheetDelta.CURRENCY_EXCHANGE_RATER_PROPERTY,
-                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(selector)
+                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(OPTIONAL_CURRENCY_EXCHANGE_RATER)
                 )
         );
     }
@@ -2435,8 +2407,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
         ).setStyle(style);
 
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("a2")
-            .setFormula(
+        final SpreadsheetCell a2 = A2.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
             );
 
@@ -2453,8 +2424,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 Sets.of(
                     a1.setFormula(formula),
                     a2.setFormula(formula),
-                    SpreadsheetSelection.parseCell("a3")
-                        .setFormula(formula)
+                    A3.setFormula(formula)
                 )
             )
         );
@@ -3037,8 +3007,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             .viewport()
                             .setAnchoredSelection(
                                 Optional.of(
-                                    SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                    A1B2.setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
                             )
                     )
@@ -3109,10 +3078,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .viewport()
                         .setAnchoredSelection(
                             Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                    .setAnchor(
-                                        SpreadsheetViewportAnchor.TOP_LEFT
-                                    )
+                                A1B2.setAnchor(
+                                    SpreadsheetViewportAnchor.TOP_LEFT
+                                )
                             )
                         )
                 )
@@ -3177,11 +3145,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetFormula.EMPTY
                 .setText("=1")
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -3204,11 +3171,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetFormula.EMPTY
                 .setText("=1")
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -3234,11 +3200,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetFormula.EMPTY
                 .setText("=1")
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -3264,8 +3229,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setFormula(SpreadsheetFormula.EMPTY)
             .setCurrency(OPTIONAL_CURRENCY);
 
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setCurrency(
                 Optional.empty()
             );
@@ -3300,11 +3264,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchWithDateTimeSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
-            .setDateTimeSymbols(
-                Optional.of(DATE_TIME_SYMBOLS)
-            );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setDateTimeSymbols(
                 Optional.empty()
             );
@@ -3342,8 +3303,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setDecimalNumberSymbols(
                 Optional.of(DECIMAL_NUMBER_SYMBOLS)
             );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setDecimalNumberSymbols(
                 Optional.empty()
             );
@@ -3384,11 +3344,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetFormula.EMPTY
                 .setText("=1")
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         this.patchAndCheck(
             SpreadsheetDelta.EMPTY
@@ -3419,8 +3378,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setLocale(
                 Optional.of(Locale.ENGLISH)
             );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setLocale(
                 Optional.empty()
             );
@@ -3459,11 +3417,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             SpreadsheetFormula.EMPTY
                 .setText("=1")
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         this.patchAndCheck(
             SpreadsheetDelta.EMPTY
@@ -3489,20 +3446,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchWithStyle() {
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.COLOR,
-            Color.BLACK
-        );
-
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY
                 .setText("=1")
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         this.patchAndCheck(
             SpreadsheetDelta.EMPTY
@@ -3513,13 +3464,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     )
                 ),
             SpreadsheetDelta.stylePatch(
-                this.marshall(style)
+                this.marshall(STYLE)
             ),
             SpreadsheetDelta.EMPTY
                 .setCells(
                     Sets.of(
-                        a1.setStyle(style),
-                        b2.setStyle(style)
+                        a1.setStyle(STYLE),
+                        b2.setStyle(STYLE)
                     )
                 )
         );
@@ -3534,8 +3485,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     ValidatorSelector.parse("before-validator")
                 )
             );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setValidator(
                 Optional.empty()
             );
@@ -3574,8 +3524,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     Optional.of(111)
                 )
             );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
+        final SpreadsheetCell a2 = A2.setFormula(
                 SpreadsheetFormula.EMPTY.setValue(
                     Optional.of(222)
                 )
@@ -3628,11 +3577,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     )
                 )
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         this.patchAndCheck(
             SpreadsheetDelta.EMPTY
@@ -3673,11 +3621,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     )
                 )
         );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("=99")
-            );
+        final SpreadsheetCell b2 = B2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=99")
+        );
 
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
             SpreadsheetFormatterSelector.parse("patched-formatter")
@@ -3752,10 +3699,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     SpreadsheetDelta.EMPTY
                         .setCells(
                             Sets.of(
-                                SpreadsheetSelection.parseCell("A2")
-                                    .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1")
-                                    )
+                                A2.setFormula(
+                                    SpreadsheetFormula.EMPTY.setText("=1")
+                                )
                             )
                         )
                 ),
@@ -3773,7 +3719,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final IllegalArgumentException thrown = assertThrows(
             IllegalArgumentException.class,
             () -> SpreadsheetDelta.EMPTY.patchCells(
-                SpreadsheetSelection.parseCell("A2"),
+                A2,
                 marshall(
                     SpreadsheetDelta.EMPTY
                         .setCells(
@@ -3782,14 +3728,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                     .setFormula(
                                         SpreadsheetFormula.EMPTY.setText("=1")
                                     ),
-                                SpreadsheetSelection.parseCell("A2")
-                                    .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=2")
-                                    ),
-                                SpreadsheetSelection.parseCell("B1")
-                                    .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=3")
-                                    )
+                                A2.setFormula(
+                                    SpreadsheetFormula.EMPTY.setText("=2")
+                                ),
+                                B1.setFormula(
+                                    SpreadsheetFormula.EMPTY.setText("=3")
+                                )
                             )
                         )
                 ),
@@ -3816,14 +3760,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                     .setFormula(
                                         SpreadsheetFormula.EMPTY.setText("=1")
                                     ),
-                                SpreadsheetSelection.parseCell("A2")
-                                    .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=2")
-                                    ),
-                                SpreadsheetSelection.parseCell("B1")
-                                    .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=3")
-                                    )
+                                A2.setFormula(
+                                    SpreadsheetFormula.EMPTY.setText("=2")
+                                ),
+                                B1.setFormula(
+                                    SpreadsheetFormula.EMPTY.setText("=3")
+                                )
                             )
                         )
                 ),
@@ -3922,7 +3864,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsWithEmptyObject() {
         this.patchCellsAndCheck(
             SpreadsheetDelta.EMPTY,
-            SpreadsheetSelection.parseCell("Z99"),
+            Z99,
             JsonNode.object(),
             SpreadsheetDelta.EMPTY
         );
@@ -3961,7 +3903,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
             SpreadsheetDelta.EMPTY
                 .setViewport(before),
-            SpreadsheetSelection.parseCell("Z99"),
+            Z99,
             marshall(delta),
             delta
         );
@@ -3977,8 +3919,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             .viewport()
                             .setAnchoredSelection(
                                 Optional.of(
-                                    SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                    A1B2.setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
 
                             )
@@ -4065,8 +4006,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .viewport()
                         .setAnchoredSelection(
                             Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                    .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                A1B2.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                             )
                         )
                 )
@@ -4074,8 +4014,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchCellsAndCheck(
             without.setCells(
                 Sets.of(
-                    SpreadsheetSelection.parseCell("b2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+                    B2.setFormula(SpreadsheetFormula.EMPTY)
                 )
             ),
             SpreadsheetSelection.parseCellOrCellRange("B2"),
@@ -4089,8 +4028,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsCellWithWindow() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
-            .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell b2 = B2.setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -4206,15 +4144,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1.setFormula(patched),
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(patched),
+                A2.setFormula(patched),
                 a3
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.formulaPatch(
                 JSON_NODE_MARSHALL_CONTEXT.marshall(patched)
             ),
@@ -4237,10 +4174,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
             );
 
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=2")
-            );
+        final SpreadsheetCell a2 = A2.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=2")
+        );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -4260,16 +4196,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 a2.setFormula(
                     SpreadsheetFormula.EMPTY.setValue(value)
                 ),
-                SpreadsheetSelection.parseCell("a3")
-                    .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(value)
-                    )
+                A3.setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(value)
+                )
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A3"),
+            A1A3,
             SpreadsheetDelta.formulaPatch(
                 SpreadsheetFormula.valuePatch(
                     value,
@@ -4320,16 +4255,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     a1.formula()
                         .setValueType(typeName)
                 ),
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(
-                        SpreadsheetFormula.EMPTY.setValueType(typeName)
-                    )
+                A2.setFormula(
+                    SpreadsheetFormula.EMPTY.setValueType(typeName)
+                )
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.formulaPatch(
                 SpreadsheetFormula.valueTypePatch(
                     typeName,
@@ -4344,33 +4278,28 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithCurrencyExchangeRaterWithMissingCells() {
-        final Optional<CurrencyExchangeRaterSelector> beforeCurrencyExchangeRater = Optional.of(CURRENCY_EXCHANGE_RATER);
-
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
-            .setCurrencyExchangeRater(beforeCurrencyExchangeRater);
+            .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
                 Sets.of(a1)
             );
 
-        final CurrencyExchangeRaterSelector patchCurrencyExchangeRater = DIFFERENT_CURRENCY_EXCHANGE_RATER;
-
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
-                a1.setCurrencyExchangeRater(Optional.of(patchCurrencyExchangeRater)),
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(SpreadsheetFormula.EMPTY)
-                    .setCurrencyExchangeRater(Optional.of(patchCurrencyExchangeRater))
+                a1.setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER),
+                A2.setFormula(SpreadsheetFormula.EMPTY)
+                    .setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER)
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.currencyExchangeRaterPatch(
-                Optional.of(patchCurrencyExchangeRater),
+                OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER,
                 JSON_NODE_MARSHALL_CONTEXT
             ),
             after
@@ -4379,34 +4308,29 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithCurrencyExchangeRater() {
-        final Optional<CurrencyExchangeRaterSelector> beforeCurrencyExchangeRater = Optional.of(CURRENCY_EXCHANGE_RATER);
-
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
-            .setCurrencyExchangeRater(beforeCurrencyExchangeRater);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
-            .setCurrencyExchangeRater(beforeCurrencyExchangeRater);
+            .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
                 Sets.of(a1, a2)
             );
 
-        final CurrencyExchangeRaterSelector patchedCurrencyExchangeRater = DIFFERENT_CURRENCY_EXCHANGE_RATER;
-
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
-                a1.setCurrencyExchangeRater(Optional.of(patchedCurrencyExchangeRater)),
-                a2.setCurrencyExchangeRater(Optional.of(patchedCurrencyExchangeRater))
+                a1.setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER),
+                a2.setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER)
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.currencyExchangeRaterPatch(
-                Optional.of(patchedCurrencyExchangeRater),
+                OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER,
                 JSON_NODE_MARSHALL_CONTEXT
             ),
             after
@@ -4417,8 +4341,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsWithCurrencyExchangeRaterEmptyClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -4436,7 +4359,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.currencyExchangeRaterPatch(
                 Optional.empty(),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4450,25 +4373,23 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
 
-        final Optional<CurrencyExchangeRaterSelector> beforeCurrencyExchangeRater = OPTIONAL_CURRENCY_EXCHANGE_RATER;
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
                 Sets.of(
-                    a1.setCurrencyExchangeRater(beforeCurrencyExchangeRater)
+                    a1.setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER)
                 )
             );
 
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1,
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(SpreadsheetFormula.EMPTY)
+                A2.setFormula(SpreadsheetFormula.EMPTY)
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.currencyExchangeRaterPatch(
                 Optional.empty(),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4482,8 +4403,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
             .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -4502,7 +4422,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.currencyExchangeRaterPatch(
                 OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER,
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4515,13 +4435,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsWithDateTimeSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
-            .setDateTimeSymbols(
-                Optional.of(
-                    DATE_TIME_SYMBOLS
-                )
-            );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setDateTimeSymbols(
                 Optional.empty()
             );
@@ -4547,12 +4462,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.cellsDateTimeSymbolsPatch(
                 Maps.of(
                     SpreadsheetSelection.A1,
                     symbols1,
-                    SpreadsheetSelection.parseCell("A2"),
+                    A2,
                     symbols2
                 ),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4570,8 +4485,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     DECIMAL_NUMBER_SYMBOLS
                 )
             );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setDecimalNumberSymbols(
                 Optional.empty()
             );
@@ -4597,12 +4511,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
                 Maps.of(
                     SpreadsheetSelection.A1,
                     symbols1,
-                    SpreadsheetSelection.parseCell("A2"),
+                    A2,
                     symbols2
                 ),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4633,15 +4547,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1.setFormatter(Optional.of(patchFormatter)),
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(SpreadsheetFormula.EMPTY)
+                A2.setFormula(SpreadsheetFormula.EMPTY)
                     .setFormatter(Optional.of(patchFormatter))
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.formatterPatch(
                 Optional.of(patchFormatter),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4660,8 +4573,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
             .setFormatter(beforeFormatter);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setFormatter(beforeFormatter);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -4681,7 +4593,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.formatterPatch(
                 Optional.of(patchedFormatter),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4694,8 +4606,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsWithFormatterEmptyClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY);
 
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
             SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
@@ -4718,7 +4629,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.formatterPatch(
                 Optional.empty(),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4747,14 +4658,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1,
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(SpreadsheetFormula.EMPTY)
+                A2.setFormula(SpreadsheetFormula.EMPTY)
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.formatterPatch(
                 Optional.empty(),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4773,8 +4683,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
             .setFormatter(beforeFormatter);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setFormatter(beforeFormatter);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -4796,7 +4705,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.formatterPatch(
                 Optional.of(patchedFormatter),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4810,8 +4719,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY.setText("=1"));
 
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY.setText("=2"));
+        final SpreadsheetCell a2 = A2.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=2")
+        );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -4829,15 +4739,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             Sets.of(
                 a1.setLocale(locale),
                 a2.setLocale(locale),
-                SpreadsheetSelection.parseCell("A3")
-                    .setFormula(SpreadsheetFormula.EMPTY)
+                A3.setFormula(SpreadsheetFormula.EMPTY)
                     .setLocale(locale)
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A3"),
+            A1A3,
             SpreadsheetDelta.localePatch(
                 locale,
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4856,8 +4765,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
             .setParser(beforeParser);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setParser(beforeParser);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -4877,7 +4785,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.parserPatch(
                 Optional.of(parser),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4890,8 +4798,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsWithParserEmptyClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY);
 
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
             SpreadsheetPattern.parseNumberParsePattern("#\"should be cleared\"")
@@ -4914,7 +4821,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.parserPatch(
                 Optional.empty(),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -4943,14 +4850,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1,
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(SpreadsheetFormula.EMPTY)
+                A2.setFormula(SpreadsheetFormula.EMPTY)
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.parserPatch(
                 Optional.empty(),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -5012,15 +4918,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1.setStyle(style),
-                SpreadsheetSelection.parseCell("A2")
-                    .setFormula(SpreadsheetFormula.EMPTY)
+                A2.setFormula(SpreadsheetFormula.EMPTY)
                     .setStyle(style)
             )
         );
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.stylePatch(
                 stylePatch
             ),
@@ -5032,8 +4937,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsWithStyle() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
             .setCells(
@@ -5060,7 +4964,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.stylePatch(stylePatch),
             after
         );
@@ -5081,8 +4985,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
             .setStyle(style);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
             .setStyle(style);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -5107,7 +5010,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.stylePatch(stylePatch),
             after
         );
@@ -5125,8 +5028,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             TextAlign.CENTER
         );
 
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
             .setStyle(beforeStyle);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -5160,7 +5062,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.stylePatch(stylePatch),
             after
         );
@@ -5184,8 +5086,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 Color.parse("#222222")
             );
 
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setStyle(beforeStyle2);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
@@ -5232,8 +5133,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testPatchCellsWithStyleNullClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY);
 
         final TextStyle style = TextStyle.EMPTY
             .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
@@ -5256,7 +5156,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.stylePatch(
                 JsonNode.nullNode()
             ),
@@ -5273,8 +5173,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     ValidatorSelector.parse("before-validator")
                 )
             );
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(SpreadsheetFormula.EMPTY)
+        final SpreadsheetCell a2 = A2.setFormula(SpreadsheetFormula.EMPTY)
             .setValidator(
                 Optional.empty()
             );
@@ -5300,12 +5199,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         this.patchCellsAndCheck(
             before,
-            SpreadsheetSelection.parseCellRange("A1:A2"),
+            A1A2,
             SpreadsheetDelta.cellsValidatorPatch(
                 Maps.of(
                     SpreadsheetSelection.A1,
                     validator1,
-                    SpreadsheetSelection.parseCell("A2"),
+                    A2,
                     validator2
                 ),
                 JSON_NODE_MARSHALL_CONTEXT
@@ -5488,8 +5387,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             .viewport()
                             .setAnchoredSelection(
                                 Optional.of(
-                                    SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                    A1B2.setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
                             )
                     )
@@ -5592,8 +5490,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .viewport()
                         .setAnchoredSelection(
                             Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                    .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                A1B2.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                             )
                         )
                 )
@@ -5809,8 +5706,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             .viewport()
                             .setAnchoredSelection(
                                 Optional.of(
-                                    SpreadsheetSelection.parseCellRange("A1:B2")
-                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                    A1B2.setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
                             )
                     )
@@ -5915,8 +5811,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .viewport()
                         .setAnchoredSelection(
                             Optional.of(
-                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                    .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                                A1B2.setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                             )
                         )
                 )
@@ -6060,10 +5955,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         .setFormula(
                             SpreadsheetFormula.EMPTY
                         ),
-                    SpreadsheetSelection.parseCell("B2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY
-                        )
+                    B2.setFormula(
+                        SpreadsheetFormula.EMPTY
+                    )
                 )
             );
 
@@ -6075,18 +5969,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testResolveLabelsIncludesLabel() {
-        final SpreadsheetCellReference z99 = SpreadsheetSelection.parseCell("Z99");
-
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
             .setCells(
                 Sets.of(
-                    z99.setFormula(
+                    Z99.setFormula(
                         SpreadsheetFormula.EMPTY
                     ),
-                    SpreadsheetSelection.parseCell("B2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY
-                        )
+                    B2.setFormula(
+                        SpreadsheetFormula.EMPTY
+                    )
                 )
             );
         final JsonObject json = marshall(delta).objectOrFail();
@@ -6100,7 +5991,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             jsonWithLabel,
             (l) -> {
                 this.checkEquals(label, l.value(), "label");
-                return z99;
+                return Z99;
             },
             json
         );
