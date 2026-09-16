@@ -31,6 +31,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.naming.HasNameTesting;
 import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
@@ -57,6 +58,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     CurrencyContextTesting,
     CurrencyLocaleContextTesting,
     HasNameTesting,
+    HasUrlFragmentTesting,
     HasValueTesting,
     JsonNodeUnmarshallContextTesting,
     LocaleContextTesting,
@@ -75,10 +77,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     public final void testUrlFragment() {
         final N name = this.createName();
 
-        this.checkEquals(
-            UrlFragment.parse(name.value()),
-            name.urlFragment(),
-            () -> name + " urlFragment"
+        this.urlFragmentAndCheck(
+            name,
+            UrlFragment.parse(name.value())
         );
     }
 
@@ -122,7 +123,8 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     public final void testCheckValueWithInvalidFails() {
         this.checkValueFails(
             this,
-            "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(this) + ", Expected " + this.propertyValueType());
+            "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(this) + ", Expected " + this.propertyValueType()
+        );
     }
 
     @Test
@@ -146,20 +148,31 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         this.createName().checkValue(value);
     }
 
-    final void checkValueFails(final Object value, final String message) {
+    final void checkValueFails(final Object value,
+                               final String message) {
         final SpreadsheetMetadataPropertyName<?> propertyName = this.createName();
 
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(
             SpreadsheetMetadataPropertyValueException.class,
             () -> propertyName.checkValue(value)
         );
-        this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
+        this.checkSpreadsheetMetadataPropertyValueException(
+            thrown,
+            message,
+            propertyName,
+            value
+        );
 
         final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(
             SpreadsheetMetadataPropertyValueException.class,
             () -> propertyName.checkValue(value)
         );
-        this.checkSpreadsheetMetadataPropertyValueException(thrown2, message, propertyName, value);
+        this.checkSpreadsheetMetadataPropertyValueException(
+            thrown2,
+            message,
+            propertyName,
+            value
+        );
     }
 
     private void checkSpreadsheetMetadataPropertyValueException(final SpreadsheetMetadataPropertyValueException thrown,
@@ -271,7 +284,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         );
     }
 
-    // isConverterSelector...................................................................................
+    // isConverterSelector..............................................................................................
 
     @Test
     public final void testIsConverterSelector() {
@@ -324,7 +337,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     }
 
 
-    // isSpreadsheetParserSelector...................................................................................
+    // isSpreadsheetParserSelector......................................................................................
 
     @Test
     public final void testIsSpreadsheetParserSelector() {
