@@ -18,30 +18,24 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 
 import java.util.Currency;
-import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameCurrencyTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameCurrency, Currency> {
 
     @Test
     public void testExtractLocaleAwareValueWithLocaleEnglish() {
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(
-                Locale.forLanguageTag("en-AU")
-            ),
+            LOCALE_CONTEXT,
             CURRENCY
         );
     }
 
     @Test
     public void testExtractLocaleAwareValueWithLocaleEnglishAustralia() {
-        final Locale locale = Locale.forLanguageTag("en-AU");
-
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(locale),
-            Currency.getInstance(locale)
+            LOCALE_CONTEXT,
+            Currency.getInstance(LOCALE)
         );
     }
 
@@ -60,7 +54,7 @@ public final class SpreadsheetMetadataPropertyNameCurrencyTest extends Spreadshe
 
     @Override
     Currency propertyValue() {
-        return Currency.getInstance("AUD");
+        return CURRENCY;
     }
 
     @Override
