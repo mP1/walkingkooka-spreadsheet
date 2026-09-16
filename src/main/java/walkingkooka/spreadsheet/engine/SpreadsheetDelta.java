@@ -1574,6 +1574,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             SpreadsheetDelta.CELLS_PROPERTY_STRING,
             SpreadsheetDelta.FORMULA_PROPERTY_STRING,
             SpreadsheetDelta.CURRENCY_STRING,
+            SpreadsheetDelta.CURRENCY_EXCHANGE_RATER_STRING,
             SpreadsheetDelta.DATE_TIME_SYMBOLS_STRING,
             SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_STRING,
             SpreadsheetDelta.FORMATTER_PROPERTY_STRING,
@@ -1692,6 +1693,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     column = true;
                     break;
                 case CURRENCY_STRING:
+                case CURRENCY_EXCHANGE_RATER_STRING:
                 case DATE_TIME_SYMBOLS_STRING:
                 case DECIMAL_NUMBER_SYMBOLS_STRING:
                 case FORMATTER_PROPERTY_STRING:
@@ -1800,6 +1802,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                         JsonNode.object()
                             .set(
                                 CURRENCY_PROPERTY,
+                                propertyAndValue
+                            ),
+                        context
+                    );
+                    break;
+                case CURRENCY_EXCHANGE_RATER_STRING:
+                    cells = patchCurrencyExchangeRater(
+                        selection,
+                        cells,
+                        JsonNode.object()
+                            .set(
+                                CURRENCY_EXCHANGE_RATER_PROPERTY,
                                 propertyAndValue
                             ),
                         context
@@ -2016,6 +2030,33 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             c -> c.setCurrency(currency),
             r -> r.setFormula(SpreadsheetFormula.EMPTY)
                 .setCurrency(currency)
+        );
+    }
+
+    /**
+     * Traverses the cells, patching each with the provided {@link JsonNode symbols}.
+     * <pre>
+     * {
+     *   "currencyExchangeRater": "storageProperties(\"/currency-exchange-raters.properties\")"
+     * }
+     * </pre>
+     */
+    private static Set<SpreadsheetCell> patchCurrencyExchangeRater(final SpreadsheetSelection selection,
+                                                                   final Set<SpreadsheetCell> cells,
+                                                                   final JsonNode patch,
+                                                                   final JsonNodeUnmarshallContext context) {
+        final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater = context.unmarshallOptional(
+            patch.objectOrFail()
+                .getOrFail(CURRENCY_EXCHANGE_RATER_PROPERTY),
+            CurrencyExchangeRaterSelector.class
+        );
+
+        return patchAllCells(
+            selection,
+            cells,
+            c -> c.setCurrencyExchangeRater(currencyExchangeRater),
+            r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                .setCurrencyExchangeRater(currencyExchangeRater)
         );
     }
 

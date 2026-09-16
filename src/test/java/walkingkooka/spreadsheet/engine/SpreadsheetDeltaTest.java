@@ -86,6 +86,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     private final static CurrencyExchangeRaterSelector DIFFERENT_CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-222");
 
+    private final static Optional<CurrencyExchangeRaterSelector> OPTIONAL_CURRENCY_EXCHANGE_RATER = Optional.of(CURRENCY_EXCHANGE_RATER);
+
+    private final static Optional<CurrencyExchangeRaterSelector> OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER = Optional.of(DIFFERENT_CURRENCY_EXCHANGE_RATER);
+
     private static final DateTimeSymbols DATE_TIME_SYMBOLS_ENGLISH = DateTimeSymbols.fromDateFormatSymbols(
         new DateFormatSymbols(Locale.ENGLISH)
     );
@@ -4345,6 +4349,177 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     typeName,
                     JSON_NODE_MARSHALL_CONTEXT
                 )
+            ),
+            after
+        );
+    }
+
+    // patchCells CurrencyExchangeRater.................................................................................
+
+    @Test
+    public void testPatchCellsWithCurrencyExchangeRaterWithMissingCells() {
+        final Optional<CurrencyExchangeRaterSelector> beforeCurrencyExchangeRater = Optional.of(CURRENCY_EXCHANGE_RATER);
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(beforeCurrencyExchangeRater);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(a1)
+            );
+
+        final CurrencyExchangeRaterSelector patchCurrencyExchangeRater = DIFFERENT_CURRENCY_EXCHANGE_RATER;
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1.setCurrencyExchangeRater(Optional.of(patchCurrencyExchangeRater)),
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(SpreadsheetFormula.EMPTY)
+                    .setCurrencyExchangeRater(Optional.of(patchCurrencyExchangeRater))
+            )
+        );
+
+        this.patchCellsAndCheck(
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.currencyExchangeRaterPatch(
+                Optional.of(patchCurrencyExchangeRater),
+                JSON_NODE_MARSHALL_CONTEXT
+            ),
+            after
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithCurrencyExchangeRater() {
+        final Optional<CurrencyExchangeRaterSelector> beforeCurrencyExchangeRater = Optional.of(CURRENCY_EXCHANGE_RATER);
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(beforeCurrencyExchangeRater);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(beforeCurrencyExchangeRater);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(a1, a2)
+            );
+
+        final CurrencyExchangeRaterSelector patchedCurrencyExchangeRater = DIFFERENT_CURRENCY_EXCHANGE_RATER;
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1.setCurrencyExchangeRater(Optional.of(patchedCurrencyExchangeRater)),
+                a2.setCurrencyExchangeRater(Optional.of(patchedCurrencyExchangeRater))
+            )
+        );
+
+        this.patchCellsAndCheck(
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.currencyExchangeRaterPatch(
+                Optional.of(patchedCurrencyExchangeRater),
+                JSON_NODE_MARSHALL_CONTEXT
+            ),
+            after
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithCurrencyExchangeRaterEmptyClears() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(SpreadsheetFormula.EMPTY);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+            .setFormula(SpreadsheetFormula.EMPTY);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(
+                    a1.setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER),
+                    a2.setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER)
+                )
+            );
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1, a2
+            )
+        );
+
+        this.patchCellsAndCheck(
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.currencyExchangeRaterPatch(
+                Optional.empty(),
+                JSON_NODE_MARSHALL_CONTEXT
+            ),
+            after
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithCurrencyExchangeRaterEmptyClears2() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(SpreadsheetFormula.EMPTY);
+
+        final Optional<CurrencyExchangeRaterSelector> beforeCurrencyExchangeRater = OPTIONAL_CURRENCY_EXCHANGE_RATER;
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(
+                    a1.setCurrencyExchangeRater(beforeCurrencyExchangeRater)
+                )
+            );
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1,
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(SpreadsheetFormula.EMPTY)
+            )
+        );
+
+        this.patchCellsAndCheck(
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.currencyExchangeRaterPatch(
+                Optional.empty(),
+                JSON_NODE_MARSHALL_CONTEXT
+            ),
+            after
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithCurrencyExchangeRaterAndWindow() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER);
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER);
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(a1, a2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1.setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER),
+                a2.setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER)
+            )
+        );
+
+        this.patchCellsAndCheck(
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.currencyExchangeRaterPatch(
+                OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER,
+                JSON_NODE_MARSHALL_CONTEXT
             ),
             after
         );
