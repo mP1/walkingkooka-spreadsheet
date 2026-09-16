@@ -82,6 +82,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     TreePrintableTesting,
     ThrowableTesting {
 
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-111");
+
+    private final static CurrencyExchangeRaterSelector DIFFERENT_CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-222");
+
     private static final DateTimeSymbols DATE_TIME_SYMBOLS_ENGLISH = DateTimeSymbols.fromDateFormatSymbols(
         new DateFormatSymbols(Locale.ENGLISH)
     );
@@ -663,12 +667,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     // cellsCurrencyExchangeRaterPatch..................................................................................
 
-    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-111");
-
-    private final static CurrencyExchangeRaterSelector DIFFERENT_CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.parse("currency-exchange-rater-222");
-
     @Test
-    public void testCellsCurrencyExchangeRaterPatchWithNullCellsToCurrencyExchangeRaterFails() {
+    public void testCellsCurrencyExchangeRaterPatchWithNullCellsToCurrencyExchangeRaterSelectorFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetDelta.cellsCurrencyExchangeRaterPatch(
@@ -2215,6 +2215,71 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // currencyExchangeRaterSelectorPatch...............................................................................
+
+    @Test
+    public void testCurrencyExchangeRaterSelectorPatchWithNullPatternFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetDelta.currencyExchangeRaterSelectorPatch(
+                null,
+                JSON_NODE_MARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testCurrencyExchangeRaterSelectorPatchWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetDelta.currencyExchangeRaterSelectorPatch(
+                Optional.of(
+                    CURRENCY_EXCHANGE_RATER
+                ),
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testCurrencyExchangeRaterSelectorPatch() {
+        final Optional<CurrencyExchangeRaterSelector> selector = Optional.of(CURRENCY_EXCHANGE_RATER);
+
+        this.currencyExchangeRaterSelectorPatchAndCheck(
+            selector,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CURRENCY_EXCHANGE_RATER_PROPERTY,
+                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(selector)
+                )
+        );
+    }
+
+    @Test
+    public void testCurrencyExchangeRaterSelectorPatchWithEmpty() {
+        final Optional<CurrencyExchangeRaterSelector> selector = Optional.empty();
+
+        this.currencyExchangeRaterSelectorPatchAndCheck(
+            selector,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CURRENCY_EXCHANGE_RATER_PROPERTY,
+                    JSON_NODE_MARSHALL_CONTEXT.marshallOptional(selector)
+                )
+        );
+    }
+
+    private void currencyExchangeRaterSelectorPatchAndCheck(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRaterSelector,
+                                                            final JsonNode expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetDelta.currencyExchangeRaterSelectorPatch(
+                currencyExchangeRaterSelector,
+                JSON_NODE_MARSHALL_CONTEXT
+            )
+        );
+    }
+    
     // dateTimeSymbolsPatch.............................................................................................
 
     @Test
