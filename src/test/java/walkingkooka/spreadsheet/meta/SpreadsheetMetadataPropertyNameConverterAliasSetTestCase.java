@@ -27,11 +27,12 @@ public abstract class SpreadsheetMetadataPropertyNameConverterAliasSetTestCase<N
     }
 
     @Test
-    public void testExtractLocaleAwareValue() {
+    public final void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck();
     }
 
-    @Override final String propertyValueType() {
+    @Override //
+    final String propertyValueType() {
         return ConverterAliasSet.class.getSimpleName();
     }
 }
