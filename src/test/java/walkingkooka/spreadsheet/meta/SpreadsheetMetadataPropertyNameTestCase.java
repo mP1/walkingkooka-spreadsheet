@@ -26,6 +26,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyContextTesting;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.naming.HasNameTesting;
@@ -283,6 +284,19 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         );
     }
 
+    // isCurrencyExchangeRaterSelector..................................................................................
+
+    @Test
+    public final void testIsCurrencyExchangeRaterSelector() {
+        final N propertyName = this.createName();
+
+        this.checkEquals(
+            this.propertyValue() instanceof CurrencyExchangeRaterSelector,
+            propertyName.isCurrencyExchangeRaterSelector(),
+            propertyName::toString
+        );
+    }
+    
     // isSpreadsheetFormatterSelector...................................................................................
 
     @Test

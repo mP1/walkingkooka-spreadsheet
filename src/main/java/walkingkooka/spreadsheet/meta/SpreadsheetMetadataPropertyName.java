@@ -878,6 +878,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
+     * Returns true if this property contains a {@link SpreadsheetMetadataPropertyNameCurrencyExchangeRaterSelector}.
+     */
+    public final boolean isCurrencyExchangeRaterSelector() {
+        return this instanceof SpreadsheetMetadataPropertyNameCurrencyExchangeRaterSelector;
+    }
+
+    /**
      * Returns true if this property contains a {@link SpreadsheetFormatterSelector}.
      */
     public final boolean isSpreadsheetFormatterSelector() {
