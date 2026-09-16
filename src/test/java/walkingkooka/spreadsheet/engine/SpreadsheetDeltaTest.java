@@ -113,7 +113,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta empty = SpreadsheetDelta.EMPTY;
 
         this.checkEquals(SpreadsheetDelta.NO_CELLS, empty.cells());
-        this.checkEquals(SpreadsheetDelta.NO_LABELS, empty.labels());
+        this.labelsAndCheck(
+            empty
+        );
         this.checkEquals(SpreadsheetDelta.NO_DELETED_CELLS, empty.deletedCells());
         this.checkEquals(SpreadsheetDelta.NO_COLUMN_WIDTHS, empty.columnWidths());
         this.checkEquals(SpreadsheetDelta.NO_ROW_HEIGHTS, empty.rowHeights());
@@ -137,10 +139,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setWindow(SpreadsheetViewportWindows.parse("B2:F6"))
             .setLabels(mappings);
 
-        this.checkEquals(
-            mappings,
-            delta.labels(),
-            "labels"
+        this.labelsAndCheck(
+            delta,
+            mappings
         );
     }
 
@@ -152,10 +153,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setWindow(SpreadsheetViewportWindows.parse("B2:D4"))
             .setLabels(mappings);
 
-        this.checkEquals(
-            mappings,
-            delta.labels(),
-            "labels"
+        this.labelsAndCheck(
+            delta,
+            mappings
         );
     }
 
@@ -167,8 +167,23 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             .setWindow(SpreadsheetViewportWindows.parse("A1:B2"))
             .setLabels(mappings);
 
+        this.labelsAndCheck(
+            delta
+        );
+    }
+
+    private void labelsAndCheck(final SpreadsheetDelta delta,
+                                final SpreadsheetLabelMapping ... expected) {
+        this.labelsAndCheck(
+            delta,
+            Sets.of(expected)
+        );
+    }
+
+    private void labelsAndCheck(final SpreadsheetDelta delta,
+                                final Set<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
-            SpreadsheetDelta.NO_LABELS,
+            expected,
             delta.labels(),
             "labels"
         );
