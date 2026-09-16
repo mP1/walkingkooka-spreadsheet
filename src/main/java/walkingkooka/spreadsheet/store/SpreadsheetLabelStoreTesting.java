@@ -314,7 +314,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
 
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label" + i);
-            if (!store.load(label).isPresent()) {
+            if (store.load(label).isEmpty()) {
                 assertThrows(
                     MissingStoreException.class,
                     () -> store.resolveLabelOrFail(label),

@@ -177,7 +177,7 @@ final class SpreadsheetViewportParser {
 
     private void parseTokenOrFail(final Parser<SpreadsheetParserContext> parser,
                                   final String label) {
-        if (false == parser.parse(this.cursor, PARSER_CONTEXT).isPresent()) {
+        if (parser.parse(this.cursor, PARSER_CONTEXT).isEmpty()) {
             throw new IllegalArgumentException("Missing " + label);
         }
     }

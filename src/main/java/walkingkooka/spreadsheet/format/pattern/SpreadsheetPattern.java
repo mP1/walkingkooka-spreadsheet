@@ -969,7 +969,7 @@ abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
         final ParserToken token = this.value();
         final Optional<?> removed = token.removeIf(predicate);
 
-        return false == removed.isPresent() || token.equals(removed.get()) ?
+        return removed.isEmpty() || token.equals(removed.get()) ?
             (T) this :
             factory.apply(
                 (ParserToken) removed.get()

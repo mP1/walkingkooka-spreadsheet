@@ -742,15 +742,15 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public boolean isEmpty() {
         return this.formula.isEmpty() &&
-            false == this.currency.isPresent() &&
-            false == this.currencyExchangeRater.isPresent() &&
-            false == this.dateTimeSymbols.isPresent() &&
-            false == this.decimalNumberSymbols.isPresent() &&
-            false == this.locale.isPresent() &&
-            false == this.formatter.isPresent() &&
-            false == this.parser.isPresent() &&
+            this.currency.isEmpty() &&
+            this.currencyExchangeRater.isEmpty() &&
+            this.dateTimeSymbols.isEmpty() &&
+            this.decimalNumberSymbols.isEmpty() &&
+            this.locale.isEmpty() &&
+            this.formatter.isEmpty() &&
+            this.parser.isEmpty() &&
             this.style.isEmpty() &&
-            false == this.validator.isPresent();
+            this.validator.isEmpty();
     }
 
     // replaceReferences................................................................................................

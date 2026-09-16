@@ -68,7 +68,7 @@ abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReference implement
                 absoluteOrRelative,
                 save
             );
-            if (false == result.isPresent()) {
+            if (result.isEmpty()) {
                 if (this.isRequired()) {
                     if (cursor.lineInfo().textOffset() != save.lineInfo().textOffset()) {
                         final InvalidCharacterException ice = cursor.lineInfo()

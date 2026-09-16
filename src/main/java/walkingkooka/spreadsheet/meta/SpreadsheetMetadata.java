@@ -241,7 +241,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     private void addIfMissing(final SpreadsheetMetadataPropertyName<?> property,
                               final Set<SpreadsheetMetadataPropertyName<?>> missing) {
-        if (false == this.get(property).isPresent()) {
+        if (this.get(property).isEmpty()) {
             missing.add(property);
         }
     }
@@ -290,7 +290,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     final <V> Optional<V> getOrGetDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
         Optional<V> value = this.getIgnoringDefaults0(propertyName);
-        if (false == value.isPresent()) {
+        if (value.isEmpty()) {
             // try again with defaults
             final SpreadsheetMetadata defaults = this.defaults;
             if (null != defaults) {

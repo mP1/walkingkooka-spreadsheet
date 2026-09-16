@@ -1752,7 +1752,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                     );
                 }
                 // if expression is absent, convert token into expression
-                if (null != token && false == formula.expression().isPresent()) {
+                if (null != token && formula.expression().isEmpty()) {
                     formula = formula.setExpression(
                         context.toExpression(token)
                     );
