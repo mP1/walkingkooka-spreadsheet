@@ -19,13 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.locale.LocaleContexts;
-
-import java.text.DateFormatSymbols;
-import java.util.Locale;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 
 
-public final class SpreadsheetMetadataPropertyNameDateTimeSymbolsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameDateTimeSymbols, DateTimeSymbols> {
+public final class SpreadsheetMetadataPropertyNameDateTimeSymbolsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameDateTimeSymbols, DateTimeSymbols>
+    implements HasDateTimeSymbolsTesting {
 
     @Test
     public void testCheckValueWithInvalidDateTimeSymbolsFails() {
@@ -38,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameDateTimeSymbolsTest extends Sp
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
+            LOCALE_CONTEXT,
             this.propertyValue()
         );
     }
@@ -58,9 +56,7 @@ public final class SpreadsheetMetadataPropertyNameDateTimeSymbolsTest extends Sp
 
     @Override
     DateTimeSymbols propertyValue() {
-        return DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(Locale.ENGLISH)
-        );
+        return DATE_TIME_SYMBOLS;
     }
 
     @Override
