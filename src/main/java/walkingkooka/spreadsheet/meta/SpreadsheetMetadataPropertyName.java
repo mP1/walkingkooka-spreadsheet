@@ -892,6 +892,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
+     * Returns true if this property contains a {@link ExpressionFunctionAliasSet}.
+     */
+    public final boolean isExpressionFunctionAliasSet() {
+        return this instanceof SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet;
+    }
+
+    /**
      * Returns true if this property contains a {@link SpreadsheetParserSelector}.
      */
     public final boolean isSpreadsheetParserSelector() {

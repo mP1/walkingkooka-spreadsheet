@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
@@ -292,6 +293,19 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         this.checkEquals(
             this.propertyValue() instanceof CurrencyExchangeRaterSelector,
             propertyName.isCurrencyExchangeRaterSelector(),
+            propertyName::toString
+        );
+    }
+
+    // isExpressionFunctionAliasSet.....................................................................................
+
+    @Test
+    public final void testIsExpressionFunctionAliasSet() {
+        final N propertyName = this.createName();
+
+        this.checkEquals(
+            this.propertyValue() instanceof ExpressionFunctionAliasSet,
+            propertyName.isExpressionFunctionAliasSet(),
             propertyName::toString
         );
     }
