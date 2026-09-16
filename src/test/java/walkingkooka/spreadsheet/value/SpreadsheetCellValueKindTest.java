@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HasValueTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.currency.HasCurrencyTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.io.FileExtension;
 import walkingkooka.io.HasFileExtensionTesting;
@@ -70,7 +71,11 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
                     )
                 )
             ).setCurrency(OPTIONAL_CURRENCY)
-            .setDateTimeSymbols(
+            .setCurrencyExchangeRater(
+                Optional.of(
+                    CurrencyExchangeRaterSelector.parse("currency-exchange-rater-123")
+                )
+            ).setDateTimeSymbols(
                 Optional.of(
                     DateTimeSymbols.fromDateFormatSymbols(
                         new DateFormatSymbols(Locale.FRANCE)
@@ -140,6 +145,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.CURRENCY,
             SpreadsheetCell::currency
+        );
+    }
+
+    @Test
+    public void testCellValueWithCurrencyExchangeRater() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.CURRENCY_EXCHANGE_RATER,
+            SpreadsheetCell::currencyExchangeRaterSelector
         );
     }
 
@@ -318,6 +331,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     }
 
     @Test
+    public void testFileExtensionWithCurrencyExchangeRater() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.CURRENCY_EXCHANGE_RATER,
+            "currencyExchangeRater"
+        );
+    }
+
+    @Test
     public void testFileExtensionWithDateTimeSymbols() {
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
@@ -417,6 +438,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         this.parseStringAndCheck(
             "",
             SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    @Test
+    public void testParseWithCurrencyExchangeRaterString() {
+        this.parseStringAndCheck(
+            "currencyExchangeRater",
+            SpreadsheetCellValueKind.CURRENCY_EXCHANGE_RATER
         );
     }
 

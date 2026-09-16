@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.value;
 
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.io.FileExtension;
 import walkingkooka.io.HasFileExtension;
@@ -57,6 +58,13 @@ public enum SpreadsheetCellValueKind implements HasContentType,
         @Override
         public Optional<Currency> cellValue(final SpreadsheetCell cell) {
             return cell.currency();
+        }
+    },
+
+    CURRENCY_EXCHANGE_RATER(SpreadsheetMediaTypes.JSON_CURRENCY_EXCHANGE_RATER) {
+        @Override
+        public Optional<CurrencyExchangeRaterSelector> cellValue(final SpreadsheetCell cell) {
+            return cell.currencyExchangeRater();
         }
     },
 
