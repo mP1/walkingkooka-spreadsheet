@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.net;
 
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.header.HasContentType;
@@ -50,6 +51,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType JSON_CURRENCY = HasContentType.CURRENCY;
 
+    public static final MediaType JSON_CURRENCY_EXCHANGE_RATER = CurrencyExchangeRaterSelector.CONTENT_TYPE;
+
     public static final MediaType JSON_DATE_TIME_SYMBOLS = HasContentType.DATE_TIME_SYMBOLS;
 
     public static final MediaType JSON_DECIMAL_NUMBER_SYMBOLS = HasContentType.DECIMAL_NUMBER_SYMBOLS;
@@ -81,6 +84,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     public static final MediaType MEMORY_CELL = object(SpreadsheetCell.class);
 
     public static final MediaType MEMORY_CURRENCY = object(Currency.class);
+
+    public static final MediaType MEMORY_CURRENCY_EXCHANGE_RATER = object(CurrencyExchangeRaterSelector.class);
 
     public static final MediaType MEMORY_DATE_TIME_SYMBOLS = object(DateTimeSymbols.class);
 
