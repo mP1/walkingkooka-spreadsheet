@@ -1316,8 +1316,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link Currency} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
-    public static JsonNode currencyExchangeRaterSelectorPatch(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRaterSelector,
-                                                              final JsonNodeMarshallContext context) {
+    public static JsonNode currencyExchangeRaterPatch(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRaterSelector,
+                                                      final JsonNodeMarshallContext context) {
         Objects.requireNonNull(currencyExchangeRaterSelector, "currencyExchangeRaterSelector");
         Objects.requireNonNull(context, "context");
 
