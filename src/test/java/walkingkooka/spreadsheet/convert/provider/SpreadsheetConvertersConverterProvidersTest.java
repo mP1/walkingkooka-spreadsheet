@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetConvertersConverterProvidersTest implements Public
     @Override
     public Class<SpreadsheetConvertersConverterProviders> type() {
         return SpreadsheetConvertersConverterProviders.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

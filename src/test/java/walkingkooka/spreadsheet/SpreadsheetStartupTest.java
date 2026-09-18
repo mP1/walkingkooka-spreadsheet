@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -32,10 +31,5 @@ public final class SpreadsheetStartupTest implements PublicStaticHelperTesting<S
     @Override
     public Class<SpreadsheetStartup> type() {
         return SpreadsheetStartup.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

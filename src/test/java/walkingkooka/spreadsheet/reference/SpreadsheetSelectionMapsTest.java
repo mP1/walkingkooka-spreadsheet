@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetSelectionMapsTest implements PublicStaticHelperTes
     @Override
     public Class<SpreadsheetSelectionMaps> type() {
         return SpreadsheetSelectionMaps.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

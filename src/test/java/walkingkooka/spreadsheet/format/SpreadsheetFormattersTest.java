@@ -59,9 +59,4 @@ public final class SpreadsheetFormattersTest implements ClassTesting2<Spreadshee
     public boolean canHavePublicTypes(final Method method) {
         return false;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
 }

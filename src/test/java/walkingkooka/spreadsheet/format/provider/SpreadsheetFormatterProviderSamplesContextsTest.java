@@ -30,11 +30,6 @@ public final class SpreadsheetFormatterProviderSamplesContextsTest implements Pu
     }
 
     @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    @Override
     public boolean canHavePublicTypes(final Method method) {
         return false;
     }

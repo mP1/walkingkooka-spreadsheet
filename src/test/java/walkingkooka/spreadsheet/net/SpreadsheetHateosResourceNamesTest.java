@@ -43,11 +43,6 @@ public final class SpreadsheetHateosResourceNamesTest implements PublicStaticHel
     }
 
     @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    @Override
     public boolean canHavePublicTypes(Method method) {
         return false;
     }

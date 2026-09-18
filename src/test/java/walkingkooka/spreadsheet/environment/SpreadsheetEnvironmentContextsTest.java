@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.environment;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetEnvironmentContextsTest implements PublicStaticHel
     @Override
     public Class<SpreadsheetEnvironmentContexts> type() {
         return SpreadsheetEnvironmentContexts.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

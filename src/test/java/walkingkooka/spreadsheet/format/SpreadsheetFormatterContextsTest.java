@@ -35,9 +35,4 @@ public final class SpreadsheetFormatterContextsTest implements ClassTesting2<Spr
     public boolean canHavePublicTypes(final Method method) {
         return false;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
 }

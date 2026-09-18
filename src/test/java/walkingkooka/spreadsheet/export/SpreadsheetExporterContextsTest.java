@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.export;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -28,11 +27,6 @@ public final class SpreadsheetExporterContextsTest implements PublicStaticHelper
     @Override
     public Class<SpreadsheetExporterContexts> type() {
         return SpreadsheetExporterContexts.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

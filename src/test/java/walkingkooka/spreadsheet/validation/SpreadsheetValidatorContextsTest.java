@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.validation;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetValidatorContextsTest implements PublicStaticHelpe
     @Override
     public Class<SpreadsheetValidatorContexts> type() {
         return SpreadsheetValidatorContexts.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override
