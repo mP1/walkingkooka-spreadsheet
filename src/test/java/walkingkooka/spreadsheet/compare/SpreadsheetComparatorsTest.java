@@ -23,7 +23,6 @@ import walkingkooka.color.Color;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
@@ -365,11 +364,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     @Override
     public Class<SpreadsheetComparators> type() {
         return SpreadsheetComparators.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.file;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -29,11 +28,6 @@ public final class SpreadsheetFileExtensionsTest implements PublicStaticHelperTe
     @Override
     public Class<SpreadsheetFileExtensions> type() {
         return SpreadsheetFileExtensions.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -345,11 +344,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Override
     public Class<SpreadsheetParsers> type() {
         return SpreadsheetParsers.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

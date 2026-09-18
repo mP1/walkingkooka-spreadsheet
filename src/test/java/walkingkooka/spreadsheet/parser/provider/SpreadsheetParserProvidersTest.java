@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.parser.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -43,10 +42,5 @@ public final class SpreadsheetParserProvidersTest implements ClassTesting2<Sprea
     @Override
     public boolean canHavePublicTypes(final Method method) {
         return false;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

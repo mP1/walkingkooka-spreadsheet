@@ -35,9 +35,4 @@ public final class SpreadsheetLabelReferencesStoresTest implements ClassTesting2
     public boolean canHavePublicTypes(final Method method) {
         return false;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
 }

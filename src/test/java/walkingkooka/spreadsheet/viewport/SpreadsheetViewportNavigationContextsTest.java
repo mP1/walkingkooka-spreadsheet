@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetViewportNavigationContextsTest implements PublicSt
     @Override
     public Class<SpreadsheetViewportNavigationContexts> type() {
         return SpreadsheetViewportNavigationContexts.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

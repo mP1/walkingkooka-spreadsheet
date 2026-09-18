@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.provider;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetProvidersTest implements PublicStaticHelperTesting
     @Override
     public Class<SpreadsheetProviders> type() {
         return SpreadsheetProviders.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

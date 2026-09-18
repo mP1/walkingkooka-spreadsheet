@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -31,10 +30,5 @@ public final class SpreadsheetMetadataContextsTest implements PublicStaticHelper
     @Override
     public Class<SpreadsheetMetadataContexts> type() {
         return SpreadsheetMetadataContexts.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

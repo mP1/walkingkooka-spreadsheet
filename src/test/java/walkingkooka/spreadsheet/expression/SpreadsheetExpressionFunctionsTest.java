@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetExpressionFunctionsTest implements PublicStaticHel
     @Override
     public Class<SpreadsheetExpressionFunctions> type() {
         return SpreadsheetExpressionFunctions.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.color;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -68,11 +67,6 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
     @Override
     public Class<SpreadsheetColors> type() {
         return SpreadsheetColors.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

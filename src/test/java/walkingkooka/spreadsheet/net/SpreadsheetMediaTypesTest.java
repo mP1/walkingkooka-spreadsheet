@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.net;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -207,11 +206,6 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Override
     public Class<SpreadsheetMediaTypes> type() {
         return SpreadsheetMediaTypes.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

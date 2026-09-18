@@ -18,7 +18,6 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -32,10 +31,5 @@ public final class SpreadsheetMetadataLoadersTest implements PublicStaticHelperT
     @Override
     public Class<SpreadsheetMetadataLoaders> type() {
         return SpreadsheetMetadataLoaders.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

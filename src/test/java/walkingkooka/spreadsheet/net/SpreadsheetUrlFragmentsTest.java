@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.net;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
@@ -27,11 +26,6 @@ public final class SpreadsheetUrlFragmentsTest implements PublicStaticHelperTest
     @Override
     public Class<SpreadsheetUrlFragments> type() {
         return SpreadsheetUrlFragments.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

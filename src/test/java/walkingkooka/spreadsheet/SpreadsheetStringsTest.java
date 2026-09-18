@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.text.CaseSensitivity;
 
@@ -41,11 +40,6 @@ public final class SpreadsheetStringsTest implements PublicStaticHelperTesting<S
     @Override
     public Class<SpreadsheetStrings> type() {
         return SpreadsheetStrings.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override
