@@ -263,12 +263,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns the {@link SpreadsheetId} or throws a {@link IllegalStateException} if missing.
      */
     @Override
-    public Optional<SpreadsheetId> id() {
+    public final Optional<SpreadsheetId> id() {
         return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
     }
 
     @Override
-    public String hateosLinkId() {
+    public final String hateosLinkId() {
         return this.id()
             .orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this))
             .hateosLinkId();
@@ -964,7 +964,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns the {@link SpreadsheetName} if one is present.
      */
     @Override
-    public Optional<SpreadsheetName> name() {
+    public final Optional<SpreadsheetName> name() {
         return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME);
     }
 
@@ -1902,7 +1902,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // HasContentType...................................................................................................
 
     @Override
-    public Optional<MediaType> contentType() {
+    public final Optional<MediaType> contentType() {
         return Optional.of(CONTENT_TYPE);
     }
 
@@ -2038,14 +2038,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // HasOptionalAuditInfo.............................................................................................
 
     @Override
-    public Optional<AuditInfo> auditInfo() {
+    public final Optional<AuditInfo> auditInfo() {
         return this.get(SpreadsheetMetadataPropertyName.AUDIT_INFO);
     }
 
     // HasOptionalLastModified..........................................................................................
 
     @Override
-    public Optional<LocalDateTime> lastModified() {
+    public final Optional<LocalDateTime> lastModified() {
         return this.auditInfo()
             .map(AuditInfo::modifiedTimestamp);
     }
