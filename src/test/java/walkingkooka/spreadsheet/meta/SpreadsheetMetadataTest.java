@@ -135,6 +135,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     HasOptionalAuditInfoTesting,
     HasOptionalLastModifiedTesting,
     HasPropertiesTesting,
+    HasSpreadsheetMetadataTesting,
     HasUrlFragmentTesting,
     JsonNodeMarshallerTesting<SpreadsheetMetadata>,
     LocaleContextTesting,
@@ -2084,6 +2085,18 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 AUDIT_INFO
             ),
             AUDIT_INFO
+        );
+    }
+
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Test
+    public void testSpreadsheetMetadata() {
+        final SpreadsheetMetadata spreadsheetMetadata = this.metadata();
+
+        this.spreadsheetMetadataAndCheck(
+            spreadsheetMetadata,
+            spreadsheetMetadata
         );
     }
 
