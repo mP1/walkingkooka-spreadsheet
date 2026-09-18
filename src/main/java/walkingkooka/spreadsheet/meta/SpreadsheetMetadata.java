@@ -183,6 +183,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     HasOptionalAuditInfo,
     HasOptionalName<SpreadsheetName>,
     HasProperties,
+    HasSpreadsheetMetadata,
     HateosResource<SpreadsheetId>,
     Patchable<SpreadsheetMetadata>,
     TreePrintable,
@@ -2025,6 +2026,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         return properties;
+    }
+
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    public final SpreadsheetMetadata spreadsheetMetadata() {
+        return this;
     }
 
     // HasOptionalAuditInfo.............................................................................................
