@@ -538,7 +538,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         context.debug(MESSAGE1);
 
         this.checkEquals(
-            MESSAGE1 + LINE_ENDING,
+            "DEBUG " + MESSAGE1 + LINE_ENDING,
             b.toString()
         );
     }
@@ -560,8 +560,8 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         context.warn(MESSAGE4);
 
         this.checkEquals(
-            MESSAGE2 + LINE_ENDING +
-                MESSAGE3 + LINE_ENDING,
+            "INFO " + MESSAGE2 + LINE_ENDING +
+                "WARN " + MESSAGE3 + LINE_ENDING,
             b.toString()
         );
     }
