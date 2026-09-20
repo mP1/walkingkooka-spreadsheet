@@ -32,6 +32,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleContextTesting;
+import walkingkooka.logging.LoggerPath;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -869,6 +870,18 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         @Override
         public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
             return this.spreadsheetEnvironmentContext.parseEnvironmentValueName(name);
+        }
+
+        // CanLog.......................................................................................................
+
+        @Override
+        public void logEnter(final LoggerPath logger) {
+            this.spreadsheetEnvironmentContext.logEnter(logger);
+        }
+
+        @Override
+        public void logExit() {
+            this.spreadsheetEnvironmentContext.logExit();
         }
 
         // SpreadsheetMetadataContext...................................................................................

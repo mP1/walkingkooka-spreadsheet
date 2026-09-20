@@ -28,6 +28,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.logging.CanLogs;
+import walkingkooka.logging.LoggerPath;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
@@ -595,6 +596,16 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 private final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+                @Override
+                public void logEnter(final LoggerPath logger) {
+                    this.environmentContext.logEnter(logger);
+                }
+
+                @Override
+                public void logExit() {
+                    this.environmentContext.logExit();
+                }
 
                 @Override
                 public void log(final LoggingLevel loggingLevel,

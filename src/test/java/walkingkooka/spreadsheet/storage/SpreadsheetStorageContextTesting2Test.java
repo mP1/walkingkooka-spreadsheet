@@ -23,6 +23,7 @@ import walkingkooka.Either;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
+import walkingkooka.logging.LoggerPath;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -250,6 +251,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         @Override
         public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
             return this.spreadsheetEnvironmentContext.parseEnvironmentValueName(name);
+        }
+
+        @Override
+        public void logEnter(final LoggerPath logger) {
+            this.spreadsheetEnvironmentContext.logEnter(logger);
+        }
+
+        @Override
+        public void logExit() {
+            this.spreadsheetEnvironmentContext.logExit();
         }
 
         @Override

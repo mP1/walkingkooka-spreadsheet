@@ -27,6 +27,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggerPath;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
@@ -233,6 +234,16 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             @Override
             public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
                 return this.spreadsheetEnvironmentContext.parseEnvironmentValueName(name);
+            }
+
+            @Override
+            public void logEnter(final LoggerPath logger) {
+                this.spreadsheetEnvironmentContext.logEnter(logger);
+            }
+
+            @Override
+            public void logExit() {
+                this.spreadsheetEnvironmentContext.logExit();
             }
 
             @Override
