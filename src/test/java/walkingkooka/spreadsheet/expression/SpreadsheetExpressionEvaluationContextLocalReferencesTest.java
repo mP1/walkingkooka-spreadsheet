@@ -875,6 +875,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         // CanLog.......................................................................................................
 
         @Override
+        public boolean isLoggingEnabled(final LoggingLevel loggingLevel) {
+            return this.spreadsheetEnvironmentContext.isLoggingEnabled(loggingLevel);
+        }
+
+        @Override
         public void logEnter(final LoggerPath logger) {
             this.spreadsheetEnvironmentContext.logEnter(logger);
         }
