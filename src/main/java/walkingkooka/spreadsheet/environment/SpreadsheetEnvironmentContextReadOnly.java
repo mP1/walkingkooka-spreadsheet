@@ -20,8 +20,6 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentWatcher;
-import walkingkooka.logging.LoggingContext;
-import walkingkooka.logging.LoggingContextDelegator;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -29,6 +27,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.logging.StorageLoggingContext;
+import walkingkooka.storage.logging.StorageLoggingContextDelegator;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -49,7 +49,7 @@ import java.util.function.Predicate;
  * throwing {@link UnsupportedOperationException}.
  */
 final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironmentContext,
-    LoggingContextDelegator,
+    StorageLoggingContextDelegator,
     TreePrintable {
 
     static SpreadsheetEnvironmentContextReadOnly with(final Predicate<EnvironmentValueName<?>> readOnlyFilter,
@@ -319,10 +319,10 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
 
     private final SpreadsheetEnvironmentContext context;
 
-    // LoggingContextDelegator..........................................................................................
+    // StorageLoggingContextDelegator...................................................................................
 
     @Override
-    public LoggingContext loggingContext() {
+    public StorageLoggingContext storageLoggingContext() {
         return this.context;
     }
 
