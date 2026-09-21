@@ -598,6 +598,11 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 private final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
                 @Override
+                public boolean isLoggingEnabled(final LoggingLevel loggingLevel) {
+                    return this.environmentContext.isLoggingEnabled(loggingLevel);
+                }
+
+                @Override
                 public void logEnter(final LoggerPath logger) {
                     this.environmentContext.logEnter(logger);
                 }
