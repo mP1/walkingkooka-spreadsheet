@@ -264,11 +264,11 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public void log(final LoggingLevel level,
+        public void log(final LoggingLevel loggingLevel,
                         final String message,
                         final Throwable throwable) {
             this.spreadsheetEnvironmentContext.log(
-                level,
+                loggingLevel,
                 message,
                 throwable
             );

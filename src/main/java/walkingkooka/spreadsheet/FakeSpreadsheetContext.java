@@ -498,7 +498,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
-    public boolean isLoggingEnabled(final LoggingLevel level) {
+    public boolean isLoggingEnabled(final LoggingLevel loggingLevel) {
         throw new UnsupportedOperationException();
     }
     
