@@ -49,6 +49,7 @@ import java.util.Optional;
  * <a href="https://exceljet.net/excel-functions/excel-errortype-function">Excel error-type function</a>
  */
 public enum SpreadsheetErrorKind implements HasSpreadsheetError,
+    HasSpreadsheetErrorKind,
     HasText {
 
     /**
@@ -185,6 +186,13 @@ public enum SpreadsheetErrorKind implements HasSpreadsheetError,
 
     // lazy cache
     private SpreadsheetError spreadsheetError;
+
+    // HasSpreadsheetErrorKind..........................................................................................
+
+    @Override
+    public SpreadsheetErrorKind spreadsheetErrorKind() {
+        return this;
+    }
 
     // HasText..........................................................................................................
 
