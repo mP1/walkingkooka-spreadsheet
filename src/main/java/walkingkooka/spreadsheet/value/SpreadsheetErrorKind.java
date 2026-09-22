@@ -48,7 +48,8 @@ import java.util.Optional;
  * <br>
  * <a href="https://exceljet.net/excel-functions/excel-errortype-function">Excel error-type function</a>
  */
-public enum SpreadsheetErrorKind implements HasText {
+public enum SpreadsheetErrorKind implements HasSpreadsheetError,
+    HasText {
 
     /**
      * <a href="https://support.microsoft.com/en-us/office/correct-a-null-error-11a15515-5df3-4a82-899e-e4c0070ea9c4">null error</a>
@@ -169,6 +170,22 @@ public enum SpreadsheetErrorKind implements HasText {
             VALIDATION != this;
     }
 
+    // HasSpreadsheetError..............................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetError} with this {@link SpreadsheetErrorKind} but no message or value.
+     */
+    @Override
+    public SpreadsheetError spreadsheetError() {
+        if (null == this.spreadsheetError) {
+            this.spreadsheetError = this.setMessage(SpreadsheetError.NO_MESSAGE);
+        }
+        return this.spreadsheetError;
+    }
+
+    // lazy cache
+    private SpreadsheetError spreadsheetError;
+
     // HasText..........................................................................................................
 
     @Override
@@ -186,19 +203,6 @@ public enum SpreadsheetErrorKind implements HasText {
     }
 
     private final int value;
-
-    /**
-     * Returns a {@link SpreadsheetError} with this {@link SpreadsheetErrorKind} but no message or value.
-     */
-    public SpreadsheetError toError() {
-        if (null == this.spreadsheetError) {
-            this.spreadsheetError = this.setMessage(SpreadsheetError.NO_MESSAGE);
-        }
-        return this.spreadsheetError;
-    }
-
-    // lazy cache
-    private SpreadsheetError spreadsheetError;
 
     public SpreadsheetError setMessage(final String message) {
         return this.setMessageAndValue(

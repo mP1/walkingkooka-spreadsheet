@@ -271,7 +271,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
 
     @Test
     public void testValidationErrorWithEmptyMessageAndNoValue() {
-        final SpreadsheetError error = SpreadsheetErrorKind.MISSING_PREFIX.toError();
+        final SpreadsheetError error = SpreadsheetErrorKind.MISSING_PREFIX.spreadsheetError();
 
         this.validationErrorsAndCheck(
             Lists.of(
@@ -306,7 +306,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                     )
             ),
             Optional.of(
-                SpreadsheetErrorKind.VALIDATION.toError()
+                SpreadsheetErrorKind.VALIDATION.spreadsheetError()
                     .setValue(
                         Optional.of(checkbox)
                     )
@@ -336,7 +336,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                     )
             ),
             Optional.of(
-                SpreadsheetErrorKind.VALIDATION.toError()
+                SpreadsheetErrorKind.VALIDATION.spreadsheetError()
                     .setValue(
                         Optional.of(
                             choices
@@ -473,7 +473,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testIsValidationWithDiv0() {
         this.isValidationAndCheck(
-            SpreadsheetErrorKind.DIV0.toError(),
+            SpreadsheetErrorKind.DIV0.spreadsheetError(),
             false
         );
     }
@@ -481,7 +481,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testIsValidationWithValidationError() {
         this.isValidationAndCheck(
-            SpreadsheetErrorKind.VALIDATION.toError(),
+            SpreadsheetErrorKind.VALIDATION.spreadsheetError(),
             true
         );
     }
@@ -748,14 +748,14 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testToExpressionErrorWithDiv0() {
         this.toExpressionErrorAndCheck(
-            SpreadsheetErrorKind.DIV0.toError()
+            SpreadsheetErrorKind.DIV0.spreadsheetError()
         );
     }
 
     @Test
     public void testToExpressionErrorWithError() {
         this.toExpressionErrorAndCheck(
-            SpreadsheetErrorKind.ERROR.toError()
+            SpreadsheetErrorKind.ERROR.spreadsheetError()
         );
     }
 
@@ -879,7 +879,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     public void testParseEmptyString() {
         this.parseStringAndCheck(
             "",
-            SpreadsheetErrorKind.MISSING_PREFIX.toError()
+            SpreadsheetErrorKind.MISSING_PREFIX.spreadsheetError()
         );
     }
 
@@ -1092,7 +1092,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testIsValidationPromptValueWhenDiv0() {
         this.isValidationPromptValueAndCheck(
-            SpreadsheetErrorKind.DIV0.toError(),
+            SpreadsheetErrorKind.DIV0.spreadsheetError(),
             false
         );
     }
@@ -1204,7 +1204,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testTreePrintOnlyKind() {
         this.treePrintAndCheck(
-            SpreadsheetErrorKind.NA.toError(),
+            SpreadsheetErrorKind.NA.spreadsheetError(),
             "#N/A\n"
         );
     }
@@ -1449,7 +1449,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testMarshallRoundtripOnlyKind() {
         this.marshallRoundTripTwiceAndCheck(
-            SpreadsheetErrorKind.ERROR.toError()
+            SpreadsheetErrorKind.ERROR.spreadsheetError()
         );
     }
 

@@ -145,7 +145,7 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
      * Creates a {@link SpreadsheetError} reporting that a cell was deleted.
      */
     public static SpreadsheetError selectionDeleted() {
-        return SpreadsheetErrorKind.REF.toError();
+        return SpreadsheetErrorKind.REF.spreadsheetError();
     }
 
     /**
@@ -166,7 +166,7 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
     public static SpreadsheetError validationPromptValue(final ValidationPromptValue value) {
         Objects.requireNonNull(value, "value");
 
-        return SpreadsheetErrorKind.VALIDATION.toError()
+        return SpreadsheetErrorKind.VALIDATION.spreadsheetError()
             .setValue(
                 Optional.of(value)
             );

@@ -307,7 +307,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
      */
     private static Parser<SpreadsheetParserContext> errorParser0(final SpreadsheetErrorKind kind) {
         final String text = kind.text();
-        final SpreadsheetError error = kind.toError();
+        final SpreadsheetError error = kind.spreadsheetError();
         final SpreadsheetFormulaParserToken token = SpreadsheetFormulaParserToken.error(error, text);
 
         return Parsers.string(

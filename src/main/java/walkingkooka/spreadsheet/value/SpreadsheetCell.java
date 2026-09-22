@@ -304,7 +304,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return formula.setValue(
             formula.value()
                 .map(v -> v instanceof Collection ?
-                    SpreadsheetErrorKind.VALUE.toError().setValue(
+                    SpreadsheetErrorKind.VALUE.spreadsheetError().setValue(
                         Optional.of(v)
                     ) :
                     v

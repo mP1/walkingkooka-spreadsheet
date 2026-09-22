@@ -790,7 +790,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.isZeroValueAndCheck(
             SpreadsheetFormula.EMPTY.setError(
                 Optional.of(
-                    SpreadsheetErrorKind.DIV0.toError()
+                    SpreadsheetErrorKind.DIV0.spreadsheetError()
                 )
             ),
             false
@@ -946,7 +946,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.validationErrorAndCheck(
             SpreadsheetFormula.EMPTY.setError(
                 Optional.of(
-                    SpreadsheetErrorKind.DIV0.toError()
+                    SpreadsheetErrorKind.DIV0.spreadsheetError()
                 )
             )
         );
@@ -957,7 +957,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.validationErrorAndCheck(
             SpreadsheetFormula.EMPTY.setError(
                 Optional.of(
-                    SpreadsheetErrorKind.ERROR.toError()
+                    SpreadsheetErrorKind.ERROR.spreadsheetError()
                 )
             )
         );
@@ -2450,7 +2450,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                     Optional.of(111)
                 ).setError(
                     Optional.of(
-                        SpreadsheetErrorKind.VALIDATION.toError()
+                        SpreadsheetErrorKind.VALIDATION.spreadsheetError()
                             .setValue(
                                 Optional.of(choices)
                             )
@@ -2477,7 +2477,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                     Optional.of(111)
                 ).setError(
                     Optional.of(
-                        SpreadsheetErrorKind.ERROR.toError()
+                        SpreadsheetErrorKind.ERROR.spreadsheetError()
                             .setValue(
                                 Optional.of(choices)
                             )
@@ -2635,7 +2635,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setText("=123/0")
                 .setValue(
                     Optional.of(
-                        SpreadsheetErrorKind.DIV0.toError()
+                        SpreadsheetErrorKind.DIV0.spreadsheetError()
                     )
                 ),
             "Formula\n" +
@@ -2651,7 +2651,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.treePrintAndCheck(
             SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(
-                    SpreadsheetErrorKind.DIV0.toError()
+                    SpreadsheetErrorKind.DIV0.spreadsheetError()
                 )
             ),
             "Formula\n" +

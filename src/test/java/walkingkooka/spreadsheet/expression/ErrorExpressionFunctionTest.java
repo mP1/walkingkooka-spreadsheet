@@ -52,7 +52,7 @@ public final class ErrorExpressionFunctionTest implements ExpressionFunctionTest
                 EXPRESSION_NUMBER_KIND.one()
             ),
             SpreadsheetErrorKind.withValue(1)
-                .toError()
+                .spreadsheetError()
         );
     }
 
