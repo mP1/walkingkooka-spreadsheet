@@ -208,10 +208,19 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * and {@link #error()}.
      */
     public SpreadsheetFormula setText(final String text) {
-        return this.text().equals(text) ?
-            this :
-            checkText(text)
-                .isEmpty() ?
+        final SpreadsheetFormula formula;
+
+        if (this.text().equals(text)) {
+            formula = this;
+        } else {
+            InvalidTextLengthException.throwIfFail(
+                "text",
+                text,
+                0,
+                MAX_FORMULA_TEXT_LENGTH
+            );
+
+            formula = text.isEmpty() ?
                 EMPTY :
                 new SpreadsheetFormula(
                     text,
@@ -221,6 +230,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     NO_VALUE,
                     NO_ERROR
                 );
+        }
+
+        return formula;
     }
 
     /**
@@ -228,20 +240,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * which may be executed.
      */
     private final String text;
-
-    /**
-     * Verifies that the given text holding a formula is not an excessive length. The syntactical correctness is not validated.
-     */
-    private static String checkText(final String text) {
-        InvalidTextLengthException.throwIfFail(
-            "text",
-            text,
-            0, // min
-            MAX_FORMULA_TEXT_LENGTH
-        );
-
-        return text;
-    }
 
     public final static int MAX_FORMULA_TEXT_LENGTH = 8192;
 
@@ -755,7 +753,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     } catch (final JsonNodeException cause) {
                         throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY_STRING + " is not a string=" + child, node);
                     }
-                    checkText(text);
                     break;
                 case TOKEN_PROPERTY_STRING:
                     token = context.unmarshallWithType(child);
