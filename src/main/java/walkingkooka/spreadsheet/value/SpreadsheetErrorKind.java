@@ -166,9 +166,7 @@ public enum SpreadsheetErrorKind implements HasSpreadsheetError,
      * Returns true for {@link SpreadsheetErrorKind} that are valid when executing an {@link walkingkooka.tree.expression.Expression}.
      */
     public boolean isExpression() {
-        return PARSING != this &&
-            FORMATTING != this &&
-            VALIDATION != this;
+        return -1 != this.value;
     }
 
     // HasSpreadsheetError..............................................................................................
