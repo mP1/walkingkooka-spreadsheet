@@ -292,13 +292,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different, SpreadsheetFormula.NO_ERROR);
     }
 
-    private void textAndCheck(final SpreadsheetFormula formula) {
-        this.textAndCheck(
-            formula,
-            ""
-        );
-    }
-
     // SetToken.........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
