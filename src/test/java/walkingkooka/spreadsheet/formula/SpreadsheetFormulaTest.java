@@ -122,26 +122,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private final static String DIFFERENT_TEXT = "99+99";
     private final static ValueType DIFFERENT_VALUE_TYPE = ValueType.TIME;
 
-    // with.............................................................................................................
-
-    @Test
-    public void testWithNullExpressionFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> formula(null)
-        );
-    }
-
-    @Test
-    public void testWithNullMaxTextLengthFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> formula(
-                CharSequences.repeating(' ', 8193)
-                    .toString()
-            )
-        );
-    }
+    // CanBeEmpty.......................................................................................................
 
     @Test
     public void testNotEmpty() {
@@ -162,7 +143,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testWithEmpty() {
+    public void testEmpty() {
         final String text = "";
         final SpreadsheetFormula formula = formula(text);
         this.textAndCheck(
