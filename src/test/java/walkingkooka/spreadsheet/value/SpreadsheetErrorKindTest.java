@@ -45,6 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
+    HasSpreadsheetErrorKindTesting,
     HasValueTesting,
     ClassTesting<SpreadsheetErrorKind>,
     ThrowableTesting {
@@ -395,6 +396,18 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
                 error,
                 kind.spreadsheetError(),
                 () -> kind + ".toError not cached"
+            );
+        }
+    }
+
+    // HasSpreadsheetErrorKind..........................................................................................
+
+    @Test
+    public void testSpreadsheetErrorKind() {
+        for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            this.spreadsheetErrorKindAndCheck(
+                kind,
+                kind
             );
         }
     }
