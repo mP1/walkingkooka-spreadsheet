@@ -523,10 +523,13 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
 
             error = this;
 
-            // translate PARSING | FORMATTING | VALIDATION
+            // translate CURRENCY_EXCHANGE | PARSING | FORMATTING | VALIDATION
             if (false == kind.isExpression()) {
                 SpreadsheetErrorKind newKind = null;
                 switch (kind) {
+                    case CURRENCY_EXCHANGE:
+                        newKind = SpreadsheetErrorKind.ERROR;
+                        break;
                     case PARSING:
                         newKind = SpreadsheetErrorKind.ERROR;
                         break;
@@ -539,6 +542,7 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
                     default:
                         NeverError.unhandledEnum(
                             kind,
+                            SpreadsheetErrorKind.CURRENCY_EXCHANGE,
                             SpreadsheetErrorKind.PARSING,
                             SpreadsheetErrorKind.FORMATTING,
                             SpreadsheetErrorKind.VALIDATION

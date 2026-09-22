@@ -114,6 +114,12 @@ public enum SpreadsheetErrorKind implements HasSpreadsheetError,
     // NON EXPRESSION SpreadsheetErrorKind..............................................................................
 
     /**
+     * This error will be used report {@link SpreadsheetError} related to {@link walkingkooka.currency.CurrencyExchangeRater}
+     * operations
+     */
+    CURRENCY_EXCHANGE("#CURRENCY_EXCHANGE!"),
+
+    /**
      * This error will be used to trap exceptions during parsing on the {@link SpreadsheetFormula#text()} into a value or {@link walkingkooka.tree.expression.Expression}.
      */
     PARSING("#PARSING"),
