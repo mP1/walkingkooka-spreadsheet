@@ -116,19 +116,19 @@ public enum SpreadsheetErrorKind implements HasSpreadsheetError,
     /**
      * This error will be used to trap exceptions during parsing on the {@link SpreadsheetFormula#text()} into a value or {@link walkingkooka.tree.expression.Expression}.
      */
-    PARSING("#PARSING", -1),
+    PARSING("#PARSING"),
 
     /**
      * This error will be used to trap exceptions during {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter)} formatting.
      */
-    FORMATTING("#FORMATTING", -1),
+    FORMATTING("#FORMATTING"),
 
     /**
      * Used to mark a {@link SpreadsheetError} as an error only holding {@link walkingkooka.validation.ValidationPromptValue}
      * and must not be returned by {@link SpreadsheetFormula#errorOrValue()}.
      * Errors of this kind should never be visible or available to Expressions.
      */
-    VALIDATION("#VALIDATOR!", -1);
+    VALIDATION("#VALIDATOR!");
 
     /**
      * A prefix character that precedes all {@link SpreadsheetErrorKind}.
@@ -155,6 +155,13 @@ public enum SpreadsheetErrorKind implements HasSpreadsheetError,
     private final static List<SpreadsheetErrorKind> EXPRESSION = Arrays.stream(values())
         .filter(SpreadsheetErrorKind::isExpression)
         .collect(ImmutableList.collector());
+
+    SpreadsheetErrorKind(final String text) {
+        this(
+            text,
+            -1
+        );
+    }
 
     SpreadsheetErrorKind(final String text,
                          final int value) {
