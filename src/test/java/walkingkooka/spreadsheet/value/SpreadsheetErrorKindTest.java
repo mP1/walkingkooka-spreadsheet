@@ -534,6 +534,8 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     public void testParseEachValue() {
         for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
             switch (kind) {
+                case CURRENCY_EXCHANGE:
+                    break;
                 case FORMATTING:
                     break;
                 case NAME_STRING:
