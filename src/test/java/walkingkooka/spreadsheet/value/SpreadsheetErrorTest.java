@@ -61,6 +61,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     ClassTesting2<SpreadsheetError>,
     ComparableTesting2<SpreadsheetError>,
     JsonNodeMarshallerTesting<SpreadsheetError>,
+    HasSpreadsheetErrorTesting,
     HasTextTesting,
     HasConvertErrorTesting,
     HasValidationPromptValueTesting,
@@ -1470,6 +1471,22 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         this.toStringAndCheck(
             this.createObject(),
             KIND + " \"" + MESSAGE + "\" " + VALUE.get()
+        );
+    }
+
+    // HasSpreadsheetError..............................................................................................
+
+    @Test
+    public void testHasSpreadsheetError() {
+        final SpreadsheetError spreadsheetError = SpreadsheetError.with(
+            SpreadsheetErrorKind.VALUE,
+            "Hello",
+            VALUE
+        );
+
+        this.spreadsheetErrorAndCheck(
+            spreadsheetError,
+            spreadsheetError
         );
     }
 
