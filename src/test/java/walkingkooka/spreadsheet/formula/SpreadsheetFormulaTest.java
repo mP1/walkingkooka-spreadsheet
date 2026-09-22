@@ -336,6 +336,31 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
+    @Test
+    public void testSetTokenDifferentAfterSetValueType() {
+        final SpreadsheetFormula formula = this.createObject()
+            .setValueType(this.valueType());
+
+        final String differentText = "different!";
+        final Optional<SpreadsheetFormulaParserToken> differentToken = this.token(differentText);
+        final SpreadsheetFormula different = formula.setToken(differentToken);
+        assertNotSame(
+            formula,
+            different
+        );
+
+        this.textAndCheck(different, differentText);
+        this.tokenAndCheck(different, differentToken);
+
+        this.expressionAndCheck(different); // should also clear expression, value, error
+        this.valueTypeAndCheck(
+            different,
+            this.valueType()
+        );
+        this.valueAndCheck(different);
+        this.errorAndCheck(different);
+    }
+
     private Optional<SpreadsheetFormulaParserToken> token() {
         return this.token(EXPRESSION);
     }
@@ -476,6 +501,36 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
+    @Test
+    public void testSetExpressionDifferentAfterSetValueType() {
+        final SpreadsheetFormula formula = this.createObject()
+            .setToken(this.token())
+            .setExpression(this.expression())
+            .setValueType(this.valueType());
+
+        final Optional<Expression> differentExpression = Optional.of(
+            Expression.value("different!")
+        );
+        final SpreadsheetFormula different = formula.setExpression(differentExpression);
+        assertNotSame(formula, different);
+
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(
+            different,
+            this.token()
+        );
+        this.expressionAndCheck(
+            different,
+            differentExpression
+        );
+        this.valueTypeAndCheck(
+            different,
+            this.valueType()
+        );
+        this.valueAndCheck(different);
+        this.errorAndCheck(different);
+    }
+
     private Optional<Expression> expression() {
         return this.expression(EXPRESSION);
     }
@@ -536,8 +591,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             different
         );
 
-        this.textAndCheck(different);
-        this.tokenAndCheck(different);
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different, this.token());
         this.expressionAndCheck(different);
         this.valueTypeAndCheck(
             different,
@@ -558,7 +613,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             different
         );
 
-        this.textAndCheck(different);
+        this.textAndCheck(different, TEXT);
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.valueTypeAndCheck(different, DIFFERENT_VALUE_TYPE);
@@ -577,8 +632,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(formula, different);
 
-        this.textAndCheck(different);
-        this.tokenAndCheck(different);
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different, this.token());
         this.expressionAndCheck(
             different,
             formula.expression()
@@ -3089,7 +3144,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 ).setValue(
                     Optional.of(123)
                 ),
-            "valueType=text value=123"
+            "\"1+2\" valueType=text value=123"
         );
     }
 
@@ -3102,7 +3157,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 ).setValue(
                     Optional.of("Hello")
                 ),
-            "valueType=text value=\"Hello\""
+            "\"1+2\" valueType=text value=\"Hello\""
         );
     }
 

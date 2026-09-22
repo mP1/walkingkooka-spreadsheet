@@ -276,11 +276,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             final String text1 = Objects.requireNonNull(token, "token")
                 .isPresent() ? null :
                 this.text();
-            return new SpreadsheetFormula(
+            return with(
                 text1,
                 token,
                 NO_EXPRESSION,
-                NO_VALUE_TYPE,
+                this.valueType,
                 NO_VALUE,
                 NO_ERROR
             );
@@ -305,11 +305,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     public SpreadsheetFormula setExpression(final Optional<Expression> expression) {
         return this.expression.equals(expression) ?
             this :
-            new SpreadsheetFormula(
+            with(
                 this.text,
                 this.token,
                 Objects.requireNonNull(expression, "expression"),
-                NO_VALUE_TYPE,
+                this.valueType,
                 NO_VALUE,
                 NO_ERROR
             );
@@ -337,9 +337,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.valueType.equals(valueType) ?
             this :
             new SpreadsheetFormula(
-                NO_TEXT,
-                NO_TOKEN,
-                NO_EXPRESSION,
+                this.text,
+                this.token,
+                this.expression,
                 Objects.requireNonNull(valueType, "valueType"),
                 NO_VALUE,
                 NO_ERROR
@@ -368,7 +368,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     public SpreadsheetFormula setValue(final Optional<Object> value) {
         return this.value.equals(value) ?
             this :
-            new SpreadsheetFormula(
+            with(
                 this.text,
                 this.token,
                 this.expression,
