@@ -62,6 +62,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     ComparableTesting2<SpreadsheetError>,
     JsonNodeMarshallerTesting<SpreadsheetError>,
     HasSpreadsheetErrorTesting,
+    HasSpreadsheetErrorKindTesting,
     HasTextTesting,
     HasConvertErrorTesting,
     HasValidationPromptValueTesting,
@@ -704,10 +705,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
             "kind"
         );
 
-        this.checkEquals(
-            kind,
-            error.spreadsheetErrorKind(),
-            "spreadsheetErrorKind"
+        this.spreadsheetErrorKindAndCheck(
+            error,
+            kind
         );
     }
 
