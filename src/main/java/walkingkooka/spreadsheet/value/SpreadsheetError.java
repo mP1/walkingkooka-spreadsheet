@@ -524,7 +524,7 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
             error = this;
 
             // translate CURRENCY_EXCHANGE | PARSING | FORMATTING | VALIDATION
-            if (false == kind.isExpression()) {
+            if (kind.isPlugin()) {
                 SpreadsheetErrorKind newKind = null;
                 switch (kind) {
                     case CURRENCY_EXCHANGE:
