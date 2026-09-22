@@ -119,7 +119,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
 
     @Test
     public void testError() {
-        final SpreadsheetError error = SpreadsheetErrorKind.NAME.toError();
+        final SpreadsheetError error = SpreadsheetErrorKind.NAME.spreadsheetError();
 
         this.toExpressionAndCheck(
             SpreadsheetFormulaParserToken.error(
@@ -132,7 +132,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
 
     @Test
     public void testErrorAndToValue() {
-        final SpreadsheetError error = SpreadsheetErrorKind.NAME.toError();
+        final SpreadsheetError error = SpreadsheetErrorKind.NAME.spreadsheetError();
         final Optional<Expression> maybeExpression = toExpression(
             SpreadsheetFormulaParserToken.error(
                 error,

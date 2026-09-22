@@ -25,7 +25,7 @@ public final class HasSpreadsheetErrorTestingTest implements HasSpreadsheetError
 
     @Test
     public void testSpreadsheetErrorAndCheck() {
-        final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.ERROR.toError();
+        final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.ERROR.spreadsheetError();
 
         this.spreadsheetErrorAndCheck(
             spreadsheetError,

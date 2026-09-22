@@ -81,7 +81,7 @@ public final class ErrorSpreadsheetFormulaParserTokenTest extends NonSymbolSprea
         this.toExpressionAndCheck(
             this.createToken(),
             Expression.value(
-                SpreadsheetErrorKind.REF.toError()
+                SpreadsheetErrorKind.REF.spreadsheetError()
             )
         );
     }
@@ -93,7 +93,7 @@ public final class ErrorSpreadsheetFormulaParserTokenTest extends NonSymbolSprea
 
     @Override
     SpreadsheetError value() {
-        return SpreadsheetErrorKind.REF.toError();
+        return SpreadsheetErrorKind.REF.spreadsheetError();
     }
 
     @Override
@@ -103,7 +103,7 @@ public final class ErrorSpreadsheetFormulaParserTokenTest extends NonSymbolSprea
 
     @Override
     public ErrorSpreadsheetFormulaParserToken createDifferentToken() {
-        final SpreadsheetError error = SpreadsheetErrorKind.DIV0.toError();
+        final SpreadsheetError error = SpreadsheetErrorKind.DIV0.spreadsheetError();
 
         return ErrorSpreadsheetFormulaParserToken.with(
             error,

@@ -79,7 +79,7 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
         return SpreadsheetErrorKind.withValue(
             ERROR_VALUE.getOrFail(parameters, 0)
                 .intValueExact()
-        ).toError();
+        ).spreadsheetError();
     }
 
     @Override

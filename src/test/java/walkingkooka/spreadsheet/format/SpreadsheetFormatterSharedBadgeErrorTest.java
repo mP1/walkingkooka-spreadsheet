@@ -52,7 +52,7 @@ public final class SpreadsheetFormatterSharedBadgeErrorTest extends SpreadsheetF
     @Test
     public void testFormatSpreadsheetErrorWithDiv0() {
         this.formatAndCheck(
-            SpreadsheetErrorKind.DIV0.toError(),
+            SpreadsheetErrorKind.DIV0.spreadsheetError(),
             TextNode.badge("#DIV/0!")
                 .appendChild(
                     TextNode.text("#DIV/0!#DIV/0!")
@@ -63,7 +63,7 @@ public final class SpreadsheetFormatterSharedBadgeErrorTest extends SpreadsheetF
     @Test
     public void testFormatSpreadsheetErrorWithError() {
         this.formatAndCheck(
-            SpreadsheetErrorKind.ERROR.toError(),
+            SpreadsheetErrorKind.ERROR.spreadsheetError(),
             TextNode.badge("#ERROR")
                 .appendChild(
                     TextNode.text("#ERROR#ERROR")

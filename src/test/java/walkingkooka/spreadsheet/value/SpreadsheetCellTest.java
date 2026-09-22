@@ -230,7 +230,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetFormula.EMPTY.setText("=1+2")
                 .setValue(
                     Optional.of(
-                        SpreadsheetErrorKind.VALUE.toError()
+                        SpreadsheetErrorKind.VALUE.spreadsheetError()
                             .setValue(value)
                     )
                 )
@@ -425,7 +425,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetFormula.EMPTY
                 .setValue(
                     Optional.of(
-                        SpreadsheetErrorKind.VALUE.toError()
+                        SpreadsheetErrorKind.VALUE.spreadsheetError()
                             .setValue(value)
                     )
                 )
@@ -1493,7 +1493,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         Optional.of(111)
                     ).setError(
                         Optional.of(
-                            SpreadsheetErrorKind.ERROR.toError()
+                            SpreadsheetErrorKind.ERROR.spreadsheetError()
                                 .setValue(
                                     Optional.of(choices)
                                 )

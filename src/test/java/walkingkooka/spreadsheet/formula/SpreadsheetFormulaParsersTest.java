@@ -34,7 +34,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
@@ -1397,7 +1396,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         this.errorParserParseAndCheck(
             kind.text(),
             SpreadsheetFormulaParserToken.error(
-                kind.toError(),
+                kind.spreadsheetError(),
                 kind.text()
             )
         );
@@ -1568,7 +1567,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         this.valueOrExpressionParserParseAndCheck(
             text,
             SpreadsheetFormulaParserToken.error(
-                SpreadsheetErrorKind.DIV0.toError(),
+                SpreadsheetErrorKind.DIV0.spreadsheetError(),
                 text
             ),
             text
@@ -1582,7 +1581,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         this.valueOrExpressionParserParseAndCheck(
             text,
             SpreadsheetFormulaParserToken.error(
-                SpreadsheetErrorKind.REF.toError(),
+                SpreadsheetErrorKind.REF.spreadsheetError(),
                 text
             ),
             text
@@ -1597,7 +1596,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             text,
             addition(
                 SpreadsheetFormulaParserToken.error(
-                    SpreadsheetErrorKind.REF.toError(),
+                    SpreadsheetErrorKind.REF.spreadsheetError(),
                     "#REF!"
                 ),
                 plusSymbol(),

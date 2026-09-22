@@ -27,8 +27,8 @@ public final class SpreadsheetComparatorSharedErrorTest extends SpreadsheetCompa
     @Test
     public void testCompareLess() {
         this.compareAndCheckLess(
-            SpreadsheetErrorKind.DIV0.toError(),
-            SpreadsheetErrorKind.ERROR.toError()
+            SpreadsheetErrorKind.DIV0.spreadsheetError(),
+            SpreadsheetErrorKind.ERROR.spreadsheetError()
         );
     }
 
@@ -36,14 +36,14 @@ public final class SpreadsheetComparatorSharedErrorTest extends SpreadsheetCompa
     public void testCompareMoreWithNullLeft() {
         this.compareAndCheckMore(
             null,
-            SpreadsheetErrorKind.DIV0.toError()
+            SpreadsheetErrorKind.DIV0.spreadsheetError()
         );
     }
 
     @Test
     public void testCompareLessWithNullRight() {
         this.compareAndCheckLess(
-            SpreadsheetErrorKind.DIV0.toError(),
+            SpreadsheetErrorKind.DIV0.spreadsheetError(),
             null
         );
     }

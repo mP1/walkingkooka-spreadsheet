@@ -430,7 +430,7 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
             Expression.value(
                 token.value()
                     .kind()
-                    .toError()
+                    .spreadsheetError()
             ),
             token
         );

@@ -369,12 +369,12 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         );
     }
 
-    // toError............................................................................................................
+    // HasSpreadsheetError..............................................................................................
 
     @Test
-    public void testToError() {
+    public void testSpreadsheetError() {
         for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
-            final SpreadsheetError error = kind.toError();
+            final SpreadsheetError error = kind.spreadsheetError();
 
             this.checkEquals(
                 SpreadsheetError.with(
@@ -388,12 +388,12 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     }
 
     @Test
-    public void testToErrorCached() {
+    public void testSpreadsheetErrorCached() {
         for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
-            final SpreadsheetError error = kind.toError();
+            final SpreadsheetError error = kind.spreadsheetError();
             assertSame(
                 error,
-                kind.toError(),
+                kind.spreadsheetError(),
                 () -> kind + ".toError not cached"
             );
         }
