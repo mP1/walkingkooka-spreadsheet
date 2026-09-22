@@ -28,6 +28,7 @@ import walkingkooka.color.HsvColor;
 import walkingkooka.color.HsvColorComponent;
 import walkingkooka.color.RgbColor;
 import walkingkooka.color.RgbColorComponent;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
@@ -165,6 +166,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String CSV_LIST_STRING = ValueType.CSV_LIST_STRING;
 
     public static final ValueType CSV_LIST = ValueType.with(CSV_LIST_STRING);
+
+    public static final String CURRENCY_STRING = "currency";
+
+    public static final ValueType CURRENCY = ValueType.with(CURRENCY_STRING);
 
     public final static String DATA_URL_STRING = ValueType.DATA_URL_STRING;
 
@@ -447,6 +452,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
      */
     public static final Set<ValueType> ALL = Sets.of(
         BOOLEAN,
+        CURRENCY,
         DATE,
         DATE_TIME,
         EMAIL,
@@ -462,6 +468,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
      */
     public final static Set<ValueType> ALL_CELL_VALUE_TYPES = Sets.of(
         BOOLEAN,
+        CURRENCY,
         DATE,
         DATE_TIME,
         EMAIL,
@@ -537,6 +544,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case CSV_LIST_STRING:
                 javaType = CsvStringList.class;
+                break;
+            case CURRENCY_STRING:
+                javaType = CurrencyValue.class;
                 break;
             case DATE_STRING:
                 javaType = LocalDate.class;
@@ -796,6 +806,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case "walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference":
                 valueType = COLUMN_RANGE;
                 break;
+            case "walkingkooka.currency.CurrencyValue":
+                valueType = CURRENCY;
+                break;
             case "walkingkooka.spreadsheet.reference.SpreadsheetLabelName":
                 valueType = LABEL;
                 break;
@@ -857,6 +870,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case COLUMN_RANGE_STRING:
                 valueType = COLUMN_RANGE;
+                break;
+            case CURRENCY_STRING:
+                valueType = CURRENCY;
                 break;
             case DATE_STRING:
                 valueType = DATE;

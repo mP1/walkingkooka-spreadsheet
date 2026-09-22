@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -433,6 +434,12 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     public void testAcceptColumnRangeReference2() {
         new SpreadsheetValueTypeVisitor() {
         }.accept(SpreadsheetColumnRangeReference.class);
+    }
+
+    @Test
+    public void testAcceptCurrency() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(CurrencyValue.class);
     }
 
     @Test

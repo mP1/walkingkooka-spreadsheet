@@ -78,6 +78,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference":
                     this.visitColumnRangeReference();
                     break;
+                case "walkingkooka.currency.CurrencyValue":
+                    this.visitCurrency();
+                    break;
                 case "java.lang.Double":
                     this.visitDouble();
                     break;
@@ -202,6 +205,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitColumnRangeReference() {
+
+    }
+
+    protected void visitCurrency() {
 
     }
 
