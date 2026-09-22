@@ -61,6 +61,7 @@ import java.util.Optional;
  */
 public final class SpreadsheetError implements Comparable<SpreadsheetError>,
     HasConvertError,
+    HasSpreadsheetError,
     HasSpreadsheetErrorKind,
     HasText,
     HasTerminalErrorText,
@@ -467,6 +468,13 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
         return SpreadsheetForms.error(cellOrLabel)
             .setMessage(this.message)
             .setValue(this.value);
+    }
+
+    // HasSpreadsheetError.............................................................................................
+
+    @Override
+    public SpreadsheetError spreadsheetError() {
+        return this;
     }
 
     // HasSpreadsheetErrorKind .........................................................................................
