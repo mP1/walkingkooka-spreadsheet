@@ -229,7 +229,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetTextDifferentEmpty() {
-        final SpreadsheetFormula formula = this.createObject();
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText(TEXT);
 
         final String differentText = "different";
         final SpreadsheetFormula different = formula.setText(differentText);
@@ -272,6 +272,24 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
+    }
+
+    @Test
+    public void testSetTextAfterSetValueType() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText(TEXT)
+            .setValueType(this.valueType());
+        final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
+        assertNotSame(
+            formula,
+            different
+        );
+
+        this.textAndCheck(different, DIFFERENT_TEXT);
+        this.tokenAndCheck(different, SpreadsheetFormula.NO_TOKEN);
+        this.expressionAndCheck(different, SpreadsheetFormula.NO_EXPRESSION);
+        this.valueTypeAndCheck(different, this.valueType()); // valueType kept
+        this.valueAndCheck(different, SpreadsheetFormula.NO_VALUE);
+        this.errorAndCheck(different, SpreadsheetFormula.NO_ERROR);
     }
 
     private void textAndCheck(final SpreadsheetFormula formula) {

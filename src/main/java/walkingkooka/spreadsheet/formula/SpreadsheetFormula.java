@@ -175,6 +175,25 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return formula;
     }
 
+    private static SpreadsheetFormula with(final String text,
+                                           final Optional<SpreadsheetFormulaParserToken> token,
+                                           final Optional<Expression> expression,
+                                           final Optional<ValueType> valueType,
+                                           final Optional<Object> value,
+                                           final Optional<SpreadsheetError> error) {
+        final SpreadsheetFormula spreadsheetFormula = new SpreadsheetFormula(
+            text,
+            token,
+            expression,
+            valueType,
+            value,
+            error
+        );
+        return spreadsheetFormula.isEmpty() ?
+            EMPTY :
+            spreadsheetFormula;
+    }
+
     private SpreadsheetFormula(final String text,
                                final Optional<SpreadsheetFormulaParserToken> token,
                                final Optional<Expression> expression,
@@ -220,16 +239,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 MAX_FORMULA_TEXT_LENGTH
             );
 
-            formula = text.isEmpty() ?
-                EMPTY :
-                new SpreadsheetFormula(
-                    text,
-                    NO_TOKEN,
-                    NO_EXPRESSION,
-                    NO_VALUE_TYPE,
-                    NO_VALUE,
-                    NO_ERROR
-                );
+            formula = with(
+                text,
+                NO_TOKEN,
+                NO_EXPRESSION,
+                this.valueType,
+                NO_VALUE,
+                NO_ERROR
+            );
         }
 
         return formula;
