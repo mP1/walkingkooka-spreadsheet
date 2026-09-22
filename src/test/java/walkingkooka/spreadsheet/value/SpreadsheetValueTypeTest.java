@@ -31,6 +31,8 @@ import walkingkooka.color.HsvColor;
 import walkingkooka.color.HsvColorComponent;
 import walkingkooka.color.RgbColor;
 import walkingkooka.color.RgbColorComponent;
+import walkingkooka.currency.CurrencyValue;
+import walkingkooka.currency.HasCurrencyCodeTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
@@ -103,7 +105,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType> {
+public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType>,
+    HasCurrencyCodeTesting {
 
     static {
         SpreadsheetStartup.init(); // required so all json marshaller/unmarshallers are registered.
@@ -114,6 +117,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.checkEquals(
             Lists.of(
                 SpreadsheetValueType.BOOLEAN,
+                SpreadsheetValueType.CURRENCY,
                 SpreadsheetValueType.DATE,
                 SpreadsheetValueType.DATE_TIME,
                 SpreadsheetValueType.EMAIL,
@@ -176,6 +180,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         assertSame(
             SpreadsheetValueType.ALPHA_RGB_COLOR,
             SpreadsheetValueType.with("color(rgb-alpha)")
+        );
+    }
+
+    @Test
+    public void testWithCurrency() {
+        assertSame(
+            SpreadsheetValueType.CURRENCY,
+            SpreadsheetValueType.with("currency")
         );
     }
 
@@ -282,6 +294,17 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.fromClassNameAndCheck(
             SpreadsheetSelection.parseColumnRange("A:B"),
             SpreadsheetValueType.COLUMN_RANGE
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithCurrencyValue() {
+        this.fromClassNameAndCheck(
+            CurrencyValue.with(
+                123,
+                CURRENCY_CODE
+            ),
+            SpreadsheetValueType.CURRENCY
         );
     }
 
