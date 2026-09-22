@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.formula;
 import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.HasValue;
+import walkingkooka.InvalidTextLengthException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
@@ -210,14 +211,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.text().equals(text) ?
             this :
             checkText(text)
-                .isEmpty() ? EMPTY : new SpreadsheetFormula(
-                text,
-                NO_TOKEN,
-                NO_EXPRESSION,
-                NO_VALUE_TYPE,
-                NO_VALUE,
-                NO_ERROR
-            );
+                .isEmpty() ?
+                EMPTY :
+                new SpreadsheetFormula(
+                    text,
+                    NO_TOKEN,
+                    NO_EXPRESSION,
+                    NO_VALUE_TYPE,
+                    NO_VALUE,
+                    NO_ERROR
+                );
     }
 
     /**
@@ -230,12 +233,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * Verifies that the given text holding a formula is not an excessive length. The syntactical correctness is not validated.
      */
     private static String checkText(final String text) {
-        Objects.requireNonNull(text, "text");
-
-        final int length = text.length();
-        if (length >= MAX_FORMULA_TEXT_LENGTH) {
-            throw new IllegalArgumentException("Invalid text length " + length + ">= " + MAX_FORMULA_TEXT_LENGTH);
-        }
+        InvalidTextLengthException.throwIfFail(
+            "text",
+            text,
+            0, // min
+            MAX_FORMULA_TEXT_LENGTH
+        );
 
         return text;
     }

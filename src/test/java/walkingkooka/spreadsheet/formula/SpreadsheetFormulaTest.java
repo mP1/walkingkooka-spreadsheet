@@ -19,7 +19,9 @@ package walkingkooka.spreadsheet.formula;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.CanBeEmptyTesting;
+import walkingkooka.HasShortMessageTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.InvalidTextLengthException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContext;
@@ -34,6 +36,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
@@ -99,12 +102,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasContentTypeTesting,
+    HasShortMessageTesting,
     HasValidationPromptValueTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
     JsonNodeMarshallerTesting<SpreadsheetFormula>,
     PatchableTesting<SpreadsheetFormula>,
     ToStringTesting<SpreadsheetFormula>,
     HasTextTesting,
+    ThrowableTesting,
     TreePrintableTesting {
 
     private final static String TEXT = "1+2";
@@ -132,7 +137,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertThrows(
             IllegalArgumentException.class,
             () -> formula(
-                CharSequences.repeating(' ', 8192)
+                CharSequences.repeating(' ', 8193)
                     .toString()
             )
         );
@@ -183,13 +188,18 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetTextMaxTextLengthFails() {
-        assertThrows(
-            IllegalArgumentException.class,
+        final InvalidTextLengthException thrown = assertThrows(
+            InvalidTextLengthException.class,
             () -> this.createObject()
                 .setText(
-                    CharSequences.repeating(' ', 8192)
+                    CharSequences.repeating(' ', 8193)
                         .toString()
                 )
+        );
+
+        this.getShortMessageAndCheck(
+            thrown,
+            "Length 8193 not between 0..8192"
         );
     }
 
