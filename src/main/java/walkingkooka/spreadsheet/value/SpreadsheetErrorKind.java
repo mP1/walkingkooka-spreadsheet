@@ -176,6 +176,13 @@ public enum SpreadsheetErrorKind implements HasSpreadsheetError,
         return -1 != this.value;
     }
 
+    /**
+     * Returns true if the {@link SpreadsheetError} was caused by a plugin.
+     */
+    public boolean isPlugin() {
+        return -1 == this.value;
+    }
+
     // HasSpreadsheetError..............................................................................................
 
     /**

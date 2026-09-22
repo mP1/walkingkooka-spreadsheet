@@ -513,6 +513,11 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
             kind.isExpression(),
             kind::toString
         );
+
+        this.checkEquals(
+            kind.isExpression(),
+            false == kind.isPlugin()
+        );
     }
 
     // ParseString......................................................................................................
