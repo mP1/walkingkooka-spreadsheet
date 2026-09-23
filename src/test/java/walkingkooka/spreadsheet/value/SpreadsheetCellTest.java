@@ -490,7 +490,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetCurrencyDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final Optional<Currency> differentCurrency = this.currency(Locale.FRANCE);
+        final Optional<Currency> differentCurrency = this.currency(DIFFERENT_LOCALE);
         final SpreadsheetCell different = cell.setCurrency(differentCurrency);
         assertNotSame(cell, different);
 
@@ -628,7 +628,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetDateTimeSymbolsDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final Optional<DateTimeSymbols> differentDateTimeSymbols = this.dateTimeSymbols(Locale.FRANCE);
+        final Optional<DateTimeSymbols> differentDateTimeSymbols = this.dateTimeSymbols(DIFFERENT_LOCALE);
         final SpreadsheetCell different = cell.setDateTimeSymbols(differentDateTimeSymbols);
         assertNotSame(cell, different);
 
@@ -694,7 +694,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetDecimalNumberSymbolsDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final Optional<DecimalNumberSymbols> differentDecimalNumberSymbols = this.decimalNumberSymbols(Locale.FRANCE);
+        final Optional<DecimalNumberSymbols> differentDecimalNumberSymbols = this.decimalNumberSymbols(DIFFERENT_LOCALE);
         final SpreadsheetCell different = cell.setDecimalNumberSymbols(differentDecimalNumberSymbols);
         assertNotSame(cell, different);
 
@@ -1427,51 +1427,40 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTextWhenAllPropertiesSet() {
         this.textAndCheck(
             SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("123")
-                    .setValue(
-                        Optional.of(123)
+                    SpreadsheetFormula.EMPTY.setText("123")
+                        .setValue(
+                            Optional.of(123)
+                        )
+                ).setCurrency(
+                    this.currency(LOCALE)
+                ).setCurrencyExchangeRater(
+                    this.currencyExchangeRater("hello-currency-exchange-rater")
+                ).setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
+                .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
+                .setFormatter(
+                    Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter"))
+                ).setLocale(
+                    Optional.of(LOCALE)
+                ).setParser(
+                    Optional.of(SpreadsheetParserSelector.parse("hello-parser"))
+                ).setStyle(
+                    TextStyle.EMPTY.set(
+                        TextStylePropertyName.TEXT_ALIGN,
+                        TextAlign.CENTER
                     )
-            ).setCurrency(
-                this.currency(LOCALE)
-            ).setCurrencyExchangeRater(
-                this.currencyExchangeRater("hello-currency-exchange-rater")
-            ).setDateTimeSymbols(
-                Optional.of(
-                    DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.ENGLISH)
+                ).setValidator(
+                    Optional.of(ValidatorSelector.parse("hello-validator"))
+                ).setFormattedValue(
+                    Optional.of(
+                        SpreadsheetText.with("Formatted-value-text")
+                            .setColor(
+                                Optional.of(
+                                    Color.parse("#123456")
+                                )
+                            ).textNode()
                     )
-                )
-            ).setDecimalNumberSymbols(
-                Optional.of(
-                    DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(Locale.ENGLISH)
-                    )
-                )
-            ).setFormatter(
-                Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter"))
-            ).setLocale(
-                Optional.of(LOCALE)
-            ).setParser(
-                Optional.of(SpreadsheetParserSelector.parse("hello-parser"))
-            ).setStyle(
-                TextStyle.EMPTY.set(
-                    TextStylePropertyName.TEXT_ALIGN,
-                    TextAlign.CENTER
-                )
-            ).setValidator(
-                Optional.of(ValidatorSelector.parse("hello-validator"))
-            ).setFormattedValue(
-                Optional.of(
-                    SpreadsheetText.with("Formatted-value-text")
-                        .setColor(
-                            Optional.of(
-                                Color.parse("#123456")
-                            )
-                        ).textNode()
-                )
-            ),
-            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",AUD,hello-currency-exchange-rater,\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",hello-formatter,\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",hello-parser,text-align: CENTER;,hello-validator,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\""
+                ),
+            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",AUD,hello-currency-exchange-rater,\"\"\"am,pm\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\"\",\"-,+,0,$,.,e,\"\",\"\",∞,.,NaN,%,‰\",hello-formatter,\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",hello-parser,text-align: CENTER;,hello-validator,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\""
         );
     }
 
@@ -1657,7 +1646,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.checkNotEquals(
             this.createObject()
                 .setCurrency(
-                    this.currency(Locale.FRANCE)
+                    this.currency(DIFFERENT_LOCALE)
                 )
         );
     }
@@ -1677,7 +1666,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.checkNotEquals(
             this.createObject()
                 .setDateTimeSymbols(
-                    this.dateTimeSymbols(Locale.FRANCE)
+                    this.dateTimeSymbols(DIFFERENT_LOCALE)
                 )
         );
     }
@@ -1687,7 +1676,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.checkNotEquals(
             this.createObject()
                 .setDecimalNumberSymbols(
-                    this.decimalNumberSymbols(Locale.FRANCE)
+                    this.decimalNumberSymbols(DIFFERENT_LOCALE)
                 )
         );
     }
@@ -1697,7 +1686,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.checkNotEquals(
             this.createObject()
                 .setLocale(
-                    Optional.of(Locale.FRANCE)
+                    Optional.of(DIFFERENT_LOCALE)
                 )
         );
     }
@@ -3939,7 +3928,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             ).setFormatter(
                 Optional.of(SpreadsheetFormatterSelector.parse("formatter111"))
             ).setLocale(
-                Optional.of(Locale.FRANCE)
+                Optional.of(DIFFERENT_LOCALE)
             ).setParser(
                 Optional.of(SpreadsheetParserSelector.parse("parser111"))
             ).setStyle(
@@ -3947,7 +3936,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             ).setValidator(
                 Optional.of(ValidatorSelector.parse("validator111"))
             ),
-            "A1 \"=1+2\" formatter=\"formatter111\" locale=\"fr_FR\" parser=\"parser111\" style={color=red} validator=\"validator111\""
+            "A1 \"=1+2\" formatter=\"formatter111\" locale=\"en_NZ\" parser=\"parser111\" style={color=red} validator=\"validator111\""
         );
     }
 
