@@ -4191,10 +4191,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1.setFormula(
-                    SpreadsheetFormula.EMPTY.setValue(value)
+                    a1.formula()
+                        .setValue(value)
                 ),
                 a2.setFormula(
-                    SpreadsheetFormula.EMPTY.setValue(value)
+                    a2.formula()
+                        .setValue(value)
                 ),
                 A3.setFormula(
                     SpreadsheetFormula.EMPTY.setValue(value)
