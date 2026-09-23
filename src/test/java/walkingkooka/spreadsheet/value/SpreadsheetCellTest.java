@@ -1388,7 +1388,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTextWhenReferenceAndEmptyFormulaText() {
         this.textAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-            "A1,,,,,,,,,,,,"
+            "A1,,,,,,,,,,,,,"
         );
     }
 
@@ -1396,7 +1396,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTextWhenReferenceAndNonEmptyFormulaText() {
         this.textAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2+magic(\"hello\")")),
-            "A1,\"=1+2+magic(\"\"hello\"\")\",,,,,,,,,,,"
+            "A1,\"=1+2+magic(\"\"hello\"\")\",,,,,,,,,,,,"
         );
     }
 
@@ -1419,7 +1419,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         ).textNode()
                 )
             ),
-            "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\","
+            "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\""
         );
     }
 
@@ -1431,19 +1431,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     .setValue(
                         Optional.of(123)
                     )
-            ).setFormatter(
-                Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter-1"))
-            ).setParser(
-                Optional.of(SpreadsheetParserSelector.parse("hello-parser-2"))
-            ).setValidator(
-                Optional.of(ValidatorSelector.parse("hello-validator-3"))
-            ).setStyle(
-                TextStyle.EMPTY.set(
-                    TextStylePropertyName.TEXT_ALIGN,
-                    TextAlign.CENTER
-                )
             ).setCurrency(
                 this.currency(LOCALE)
+            ).setCurrencyExchangeRater(
+                this.currencyExchangeRater("hello-currency-exchange-rater")
             ).setDateTimeSymbols(
                 Optional.of(
                     DateTimeSymbols.fromDateFormatSymbols(
@@ -1457,8 +1448,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         new DecimalFormatSymbols(Locale.ENGLISH)
                     )
                 )
+            ).setFormatter(
+                Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter"))
             ).setLocale(
                 Optional.of(LOCALE)
+            ).setParser(
+                Optional.of(SpreadsheetParserSelector.parse("hello-parser"))
+            ).setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
+                )
+            ).setValidator(
+                Optional.of(ValidatorSelector.parse("hello-validator"))
             ).setFormattedValue(
                 Optional.of(
                     SpreadsheetText.with("Formatted-value-text")
@@ -1469,7 +1471,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         ).textNode()
                 )
             ),
-            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",AUD,\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",hello-formatter-1,hello-parser-2,text-align: CENTER;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",hello-validator-3"
+            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",AUD,hello-currency-exchange-rater,\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",hello-formatter,\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",hello-parser,text-align: CENTER;,hello-validator,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\""
         );
     }
 
@@ -1550,18 +1552,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         Optional.of(
                             LocalDate.of(1999, 12, 31)
                         )
+                    ).setValueType(
+                        Optional.of(ValueType.TEXT)
                     )
-            ).setFormatter(
-                Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter-1"))
-            ).setParser(
-                Optional.of(SpreadsheetParserSelector.parse("hello-parser-2"))
-            ).setValidator(
-                Optional.of(ValidatorSelector.parse("hello-validator-3"))
-            ).setStyle(
-                TextStyle.EMPTY.set(
-                    TextStylePropertyName.TEXT_ALIGN,
-                    TextAlign.CENTER
-                )
             ).setCurrency(
                 this.currency(LOCALE)
             ).setDateTimeSymbols(
@@ -1586,6 +1579,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             )
                         ).textNode()
                 )
+            ).setFormatter(
+                Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter-1"))
+            ).setParser(
+                Optional.of(SpreadsheetParserSelector.parse("hello-parser-2"))
+            ).setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
+                )
+            ).setValidator(
+                Optional.of(ValidatorSelector.parse("hello-validator-3"))
             )
         );
     }

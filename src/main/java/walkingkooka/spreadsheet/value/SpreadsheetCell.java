@@ -1048,14 +1048,15 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 toText(formula.valueType()),
                 toJsonText(formula.value()),
                 this.currency.map(Currency::toString).orElse(""),
+                toText(this.currencyExchangeRater),
                 toText(this.dateTimeSymbols),
                 toText(this.decimalNumberSymbols),
-                toJsonText(this.locale),
                 toText(this.formatter),
+                toJsonText(this.locale),
                 toText(this.parser),
                 this.style.text(),
-                toJsonText(this.formattedValue),
-                toText(this.validator)
+                toText(this.validator),
+                toJsonText(this.formattedValue)
             )
         ).text();
     }
@@ -1107,8 +1108,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         final CsvStringList list = CsvStringList.parse(csv);
 
         final int count = list.size();
-        if (13 != count) {
-            throw new IllegalArgumentException("Expected 13 tokens but got " + count);
+        if (14 != count) {
+            throw new IllegalArgumentException("Expected 14 tokens but got " + count);
         }
 
         SpreadsheetCell cell = SpreadsheetCell.with(
@@ -1137,48 +1138,53 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 list.get(4),
                 Currency::getInstance
             )
-        ).setDateTimeSymbols(
+        ).setCurrencyExchangeRater(
             parseCellComponent(
                 list.get(5),
+                CurrencyExchangeRaterSelector::parse
+            )
+        ).setDateTimeSymbols(
+            parseCellComponent(
+                list.get(6),
                 DateTimeSymbols::parse
             )
         ).setDecimalNumberSymbols(
             parseCellComponent(
-                list.get(6),
-                DecimalNumberSymbols::parse
-            )
-        ).setLocale(
-            parseCellComponent(
                 list.get(7),
-                Locale::forLanguageTag
+                DecimalNumberSymbols::parse
             )
         ).setFormatter(
             parseCellComponent(
                 list.get(8),
                 SpreadsheetFormatterSelector::parse
             )
-        ).setParser(
+        ).setLocale(
             parseCellComponent(
                 list.get(9),
+                Locale::forLanguageTag
+            )
+        ).setParser(
+            parseCellComponent(
+                list.get(10),
                 SpreadsheetParserSelector::parse
             )
         ).setStyle(
             TextStyle.parse(
-                list.get(10)
+                list.get(11)
             )
-        );
-
-        final Optional<TextNode> formattedValue = unmarshallCellComponentWithType(
-            list.get(11)
-        );
-
-        // must call setFormattedValue after setValidator because later clears former
-        return cell.setValidator(
+        ).setValidator(
             parseCellComponent(
                 list.get(12),
                 ValidatorSelector::parse
             )
-        ).setFormattedValue(formattedValue);
+        );
+
+        final Optional<TextNode> formattedValue = unmarshallCellComponentWithType(
+            list.get(13)
+        );
+
+        // must call setFormattedValue must be last
+        return cell.setFormattedValue(formattedValue);
     }
 
     private static <TT> Optional<TT> parseCellComponent(final String text,
