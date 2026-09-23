@@ -27,11 +27,11 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.function.ExpressionFunctionTesting;
+import walkingkooka.tree.expression.function.ExpressionFunctionTesting2;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ErrorExpressionFunctionTest implements ExpressionFunctionTesting<ErrorExpressionFunction, SpreadsheetError, ExpressionEvaluationContext>,
+public final class ErrorExpressionFunctionTest implements ExpressionFunctionTesting2<ErrorExpressionFunction, SpreadsheetError, ExpressionEvaluationContext>,
     ClassTesting2<ErrorExpressionFunction>,
     TypeNameTesting<ErrorExpressionFunction> {
 
