@@ -790,15 +790,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
             final JsonPropertyName propertyName = propertyAndValue.name();
             switch (propertyName.value()) {
-                case FORMULA_PROPERTY_STRING:
-                    patched = patched.setFormula(
-                        patched.formula()
-                            .patch(
-                                propertyAndValue,
-                                context
-                            )
-                    );
-                    break;
                 case CURRENCY_PROPERTY_STRING:
                     patched = patched.setCurrency(
                         context.unmarshallOptional(
@@ -831,19 +822,28 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         )
                     );
                     break;
-                case LOCALE_PROPERTY_STRING:
-                    patched = patched.setLocale(
-                        context.unmarshallOptional(
-                            propertyAndValue,
-                            Locale.class
-                        )
-                    );
-                    break;
                 case FORMATTER_PROPERTY_STRING:
                     patched = patched.setFormatter(
                         context.unmarshallOptional(
                             propertyAndValue,
                             SpreadsheetFormatterSelector.class
+                        )
+                    );
+                    break;
+                case FORMULA_PROPERTY_STRING:
+                    patched = patched.setFormula(
+                        patched.formula()
+                            .patch(
+                                propertyAndValue,
+                                context
+                            )
+                    );
+                    break;
+                case LOCALE_PROPERTY_STRING:
+                    patched = patched.setLocale(
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            Locale.class
                         )
                     );
                     break;
@@ -883,18 +883,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
         }
 
         return patched;
-    }
-
-    /**
-     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
-     */
-    public JsonNode formulaPatch(final JsonNodeMarshallContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return this.makePatch(
-            FORMULA_PROPERTY,
-            context.marshall(this.formula)
-        );
     }
 
     /**
@@ -951,19 +939,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
-     * a {@link Locale}.
-     */
-    public JsonNode localePatch(final JsonNodeMarshallContext context) {
-        Objects.requireNonNull(context, "context");
-
-        return this.makePatch(
-            LOCALE_PROPERTY,
-            context.marshallOptional(this.locale)
-        );
-    }
-
-    /**
-     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
      * a formatter.
      */
     public JsonNode formatterPatch(final JsonNodeMarshallContext context) {
@@ -972,6 +947,31 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.makePatch(
             FORMATTER_PROPERTY,
             context.marshallOptional(this.formatter)
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public JsonNode formulaPatch(final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return this.makePatch(
+            FORMULA_PROPERTY,
+            context.marshall(this.formula)
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
+     * a {@link Locale}.
+     */
+    public JsonNode localePatch(final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return this.makePatch(
+            LOCALE_PROPERTY,
+            context.marshallOptional(this.locale)
         );
     }
 
