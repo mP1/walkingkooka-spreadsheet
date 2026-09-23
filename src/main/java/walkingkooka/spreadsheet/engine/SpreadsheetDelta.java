@@ -1992,16 +1992,24 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                           final Set<SpreadsheetCell> cells,
                                                           final JsonNode patch,
                                                           final JsonNodeUnmarshallContext context) {
+        final JsonNode formulaPatch = patch.objectOrFail()
+            .getOrFail(FORMULA_PROPERTY);
+
         final SpreadsheetFormula formula = context.unmarshall(
-            patch.objectOrFail()
-                .getOrFail(FORMULA_PROPERTY),
+            formulaPatch,
             SpreadsheetFormula.class
         );
 
         return patchAllCells(
             selection,
             cells,
-            c -> c.setFormula(formula),
+            c -> c.setFormula(
+                c.formula()
+                    .patch(
+                        formulaPatch,
+                        context
+                    )
+            ),
             r -> r.setFormula(formula)
         );
     }
