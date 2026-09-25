@@ -252,6 +252,10 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
+            return this.spreadsheetExpressionEvaluationContext;
+        }
+
+        {
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
@@ -259,7 +263,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                 Optional.of(spreadsheetId)
             );
 
-            return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
+            this.spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
@@ -319,6 +323,8 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                 TERMINAL_CONTEXT
             );
         }
+
+        private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
 
         @Override
         public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {

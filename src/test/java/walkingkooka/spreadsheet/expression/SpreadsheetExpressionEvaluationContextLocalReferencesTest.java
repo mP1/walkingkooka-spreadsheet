@@ -846,15 +846,15 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         @Override
         public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                             final T value) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(value, "value");
-            throw new UnsupportedOperationException();
+            this.spreadsheetEnvironmentContext.setEnvironmentValue(
+                name,
+                value
+            );
         }
 
         @Override
         public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            Objects.requireNonNull(name, "name");
-            throw new UnsupportedOperationException();
+            this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
         }
 
         @Override

@@ -57,6 +57,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -128,6 +129,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             this.spreadsheetEnvironmentContext.setEnvironmentValue(name, value);
         }
 
+        @Override
+        public Charset charset() {
+            return this.spreadsheetEnvironmentContext.charset();
+        }
+
+        @Override
+        public void setCharset(final Charset charset) {
+            this.spreadsheetEnvironmentContext.setCharset(charset);
+        }
+        
         @Override
         public Currency currency() {
             return this.spreadsheetEnvironmentContext.currency();
