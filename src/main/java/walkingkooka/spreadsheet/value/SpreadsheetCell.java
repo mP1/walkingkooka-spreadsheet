@@ -136,7 +136,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     /**
      * Holds an absent {@link TextNode}.
      */
-    public final static Optional<TextNode> NO_FORMATTED_VALUE_CELL = Optional.empty();
+    public final static Optional<TextNode> NO_FORMATTED_VALUE = Optional.empty();
 
     /**
      * Holds an absent {@link SpreadsheetParserSelector}.
@@ -174,7 +174,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             NO_FORMATTER,
             NO_PARSER,
             NO_STYLE,
-            NO_FORMATTED_VALUE_CELL,
+            NO_FORMATTED_VALUE,
             NO_VALIDATOR
         );
     }
@@ -729,7 +729,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             formatter,
             parser,
             style,
-            NO_FORMATTED_VALUE_CELL,
+            NO_FORMATTED_VALUE,
             validator
         );
     }
@@ -1380,7 +1380,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         TextStyle style = TextStyle.EMPTY;
         Optional<ValidatorSelector> validator = NO_VALIDATOR;
 
-        Optional<TextNode> formatted = NO_FORMATTED_VALUE_CELL;
+        Optional<TextNode> formatted = NO_FORMATTED_VALUE;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();

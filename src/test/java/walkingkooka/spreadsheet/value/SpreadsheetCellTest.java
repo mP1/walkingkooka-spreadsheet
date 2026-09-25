@@ -1225,7 +1225,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     private void formattedValueAndCheck(final SpreadsheetCell cell) {
         this.formattedValueAndCheck(
             cell,
-            SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+            SpreadsheetCell.NO_FORMATTED_VALUE
         );
     }
 

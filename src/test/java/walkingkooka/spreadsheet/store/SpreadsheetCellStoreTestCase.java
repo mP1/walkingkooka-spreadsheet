@@ -471,7 +471,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @SuppressWarnings("SameReturnValue")
     private Optional<TextNode> formattedValue() {
-        return SpreadsheetCell.NO_FORMATTED_VALUE_CELL;
+        return SpreadsheetCell.NO_FORMATTED_VALUE;
     }
 
     // TypeNameTesting..................................................................
