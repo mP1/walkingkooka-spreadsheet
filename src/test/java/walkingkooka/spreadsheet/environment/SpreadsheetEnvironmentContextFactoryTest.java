@@ -344,36 +344,6 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         );
     }
 
-    // HasCurrency..................................................................................................
-
-    @Test
-    public void testCurrency() {
-        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        this.currencyAndCheck(
-            this.createContext(context),
-            context.currency()
-        );
-    }
-
-    @Test
-    public void testSetCurrency() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
-
-        this.setCurrencyAndCheck(
-            context,
-            DIFFERENT_CURRENCY
-        );
-    }
-
     // currentWorkingDirectory..........................................................................................
 
     @Test
@@ -381,88 +351,6 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.currentWorkingDirectoryAndCheck(
             this.createContext(),
             CURRENT_WORKING_DIRECTORY
-        );
-    }
-
-    // HasIndentation..................................................................................................
-
-    @Test
-    public void testIndentation() {
-        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        this.indentationAndCheck(
-            this.createContext(context),
-            context.indentation()
-        );
-    }
-
-    @Test
-    public void testSetIndentation() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        this.setIndentationAndCheck(
-            this.createContext(spreadsheetEnvironmentContext),
-            DIFFERENT_INDENTATION
-        );
-    }
-    
-    // HasLineEndings...................................................................................................
-
-    @Test
-    public void testLineEnding() {
-        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        this.lineEndingAndCheck(
-            this.createContext(context),
-            LINE_ENDING
-        );
-    }
-
-    @Test
-    public void testSetLineEnding() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        this.setLineEndingAndCheck(
-            this.createContext(spreadsheetEnvironmentContext),
-            DIFFERENT_LINE_ENDING
-        );
-    }
-
-    @Test
-    public void testLocale() {
-        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
-            Storages.fake(),
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-
-        this.localeAndCheck(
-            this.createContext(context),
-            context.locale()
-        );
-    }
-
-    @Test
-    public void testSetLocale() {
-        this.setLocaleAndCheck(
-            this.createContext(
-                SpreadsheetEnvironmentContexts.basic(
-                    Storages.fake(),
-                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                )
-            ),
-            DIFFERENT_LOCALE
         );
     }
 

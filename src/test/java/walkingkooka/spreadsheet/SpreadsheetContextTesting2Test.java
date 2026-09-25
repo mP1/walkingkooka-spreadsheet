@@ -61,6 +61,11 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
         }
 
         @Override
+        public void setCharset(final Charset charset) {
+            this.spreadsheetEnvironmentContext.setCharset(charset);
+        }
+
+        @Override
         public Currency currency() {
             return this.spreadsheetEnvironmentContext.currency();
         }

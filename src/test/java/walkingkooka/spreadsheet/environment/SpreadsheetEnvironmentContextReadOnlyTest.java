@@ -184,18 +184,20 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
     }
 
-    // currency.........................................................................................................
+    // setCharset.......................................................................................................
 
-    @Test
-    public void testCurrency() {
-        this.currencyAndCheck(
-            this.createContext(),
-            CURRENCY
-        );
+    @Override
+    public void testSetCharset() {
+        throw new UnsupportedOperationException();
     }
-
+    
     // setCurrency......................................................................................................
 
+    @Override
+    public void testSetCurrency() {
+        throw new UnsupportedOperationException();
+    }
+    
     @Test
     public void testSetCurrencyFails() {
         assertThrows(
@@ -231,18 +233,13 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
     }
 
-    // indentation......................................................................................................
-
-    @Test
-    public void testIndentation() {
-        this.indentationAndCheck(
-            this.createContext(),
-            INDENTATION
-        );
-    }
-
     // setIndentation...................................................................................................
 
+    @Override
+    public void testSetIndentation() {
+        throw new UnsupportedOperationException();
+    }
+    
     @Test
     public void testSetIndentationFails() {
         assertThrows(
@@ -256,18 +253,13 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     public void testSetIndentationWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
-    
-    // lineEnding.......................................................................................................
-
-    @Test
-    public void testLineEnding() {
-        this.lineEndingAndCheck(
-            this.createContext(),
-            LINE_ENDING
-        );
-    }
 
     // setLineEnding....................................................................................................
+
+    @Override
+    public void testSetLineEnding() {
+        throw new UnsupportedOperationException();
+    }
 
     @Test
     public void testSetLineEndingFails() {
@@ -282,16 +274,6 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     @Override
     public void testSetLineEndingWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
-    }
-
-    // locale...........................................................................................................
-
-    @Test
-    public void testLocale() {
-        this.localeAndCheck(
-            this.createContext(),
-            LOCALE
-        );
     }
 
     // setLocale........................................................................................................
@@ -315,17 +297,12 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
     }
 
-    // loggingLevel.....................................................................................................
-
-    @Test
-    public void testLoggingLevel() {
-        this.loggingLevelAndCheck(
-            this.createContext(),
-            LOGGING_LEVEL
-        );
-    }
-
     // setLoggingLevel..................................................................................................
+
+    @Override
+    public void testSetLoggingLevel() {
+        throw new UnsupportedOperationException();
+    }
 
     @Test
     public void testSetLoggingLevelFails() {
@@ -362,16 +339,6 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
     }
 
-    // timeOffset.......................................................................................................
-
-    @Test
-    public void testTimeOffset() {
-        this.timeOffsetAndCheck(
-            this.createContext(),
-            ZoneOffset.UTC
-        );
-    }
-
     // setTimeOffset....................................................................................................
 
     @Test
@@ -386,18 +353,13 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     }
 
     @Override
-    public void testSetTimeOffsetWithDifferentAndWatcher() {
+    public void testSetTimeOffsetWithDifferent() {
         throw new UnsupportedOperationException();
     }
-    
-    // user.............................................................................................................
 
-    @Test
-    public void testUser() {
-        this.userAndCheck(
-            this.createContext(),
-            USER
-        );
+    @Override
+    public void testSetTimeOffsetWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
     }
 
     // setUser..........................................................................................................

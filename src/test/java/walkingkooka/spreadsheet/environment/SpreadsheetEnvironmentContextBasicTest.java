@@ -25,7 +25,6 @@ import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.logging.CanLog;
 import walkingkooka.logging.CanLogs;
 import walkingkooka.logging.LoggingLevel;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
@@ -36,13 +35,8 @@ import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.text.Indentation;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintableTesting;
-
-import java.util.Locale;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -305,98 +299,6 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.setSpreadsheetIdAndCheck(
             context,
             spreadsheetId2
-        );
-    }
-
-    // lineEnding.......................................................................................................
-
-    @Test
-    public void testSetLineEnding() {
-        final SpreadsheetEnvironmentContextBasic context = this.createContext();
-
-        final LineEnding lineEnding = LineEnding.CRNL;
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
-        this.lineEndingAndCheck(
-            context,
-            LINE_ENDING
-        );
-
-        this.setLineEndingAndCheck(
-            context,
-            lineEnding
-        );
-    }
-
-    // indentation......................................................................................................
-
-    @Test
-    public void testSetIndentation() {
-        final SpreadsheetEnvironmentContextBasic context = this.createContext();
-
-        final Indentation indentation = Indentation.SPACES4;
-        this.checkNotEquals(
-            INDENTATION,
-            indentation
-        );
-
-        this.indentationAndCheck(
-            context,
-            INDENTATION
-        );
-
-        this.setIndentationAndCheck(
-            context,
-            indentation
-        );
-    }
-    
-    // locale...........................................................................................................
-
-    @Test
-    public void testSetLocale() {
-        final SpreadsheetEnvironmentContextBasic context = this.createContext();
-
-        final Locale locale = Locale.GERMANY;
-        this.checkNotEquals(
-            LOCALE,
-            locale
-        );
-
-        this.localeAndCheck(
-            context,
-            LOCALE
-        );
-
-        this.setLocaleAndCheck(
-            context,
-            locale
-        );
-    }
-
-    // user.............................................................................................................
-
-    @Test
-    public void testSetUser() {
-        final SpreadsheetEnvironmentContextBasic context = this.createContext();
-
-        final Optional<EmailAddress> user = Optional.of(DIFFERENT_USER);
-        this.checkNotEquals(
-            USER,
-            user
-        );
-
-        this.userAndCheck(
-            context,
-            USER
-        );
-
-        this.setUserAndCheck(
-            context,
-            user
         );
     }
 
