@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Context;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.logging.LoggerPath;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -52,6 +53,10 @@ public interface SpreadsheetEngineContext extends Context,
     SpreadsheetLabelNameResolver,
     SpreadsheetStorageContext,
     HasMissingCellNumberValue {
+
+    // CanLog...........................................................................................................
+
+    LoggerPath ENGINE_LOGGER = LoggerPath.parse("engine");
 
     /**
      * Useful constant for some members that require a {@link SpreadsheetCell}.
