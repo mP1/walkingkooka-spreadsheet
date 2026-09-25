@@ -37,6 +37,7 @@ import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * A context that holds individual values tailored for an individual spreadsheet or user such as their locale,
@@ -57,6 +58,16 @@ public interface SpreadsheetEngineContext extends Context,
     // CanLog...........................................................................................................
 
     LoggerPath ENGINE_LOGGER = LoggerPath.parse("engine");
+
+    /**
+     * Convenience method that calls {@link #logEnterAndExit(LoggerPath, Supplier)} with {@link #ENGINE_LOGGER}.
+     */
+    default <T> T logEnterAndExitEngine(final Supplier<T> supplier) {
+        return this.logEnterAndExit(
+            ENGINE_LOGGER,
+            supplier
+        );
+    }
 
     /**
      * Useful constant for some members that require a {@link SpreadsheetCell}.
