@@ -396,6 +396,13 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
     }
 
     /**
+     * Returns true if this error is a parser error.
+     */
+    public boolean isParser() {
+        return this.kind() == SpreadsheetErrorKind.PARSING;
+    }
+
+    /**
      * Returns true if this error is a validation error.
      */
     public boolean isValidation() {
