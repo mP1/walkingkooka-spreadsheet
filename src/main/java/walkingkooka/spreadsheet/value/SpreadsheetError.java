@@ -382,14 +382,14 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
     }
 
     /**
-     * Returns true if this error is a validation error.
+     * Returns true if this error is a currency-exchange error.
      */
     public boolean isCurrencyExchange() {
         return this.kind() == SpreadsheetErrorKind.CURRENCY_EXCHANGE;
     }
 
     /**
-     * Returns true if this error is a validation error.
+     * Returns true if this error is a formatter error.
      */
     public boolean isFormatter() {
         return this.kind() == SpreadsheetErrorKind.FORMATTING;
