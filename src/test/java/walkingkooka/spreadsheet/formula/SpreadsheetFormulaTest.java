@@ -1131,6 +1131,73 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             () -> "formatterError: " + formula
         );
     }
+
+    // parserError......................................................................................................
+
+    @Test
+    public void testParserErrorWhenNone() {
+        this.parserErrorAndCheck(
+            SpreadsheetFormula.EMPTY
+        );
+    }
+
+    @Test
+    public void testParserErrorWhenDivideByZeroError() {
+        this.parserErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.DIV0.spreadsheetError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testParserErrorWhenError() {
+        this.parserErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.ERROR.spreadsheetError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testParserErrorWhenParserError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.PARSING.setMessage("parserError123");
+
+        this.parserErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(error)
+            ),
+            error
+        );
+    }
+
+    private void parserErrorAndCheck(final SpreadsheetFormula formula) {
+        this.parserErrorAndCheck(
+            formula,
+            SpreadsheetFormula.NO_ERROR
+        );
+    }
+
+    private void parserErrorAndCheck(final SpreadsheetFormula formula,
+                                     final SpreadsheetError expected) {
+        this.parserErrorAndCheck(
+            formula,
+            Optional.of(expected)
+        );
+    }
+
+    private void parserErrorAndCheck(final SpreadsheetFormula formula,
+                                     final Optional<SpreadsheetError> expected) {
+        this.checkEquals(
+            expected,
+            formula.parserError(),
+            () -> "parserError: " + formula
+        );
+    }
     
     // validationError..................................................................................................
 
