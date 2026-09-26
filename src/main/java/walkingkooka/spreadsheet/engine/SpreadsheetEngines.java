@@ -39,11 +39,11 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetMetadataStampingSpreadsheetEngine}
+     * {@see SpreadsheetEngineSpreadsheetMetadataStamping}
      */
     public static SpreadsheetEngine stamper(final SpreadsheetEngine engine,
                                             final Function<SpreadsheetMetadata, SpreadsheetMetadata> stamper) {
-        return SpreadsheetMetadataStampingSpreadsheetEngine.with(engine, stamper);
+        return SpreadsheetEngineSpreadsheetMetadataStamping.with(engine, stamper);
     }
 
     /**
