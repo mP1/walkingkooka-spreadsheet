@@ -54,17 +54,17 @@ import java.util.function.Supplier;
  * Wraps a {@link SpreadsheetEngine} that conditionally calls a {@link Function} to stamp and save the {@link SpreadsheetMetadata}.
  * This is particularly useful to update the last modified user and timestamp.
  */
-final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetEngine {
+final class SpreadsheetEngineSpreadsheetMetadataStamping implements SpreadsheetEngine {
 
-    static SpreadsheetMetadataStampingSpreadsheetEngine with(final SpreadsheetEngine engine,
+    static SpreadsheetEngineSpreadsheetMetadataStamping with(final SpreadsheetEngine engine,
                                                              final Function<SpreadsheetMetadata, SpreadsheetMetadata> stamper) {
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(stamper, "stamper");
 
-        return new SpreadsheetMetadataStampingSpreadsheetEngine(engine, stamper);
+        return new SpreadsheetEngineSpreadsheetMetadataStamping(engine, stamper);
     }
 
-    private SpreadsheetMetadataStampingSpreadsheetEngine(final SpreadsheetEngine engine,
+    private SpreadsheetEngineSpreadsheetMetadataStamping(final SpreadsheetEngine engine,
                                                          final Function<SpreadsheetMetadata, SpreadsheetMetadata> stamper) {
         super();
         this.engine = engine;

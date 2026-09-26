@@ -74,10 +74,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements SpreadsheetEngineTesting2<SpreadsheetMetadataStampingSpreadsheetEngine>,
+public final class SpreadsheetEngineSpreadsheetMetadataStampingTest implements SpreadsheetEngineTesting2<SpreadsheetEngineSpreadsheetMetadataStamping>,
     CurrencyContextTesting,
     LocaleContextTesting,
-    ToStringTesting<SpreadsheetMetadataStampingSpreadsheetEngine> {
+    ToStringTesting<SpreadsheetEngineSpreadsheetMetadataStamping> {
 
     private final static SpreadsheetId ID = SpreadsheetId.parse("123");
 
@@ -118,7 +118,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     public void testWithNullEngineFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetMetadataStampingSpreadsheetEngine.with(
+            () -> SpreadsheetEngineSpreadsheetMetadataStamping.with(
                 null,
                 Function.identity()
             )
@@ -129,7 +129,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     public void testWithNullStamperFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetMetadataStampingSpreadsheetEngine.with(
+            () -> SpreadsheetEngineSpreadsheetMetadataStamping.with(
                 SpreadsheetEngines.fake(),
                 null
             )
@@ -138,7 +138,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testLoadCell() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         assertNotNull(
@@ -155,7 +155,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testLoadCellEvaluateStamps() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         context.storeRepository()
@@ -196,7 +196,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testSaveCellStamped() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetDelta saved = engine.saveCell(
@@ -210,7 +210,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteCellNoop() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         engine.deleteCells(SpreadsheetSelection.A1, context);
@@ -220,7 +220,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteCellStamped() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetDelta saved = engine.saveCell(
@@ -256,7 +256,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteColumnNoop() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         engine.deleteColumns(SpreadsheetSelection.parseColumn("Z"), 1, context);
@@ -266,7 +266,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteColumnNoop2() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetDelta saved = engine.saveCell(
@@ -290,7 +290,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteColumn() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetDelta saved = engine.saveCell(
@@ -313,7 +313,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testInsertColumnNoop() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         engine.insertColumns(SpreadsheetSelection.parseColumn("Z"), 0, context);
@@ -323,7 +323,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testInsertColumn() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         engine.insertColumns(SpreadsheetSelection.parseColumn("B"), 1, context);
@@ -333,7 +333,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteRowNoop() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         engine.deleteRows(SpreadsheetSelection.parseRow("99"), 1, context);
@@ -343,7 +343,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteRowNoop2() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetDelta saved = engine.saveCell(
@@ -367,7 +367,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testDeleteRow() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetDelta saved = engine.saveCell(
@@ -390,7 +390,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testInsertRowNoop() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         engine.insertRows(SpreadsheetSelection.parseRow("99"), 0, context);
@@ -400,7 +400,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     @Test
     public void testInsertRow() {
-        final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineSpreadsheetMetadataStamping engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
         engine.insertRows(SpreadsheetSelection.parseRow("99"), 1, context);
@@ -443,14 +443,14 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetEngine engine = SpreadsheetEngines.fake();
 
         this.toStringAndCheck(
-            SpreadsheetMetadataStampingSpreadsheetEngine.with(engine, Function.identity()),
+            SpreadsheetEngineSpreadsheetMetadataStamping.with(engine, Function.identity()),
             engine.toString()
         );
     }
 
     @Override
-    public SpreadsheetMetadataStampingSpreadsheetEngine createSpreadsheetEngine() {
-        return SpreadsheetMetadataStampingSpreadsheetEngine.with(
+    public SpreadsheetEngineSpreadsheetMetadataStamping createSpreadsheetEngine() {
+        return SpreadsheetEngineSpreadsheetMetadataStamping.with(
             SpreadsheetEngines.basic(),
             this.stamper()
         );
@@ -636,7 +636,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     }
 
     @Override
-    public Class<SpreadsheetMetadataStampingSpreadsheetEngine> type() {
-        return SpreadsheetMetadataStampingSpreadsheetEngine.class;
+    public Class<SpreadsheetEngineSpreadsheetMetadataStamping> type() {
+        return SpreadsheetEngineSpreadsheetMetadataStamping.class;
     }
 }
