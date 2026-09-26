@@ -1452,15 +1452,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
             .set(
-                this.referenceToJsonPropertyName(),
-                marshallProperties(context)
+                JsonPropertyName.with(
+                    this.reference.toString()
+                ),
+                this.marshallProperties(context)
             );
-    }
-
-    private JsonPropertyName referenceToJsonPropertyName() {
-        return JsonPropertyName.with(
-            this.reference.toString()
-        );
     }
 
     private JsonNode marshallProperties(final JsonNodeMarshallContext context) {
