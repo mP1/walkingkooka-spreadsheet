@@ -654,7 +654,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         printer.indent();
 
         final String text = this.text;
-        if (false == CharSequences.isNullOrEmpty(text)) {
+        if (CharSequences.isNotNullOrEmpty(text)) {
             this.printTreeLabelAndValue(
                 "text",
                 this.text(),

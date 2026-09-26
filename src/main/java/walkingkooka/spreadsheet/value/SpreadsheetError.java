@@ -488,7 +488,7 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
     @Override
     public Optional<String> convertErrorMessage() {
         return Optional.ofNullable(
-            SpreadsheetErrorKind.VALUE == this.kind && false == CharSequences.isNullOrEmpty(this.message) ?
+            SpreadsheetErrorKind.VALUE == this.kind && CharSequences.isNotNullOrEmpty(this.message) ?
                 this.message :
                 null
         );
