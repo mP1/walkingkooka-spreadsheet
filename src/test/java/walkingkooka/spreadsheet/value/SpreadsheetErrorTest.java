@@ -469,6 +469,41 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
+    // isCurrencyExchange...............................................................................................
+
+    @Test
+    public void testIsCurrencyExchangeWithDiv0() {
+        this.isCurrencyExchangeAndCheck(
+            SpreadsheetErrorKind.DIV0.spreadsheetError(),
+            false
+        );
+    }
+
+    @Test
+    public void testIsCurrencyExchangeWithCurrencyExchangeError() {
+        this.isCurrencyExchangeAndCheck(
+            SpreadsheetErrorKind.CURRENCY_EXCHANGE.spreadsheetError(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsCurrencyExchangeWithValidationError() {
+        this.isCurrencyExchangeAndCheck(
+            SpreadsheetErrorKind.VALIDATION.spreadsheetError(),
+            false
+        );
+    }
+
+    private void isCurrencyExchangeAndCheck(final SpreadsheetError error,
+                                            final boolean expected) {
+        this.checkEquals(
+            expected,
+            error.isCurrencyExchange(),
+            () -> error + ".isCurrencyExchange()"
+        );
+    }
+    
     // isValidation.....................................................................................................
 
     @Test
