@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.convert.HasConvertErrorTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterName;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
@@ -180,6 +181,26 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         this.valueAndCheck(error, Optional.of(label));
     }
 
+    // currencyExchangeRaterNotFound....................................................................................
+
+    @Test
+    public void testCurrencyExchangeRaterNotFoundAndNullSpreadsheetCurrencyExchangeRaterName() {
+        final SpreadsheetError error = SpreadsheetError.currencyExchangeRaterNotFound(null);
+        this.kindAndCheck(error, SpreadsheetErrorKind.ERROR);
+        this.messageAndCheck(error, "CurrencyExchangeRater not found");
+        this.valueAndCheck(error, Optional.empty());
+    }
+
+    @Test
+    public void testCurrencyExchangeRaterNotFoundAndValue() {
+        final CurrencyExchangeRaterName name = CurrencyExchangeRaterName.with("hello");
+
+        final SpreadsheetError error = SpreadsheetError.currencyExchangeRaterNotFound(name);
+        this.kindAndCheck(error, SpreadsheetErrorKind.ERROR);
+        this.messageAndCheck(error, "CurrencyExchangeRater not found");
+        this.valueAndCheck(error, Optional.ofNullable(name));
+    }
+    
     // formatterNotFound................................................................................................
 
     @Test

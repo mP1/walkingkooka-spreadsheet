@@ -25,6 +25,8 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.compare.Comparators;
 import walkingkooka.convert.HasConvertError;
+import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.provider.CurrencyExchangeRaterName;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -77,6 +79,16 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
 
     public static final Optional<Object> NO_VALUE = Optional.empty();
 
+    /**
+     * Creates a {@link SpreadsheetError} reporting that no {@link CurrencyExchangeRater} during a computation.
+     */
+    public static SpreadsheetError currencyExchangeRaterNotFound(final CurrencyExchangeRaterName name) {
+        return SpreadsheetErrorKind.ERROR.setMessageAndValue(
+            "CurrencyExchangeRater not found",
+            name
+        );
+    }
+    
     /**
      * Creates a {@link SpreadsheetError} indicating a cycle involving the provided {@link SpreadsheetExpressionReference}.
      */
