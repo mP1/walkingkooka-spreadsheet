@@ -265,17 +265,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     public SpreadsheetCell setFormula(final SpreadsheetFormula formula) {
-        return this.setFormula0(
-            checkFormula(formula)
-        );
-    }
-
-    private SpreadsheetCell setFormula0(final SpreadsheetFormula formula) {
-        return this.formula.equals(formula) ?
+        final SpreadsheetFormula formula1 = checkFormula(formula);
+        return this.formula.equals(formula1) ?
             this :
             this.replace(
                 this.reference,
-                formula,
+                formula1,
                 this.currency,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
@@ -326,25 +321,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public SpreadsheetCell setCurrency(final Optional<Currency> currency) {
         return this.currency.equals(currency) ?
             this :
-            this.replaceCurrency(
-                Objects.requireNonNull(currency, "currency")
+            this.replace(
+                this.reference,
+                this.formula,
+                Objects.requireNonNull(currency, "currency"),
+                this.currencyExchangeRater,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
             );
-    }
-
-    private SpreadsheetCell replaceCurrency(final Optional<Currency> currency) {
-        return this.replace(
-            this.reference,
-            this.formula,
-            currency,
-            this.currencyExchangeRater,
-            this.dateTimeSymbols,
-            this.decimalNumberSymbols,
-            this.locale,
-            this.formatter,
-            this.parser,
-            this.style,
-            this.validator
-        );
     }
 
     /**
@@ -365,25 +354,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public SpreadsheetCell setCurrencyExchangeRater(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater) {
         return this.currencyExchangeRater.equals(currencyExchangeRater) ?
             this :
-            this.replaceCurrencyExchangeRater(
-                Objects.requireNonNull(currencyExchangeRater, "currencyExchangeRater")
+            this.replace(
+                this.reference,
+                this.formula,
+                this.currency,
+                Objects.requireNonNull(currencyExchangeRater, "currencyExchangeRater"),
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
             );
-    }
-
-    private SpreadsheetCell replaceCurrencyExchangeRater(final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater) {
-        return this.replace(
-            this.reference,
-            this.formula,
-            this.currency,
-            currencyExchangeRater,
-            this.dateTimeSymbols,
-            this.decimalNumberSymbols,
-            this.locale,
-            this.formatter,
-            this.parser,
-            this.style,
-            this.validator
-        );
     }
 
     /**
@@ -412,25 +395,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public SpreadsheetCell setDateTimeSymbols(final Optional<DateTimeSymbols> dateTimeSymbols) {
         return this.dateTimeSymbols.equals(dateTimeSymbols) ?
             this :
-            this.replaceDateTimeSymbols(
-                Objects.requireNonNull(dateTimeSymbols, "dateTimeSymbols")
+            this.replace(
+                this.reference,
+                this.formula,
+                this.currency,
+                this.currencyExchangeRater,
+                Objects.requireNonNull(dateTimeSymbols, "dateTimeSymbols"),
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
             );
-    }
-
-    private SpreadsheetCell replaceDateTimeSymbols(final Optional<DateTimeSymbols> dateTimeSymbols) {
-        return this.replace(
-            this.reference,
-            this.formula,
-            this.currency,
-            this.currencyExchangeRater,
-            dateTimeSymbols,
-            this.decimalNumberSymbols,
-            this.locale,
-            this.formatter,
-            this.parser,
-            this.style,
-            this.validator
-        );
     }
 
     /**
@@ -452,25 +429,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public SpreadsheetCell setDecimalNumberSymbols(final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
         return this.decimalNumberSymbols.equals(decimalNumberSymbols) ?
             this :
-            this.replaceDecimalNumberSymbols(
-                Objects.requireNonNull(decimalNumberSymbols, "decimalNumberSymbols")
+            this.replace(
+                this.reference,
+                this.formula,
+                this.currency,
+                this.currencyExchangeRater,
+                this.dateTimeSymbols,
+                Objects.requireNonNull(decimalNumberSymbols, "decimalNumberSymbols"),
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
             );
-    }
-
-    private SpreadsheetCell replaceDecimalNumberSymbols(final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
-        return this.replace(
-            this.reference,
-            this.formula,
-            this.currency,
-            this.currencyExchangeRater,
-            this.dateTimeSymbols,
-            decimalNumberSymbols,
-            this.locale,
-            this.formatter,
-            this.parser,
-            this.style,
-            this.validator
-        );
     }
 
     /**
@@ -554,28 +525,20 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public SpreadsheetCell setParser(final Optional<SpreadsheetParserSelector> parser) {
         return this.parser.equals(parser) ?
             this :
-            this.replaceParser(
-                Objects.requireNonNull(parser, "parser")
+            this.replace(
+                this.reference,
+                this.formula.setToken(SpreadsheetFormula.NO_TOKEN)
+                    .setText(this.formula.text()),
+                this.currency,
+                this.currencyExchangeRater,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                Objects.requireNonNull(parser, "parser"),
+                this.style,
+                this.validator
             );
-    }
-
-    private SpreadsheetCell replaceParser(final Optional<SpreadsheetParserSelector> parser) {
-        final SpreadsheetFormula formula = this.formula;
-
-        return this.replace(
-            this.reference,
-            formula.setToken(SpreadsheetFormula.NO_TOKEN)
-                .setText(formula.text()),
-            this.currency,
-            this.currencyExchangeRater,
-            this.dateTimeSymbols,
-            this.decimalNumberSymbols,
-            this.locale,
-            this.formatter,
-            parser,
-            this.style,
-            this.validator
-        );
     }
 
     /**
