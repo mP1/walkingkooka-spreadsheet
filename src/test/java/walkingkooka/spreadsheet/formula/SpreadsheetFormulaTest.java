@@ -998,6 +998,140 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // currencyExchangeError............................................................................................
+
+    @Test
+    public void testCurrencyExchangeErrorWhenNone() {
+        this.currencyExchangeErrorAndCheck(
+            SpreadsheetFormula.EMPTY
+        );
+    }
+
+    @Test
+    public void testCurrencyExchangeErrorWhenDivideByZeroError() {
+        this.currencyExchangeErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.DIV0.spreadsheetError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testCurrencyExchangeErrorWhenError() {
+        this.currencyExchangeErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.ERROR.spreadsheetError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testCurrencyExchangeErrorWhenCurrencyExchangeError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.CURRENCY_EXCHANGE.setMessage("currencyExchangeError123");
+
+        this.currencyExchangeErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(error)
+            ),
+            error
+        );
+    }
+
+    private void currencyExchangeErrorAndCheck(final SpreadsheetFormula formula) {
+        this.currencyExchangeErrorAndCheck(
+            formula,
+            SpreadsheetFormula.NO_ERROR
+        );
+    }
+
+    private void currencyExchangeErrorAndCheck(final SpreadsheetFormula formula,
+                                               final SpreadsheetError expected) {
+        this.currencyExchangeErrorAndCheck(
+            formula,
+            Optional.of(expected)
+        );
+    }
+
+    private void currencyExchangeErrorAndCheck(final SpreadsheetFormula formula,
+                                               final Optional<SpreadsheetError> expected) {
+        this.checkEquals(
+            expected,
+            formula.currencyExchangeError(),
+            () -> "currencyExchangeError: " + formula
+        );
+    }
+
+    // formatterError...................................................................................................
+
+    @Test
+    public void testFormatterErrorWhenNone() {
+        this.formatterErrorAndCheck(
+            SpreadsheetFormula.EMPTY
+        );
+    }
+
+    @Test
+    public void testFormatterErrorWhenDivideByZeroError() {
+        this.formatterErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.DIV0.spreadsheetError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testFormatterErrorWhenError() {
+        this.formatterErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.ERROR.spreadsheetError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testFormatterErrorWhenFormatterError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.FORMATTING.setMessage("formatterError123");
+
+        this.formatterErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(error)
+            ),
+            error
+        );
+    }
+
+    private void formatterErrorAndCheck(final SpreadsheetFormula formula) {
+        this.formatterErrorAndCheck(
+            formula,
+            SpreadsheetFormula.NO_ERROR
+        );
+    }
+
+    private void formatterErrorAndCheck(final SpreadsheetFormula formula,
+                                        final SpreadsheetError expected) {
+        this.formatterErrorAndCheck(
+            formula,
+            Optional.of(expected)
+        );
+    }
+
+    private void formatterErrorAndCheck(final SpreadsheetFormula formula,
+                                        final Optional<SpreadsheetError> expected) {
+        this.checkEquals(
+            expected,
+            formula.formatterError(),
+            () -> "formatterError: " + formula
+        );
+    }
+    
     // validationError..................................................................................................
 
     @Test

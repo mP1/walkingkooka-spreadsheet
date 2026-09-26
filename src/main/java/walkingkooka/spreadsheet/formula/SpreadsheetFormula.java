@@ -412,6 +412,24 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.error.flatMap(SpreadsheetError::validationPromptValue);
     }
 
+    // currencyExchangeError............................................................................................
+
+    /**
+     * If any present error is a {@link SpreadsheetError#isCurrencyExchange()} it will be returned.
+     */
+    public Optional<SpreadsheetError> currencyExchangeError() {
+        return this.error.filter(SpreadsheetError::isCurrencyExchange);
+    }
+
+    // formatterError...................................................................................................
+
+    /**
+     * If any present error is a {@link SpreadsheetError#isFormatter()} it will be returned.
+     */
+    public Optional<SpreadsheetError> formatterError() {
+        return this.error.filter(SpreadsheetError::isFormatter);
+    }
+    
     // validationError..................................................................................................
 
     /**
