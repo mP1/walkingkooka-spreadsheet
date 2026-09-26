@@ -429,6 +429,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     public Optional<SpreadsheetError> formatterError() {
         return this.error.filter(SpreadsheetError::isFormatter);
     }
+
+    // parserError......................................................................................................
+
+    /**
+     * If any present error is a {@link SpreadsheetError#isParser()} it will be returned.
+     */
+    public Optional<SpreadsheetError> parserError() {
+        return this.error.filter(SpreadsheetError::isParser);
+    }
     
     // validationError..................................................................................................
 
