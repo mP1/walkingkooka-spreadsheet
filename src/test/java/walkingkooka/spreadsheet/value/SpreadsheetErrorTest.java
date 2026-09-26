@@ -503,6 +503,41 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
             () -> error + ".isCurrencyExchange()"
         );
     }
+
+    // isFormatter......................................................................................................
+
+    @Test
+    public void testIsFormatterWithDiv0() {
+        this.isFormatterAndCheck(
+            SpreadsheetErrorKind.DIV0.spreadsheetError(),
+            false
+        );
+    }
+
+    @Test
+    public void testIsFormatterWithFormatterError() {
+        this.isFormatterAndCheck(
+            SpreadsheetErrorKind.FORMATTING.spreadsheetError(),
+            true
+        );
+    }
+
+    @Test
+    public void testIsFormatterWithValidationError() {
+        this.isFormatterAndCheck(
+            SpreadsheetErrorKind.VALIDATION.spreadsheetError(),
+            false
+        );
+    }
+
+    private void isFormatterAndCheck(final SpreadsheetError error,
+                                     final boolean expected) {
+        this.checkEquals(
+            expected,
+            error.isFormatter(),
+            () -> error + ".isFormatter()"
+        );
+    }
     
     // isValidation.....................................................................................................
 
