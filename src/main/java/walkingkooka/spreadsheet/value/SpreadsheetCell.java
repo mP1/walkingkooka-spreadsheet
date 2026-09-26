@@ -129,24 +129,24 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public final static Optional<DecimalNumberSymbols> NO_DECIMAL_NUMBER_SYMBOLS = Optional.empty();
 
     /**
-     * Holds an absent {@link SpreadsheetFormatterSelector}.
-     */
-    public final static Optional<SpreadsheetFormatterSelector> NO_FORMATTER = Optional.empty();
-
-    /**
      * Holds an absent {@link TextNode}.
      */
     public final static Optional<TextNode> NO_FORMATTED_VALUE = Optional.empty();
 
     /**
-     * Holds an absent {@link SpreadsheetParserSelector}.
+     * Holds an absent {@link SpreadsheetFormatterSelector}.
      */
-    public final static Optional<SpreadsheetParserSelector> NO_PARSER = Optional.empty();
+    public final static Optional<SpreadsheetFormatterSelector> NO_FORMATTER = Optional.empty();
 
     /**
      * No {@link Locale}.
      */
     public final static Optional<Locale> NO_LOCALE = Optional.empty();
+
+    /**
+     * Holds an absent {@link SpreadsheetParserSelector}.
+     */
+    public final static Optional<SpreadsheetParserSelector> NO_PARSER = Optional.empty();
 
     /**
      * An empty {@link TextStyle}.
