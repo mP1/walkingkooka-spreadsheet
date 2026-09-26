@@ -436,28 +436,27 @@ public final class SpreadsheetError implements Comparable<SpreadsheetError>,
      * to convert a #NAME to a {@link String} value.
      */
     public SpreadsheetError setNameString() {
-        final SpreadsheetErrorKind kind = this.kind;
-        return kind == SpreadsheetErrorKind.NAME_STRING ?
-            this :
-            this.setNameStringDifferent();
-    }
+        SpreadsheetError spreadsheetError = this;
 
-    private SpreadsheetError setNameStringDifferent() {
         final SpreadsheetErrorKind kind = this.kind;
-        if (kind != SpreadsheetErrorKind.NAME) {
-            throw new IllegalStateException(
-                "SpreadsheetError.kind is not " +
-                    SpreadsheetErrorKind.NAME +
-                    " but is " +
-                    kind
+        if (kind != SpreadsheetErrorKind.NAME_STRING) {
+            if (kind != SpreadsheetErrorKind.NAME) {
+                throw new IllegalStateException(
+                    "SpreadsheetError.kind is not " +
+                        SpreadsheetErrorKind.NAME +
+                        " but is " +
+                        kind
+                );
+            }
+
+            spreadsheetError = new SpreadsheetError(
+                SpreadsheetErrorKind.NAME_STRING,
+                this.message,
+                this.value
             );
         }
 
-        return new SpreadsheetError(
-            SpreadsheetErrorKind.NAME_STRING,
-            this.message,
-            this.value
-        );
+        return spreadsheetError;
     }
 
     // toValidationError................................................................................................
