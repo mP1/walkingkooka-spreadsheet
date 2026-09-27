@@ -70,7 +70,7 @@
   "comparators": "",
   "converters": "",
   "currency": "AUD",
-  "currencyExchangeRaters": "properties, storage-path-properties",
+  "currencyExchangeRaters": "empty, properties, storage-path-properties",
   "dateTimeOffset": -25569,
   "decimalNumberDigitCount": 9,
   "defaultFormHandler": "non-null",
