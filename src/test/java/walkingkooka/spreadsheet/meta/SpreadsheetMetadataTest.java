@@ -52,8 +52,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.props.HasPropertiesTesting;
 import walkingkooka.props.Properties;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
@@ -130,7 +129,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
-    ClassTesting2<SpreadsheetMetadata>,
+    PublicClassTesting<SpreadsheetMetadata>,
     CurrencyLocaleContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
     HasDateTimeSymbolsTesting,
@@ -2103,11 +2102,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     @Override
     public Class<SpreadsheetMetadata> type() {
         return SpreadsheetMetadata.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // helper...........................................................................................................
