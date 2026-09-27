@@ -82,6 +82,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.BinaryTextContextTesting;
+import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -144,7 +146,8 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     MediaTypeDetectorTesting,
     PatchableTesting<SpreadsheetMetadata>,
     SpreadsheetEnvironmentContextTesting,
-    ToStringTesting<SpreadsheetMetadata> {
+    ToStringTesting<SpreadsheetMetadata>,
+    TreePrintableTesting {
 
     private static final SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -1212,41 +1215,62 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testSpreadsheetProvider() {
-        this.checkNotEquals(
-            null,
-            SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorAliasSet.parse("comparator-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterAliasSet.parse("converter-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.EXPORTERS,
-                SpreadsheetExporterAliasSet.parse("exporter-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse("form-handler-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("function-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("function-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMATTERS,
-                SpreadsheetFormatterAliasSet.parse("formatter-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.IMPORTERS,
-                SpreadsheetImporterAliasSet.parse("importer-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.PARSERS,
-                SpreadsheetParserAliasSet.parse("parser-1")
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorAliasSet.parse("validator-1")
-            ).spreadsheetProvider(
-                this.spreadsheetProvider()
-            )
+        this.treePrintAndCheck(
+            (TreePrintable)
+                SpreadsheetMetadata.EMPTY.set(
+                    SpreadsheetMetadataPropertyName.COMPARATORS,
+                    SpreadsheetComparatorAliasSet.parse("comparator-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.CONVERTERS,
+                    ConverterAliasSet.parse("converter-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.EXPORTERS,
+                    SpreadsheetExporterAliasSet.parse("exporter-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                    FormHandlerAliasSet.parse("form-handler-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                    SpreadsheetExpressionFunctions.parseAliasSet("function-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.FUNCTIONS,
+                    SpreadsheetExpressionFunctions.parseAliasSet("function-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.FORMATTERS,
+                    SpreadsheetFormatterAliasSet.parse("formatter-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.IMPORTERS,
+                    SpreadsheetImporterAliasSet.parse("importer-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.PARSERS,
+                    SpreadsheetParserAliasSet.parse("parser-1")
+                ).set(
+                    SpreadsheetMetadataPropertyName.VALIDATORS,
+                    ValidatorAliasSet.parse("validator-1")
+                ).spreadsheetProvider(
+                    this.spreadsheetProvider()
+                ),
+            "SpreadsheetProviderBasic\n" +
+                "  comparatorProvider\n" +
+                "    [] (walkingkooka.spreadsheet.compare.provider.AliasesSpreadsheetComparatorProvider)\n" +
+                "  converterProvider\n" +
+                "    [] (walkingkooka.convert.provider.AliasesConverterProvider)\n" +
+                "  currencyExchangeRaterProvider\n" +
+                "    EmptyCurrencyExchangeRaterProvider (walkingkooka.currency.provider.EmptyCurrencyExchangeRaterProvider)\n" +
+                "  spreadsheetExporterProvider\n" +
+                "    [] (walkingkooka.spreadsheet.export.provider.AliasesSpreadsheetExporterProvider)\n" +
+                "  expressionFunctionProvider\n" +
+                "    [https://example.com/function-1 function-1] (walkingkooka.tree.expression.function.provider.AliasesExpressionFunctionProvider)\n" +
+                "  spreadsheetFormatterProvider\n" +
+                "    [] (walkingkooka.spreadsheet.format.provider.AliasesSpreadsheetFormatterProvider)\n" +
+                "  formHandlerProvider\n" +
+                "    [] (walkingkooka.validation.form.provider.AliasesFormHandlerProvider)\n" +
+                "  spreadsheetImporterProvider\n" +
+                "    [] (walkingkooka.spreadsheet.importer.provider.AliasesSpreadsheetImporterProvider)\n" +
+                "  spreadsheetParserProvider\n" +
+                "    [] (walkingkooka.spreadsheet.parser.provider.AliasesSpreadsheetParserProvider)\n" +
+                "  validatorProvider\n" +
+                "    [] (walkingkooka.validation.provider.AliasesValidatorProvider)\n"
         );
     }
 
