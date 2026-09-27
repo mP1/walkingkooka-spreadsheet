@@ -156,6 +156,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
+
+    private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER =  SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER);
+
     // isClass..........................................................................................................
 
     @Test
@@ -688,8 +692,8 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 (final ProviderContext p) -> metadata.dateTimeConverter(
-                    spreadsheetFormatterProvider(),
-                    spreadsheetParserProvider(),
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
                     p
                 )
             ),
@@ -713,8 +717,8 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 (final ProviderContext p) -> metadata.dateTimeConverter(
-                    spreadsheetFormatterProvider(),
-                    spreadsheetParserProvider(),
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
                     p
                 )
             ),
@@ -739,8 +743,8 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 (final ProviderContext p) -> metadata.dateTimeConverter(
-                    spreadsheetFormatterProvider(),
-                    spreadsheetParserProvider(),
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
                     p
                 )
             ),
@@ -803,8 +807,8 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 LOCALE
             ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
             .dateTimeConverter(
-                spreadsheetFormatterProvider(),
-                spreadsheetParserProvider(),
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
             );
         this.checkNotEquals(
@@ -2102,17 +2106,5 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     @Override
     public Class<SpreadsheetMetadata> type() {
         return SpreadsheetMetadata.class;
-    }
-
-    // helper...........................................................................................................
-
-    private static SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
-        return SpreadsheetFormatterProviders.spreadsheetFormatters();
-    }
-
-    private static SpreadsheetParserProvider spreadsheetParserProvider() {
-        return SpreadsheetParserProviders.spreadsheetParsePattern(
-            spreadsheetFormatterProvider()
-        );
     }
 }
