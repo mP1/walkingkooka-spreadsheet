@@ -36,12 +36,14 @@ import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasOptionalLastModifiedTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.HasOptionalAuditInfoTesting;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
@@ -118,7 +120,6 @@ import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -132,6 +133,8 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     ClassTesting2<SpreadsheetMetadata>,
     CurrencyLocaleContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
+    HasDateTimeSymbolsTesting,
+    HasDecimalNumberSymbolsTesting,
     HasOptionalAuditInfoTesting,
     HasOptionalLastModifiedTesting,
     HasPropertiesTesting,
@@ -337,16 +340,14 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     public void testLoadFromLocale() {
         this.checkEquals(
             SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CURRENCY, Currency.getInstance(LOCALE))
+                .set(SpreadsheetMetadataPropertyName.CURRENCY, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("dddd, d mmmm yyyy").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM;dddd, d mmmm yy \\a\\t h:mm:ss AM/PM;dddd, d mmmm yy \\a\\t h:mm:ss;dddd, d mmmm yy \\a\\t h:mm AM/PM;dddd, d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\a\\t h:mm:ss.0;dddd, d mmmm yyyy \\a\\t h:mm:ss;dddd, d mmmm yyyy \\a\\t h:mm AM/PM;dddd, d mmmm yyyy \\a\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\a\\t h:mm:ss AM/PM;d mmmm yy \\a\\t h:mm:ss AM/PM;d mmmm yy \\a\\t h:mm:ss;d mmmm yy \\a\\t h:mm AM/PM;d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\a\\t h:mm:ss.0;d mmmm yyyy \\a\\t h:mm:ss;d mmmm yyyy \\a\\t h:mm AM/PM;d mmmm yyyy \\a\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm").spreadsheetParserSelector())
                 .set(
                     SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
-                    DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(LOCALE)
-                    )
+                    DATE_TIME_SYMBOLS
                 ).set(
                     SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                     DecimalNumberSymbols.with(
@@ -542,10 +543,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         this.shouldViewRefreshAndCheck(
             metadata.set(
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                    '+',
-                    new DecimalFormatSymbols(DIFFERENT_LOCALE)
-                )
+                DIFFERENT_DECIMAL_NUMBER_SYMBOLS
             ),
             metadata,
             true
