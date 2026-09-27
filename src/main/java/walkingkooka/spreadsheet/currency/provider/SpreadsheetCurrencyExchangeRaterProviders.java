@@ -30,10 +30,10 @@ import java.util.function.Function;
 public final class SpreadsheetCurrencyExchangeRaterProviders implements PublicStaticHelper {
 
     /**
-     * {@link SpreadsheetCurrencyCurrencyExchangeRaterProvider}
+     * {@link SpreadsheetCurrencyExchangeRaterProvider}
      */
     public static CurrencyExchangeRaterProvider spreadsheetCurrency(final Function<String, Number> numberParser) {
-        return SpreadsheetCurrencyCurrencyExchangeRaterProvider.with(numberParser);
+        return SpreadsheetCurrencyExchangeRaterProvider.with(numberParser);
     }
 
     /**

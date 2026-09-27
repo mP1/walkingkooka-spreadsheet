@@ -44,7 +44,7 @@ import java.util.function.Function;
 /**
  * A {@link CurrencyExchangeRaterProvider} for {@link CurrencyExchangeRater} in {@link SpreadsheetCurrencyExchangeRaters}.
  */
-final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements CurrencyExchangeRaterProvider,
+final class SpreadsheetCurrencyExchangeRaterProvider implements CurrencyExchangeRaterProvider,
     TreePrintable {
 
     final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
@@ -54,13 +54,13 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
     /**
      * Factory
      */
-    static SpreadsheetCurrencyCurrencyExchangeRaterProvider with(final Function<String, Number> numberParser) {
-        return new SpreadsheetCurrencyCurrencyExchangeRaterProvider(
+    static SpreadsheetCurrencyExchangeRaterProvider with(final Function<String, Number> numberParser) {
+        return new SpreadsheetCurrencyExchangeRaterProvider(
             Objects.requireNonNull(numberParser, "numberParser")
         );
     }
 
-    private SpreadsheetCurrencyCurrencyExchangeRaterProvider(final Function<String, Number> numberParser) {
+    private SpreadsheetCurrencyExchangeRaterProvider(final Function<String, Number> numberParser) {
         super();
         this.numberParser = numberParser;
     }
@@ -162,7 +162,7 @@ final class SpreadsheetCurrencyCurrencyExchangeRaterProvider implements Currency
     );
 
     /**
-     * Helper that creates a {@link CurrencyExchangeRaterInfo} from the given {@link CurrencyExchangeRaterName} and {@link SpreadsheetCurrencyCurrencyExchangeRaterProvider#BASE_URL}.
+     * Helper that creates a {@link CurrencyExchangeRaterInfo} from the given {@link CurrencyExchangeRaterName} and {@link SpreadsheetCurrencyExchangeRaterProvider#BASE_URL}.
      */
     private static CurrencyExchangeRaterInfo currencyExchangeRaterInfo(final CurrencyExchangeRaterName name) {
         return CurrencyExchangeRaterInfo.with(

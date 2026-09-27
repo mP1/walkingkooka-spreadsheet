@@ -56,7 +56,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implements CurrencyExchangeRaterProviderTesting<SpreadsheetCurrencyCurrencyExchangeRaterProvider>,
+public final class SpreadsheetCurrencyExchangeRaterProviderTest implements CurrencyExchangeRaterProviderTesting<SpreadsheetCurrencyExchangeRaterProvider>,
     CurrencyLocaleContextTesting,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
@@ -159,7 +159,7 @@ public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implemen
     public void testWithNullNumberParserFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCurrencyCurrencyExchangeRaterProvider.with(null)
+            () -> SpreadsheetCurrencyExchangeRaterProvider.with(null)
         );
     }
 
@@ -216,14 +216,14 @@ public final class SpreadsheetCurrencyCurrencyExchangeRaterProviderTest implemen
     }
 
     @Override
-    public SpreadsheetCurrencyCurrencyExchangeRaterProvider createCurrencyExchangeRaterProvider() {
-        return SpreadsheetCurrencyCurrencyExchangeRaterProvider.with(NUMBER_PARSER);
+    public SpreadsheetCurrencyExchangeRaterProvider createCurrencyExchangeRaterProvider() {
+        return SpreadsheetCurrencyExchangeRaterProvider.with(NUMBER_PARSER);
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCurrencyCurrencyExchangeRaterProvider> type() {
-        return SpreadsheetCurrencyCurrencyExchangeRaterProvider.class;
+    public Class<SpreadsheetCurrencyExchangeRaterProvider> type() {
+        return SpreadsheetCurrencyExchangeRaterProvider.class;
     }
 }
