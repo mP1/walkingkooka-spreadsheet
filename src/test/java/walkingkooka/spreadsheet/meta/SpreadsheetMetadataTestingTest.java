@@ -26,18 +26,14 @@ import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.locale.LocaleContextTesting;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -52,9 +48,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testCurrencyContextReadOnly() {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> SpreadsheetMetadataTesting.CURRENCY_CONTEXT.setCurrency(
-                Currency.getInstance("NZD")
-            )
+            () -> SpreadsheetMetadataTesting.CURRENCY_CONTEXT.setCurrency(DIFFERENT_CURRENCY)
         );
     }
 
@@ -183,16 +177,9 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testSetLocaleFails() {
-        final Locale locale = Locale.FRANCE;
-        
-        this.checkNotEquals(
-            LOCALE,
-            locale
-        );
-        
         assertThrows(
             ReadOnlyEnvironmentValueException.class,
-            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setLocale(locale)
+            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setLocale(DIFFERENT_LOCALE)
         );
         
         this.localeAndCheck(
@@ -230,44 +217,25 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testProviderContextCloneEnvironmentSetLineEnding() {
-        final LineEnding lineEnding = LineEnding.CRNL;
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
-        final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
         this.setLineEndingAndCheck(
-            context,
-            lineEnding
+            PROVIDER_CONTEXT.cloneEnvironment(),
+            DIFFERENT_LINE_ENDING
         );
     }
 
     @Test
     public void testProviderContextCloneEnvironmentSetLocale() {
-        final Locale locale = Locale.FRANCE;
-        this.checkNotEquals(
-            LOCALE,
-            locale
-        );
-
-        final ProviderContext clone = PROVIDER_CONTEXT.cloneEnvironment();
-        clone.setLocale(locale);
-
-        this.localeAndCheck(
-            clone,
-            locale
+        this.setLocaleAndCheck(
+            PROVIDER_CONTEXT.cloneEnvironment(),
+            DIFFERENT_LOCALE
         );
     }
 
     @Test
     public void testProviderContextCloneEnvironmentSetUser() {
-        final EmailAddress user = EmailAddress.parse("different@example.com");
-
-        final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
         this.setUserAndCheck(
-            context,
-            user
+            PROVIDER_CONTEXT.cloneEnvironment(),
+            DIFFERENT_USER
         );
     }
 
@@ -325,18 +293,9 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testSetUserFails() {
-        final EmailAddress user = EmailAddress.parse("different@example.com");
-
-        this.checkNotEquals(
-            USER,
-            user
-        );
-
         assertThrows(
             ReadOnlyEnvironmentValueException.class,
-            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setUser(
-                Optional.of(user)
-            )
+            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setUser(OPTIONAL_DIFFERENT_USER)
         );
 
         this.userAndCheck(
