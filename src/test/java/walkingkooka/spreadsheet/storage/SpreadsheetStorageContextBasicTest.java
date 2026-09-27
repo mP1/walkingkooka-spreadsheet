@@ -22,7 +22,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
-import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -32,6 +31,7 @@ import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
@@ -1117,7 +1117,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
         final SpreadsheetProvider spreadsheetProvider = SpreadsheetProviders.basic(
             SpreadsheetComparatorProviders.empty(),
             CONVERTER_PROVIDER,
-            CurrencyExchangeRaterProviders.currencyExchangeRaters(
+            SpreadsheetCurrencyExchangeRaterProviders.spreadsheetCurrency(
                 EXPRESSION_NUMBER_KIND::parse
             ),
             SpreadsheetExporterProviders.empty(),

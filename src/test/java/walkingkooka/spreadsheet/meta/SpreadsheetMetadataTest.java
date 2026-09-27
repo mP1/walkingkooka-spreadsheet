@@ -34,7 +34,6 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
-import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.datetime.HasOptionalLastModifiedTesting;
@@ -58,6 +57,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -1293,7 +1293,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         return SpreadsheetProviders.basic(
             SpreadsheetComparatorProviders.spreadsheetComparators(),
             ConverterProviders.converters(),
-            CurrencyExchangeRaterProviders.currencyExchangeRaters(
+            SpreadsheetCurrencyExchangeRaterProviders.spreadsheetCurrency(
                 EXPRESSION_NUMBER_KIND::parse
             ),
             SpreadsheetExporterProviders.spreadsheetExport(),
