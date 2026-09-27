@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -29,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -619,7 +619,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                     (ProviderContext p) -> Converters.never()
                 ),
-                CurrencyExchangeRaterProviders.currencyExchangeRaters(
+                SpreadsheetCurrencyExchangeRaterProviders.spreadsheetCurrency(
                     EXPRESSION_NUMBER_KIND::parse
                 ),
                 SpreadsheetExporterProviders.empty(),

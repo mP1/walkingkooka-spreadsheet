@@ -22,7 +22,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
-import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
@@ -33,6 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -1155,7 +1155,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         (ProviderContext p) -> Converters.never()
                     ),
-                    CurrencyExchangeRaterProviders.currencyExchangeRaters(
+                    SpreadsheetCurrencyExchangeRaterProviders.spreadsheetCurrency(
                         EXPRESSION_NUMBER_KIND::parse
                     ),
                     SpreadsheetExporterProviders.empty(),

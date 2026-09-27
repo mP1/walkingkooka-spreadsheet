@@ -27,7 +27,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterLikeTesting;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.Url;
@@ -39,6 +38,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -271,7 +271,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 (p) -> Converters.never()
                             ),
-                            CurrencyExchangeRaterProviders.currencyExchangeRaters(
+                            SpreadsheetCurrencyExchangeRaterProviders.spreadsheetCurrency(
                                 EXPRESSION_NUMBER_KIND::parse
                             ),
                             SpreadsheetExporterProviders.empty(),
