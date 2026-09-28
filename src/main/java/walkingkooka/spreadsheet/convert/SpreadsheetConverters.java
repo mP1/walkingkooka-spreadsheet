@@ -1142,13 +1142,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * {@link NetConverters#textToHasHostAddress}
-     */
-    public static Converter<SpreadsheetConverterContext> textToHasHostAddress() {
-        return NetConverters.textToHasHostAddress();
-    }
-
-    /**
      * {@link NetConverters#textToHostAddress}
      */
     public static Converter<SpreadsheetConverterContext> textToHostAddress() {

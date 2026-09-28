@@ -50,7 +50,6 @@ import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.HasHostAddress;
 import walkingkooka.net.MailToUrl;
 import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
@@ -1333,27 +1332,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     MediaType.class,
                     SpreadsheetConvertersConverterProvider.NET,
                     IS_MEDIA_TYPE
-                );
-
-                verifier.addIfConversionFail(
-                    ABSOLUTE_URL.text(),
-                    HasHostAddress.class,
-                    SpreadsheetConvertersConverterProvider.NET,
-                    IS_ABSOLUTE_URL
-                );
-
-                verifier.addIfConversionFail(
-                    EMAIL_ADDRESS.text(),
-                    HasHostAddress.class,
-                    SpreadsheetConvertersConverterProvider.NET,
-                    IS_EMAIL_ADDRESS
-                );
-
-                verifier.addIfConversionFail(
-                    MAIL_TO_URL.text(),
-                    HasHostAddress.class,
-                    SpreadsheetConvertersConverterProvider.NET,
-                    IS_MAIL_TO_URL
                 );
             }
         }
