@@ -847,6 +847,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toCsvStringList();
                 break;
+            case TO_CURRENCY_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toCurrency();
+                break;
             case TO_DATE_TIME_SYMBOLS_STRING:
                 this.noParameterCheck(copy);
 
@@ -1580,6 +1585,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_CSV_STRING_LIST = ConverterName.with(TO_CSV_STRING_LIST_STRING);
 
+    private final static String TO_CURRENCY_STRING = "to-currency";
+
+    final static ConverterName TO_CURRENCY = ConverterName.with(TO_CURRENCY_STRING);
+    
     private final static String TO_DATE_TIME_SYMBOLS_STRING = "to-date-time-symbols";
 
     final static ConverterName TO_DATE_TIME_SYMBOLS = ConverterName.with(TO_DATE_TIME_SYMBOLS_STRING);
@@ -1836,6 +1845,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_BINARY),
             converterInfo(TO_BOOLEAN),
             converterInfo(TO_CSV_STRING_LIST),
+            converterInfo(TO_CURRENCY),
             converterInfo(TO_DATE_TIME_SYMBOLS),
             converterInfo(TO_DECIMAL_NUMBER_SYMBOLS),
             converterInfo(TO_ENVIRONMENT),

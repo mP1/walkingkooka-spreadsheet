@@ -1515,6 +1515,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link Converters#toCurrency()}
+     */
+    public static Converter<SpreadsheetConverterContext> toCurrency() {
+        return Converters.toCurrency();
+    }
+    
+    /**
      * {@see ConverterToDateTimeSymbols}
      */
     public static Converter<SpreadsheetConverterContext> toDateTimeSymbols() {
