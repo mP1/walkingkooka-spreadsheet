@@ -707,7 +707,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-expression\n" +
                 "    text-to-flag\n" +
                 "    text-to-form-name\n" +
-                "    text-to-has-host-address\n" +
                 "    text-to-host-address\n" +
                 "    text-to-indentation\n" +
                 "    text-to-json\n" +
