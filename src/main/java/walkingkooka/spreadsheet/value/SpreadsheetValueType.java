@@ -167,9 +167,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType CSV_LIST = ValueType.with(CSV_LIST_STRING);
 
-    public static final String CURRENCY_STRING = "currency";
+    public static final String CURRENCY_STRING = ValueType.CURRENCY_STRING;
 
-    public static final ValueType CURRENCY = ValueType.with(CURRENCY_STRING);
+    public static final ValueType CURRENCY = ValueType.CURRENCY;
 
     public final static String DATA_URL_STRING = ValueType.DATA_URL_STRING;
 
@@ -870,9 +870,6 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case COLUMN_RANGE_STRING:
                 valueType = COLUMN_RANGE;
-                break;
-            case CURRENCY_STRING:
-                valueType = CURRENCY;
                 break;
             case DATE_STRING:
                 valueType = DATE;
