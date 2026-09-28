@@ -693,6 +693,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-border\n" +
                 "    text-to-charset\n" +
                 "    text-to-color\n" +
+                "    text-to-converter-selector\n" +
                 "    text-to-csv-string-list\n" +
                 "    text-to-csv-string-set\n" +
                 "    text-to-currency\n" +

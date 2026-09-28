@@ -342,6 +342,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("Label123");
     private final static SpreadsheetError ERROR = SpreadsheetError.referenceNotFound(CELL);
 
+    private final static ConverterSelector CONVERTER_SELECTOR = ConverterSelector.parse("test-converter");
     private final static SpreadsheetFormatterSelector FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("test-formatter");
     private final static SpreadsheetParserSelector PARSER_SELECTOR = SpreadsheetParserSelector.parse("test-parser");
     private final static ValidatorSelector VALIDATOR_SELECTOR = ValidatorSelector.parse("test-validator");
@@ -1459,6 +1460,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     SpreadsheetConvertersConverterProvider.PLUGINS,
                     spreadsheetCell.validator()
                         .orElse(null)
+                );
+            }
+
+            // text-to-converter-selector..............................................................................
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    CONVERTER_SELECTOR.text(),
+                    ConverterSelector.class,
+                    SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_CONVERTER_SELECTOR
+                    CONVERTER_SELECTOR
                 );
             }
 

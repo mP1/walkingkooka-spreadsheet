@@ -2385,12 +2385,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testPluginConvertStringToConverterSelectorFails() {
+    public void testPluginConvertStringToConverterSelector() {
         final String selector = "hello-converter";
 
-        this.pluginConvertFails(
+        this.pluginConvertAndCheck(
             selector,
-            ConverterSelector.class
+            ConverterSelector.parse(selector)
         );
     }
 

@@ -835,6 +835,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToConverterSelector() {
+        this.converterAndCheck(
+            "text-to-converter-selector",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToConverterSelector()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToCsvStringList() {
         this.converterAndCheck(
             "text-to-csv-string-list",
@@ -1676,6 +1685,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-border text-to-border\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-charset text-to-charset\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-color text-to-color\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-converter-selector text-to-converter-selector\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-csv-string-list text-to-csv-string-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-csv-string-set text-to-csv-string-set\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-currency text-to-currency\n" +
