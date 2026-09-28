@@ -28,6 +28,7 @@ import walkingkooka.color.HsvColor;
 import walkingkooka.color.HsvColorComponent;
 import walkingkooka.color.RgbColor;
 import walkingkooka.color.RgbColorComponent;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyValue;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
@@ -170,6 +171,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String CURRENCY_STRING = ValueType.CURRENCY_STRING;
 
     public static final ValueType CURRENCY = ValueType.CURRENCY;
+
+    public static final String CURRENCY_CODE_STRING = ValueType.CURRENCY_CODE_STRING;
+
+    public static final ValueType CURRENCY_CODE = ValueType.CURRENCY_CODE;
 
     public final static String DATA_URL_STRING = ValueType.DATA_URL_STRING;
 
@@ -548,6 +553,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case CURRENCY_STRING:
                 javaType = CurrencyValue.class;
                 break;
+            case CURRENCY_CODE_STRING:
+                javaType = CurrencyCode.class;
+                break;
             case DATE_STRING:
                 javaType = LocalDate.class;
                 break;
@@ -805,6 +813,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case "walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference":
                 valueType = COLUMN_RANGE;
+                break;
+            case "walkingkooka.currency.CurrencyCode":
+                valueType = CURRENCY_CODE;
                 break;
             case "walkingkooka.currency.CurrencyValue":
                 valueType = CURRENCY;
