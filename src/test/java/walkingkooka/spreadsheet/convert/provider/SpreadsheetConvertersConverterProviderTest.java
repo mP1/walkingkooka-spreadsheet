@@ -961,6 +961,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToHasHostAddress() {
+        this.converterAndCheck(
+            "text-to-has-host-address",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToHasHostAddress()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToHostAddress() {
         this.converterAndCheck(
             "text-to-host-address",
@@ -1700,6 +1709,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-expression text-to-expression\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-flag text-to-flag\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-form-name text-to-form-name\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-has-host-address text-to-has-host-address\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-host-address text-to-host-address\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-indentation text-to-indentation\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-json text-to-json\n" +
