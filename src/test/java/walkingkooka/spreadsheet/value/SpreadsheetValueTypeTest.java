@@ -192,6 +192,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testWithCurrencyCode() {
+        assertSame(
+            SpreadsheetValueType.CURRENCY_CODE,
+            SpreadsheetValueType.with("currency-code")
+        );
+    }
+
+    @Test
     public void testWithDate() {
         assertSame(
             SpreadsheetValueType.DATE,
