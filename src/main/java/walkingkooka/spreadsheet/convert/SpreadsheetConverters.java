@@ -253,7 +253,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 numberToCurrencyValue(),
                 textToCurrency(),
                 textToCurrencyCode(),
-                textToCurrencyValue()
+                textToCurrencyValue(),
+                toCurrency()
             );
         }
         return CURRENCY;
