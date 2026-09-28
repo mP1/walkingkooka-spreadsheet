@@ -858,6 +858,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
                 verifier.addIfConversionFail(
                     currencyCode.value(),
+                    CurrencyCode.class,
+                    SpreadsheetConvertersConverterProvider.CURRENCY, // to-currency
+                    currencyCode
+                );
+
+                verifier.addIfConversionFail(
+                    currencyCode.value(),
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY, // text-to-currency
                     IS_CURRENCY

@@ -254,7 +254,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 textToCurrency(),
                 textToCurrencyCode(),
                 textToCurrencyValue(),
-                toCurrency()
+                toCurrency(),
+                toCurrencyCode()
             );
         }
         return CURRENCY;
@@ -1520,6 +1521,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toCurrency() {
         return Converters.toCurrency();
+    }
+
+    /**
+     * {@link Converters#toCurrencyCode()}
+     */
+    public static Converter<SpreadsheetConverterContext> toCurrencyCode() {
+        return Converters.toCurrencyCode();
     }
     
     /**
