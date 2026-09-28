@@ -43,6 +43,7 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.currency.CurrencyValue;
+import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -150,6 +151,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -160,6 +162,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasCharsetTesting,
+    HasCurrencyTesting,
     HasDateTimeSymbolsTesting,
     HasDecimalNumberSymbolsTesting,
     JsonNodeMarshallUnmarshallContextTesting,
@@ -729,9 +732,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    private <T extends Number> void currencyConvertAndCheck(final Object value,
-                                                            final Class<T> type,
-                                                            final T expected) {
+    @Test
+    public void testCurrencyConvertSpreadsheetCellToCurrency() {
+        this.currencyConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setCurrency(OPTIONAL_CURRENCY),
+            Currency.class,
+            CURRENCY
+        );
+    }
+
+    private <T> void currencyConvertAndCheck(final Object value,
+                                             final Class<T> type,
+                                             final T expected) {
         this.convertAndCheck(
             SpreadsheetConverters.currency(),
             value,
