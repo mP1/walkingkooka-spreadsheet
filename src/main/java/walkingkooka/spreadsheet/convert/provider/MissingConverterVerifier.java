@@ -424,6 +424,11 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         DATE_TIME
     );
 
+    private final static FormName FORM_NAME = FormName.with("Form123");
+
+    private final static ValidationError VALIDATION_ERROR = SpreadsheetForms.error(CELL)
+        .setMessage("Error message 123");
+
     private final static Predicate<Object> IS_ABSOLUTE_URL = v -> v instanceof AbsoluteUrl;
 
     private final static Predicate<Object> IS_BINARY = v -> v instanceof Binary;
@@ -2284,20 +2289,18 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 if (formula || scripting || validation) {
                     if (validation) {
                         verifier.addIfConversionFail(
-                            "Form123",
+                            FORM_NAME.value(),
                             FormName.class,
                             SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TEXT_TO_FORM_NAME
-                            IS_FORM_NAME
+                            FORM_NAME
                         );
 
                         // text-to-validation-error.....................................................................
                         verifier.addIfConversionFail(
-                            SpreadsheetForms.error(CELL)
-                                .setMessage("Error message 123")
-                                .text(),
+                            VALIDATION_ERROR.text(),
                             ValidationError.class,
                             SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TEXT_TO_VALIDATION_ERROR
-                            IS_VALIDATION_ERROR
+                            VALIDATION_ERROR
                         );
                     }
                 }
