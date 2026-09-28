@@ -624,6 +624,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 hasSpreadsheetParserSelector(),
                 hasValidatorSelector(),
                 textToConverterSelector(),
+                textToCurrencyExchangeRaterSelector(),
                 textToSpreadsheetFormatterSelector(),
                 textToValidatorSelector()
             );
@@ -1062,6 +1063,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         return Converters.textToCurrencyCode();
     }
 
+    /**
+     * {@see SpreadsheetConverterTextToCurrencyExchangeRaterSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToCurrencyExchangeRaterSelector() {
+        return SpreadsheetConverterTextToCurrencyExchangeRaterSelector.INSTANCE;
+    }
+    
     /**
      * {@see Converters#textToCurrencyValue()}
      */

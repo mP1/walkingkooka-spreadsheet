@@ -698,6 +698,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-csv-string-set\n" +
                 "    text-to-currency\n" +
                 "    text-to-currency-code\n" +
+                "    text-to-currency-exchange-rater-selector\n" +
                 "    text-to-currency-value\n" +
                 "    text-to-date-list\n" +
                 "    text-to-date-time-list\n" +

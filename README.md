@@ -244,6 +244,7 @@ eg
 - [text-to-csv-string-set](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionSetCsvStringSet.java)
 - [text-to-currency](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCurrency.java)
 - [text-to-currency-code](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCurrencyCode.java)
+- [text-to-currency-exchange-rater-selector](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/SpreadsheetConverterTextToCurrencyExchangeRaterSelector.java)
 - [text-to-currency-value](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCurrencyValue.java)
 - [text-to-currency-value-number](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCurrencyValueNumber.java)
 - [text-to-date-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionListLocalDateList.java)

@@ -38,6 +38,7 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyValue;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
@@ -344,6 +345,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
     private final static SpreadsheetError ERROR = SpreadsheetError.referenceNotFound(CELL);
 
     private final static ConverterSelector CONVERTER_SELECTOR = ConverterSelector.parse("test-converter");
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR = CurrencyExchangeRaterSelector.parse("test-currency-exchange-rater");
     private final static SpreadsheetFormatterSelector FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("test-formatter");
     private final static SpreadsheetParserSelector PARSER_SELECTOR = SpreadsheetParserSelector.parse("test-parser");
     private final static ValidatorSelector VALIDATOR_SELECTOR = ValidatorSelector.parse("test-validator");
@@ -567,6 +569,8 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2+3")
+        ).setCurrencyExchangeRater(
+            Optional.of(CURRENCY_EXCHANGE_RATER_SELECTOR)
         ).setDateTimeSymbols(
             Optional.of(
                 context.dateTimeSymbols()
@@ -1492,6 +1496,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ConverterSelector.class,
                     SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_CONVERTER_SELECTOR
                     CONVERTER_SELECTOR
+                );
+            }
+
+            // text-to-currency-exchange-rater-selector.................................................................
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    CURRENCY_EXCHANGE_RATER_SELECTOR.text(),
+                    CurrencyExchangeRaterSelector.class,
+                    SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_CURRENCY_EXCHANGE_RATER_SELECTOR
+                    CURRENCY_EXCHANGE_RATER_SELECTOR
                 );
             }
 

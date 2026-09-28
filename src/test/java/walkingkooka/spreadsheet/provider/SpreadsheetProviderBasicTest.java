@@ -585,6 +585,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-csv-string-set text-to-csv-string-set\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-currency text-to-currency\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-currency-code text-to-currency-code\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-currency-exchange-rater-selector text-to-currency-exchange-rater-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-currency-value text-to-currency-value\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-date-list text-to-date-list\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-date-time-list text-to-date-time-list\n" +

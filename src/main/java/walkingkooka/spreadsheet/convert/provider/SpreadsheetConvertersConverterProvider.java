@@ -562,6 +562,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.textToCurrencyCode();
                 break;
+            case TEXT_TO_CURRENCY_EXCHANGE_RATER_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToCurrencyExchangeRaterSelector();
+                break;
             case TEXT_TO_CURRENCY_VALUE_STRING:
                 this.noParameterCheck(copy);
 
@@ -1347,6 +1352,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TEXT_TO_CURRENCY_CODE = ConverterName.with(TEXT_TO_CURRENCY_CODE_STRING);
 
+    private final static String TEXT_TO_CURRENCY_EXCHANGE_RATER_SELECTOR_STRING = "text-to-currency-exchange-rater-selector";
+
+    final static ConverterName TEXT_TO_CURRENCY_EXCHANGE_RATER_SELECTOR = ConverterName.with(TEXT_TO_CURRENCY_EXCHANGE_RATER_SELECTOR_STRING);
+
     private final static String TEXT_TO_CURRENCY_VALUE_STRING = "text-to-currency-value";
 
     final static ConverterName TEXT_TO_CURRENCY_VALUE = ConverterName.with(TEXT_TO_CURRENCY_VALUE_STRING);
@@ -1770,6 +1779,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_CSV_STRING_SET),
             converterInfo(TEXT_TO_CURRENCY),
             converterInfo(TEXT_TO_CURRENCY_CODE),
+            converterInfo(TEXT_TO_CURRENCY_EXCHANGE_RATER_SELECTOR),
             converterInfo(TEXT_TO_CURRENCY_VALUE),
             converterInfo(TEXT_TO_DATE_LIST),
             converterInfo(TEXT_TO_DATE_TIME_LIST),
