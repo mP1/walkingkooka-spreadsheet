@@ -45,6 +45,14 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     TreePrintableTesting {
 
     @Test
+    public void testSpreadsheetNameConstantsDifferent() {
+        this.checkNotEquals(
+            SPREADSHEET_NAME,
+            DIFFERENT_SPREADSHEET_NAME
+        );
+    }
+
+    @Test
     public void testCurrencyContextReadOnly() {
         assertThrows(
             UnsupportedOperationException.class,
