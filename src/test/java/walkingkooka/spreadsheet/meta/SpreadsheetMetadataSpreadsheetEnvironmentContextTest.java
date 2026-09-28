@@ -645,6 +645,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    locale-to-text\n" +
                 "    logging\n" +
                 "    net\n" +
+                "    never\n" +
                 "    null-to-number\n" +
                 "    number\n" +
                 "    number-to-color\n" +
