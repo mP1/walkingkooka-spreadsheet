@@ -586,12 +586,12 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             Optional.of(decimalNumberSymbols)
         ).setFormatter(
             Optional.of(FORMATTER_SELECTOR)
+        ).setLocale(
+            Optional.of(locale)
         ).setParser(
             Optional.of(PARSER_SELECTOR)
         ).setValidator(
             Optional.of(VALIDATOR_SELECTOR)
-        ).setLocale(
-            Optional.of(locale)
         ).setStyle(STYLE);
 
         // basic........................................................................................................
