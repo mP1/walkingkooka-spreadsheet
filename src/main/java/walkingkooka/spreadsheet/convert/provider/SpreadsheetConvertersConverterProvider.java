@@ -537,6 +537,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.textToColor();
                 break;
+            case TEXT_TO_CONVERTER_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToConverterSelector();
+                break;
             case TEXT_TO_CSV_STRING_LIST_STRING:
                 this.noParameterCheck(copy);
 
@@ -1317,6 +1322,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
 
+    private final static String TEXT_TO_CONVERTER_SELECTOR_STRING = "text-to-converter-selector";
+
+    final static ConverterName TEXT_TO_CONVERTER_SELECTOR = ConverterName.with(TEXT_TO_CONVERTER_SELECTOR_STRING);
+
     private final static String TEXT_TO_CSV_STRING_LIST_STRING = "text-to-csv-string-list";
 
     final static ConverterName TEXT_TO_CSV_STRING_LIST = ConverterName.with(TEXT_TO_CSV_STRING_LIST_STRING);
@@ -1747,6 +1756,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_BORDER),
             converterInfo(TEXT_TO_CHARSET),
             converterInfo(TEXT_TO_COLOR),
+            converterInfo(TEXT_TO_CONVERTER_SELECTOR),
             converterInfo(TEXT_TO_CSV_STRING_LIST),
             converterInfo(TEXT_TO_CSV_STRING_SET),
             converterInfo(TEXT_TO_CURRENCY),

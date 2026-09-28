@@ -623,6 +623,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 hasSpreadsheetFormatterSelector(),
                 hasSpreadsheetParserSelector(),
                 hasValidatorSelector(),
+                textToConverterSelector(),
                 textToSpreadsheetFormatterSelector(),
                 textToValidatorSelector()
             );
@@ -1026,6 +1027,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         return ColorConverters.textToColor();
     }
 
+    /**
+     * {@see SpreadsheetConverterTextToConverterSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToConverterSelector() {
+        return SpreadsheetConverterTextToConverterSelector.INSTANCE;
+    }
+    
     /**
      * {@link Converters#textToCsvStringList()}
      */
