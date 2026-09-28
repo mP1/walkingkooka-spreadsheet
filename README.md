@@ -193,6 +193,7 @@ eg
 - [locale-to-text](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterLocaleToString.java)
 - [logging](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters#logging)
 - [net](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverters#net)
+- [never](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterNever.java)
 - [null-to-number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterNullToNumber.java) Handles converting null/missing cell values into 0, 10 + B2 when B2 is missing becomes 10 + 0. 
 - [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 - [number-to-color](https://github.com/mP1/walkingkooka-color/blob/master/src/main/java/walkingkooka/color/convert/NumberToColorConverter.java)

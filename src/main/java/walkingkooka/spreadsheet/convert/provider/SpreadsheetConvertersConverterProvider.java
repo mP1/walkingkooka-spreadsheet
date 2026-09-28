@@ -297,6 +297,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.net();
                 break;
+            case NEVER_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.never();
+                break;
             case NUMBER_STRING:
                 this.noParameterCheck(copy);
 
@@ -1125,6 +1130,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName NET = ConverterName.with(NET_STRING);
 
+    private final static String NEVER_STRING = "never";
+
+    final static ConverterName NEVER = ConverterName.NEVER;
+
     private final static String NULL_TO_NUMBER_STRING = "null-to-number";
 
     final static ConverterName NULL_TO_NUMBER = ConverterName.with(NULL_TO_NUMBER_STRING);
@@ -1699,6 +1708,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(LOCALE_TO_TEXT),
             converterInfo(LOGGING),
             converterInfo(NET),
+            converterInfo(NEVER),
             converterInfo(NULL_TO_NUMBER),
             converterInfo(NUMBER),
             converterInfo(NUMBER_TO_COLOR),

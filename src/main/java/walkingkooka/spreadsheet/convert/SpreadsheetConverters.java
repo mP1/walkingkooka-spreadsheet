@@ -526,6 +526,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link Converters#never()}
+     */
+    public static Converter<SpreadsheetConverterContext> never() {
+        return Converters.never();
+    }
+
+    /**
      * {@see SpreadsheetConverterNullToNumber}
      */
     public static Converter<SpreadsheetConverterContext> nullToNumber() {
