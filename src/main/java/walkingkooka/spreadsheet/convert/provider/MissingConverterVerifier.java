@@ -377,9 +377,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
     private final static Hyperlink HYPERLINK = Hyperlink.hyperlink(ABSOLUTE_URL);
     private final static Image IMAGE = Image.image(ABSOLUTE_URL);
 
-
-    private final static LocaleLanguageTag LANGUAGE_TAG = LocaleLanguageTag.parse("en-AU");
-
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SpreadsheetId.with(1)
@@ -563,6 +560,8 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         final CurrencyCode currencyCode = context.currencyCode();
 
+        final Currency currency = context.currencyForCurrencyCodeOrFail(currencyCode);
+
         final DateTimeSymbols dateTimeSymbols = context.dateTimeSymbols();
 
         final DecimalNumberSymbols decimalNumberSymbols = context.decimalNumberSymbols();
@@ -573,8 +572,8 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         final LineEnding lineEnding = context.lineEnding();
 
-        final Locale locale = context.localeForLanguageTagOrFail(LANGUAGE_TAG);
-        final String languageTag = locale.toLanguageTag();
+        final Locale locale = context.locale();
+        final LocaleLanguageTag languageTag = LocaleLanguageTag.fromLocale(locale);
 
         final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2+3")
@@ -837,21 +836,25 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
             // text-to-color............................................................................................
             if (formatting || formula || scripting) {
+                final String color = "#123456";
+
                 verifier.addIfConversionFail(
-                    "#123456",
+                    color,
                     Color.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR,
-                    IS_COLOR
+                    Color.parseRgb(color)
                 );
             }
 
             // text-to-spreadsheet-color-name...........................................................................
             if (formatting || formula || scripting) {
+                final SpreadsheetColorName spreadsheetColorName = SpreadsheetColorName.BLACK;
+
                 verifier.addIfConversionFail(
-                    SpreadsheetColorName.BLACK.value(),
+                    spreadsheetColorName.value(),
                     SpreadsheetColorName.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME,
-                    IS_SPREADSHEET_COLOR_NAME
+                    spreadsheetColorName
                 );
             }
         }
@@ -870,14 +873,14 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     currencyCode.value(),
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY, // text-to-currency
-                    IS_CURRENCY
+                    currency
                 );
 
                 verifier.addIfConversionFail(
                     currencyCode.value(),
                     CurrencyCode.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY, // text-to-currency-code
-                    IS_CURRENCY_CODE
+                    currencyCode
                 );
 
                 verifier.addIfConversionFail(
@@ -935,7 +938,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     currencyCode,
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY, // currency-code-to-currency
-                    IS_CURRENCY
+                    currency
                 );
 
                 verifier.addIfConversionFail(
@@ -1026,7 +1029,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 spreadsheetCell,
                 DateTimeSymbols.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS, // DATE_TIME_SYMBOLS
-                IS_DATE_TIME_SYMBOLS
+                dateTimeSymbols
             );
 
             verifier.addIfConversionFail(
@@ -1267,10 +1270,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             // text-to-locale-language-tag..............................................................................
             if (formula || query || scripting) {
                 verifier.addIfConversionFail(
-                    languageTag,
+                    languageTag.value(),
                     LocaleLanguageTag.class,
                     SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
-                    LocaleLanguageTag.parse(languageTag)
+                    languageTag
                 );
             }
 
@@ -1282,7 +1285,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ),
                     LocaleLanguageTag.class,
                     SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
-                    LocaleLanguageTag.fromLocale(locale)
+                    languageTag
                 );
             }
         }
@@ -1331,28 +1334,28 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     MEDIA_TYPE.toString(),
                     MediaType.class,
                     SpreadsheetConvertersConverterProvider.NET,
-                    IS_MEDIA_TYPE
+                    MEDIA_TYPE
                 );
 
                 verifier.addIfConversionFail(
                     ABSOLUTE_URL.text(),
                     HasHostAddress.class,
                     SpreadsheetConvertersConverterProvider.NET,
-                    IS_ABSOLUTE_URL
+                    ABSOLUTE_URL
                 );
 
                 verifier.addIfConversionFail(
                     EMAIL_ADDRESS.text(),
                     HasHostAddress.class,
                     SpreadsheetConvertersConverterProvider.NET,
-                    IS_EMAIL_ADDRESS
+                    EMAIL_ADDRESS
                 );
 
                 verifier.addIfConversionFail(
                     MAIL_TO_URL.text(),
                     HasHostAddress.class,
                     SpreadsheetConvertersConverterProvider.NET,
-                    IS_MAIL_TO_URL
+                    MAIL_TO_URL
                 );
             }
         }
