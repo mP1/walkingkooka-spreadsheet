@@ -2579,7 +2579,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 ),
                 LineEnding.class,
                 SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_LINE_ENDING
+                LineEnding.CRNL
             );
 
             // text-to-lineEnding.......................................................................................
@@ -2587,7 +2587,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 LineEnding.NL.text(),
                 LineEnding.class,
                 SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_LINE_ENDING
-                IS_LINE_ENDING
+                LineEnding.NL
             );
 
             // text-to-spreadsheet-selection............................................................................
