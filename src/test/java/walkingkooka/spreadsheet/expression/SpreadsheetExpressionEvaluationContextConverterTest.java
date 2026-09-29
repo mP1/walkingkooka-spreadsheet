@@ -28,7 +28,6 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.Url;
@@ -79,7 +78,6 @@ import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.MathContext;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -94,14 +92,9 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-US"))
-        .loadFromLocale(
-            CURRENCY_CONTEXT.setLocaleContext(
-                LocaleContexts.jre(
-                    Locale.forLanguageTag("EN-US")
-                )
-            )
-        ).set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
+        .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+        .loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+        .set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
         .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
         .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)
         .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)

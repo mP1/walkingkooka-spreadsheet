@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -39,6 +40,8 @@ import java.util.Optional;
 public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting2<SpreadsheetConverterNumberToTextSpreadsheetConverterContext>,
     DecimalNumberContextDelegator,
     SpreadsheetEnvironmentContextTesting {
+
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MATH_CONTEXT);
 
     @Override
     public void testAmpms() {
