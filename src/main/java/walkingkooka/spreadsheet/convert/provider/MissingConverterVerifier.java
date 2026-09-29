@@ -1327,7 +1327,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     EMAIL_ADDRESS.text(),
                     EmailAddress.class,
                     SpreadsheetConvertersConverterProvider.NET,
-                    IS_EMAIL_ADDRESS
+                    EMAIL_ADDRESS
                 );
 
                 verifier.addIfConversionFail(
