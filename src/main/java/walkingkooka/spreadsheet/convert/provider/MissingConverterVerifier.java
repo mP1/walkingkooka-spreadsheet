@@ -1022,7 +1022,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 locale,
                 DateTimeSymbols.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS, // DATE_TIME_SYMBOLS
-                IS_DATE_TIME_SYMBOLS
+                dateTimeSymbols
             );
 
             verifier.addIfConversionFail(
@@ -1036,7 +1036,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 dateTimeSymbols.properties(),
                 DateTimeSymbols.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS, // DATE_TIME_SYMBOLS
-                IS_DATE_TIME_SYMBOLS
+                dateTimeSymbols
             );
         }
 
@@ -1229,7 +1229,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ),
                     DateTimeSymbols.class,
                     SpreadsheetConvertersConverterProvider.LOCALE, // DATE_TIME_SYMBOLS
-                    IS_DATE_TIME_SYMBOLS
+                    dateTimeSymbols
                 );
             }
 
