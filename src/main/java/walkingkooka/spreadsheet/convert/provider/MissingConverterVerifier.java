@@ -2203,7 +2203,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ABSOLUTE_URL.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_HYPERLINK
-                    IS_HYPERLINK
+                    TextNode.hyperlink(ABSOLUTE_URL)
                 );
 
                 // url-to-image.........................................................................................
@@ -2211,7 +2211,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ABSOLUTE_URL.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE, // URL_TO_IMAGE
-                    IS_IMAGE
+                    TextNode.image(ABSOLUTE_URL)
                 );
             }
 
