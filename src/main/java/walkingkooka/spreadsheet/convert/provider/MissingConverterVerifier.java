@@ -1054,14 +1054,14 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 locale,
                 DecimalNumberSymbols.class,
                 SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS, // DECIMAL_NUMBER_SYMBOLS
-                IS_DECIMAL_NUMBER_SYMBOLS
+                decimalNumberSymbols
             );
 
             verifier.addIfConversionFail(
                 decimalNumberSymbols.properties(),
                 DecimalNumberSymbols.class,
                 SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS, // DECIMAL_NUMBER_SYMBOLS
-                IS_DECIMAL_NUMBER_SYMBOLS
+                decimalNumberSymbols
             );
         }
 
@@ -1241,7 +1241,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ),
                     DecimalNumberSymbols.class,
                     SpreadsheetConvertersConverterProvider.LOCALE, // DECIMAL_NUMBER_SYMBOLS
-                    IS_DECIMAL_NUMBER_SYMBOLS
+                    decimalNumberSymbols
                 );
             }
 
