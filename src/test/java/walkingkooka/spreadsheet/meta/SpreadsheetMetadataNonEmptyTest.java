@@ -1484,7 +1484,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDateTimeContextMissingDateTimeSymbols() {
-        Arrays.stream(Locale.getAvailableLocales())
+        LOCALE_CONTEXT.availableLocales()
             .forEach(l -> {
                     final int twoDigitYear = 49;
                     final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
