@@ -37,6 +37,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
+import walkingkooka.environment.Environment;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
@@ -1056,6 +1057,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.EMAIL_ADDRESS,
             EmailAddress.class
+        );
+    }
+
+    @Test
+    public void testToClassWithEnvironment() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.ENVIRONMENT,
+            Environment.class
         );
     }
 
