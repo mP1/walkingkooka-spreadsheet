@@ -2388,12 +2388,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // plugins..........................................................................................................
 
     @Test
-    public void testPluginConvertStringToComparatorSelectorFails() {
+    public void testPluginConvertStringToComparatorSelector() {
         final String selector = "hello-comparator";
 
-        this.pluginConvertFails(
+        this.pluginConvertAndCheck(
             selector,
-            SpreadsheetComparatorSelector.class
+            SpreadsheetComparatorSelector.parse(selector)
         );
     }
 

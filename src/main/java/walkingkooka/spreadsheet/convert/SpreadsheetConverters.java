@@ -628,6 +628,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 textToConverterSelector(),
                 textToCurrencyExchangeRaterSelector(),
                 textToExpressionFunctionSelector(),
+                textToSpreadsheetComparatorSelector(),
                 textToSpreadsheetFormatterSelector(),
                 textToSpreadsheetParserSelector(),
                 textToValidatorSelector()
@@ -1303,6 +1304,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         return Converters.textToProperties();
     }
 
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetComparatorSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetComparatorSelector() {
+        return SpreadsheetConverterTextToSpreadsheetComparatorSelector.INSTANCE;
+    }
+    
     /**
      * {@see SpreadsheetConverterTextToSpreadsheetColorName}
      */
