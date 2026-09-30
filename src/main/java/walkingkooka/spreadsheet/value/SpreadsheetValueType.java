@@ -34,6 +34,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
+import walkingkooka.environment.Environment;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
@@ -215,6 +216,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String EMAIL_STRING = ValueType.EMAIL_STRING;
 
     public static final ValueType EMAIL = ValueType.EMAIL;
+
+    public static final String ENVIRONMENT_STRING = ValueType.ENVIRONMENT_STRING;
+
+    public static final ValueType ENVIRONMENT = ValueType.ENVIRONMENT;
 
     public static final String EQUALS_EXPRESSION_STRING = ValueType.EQUALS_EXPRESSION_STRING;
 
@@ -580,6 +585,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case EMAIL_ADDRESS_STRING:
             case EMAIL_STRING:
                 javaType = EmailAddress.class;
+                break;
+            case ENVIRONMENT_STRING:
+                javaType = Environment.class;
                 break;
             case EQUALS_EXPRESSION_STRING:
                 javaType = EqualsExpression.class;
