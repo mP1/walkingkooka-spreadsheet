@@ -607,6 +607,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.textToExpression();
                 break;
+            case TEXT_TO_EXPRESSION_FUNCTION_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToExpressionFunctionSelector();
+                break;
             case TEXT_TO_FLAG_STRING:
                 this.noParameterCheck(copy);
 
@@ -1403,6 +1408,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TEXT_TO_EXPRESSION = ConverterName.with(TEXT_TO_EXPRESSION_STRING);
 
+    private final static String TEXT_TO_EXPRESSION_FUNCTION_SELECTOR_STRING = "text-to-expression-function-selector";
+
+    final static ConverterName TEXT_TO_EXPRESSION_FUNCTION_SELECTOR = ConverterName.with(TEXT_TO_EXPRESSION_FUNCTION_SELECTOR_STRING);
+
     private final static String TEXT_TO_FLAG_STRING = "text-to-flag";
 
     final static ConverterName TEXT_TO_FLAG = ConverterName.with(TEXT_TO_FLAG_STRING);
@@ -1815,6 +1824,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),
             converterInfo(TEXT_TO_EXPRESSION),
+            converterInfo(TEXT_TO_EXPRESSION_FUNCTION_SELECTOR),
             converterInfo(TEXT_TO_FLAG),
             converterInfo(TEXT_TO_FORM_NAME),
             converterInfo(TEXT_TO_HAS_HOST_ADDRESS),

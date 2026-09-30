@@ -344,6 +344,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
     private final static ConverterSelector CONVERTER_SELECTOR = ConverterSelector.parse("test-converter");
     private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR = CurrencyExchangeRaterSelector.parse("test-currency-exchange-rater");
+    private final static SpreadsheetFormatterSelector FUNCTION_SELECTOR = SpreadsheetFormatterSelector.parse("test-function");
     private final static SpreadsheetFormatterSelector FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("test-formatter");
     private final static SpreadsheetParserSelector PARSER_SELECTOR = SpreadsheetParserSelector.parse("test-parser");
     private final static ValidatorSelector VALIDATOR_SELECTOR = ValidatorSelector.parse("test-validator");
@@ -1506,6 +1507,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 );
             }
 
+            // text-to-expression-function-selector...................................................................
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    FUNCTION_SELECTOR.text(),
+                    SpreadsheetFormatterSelector.class,
+                    SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_EXPRESSION_FUNCTION_SELECTOR
+                    FUNCTION_SELECTOR
+                );
+            }
+            
             // text-to-spreadsheet-formatter-selector...................................................................
             if (formula || scripting || validation) {
                 verifier.addIfConversionFail(

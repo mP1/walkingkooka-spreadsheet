@@ -594,6 +594,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-environment-value-name text-to-environment-value-name\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-error text-to-error\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-expression text-to-expression\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-expression-function-selector text-to-expression-function-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-flag text-to-flag\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-form-name text-to-form-name\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-has-host-address text-to-has-host-address\n" +
