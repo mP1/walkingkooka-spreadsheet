@@ -1506,6 +1506,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 );
             }
 
+            // text-to-spreadsheet-formatter-selector...................................................................
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    FORMATTER_SELECTOR.text(),
+                    SpreadsheetFormatterSelector.class,
+                    SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR
+                    FORMATTER_SELECTOR
+                );
+            }
+            
             // text-to-spreadsheet-parser-selector......................................................................
             if (formula || scripting || validation) {
                 verifier.addIfConversionFail(
