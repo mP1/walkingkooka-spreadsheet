@@ -54,7 +54,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithBasic() {
         this.converterAndCheck(
             "basic",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.basic()
         );
     }
@@ -63,17 +62,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithBinary() {
         this.converterAndCheck(
             "binary",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.binary()
         );
     }
-
 
     @Test
     public void testConverterSelectorWithBinaryToText() {
         this.converterAndCheck(
             "binary-to-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.binaryToText()
         );
     }
@@ -82,7 +78,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithBoolean() {
         this.converterAndCheck(
             "boolean",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.booleans()
         );
     }
@@ -91,7 +86,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithBooleanToText() {
         this.converterAndCheck(
             "boolean-to-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.booleanToText()
         );
     }
@@ -140,7 +134,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithCollectionTo() {
         this.converterAndCheck(
             "collection-to",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.collectionTo()
         );
     }
@@ -149,7 +142,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithCollectionToList() {
         this.converterAndCheck(
             "collection-to-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.collectionToList()
         );
     }
@@ -158,7 +150,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithColor() {
         this.converterAndCheck(
             "color",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.color()
         );
     }
@@ -167,7 +158,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithColorToNumber() {
         this.converterAndCheck(
             "color-to-number",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.colorToNumber()
         );
     }
@@ -177,7 +167,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithCsv() {
         this.converterAndCheck(
             "csv",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.csv()
         );
     }
@@ -186,7 +175,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithCurrency() {
         this.converterAndCheck(
             "currency",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.currency()
         );
     }
@@ -195,7 +183,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithCurrencyCodeToCurrency() {
         this.converterAndCheck(
             "currency-code-to-currency",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.currencyCodeToCurrency()
         );
     }
@@ -204,7 +191,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithCurrencyValueTo() {
         this.converterAndCheck(
             "currency-value-to",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.currencyValueTo()
         );
     }
@@ -213,7 +199,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithCurrencyValueToNumber() {
         this.converterAndCheck(
             "currency-value-to-number",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.currencyValueToNumber()
         );
     }
@@ -271,16 +256,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithDateTimeSymbols() {
         this.converterAndCheck(
             "date-time-symbols",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.dateTimeSymbols()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithDecimalNumberSymbols() {
         this.converterAndCheck(
             "decimal-number-symbols",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.decimalNumberSymbols()
         );
     }
@@ -289,7 +272,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithEnvironment() {
         this.converterAndCheck(
             "environment",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.environment()
         );
     }
@@ -298,16 +280,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithEnvironmentToBinary() {
         this.converterAndCheck(
             "environment-to-binary",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.environmentToBinary()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithEnvironmentToText() {
         this.converterAndCheck(
             "environment-to-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.environmentToText()
         );
     }
@@ -316,18 +296,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithErrorToNumber() {
         this.converterAndCheck(
             "error-to-number",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.errorToNumber()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithErrorThrowing() {
-        this.converterAndCheck(
-            ConverterName.with("error-throwing"),
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.errorThrowing()
         );
     }
 
@@ -335,7 +304,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithErrorThrowing() {
         this.converterAndCheck(
             "error-throwing",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.errorThrowing()
         );
     }
@@ -347,7 +315,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
 
         this.converterAndCheck(
             selector,
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.formatPatternToString(pattern)
                 .setToString(selector)
         );
@@ -356,8 +323,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithFormAndValidationString() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION + "",
-            PROVIDER_CONTEXT,
+            "form-and-validation",
             SpreadsheetConverters.formAndValidation()
         );
     }
@@ -366,7 +332,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithHasFormatterSelector() {
         this.converterAndCheck(
             "has-formatter-selector",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.hasSpreadsheetFormatterSelector()
         );
     }
@@ -375,7 +340,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithHasParserSelector() {
         this.converterAndCheck(
             "has-parser-selector",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.hasSpreadsheetParserSelector()
         );
     }
@@ -384,7 +348,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithHasSpreadsheetSelection() {
         this.converterAndCheck(
             "has-spreadsheet-selection",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.hasSpreadsheetSelection()
         );
     }
@@ -393,7 +356,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithHasValidatorSelector() {
         this.converterAndCheck(
             "has-validator-selector",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.hasValidatorSelector()
         );
     }
@@ -402,7 +364,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithJson() {
         this.converterAndCheck(
             "json",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.json()
         );
     }
@@ -411,7 +372,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithJsonTo() {
         this.converterAndCheck(
             "json-to",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.jsonTo()
         );
     }
@@ -420,7 +380,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithLocale() {
         this.converterAndCheck(
             "locale",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.locale()
         );
     }
@@ -429,7 +388,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithLocaleToText() {
         this.converterAndCheck(
             "locale-to-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.locale()
         );
     }
@@ -438,7 +396,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithNet() {
         this.converterAndCheck(
             "net",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.net()
         );
     }
@@ -447,7 +404,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithNumber() {
         this.converterAndCheck(
             "number",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.number()
         );
     }
@@ -456,7 +412,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithNumberToColor() {
         this.converterAndCheck(
             "number-to-color",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.numberToColor()
         );
     }
@@ -465,7 +420,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithNumberToCurrencyValue() {
         this.converterAndCheck(
             "number-to-currency-value",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.numberToCurrencyValue()
         );
     }
@@ -474,7 +428,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithNumberToText() {
         this.converterAndCheck(
             "number-to-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.numberToText()
         );
     }
@@ -483,7 +436,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithPlugins() {
         this.converterAndCheck(
             "plugins",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.plugins()
         );
     }
@@ -492,7 +444,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithProperties() {
         this.converterAndCheck(
             "properties",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.properties()
         );
     }
@@ -501,7 +452,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithPropertiesToDateTimeSymbols() {
         this.converterAndCheck(
             "properties-to-date-time-symbols",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.propertiesToDateTimeSymbols()
         );
     }
@@ -510,7 +460,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithPropertiesToDecimalNumberSymbols() {
         this.converterAndCheck(
             "properties-to-decimal-number-symbols",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.propertiesToDecimalNumberSymbols()
         );
     }
@@ -519,7 +468,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithPropertiesToSpreadsheetMetadata() {
         this.converterAndCheck(
             "properties-to-spreadsheet-metadata",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.propertiesToSpreadsheetMetadata()
         );
     }
@@ -528,7 +476,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithPropertiesToTextStyle() {
         this.converterAndCheck(
             "properties-to-text-style",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.propertiesToTextStyle()
         );
     }
@@ -537,7 +484,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithSpreadsheetCellSet() {
         this.converterAndCheck(
             "spreadsheet-cell-set",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetCellSet()
         );
     }
@@ -546,7 +492,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithSpreadsheetIdToSpreadsheetMetadata() {
         this.converterAndCheck(
             "spreadsheet-id-to-spreadsheet-metadata",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetIdToSpreadsheetMetadata()
         );
     }
@@ -555,28 +500,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithSpreadsheetMetadata() {
         this.converterAndCheck(
             "spreadsheet-metadata",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetMetadata()
         );
     }
 
     @Test
-    public void testConverterNameWithSpreadsheetSelection() {
+    public void testConverterSelectorWithSpreadsheetSelection() {
         this.converterAndCheck(
             "spreadsheet-selection",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetSelection()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithSpreadsheetSelectionToSpreadsheetSelection() {
-        this.converterAndCheck(
-            "spreadsheet-selection-to-spreadsheet-selection",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.spreadsheetSelectionToSpreadsheetSelection()
         );
     }
 
@@ -584,18 +516,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithSpreadsheetSelectionToSpreadsheetSelection() {
         this.converterAndCheck(
             "spreadsheet-selection-to-spreadsheet-selection",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetSelectionToSpreadsheetSelection()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithSpreadsheetSelectionToText() {
-        this.converterAndCheck(
-            "spreadsheet-selection-to-text",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.spreadsheetSelectionToText()
         );
     }
 
@@ -603,7 +524,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithSpreadsheetSelectionToText() {
         this.converterAndCheck(
             "spreadsheet-selection-to-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetSelectionToText()
         );
     }
@@ -612,7 +532,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorage() {
         this.converterAndCheck(
             "storage",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storage()
         );
     }
@@ -621,16 +540,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageBinaryToStorageValueBinary() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-binary",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueBinary()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithStorageBinaryToStorageValueCsv() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-csv",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueCsv()
         );
     }
@@ -639,7 +556,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageBinaryToStorageValueEnvironment() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-environment",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueEnvironment()
         );
     }
@@ -648,7 +564,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageBinaryToStorageValueExpression() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-expression",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueExpression()
         );
     }
@@ -657,7 +572,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageBinaryToStorageValueJson() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-json",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueJson()
         );
     }
@@ -666,7 +580,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageBinaryToStorageValueProperties() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-properties",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueProperties()
         );
     }
@@ -675,7 +588,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageBinaryToStorageValueTsv() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-tsv",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueTsv()
         );
     }
@@ -684,7 +596,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageBinaryToStorageValueTxt() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-txt",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageBinaryToStorageValueTxt()
         );
     }
@@ -693,7 +604,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueInfoListToText() {
         this.converterAndCheck(
             "storage-value-info-list-to-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueInfoListToText()
         );
     }
@@ -702,7 +612,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryBinary() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-binary",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryBinary()
         );
     }
@@ -711,7 +620,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryCsv() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-csv",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryCsv()
         );
     }
@@ -720,7 +628,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryEnvironment() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-environment",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryEnvironment()
         );
     }
@@ -729,7 +636,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryExpression() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-expression",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryExpression()
         );
     }
@@ -738,7 +644,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryJson() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-json",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryJson()
         );
     }
@@ -747,7 +652,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryProperties() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-properties",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryProperties()
         );
     }
@@ -756,7 +660,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryTsv() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-tsv",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryTsv()
         );
     }
@@ -765,7 +668,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStorageValueToStorageBinaryTxt() {
         this.converterAndCheck(
             "storage-value-to-storage-binary-txt",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.storageValueToStorageBinaryTxt()
         );
     }
@@ -774,18 +676,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithStyle() {
         this.converterAndCheck(
             "style",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.style()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithSystem() {
-        this.converterAndCheck(
-            "system",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.system()
         );
     }
 
@@ -793,7 +684,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithSystem() {
         this.converterAndCheck(
             "system",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.system()
         );
     }
@@ -802,7 +692,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithText() {
         this.converterAndCheck(
             "text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.text()
         );
     }
@@ -811,25 +700,22 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextNode() {
         this.converterAndCheck(
             "text-node",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textNode()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithTextToBorder() {
         this.converterAndCheck(
             "text-to-border",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToBorder()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithTextToColor() {
         this.converterAndCheck(
             "text-to-color",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToColor()
         );
     }
@@ -838,7 +724,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToConverterSelector() {
         this.converterAndCheck(
             "text-to-converter-selector",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToConverterSelector()
         );
     }
@@ -847,7 +732,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToCsvStringList() {
         this.converterAndCheck(
             "text-to-csv-string-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCsvStringList()
         );
     }
@@ -856,7 +740,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToCsvStringSet() {
         this.converterAndCheck(
             "text-to-csv-string-set",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCsvStringSet()
         );
     }
@@ -865,7 +748,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToCharset() {
         this.converterAndCheck(
             "text-to-charset",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCharset()
         );
     }
@@ -874,7 +756,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToCurrency() {
         this.converterAndCheck(
             "text-to-currency",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCurrency()
         );
     }
@@ -883,7 +764,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToCurrencyCode() {
         this.converterAndCheck(
             "text-to-currency-code",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCurrencyCode()
         );
     }
@@ -892,7 +772,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToCurrencyExchangeRaterSelector() {
         this.converterAndCheck(
             "text-to-currency-exchange-rater-selector",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCurrencyExchangeRaterSelector()
         );
     }
@@ -901,7 +780,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToCurrencyValue() {
         this.converterAndCheck(
             "text-to-currency-value",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToCurrencyValue()
         );
     }
@@ -910,7 +788,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToDateList() {
         this.converterAndCheck(
             "text-to-date-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToDateList()
         );
     }
@@ -919,7 +796,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToDateTimeList() {
         this.converterAndCheck(
             "text-to-date-time-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToDateTimeList()
         );
     }
@@ -928,7 +804,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToEmailAddress() {
         this.converterAndCheck(
             "text-to-email-address",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToEmailAddress()
         );
     }
@@ -937,7 +812,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToEnvironment() {
         this.converterAndCheck(
             "text-to-environment",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToEnvironment()
         );
     }
@@ -946,7 +820,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToEnvironmentValueName() {
         this.converterAndCheck(
             "text-to-environment-value-name",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToEnvironmentValueName()
         );
     }
@@ -955,7 +828,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToExpression() {
         this.converterAndCheck(
             "text-to-expression",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToExpression()
         );
     }
@@ -964,7 +836,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToExpressionFunctionSelector() {
         this.converterAndCheck(
             "text-to-expression-function-selector",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToExpressionFunctionSelector()
         );
     }
@@ -973,17 +844,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToFlag() {
         this.converterAndCheck(
             "text-to-flag",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToFlag()
         );
     }
 
     @Test
-    public void testConverterNameWithTextToFormName() {
+    public void testConverterSelectorWithTextToFormName() {
         this.converterAndCheck(
             "text-to-form-name",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToFormName()
         );
     }
@@ -992,7 +860,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToHasHostAddress() {
         this.converterAndCheck(
             "text-to-has-host-address",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToHasHostAddress()
         );
     }
@@ -1001,7 +868,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToHostAddress() {
         this.converterAndCheck(
             "text-to-host-address",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToHostAddress()
         );
     }
@@ -1010,7 +876,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToIndentation() {
         this.converterAndCheck(
             "text-to-indentation",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToIndentation()
         );
     }
@@ -1019,7 +884,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToJson() {
         this.converterAndCheck(
             "text-to-json",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToJson()
         );
     }
@@ -1028,7 +892,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToJsonPointer() {
         this.converterAndCheck(
             "text-to-json-pointer",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToJsonPointer()
         );
     }
@@ -1037,7 +900,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToJsonSelector() {
         this.converterAndCheck(
             "text-to-json-selector",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToJsonSelector()
         );
     }
@@ -1046,7 +908,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToLineEnding() {
         this.converterAndCheck(
             "text-to-line-ending",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToLineEnding()
         );
     }
@@ -1055,7 +916,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToLocale() {
         this.converterAndCheck(
             "text-to-locale",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToLocale()
         );
     }
@@ -1064,7 +924,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToLocaleLanguageTag() {
         this.converterAndCheck(
             "text-to-locale-language-tag",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToLocaleLanguageTag()
         );
     }
@@ -1073,7 +932,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToLoggingLevel() {
         this.converterAndCheck(
             "text-to-logging-level",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToLoggingLevel()
         );
     }
@@ -1082,7 +940,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToMargin() {
         this.converterAndCheck(
             "text-to-margin",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToMargin()
         );
     }
@@ -1091,7 +948,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToMediaType() {
         this.converterAndCheck(
             "text-to-media-type",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToMediaType()
         );
     }
@@ -1100,7 +956,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToNumberList() {
         this.converterAndCheck(
             "text-to-number-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToNumberList()
         );
     }
@@ -1109,7 +964,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToObject() {
         this.converterAndCheck(
             "text-to-object",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToObject()
         );
     }
@@ -1118,16 +972,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToPath() {
         this.converterAndCheck(
             "text-to-path",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToPath()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithTextToProperties() {
         this.converterAndCheck(
             "text-to-properties",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToProperties()
         );
     }
@@ -1136,17 +988,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToSpreadsheetFormatterSelector() {
         this.converterAndCheck(
             "text-to-spreadsheet-formatter-selector",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetFormatterSelector()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadata() {
         this.converterAndCheck(
             "text-to-spreadsheet-metadata",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetMetadata()
         );
     }
@@ -1155,7 +1004,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToSpreadsheetMetadataColor() {
         this.converterAndCheck(
             "text-to-spreadsheet-metadata-color",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetMetadataColor()
         );
     }
@@ -1164,28 +1012,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToSpreadsheetMetadataPropertyName() {
         this.converterAndCheck(
             "text-to-spreadsheet-metadata-property-name",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetMetadataPropertyName()
         );
     }
 
     @Test
-    public void testConverterNameWithTextToSpreadsheetParserSelector() {
+    public void testConverterSelectorWithTextToSpreadsheetParserSelector() {
         this.converterAndCheck(
             "text-to-spreadsheet-parser-selector",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetParserSelector()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithTextToSpreadsheetSelection() {
-        this.converterAndCheck(
-            "text-to-spreadsheet-selection",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.textToSpreadsheetSelection()
         );
     }
 
@@ -1193,8 +1028,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToSpreadsheetSelection() {
         this.converterAndCheck(
             "text-to-spreadsheet-selection",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetSelection()
         );
     }
@@ -1203,7 +1036,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToStringList() {
         this.converterAndCheck(
             "text-to-string-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToStringList()
         );
     }
@@ -1212,7 +1044,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextStyleToStyle() {
         this.converterAndCheck(
             "to-style",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toStyle()
         );
     }
@@ -1221,7 +1052,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToTemplateValueName() {
         this.converterAndCheck(
             "text-to-template-value-name",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToTemplateValueName()
         );
     }
@@ -1230,7 +1060,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToTextNode() {
         this.converterAndCheck(
             "text-to-text-node",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToTextNode()
         );
     }
@@ -1239,7 +1068,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToTextStyle() {
         this.converterAndCheck(
             "text-to-text-style",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToTextStyle()
         );
     }
@@ -1248,7 +1076,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToTextStylePropertyName() {
         this.converterAndCheck(
             "text-to-text-style-property-name",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToTextStylePropertyName()
         );
     }
@@ -1256,8 +1083,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToTimeList() {
         this.converterAndCheck(
-             "text-to-time-list",
-            PROVIDER_CONTEXT,
+            "text-to-time-list",
             SpreadsheetConverters.textToTimeList()
         );
     }
@@ -1265,8 +1091,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithTextToTsvStringList() {
         this.converterAndCheck(
-             "text-to-tsv-string-list",
-            PROVIDER_CONTEXT,
+            "text-to-tsv-string-list",
             SpreadsheetConverters.textToTsvStringList()
         );
     }
@@ -1275,57 +1100,46 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToTsvStringSet() {
         this.converterAndCheck(
             "text-to-tsv-string-set",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToTsvStringSet()
         );
     }
 
     @Test
-    public void testConverterNameWithTextToUrl() {
+    public void testConverterSelectorWithTextToUrl() {
         this.converterAndCheck(
             "text-to-url",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToUrl()
         );
     }
 
     @Test
-    public void testConverterNameWithTextToUrlFragment() {
+    public void testConverterSelectorWithTextToUrlFragment() {
         this.converterAndCheck(
             "text-to-url-fragment",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToUrlFragment()
         );
     }
 
     @Test
-    public void testConverterNameWithTextToUrlQueryString() {
+    public void testConverterSelectorWithTextToUrlQueryString() {
         this.converterAndCheck(
             "text-to-url-query-string",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToUrlQueryString()
         );
     }
 
     @Test
-    public void testConverterNameWithTextToValidatorSelector() {
+    public void testConverterSelectorWithTextToValidatorSelector() {
         this.converterAndCheck(
             "text-to-validator-selector",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToValidatorSelector()
         );
     }
 
     @Test
-    public void testConverterNameWithTextToValueType() {
+    public void testConverterSelectorWithTextToValueType() {
         this.converterAndCheck(
             "text-to-value-type",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToValueType()
         );
     }
@@ -1334,7 +1148,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTextToZoneOffset() {
         this.converterAndCheck(
             "text-to-zone-offset",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.textToZoneOffset()
         );
     }
@@ -1343,7 +1156,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToBinary() {
         this.converterAndCheck(
             "to-binary",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toBinary()
         );
     }
@@ -1352,7 +1164,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToBoolean() {
         this.converterAndCheck(
             "to-boolean",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toBoolean()
         );
     }
@@ -1361,7 +1172,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToCsvStringList() {
         this.converterAndCheck(
             "to-csv-string-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toCsvStringList()
         );
     }
@@ -1370,7 +1180,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToCurrency() {
         this.converterAndCheck(
             "to-currency",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toCurrency()
         );
     }
@@ -1379,7 +1188,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToCurrencyCode() {
         this.converterAndCheck(
             "to-currency-code",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toCurrencyCode()
         );
     }
@@ -1388,7 +1196,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToDateTimeSymbols() {
         this.converterAndCheck(
             "to-date-time-symbols",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toDateTimeSymbols()
         );
     }
@@ -1397,7 +1204,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToDecimalNumberSymbols() {
         this.converterAndCheck(
             "to-decimal-number-symbols",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toDecimalNumberSymbols()
         );
     }
@@ -1406,7 +1212,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToEnvironment() {
         this.converterAndCheck(
             "to-environment",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toEnvironment()
         );
     }
@@ -1415,7 +1220,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToHostAddress() {
         this.converterAndCheck(
             "to-host-address",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toHostAddress()
         );
     }
@@ -1424,7 +1228,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToJsonNode() {
         this.converterAndCheck(
             "to-json-node",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toJsonNode()
         );
     }
@@ -1433,7 +1236,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToLocale() {
         this.converterAndCheck(
             "to-locale",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toLocale()
         );
     }
@@ -1442,7 +1244,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToLocaleLanguageTag() {
         this.converterAndCheck(
             "to-locale-language-tag",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toLocaleLanguageTag()
         );
     }
@@ -1451,7 +1252,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToMultiLineText() {
         this.converterAndCheck(
             "to-multi-line-text",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toMultiLineText()
         );
     }
@@ -1460,7 +1260,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToNumber() {
         this.converterAndCheck(
             "to-number",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toNumber()
         );
     }
@@ -1469,7 +1268,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToProperties() {
         this.converterAndCheck(
             "to-properties",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toProperties()
         );
     }
@@ -1478,7 +1276,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToString() {
         this.converterAndCheck(
             "to-string",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.objectToString()
         );
     }
@@ -1487,7 +1284,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToStyleable() {
         this.converterAndCheck(
             "to-styleable",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toStyleable()
         );
     }
@@ -1496,7 +1292,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToTextNode() {
         this.converterAndCheck(
             "to-text-node",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toTextNode()
         );
     }
@@ -1505,7 +1300,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToTsvStringList() {
         this.converterAndCheck(
             "to-tsv-string-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toTsvStringList()
         );
     }
@@ -1514,16 +1308,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToValidationCheckbox() {
         this.converterAndCheck(
             "to-validation-checkbox",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toValidationCheckbox()
         );
     }
-    
+
     @Test
     public void testConverterSelectorWithToValidationChoice() {
         this.converterAndCheck(
             "to-validation-choice",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toValidationChoice()
         );
     }
@@ -1532,7 +1324,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToValidationChoiceList() {
         this.converterAndCheck(
             "to-validation-choice-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toValidationChoiceList()
         );
     }
@@ -1541,7 +1332,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToValidationErrorList() {
         this.converterAndCheck(
             "to-validation-error-list",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toValidationErrorList()
         );
     }
@@ -1550,7 +1340,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToValue() {
         this.converterAndCheck(
             "to-value",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.toValue()
         );
     }
@@ -1559,7 +1348,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithTsv() {
         this.converterAndCheck(
             "tsv",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.tsv()
         );
     }
@@ -1568,7 +1356,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithUrl() {
         this.converterAndCheck(
             "url",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.url()
         );
     }
@@ -1577,7 +1364,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithUrlToHyperlink() {
         this.converterAndCheck(
             "url-to-hyperlink",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.urlToHyperlink()
         );
     }
@@ -1586,7 +1372,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithUrlToImage() {
         this.converterAndCheck(
             "url-to-image",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.urlToImage()
         );
     }
@@ -1595,7 +1380,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithValue() {
         this.converterAndCheck(
             "value",
-            PROVIDER_CONTEXT,
             SpreadsheetConverters.value()
         );
     }
@@ -1608,6 +1392,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SPREADSHEET_PARSER_PROVIDER,
                 context
             )
+        );
+    }
+
+    private void converterAndCheck(final String selector,
+                                   final Converter<?> expected) {
+        this.converterAndCheck(
+            selector,
+            PROVIDER_CONTEXT,
+            expected
         );
     }
 
