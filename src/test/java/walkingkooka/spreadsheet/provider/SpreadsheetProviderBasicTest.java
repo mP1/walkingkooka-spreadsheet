@@ -615,6 +615,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-path text-to-path\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-properties text-to-properties\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-color-name text-to-spreadsheet-color-name\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-comparator-selector text-to-spreadsheet-comparator-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-formatter-selector text-to-spreadsheet-formatter-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-id text-to-spreadsheet-id\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-metadata text-to-spreadsheet-metadata\n" +
