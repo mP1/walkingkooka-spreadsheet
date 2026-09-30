@@ -100,16 +100,16 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
 
     @Test
     public void testSetPathSame() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         assertSame(
-            find,
-            find.setPath(find.path())
+            request,
+            request.setPath(request.path())
         );
     }
 
     @Test
     public void testSetPathDifferent() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         final Optional<SpreadsheetCellRangeReferencePath> path = Optional.of(
             SpreadsheetCellRangeReferencePath.RLTD
         );
@@ -122,7 +122,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                 VALUE_TYPE,
                 QUERY
             ),
-            find.setPath(path)
+            request.setPath(path)
         );
     }
 
@@ -154,16 +154,16 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
 
     @Test
     public void testSetOffsetSame() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         assertSame(
-            find,
-            find.setOffset(find.count())
+            request,
+            request.setOffset(request.count())
         );
     }
 
     @Test
     public void testSetOffsetDifferent() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         final OptionalInt offset = OptionalInt.of(
             999
         );
@@ -176,7 +176,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                 VALUE_TYPE,
                 QUERY
             ),
-            find.setOffset(offset)
+            request.setOffset(offset)
         );
     }
 
@@ -208,16 +208,16 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
 
     @Test
     public void testSetCountSame() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         assertSame(
-            find,
-            find.setCount(find.count())
+            request,
+            request.setCount(request.count())
         );
     }
 
     @Test
     public void testSetCountDifferent() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         final OptionalInt count = OptionalInt.of(
             999
         );
@@ -230,7 +230,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                 VALUE_TYPE,
                 QUERY
             ),
-            find.setCount(count)
+            request.setCount(count)
         );
     }
 
@@ -247,16 +247,16 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
 
     @Test
     public void testSetValueTypeSame() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         assertSame(
-            find,
-            find.setValueType(find.valueType())
+            request,
+            request.setValueType(request.valueType())
         );
     }
 
     @Test
     public void testSetValueTypeDifferent() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         final Optional<ValueType> valueType = Optional.of(
             SpreadsheetValueType.TEXT
         );
@@ -269,7 +269,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                 valueType,
                 QUERY
             ),
-            find.setValueType(valueType)
+            request.setValueType(valueType)
         );
     }
 
@@ -286,16 +286,16 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
 
     @Test
     public void testSetQuerySame() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         assertSame(
-            find,
-            find.setQuery(find.query())
+            request,
+            request.setQuery(request.query())
         );
     }
 
     @Test
     public void testSetQueryDifferent() {
-        final SpreadsheetCellQueryRequest find = SpreadsheetCellQueryRequest.empty();
+        final SpreadsheetCellQueryRequest request = SpreadsheetCellQueryRequest.empty();
         final Optional<SpreadsheetCellQuery> query = Optional.of(
             SpreadsheetCellQuery.parse("different123()")
         );
@@ -308,7 +308,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                 VALUE_TYPE,
                 query
             ),
-            find.setQuery(query)
+            request.setQuery(query)
         );
     }
 
@@ -410,20 +410,20 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
         );
     }
 
-    private void toUrlQueryStringAndCheck(final SpreadsheetCellQueryRequest find,
+    private void toUrlQueryStringAndCheck(final SpreadsheetCellQueryRequest request,
                                           final String expected) {
         this.toUrlQueryStringAndCheck(
-            find,
+            request,
             UrlQueryString.parse(expected)
         );
     }
 
-    private void toUrlQueryStringAndCheck(final SpreadsheetCellQueryRequest find,
+    private void toUrlQueryStringAndCheck(final SpreadsheetCellQueryRequest request,
                                           final UrlQueryString expected) {
         this.checkEquals(
             expected,
-            find.toUrlQueryString(),
-            find::toString
+            request.toUrlQueryString(),
+            request::toString
         );
     }
 
