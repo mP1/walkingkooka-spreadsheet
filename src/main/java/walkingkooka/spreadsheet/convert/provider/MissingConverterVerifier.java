@@ -61,6 +61,7 @@ import walkingkooka.net.header.MediaType;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.props.Properties;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -342,6 +343,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("Label123");
     private final static SpreadsheetError ERROR = SpreadsheetError.referenceNotFound(CELL);
 
+    private final static SpreadsheetComparatorSelector COMPARATOR_SELECTOR = SpreadsheetComparatorSelector.parse("test-comparator");
     private final static ConverterSelector CONVERTER_SELECTOR = ConverterSelector.parse("test-converter");
     private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR = CurrencyExchangeRaterSelector.parse("test-currency-exchange-rater");
     private final static SpreadsheetFormatterSelector FUNCTION_SELECTOR = SpreadsheetFormatterSelector.parse("test-function");
@@ -1514,6 +1516,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     SpreadsheetFormatterSelector.class,
                     SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_EXPRESSION_FUNCTION_SELECTOR
                     FUNCTION_SELECTOR
+                );
+            }
+
+            // text-to-spreadsheet-comparator-selector..................................................................
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    COMPARATOR_SELECTOR.text(),
+                    SpreadsheetComparatorSelector.class,
+                    SpreadsheetConvertersConverterProvider.PLUGINS, // TEXT_TO_SPREADSHEET_COMPARATOR_SELECTOR
+                    COMPARATOR_SELECTOR
                 );
             }
             
