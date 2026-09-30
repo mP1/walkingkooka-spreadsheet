@@ -737,6 +737,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.textToSpreadsheetName();
                 break;
+            case TEXT_TO_SPREADSHEET_PARSER_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToSpreadsheetParserSelector();
+                break;
             case TEXT_TO_SPREADSHEET_SELECTION_STRING:
                 this.noParameterCheck(copy);
 
@@ -1502,6 +1507,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TEXT_TO_SPREADSHEET_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_NAME_STRING);
 
+    private final static String TEXT_TO_SPREADSHEET_PARSER_SELECTOR_STRING = "text-to-spreadsheet-parser-selector";
+
+    final static ConverterName TEXT_TO_SPREADSHEET_PARSER_SELECTOR = ConverterName.with(TEXT_TO_SPREADSHEET_PARSER_SELECTOR_STRING);
+
     private final static String TEXT_TO_SPREADSHEET_SELECTION_STRING = "text-to-spreadsheet-selection";
 
     final static ConverterName TEXT_TO_SPREADSHEET_SELECTION = ConverterName.with(TEXT_TO_SPREADSHEET_SELECTION_STRING);
@@ -1832,6 +1841,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_SPREADSHEET_METADATA_COLOR),
             converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
             converterInfo(TEXT_TO_SPREADSHEET_NAME),
+            converterInfo(TEXT_TO_SPREADSHEET_PARSER_SELECTOR),
             converterInfo(TEXT_TO_SPREADSHEET_SELECTION),
             converterInfo(TEXT_TO_SPREADSHEET_TEXT),
             converterInfo(TEXT_TO_STORAGE_PATH),

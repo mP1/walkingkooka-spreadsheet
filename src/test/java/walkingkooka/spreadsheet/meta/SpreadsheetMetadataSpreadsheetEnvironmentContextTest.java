@@ -733,6 +733,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-spreadsheet-metadata-color\n" +
                 "    text-to-spreadsheet-metadata-property-name\n" +
                 "    text-to-spreadsheet-name\n" +
+                "    text-to-spreadsheet-parser-selector\n" +
                 "    text-to-spreadsheet-selection\n" +
                 "    text-to-spreadsheet-text\n" +
                 "    text-to-storage-path\n" +

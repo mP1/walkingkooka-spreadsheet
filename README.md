@@ -280,6 +280,7 @@ eg
 - [text-to-spreadsheet-metadata-property-name](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.java)
 - [text-to-spreadsheet-metadata-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetMetadataColor.java)
 - [text-to-spreadsheet-name](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetName.java)
+- [text-to-spreadsheet-parser-selector](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetParserSelector.java)
 - [text-to-spreadsheet-selection](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetSelection.java)
 - [text-to-spreadsheet-text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/textToSpreadsheetText.java)
 - [text-to-storage-path](https://github.com/mP1/walkingkooka-storage/blob/master/src/main/java/walkingkooka/storage/convert/StorageConverterTextToStoragePath.java)
