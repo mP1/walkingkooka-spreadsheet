@@ -961,6 +961,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToExpressionFunctionSelector() {
+        this.converterAndCheck(
+            "text-to-expression-function-selector",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToExpressionFunctionSelector()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToFlag() {
         this.converterAndCheck(
             "text-to-flag",
@@ -1745,6 +1754,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-environment-value-name text-to-environment-value-name\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-error text-to-error\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-expression text-to-expression\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-expression-function-selector text-to-expression-function-selector\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-flag text-to-flag\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-form-name text-to-form-name\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-has-host-address text-to-has-host-address\n" +

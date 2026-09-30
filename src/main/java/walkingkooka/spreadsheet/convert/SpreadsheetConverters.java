@@ -627,6 +627,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 hasValidatorSelector(),
                 textToConverterSelector(),
                 textToCurrencyExchangeRaterSelector(),
+                textToExpressionFunctionSelector(),
                 textToSpreadsheetFormatterSelector(),
                 textToSpreadsheetParserSelector(),
                 textToValidatorSelector()
@@ -1144,6 +1145,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> textToExpression() {
         return SpreadsheetConverterTextToExpression.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToExpressionFunctionSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToExpressionFunctionSelector() {
+        return SpreadsheetConverterTextToExpressionFunctionSelector.INSTANCE;
     }
 
     /**
