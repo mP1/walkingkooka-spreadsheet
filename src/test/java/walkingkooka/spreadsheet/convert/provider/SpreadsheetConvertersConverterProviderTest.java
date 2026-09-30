@@ -1133,6 +1133,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToSpreadsheetFormatterSelector() {
+        this.converterAndCheck(
+            "text-to-spreadsheet-formatter-selector",
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToSpreadsheetFormatterSelector()
+        );
+    }
+    
+    @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadata() {
         this.converterAndCheck(
             "text-to-spreadsheet-metadata",
