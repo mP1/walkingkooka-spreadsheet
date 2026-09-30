@@ -979,6 +979,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithTextToFormName() {
+        this.converterAndCheck(
+            "text-to-form-name",
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToFormName()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToHasHostAddress() {
         this.converterAndCheck(
             "text-to-has-host-address",
@@ -1087,6 +1097,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToNumberList() {
+        this.converterAndCheck(
+            "text-to-number-list",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToNumberList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToObject() {
         this.converterAndCheck(
             "text-to-object",
@@ -1137,25 +1156,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "text-to-spreadsheet-metadata-property-name",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textToSpreadsheetMetadataPropertyName()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithTextToFormName() {
-        this.converterAndCheck(
-            "text-to-form-name",
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.textToFormName()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithTextToNumberList() {
-        this.converterAndCheck(
-            "text-to-number-list",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.textToNumberList()
         );
     }
 
