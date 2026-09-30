@@ -1151,6 +1151,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithTextToSpreadsheetParserSelector() {
+        this.converterAndCheck(
+            "text-to-spreadsheet-parser-selector",
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToSpreadsheetParserSelector()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToSpreadsheetSelection() {
         this.converterAndCheck(
             "text-to-spreadsheet-selection",
@@ -1761,6 +1771,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-metadata-color text-to-spreadsheet-metadata-color\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-metadata-property-name text-to-spreadsheet-metadata-property-name\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-name text-to-spreadsheet-name\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-parser-selector text-to-spreadsheet-parser-selector\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-selection text-to-spreadsheet-selection\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-spreadsheet-text text-to-spreadsheet-text\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-storage-path text-to-storage-path\n" +

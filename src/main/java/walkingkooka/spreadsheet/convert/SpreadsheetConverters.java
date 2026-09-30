@@ -628,6 +628,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 textToConverterSelector(),
                 textToCurrencyExchangeRaterSelector(),
                 textToSpreadsheetFormatterSelector(),
+                textToSpreadsheetParserSelector(),
                 textToValidatorSelector()
             );
         }
@@ -1348,6 +1349,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetName() {
         return SpreadsheetConverterTextToSpreadsheetName.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetParserSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetParserSelector() {
+        return SpreadsheetConverterTextToSpreadsheetParserSelector.INSTANCE;
     }
 
     /**
