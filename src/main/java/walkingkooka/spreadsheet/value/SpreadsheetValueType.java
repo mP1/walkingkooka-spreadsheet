@@ -297,10 +297,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         EMAIL,
         SPREADSHEET_ERROR,
         NUMBER,
+        WHOLE_NUMBER,
         TEXT,
         TIME,
-        URL,
-        WHOLE_NUMBER
+        URL
     );
 
     /**
