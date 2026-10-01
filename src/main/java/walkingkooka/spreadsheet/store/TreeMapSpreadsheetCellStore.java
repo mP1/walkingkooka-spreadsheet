@@ -462,8 +462,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore,
                                                     final ValueType valueType) {
         final Function<Object, Boolean> filter = SpreadsheetValueType.ANY.equals(valueType) ?
             v -> Boolean.TRUE :
-            v -> valueType.equals(
-                SpreadsheetValueType.toValueType(v.getClass())
+            v -> valueType.test(
+                ValueType.fromClass(v.getClass())
                     .orElse(null)
             );
 

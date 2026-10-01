@@ -21,7 +21,6 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.validation.ValueType;
 
@@ -53,11 +52,11 @@ final class SpreadsheetEngineBasicFilterCellsPredicate implements Predicate<Spre
                                                        final SpreadsheetEngineContext context,
                                                        final SpreadsheetExpressionReferenceLoader loader) {
         this.valueType = Predicates.customToString(
-            valueType.isAny() ?
+            ValueType.ANY.equals(valueType) ?
                 v -> Boolean.TRUE :
                 v -> null != v &&
                     valueType.equals(
-                        SpreadsheetValueType.toValueType(v.getClass())
+                        ValueType.fromClass(v.getClass())
                             .orElse(null)
                     ),
             valueType.value()

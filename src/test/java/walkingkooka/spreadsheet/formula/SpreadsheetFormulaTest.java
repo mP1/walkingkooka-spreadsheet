@@ -3109,11 +3109,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.VALUE_TYPE_PROPERTY,
-                    "text123"
+                    "date"
                 ),
             SpreadsheetFormula.valueTypePatch(
                 Optional.of(
-                    ValueType.with("text123")
+                    ValueType.DATE
                 ),
                 JSON_NODE_MARSHALL_CONTEXT
             )
@@ -3252,7 +3252,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
             .setText("=1");
         final Optional<ValueType> valueType = Optional.of(
-            ValueType.with("text123")
+            ValueType.TIME
         );
 
         this.patchAndCheck(

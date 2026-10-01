@@ -2114,7 +2114,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testCellsValueTypePatch() {
-        final Optional<ValueType> valueType1 = Optional.of(ValueType.with("hello-value-type"));
+        final Optional<ValueType> valueType1 = Optional.of(ValueType.NUMBER);
         final Optional<ValueType> valueType2 = Optional.empty();
 
         this.cellsValueTypePatchAndCheck(
@@ -2128,7 +2128,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 "  \"cells\": {\n" +
                 "    \"A1\": {\n" +
                 "      \"formula\": {\n" +
-                "        \"valueType\": \"hello-value-type\"\n" +
+                "        \"valueType\": \"number\"\n" +
                 "      }\n" +
                 "    },\n" +
                 "    \"A2\": {\n" +
@@ -2866,14 +2866,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testValueTypePatch() {
         final Optional<ValueType> valueType = Optional.of(
-            ValueType.with("text-123")
+            ValueType.TEXT
         );
 
         this.checkEquals(
             JsonNode.parse(
                 "{\n" +
                     "  \"formula\": {\n" +
-                    "    \"valueType\": \"text-123\"\n" +
+                    "    \"valueType\": \"text\"\n" +
                     "  }\n" +
                     "}"
             ),
@@ -3564,16 +3564,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchWithValueType() {
-        final Optional<ValueType> valueType = Optional.of(
-            ValueType.with("hello-value-type")
-        );
+        final Optional<ValueType> valueType = Optional.of(ValueType.TEXT);
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY
                 .setText("=1")
                 .setValueType(
                     Optional.of(
-                        ValueType.with("lost-value-type")
+                        ValueType.NUMBER
                     )
                 )
         );
@@ -3617,7 +3615,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setText("=1")
                 .setValueType(
                     Optional.of(
-                        ValueType.with("lost-value-type")
+                        ValueType.TEXT
                     )
                 )
         );
@@ -4224,7 +4222,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetFormula.EMPTY.setText("'will be patched over")
                     .setValueType(
                         Optional.of(
-                            ValueType.with("lost-value-type")
+                            ValueType.TEXT
                         )
                     )
             ).setStyle(
@@ -4247,18 +4245,18 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
             );
 
-        final Optional<ValueType> typeName = Optional.of(
-            ValueType.with("patched-value-type")
+        final Optional<ValueType> valueType = Optional.of(
+            ValueType.NUMBER
         );
 
         final SpreadsheetDelta after = before.setCells(
             Sets.of(
                 a1.setFormula(
                     a1.formula()
-                        .setValueType(typeName)
+                        .setValueType(valueType)
                 ),
                 A2.setFormula(
-                    SpreadsheetFormula.EMPTY.setValueType(typeName)
+                    SpreadsheetFormula.EMPTY.setValueType(valueType)
                 )
             )
         );
@@ -4268,7 +4266,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             A1A2,
             SpreadsheetDelta.formulaPatch(
                 SpreadsheetFormula.valueTypePatch(
-                    typeName,
+                    valueType,
                     JSON_NODE_MARSHALL_CONTEXT
                 )
             ),

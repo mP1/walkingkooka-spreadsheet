@@ -500,7 +500,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
                         SpreadsheetFormula.EMPTY.setText("=1+2")
                             .setValueType(
                                 Optional.of(
-                                    ValueType.with("hello-value-type")
+                                    ValueType.DATE_TIME
                                 )
                             )
                     ),
@@ -511,7 +511,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             "A1-XFD1048576.valueType.json",
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
             "{\n" +
-                "  \"A1\": \"hello-value-type\",\n" +
+                "  \"A1\": \"date-time\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );

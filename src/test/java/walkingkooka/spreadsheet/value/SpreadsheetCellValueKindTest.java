@@ -67,7 +67,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setValueType(
                     Optional.of(
-                        ValueType.with("hello-value-type")
+                        ValueType.TEXT
                     )
                 )
             ).setCurrency(OPTIONAL_CURRENCY)
@@ -251,7 +251,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValueType(
                 Optional.of(
-                    ValueType.with("hello-value-type")
+                    ValueType.TEXT
                 )
             )
         ).setCurrency(

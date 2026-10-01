@@ -98,7 +98,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
     );
 
     private final static Optional<ValueType> VALUE_TYPE = Optional.of(
-        ValueType.with("hello")
+        ValueType.TEXT
     );
 
     private final static Optional<TextNode> FORMATTED_VALUE = Optional.of(
