@@ -83,7 +83,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValueType ABSOLUTE_URL = ValueType.fromClassOrFail(AbsoluteUrl.class);
 
     public final static ValueType ALPHA_HSV_COLOR = ValueType.register(
-        "color(hsv-alpha)",
+        "color/hsv-alpha",
         Color.BLACK_HSV_50_ALPHA.getClass()
     );
 
@@ -93,7 +93,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     );
 
     public final static ValueType ALPHA_RGB_COLOR = ValueType.register(
-        "color(rgb-alpha)",
+        "color/rgb-alpha",
         Color.BLACK_50_ALPHA.getClass()
     );
 
