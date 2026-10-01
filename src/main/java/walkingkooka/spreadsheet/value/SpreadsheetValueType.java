@@ -172,7 +172,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         HsvColor.class
     );
 
-    public final static ValueType JSON_NODE = ValueType.fromClassOrFail(JsonNode.class);
+    public final static ValueType JSON = ValueType.fromClassOrFail(JsonNode.class);
 
     public final static ValueType JSON_ARRAY = ValueType.fromClassOrFail(JsonArray.class);
 
