@@ -606,7 +606,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
             resolveParsers(value)
                 .apply(VALUE_OR_EXPRESSION_IDENTIFIER)
                 .transform(SpreadsheetFormulaParsers::transformValueOrExpression),
-            Optional.of(SpreadsheetValueType.VALUE_OR_EXPRESSION)
+            Optional.of(SpreadsheetValueType.ANY)
         );
     }
 

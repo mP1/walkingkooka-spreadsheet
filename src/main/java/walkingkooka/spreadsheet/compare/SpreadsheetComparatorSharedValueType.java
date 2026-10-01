@@ -45,7 +45,10 @@ final class SpreadsheetComparatorSharedValueType extends SpreadsheetComparatorSh
     @Override
     int compareNonNull(final ValueType left,
                        final ValueType right) {
-        return left.compareTo(right);
+        return left.value()
+            .compareTo(
+                right.value()
+            );
     }
 
     // Object...................................................................,.......................................

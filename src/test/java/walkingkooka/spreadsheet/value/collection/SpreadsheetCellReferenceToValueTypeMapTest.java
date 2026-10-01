@@ -47,7 +47,7 @@ public final class SpreadsheetCellReferenceToValueTypeMapTest implements MapTest
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
     private final static Optional<ValueType> VALUE1 = Optional.of(
-        ValueType.with("hello-type")
+        ValueType.TEXT
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
@@ -205,7 +205,7 @@ public final class SpreadsheetCellReferenceToValueTypeMapTest implements MapTest
         this.marshallAndCheck(
             this.createMap(),
             "{\n" +
-                "  \"A1\": \"hello-type\",\n" +
+                "  \"A1\": \"text\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );
@@ -215,7 +215,7 @@ public final class SpreadsheetCellReferenceToValueTypeMapTest implements MapTest
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": \"hello-type\",\n" +
+                "  \"A1\": \"text\",\n" +
                 "  \"A2\": null\n" +
                 "}",
             this.createMap()
@@ -242,7 +242,7 @@ public final class SpreadsheetCellReferenceToValueTypeMapTest implements MapTest
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%22hello-type%22,%0A%20%20%22A2%22:%20null%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22text%22,%0A%20%20%22A2%22:%20null%0A%7D"
         );
     }
 
