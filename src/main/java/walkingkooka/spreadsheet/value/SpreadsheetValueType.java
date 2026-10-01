@@ -280,10 +280,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         DATE_TIME,
         EMAIL,
         NUMBER,
+        WHOLE_NUMBER,
         TEXT,
         TIME,
-        URL,
-        WHOLE_NUMBER
+        URL
     );
 
     /**
