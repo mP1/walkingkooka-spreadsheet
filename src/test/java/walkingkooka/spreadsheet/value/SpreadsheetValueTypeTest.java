@@ -878,9 +878,9 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testTypeWithJsonNode() {
+    public void testTypeWithJson() {
         this.typeAndCheck(
-            SpreadsheetValueType.JSON_NODE,
+            SpreadsheetValueType.JSON,
             JsonNode.class
         );
     }
