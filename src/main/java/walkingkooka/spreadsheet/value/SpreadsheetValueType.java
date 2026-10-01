@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.json.JsonArray;
 import walkingkooka.tree.json.JsonBoolean;
@@ -224,6 +225,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public final static ValueType RGB_COLOR = ValueType.register(
         "color/rgb",
         RgbColor.class
+    );
+
+    public final static ValueType REFERENCE = ValueType.register(
+        "reference",
+        SpreadsheetSelection.class
     );
 
     public final static ValueType RELATIVE_URL = ValueType.fromClassOrFail(RelativeUrl.class);
