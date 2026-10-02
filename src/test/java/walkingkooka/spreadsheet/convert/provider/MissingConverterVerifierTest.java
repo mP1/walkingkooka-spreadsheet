@@ -174,6 +174,13 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
+    public void testVerifyAndCheckWithWithSpreadsheetMetadataDefaultsSortConverter() {
+        this.spreadsheetMetadataDefaultVerifyAndCheck(
+            SpreadsheetMetadataPropertyName.SORT_CONVERTER
+        );
+    }
+
+    @Test
     public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingValidationConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
