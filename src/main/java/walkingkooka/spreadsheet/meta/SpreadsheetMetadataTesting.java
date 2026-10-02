@@ -247,7 +247,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             EXPRESSION_NUMBER_KIND
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, style, text-node, template, net, basic)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CURRENCY_EXCHANGE_RATER,
             CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")

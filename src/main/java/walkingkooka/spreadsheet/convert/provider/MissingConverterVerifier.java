@@ -782,84 +782,76 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         }
 
         // color........................................................................................................
-        {
+        if (formatting || formula || scripting) {
             // color-to-color...........................................................................................
-            if (formatting || formula || scripting) {
-                verifier.addIfConversionFail(
-                    Color.BLACK,
-                    Lists.of(
-                        HslColor.class,
-                        HsvColor.class,
-                        RgbColor.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_COLOR
-                    IS_COLOR
-                );
-            }
+            verifier.addIfConversionFail(
+                Color.BLACK,
+                Lists.of(
+                    HslColor.class,
+                    HsvColor.class,
+                    RgbColor.class
+                ),
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_COLOR
+                IS_COLOR
+            );
 
             // color-to-number..........................................................................................
-            if (formatting || formula || scripting) {
-                verifier.addIfConversionFail(
-                    Color.BLACK,
-                    NUMBER_TYPES_WITHOUT_BYTE_SHORT,
-                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
-                    IS_NUMBER
-                );
+            verifier.addIfConversionFail(
+                Color.BLACK,
+                NUMBER_TYPES_WITHOUT_BYTE_SHORT,
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                IS_NUMBER
+            );
 
-                final RgbColor rgb = Color.parseRgb("#12345678");
+            final RgbColor rgb = Color.parseRgb("#12345678");
 
-                verifier.addIfConversionFail(
-                    rgb.alpha(),
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
-                    IS_NUMBER
-                );
+            verifier.addIfConversionFail(
+                rgb.alpha(),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                IS_NUMBER
+            );
 
-                verifier.addIfConversionFail(
-                    rgb.red(),
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
-                    IS_NUMBER
-                );
+            verifier.addIfConversionFail(
+                rgb.red(),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                IS_NUMBER
+            );
 
-                verifier.addIfConversionFail(
-                    rgb.green(),
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
-                    IS_NUMBER
-                );
+            verifier.addIfConversionFail(
+                rgb.green(),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                IS_NUMBER
+            );
 
-                verifier.addIfConversionFail(
-                    rgb.blue(),
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
-                    IS_NUMBER
-                );
-            }
+            verifier.addIfConversionFail(
+                rgb.blue(),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
+                IS_NUMBER
+            );
 
             // text-to-color............................................................................................
-            if (formatting || formula || scripting) {
-                final String color = "#123456";
+            final String color = "#123456";
 
-                verifier.addIfConversionFail(
-                    color,
-                    Color.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR,
-                    Color.parseRgb(color)
-                );
-            }
+            verifier.addIfConversionFail(
+                color,
+                Color.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR,
+                Color.parseRgb(color)
+            );
 
             // text-to-spreadsheet-color-name...........................................................................
-            if (formatting || formula || scripting) {
-                final SpreadsheetColorName spreadsheetColorName = SpreadsheetColorName.BLACK;
+            final SpreadsheetColorName spreadsheetColorName = SpreadsheetColorName.BLACK;
 
-                verifier.addIfConversionFail(
-                    spreadsheetColorName.value(),
-                    SpreadsheetColorName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME,
-                    spreadsheetColorName
-                );
-            }
+            verifier.addIfConversionFail(
+                spreadsheetColorName.value(),
+                SpreadsheetColorName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME,
+                spreadsheetColorName
+            );
         }
 
         // currency.....................................................................................................
@@ -1070,7 +1062,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         // environment..................................................................................................
         {
-            if (formula || scripting) {
+            if (formatting || formula || scripting) {
                 final Environment environment = Environment.empty();
 
                 verifier.addIfConversionFail(
@@ -1140,7 +1132,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         // error........................................................................................................
         {
-            if (formula || scripting) {
+            if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     ERROR,
                     SpreadsheetError.class,
@@ -1162,7 +1154,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         // expression...................................................................................................
         {
-            if (query || formatting || formula || scripting || validation) {
+            if (formatting || formula || query || scripting || validation) {
                 verifier.addIfConversionFail(
                     "1+sum(2)",
                     Expression.class,
@@ -1173,9 +1165,8 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         }
 
         // json.........................................................................................................
-        {
+        if (formatting || formula || scripting | validation) {
             // to-json..................................................................................................
-            if (formula || scripting | validation) {
                 verifier.addIfConversionFail(
                     "Hello",
                     Lists.of(
@@ -1189,9 +1180,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     SpreadsheetConvertersConverterProvider.JSON, // TO_JSON,
                     IS_JSON
                 );
-            }
 
-            if (formula || scripting) {
                 verifier.addIfConversionFail(
                     context.marshall(spreadsheetCell)
                         .toString(),
@@ -1199,20 +1188,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     SpreadsheetConvertersConverterProvider.JSON, // textToObject
                     spreadsheetCell
                 );
-            }
 
-            // to-json-pointer..........................................................................................
-            if (formula || scripting | validation) {
+                // to-json-pointer..........................................................................................
                 verifier.addIfConversionFail(
                     JSON_POINTER.toString(),
                     JsonPointer.class,
                     SpreadsheetConvertersConverterProvider.JSON, // TO_JSON,
                     JSON_POINTER
                 );
-            }
 
-            // to-json-selector..........................................................................................
-            if (formula || scripting | validation) {
+                // to-json-selector..........................................................................................
                 verifier.addIfConversionFail(
                     JSON_SELECTOR.toString(),
                     JsonSelector.class,
@@ -1220,77 +1205,64 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     JSON_SELECTOR
                 );
             }
-        }
 
         // locale.......................................................................................................
-        {
-            if (formatting || formula || query || scripting) {
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        locale.toLanguageTag(),
-                        locale
-                    ),
-                    DateTimeSymbols.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE, // DATE_TIME_SYMBOLS
-                    dateTimeSymbols
-                );
-            }
+        if (formatting || formula || query || scripting) {
+            verifier.addIfConversionFail(
+                Lists.of(
+                    locale.toLanguageTag(),
+                    locale
+                ),
+                DateTimeSymbols.class,
+                SpreadsheetConvertersConverterProvider.LOCALE, // DATE_TIME_SYMBOLS
+                dateTimeSymbols
+            );
 
-            if (formatting || formula || query || scripting) {
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        locale.toLanguageTag(),
-                        locale
-                    ),
-                    DecimalNumberSymbols.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE, // DECIMAL_NUMBER_SYMBOLS
-                    decimalNumberSymbols
-                );
-            }
+            verifier.addIfConversionFail(
+                Lists.of(
+                    locale.toLanguageTag(),
+                    locale
+                ),
+                DecimalNumberSymbols.class,
+                SpreadsheetConvertersConverterProvider.LOCALE, // DECIMAL_NUMBER_SYMBOLS
+                decimalNumberSymbols
+            );
 
             // text-to-locale...............................................................................................
-            if (formula || query || scripting) {
-                verifier.addIfConversionFail(
-                    locale.toLanguageTag(),
-                    Locale.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE, // TEXT_TO_LOCALE
-                    locale
-                );
-            }
+            verifier.addIfConversionFail(
+                locale.toLanguageTag(),
+                Locale.class,
+                SpreadsheetConvertersConverterProvider.LOCALE, // TEXT_TO_LOCALE
+                locale
+            );
 
-            if (formula || query || scripting) {
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        locale,
-                        spreadsheetCell
-                    ),
-                    Locale.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE, // TEXT_TO_LOCALE
-                    locale
-                );
-            }
+            verifier.addIfConversionFail(
+                Lists.of(
+                    locale,
+                    spreadsheetCell
+                ),
+                Locale.class,
+                SpreadsheetConvertersConverterProvider.LOCALE, // TEXT_TO_LOCALE
+                locale
+            );
 
             // text-to-locale-language-tag..............................................................................
-            if (formula || query || scripting) {
-                verifier.addIfConversionFail(
-                    languageTag.value(),
-                    LocaleLanguageTag.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
-                    languageTag
-                );
-            }
+            verifier.addIfConversionFail(
+                languageTag.value(),
+                LocaleLanguageTag.class,
+                SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
+                languageTag
+            );
 
-            if (formula || query || scripting) {
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        locale,
-                        spreadsheetCell
-                    ),
-                    LocaleLanguageTag.class,
-                    SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
-                    languageTag
-                );
-            }
+            verifier.addIfConversionFail(
+                Lists.of(
+                    locale,
+                    spreadsheetCell
+                ),
+                LocaleLanguageTag.class,
+                SpreadsheetConvertersConverterProvider.LOCALE, // text-to-locale-language-tag
+                languageTag
+            );
         }
 
         // logging...................................................................................................
@@ -1314,7 +1286,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         // net..........................................................................................................
         {
-            if (formula | query | scripting) {
+            if (formatting | formula | query | scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         ABSOLUTE_URL.text(),
@@ -1659,7 +1631,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         // storage......................................................................................................
         {
-            if (formula || scripting) {
+            if (formatting || formula || scripting) {
                 final String text = "BinaryTextContent123";
 
                 textToPath(

@@ -922,7 +922,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    time\n" +
                 "  formattingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, style, text-node, template, net, basic)\"\n" +
+                "      \"(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
                 "  formattingCurrencyExchangeRater\n" +
                 "    storage-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +

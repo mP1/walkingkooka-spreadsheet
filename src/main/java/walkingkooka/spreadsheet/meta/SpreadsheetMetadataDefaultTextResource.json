@@ -77,7 +77,7 @@
   "defaultYear": 1900,
   "exporters": "",
   "expressionNumberKind": "BIG_DECIMAL",
-  "formattingConverter": "collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net, basic)",
+  "formattingConverter": "collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)",
   "formattingCurrencyExchangeRater": "storage-path-properties(\"/samples/CurrencyExchangeRates.properties\")",
   "formHandlers": "basic",
   "formulaConverter": "collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)",
