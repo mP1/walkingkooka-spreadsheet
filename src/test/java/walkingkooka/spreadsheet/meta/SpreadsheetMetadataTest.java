@@ -730,7 +730,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         this.toStringAndCheck(
             converter,
-            "formulaConverter: collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net, basic)"
+            "formulaConverter: collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)"
         );
     }
 
