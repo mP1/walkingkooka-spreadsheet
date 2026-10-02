@@ -117,13 +117,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testVerifyAndCheckWithWithFindConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
-        this.verifyAndCheck(
-            SpreadsheetMetadataPropertyName.QUERY_CONVERTER
-        );
-    }
-
-    @Test
     public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
@@ -134,6 +127,13 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     public void testVerifyAndCheckWithWithFormattingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
+        );
+    }
+
+    @Test
+    public void testVerifyAndCheckWithWithQueryConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
+        this.verifyAndCheck(
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER
         );
     }
 
