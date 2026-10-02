@@ -2891,7 +2891,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             ),
             "Formula\n" +
                 "  valueType:\n" +
-                "    text\n"
+                "    text/Text\n"
         );
     }
 
@@ -3109,7 +3109,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.VALUE_TYPE_PROPERTY,
-                    "date"
+                    "Date"
                 ),
             SpreadsheetFormula.valueTypePatch(
                 Optional.of(
@@ -3345,7 +3345,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 ).setValue(
                     Optional.of(123)
                 ),
-            "\"1+2\" valueType=text value=123"
+            "\"1+2\" valueType=text/Text value=123"
         );
     }
 
@@ -3358,7 +3358,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 ).setValue(
                     Optional.of("Hello")
                 ),
-            "\"1+2\" valueType=text value=\"Hello\""
+            "\"1+2\" valueType=text/Text value=\"Hello\""
         );
     }
 

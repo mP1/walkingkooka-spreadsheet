@@ -1089,7 +1089,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 .setValueType(
                     parseCellComponent(
                         list.get(2),
-                        ValueType::fromClassNameOrFail
+                        ValueType::parseOrFail
                     )
                 ).setValue(
                     unmarshallCellComponentWithType(

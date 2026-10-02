@@ -719,7 +719,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 SpreadsheetDelta.NO_TOTAL_WIDTH,
                 SpreadsheetDelta.NO_TOTAL_HEIGHT
             ),
-            "home: A1 width: 100.0 height: 40.0 anchoredSelection: A1:B2 BOTTOM_RIGHT cells: A1 \"1\", B2 \"2\", C3 \"3\" forms: Form111 fields=A1 \"Label111\" text"
+            "home: A1 width: 100.0 height: 40.0 anchoredSelection: A1:B2 BOTTOM_RIGHT cells: A1 \"1\", B2 \"2\", C3 \"3\" forms: Form111 fields=A1 \"Label111\" text/Text"
         );
     }
 
@@ -1157,7 +1157,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 "          label:\n" +
                 "            \"Label111\"\n" +
                 "          type:\n" +
-                "            text\n"
+                "            text/Text\n"
         );
     }
 
@@ -1598,7 +1598,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 "          label:\n" +
                 "            \"Label111\"\n" +
                 "          type:\n" +
-                "            text\n" +
+                "            text/Text\n" +
                 "  labels:\n" +
                 "    LabelA1A: A1\n" +
                 "    LabelA1B: A1\n" +

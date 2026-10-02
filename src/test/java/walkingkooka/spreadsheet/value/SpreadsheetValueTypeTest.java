@@ -56,7 +56,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.text.CharSequences;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonArray;
@@ -84,7 +84,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType>,
-    HasCurrencyCodeTesting {
+    HasCurrencyCodeTesting,
+    ParseStringTesting<Optional<ValueType>> {
 
     static {
         SpreadsheetStartup.init(); // required so all json marshaller/unmarshallers are registered.
@@ -100,10 +101,10 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                 SpreadsheetValueType.DATE_TIME,
                 SpreadsheetValueType.EMAIL,
                 SpreadsheetValueType.NUMBER,
-                SpreadsheetValueType.WHOLE_NUMBER,
                 SpreadsheetValueType.TEXT,
                 SpreadsheetValueType.TIME,
-                SpreadsheetValueType.URL
+                SpreadsheetValueType.URL,
+                SpreadsheetValueType.WHOLE_NUMBER
             ),
             new ArrayList<>(
                 SpreadsheetValueType.ALL
@@ -111,43 +112,48 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
-    // fromClassName....................................................................................................
+    // parse............................................................................................................
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
 
     @Test
-    public void testFromClassNameWithCell() {
-        this.fromClassNameAndCheck(
+    public void testParseWithCell() {
+        this.parseStringAndCheck(
             SpreadsheetSelection.A1,
             SpreadsheetValueType.CELL
         );
     }
 
     @Test
-    public void testFromClassNameWithCellRange() {
-        this.fromClassNameAndCheck(
+    public void testParseWithCellRange() {
+        this.parseStringAndCheck(
             SpreadsheetSelection.parseCellRange("A1:B2"),
             SpreadsheetValueType.CELL_RANGE
         );
     }
 
     @Test
-    public void testFromClassNameWithColumn() {
-        this.fromClassNameAndCheck(
+    public void testParseWithColumn() {
+        this.parseStringAndCheck(
             SpreadsheetSelection.parseColumn("A"),
             SpreadsheetValueType.COLUMN
         );
     }
 
     @Test
-    public void testFromClassNameWithColumnRange() {
-        this.fromClassNameAndCheck(
+    public void testParseWithColumnRange() {
+        this.parseStringAndCheck(
             SpreadsheetSelection.parseColumnRange("A:B"),
             SpreadsheetValueType.COLUMN_RANGE
         );
     }
 
     @Test
-    public void testFromClassNameWithCurrencyValue() {
-        this.fromClassNameAndCheck(
+    public void testParseWithCurrencyValue() {
+        this.parseStringAndCheck(
             CurrencyValue.with(
                 123,
                 CURRENCY_CODE
@@ -157,32 +163,32 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testFromClassNameWithLabel() {
-        this.fromClassNameAndCheck(
+    public void testParseWithLabel() {
+        this.parseStringAndCheck(
             SpreadsheetSelection.labelName("Label123"),
             SpreadsheetValueType.LABEL
         );
     }
 
     @Test
-    public void testFromClassNameWithRow() {
-        this.fromClassNameAndCheck(
+    public void testParseWithRow() {
+        this.parseStringAndCheck(
             SpreadsheetSelection.parseRow("12"),
             SpreadsheetValueType.ROW
         );
     }
 
     @Test
-    public void testFromClassNameWithRowRange() {
-        this.fromClassNameAndCheck(
+    public void testParseWithRowRange() {
+        this.parseStringAndCheck(
             SpreadsheetSelection.parseRowRange("12:34"),
             SpreadsheetValueType.ROW_RANGE
         );
     }
 
     @Test
-    public void testFromClassNameWithAlphaHslColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithAlphaHslColor() {
+        this.parseStringAndCheck(
             Color.BLACK.toHsl()
                 .set(
                     HslColorComponent.alpha(0.5f)
@@ -192,8 +198,8 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testFromClassNameWithAlphaHsvColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithAlphaHsvColor() {
+        this.parseStringAndCheck(
             Color.BLACK.toHsv()
                 .set(
                     HsvColorComponent.alpha(0.5f)
@@ -203,8 +209,8 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testFromClassNameWithAlphaRgbColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithAlphaRgbColor() {
+        this.parseStringAndCheck(
             Color.BLACK.set(
                 RgbColorComponent.alpha((byte) 127)
             ),
@@ -213,119 +219,133 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testFromClassNameWithColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithColor() {
+        this.parseStringAndCheck(
             Color.class,
             SpreadsheetValueType.COLOR
         );
     }
 
     @Test
-    public void testFromClassNameWithHslColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithHslColor() {
+        this.parseStringAndCheck(
             HslColor.class,
             SpreadsheetValueType.HSL_COLOR
         );
     }
 
     @Test
-    public void testFromClassNameWithHsvColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithHsvColor() {
+        this.parseStringAndCheck(
             HsvColor.class,
             SpreadsheetValueType.HSV_COLOR
         );
     }
 
     @Test
-    public void testFromClassNameWithOpaqueHslColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithOpaqueHslColor() {
+        this.parseStringAndCheck(
             Color.BLACK.toHsl(),
             SpreadsheetValueType.OPAQUE_HSL_COLOR
         );
     }
 
     @Test
-    public void testFromClassNameWithOpaqueHsvColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithOpaqueHsvColor() {
+        this.parseStringAndCheck(
             Color.BLACK.toHsv(),
             SpreadsheetValueType.OPAQUE_HSV_COLOR
         );
     }
 
     @Test
-    public void testFromClassNameWithOpaqueRgbColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithOpaqueRgbColor() {
+        this.parseStringAndCheck(
             Color.BLACK,
             SpreadsheetValueType.OPAQUE_RGB_COLOR
         );
     }
 
     @Test
-    public void testFromClassNameWithRgbColor() {
-        this.fromClassNameAndCheck(
+    public void testParseWithRgbColor() {
+        this.parseStringAndCheck(
             RgbColor.class,
             SpreadsheetValueType.RGB_COLOR
         );
     }
 
     @Test
-    public void testFromClassNameWithExpressionNumber() {
-        this.fromClassNameAndCheck(
+    public void testParseWithExpressionNumber() {
+        this.parseStringAndCheck(
             ExpressionNumberKind.BIG_DECIMAL.zero(),
             SpreadsheetValueType.NUMBER
         );
     }
 
     @Test
-    public void testFromClassNameWithString() {
-        this.fromClassNameAndCheck(
+    public void testParseWithString() {
+        this.parseStringAndCheck(
             String.class,
-            SpreadsheetValueType.TEXT
+            ValueType.fromClassOrFail(String.class)
         );
     }
 
     @Test
-    public void testFromClassNameWithSpreadsheetError() {
-        this.fromClassNameAndCheck(
+    public void testParseWithSpreadsheetError() {
+        this.parseStringAndCheck(
             SpreadsheetError.class,
             SpreadsheetValueType.SPREADSHEET_ERROR
         );
     }
 
     @Test
-    public void testFromClassNameWithValidationError() {
-        this.fromClassNameAndCheck(
+    public void testParseWithValidationError() {
+        this.parseStringAndCheck(
             ValidationError.class,
             SpreadsheetValueType.VALIDATION_ERROR
         );
     }
 
-    private void fromClassNameAndCheck(final Object value,
-                                       final ValueType expected) {
-        this.fromClassNameAndCheck(
+    private void parseStringAndCheck(final Object value,
+                                     final ValueType expected) {
+        this.parseStringAndCheck(
             value.getClass(),
             expected
         );
     }
 
-    private void fromClassNameAndCheck(final Class<?> klass,
-                                       final ValueType expected) {
-        this.fromClassNameAndCheck(
-            klass.getSimpleName(),
+    private void parseStringAndCheck(final Class<?> klass,
+                                     final ValueType expected) {
+        this.parseStringAndCheck(
+            klass.getName(),
             expected
         );
     }
 
-    private void fromClassNameAndCheck(final String className,
-                                       final ValueType expected) {
-        this.checkEquals(
-            Optional.of(expected),
-            ValueType.fromClassName(className),
-            () -> "ValueType.fromClassName " + CharSequences.quoteAndEscape(className)
+    private void parseStringAndCheck(final String text,
+                                     final ValueType expected) {
+        this.parseStringAndCheck(
+            text,
+            Optional.of(expected)
         );
     }
 
-    // toValueType......................................................................................................
+    @Override
+    public Optional<ValueType> parseString(final String text) {
+        return ValueType.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
+    }
+
+    // fromClass........................................................................................................
 
     @Test
     public void testFromClassTypeWithAbsoluteUrl() {
@@ -422,7 +442,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     public void testFromClassTypeWithCsvStringList() {
         this.fromClassAndCheck(
             CsvStringList.class,
-            SpreadsheetValueType.CSV_LIST
+            SpreadsheetValueType.CSV
         );
     }
 
@@ -656,7 +676,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                                    final String expected) {
         this.fromClassAndCheck(
             type,
-            ValueType.fromClassName(expected)
+            ValueType.parse(expected)
         );
     }
 
@@ -784,7 +804,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     @Test
     public void testTypeWithCsvList() {
         this.typeAndCheck(
-            SpreadsheetValueType.CSV_LIST,
+            SpreadsheetValueType.CSV,
             CsvStringList.class
         );
     }
@@ -914,30 +934,6 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.typeAndCheck(
             SpreadsheetValueType.LABEL,
             SpreadsheetLabelName.class
-        );
-    }
-
-    @Test
-    public void testTypeWithLocalDate() {
-        this.typeAndCheck(
-            SpreadsheetValueType.LOCAL_DATE,
-            LocalDate.class
-        );
-    }
-
-    @Test
-    public void testTypeWithLocalDateTime() {
-        this.typeAndCheck(
-            SpreadsheetValueType.LOCAL_DATE_TIME,
-            LocalDateTime.class
-        );
-    }
-
-    @Test
-    public void testTypeWithLocalTime() {
-        this.typeAndCheck(
-            SpreadsheetValueType.LOCAL_TIME,
-            LocalTime.class
         );
     }
 
@@ -1087,7 +1083,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     private void typeAndCheck(final String valueType,
                               final Class<?> expected) {
         this.typeAndCheck(
-            ValueType.fromClassNameOrFail(valueType),
+            ValueType.parseOrFail(valueType),
             expected
         );
     }
@@ -1123,7 +1119,10 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
             final ValueType valueType = ((ValueType) constant.get(null));
 
-            if(ValueType.ANY.equals(valueType)) {
+            if(valueType.type() == Object.class) {
+                continue;
+            }
+            if(ValueType.NUMBER.equals(valueType)) {
                 continue;
             }
 

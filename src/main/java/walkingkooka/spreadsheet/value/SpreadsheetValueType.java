@@ -17,29 +17,11 @@
 
 package walkingkooka.spreadsheet.value;
 
-import walkingkooka.collect.list.BooleanList;
-import walkingkooka.collect.list.CsvStringList;
-import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.HslColor;
 import walkingkooka.color.HsvColor;
 import walkingkooka.color.RgbColor;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyValue;
-import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.datetime.LocalDateList;
-import walkingkooka.datetime.LocalDateTimeList;
-import walkingkooka.datetime.LocalTimeList;
-import walkingkooka.environment.Environment;
-import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.math.NumberList;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.DataUrl;
-import walkingkooka.net.MailToUrl;
-import walkingkooka.net.RelativeUrl;
-import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.formula.parser.ConditionRightEqualsSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -51,224 +33,220 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
-import walkingkooka.tree.json.JsonArray;
-import walkingkooka.tree.json.JsonBoolean;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNull;
-import walkingkooka.tree.json.JsonNumber;
-import walkingkooka.tree.json.JsonObject;
-import walkingkooka.tree.json.JsonString;
-import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValueType;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Currency;
-import java.util.List;
 import java.util.Set;
 
 /**
  * A list of possible(supported) spreadsheet value types.
  * A few helpers are provided to help translate {@link ValueType} to and from its equivalent java {@link Class}.
- * Aliases or apparent duplicates exist such as {@link #DATE} and {@link #LOCAL_DATE} which should support
- * marshalling/unmarshalling values between {@link ValueType} and java object instances.
+ * Aliases or apparent duplicates exist such as {@link #DATE} which should support marshalling/unmarshalling values
+ * between {@link ValueType} and java object instances.
  */
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType ANY = ValueType.ANY;
 
-    public static final ValueType ABSOLUTE_URL = ValueType.fromClassOrFail(AbsoluteUrl.class);
-
-    public final static ValueType ALPHA_HSV_COLOR = ValueType.register(
-        "color/hsv-alpha",
-        Color.BLACK_HSV_50_ALPHA.getClass()
-    );
-
-    public final static ValueType ALPHA_HSL_COLOR = ValueType.register(
-        "color/hsl-alpha",
-        Color.BLACK_HSL_50_ALPHA.getClass()
-    );
-
-    public final static ValueType ALPHA_RGB_COLOR = ValueType.register(
-        "color/rgb-alpha",
-        Color.BLACK_50_ALPHA.getClass()
-    );
-
-    public static final ValueType BOOLEAN = ValueType.BOOLEAN;
-
-    public static final ValueType BOOLEAN_LIST = ValueType.fromClassOrFail(BooleanList.class);
-
-    public static final ValueType CELL = ValueType.register(
-        "reference/cell",
-        SpreadsheetCellReference.class
-    );
-
-    public static final ValueType CELL_RANGE = ValueType.register(
-        "reference/cell-range",
-        SpreadsheetCellRangeReference.class
-    );
-
-    public static final ValueType CHOICE_LIST = ValueType.fromClassOrFail(ValidationChoiceList.class);
-
+    // color............................................................................................................
 
     public final static ValueType COLOR = ValueType.register(
         "color",
         Color.class
     );
 
-    public static final ValueType COLUMN = ValueType.register(
-        "reference/column",
-        SpreadsheetColumnReference.class
+    public final static ValueType ALPHA_HSV_COLOR = ValueType.register(
+        "color/HsvAlpha",
+        Color.BLACK_HSV_50_ALPHA.getClass()
     );
 
-    public static final ValueType COLUMN_RANGE = ValueType.register(
-        "reference/column-range",
-        SpreadsheetColumnRangeReference.class
+    public final static ValueType ALPHA_HSL_COLOR = ValueType.register(
+        "color/HslAlpha",
+        Color.BLACK_HSL_50_ALPHA.getClass()
     );
 
-    public static final ValueType CONDITION = ValueType.register(
-        "condition",
-        ConditionRightEqualsSpreadsheetFormulaParserToken.class
+    public final static ValueType ALPHA_RGB_COLOR = ValueType.register(
+        "color/RgbColorAlpha",
+        Color.BLACK_50_ALPHA.getClass()
     );
-
-    public static final ValueType CSV_LIST = ValueType.fromClassOrFail(CsvStringList.class);
-
-    public static final ValueType CURRENCY = ValueType.fromClassOrFail(Currency.class);
-
-    public static final ValueType CURRENCY_CODE = ValueType.fromClassOrFail(CurrencyCode.class);
-
-    public static final ValueType CURRENCY_VALUE = ValueType.fromClassOrFail(CurrencyValue.class);
-
-    public final static ValueType DATA_URL = ValueType.fromClassOrFail(DataUrl.class);
-
-    public static final ValueType DATE = ValueType.DATE;
-
-    public static final ValueType DATE_LIST = ValueType.fromClassOrFail(LocalDateList.class);
-
-    public static final ValueType DATE_TIME = ValueType.DATE_TIME;
-
-    public static final ValueType DATE_TIME_LIST = ValueType.fromClassOrFail(LocalDateTimeList.class);
-
-    public final static ValueType DATE_TIME_SYMBOLS = ValueType.fromClassOrFail(DateTimeSymbols.class);
-
-    public final static ValueType DECIMAL_NUMBER_SYMBOLS = ValueType.fromClassOrFail(DecimalNumberSymbols.class);
-
-    public static final ValueType EMAIL = ValueType.fromClassOrFail(EmailAddress.class);
-
-    public static final ValueType ENVIRONMENT = ValueType.fromClassOrFail(Environment.class);
-
-    public static final ValueType ERROR = ValueType.fromClassOrFail(SpreadsheetError.class);
 
     public final static ValueType HSL_COLOR = ValueType.register(
-        "color/hsl",
+        "color/Hsl",
         HslColor.class
     );
 
     public final static ValueType HSV_COLOR = ValueType.register(
-        "color/hsv",
+        "color/Hsv",
         HsvColor.class
     );
 
-    public final static ValueType JSON = ValueType.fromClassOrFail(JsonNode.class);
-
-    public final static ValueType JSON_ARRAY = ValueType.fromClassOrFail(JsonArray.class);
-
-    public final static ValueType JSON_BOOLEAN = ValueType.fromClassOrFail(JsonBoolean.class);
-
-    public final static ValueType JSON_NULL = ValueType.fromClassOrFail(JsonNull.class);
-
-    public final static ValueType JSON_NUMBER = ValueType.fromClassOrFail(JsonNumber.class);
-
-    public final static ValueType JSON_OBJECT = ValueType.fromClassOrFail(JsonObject.class);
-
-    public final static ValueType JSON_STRING = ValueType.fromClassOrFail(JsonString.class);
-
-    public final static ValueType LIST = ValueType.fromClassOrFail(List.class);
-
-    public final static ValueType LOCALE = ValueType.LOCALE;
-
-    public static final ValueType LABEL = ValueType.register(
-        "reference/label",
-        SpreadsheetLabelName.class
-    );
-
-    public static final ValueType LOCAL_DATE = ValueType.fromClassOrFail(LocalDate.class);
-
-    public static final ValueType LOCAL_DATE_TIME = ValueType.fromClassOrFail(LocalDateTime.class);
-
-    public static final ValueType LOCAL_TIME = ValueType.fromClassOrFail(LocalTime.class);
-
-    public final static ValueType MAIL_TO_URL = ValueType.fromClassOrFail(MailToUrl.class);
-
-    public static final ValueType NUMBER = ValueType.NUMBER;
-
-    public static final ValueType NUMBER_LIST = ValueType.fromClassOrFail(NumberList.class);
-
     public final static ValueType OPAQUE_HSL_COLOR = ValueType.register(
-        "color/hsl-opaque",
+        "color/HslOpaque",
         Color.BLACK_HSL.getClass()
     );
 
     public final static ValueType OPAQUE_HSV_COLOR = ValueType.register(
-        "color/hsv-opaque",
+        "color/HsvOpaque",
         Color.BLACK_HSV.getClass()
     );
 
     public final static ValueType OPAQUE_RGB_COLOR = ValueType.register(
-        "color/rgb-opaque",
+        "color/RgbOpaque",
         Color.BLACK.getClass()
     );
 
     public final static ValueType RGB_COLOR = ValueType.register(
-        "color/rgb",
+        "color/Rgb",
         RgbColor.class
     );
+
+    // references.......................................................................................................
 
     public final static ValueType REFERENCE = ValueType.register(
         "reference",
         SpreadsheetSelection.class
     );
 
-    public final static ValueType RELATIVE_URL = ValueType.fromClassOrFail(RelativeUrl.class);
+    public static final ValueType CELL = ValueType.register(
+        "reference/CellReference",
+        SpreadsheetCellReference.class
+    );
+
+    public static final ValueType CELL_RANGE = ValueType.register(
+        "reference/CellRangeReference",
+        SpreadsheetCellRangeReference.class
+    );
+
+    public static final ValueType COLUMN = ValueType.register(
+        "reference/ColumnReference",
+        SpreadsheetColumnReference.class
+    );
+
+    public static final ValueType COLUMN_RANGE = ValueType.register(
+        "reference/ColumnRangeReference",
+        SpreadsheetColumnRangeReference.class
+    );
+
+    public static final ValueType LABEL = ValueType.register(
+        "reference/Label",
+        SpreadsheetLabelName.class
+    );
 
     public static final ValueType ROW = ValueType.register(
-        "reference/row",
+        "reference/RowReference",
         SpreadsheetRowReference.class
     );
 
     public static final ValueType ROW_RANGE = ValueType.register(
-        "reference/row-range",
+        "reference/RowRangeReference",
         SpreadsheetRowRangeReference.class
     );
 
+    // ValueType........................................................................................................
+
+    public static final ValueType ABSOLUTE_URL = ValueType.ABSOLUTE_URL;
+
+    public static final ValueType BOOLEAN = ValueType.BOOLEAN;
+
+    public static final ValueType BOOLEAN_LIST = ValueType.BOOLEAN_LIST;
+
+    public static final ValueType CHOICE_LIST = ValueType.CHOICE_LIST;
+
+    public static final ValueType CONDITION = ValueType.register(
+        "Condition",
+        ConditionRightEqualsSpreadsheetFormulaParserToken.class
+    );
+
+    public static final ValueType CSV = ValueType.CSV;
+
+    public static final ValueType CURRENCY = ValueType.CURRENCY;
+
+    public static final ValueType CURRENCY_CODE = ValueType.CURRENCY_CODE;
+
+    public static final ValueType CURRENCY_VALUE = ValueType.CURRENCY_VALUE;
+
+    public final static ValueType DATA_URL = ValueType.DATA_URL;
+
+    public static final ValueType DATE = ValueType.DATE;
+
+    public static final ValueType DATE_LIST = ValueType.DATE_LIST;
+
+    public static final ValueType DATE_TIME = ValueType.DATE_TIME;
+
+    public static final ValueType DATE_TIME_LIST = ValueType.DATE_TIME_LIST;
+
+    public final static ValueType DATE_TIME_SYMBOLS = ValueType.DATE_TIME_SYMBOLS;
+
+    public final static ValueType DECIMAL_NUMBER_SYMBOLS = ValueType.DECIMAL_NUMBER_SYMBOLS;
+
+    public static final ValueType EMAIL = ValueType.EMAIL;
+
+    public static final ValueType ENVIRONMENT = ValueType.ENVIRONMENT;
+
+    public static final ValueType ERROR = ValueType.fromClassOrFail(SpreadsheetError.class);
+
+    public final static ValueType JSON = ValueType.JSON_PARENT;
+
+    public final static ValueType JSON_ARRAY = ValueType.JSON_ARRAY;
+
+    public final static ValueType JSON_BOOLEAN = ValueType.JSON_BOOLEAN;
+
+    public final static ValueType JSON_NULL = ValueType.JSON_NULL;
+
+    public final static ValueType JSON_NUMBER = ValueType.JSON_NUMBER;
+
+    public final static ValueType JSON_OBJECT = ValueType.JSON_OBJECT;
+
+    public final static ValueType JSON_STRING = ValueType.JSON_STRING;
+
+    public final static ValueType LIST = ValueType.LIST_PARENT;
+
+    public final static ValueType LOCALE_PARENT = ValueType.LOCALE_PARENT;
+
+    public final static ValueType LOCALE = ValueType.LOCALE;
+
+    public final static ValueType LOCALE_LANGUAGE_TAG = ValueType.LOCALE_LANGUAGE_TAG;
+
+    public final static ValueType LOCALE_LANGUAGE_TAG_SET = ValueType.LOCALE_LANGUAGE_TAG_SET;
+
+    public final static ValueType MAIL_TO_URL = ValueType.MAIL_TO_URL;
+
+    public static final ValueType NUMBER_PARENT = ValueType.NUMBER_PARENT;
+
+    public static final ValueType NUMBER = ValueType.NUMBER;
+
+    public static final ValueType NUMBER_LIST = ValueType.NUMBER_LIST;
+
+    public final static ValueType RELATIVE_URL = ValueType.RELATIVE_URL;
+
     public static final ValueType SPREADSHEET_ERROR = ValueType.register(
-        "error/spreadsheet",
+        "error/SpreadsheetError",
         SpreadsheetError.class
     );
 
     public static final ValueType TEMPLATE_VALUE_NAME = ValueType.register(
-        "template/value-name",
+        "template/TemplateValueName",
         TemplateValueName.class
     );
 
+    public static final ValueType TEXT_PARENT = ValueType.TEXT_PARENT;
+
     public static final ValueType TEXT = ValueType.TEXT;
 
-    public static final ValueType STRING_LIST = ValueType.fromClassOrFail(StringList.class);
+    public static final ValueType STRING_LIST = ValueType.STRING_LIST;
 
     public static final ValueType TIME = ValueType.TIME;
 
-    public static final ValueType TIME_LIST = ValueType.fromClassOrFail(LocalTimeList.class);
+    public static final ValueType TIME_LIST = ValueType.TIME_LIST;
 
-    public static final ValueType URL = ValueType.fromClassOrFail(Url.class);
+    public static final ValueType URL = ValueType.URL_PARENT;
 
     public static final ValueType VALIDATION_ERROR = ValueType.fromClassOrFail(ValidationError.class);
 
     public static final ValueType VALIDATION_ERROR_LIST = ValueType.fromClassOrFail(ValidationErrorList.class);
 
-    public static final ValueType WHOLE_NUMBER = ValueType.WHOLE_NUMBER;
+    public static final ValueType WHOLE_NUMBER = ValueType.WHOLE_NUMBER_PARENT;
 
     /**
      * Does not include all types, only those that typically appear in a cell
@@ -280,10 +258,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         DATE_TIME,
         EMAIL,
         NUMBER,
-        WHOLE_NUMBER,
         TEXT,
         TIME,
-        URL
+        URL,
+        WHOLE_NUMBER
     );
 
     /**
@@ -297,10 +275,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         EMAIL,
         SPREADSHEET_ERROR,
         NUMBER,
-        WHOLE_NUMBER,
         TEXT,
         TIME,
-        URL
+        URL,
+        WHOLE_NUMBER
     );
 
     /**

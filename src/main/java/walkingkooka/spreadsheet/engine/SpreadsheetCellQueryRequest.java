@@ -92,7 +92,7 @@ public final class SpreadsheetCellQueryRequest implements HasUrlFragment,
             if (VALUE_TYPE_STRING.equals(component)) {
                 query = query.setValueType(
                     parseComponent(cursor)
-                        .map(ValueType::fromClassNameOrFail)
+                        .map(ValueType::parseOrFail)
                 );
                 component = parseComponentOrNull(cursor);
             }
@@ -194,7 +194,7 @@ public final class SpreadsheetCellQueryRequest implements HasUrlFragment,
                 )
             ).setValueType(
                 VALUE_TYPE.firstParameterValue(parameters)
-                    .map(ValueType::fromClassNameOrFail)
+                    .map(ValueType::parseOrFail)
             ).setQuery(
                 SpreadsheetCellQuery.extract(parameters)
             );
@@ -456,7 +456,7 @@ public final class SpreadsheetCellQueryRequest implements HasUrlFragment,
                 .appendSlashThen(
                     UrlFragment.with(
                         valueType.get()
-                            .value()
+                            .text()
                     )
                 );
         }
@@ -549,7 +549,7 @@ public final class SpreadsheetCellQueryRequest implements HasUrlFragment,
             result = result.addParameter(
                 VALUE_TYPE,
                 valueType.get()
-                    .value()
+                    .text()
             );
         }
 

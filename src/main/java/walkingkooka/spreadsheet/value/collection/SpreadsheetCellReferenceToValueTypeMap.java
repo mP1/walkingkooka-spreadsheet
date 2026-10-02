@@ -47,11 +47,11 @@ public final class SpreadsheetCellReferenceToValueTypeMap extends SpreadsheetCel
         Objects.requireNonNull(cellReferenceToValueType, "cellReferenceToValueType");
 
         final Map<SpreadsheetCellReference, Optional<ValueType>> copy = SpreadsheetSelectionMaps.cell();
-        for (final Entry<SpreadsheetCellReference, Optional<ValueType>> referenceAndCell : cellReferenceToValueType.entrySet()) {
+        for (final Entry<SpreadsheetCellReference, Optional<ValueType>> cellReferenceAndValueType : cellReferenceToValueType.entrySet()) {
             copy.put(
-                referenceAndCell.getKey(),
+                cellReferenceAndValueType.getKey(),
                 Objects.requireNonNull(
-                    referenceAndCell.getValue(),
+                    cellReferenceAndValueType.getValue(),
                     "null ValueType included"
                 )
             );
