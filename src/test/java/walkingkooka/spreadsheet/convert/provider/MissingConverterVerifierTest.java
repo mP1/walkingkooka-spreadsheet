@@ -124,6 +124,18 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
+    public void testVerifyAndCheckWithWithMetadataDefaultFormulaConverter() {
+        this.verifyAndCheck(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.setOrRemove(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    LOCALE
+                ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+                .getOrFail(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER)
+        );
+    }
+
+    @Test
     public void testVerifyAndCheckWithWithFormattingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
@@ -163,6 +175,16 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         this.verifyAndCheck(
             propertyName,
             SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(propertyName),
+            expected
+        );
+    }
+
+    private void verifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
+                                final ConverterSelector converterSelector,
+                                final MissingConverter... expected) {
+        this.verifyAndCheck(
+            propertyName,
+            converterSelector,
             SpreadsheetMetadataTesting.CONVERTER_PROVIDER,
             expected
         );
