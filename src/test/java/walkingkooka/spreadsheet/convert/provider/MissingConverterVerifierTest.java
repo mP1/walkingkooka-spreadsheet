@@ -23,7 +23,6 @@ import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
@@ -75,10 +74,19 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     ClassTesting<MissingConverterVerifier>,
     SpreadsheetMetadataTesting {
 
-    private final static SpreadsheetMetadata SPREADSHEET_METADATA = METADATA_EN_AU.set(
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA_TESTING = METADATA_EN_AU.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     );
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA_DEFAULT = SpreadsheetMetadata.NON_LOCALE_DEFAULTS.setOrRemove(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            LOCALE
+        ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+        .set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
 
     @Test
     public void testVerifyAndCheckWithNullConverterFails() {
@@ -118,115 +126,102 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
     @Test
     public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
-        this.verifyAndCheck(
+        this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithMetadataDefaultFormulaConverter() {
-        this.verifyAndCheck(
-            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.setOrRemove(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    LOCALE
-                ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
-                .getOrFail(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER)
+        this.spreadsheetMetadataDefaultVerifyAndCheck(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithFormattingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
-        this.verifyAndCheck(
+        this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithMetadataDefaultFormattingConverter() {
-        this.verifyAndCheck(
-            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.setOrRemove(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    LOCALE
-                ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
-                .getOrFail(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER)
+        this.spreadsheetMetadataDefaultVerifyAndCheck(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithQueryConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
-        this.verifyAndCheck(
+        this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithScriptingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
-        this.verifyAndCheck(
+        this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithSortConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
-        this.verifyAndCheck(
+        this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithValidationConverter() {
-        this.verifyAndCheck(
+        this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
         );
     }
 
-    private void verifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
-                                final MissingConverter... expected) {
+    private void spreadsheetMetadataTestingVerifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
+                                                          final MissingConverter... expected) {
         this.verifyAndCheck(
+            SPREADSHEET_METADATA_TESTING,
             propertyName,
-            SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(propertyName),
             expected
         );
     }
 
-    private void verifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
-                                final ConverterSelector converterSelector,
-                                final MissingConverter... expected) {
+    private void spreadsheetMetadataDefaultVerifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
+                                                          final MissingConverter... expected) {
         this.verifyAndCheck(
+            SPREADSHEET_METADATA_DEFAULT,
             propertyName,
-            converterSelector,
-            SpreadsheetMetadataTesting.CONVERTER_PROVIDER,
             expected
         );
     }
 
-    private void verifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
-                                final ConverterSelector converterSelector,
-                                final ConverterProvider converterProvider,
+    private void verifyAndCheck(final SpreadsheetMetadata spreadsheetMetadata,
+                                final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                 final MissingConverter... expected) {
+        final ConverterSelector converterSelector = spreadsheetMetadata.getOrFail(propertyName);
+
         // KEEP useful helps to update SpreadsheetMetadataDefaultTextResource.json
         System.out.println(propertyName + "=" + converterSelector);
 
-        this.verifyAndCheck(
-            converterProvider.converter(
-                converterSelector,
-                PROVIDER_CONTEXT
-            ),
-            propertyName,
-            expected
+        final Converter<SpreadsheetConverterContext> converter = CONVERTER_PROVIDER.converter(
+            converterSelector,
+            PROVIDER_CONTEXT
         );
-    }
 
-    private void verifyAndCheck(final Converter<SpreadsheetConverterContext> converter,
-                                final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
-                                final MissingConverter... expected) {
-        this.verifyAndCheck(
-            converter,
-            propertyName,
-            new TestSpreadsheetConverterContext(converter),
-            expected
+        this.checkEquals(
+            Sets.of(expected),
+            MissingConverterVerifier.verify(
+                converter,
+                propertyName,
+                new TestSpreadsheetConverterContext(
+                    spreadsheetMetadata,
+                    converter
+                )
+            ),
+            () -> propertyName + "=" + converter
         );
     }
 
@@ -237,7 +232,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         JsonNodeMarshallUnmarshallContextDelegator,
         LocaleContextDelegator {
 
-        TestSpreadsheetConverterContext(final Converter<SpreadsheetConverterContext> converter) {
+        TestSpreadsheetConverterContext(final SpreadsheetMetadata spreadsheetMetadata,
+                                        final Converter<SpreadsheetConverterContext> converter) {
+            super();
+
+            this.spreadsheetMetadata = spreadsheetMetadata;
             this.converter = converter;
         }
 
@@ -422,14 +421,16 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
-            return SPREADSHEET_METADATA;
+            return spreadsheetMetadata;
         }
+
+        private final SpreadsheetMetadata spreadsheetMetadata;
 
         @Override
         public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
             return Optional.ofNullable(
                 SPREADSHEET_ID.equals(id) ?
-                    SPREADSHEET_METADATA :
+                    this.spreadsheetMetadata :
                     null
             );
         }
@@ -463,33 +464,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
     }
 
-    private void verifyAndCheck(final Converter<SpreadsheetConverterContext> converter,
-                                final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
-                                final SpreadsheetConverterContext context,
-                                final MissingConverter... expected) {
-        this.verifyAndCheck(
-            converter,
-            propertyName,
-            context,
-            Sets.of(expected)
-        );
-    }
-
-    private void verifyAndCheck(final Converter<SpreadsheetConverterContext> converter,
-                                final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
-                                final SpreadsheetConverterContext context,
-                                final Set<MissingConverter> expected) {
-        this.checkEquals(
-            expected,
-            MissingConverterVerifier.verify(
-                converter,
-                propertyName,
-                context
-            ),
-            () -> propertyName + "=" + converter
-        );
-    }
-
     @Test
     public void testVerifyAndMarshall() {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -506,7 +480,10 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         final Set<MissingConverter> missing = MissingConverterVerifier.verify(
             converter,
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-            new TestSpreadsheetConverterContext(converter)
+            new TestSpreadsheetConverterContext(
+                SPREADSHEET_METADATA_TESTING,
+                converter
+            )
         );
 
         JSON_NODE_MARSHALL_CONTEXT.marshall(missing);
