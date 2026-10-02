@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.header.MediaTypeDetector;
@@ -183,5 +184,29 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     @Override
     boolean canChangeSpreadsheetId() {
         return true;
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder b) {
+        b.label("mediaTypeDetector")
+            .value(this.mediaTypeDetector)
+            .label("multiplier")
+            .value(this.multiplier)
+            .label("spreadsheetEngine")
+            .value(this.spreadsheetEngine)
+            .label("spreadsheetContextSupplier")
+            .value(this.spreadsheetContextSupplier)
+            .label("spreadsheetMetadataContext")
+            .value(this.spreadsheetMetadataContext)
+            .label("currencyLocaleContext")
+            .value(this.currencyLocaleContext)
+            .label("spreadsheetEnvironmentContext")
+            .value(this.spreadsheetEnvironmentContext)
+            .label("spreadsheetProvider")
+            .value(this.spreadsheetProvider)
+            .label("providerContext")
+            .value(this.providerContext);
     }
 }

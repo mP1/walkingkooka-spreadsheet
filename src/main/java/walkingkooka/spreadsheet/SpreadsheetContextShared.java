@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Binary;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextDelegator;
@@ -53,7 +55,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetEnvironmentContextDelegator,
     CurrencyLocaleContextDelegator,
-    SpreadsheetProviderDelegator {
+    SpreadsheetProviderDelegator,
+    UsesToStringBuilder {
 
     SpreadsheetContextShared(final MediaTypeDetector mediaTypeDetector,
                              final SpreadsheetMetadataCreator metadataCreator,
@@ -292,7 +295,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         return this.spreadsheetEnvironmentContext;
     }
 
-    private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
+    final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
     // CurrencyContextDelegator.........................................................................................
 
@@ -301,7 +304,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         return this.currencyLocaleContext;
     }
 
-    private final CurrencyLocaleContext currencyLocaleContext;
+    final CurrencyLocaleContext currencyLocaleContext;
 
     // HasProviderContext...............................................................................................
 
@@ -310,7 +313,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         return this.providerContext;
     }
 
-    private final ProviderContext providerContext;
+    final ProviderContext providerContext;
 
     // HasSpreadsheetProvider...........................................................................................
 
@@ -337,12 +340,12 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     /**
      * The {@link SpreadsheetProvider} that will be filtered by the {@link SpreadsheetMetadata}.
      */
-    private final SpreadsheetProvider spreadsheetProvider;
+    final SpreadsheetProvider spreadsheetProvider;
 
     // Object...........................................................................................................
 
     @Override
     public final String toString() {
-        return this.spreadsheetEnvironmentContext.toString();
+        return ToStringBuilder.buildFrom(this);
     }
 }

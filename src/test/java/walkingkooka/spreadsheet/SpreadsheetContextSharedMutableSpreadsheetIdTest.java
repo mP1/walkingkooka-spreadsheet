@@ -581,19 +581,27 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_ENGINE,
-            (SpreadsheetId id) -> {
-                final SpreadsheetStoreRepository repo = spreadsheetIdToSpreadsheetStoreRepository.get(id);
-                if (null == repo) {
-                    throw new IllegalArgumentException("SpreadsheetId " + id + " not found");
-                }
-                return Optional.of(
-                    new FakeSpreadsheetContext() {
-                        @Override
-                        public SpreadsheetStoreRepository storeRepository() {
-                            return repo;
-                        }
+            new SpreadsheetContextSupplier() {
+                @Override
+                public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                    final SpreadsheetStoreRepository repo = spreadsheetIdToSpreadsheetStoreRepository.get(id);
+                    if (null == repo) {
+                        throw new IllegalArgumentException("SpreadsheetId " + id + " not found");
                     }
-                );
+                    return Optional.of(
+                        new FakeSpreadsheetContext() {
+                            @Override
+                            public SpreadsheetStoreRepository storeRepository() {
+                                return repo;
+                            }
+                        }
+                    );
+                }
+
+                @Override
+                public String toString() {
+                    return SpreadsheetContextSupplier.class.getSimpleName();
+                }
             },
             SpreadsheetMetadataContexts.basic(
                 SPREADSHEET_METADATA_CREATOR,
@@ -616,6 +624,30 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         this.environmentContextAndCheck(
             this.createContext(context),
             context
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "mediaTypeDetector=application/octet-stream multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction spreadsheetEngine=FakeSpreadsheetEngine spreadsheetContextSupplier=SpreadsheetContextSupplier spreadsheetMetadataContext={123={\n" +
+                "  \"spreadsheetId\": \"123\",\n" +
+                "  \"auditInfo\": {\n" +
+                "    \"createdBy\": \"creator@example.com\",\n" +
+                "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                "    \"modifiedBy\": \"creator@example.com\",\n" +
+                "    \"modifiedTimestamp\": \"1999-12-31T12:58:59\"\n" +
+                "  },\n" +
+                "  \"comparators\": \"\",\n" +
+                "  \"converters\": \"\",\n" +
+                "  \"currency\": \"AUD\",\n" +
+                "  \"dateFormatter\": \"date dddd, d mmmm yyyy\",\n" +
+                "  \"dateParser\": \"date dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                "  \"dateTimeFormatter\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                "  \"dateTimeParser\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yy"
         );
     }
 
