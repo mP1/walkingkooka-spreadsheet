@@ -756,7 +756,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         this.toStringAndCheck(
             converter,
-            "formattingConverter: collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net, basic)"
+            "formattingConverter: collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)"
         );
     }
 
@@ -1742,7 +1742,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "expressionNumberKind=BIG_DECIMAL\n" +
                                 "formHandlers=\n" +
                                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-                                "formattingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, style, text-node, template, net, basic)\n" +
+                                "formattingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
                                 "formattingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "formattingFunctions=\n" +
                                 "formulaConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
@@ -1924,7 +1924,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "expressionNumberKind=BIG_DECIMAL\n" +
                 "formHandlers=\n" +
                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-                "formattingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, currency, plugins, properties, style, text-node, template, net, basic)\n" +
+                "formattingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
                 "formattingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                 "formattingFunctions=\n" +
                 "formulaConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
