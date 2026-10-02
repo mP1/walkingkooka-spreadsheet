@@ -125,7 +125,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
+    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingFormulaConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
         );
@@ -139,7 +139,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testVerifyAndCheckWithWithFormattingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
+    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingFormattingConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
         );
@@ -153,21 +153,21 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testVerifyAndCheckWithWithQueryConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
+    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingQueryConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithScriptingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
+    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingScriptingConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSortConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
+    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingSortConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER
         );
