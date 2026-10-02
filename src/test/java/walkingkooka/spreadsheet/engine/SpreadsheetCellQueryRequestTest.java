@@ -384,7 +384,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                         SpreadsheetValueType.NUMBER
                     )
                 ),
-            "value-type=number"
+            "value-type=Number"
         );
     }
 
@@ -744,7 +744,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                 .setValueType(
                     Optional.of(SpreadsheetValueType.NUMBER)
                 ),
-            UrlFragment.parse("/value-type/number")
+            UrlFragment.parse("/value-type/Number")
         );
     }
 
@@ -791,7 +791,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                     SpreadsheetCellQuery.parse("query789()")
                 )
             ),
-            "/path/BULR/offset/123/count/456/value-type/number/query/query789()"
+            "/path/BULR/offset/123/count/456/value-type/Number/query/query789()"
         );
     }
 

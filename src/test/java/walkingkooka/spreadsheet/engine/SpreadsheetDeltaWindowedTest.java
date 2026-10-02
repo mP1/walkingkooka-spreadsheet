@@ -842,7 +842,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 "          label:\n" +
                 "            \"Label111\"\n" +
                 "          type:\n" +
-                "            text\n" +
+                "            text/Text\n" +
                 "  window:\n" +
                 "    A1:E5\n"
         );

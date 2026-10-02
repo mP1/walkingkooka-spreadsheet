@@ -2128,7 +2128,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 "  \"cells\": {\n" +
                 "    \"A1\": {\n" +
                 "      \"formula\": {\n" +
-                "        \"valueType\": \"number\"\n" +
+                "        \"valueType\": \"Number\"\n" +
                 "      }\n" +
                 "    },\n" +
                 "    \"A2\": {\n" +
@@ -2873,7 +2873,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             JsonNode.parse(
                 "{\n" +
                     "  \"formula\": {\n" +
-                    "    \"valueType\": \"text\"\n" +
+                    "    \"valueType\": \"Text\"\n" +
                     "  }\n" +
                     "}"
             ),

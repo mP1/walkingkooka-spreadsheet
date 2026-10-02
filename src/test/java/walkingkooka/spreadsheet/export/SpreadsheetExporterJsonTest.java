@@ -511,7 +511,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             "A1-XFD1048576.valueType.json",
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
             "{\n" +
-                "  \"A1\": \"date-time\",\n" +
+                "  \"A1\": \"DateTime\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );

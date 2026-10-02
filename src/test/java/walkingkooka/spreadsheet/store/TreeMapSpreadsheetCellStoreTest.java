@@ -1034,7 +1034,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.findCellsWithValueTypeAndCheck(
             store,
             SpreadsheetSelection.parseCellRange("A1:A6"),
-            SpreadsheetValueType.NUMBER,
+            SpreadsheetValueType.NUMBER_PARENT,
             100,
             a1,
             a3
@@ -1333,7 +1333,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         this.countCellsWithValueTypeAndCheck(
             store,
             SpreadsheetSelection.parseCellRange("A1:A6"),
-            SpreadsheetValueType.NUMBER,
+            SpreadsheetValueType.NUMBER_PARENT,
             2
         );
     }
