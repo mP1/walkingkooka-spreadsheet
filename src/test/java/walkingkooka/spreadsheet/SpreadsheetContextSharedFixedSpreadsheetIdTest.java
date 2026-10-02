@@ -44,7 +44,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageEnvironmentContexts;
@@ -60,7 +59,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends SpreadsheetContextSharedTestCase<SpreadsheetContextSharedFixedSpreadsheetId> {
 
-    private final static SpreadsheetStoreRepository REPO = SpreadsheetStoreRepositories.fake();
+    private final static SpreadsheetStoreRepository REPO = new FakeSpreadsheetStoreRepository() {
+
+        @Override
+        public String toString() {
+            return "REPO";
+        }
+    };
 
     final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> HTTP_ROUTER_FACTORY = (SpreadsheetEngineContext c) -> {
         throw new UnsupportedOperationException();
@@ -487,6 +492,11 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 public SpreadsheetMetadataStore metadatas() {
                     return store;
                 }
+
+                @Override
+                public String toString() {
+                    return "REPO";
+                }
             },
             (c) -> new Router<>() {
                 @Override
@@ -511,6 +521,30 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         this.environmentContextAndCheck(
             this.createContext(context),
             context
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "mediaTypeDetector=application/octet-stream metadataCreator=SPREADSHEET_METADATA_CREATOR multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction storeRepository=REPO spreadsheetMetadataContext={123={\n" +
+                "  \"spreadsheetId\": \"123\",\n" +
+                "  \"auditInfo\": {\n" +
+                "    \"createdBy\": \"creator@example.com\",\n" +
+                "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                "    \"modifiedBy\": \"creator@example.com\",\n" +
+                "    \"modifiedTimestamp\": \"1999-12-31T12:58:59\"\n" +
+                "  },\n" +
+                "  \"comparators\": \"\",\n" +
+                "  \"converters\": \"\",\n" +
+                "  \"currency\": \"AUD\",\n" +
+                "  \"dateFormatter\": \"date dddd, d mmmm yyyy\",\n" +
+                "  \"dateParser\": \"date dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                "  \"dateTimeFormatter\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                "  \"dateTimeParser\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dd"
         );
     }
 

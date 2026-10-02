@@ -30,14 +30,14 @@ import walkingkooka.logging.CanLog;
 import walkingkooka.logging.CanLogs;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -75,7 +75,12 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
-    final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
+    final static SpreadsheetEngine SPREADSHEET_ENGINE = new FakeSpreadsheetEngine() {
+        @Override
+        public String toString() {
+            return FakeSpreadsheetEngine.class.getSimpleName();
+        }
+    };
 
     final static EmailAddress CREATOR = EmailAddress.parse("creator@example.com");
 
@@ -102,6 +107,11 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
                 );
             }
             return metadata;
+        }
+
+        @Override
+        public String toString() {
+            return "SPREADSHEET_METADATA_CREATOR";
         }
     };
 
@@ -145,7 +155,12 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         ValidatorProviders.empty()
     );
 
-    final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+    final static ProviderContext PROVIDER_CONTEXT = new FakeProviderContext() {
+        @Override
+        public String toString() {
+            return "PROVIDER_CONTEXT";
+        }
+    };
 
     // with.............................................................................................................
 
@@ -548,16 +563,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext);
-
-    // toString.........................................................................................................
-
-    @Test
-    public final void testToString() {
-        this.toStringAndCheck(
-            this.createContext(),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
-        );
-    }
 
     // class............................................................................................................
 
