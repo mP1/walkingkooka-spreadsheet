@@ -329,14 +329,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithHasSpreadsheetSelection() {
-        this.converterAndCheck(
-            "has-spreadsheet-selection",
-            SpreadsheetConverters.hasSpreadsheetSelection()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithJson() {
         this.converterAndCheck(
             "json",
@@ -1273,6 +1265,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToSpreadsheetSelection() {
+        this.converterAndCheck(
+            "to-spreadsheet-selection",
+            SpreadsheetConverters.toSpreadsheetSelection()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToString() {
         this.converterAndCheck(
             "to-string",
@@ -1493,7 +1493,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/expression expression\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/form-and-validation form-and-validation\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/format-pattern-to-string format-pattern-to-string\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-spreadsheet-selection has-spreadsheet-selection\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/json json\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/json-to json-to\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/locale locale\n" +
@@ -1627,6 +1626,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-number to-number\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-parser-selector to-parser-selector\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-properties to-properties\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-spreadsheet-selection to-spreadsheet-selection\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-string to-string\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-style to-style\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-styleable to-styleable\n" +

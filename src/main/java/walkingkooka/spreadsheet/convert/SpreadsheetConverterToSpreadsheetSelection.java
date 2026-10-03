@@ -25,14 +25,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
  * A {@link walkingkooka.convert.Converter} that returns a {@link walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference} 
  * from a source value.
  */
-final class SpreadsheetConverterHasSpreadsheetSelection extends SpreadsheetConverter {
+final class SpreadsheetConverterToSpreadsheetSelection extends SpreadsheetConverter {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterHasSpreadsheetSelection INSTANCE = new SpreadsheetConverterHasSpreadsheetSelection();
+    final static SpreadsheetConverterToSpreadsheetSelection INSTANCE = new SpreadsheetConverterToSpreadsheetSelection();
 
-    private SpreadsheetConverterHasSpreadsheetSelection() {
+    private SpreadsheetConverterToSpreadsheetSelection() {
         super();
     }
 
