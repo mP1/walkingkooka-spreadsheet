@@ -251,7 +251,7 @@ eg
 - [text-to-date-time-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToCollectionListLocalDateTimeList.java)
 - [text-to-email-address](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToEmailAddress.java)
 - [text-to-environment](https://github.com/mP1/walkingkooka-environment/blob/master/src/main/java/walkingkooka/environment/convert/EnvironmentConverterTextToEnvironment.java)
-- [text-to-environment-value-name](https://github.com/mP1/walkingkooka-environment/blob/master/src/main/java/walkingkooka/environment/convert/EnvironmentConverterStringToEnvironmentValueName.java)
+- [text-to-environment-value-name](https://github.com/mP1/walkingkooka-environment/blob/master/src/main/java/walkingkooka/environment/convert/EnvironmentConverterTextToEnvironmentValueName.java)
 - [text-to-error](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetError.java)
 - [text-to-expression](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToExpression.java)
 - [text-to-expression-function-selector](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToExpressionFunctionSelector.java)
