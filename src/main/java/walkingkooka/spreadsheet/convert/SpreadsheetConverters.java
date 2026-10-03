@@ -448,10 +448,10 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * {@link ValidationConvertConverters#hasOptionalValidatorSelector}
+     * {@link ValidationConvertConverters#toValidatorSelector}
      */
     public static Converter<SpreadsheetConverterContext> hasValidatorSelector() {
-        return ValidationConvertConverters.hasOptionalValidatorSelector();
+        return ValidationConvertConverters.toValidatorSelector();
     }
 
     /**
