@@ -1755,6 +1755,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 spreadsheetSelection(),
                 errorToError(), // must be before #textToSpreadsheetError
                 textToSpreadsheetError(),
+                toValueType(), // must be before #textToValueType otherwise SpreadsheetCell#text may be converted to ValueType
                 textToValueType(),
                 textToZoneOffset(),
                 spreadsheetCellSet(),
@@ -1766,7 +1767,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 textToNumberList(),
                 textToTimeList(),
                 textToStringList(),
-                toValueType(),
                 csv(),
                 tsv(),
                 binaryToText(),

@@ -578,8 +578,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         final Locale locale = context.locale();
         final LocaleLanguageTag languageTag = LocaleLanguageTag.fromLocale(locale);
 
+        final ValueType valueType = ValueType.TEXT;
+
         final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2+3")
+                .setValueType(
+                    Optional.of(valueType)
+                )
         ).setCurrencyExchangeRater(
             Optional.of(CURRENCY_EXCHANGE_RATER_SELECTOR)
         ).setDateTimeSymbols(
@@ -2726,6 +2731,16 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ZoneOffset.class,
                     SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_ZONE_OFFSET
                     zoneOffset
+                );
+            }
+
+            // to-value-type............................................................................................
+            if (formula || formatting || validation || scripting) {
+                verifier.addIfConversionFail(
+                    spreadsheetCell,
+                    ValueType.class,
+                    SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_ZONE_OFFSET
+                    valueType
                 );
             }
 

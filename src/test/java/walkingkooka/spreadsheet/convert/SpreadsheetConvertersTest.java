@@ -131,6 +131,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.HasLocale;
 import walkingkooka.util.HasOptionalLocale;
+import walkingkooka.validation.HasOptionalValueTypeTesting;
 import walkingkooka.validation.ValidationCheckbox;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
@@ -165,6 +166,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     HasCurrencyTesting,
     HasDateTimeSymbolsTesting,
     HasDecimalNumberSymbolsTesting,
+    HasOptionalValueTypeTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     MediaTypeDetectorTesting,
     PublicStaticHelperTesting<SpreadsheetConverters>,
@@ -2883,6 +2885,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             cell,
             SpreadsheetCellReference.class,
             cell.reference()
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellToValueType() {
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
+            ),
+            VALUE_TYPE
         );
     }
 
