@@ -522,7 +522,6 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/expression expression\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/form-and-validation form-and-validation\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/format-pattern-to-string format-pattern-to-string\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-parser-selector has-parser-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-spreadsheet-selection has-spreadsheet-selection\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/json json\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/json-to json-to\n" +
@@ -655,6 +654,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-locale-language-tag to-locale-language-tag\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-multi-line-text to-multi-line-text\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-number to-number\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-parser-selector to-parser-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-properties to-properties\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-string to-string\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-style to-style\n" +

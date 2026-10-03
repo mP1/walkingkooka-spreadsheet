@@ -427,13 +427,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * {@see SpreadsheetConverterHasOptionalSpreadsheetParserSelector}
-     */
-    public static Converter<SpreadsheetConverterContext> hasSpreadsheetParserSelector() {
-        return SpreadsheetConverterHasOptionalSpreadsheetParserSelector.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetConverterHasSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetSelection() {
@@ -609,7 +602,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             PLUGINS = namedCollection(
                 "PLUGINS",
                 toSpreadsheetFormatterSelector(),
-                hasSpreadsheetParserSelector(),
+                toSpreadsheetParserSelector(),
                 toValidatorSelector(),
                 textToConverterSelector(),
                 textToCurrencyExchangeRaterSelector(),
@@ -1608,6 +1601,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toNumber() {
         return SpreadsheetConverterToNumber.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterToSpreadsheetParserSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> toSpreadsheetParserSelector() {
+        return SpreadsheetConverterToSpreadsheetParserSelector.INSTANCE;
     }
 
     /**

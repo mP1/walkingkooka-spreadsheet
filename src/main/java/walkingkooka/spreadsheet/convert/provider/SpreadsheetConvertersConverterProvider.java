@@ -237,11 +237,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.formAndValidation();
                 break;
-            case HAS_PARSER_SELECTOR_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasSpreadsheetParserSelector();
-                break;
             case HAS_SPREADSHEET_SELECTION_STRING:
                 this.noParameterCheck(copy);
 
@@ -912,6 +907,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toMultiLineText();
                 break;
+            case TO_PARSER_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toSpreadsheetParserSelector();
+                break;
             case TO_PROPERTIES_STRING:
                 this.noParameterCheck(copy);
 
@@ -1125,10 +1125,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
 
-    private final static String HAS_PARSER_SELECTOR_STRING = "has-parser-selector";
-
-    final static ConverterName HAS_PARSER_SELECTOR = ConverterName.with(HAS_PARSER_SELECTOR_STRING);
-    
     private final static String HAS_SPREADSHEET_SELECTION_STRING = "has-spreadsheet-selection";
 
     final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
@@ -1657,6 +1653,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_NUMBER = ConverterName.with(TO_NUMBER_STRING);
 
+    private final static String TO_PARSER_SELECTOR_STRING = "to-parser-selector";
+
+    final static ConverterName TO_PARSER_SELECTOR = ConverterName.with(TO_PARSER_SELECTOR_STRING);
+
     private final static String TO_PROPERTIES_STRING = "to-properties";
 
     final static ConverterName TO_PROPERTIES = ConverterName.with(TO_PROPERTIES_STRING);
@@ -1761,7 +1761,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(EXPRESSION),
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
-            converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
             converterInfo(JSON),
             converterInfo(JSON_TO),
@@ -1894,6 +1893,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_LOCALE_LANGUAGE_TAG),
             converterInfo(TO_MULTI_LINE_TEXT),
             converterInfo(TO_NUMBER),
+            converterInfo(TO_PARSER_SELECTOR),
             converterInfo(TO_PROPERTIES),
             converterInfo(TO_STRING),
             converterInfo(TO_STYLE),
