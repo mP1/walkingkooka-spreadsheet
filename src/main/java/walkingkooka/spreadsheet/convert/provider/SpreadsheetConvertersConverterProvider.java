@@ -262,11 +262,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toTextNode();
                 break;
-            case HAS_VALIDATOR_SELECTOR_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasValidatorSelector();
-                break;
             case JSON_STRING:
                 this.noParameterCheck(copy);
 
@@ -957,6 +952,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toValidationErrorList();
                 break;
+            case TO_VALIDATOR_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toValidatorSelector();
+                break;
             case TO_VALUE_STRING:
                 this.noParameterCheck(copy);
 
@@ -1136,10 +1136,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String HAS_SPREADSHEET_SELECTION_STRING = "has-spreadsheet-selection";
 
     final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
-
-    private final static String HAS_VALIDATOR_SELECTOR_STRING = "has-validator-selector";
-
-    final static ConverterName HAS_VALIDATOR_SELECTOR = ConverterName.with(HAS_VALIDATOR_SELECTOR_STRING);
 
     private final static String JSON_STRING = "json";
 
@@ -1701,6 +1697,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_VALIDATION_ERROR_LIST = ConverterName.with(TO_VALIDATION_ERROR_LIST_STRING);
 
+    private final static String TO_VALIDATOR_SELECTOR_STRING = "to-validator-selector";
+
+    final static ConverterName TO_VALIDATOR_SELECTOR = ConverterName.with(TO_VALIDATOR_SELECTOR_STRING);
+
     private final static String TO_VALUE_STRING = "to-value";
 
     final static ConverterName TO_VALUE = ConverterName.with(TO_VALUE_STRING);
@@ -1764,7 +1764,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
-            converterInfo(HAS_VALIDATOR_SELECTOR),
             converterInfo(JSON),
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
@@ -1905,6 +1904,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_VALIDATION_CHOICE),
             converterInfo(TO_VALIDATION_CHOICE_LIST),
             converterInfo(TO_VALIDATION_ERROR_LIST),
+            converterInfo(TO_VALIDATOR_SELECTOR),
             converterInfo(TO_VALUE),
             converterInfo(TSV),
             converterInfo(URL),

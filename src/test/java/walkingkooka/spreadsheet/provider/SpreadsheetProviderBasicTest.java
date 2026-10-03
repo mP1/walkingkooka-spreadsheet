@@ -525,7 +525,6 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-formatter-selector has-formatter-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-parser-selector has-parser-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-spreadsheet-selection has-spreadsheet-selection\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-validator-selector has-validator-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/json json\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/json-to json-to\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/locale locale\n" +
@@ -666,6 +665,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-choice to-validation-choice\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-choice-list to-validation-choice-list\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-error-list to-validation-error-list\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validator-selector to-validator-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-value to-value\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/tsv tsv\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url url\n" +
