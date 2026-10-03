@@ -68,10 +68,10 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.HasOptionalLocaleTesting;
+import walkingkooka.validation.HasOptionalValueTypeTesting;
 import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
-import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -98,6 +98,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasOptionalSpreadsheetFormatterSelectorTesting,
     HasOptionalSpreadsheetParserSelectorTesting,
     HasOptionalValidatorSelectorTesting,
+    HasOptionalValueTypeTesting,
     HasSpreadsheetReferenceTesting,
     HasTextNodeTesting,
     HasTextStyleTesting,
@@ -1312,7 +1313,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.textAndCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setValueType(
-                    Optional.of(ValueType.TEXT)
+                    OPTIONAL_VALUE_TYPE
                 ).setValue(
                     Optional.of(123)
                 )
@@ -1440,7 +1441,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 LocalDate.of(1999, 12, 31)
                             )
                         ).setValueType(
-                            Optional.of(ValueType.TEXT)
+                            OPTIONAL_VALUE_TYPE
                         )
                 ).setCurrency(OPTIONAL_CURRENCY)
                 .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
@@ -3828,6 +3829,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setStyle(textStyle),
             textStyle
+        );
+    }
+
+    // HasOptionalValueType.............................................................................................
+
+    @Test
+    public void testValueType() {
+        this.valueTypeAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
+            ),
+            VALUE_TYPE
         );
     }
 

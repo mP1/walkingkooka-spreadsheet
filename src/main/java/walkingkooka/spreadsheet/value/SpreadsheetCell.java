@@ -69,6 +69,7 @@ import walkingkooka.tree.text.HasTextStyle;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.util.HasOptionalLocale;
+import walkingkooka.validation.HasOptionalValueType;
 import walkingkooka.validation.HasValidationPromptValue;
 import walkingkooka.validation.ValidationPromptValue;
 import walkingkooka.validation.ValueType;
@@ -98,6 +99,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasOptionalSpreadsheetFormatterSelector,
     HasOptionalSpreadsheetParserSelector,
     HasOptionalValidatorSelector,
+    HasOptionalValueType,
     HasSpreadsheetReference<SpreadsheetCellReference>,
     HasTextNode,
     HasTextStyle,
@@ -663,6 +665,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public Optional<ValidationPromptValue> validationPromptValue() {
         return this.formula.validationPromptValue();
+    }
+
+    // HasOptionalValueType.............................................................................................
+
+    @Override
+    public Optional<ValueType> valueType() {
+        return this.formula.valueType();
     }
 
     // replace..........................................................................................................
