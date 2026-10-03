@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
-public final class SpreadsheetConverterHasSpreadsheetSelectionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterHasSpreadsheetSelection> {
+public final class SpreadsheetConverterToSpreadsheetSelectionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterToSpreadsheetSelection> {
 
     @Test
     public void testConvertThisToSpreadsheetFormatterSelector() {
@@ -60,8 +60,8 @@ public final class SpreadsheetConverterHasSpreadsheetSelectionTest extends Sprea
     }
 
     @Override
-    public SpreadsheetConverterHasSpreadsheetSelection createConverter() {
-        return SpreadsheetConverterHasSpreadsheetSelection.INSTANCE;
+    public SpreadsheetConverterToSpreadsheetSelection createConverter() {
+        return SpreadsheetConverterToSpreadsheetSelection.INSTANCE;
     }
 
     @Override
@@ -94,7 +94,7 @@ public final class SpreadsheetConverterHasSpreadsheetSelectionTest extends Sprea
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterHasSpreadsheetSelection> type() {
-        return SpreadsheetConverterHasSpreadsheetSelection.class;
+    public Class<SpreadsheetConverterToSpreadsheetSelection> type() {
+        return SpreadsheetConverterToSpreadsheetSelection.class;
     }
 }

@@ -427,13 +427,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * {@see SpreadsheetConverterHasSpreadsheetSelection}
-     */
-    public static Converter<SpreadsheetConverterContext> hasSpreadsheetSelection() {
-        return SpreadsheetConverterHasSpreadsheetSelection.INSTANCE;
-    }
-
-    /**
      * A converter that involves {@link JsonNode} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> json() {
@@ -703,7 +696,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == SPREADSHEET_SELECTION) {
             SPREADSHEET_SELECTION = namedCollection(
                 "SPREADSHEET SELECTION",
-                hasSpreadsheetSelection(),
+                toSpreadsheetSelection(),
                 spreadsheetSelectionToSpreadsheetSelection(),
                 spreadsheetSelectionToText(),
                 textToSpreadsheetSelection()
@@ -1615,6 +1608,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toProperties() {
         return Converters.toProperties();
+    }
+
+    /**
+     * {@see SpreadsheetConverterToSpreadsheetSelection}
+     */
+    public static Converter<SpreadsheetConverterContext> toSpreadsheetSelection() {
+        return SpreadsheetConverterToSpreadsheetSelection.INSTANCE;
     }
 
     /**

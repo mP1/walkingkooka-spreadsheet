@@ -635,7 +635,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    expression\n" +
                 "    form-and-validation\n" +
                 "    format-pattern-to-string\n" +
-                "    has-spreadsheet-selection\n" +
                 "    json\n" +
                 "    json-to\n" +
                 "    locale\n" +
@@ -769,6 +768,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-number\n" +
                 "    to-parser-selector\n" +
                 "    to-properties\n" +
+                "    to-spreadsheet-selection\n" +
                 "    to-string\n" +
                 "    to-style\n" +
                 "    to-styleable\n" +

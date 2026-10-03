@@ -237,11 +237,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.formAndValidation();
                 break;
-            case HAS_SPREADSHEET_SELECTION_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasSpreadsheetSelection();
-                break;
             case JSON_STRING:
                 this.noParameterCheck(copy);
 
@@ -907,6 +902,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toProperties();
                 break;
+            case TO_SPREADSHEET_SELECTION_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toSpreadsheetSelection();
+                break;
             case TO_STRING_STRING:
                 this.noParameterCheck(copy);
 
@@ -1124,10 +1124,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String FORM_AND_VALIDATION_STRING = "form-and-validation";
 
     final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
-
-    private final static String HAS_SPREADSHEET_SELECTION_STRING = "has-spreadsheet-selection";
-
-    final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
 
     private final static String JSON_STRING = "json";
 
@@ -1661,6 +1657,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_PROPERTIES = ConverterName.with(TO_PROPERTIES_STRING);
 
+    private final static String TO_SPREADSHEET_SELECTION_STRING = "to-spreadsheet-selection";
+
+    final static ConverterName TO_SPREADSHEET_SELECTION = ConverterName.with(TO_SPREADSHEET_SELECTION_STRING);
+
     private final static String TO_STRING_STRING = "to-string";
 
     final static ConverterName TO_STRING = ConverterName.with(TO_STRING_STRING);
@@ -1761,7 +1761,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(EXPRESSION),
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
-            converterInfo(HAS_SPREADSHEET_SELECTION),
+            converterInfo(TO_SPREADSHEET_SELECTION),
             converterInfo(JSON),
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
