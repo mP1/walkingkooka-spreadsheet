@@ -35,8 +35,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.header.HasContentTypeTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -98,7 +97,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
+public final class SpreadsheetFormulaTest implements PublicClassTesting<SpreadsheetFormula>,
     CanBeEmptyTesting,
     CanReplaceReferencesTesting2<SpreadsheetFormula>,
     DateTimeContextTesting,
@@ -3717,10 +3716,5 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Override
     public Class<SpreadsheetFormula> type() {
         return SpreadsheetFormula.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }
