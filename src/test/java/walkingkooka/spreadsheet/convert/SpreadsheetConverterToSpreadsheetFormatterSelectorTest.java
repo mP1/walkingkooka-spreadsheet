@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetConverterHasOptionalSpreadsheetFormatterSelectorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector> {
+public final class SpreadsheetConverterToSpreadsheetFormatterSelectorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterToSpreadsheetFormatterSelector> {
 
     @Test
     public void testConvertThisToSpreadsheetFormatterSelector() {
@@ -58,8 +58,8 @@ public final class SpreadsheetConverterHasOptionalSpreadsheetFormatterSelectorTe
     }
 
     @Override
-    public SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector createConverter() {
-        return SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector.INSTANCE;
+    public SpreadsheetConverterToSpreadsheetFormatterSelector createConverter() {
+        return SpreadsheetConverterToSpreadsheetFormatterSelector.INSTANCE;
     }
 
     @Override
@@ -70,7 +70,7 @@ public final class SpreadsheetConverterHasOptionalSpreadsheetFormatterSelectorTe
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector> type() {
-        return SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector.class;
+    public Class<SpreadsheetConverterToSpreadsheetFormatterSelector> type() {
+        return SpreadsheetConverterToSpreadsheetFormatterSelector.class;
     }
 }

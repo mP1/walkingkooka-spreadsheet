@@ -21,14 +21,14 @@ import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
-final class SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector extends SpreadsheetConverter {
+final class SpreadsheetConverterToSpreadsheetFormatterSelector extends SpreadsheetConverter {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector INSTANCE = new SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector();
+    final static SpreadsheetConverterToSpreadsheetFormatterSelector INSTANCE = new SpreadsheetConverterToSpreadsheetFormatterSelector();
 
-    private SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector() {
+    private SpreadsheetConverterToSpreadsheetFormatterSelector() {
         super();
     }
 
