@@ -111,11 +111,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     public final static Optional<SpreadsheetError> NO_ERROR = Optional.empty();
 
     /**
-     * Input value type is absent constant.
-     */
-    public final static Optional<ValueType> NO_VALUE_TYPE = Optional.empty();
-
-    /**
      * Input value is absent constant.
      */
     public final static Optional<Object> NO_VALUE = Optional.empty();
