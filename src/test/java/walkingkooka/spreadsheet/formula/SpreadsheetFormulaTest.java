@@ -81,6 +81,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.PatchableTesting;
+import walkingkooka.validation.HasOptionalValueTypeTesting;
 import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
@@ -102,6 +103,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasContentTypeTesting,
+    HasOptionalValueTypeTesting,
     HasShortMessageTesting,
     HasValidationPromptValueTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
@@ -115,13 +117,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private final static String TEXT = "1+2";
     private final static String EXPRESSION = "1+2";
     private final static Double EXPRESSION_VALUE = 3.0;
-    private final static ValueType VALUE_TYPE = ValueType.TEXT;
     private final static String VALUE = "\"Value444\"";
     private final static String ERROR = "Message #1";
 
     private final static String DIFFERENT_TEXT = "99+99";
-    private final static ValueType DIFFERENT_VALUE_TYPE = ValueType.TIME;
-
+    
     // CanBeEmpty.......................................................................................................
 
     @Test
@@ -277,7 +277,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetTextAfterSetValueType() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText(TEXT)
-            .setValueType(this.valueType());
+            .setValueType(OPTIONAL_VALUE_TYPE);
         final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
         assertNotSame(
             formula,
@@ -287,7 +287,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(different, DIFFERENT_TEXT);
         this.tokenAndCheck(different, SpreadsheetFormula.NO_TOKEN);
         this.expressionAndCheck(different, SpreadsheetFormula.NO_EXPRESSION);
-        this.valueTypeAndCheck(different, this.valueType()); // valueType kept
+        this.valueTypeAndCheck(different, VALUE_TYPE); // valueType kept
         this.valueAndCheck(different, SpreadsheetFormula.NO_VALUE);
         this.errorAndCheck(different, SpreadsheetFormula.NO_ERROR);
     }
@@ -339,7 +339,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetTokenDifferentAfterSetValueType() {
         final SpreadsheetFormula formula = this.createObject()
-            .setValueType(this.valueType());
+            .setValueType(OPTIONAL_VALUE_TYPE);
 
         final String differentText = "different!";
         final Optional<SpreadsheetFormulaParserToken> differentToken = this.token(differentText);
@@ -355,7 +355,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different); // should also clear expression, value, error
         this.valueTypeAndCheck(
             different,
-            this.valueType()
+            VALUE_TYPE
         );
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -506,7 +506,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula formula = this.createObject()
             .setToken(this.token())
             .setExpression(this.expression())
-            .setValueType(this.valueType());
+            .setValueType(OPTIONAL_VALUE_TYPE);
 
         final Optional<Expression> differentExpression = Optional.of(
             Expression.value("different!")
@@ -525,7 +525,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.valueTypeAndCheck(
             different,
-            this.valueType()
+            VALUE_TYPE
         );
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -584,7 +584,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetValueTypeDifferent() {
         final SpreadsheetFormula formula = this.createObject()
             .setToken(this.token());
-        final Optional<ValueType> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
+        final Optional<ValueType> differentValueType = OPTIONAL_DIFFERENT_VALUE_TYPE;
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(
             formula,
@@ -605,8 +605,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetValueTypeDifferentAndClear() {
         final SpreadsheetFormula formula = this.createObject()
-            .setValueType(this.valueType());
-        final Optional<ValueType> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
+            .setValueType(OPTIONAL_VALUE_TYPE);
+        final Optional<ValueType> differentValueType = OPTIONAL_DIFFERENT_VALUE_TYPE;
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(
             formula,
@@ -626,9 +626,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula formula = this.createObject()
             .setToken(this.token())
             .setExpression(this.expression())
-            .setValueType(this.valueType());
+            .setValueType(OPTIONAL_VALUE_TYPE);
 
-        final Optional<ValueType> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
+        final Optional<ValueType> differentValueType = OPTIONAL_DIFFERENT_VALUE_TYPE;
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(formula, different);
 
@@ -644,31 +644,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.valueAndCheck(different);
         this.errorAndCheck(different);
-    }
-
-    private Optional<ValueType> valueType() {
-        return this.valueType(VALUE_TYPE);
-    }
-
-    private Optional<ValueType> valueType(final ValueType type) {
-        return Optional.of(type);
-    }
-
-    private void valueTypeAndCheck(final SpreadsheetFormula formula,
-                                   final ValueType type) {
-        this.valueTypeAndCheck(
-            formula,
-            Optional.of(type)
-        );
-    }
-
-    private void valueTypeAndCheck(final SpreadsheetFormula formula,
-                                   final Optional<ValueType> type) {
-        this.checkEquals(
-            type,
-            formula.valueType(),
-            "valueType"
-        );
     }
 
     private void valueTypeAndCheck(final SpreadsheetFormula formula) {
@@ -2886,9 +2861,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testTreePrintTextValueType() {
         this.treePrintAndCheck(
-            SpreadsheetFormula.EMPTY.setValueType(
-                Optional.of(ValueType.TEXT)
-            ),
+            SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE),
             "Formula\n" +
                 "  valueType:\n" +
                 "    text/Text\n"
@@ -2968,12 +2941,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testEqualsDifferentValueKind() {
         checkNotEquals(
-            SpreadsheetFormula.EMPTY.setValueType(
-                this.valueType()
-            ),
-            SpreadsheetFormula.EMPTY.setValue(
-                Optional.of(DIFFERENT_VALUE_TYPE)
-            )
+            SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE),
+            SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_DIFFERENT_VALUE_TYPE)
         );
     }
 

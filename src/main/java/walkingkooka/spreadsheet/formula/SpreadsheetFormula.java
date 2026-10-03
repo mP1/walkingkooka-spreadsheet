@@ -64,6 +64,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
+import walkingkooka.validation.HasOptionalValueType;
 import walkingkooka.validation.HasValidationPromptValue;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationPromptValue;
@@ -82,6 +83,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     HasContentType,
     HasText,
     HasValue<Optional<Object>>,
+    HasOptionalValueType,
     Patchable<SpreadsheetFormula>,
     TreePrintable,
     UsesToStringBuilder,
