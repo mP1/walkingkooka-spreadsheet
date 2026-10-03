@@ -242,16 +242,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.hasSpreadsheetSelection();
                 break;
-            case TO_STYLE_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.toStyle();
-                break;
-            case TO_TEXT_NODE_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.toTextNode();
-                break;
             case JSON_STRING:
                 this.noParameterCheck(copy);
 
@@ -922,10 +912,20 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.objectToString();
                 break;
+            case TO_STYLE_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toStyle();
+                break;
             case TO_STYLEABLE_STRING:
                 this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toStyleable();
+                break;
+            case TO_TEXT_NODE_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toTextNode();
                 break;
             case TO_TSV_STRING_LIST_STRING:
                 this.noParameterCheck(copy);
