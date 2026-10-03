@@ -448,13 +448,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * {@link ValidationConvertConverters#toValidatorSelector}
-     */
-    public static Converter<SpreadsheetConverterContext> hasValidatorSelector() {
-        return ValidationConvertConverters.toValidatorSelector();
-    }
-
-    /**
      * A converter that involves {@link JsonNode} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> json() {
@@ -624,7 +617,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 "PLUGINS",
                 hasSpreadsheetFormatterSelector(),
                 hasSpreadsheetParserSelector(),
-                hasValidatorSelector(),
+                toValidatorSelector(),
                 textToConverterSelector(),
                 textToCurrencyExchangeRaterSelector(),
                 textToExpressionFunctionSelector(),
@@ -1678,6 +1671,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toValidationErrorList() {
         return ValidationConvertConverters.toValidationErrorList();
+    }
+
+    /**
+     * {@link ValidationConvertConverters#toValidatorSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> toValidatorSelector() {
+        return ValidationConvertConverters.toValidatorSelector();
     }
 
     /**
