@@ -237,11 +237,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.formAndValidation();
                 break;
-            case HAS_FORMATTER_SELECTOR_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
-                break;
             case HAS_PARSER_SELECTOR_STRING:
                 this.noParameterCheck(copy);
 
@@ -882,6 +877,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toEnvironment();
                 break;
+            case TO_FORMATTER_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toSpreadsheetFormatterSelector();
+                break;
             case TO_HOST_ADDRESS_STRING:
                 this.noParameterCheck(copy);
 
@@ -1124,10 +1124,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String FORM_AND_VALIDATION_STRING = "form-and-validation";
 
     final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
-
-    private final static String HAS_FORMATTER_SELECTOR_STRING = "has-formatter-selector";
-
-    final static ConverterName HAS_FORMATTER_SELECTOR = ConverterName.with(HAS_FORMATTER_SELECTOR_STRING);
 
     private final static String HAS_PARSER_SELECTOR_STRING = "has-parser-selector";
 
@@ -1632,7 +1628,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String TO_ENVIRONMENT_STRING = "to-environment";
 
     final static ConverterName TO_ENVIRONMENT = ConverterName.with(TO_ENVIRONMENT_STRING);
-    
+
+    private final static String TO_FORMATTER_SELECTOR_STRING = "to-formatter-selector";
+
+    final static ConverterName TO_FORMATTER_SELECTOR = ConverterName.with(TO_FORMATTER_SELECTOR_STRING);
+
     private final static String TO_HOST_ADDRESS_STRING = "to-host-address";
 
     final static ConverterName TO_HOST_ADDRESS = ConverterName.with(TO_HOST_ADDRESS_STRING);
@@ -1761,7 +1761,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(EXPRESSION),
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
-            converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
             converterInfo(JSON),
@@ -1888,6 +1887,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_DATE_TIME_SYMBOLS),
             converterInfo(TO_DECIMAL_NUMBER_SYMBOLS),
             converterInfo(TO_ENVIRONMENT),
+            converterInfo(TO_FORMATTER_SELECTOR),
             converterInfo(TO_HOST_ADDRESS),
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_LOCALE),

@@ -427,13 +427,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * {@see SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector}
-     */
-    public static Converter<SpreadsheetConverterContext> hasSpreadsheetFormatterSelector() {
-        return SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetConverterHasOptionalSpreadsheetParserSelector}
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetParserSelector() {
@@ -615,7 +608,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == PLUGINS) {
             PLUGINS = namedCollection(
                 "PLUGINS",
-                hasSpreadsheetFormatterSelector(),
+                toSpreadsheetFormatterSelector(),
                 hasSpreadsheetParserSelector(),
                 toValidatorSelector(),
                 textToConverterSelector(),
@@ -1566,6 +1559,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toEnvironment() {
         return EnvironmentConverters.toEnvironment();
+    }
+
+    /**
+     * {@see SpreadsheetConverterToSpreadsheetFormatterSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> toSpreadsheetFormatterSelector() {
+        return SpreadsheetConverterToSpreadsheetFormatterSelector.INSTANCE;
     }
 
     /**

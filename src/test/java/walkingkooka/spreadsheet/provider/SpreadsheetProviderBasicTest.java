@@ -522,7 +522,6 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/expression expression\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/form-and-validation form-and-validation\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/format-pattern-to-string format-pattern-to-string\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-formatter-selector has-formatter-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-parser-selector has-parser-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/has-spreadsheet-selection has-spreadsheet-selection\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/json json\n" +
@@ -649,6 +648,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-date-time-symbols to-date-time-symbols\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-decimal-number-symbols to-decimal-number-symbols\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-environment to-environment\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-formatter-selector to-formatter-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-host-address to-host-address\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-json-node to-json-node\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-locale to-locale\n" +
