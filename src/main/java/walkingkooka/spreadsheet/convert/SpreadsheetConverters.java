@@ -1688,6 +1688,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link ValidationConvertConverters#toValueType}
+     */
+    public static Converter<SpreadsheetConverterContext> toValueType() {
+        return ValidationConvertConverters.toValueType();
+    }
+
+    /**
      * A converter that involves {@link walkingkooka.collect.list.TsvStringList}.
      */
     public static Converter<SpreadsheetConverterContext> tsv() {
@@ -1759,6 +1766,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 textToNumberList(),
                 textToTimeList(),
                 textToStringList(),
+                toValueType(),
                 csv(),
                 tsv(),
                 binaryToText(),

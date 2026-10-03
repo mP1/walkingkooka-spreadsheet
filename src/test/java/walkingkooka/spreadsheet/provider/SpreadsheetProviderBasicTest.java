@@ -667,6 +667,7 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-error-list to-validation-error-list\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validator-selector to-validator-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-value to-value\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-value-type to-value-type\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/tsv tsv\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url url\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/url-to-hyperlink url-to-hyperlink\n" +
