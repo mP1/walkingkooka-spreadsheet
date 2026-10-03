@@ -237,16 +237,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.formAndValidation();
                 break;
-            case HAS_FORMATTER_SELECTOR_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
-                break;
-            case HAS_PARSER_SELECTOR_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.hasSpreadsheetParserSelector();
-                break;
             case HAS_SPREADSHEET_SELECTION_STRING:
                 this.noParameterCheck(copy);
 
@@ -882,6 +872,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toEnvironment();
                 break;
+            case TO_FORMATTER_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toSpreadsheetFormatterSelector();
+                break;
             case TO_HOST_ADDRESS_STRING:
                 this.noParameterCheck(copy);
 
@@ -911,6 +906,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
                 this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toMultiLineText();
+                break;
+            case TO_PARSER_SELECTOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toSpreadsheetParserSelector();
                 break;
             case TO_PROPERTIES_STRING:
                 this.noParameterCheck(copy);
@@ -1125,14 +1125,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
 
-    private final static String HAS_FORMATTER_SELECTOR_STRING = "has-formatter-selector";
-
-    final static ConverterName HAS_FORMATTER_SELECTOR = ConverterName.with(HAS_FORMATTER_SELECTOR_STRING);
-
-    private final static String HAS_PARSER_SELECTOR_STRING = "has-parser-selector";
-
-    final static ConverterName HAS_PARSER_SELECTOR = ConverterName.with(HAS_PARSER_SELECTOR_STRING);
-    
     private final static String HAS_SPREADSHEET_SELECTION_STRING = "has-spreadsheet-selection";
 
     final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
@@ -1632,7 +1624,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String TO_ENVIRONMENT_STRING = "to-environment";
 
     final static ConverterName TO_ENVIRONMENT = ConverterName.with(TO_ENVIRONMENT_STRING);
-    
+
+    private final static String TO_FORMATTER_SELECTOR_STRING = "to-formatter-selector";
+
+    final static ConverterName TO_FORMATTER_SELECTOR = ConverterName.with(TO_FORMATTER_SELECTOR_STRING);
+
     private final static String TO_HOST_ADDRESS_STRING = "to-host-address";
 
     final static ConverterName TO_HOST_ADDRESS = ConverterName.with(TO_HOST_ADDRESS_STRING);
@@ -1656,6 +1652,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String TO_NUMBER_STRING = "to-number";
 
     final static ConverterName TO_NUMBER = ConverterName.with(TO_NUMBER_STRING);
+
+    private final static String TO_PARSER_SELECTOR_STRING = "to-parser-selector";
+
+    final static ConverterName TO_PARSER_SELECTOR = ConverterName.with(TO_PARSER_SELECTOR_STRING);
 
     private final static String TO_PROPERTIES_STRING = "to-properties";
 
@@ -1761,8 +1761,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(EXPRESSION),
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
-            converterInfo(HAS_FORMATTER_SELECTOR),
-            converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
             converterInfo(JSON),
             converterInfo(JSON_TO),
@@ -1888,12 +1886,14 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_DATE_TIME_SYMBOLS),
             converterInfo(TO_DECIMAL_NUMBER_SYMBOLS),
             converterInfo(TO_ENVIRONMENT),
+            converterInfo(TO_FORMATTER_SELECTOR),
             converterInfo(TO_HOST_ADDRESS),
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_LOCALE),
             converterInfo(TO_LOCALE_LANGUAGE_TAG),
             converterInfo(TO_MULTI_LINE_TEXT),
             converterInfo(TO_NUMBER),
+            converterInfo(TO_PARSER_SELECTOR),
             converterInfo(TO_PROPERTIES),
             converterInfo(TO_STRING),
             converterInfo(TO_STYLE),

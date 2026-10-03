@@ -635,8 +635,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    expression\n" +
                 "    form-and-validation\n" +
                 "    format-pattern-to-string\n" +
-                "    has-formatter-selector\n" +
-                "    has-parser-selector\n" +
                 "    has-spreadsheet-selection\n" +
                 "    json\n" +
                 "    json-to\n" +
@@ -762,12 +760,14 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-date-time-symbols\n" +
                 "    to-decimal-number-symbols\n" +
                 "    to-environment\n" +
+                "    to-formatter-selector\n" +
                 "    to-host-address\n" +
                 "    to-json-node\n" +
                 "    to-locale\n" +
                 "    to-locale-language-tag\n" +
                 "    to-multi-line-text\n" +
                 "    to-number\n" +
+                "    to-parser-selector\n" +
                 "    to-properties\n" +
                 "    to-string\n" +
                 "    to-style\n" +

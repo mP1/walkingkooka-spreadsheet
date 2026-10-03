@@ -427,20 +427,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
-     * {@see SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector}
-     */
-    public static Converter<SpreadsheetConverterContext> hasSpreadsheetFormatterSelector() {
-        return SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector.INSTANCE;
-    }
-
-    /**
-     * {@see SpreadsheetConverterHasOptionalSpreadsheetParserSelector}
-     */
-    public static Converter<SpreadsheetConverterContext> hasSpreadsheetParserSelector() {
-        return SpreadsheetConverterHasOptionalSpreadsheetParserSelector.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetConverterHasSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetSelection() {
@@ -615,8 +601,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == PLUGINS) {
             PLUGINS = namedCollection(
                 "PLUGINS",
-                hasSpreadsheetFormatterSelector(),
-                hasSpreadsheetParserSelector(),
+                toSpreadsheetFormatterSelector(),
+                toSpreadsheetParserSelector(),
                 toValidatorSelector(),
                 textToConverterSelector(),
                 textToCurrencyExchangeRaterSelector(),
@@ -1569,6 +1555,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@see SpreadsheetConverterToSpreadsheetFormatterSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> toSpreadsheetFormatterSelector() {
+        return SpreadsheetConverterToSpreadsheetFormatterSelector.INSTANCE;
+    }
+
+    /**
      * {@link  NetConverters#toHostAddress()}
      */
     public static Converter<SpreadsheetConverterContext> toHostAddress() {
@@ -1608,6 +1601,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toNumber() {
         return SpreadsheetConverterToNumber.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterToSpreadsheetParserSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> toSpreadsheetParserSelector() {
+        return SpreadsheetConverterToSpreadsheetParserSelector.INSTANCE;
     }
 
     /**
