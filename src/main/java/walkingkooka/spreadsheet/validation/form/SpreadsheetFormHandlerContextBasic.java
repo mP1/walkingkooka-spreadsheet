@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.convert.ConverterLikeDelegator;
@@ -55,7 +57,8 @@ import java.util.function.Function;
  */
 final class SpreadsheetFormHandlerContextBasic implements SpreadsheetFormHandlerContext,
     ConverterLikeDelegator,
-    EnvironmentContextDelegator {
+    EnvironmentContextDelegator,
+    UsesToStringBuilder {
 
     static SpreadsheetFormHandlerContextBasic with(final Form<SpreadsheetValidationReference> form,
                                                    final SpreadsheetExpressionReferenceLoader loader,
@@ -301,6 +304,20 @@ final class SpreadsheetFormHandlerContextBasic implements SpreadsheetFormHandler
 
     @Override
     public String toString() {
-        return this.loader + " " + this.cellsSaver + " " + this.context;
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("form")
+            .value(this.form)
+            .label("loader")
+            .value(this.loader)
+            .label("cellsSaver")
+            .value(this.cellsSaver)
+            .label("context")
+            .value(this.context);
     }
 }
