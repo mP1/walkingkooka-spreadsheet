@@ -371,15 +371,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.validatorAndCheck(different, VALIDATOR_SELECTOR);
     }
 
-    private void referenceAndCheck(final SpreadsheetCell cell,
-                                   final SpreadsheetCellReference reference) {
-        this.checkEquals(
-            reference,
-            cell.reference(),
-            "reference"
-        );
-    }
-
     // setFormula.......................................................................................................
 
     @Test
