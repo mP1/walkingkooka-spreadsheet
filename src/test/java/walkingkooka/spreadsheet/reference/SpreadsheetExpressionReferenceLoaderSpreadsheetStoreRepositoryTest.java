@@ -34,7 +34,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoaderTest implements SpreadsheetExpressionReferenceLoaderTesting2<SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader> {
+public final class SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepositoryTest implements SpreadsheetExpressionReferenceLoaderTesting2<SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
 
@@ -42,7 +42,7 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
     public void testWithNullSpreadsheetStoreRepositoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(null)
+            () -> SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository.with(null)
         );
     }
 
@@ -68,7 +68,7 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
             .save(cell);
 
         this.loadCellAndCheck(
-            SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
+            SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository.with(repo),
             CELL,
             this.createContext(),
             cell
@@ -106,7 +106,7 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
             .save(b2);
 
         this.loadCellRangeAndCheck(
-            SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
+            SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository.with(repo),
             SpreadsheetSelection.parseCellRange("A1:B2"),
             this.createContext(),
             a1,
@@ -133,15 +133,15 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
             .save(label);
 
         this.loadLabelAndCheck(
-            SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
+            SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository.with(repo),
             label.label(),
             label
         );
     }
 
     @Override
-    public SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader createSpreadsheetExpressionReferenceLoader() {
-        return SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(SpreadsheetStoreRepositories.fake());
+    public SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository createSpreadsheetExpressionReferenceLoader() {
+        return SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository.with(SpreadsheetStoreRepositories.fake());
     }
 
     @Override

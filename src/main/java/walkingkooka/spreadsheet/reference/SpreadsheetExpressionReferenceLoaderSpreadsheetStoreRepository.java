@@ -29,18 +29,18 @@ import java.util.Set;
  * A {@link SpreadsheetExpressionReferenceLoader} that calls a method on a {@link walkingkooka.spreadsheet.store.SpreadsheetStore}.
  * Note cells are returned without evaluating expressions, formatting etc.
  */
-final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader implements SpreadsheetExpressionReferenceLoader {
+final class SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository implements SpreadsheetExpressionReferenceLoader {
 
     /**
      * Factory
      */
-    static SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader with(final SpreadsheetStoreRepository repository) {
-        return new SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader(
+    static SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository with(final SpreadsheetStoreRepository repository) {
+        return new SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository(
             Objects.requireNonNull(repository, "repository")
         );
     }
 
-    private SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader(final SpreadsheetStoreRepository repository) {
+    private SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository(final SpreadsheetStoreRepository repository) {
         this.repository = repository;
     }
 
