@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.validation.form;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
@@ -70,7 +71,8 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormHandlerContextBasicTest implements SpreadsheetFormHandlerContextTesting<SpreadsheetFormHandlerContextBasic>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetFormHandlerContextBasic> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetFormHandlerContextBasic>,
+    ToStringTesting<SpreadsheetFormHandlerContextBasic> {
 
     private final static Form<SpreadsheetValidationReference> FORM = Form.with(
         FormName.with("Form123")
@@ -78,7 +80,18 @@ public final class SpreadsheetFormHandlerContextBasicTest implements Spreadsheet
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
-    private static final Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = SpreadsheetDelta.EMPTY::setCells;
+    private static final Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = new Function<Set<SpreadsheetCell>, SpreadsheetDelta>() {
+
+        @Override
+        public SpreadsheetDelta apply(final Set<SpreadsheetCell> cells) {
+            return SpreadsheetDelta.EMPTY.setCells(cells);
+        }
+
+        @Override
+        public String toString() {
+            return "SpreadsheetFormHandlerContextBasicTest.CELLS_SAVER";
+        }
+    };
 
     // with.............................................................................................................
 
@@ -410,6 +423,11 @@ public final class SpreadsheetFormHandlerContextBasicTest implements Spreadsheet
                 Sets.empty() :
                 Sets.of(cell);
         }
+
+        @Override
+        public String toString() {
+            return SpreadsheetFormHandlerContextBasicTest.class.getSimpleName() + "$" + SpreadsheetExpressionReferenceLoader.class.getSimpleName();
+        }
     };
 
     private final static SpreadsheetLabelName A1LABEL = SpreadsheetSelection.labelName("A1LABEL");
@@ -623,6 +641,11 @@ public final class SpreadsheetFormHandlerContextBasicTest implements Spreadsheet
                             throwable
                         );
                 }
+
+                @Override
+                public String toString() {
+                    return FakeSpreadsheetEngineContext.class.getSimpleName();
+                }
             }
         );
     }
@@ -784,6 +807,16 @@ public final class SpreadsheetFormHandlerContextBasicTest implements Spreadsheet
                 context
             ),
             context
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createObject(),
+            "form=Form123 loader=SpreadsheetFormHandlerContextBasicTest$SpreadsheetExpressionReferenceLoader cellsSaver=SpreadsheetFormHandlerContextBasicTest.CELLS_SAVER context=FakeSpreadsheetEngineContext"
         );
     }
 
