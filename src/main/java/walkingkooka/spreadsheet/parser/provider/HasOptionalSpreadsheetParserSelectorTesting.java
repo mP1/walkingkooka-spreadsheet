@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.parser.provider;
 
-import walkingkooka.test.Testing;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public interface HasOptionalSpreadsheetParserSelectorTesting extends Testing {
+public interface HasOptionalSpreadsheetParserSelectorTesting extends TreePrintableTesting {
 
     default void parserSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has) {
         this.parserSelectorAndCheck(

@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.test.Testing;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 
-public interface HasSpreadsheetPatternKindTesting extends Testing {
+public interface HasSpreadsheetPatternKindTesting extends TreePrintableTesting {
 
     default void hasSpreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has) {
         this.hasSpreadsheetPatternKindAndCheck(
