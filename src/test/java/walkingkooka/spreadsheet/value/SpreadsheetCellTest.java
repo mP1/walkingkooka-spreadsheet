@@ -212,6 +212,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         TextNode.text("different-formatted-value")
     );
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNullReferenceFails() {
         assertThrows(
@@ -358,7 +360,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formattedValueAndCheck(cell);
     }
 
-    // SetReference.....................................................................................................
+    // setReference.....................................................................................................
 
     @Test
     public void testSetReferenceNullFails() {
@@ -421,7 +423,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetFormula.....................................................................................................
+    // setFormula.......................................................................................................
 
     @Test
     public void testSetFormulaNullFails() {
@@ -512,7 +514,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetCurrency......................................................................................................
+    // setCurrency......................................................................................................
 
     @Test
     public void testSetCurrencyNullFails() {
@@ -564,7 +566,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetCurrencyExchangeRater.........................................................................................
+    // setCurrencyExchangeRater.........................................................................................
 
     @Test
     public void testSetCurrencyExchangeRaterNullFails() {
@@ -631,7 +633,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetDateTimeSymbols...............................................................................................
+    // setDateTimeSymbols...............................................................................................
 
     @Test
     public void testSetDateTimeSymbolsNullFails() {
@@ -679,7 +681,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formattedValueAndCheck(different); // clear formattedValue because of dateTimeSymbols / value change.
     }
 
-    // SetDecimalNumberSymbols..........................................................................................
+    // setDecimalNumberSymbols..........................................................................................
 
     @Test
     public void testSetDecimalNumberSymbolsNullFails() {
@@ -779,7 +781,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formattedValueAndCheck(different);
     }
 
-    // SetFormatter.....................................................................................................
+    // setFormatter.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
@@ -875,7 +877,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetParser........................................................................................................
+    // setParser........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
@@ -1033,7 +1035,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetStyle.........................................................................................................
+    // setStyle.........................................................................................................
 
     @Test
     public void testSetStyleNullFails() {
@@ -1100,7 +1102,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetStyle.........................................................................................................
+    // setValidator.....................................................................................................
 
     @Test
     public void testSetValidatorNullFails() {
@@ -1174,7 +1176,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetFormattedValue................................................................................................
+    // setFormattedValue................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
