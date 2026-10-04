@@ -22,11 +22,11 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
-public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreTesting<TreeSpreadsheetFormStore> {
+public final class SpreadsheetFormStoreTreeMapStoreTest implements SpreadsheetFormStoreTesting<SpreadsheetFormStoreTreeMapStore> {
 
     @Test
     public void testSaveAndLoad() {
-        final TreeSpreadsheetFormStore store = this.createStore();
+        final SpreadsheetFormStoreTreeMapStore store = this.createStore();
 
         final Form<SpreadsheetValidationReference> form = this.value();
         store.save(form);
@@ -40,7 +40,7 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
 
     @Test
     public void testFindFormsByName() {
-        final TreeSpreadsheetFormStore store = this.createStore();
+        final SpreadsheetFormStoreTreeMapStore store = this.createStore();
 
         final Form<SpreadsheetValidationReference> form1 = Form.with(
             FormName.with("Form1")
@@ -76,7 +76,7 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
 
     @Test
     public void testFindFormsByNameSkip() {
-        final TreeSpreadsheetFormStore store = this.createStore();
+        final SpreadsheetFormStoreTreeMapStore store = this.createStore();
 
         final Form<SpreadsheetValidationReference> form1 = Form.with(
             FormName.with("Form1")
@@ -111,7 +111,7 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
 
     @Test
     public void testFindFormsByNameCount() {
-        final TreeSpreadsheetFormStore store = this.createStore();
+        final SpreadsheetFormStoreTreeMapStore store = this.createStore();
 
         final Form<SpreadsheetValidationReference> form1 = Form.with(
             FormName.with("Form1")
@@ -146,7 +146,7 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
 
     @Test
     public void testFindFormsByNameOffsetAndCount() {
-        final TreeSpreadsheetFormStore store = this.createStore();
+        final SpreadsheetFormStoreTreeMapStore store = this.createStore();
 
         final Form<SpreadsheetValidationReference> form1 = Form.with(
             FormName.with("Form1")
@@ -180,7 +180,7 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
 
     @Test
     public void testFindFormsByNameFiltered() {
-        final TreeSpreadsheetFormStore store = this.createStore();
+        final SpreadsheetFormStoreTreeMapStore store = this.createStore();
 
         final Form<SpreadsheetValidationReference> form1 = Form.with(
             FormName.with("Different1")
@@ -213,8 +213,8 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
     }
 
     @Override
-    public TreeSpreadsheetFormStore createStore() {
-        return TreeSpreadsheetFormStore.empty();
+    public SpreadsheetFormStoreTreeMapStore createStore() {
+        return SpreadsheetFormStoreTreeMapStore.empty();
     }
 
     @Override
@@ -230,7 +230,7 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
     // class............................................................................................................
 
     @Override
-    public Class<TreeSpreadsheetFormStore> type() {
-        return TreeSpreadsheetFormStore.class;
+    public Class<SpreadsheetFormStoreTreeMapStore> type() {
+        return SpreadsheetFormStoreTreeMapStore.class;
     }
 }

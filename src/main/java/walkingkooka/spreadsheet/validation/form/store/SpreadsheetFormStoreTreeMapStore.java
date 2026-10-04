@@ -32,13 +32,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
+final class SpreadsheetFormStoreTreeMapStore implements SpreadsheetFormStore {
 
-    static TreeSpreadsheetFormStore empty() {
-        return new TreeSpreadsheetFormStore();
+    static SpreadsheetFormStoreTreeMapStore empty() {
+        return new SpreadsheetFormStoreTreeMapStore();
     }
 
-    private TreeSpreadsheetFormStore() {
+    private SpreadsheetFormStoreTreeMapStore() {
         this.store = FormStores.treeMapStore();
     }
 
