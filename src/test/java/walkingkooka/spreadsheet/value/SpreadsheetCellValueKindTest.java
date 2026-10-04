@@ -21,19 +21,19 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HasValueTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.currency.HasCurrencyTesting;
-import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.currency.provider.HasOptionalCurrencyExchangeRaterSelectorTesting;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.io.FileExtension;
 import walkingkooka.io.HasFileExtensionTesting;
-import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelectorTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
-import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.parser.provider.HasOptionalSpreadsheetParserSelectorTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -41,13 +41,9 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.validation.ValueType;
-import walkingkooka.validation.provider.ValidatorSelector;
+import walkingkooka.validation.HasOptionalValueTypeTesting;
+import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -57,66 +53,45 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     HasContentTypeTesting,
     HasCurrencyTesting,
+    HasDateTimeSymbolsTesting,
+    HasDecimalNumberSymbolsTesting,
     HasFileExtensionTesting,
+    HasOptionalCurrencyExchangeRaterSelectorTesting,
+    HasOptionalSpreadsheetFormatterSelectorTesting,
+    HasOptionalSpreadsheetParserSelectorTesting,
+    HasOptionalValidatorSelectorTesting,
+    HasOptionalValueTypeTesting,
     HasValueTesting,
     ParseStringTesting<SpreadsheetCellValueKind>,
     ClassTesting<SpreadsheetCellValueKind> {
 
+    private final static SpreadsheetCell CELL = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
+        ).setCurrency(OPTIONAL_CURRENCY)
+        .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
+        .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
+        .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
+        .setLocale(OPTIONAL_LOCALE)
+        .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
+        .setParser(OPTIONAL_PARSER_SELECTOR)
+        .setStyle(
+            TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+            )
+        ).setValidator(OPTIONAL_VALIDATOR_SELECTOR)
+        .setFormattedValue(
+            Optional.of(
+                TextNode.text("formatted-value")
+            )
+        );
+
     @Test
     public void testCellValue() {
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValueType(
-                    Optional.of(
-                        ValueType.TEXT
-                    )
-                )
-            ).setCurrency(OPTIONAL_CURRENCY)
-            .setCurrencyExchangeRater(
-                Optional.of(
-                    CurrencyExchangeRaterSelector.parse("currency-exchange-rater-123")
-                )
-            ).setDateTimeSymbols(
-                Optional.of(
-                    DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.FRANCE)
-                    )
-                )
-            ).setDecimalNumberSymbols(
-                Optional.of(
-                    DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(Locale.FRANCE)
-                    )
-                )
-            ).setLocale(
-                Optional.of(Locale.ENGLISH)
-            ).setFormatter(
-                Optional.of(
-                    SpreadsheetFormatterSelector.parse("hello-formatter")
-                )
-            ).setParser(
-                Optional.of(
-                    SpreadsheetParserSelector.parse("hello-parser")
-                )
-            ).setStyle(
-                TextStyle.EMPTY.set(
-                    TextStylePropertyName.TEXT_ALIGN,
-                    TextAlign.CENTER
-                )
-            ).setValidator(
-                Optional.of(
-                    ValidatorSelector.parse("hello-validator")
-                )
-            ).setFormattedValue(
-                Optional.of(
-                    TextNode.text("formatted-value")
-                )
-            );
-
         final Set<Object> values = Sets.hash();
         for (final SpreadsheetCellValueKind kind : SpreadsheetCellValueKind.values()) {
             final Object value = values.add(
-                kind.cellValue(cell)
+                kind.cellValue(CELL)
             );
             this.checkNotEquals(
                 Optional.empty(),
@@ -248,58 +223,10 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
 
     private void cellValueAndCheck(final SpreadsheetCellValueKind kind,
                                    final Function<SpreadsheetCell, Object> expected) {
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setValueType(
-                Optional.of(
-                    ValueType.TEXT
-                )
-            )
-        ).setCurrency(
-            Optional.of(
-                Currency.getInstance("AUD")
-            )
-        ).setDateTimeSymbols(
-            Optional.of(
-                DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(Locale.FRANCE)
-                )
-            )
-        ).setDecimalNumberSymbols(
-            Optional.of(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                    '+',
-                    new DecimalFormatSymbols(Locale.FRANCE)
-                )
-            )
-        ).setLocale(
-            Optional.of(Locale.ENGLISH)
-        ).setFormatter(
-            Optional.of(
-                SpreadsheetFormatterSelector.parse("hello-formatter")
-            )
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("formatted-value")
-            )
-        ).setParser(
-            Optional.of(
-                SpreadsheetParserSelector.parse("hello-parser")
-            )
-        ).setStyle(
-            TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
-            )
-        ).setValidator(
-            Optional.of(
-                ValidatorSelector.parse("hello-validator")
-            )
-        );
-
         this.cellValueAndCheck(
             kind,
-            cell,
-            expected.apply(cell)
+            CELL,
+            expected.apply(CELL)
         );
     }
 
