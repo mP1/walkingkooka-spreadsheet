@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.test.Testing;
+import walkingkooka.text.printer.TreePrintableTesting;
 
-public interface HasSpreadsheetReferenceTesting extends Testing {
+public interface HasSpreadsheetReferenceTesting extends TreePrintableTesting {
 
     default <RR extends Comparable<RR>> void referenceAndCheck(final HasSpreadsheetReference<RR> has,
                                                                final RR expected) {

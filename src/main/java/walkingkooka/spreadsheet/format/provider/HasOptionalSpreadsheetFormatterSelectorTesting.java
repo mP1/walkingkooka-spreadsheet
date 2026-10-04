@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.format.provider;
 
-import walkingkooka.test.Testing;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public interface HasOptionalSpreadsheetFormatterSelectorTesting extends Testing {
+public interface HasOptionalSpreadsheetFormatterSelectorTesting extends TreePrintableTesting {
 
     SpreadsheetFormatterSelector FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("formatter-selector-111");
 
