@@ -28,8 +28,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.OptionalDecimalNumberSymbols;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -63,7 +62,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     HasValueTesting,
     ToStringTesting<SpreadsheetImporterCellValue>,
     TreePrintableTesting,
-    ClassTesting2<SpreadsheetImporterCellValue> {
+    PublicClassTesting<SpreadsheetImporterCellValue> {
     
     // cell.............................................................................................................
 
@@ -630,10 +629,5 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Override
     public Class<SpreadsheetImporterCellValue> type() {
         return SpreadsheetImporterCellValue.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }
