@@ -54,8 +54,8 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.terminal.FakeTerminalContext;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -85,7 +85,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("'CurrentCell"))
     );
 
-    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = SpreadsheetExpressionReferenceLoaders.fake();
+    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = new FakeSpreadsheetExpressionReferenceLoader() {
+        @Override
+        public String toString() {
+            return "SpreadsheetExpressionReferenceLoader";
+        }
+    };
 
     private final static SpreadsheetMetadataMode MODE = SpreadsheetMetadataMode.FORMULA;
 
@@ -115,7 +120,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         PROVIDER_CONTEXT
     );
 
-    private final static TerminalContext TERMINAL_CONTEXT = TerminalContexts.fake();
+    private final static TerminalContext TERMINAL_CONTEXT = new FakeTerminalContext() {
+        @Override
+        public String toString() {
+            return FakeTerminalContext.class.getSimpleName();
+        }
+    };
 
     // with.............................................................................................................
 
@@ -1067,6 +1077,16 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     @Override
     public void testEnvironmentContext() {
         throw new UnsupportedOperationException();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "mode=FORMULA cell=Z9 \"'CurrentCell\" spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader spreadsheetLabelNameResolver=EmptySpreadsheetLabelNameResolver terminalContext=FakeTerminalContext"
+        );
     }
 
     // Class............................................................................................................

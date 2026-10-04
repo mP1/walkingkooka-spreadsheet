@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
@@ -490,10 +491,21 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     // SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext
     final SpreadsheetMetadataContext spreadsheetMetadataContext;
 
-    // Object...........................................................................................................
+
+    // UsesToStringBuilder..............................................................................................
 
     @Override
-    public String toString() {
-        return this.spreadsheetEnvironmentContextFactory.toString();
+    public void buildToString(final ToStringBuilder b) {
+        b.label("mediaTypeDetector")
+            .value(this.mediaTypeDetector)
+            .label("spreadsheetContextSupplier")
+            .value(this.spreadsheetContextSupplier)
+            .label("spreadsheetEnvironmentContextFactory")
+            .value(this.spreadsheetEnvironmentContextFactory)
+            .label("expressionFunctionProvider")
+            .value(this.expressionFunctionProvider)
+            .label("spreadsheetMetadataContext")
+            .value(this.spreadsheetMetadataContext);
+        ;
     }
 }

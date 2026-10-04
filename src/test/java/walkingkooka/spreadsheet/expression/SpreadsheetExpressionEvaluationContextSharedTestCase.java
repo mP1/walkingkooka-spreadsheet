@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -31,7 +32,8 @@ import java.math.MathContext;
 
 public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C extends SpreadsheetExpressionEvaluationContextShared> implements SpreadsheetExpressionEvaluationContextTesting2<C>,
     SpreadsheetMetadataTesting,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    ToStringTesting<C> {
 
     SpreadsheetExpressionEvaluationContextSharedTestCase() {
         super();
