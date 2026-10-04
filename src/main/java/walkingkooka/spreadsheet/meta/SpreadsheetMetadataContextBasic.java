@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.store.StoreWatcher;
@@ -27,7 +29,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-final class SpreadsheetMetadataContextBasic implements SpreadsheetMetadataContext {
+final class SpreadsheetMetadataContextBasic implements SpreadsheetMetadataContext,
+    UsesToStringBuilder {
 
     static SpreadsheetMetadataContextBasic with(final SpreadsheetMetadataCreator createMetadata,
                                                 final SpreadsheetMetadataStore store) {
@@ -129,6 +132,16 @@ final class SpreadsheetMetadataContextBasic implements SpreadsheetMetadataContex
 
     @Override
     public String toString() {
-        return this.store.toString();
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("createMetadata")
+            .value(this.createMetadata)
+            .label("store")
+            .value(this.store);
     }
 }

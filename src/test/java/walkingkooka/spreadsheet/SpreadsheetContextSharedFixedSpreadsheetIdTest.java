@@ -530,7 +530,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "mediaTypeDetector=application/octet-stream metadataCreator=SPREADSHEET_METADATA_CREATOR multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction storeRepository=REPO spreadsheetMetadataContext={123={\n" +
+            "mediaTypeDetector=application/octet-stream metadataCreator=SPREADSHEET_METADATA_CREATOR multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction storeRepository=REPO spreadsheetMetadataContext=createMetadata=this store={123={\n" +
                 "  \"spreadsheetId\": \"123\",\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"creator@example.com\",\n" +
@@ -544,7 +544,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 "  \"dateFormatter\": \"date dddd, d mmmm yyyy\",\n" +
                 "  \"dateParser\": \"date dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                 "  \"dateTimeFormatter\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
-                "  \"dateTimeParser\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dd"
+                "  \"dateTimeParser\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy"
         );
     }
 
