@@ -26,7 +26,7 @@ import walkingkooka.validation.ValidatorContextDelegator;
 import java.util.Locale;
 import java.util.Objects;
 
-final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorContext,
+final class SpreadsheetValidatorContextBasic implements SpreadsheetValidatorContext,
     ValidatorContextDelegator<SpreadsheetValidationReference> {
 
     static SpreadsheetValidatorContext with(final ValidatorContext<SpreadsheetValidationReference> context) {
@@ -34,10 +34,10 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
 
         return context instanceof SpreadsheetValidatorContext ?
             (SpreadsheetValidatorContext) context :
-            new BasicSpreadsheetValidatorContext(context);
+            new SpreadsheetValidatorContextBasic(context);
     }
 
-    private BasicSpreadsheetValidatorContext(final ValidatorContext<SpreadsheetValidationReference> context) {
+    private SpreadsheetValidatorContextBasic(final ValidatorContext<SpreadsheetValidationReference> context) {
         super();
 
         this.context = context;
@@ -83,7 +83,7 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
             .toSpreadsheetSelection()
             .equalsIgnoreReferenceKind(cellOrLabel) ?
             this :
-            new BasicSpreadsheetValidatorContext(
+            new SpreadsheetValidatorContextBasic(
                 this.validatorContext()
                     .setValidationReference(
                         Objects.requireNonNull(cellOrLabel, "cellOrLabel")

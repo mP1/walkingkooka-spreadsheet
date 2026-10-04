@@ -31,20 +31,20 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetValidatorContextTesting<BasicSpreadsheetValidatorContext>,
+public final class SpreadsheetValidatorContextBasicTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextBasic>,
     SpreadsheetMetadataTesting {
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetValidatorContext.with(null)
+            () -> SpreadsheetValidatorContextBasic.with(null)
         );
     }
 
     @Test
     public void testSetValidationReferenceSameDifferentKind() {
-        final BasicSpreadsheetValidatorContext context = this.createContext();
+        final SpreadsheetValidatorContextBasic context = this.createContext();
 
         final SpreadsheetCellReference different = SpreadsheetSelection.parseCell("$A1");
 
@@ -61,7 +61,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
 
     @Test
     public void testSetEnvironmentContextWithDifferentEnvironmentContext() {
-        final BasicSpreadsheetValidatorContext context = this.createContext();
+        final SpreadsheetValidatorContextBasic context = this.createContext();
 
         final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
@@ -79,9 +79,9 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
     }
 
     @Override
-    public BasicSpreadsheetValidatorContext createContext() {
+    public SpreadsheetValidatorContextBasic createContext() {
         return Cast.to(
-            BasicSpreadsheetValidatorContext.with(
+            SpreadsheetValidatorContextBasic.with(
                 ValidatorContexts.basic(
                     SpreadsheetSelection.A1,
                     (final ValidatorSelector validatorSelector) -> {
@@ -106,7 +106,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
         final ValidatorContext<SpreadsheetValidationReference> context = ValidatorContexts.fake();
 
         this.environmentContextAndCheck(
-            BasicSpreadsheetValidatorContext.with(context),
+            SpreadsheetValidatorContextBasic.with(context),
             context
         );
     }
@@ -114,7 +114,12 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetValidatorContext> type() {
-        return BasicSpreadsheetValidatorContext.class;
+    public Class<SpreadsheetValidatorContextBasic> type() {
+        return SpreadsheetValidatorContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

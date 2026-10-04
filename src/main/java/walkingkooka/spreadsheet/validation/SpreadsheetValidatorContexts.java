@@ -26,10 +26,10 @@ import walkingkooka.validation.ValidatorContext;
 public final class SpreadsheetValidatorContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetValidatorContext}
+     * {@see SpreadsheetValidatorContextBasic}
      */
     public static SpreadsheetValidatorContext basic(final ValidatorContext<SpreadsheetValidationReference> context) {
-        return BasicSpreadsheetValidatorContext.with(context);
+        return SpreadsheetValidatorContextBasic.with(context);
     }
 
     /**
