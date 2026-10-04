@@ -39,7 +39,7 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     }
 
     private TreeSpreadsheetFormStore() {
-        this.store = FormStores.empty();
+        this.store = FormStores.treeMapStore();
     }
 
     @Override
