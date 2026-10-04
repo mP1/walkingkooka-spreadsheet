@@ -25,14 +25,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-final class EmptySpreadsheetExpressionReferenceLoader implements SpreadsheetExpressionReferenceLoader {
+final class SpreadsheetExpressionReferenceLoaderEmpty implements SpreadsheetExpressionReferenceLoader {
 
     /**
      * Singleton
      */
-    final static EmptySpreadsheetExpressionReferenceLoader INSTANCE = new EmptySpreadsheetExpressionReferenceLoader();
+    final static SpreadsheetExpressionReferenceLoaderEmpty INSTANCE = new SpreadsheetExpressionReferenceLoaderEmpty();
 
-    private EmptySpreadsheetExpressionReferenceLoader() {
+    private SpreadsheetExpressionReferenceLoaderEmpty() {
         super();
     }
 

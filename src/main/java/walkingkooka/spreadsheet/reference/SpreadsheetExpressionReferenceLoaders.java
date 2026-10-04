@@ -27,10 +27,10 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 public final class SpreadsheetExpressionReferenceLoaders implements PublicStaticHelper {
 
     /**
-     * {@see EmptySpreadsheetExpressionReferenceLoader}
+     * {@see SpreadsheetExpressionReferenceLoaderEmpty}
      */
     public static SpreadsheetExpressionReferenceLoader empty() {
-        return EmptySpreadsheetExpressionReferenceLoader.INSTANCE;
+        return SpreadsheetExpressionReferenceLoaderEmpty.INSTANCE;
     }
 
     /**
