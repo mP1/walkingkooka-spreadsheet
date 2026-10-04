@@ -24,6 +24,14 @@ import java.util.Optional;
 
 public interface HasOptionalSpreadsheetParserSelectorTesting extends TreePrintableTesting {
 
+    SpreadsheetParserSelector PARSER_SELECTOR = SpreadsheetParserSelector.parse("parser-selector-111");
+
+    SpreadsheetParserSelector DIFFERENT_PARSER_SELECTOR = SpreadsheetParserSelector.parse("different-parser-selector-222");
+
+    Optional<SpreadsheetParserSelector> OPTIONAL_PARSER_SELECTOR = Optional.of(PARSER_SELECTOR);
+
+    Optional<SpreadsheetParserSelector> OPTIONAL_DIFFERENT_PARSER_SELECTOR = Optional.of(DIFFERENT_PARSER_SELECTOR);
+
     default void parserSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has) {
         this.parserSelectorAndCheck(
             has,
