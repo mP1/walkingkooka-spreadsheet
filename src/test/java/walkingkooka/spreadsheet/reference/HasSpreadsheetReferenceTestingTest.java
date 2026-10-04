@@ -17,10 +17,35 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PublicClassTesting;
 
 public final class HasSpreadsheetReferenceTestingTest implements HasSpreadsheetReferenceTesting,
     PublicClassTesting<HasSpreadsheetReferenceTesting> {
+
+    @Test
+    public void testConstants() {
+        this.checkNotEquals(
+            REFERENCE,
+            DIFFERENT_REFERENCE
+        );
+    }
+
+    @Test
+    public void testConstants2() {
+        this.checkNotEquals(
+            REFERENCE,
+            ABSOLUTE_REFERENCE
+        );
+    }
+
+    @Test
+    public void testConstants3() {
+        this.checkEquals(
+            REFERENCE.toAbsolute(),
+            ABSOLUTE_REFERENCE
+        );
+    }
 
     // class............................................................................................................
 

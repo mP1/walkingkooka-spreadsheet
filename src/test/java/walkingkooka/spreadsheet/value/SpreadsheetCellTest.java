@@ -108,12 +108,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     ToStringTesting<SpreadsheetCell>,
     TreePrintableTesting {
 
-    private final static SpreadsheetCellReference REFERENCE = SpreadsheetSelection.A1;
-
-    private final static SpreadsheetCellReference ABSOLUTE_A1 = SpreadsheetSelection.parseCell("$A$1");
-
-    private final static SpreadsheetCellReference DIFFERENT_REFERENCE = SpreadsheetSelection.parseCell("B2");
-
     private final static SpreadsheetFormula FORMULA = SpreadsheetFormula.EMPTY
         .setText("=1+2");
 
@@ -2968,7 +2962,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormula() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA
             ),
             "Cell A1\n" +
@@ -2982,7 +2976,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaToken() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA.setToken(TOKEN)
 
             ),
@@ -3003,7 +2997,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaTokenExpression() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA.setToken(TOKEN)
                     .setExpression(EXPRESSION)
 
@@ -3029,7 +3023,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaTokenExpressionValue() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA.setToken(TOKEN)
                     .setExpression(EXPRESSION)
                     .setValue(VALUE)
@@ -3058,7 +3052,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaTokenExpressionError() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA.setToken(TOKEN)
                     .setToken(TOKEN)
                     .setExpression(EXPRESSION)
@@ -3093,7 +3087,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaTokenExpressionValueStyle() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA.setToken(TOKEN)
                     .setToken(TOKEN)
                     .setExpression(EXPRESSION)
@@ -3125,7 +3119,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaCurrency() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA.setToken(TOKEN)
             ).setCurrency(OPTIONAL_CURRENCY),
             "Cell A1\n" +
@@ -3147,7 +3141,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaCurrencyExchangeRater() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA
             ).setCurrency(OPTIONAL_CURRENCY),
             "Cell A1\n" +
@@ -3163,7 +3157,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaDateTimeSymbols() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA
             ).setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS),
             "Cell A1\n" +
@@ -3225,7 +3219,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaDecimalNumberSymbols() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA
             ).setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS),
             "Cell A1\n" +
@@ -3265,7 +3259,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaLocale() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA
             ).setLocale(
                 OPTIONAL_LOCALE
@@ -3282,7 +3276,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testTreePrintFormulaTokenExpressionValueStyleParser() {
         this.treePrintAndCheck(
-            ABSOLUTE_A1
+            ABSOLUTE_REFERENCE
                 .setFormula(SpreadsheetFormula.EMPTY)
                 .setStyle(TEXT_STYLE)
                 .setParser(OPTIONAL_PARSER_SELECTOR)
@@ -3319,7 +3313,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testTreePrintFormulaTokenExpressionValueStyleParserFormatter() {
         this.treePrintAndCheck(
-            ABSOLUTE_A1
+            ABSOLUTE_REFERENCE
                 .setFormula(SpreadsheetFormula.EMPTY)
                 .setStyle(TEXT_STYLE)
                 .setParser(OPTIONAL_PARSER_SELECTOR)
@@ -3359,7 +3353,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaTokenExpressionValueStyleFormatter() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                    ABSOLUTE_A1,
+                    ABSOLUTE_REFERENCE,
                     FORMULA.setToken(TOKEN)
                         .setExpression(EXPRESSION)
                         .setValue(VALUE)
@@ -3393,7 +3387,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaTokenExpressionValueStyleFormatterFormatted() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                    ABSOLUTE_A1,
+                    ABSOLUTE_REFERENCE,
                     FORMULA.setToken(TOKEN)
                         .setExpression(EXPRESSION)
                         .setValue(VALUE)
@@ -3430,7 +3424,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTreePrintFormulaValidator() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
-                ABSOLUTE_A1,
+                ABSOLUTE_REFERENCE,
                 FORMULA.setToken(TOKEN)
                     .setExpression(EXPRESSION)
                     .setValue(VALUE)

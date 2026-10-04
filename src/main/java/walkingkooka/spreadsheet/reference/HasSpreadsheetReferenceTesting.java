@@ -21,6 +21,12 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 public interface HasSpreadsheetReferenceTesting extends TreePrintableTesting {
 
+    SpreadsheetCellReference REFERENCE = SpreadsheetSelection.A1;
+
+    SpreadsheetCellReference DIFFERENT_REFERENCE = SpreadsheetSelection.parseCell("B2");
+
+    SpreadsheetCellReference ABSOLUTE_REFERENCE = REFERENCE.toAbsolute();
+
     default <RR extends Comparable<RR>> void referenceAndCheck(final HasSpreadsheetReference<RR> has,
                                                                final RR expected) {
         this.checkEquals(
