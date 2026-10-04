@@ -22,7 +22,6 @@ import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.currency.HasOptionalCurrencyTesting;
 import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
@@ -59,8 +58,6 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.PatchableTesting;
-import walkingkooka.tree.text.FontStyle;
-import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.HasTextNodeTesting;
 import walkingkooka.tree.text.HasTextStyleTesting;
 import walkingkooka.tree.text.TextAlign;
@@ -76,9 +73,7 @@ import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.time.LocalDate;
-import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -153,7 +148,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         )
     );
 
-    private final static Optional<Expression> EXPRESSION =  Optional.of(
+    private final static Optional<Expression> EXPRESSION = Optional.of(
         Expression.add(
             Expression.value(
                 EXPRESSION_NUMBER_KIND.one()
@@ -165,44 +160,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     );
 
     private final static Optional<Object> VALUE = Optional.of(3);
-
-    private final static Optional<CurrencyExchangeRaterSelector> CURRENCY_EXCHANGE_RATER = Optional.of(
-        CurrencyExchangeRaterSelector.parse("hello-currency-exchange-rater")
-    );
-
-    private final static Optional<CurrencyExchangeRaterSelector> DIFFERENT_CURRENCY_EXCHANGE_RATER = Optional.of(
-        CurrencyExchangeRaterSelector.parse("different-currency-exchange-rater")
-    );
-
-    private final static Optional<SpreadsheetFormatterSelector> FORMATTER = Optional.of(
-        SpreadsheetPattern.parseTextFormatPattern("@@")
-            .spreadsheetFormatterSelector()
-    );
-
-    private final static Optional<SpreadsheetParserSelector> PARSER = Optional.of(
-        SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
-            .spreadsheetParserSelector()
-    );
-
-    private final static TextStyle STYLE = TextStyle.EMPTY.setValues(
-        Maps.of(
-            TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
-            TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC
-        )
-    );
-
-    private final static TextStyle DIFFERENT_STYLE = TextStyle.EMPTY.set(
-        TextStylePropertyName.FONT_STYLE,
-        FontStyle.ITALIC
-    );
-
-    private final static Optional<ValidatorSelector> VALIDATOR = Optional.ofNullable(
-        ValidatorSelector.parse("validator123")
-    );
-
-    private final static Optional<ValidatorSelector> DIFFERENT_VALIDATOR = Optional.ofNullable(
-        ValidatorSelector.parse("different-validator-456")
-    );
 
     private final static Optional<TextNode> FORMATTED_VALUE = Optional.of(
         TextNode.text("formattedValue-text")
@@ -243,14 +200,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(cell, REFERENCE);
         this.formulaAndCheck(cell, FORMULA);
         this.currencyAndCheck(cell, CURRENCY);
-        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(cell, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(cell, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(cell, FORMATTER);
+        this.formatterAndCheck(cell, FORMATTER_SELECTOR);
         this.localeAndCheck(cell, LOCALE);
-        this.parserAndCheck(cell, PARSER);
-        this.styleAndCheck(cell, STYLE);
-        this.validatorAndCheck(cell, VALIDATOR);
+        this.parserAndCheck(cell, PARSER_SELECTOR);
+        this.styleAndCheck(cell, TEXT_STYLE);
+        this.validatorAndCheck(cell, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(cell, FORMATTED_VALUE);
     }
 
@@ -391,12 +348,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different, DIFFERENT_REFERENCE);
         this.formulaAndCheck(different, FORMULA);
         this.currencyAndCheck(cell, CURRENCY);
-        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(cell, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(cell, FORMATTER);
+        this.formatterAndCheck(cell, FORMATTER_SELECTOR);
         this.localeAndCheck(cell, LOCALE);
-        this.parserAndCheck(cell, PARSER);
+        this.parserAndCheck(cell, PARSER_SELECTOR);
         this.referenceAndCheck(cell, REFERENCE);
         this.checkEquals(
             cell.parser(),
@@ -410,8 +367,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             different.formatter(),
             "formatter"
         );
-        this.validatorAndCheck(cell, VALIDATOR);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.validatorAndCheck(cell, VALIDATOR_SELECTOR);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
     }
 
     private void referenceAndCheck(final SpreadsheetCell cell,
@@ -457,14 +414,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different, REFERENCE);
         this.formulaAndCheck(different, DIFFERENT_FORMULA);
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of formula / value change.
     }
 
@@ -494,14 +451,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 )
         );
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of formula / value change.
     }
 
@@ -540,30 +497,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetCurrencyDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final Optional<Currency> differentCurrency = this.currency(DIFFERENT_LOCALE);
-        final SpreadsheetCell different = cell.setCurrency(differentCurrency);
+        final SpreadsheetCell different = cell.setCurrency(OPTIONAL_DIFFERENT_CURRENCY);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
         this.formulaAndCheck(different, FORMULA);
         this.currencyAndCheck(
             different,
-            differentCurrency
+            DIFFERENT_CURRENCY
         );
-        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(cell, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.decimalNumberSymbolsAndCheck(cell, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(cell, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of currency / value change.
-    }
-
-    private Optional<Currency> currency(final Locale locale) {
-        return Optional.of(
-            Currency.getInstance(locale)
-        );
     }
 
     // setCurrencyExchangeRater.........................................................................................
@@ -592,7 +542,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetCurrencyExchangeRaterDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final SpreadsheetCell different = cell.setCurrencyExchangeRater(DIFFERENT_CURRENCY_EXCHANGE_RATER);
+        final SpreadsheetCell different = cell.setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
@@ -600,14 +550,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.currencyAndCheck(different, CURRENCY);
         this.currencyExchangeRaterAndCheck(
             different,
-            DIFFERENT_CURRENCY_EXCHANGE_RATER
+            DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR
         );
         this.decimalNumberSymbolsAndCheck(cell, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(cell, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
 
         this.formattedValueAndCheck(different); // clear formattedValue because of currencyExchangeRater / value change.
     }
@@ -616,6 +566,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.currencyExchangeRaterAndCheck(
             cell,
             SpreadsheetCell.NO_CURRENCY_EXCHANGE_RATER
+        );
+    }
+
+    private void currencyExchangeRaterAndCheck(final SpreadsheetCell cell,
+                                               final CurrencyExchangeRaterSelector currencyExchangeRater) {
+        this.currencyExchangeRaterAndCheck(
+            cell,
+            Optional.of(currencyExchangeRater)
         );
     }
 
@@ -659,25 +617,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetDateTimeSymbolsDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final SpreadsheetCell different = cell.setDateTimeSymbols(
-            Optional.of(DIFFERENT_DATE_TIME_SYMBOLS)
-        );
+        final SpreadsheetCell different = cell.setDateTimeSymbols(OPTIONAL_DIFFERENT_DATE_TIME_SYMBOLS);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
         this.formulaAndCheck(different, FORMULA);
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(
             different,
             DIFFERENT_DATE_TIME_SYMBOLS
         );
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of dateTimeSymbols / value change.
     }
 
@@ -713,17 +669,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different, REFERENCE);
         this.formulaAndCheck(different, FORMULA);
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(
             different,
             OPTIONAL_DIFFERENT_DECIMAL_NUMBER_SYMBOLS
         );
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of decimalNumberSymbols / value change.
     }
 
@@ -753,9 +709,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetLocaleDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final SpreadsheetCell different = cell.setLocale(
-            OPTIONAL_DIFFERENT_LOCALE
-        );
+        final SpreadsheetCell different = cell.setLocale(OPTIONAL_DIFFERENT_LOCALE);
         assertNotSame(
             cell,
             different
@@ -767,17 +721,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             FORMULA
         );
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(
             different,
             DIFFERENT_LOCALE
         );
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different);
     }
 
@@ -807,11 +761,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetFormatterDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetFormatterSelector> differentFormatter = Optional.of(
-            SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
-                .spreadsheetFormatterSelector()
-        );
-        final SpreadsheetCell different = cell.setFormatter(differentFormatter);
+        final SpreadsheetCell different = cell.setFormatter(OPTIONAL_DIFFERENT_FORMATTER_SELECTOR);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
@@ -821,24 +771,24 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.formulaAndCheck(different, FORMULA);
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
         this.formatterAndCheck(
             different,
-            differentFormatter
+            DIFFERENT_FORMATTER_SELECTOR
         );
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of format change
     }
 
     @Test
     public void testSetFormatterWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, FORMULA)
-            .setFormatter(FORMATTER);
+            .setFormatter(OPTIONAL_FORMATTER_SELECTOR);
         final SpreadsheetCell different = cell.setFormatter(SpreadsheetCell.NO_FORMATTER);
         assertNotSame(cell, different);
 
@@ -860,6 +810,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formatterSelectorAndCheck(
             cell,
             SpreadsheetCell.NO_FORMATTER
+        );
+    }
+
+    private void formatterAndCheck(final SpreadsheetCell cell,
+                                   final SpreadsheetFormatterSelector formatter) {
+        this.formatterSelectorAndCheck(
+            cell,
+            Optional.of(formatter)
         );
     }
 
@@ -927,11 +885,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetParserDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetParserSelector> differentParser = Optional.of(
-            SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
-                .spreadsheetParserSelector()
-        );
-        final SpreadsheetCell different = cell.setParser(differentParser);
+        final SpreadsheetCell different = cell.setParser(OPTIONAL_DIFFERENT_PARSER_SELECTOR);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
@@ -941,17 +895,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.formulaAndCheck(different, FORMULA);
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
         this.parserAndCheck(
             different,
-            differentParser
+            DIFFERENT_PARSER_SELECTOR
         );
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of format change
     }
 
@@ -973,31 +927,27 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     )
                 )
             );
-        final Optional<SpreadsheetParserSelector> differentParser = Optional.of(
-            SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
-                .spreadsheetParserSelector()
-        );
-        final SpreadsheetCell different = cell.setParser(differentParser);
+        final SpreadsheetCell different = cell.setParser(OPTIONAL_DIFFERENT_PARSER_SELECTOR);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
         this.formulaAndCheck(different, formula);
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, differentParser);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, DIFFERENT_PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of format change
     }
 
     @Test
     public void testSetParserWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, FORMULA);
-        final SpreadsheetCell different = cell.setParser(PARSER);
+        final SpreadsheetCell different = cell.setParser(OPTIONAL_PARSER_SELECTOR);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
@@ -1008,7 +958,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.localeAndCheck(cell);
-        this.parserAndCheck(different, PARSER);
+        this.parserAndCheck(different, PARSER_SELECTOR);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheck(different);
@@ -1018,6 +968,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.parserAndCheck(
             cell,
             SpreadsheetCell.NO_PARSER
+        );
+    }
+
+    private void parserAndCheck(final SpreadsheetCell cell,
+                                final SpreadsheetParserSelector selector) {
+        this.parserAndCheck(
+            cell,
+            Optional.of(selector)
         );
     }
 
@@ -1060,7 +1018,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetStyleDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final SpreadsheetCell different = cell.setStyle(DIFFERENT_STYLE);
+        final SpreadsheetCell different = cell.setStyle(DIFFERENT_TEXT_STYLE);
         assertNotSame(
             cell,
             different
@@ -1072,17 +1030,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             FORMULA
         );
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
+        this.parserAndCheck(different, PARSER_SELECTOR);
         this.styleAndCheck(
             different,
-            DIFFERENT_STYLE
+            DIFFERENT_TEXT_STYLE
         );
-        this.validatorAndCheck(different, VALIDATOR);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(different); // clear formattedValue because of text properties change
     }
 
@@ -1128,8 +1086,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetValidatorDifferent() {
         final SpreadsheetCell cell = this.createCell();
 
-        final Optional<ValidatorSelector> differentValidator = DIFFERENT_VALIDATOR;
-        final SpreadsheetCell different = cell.setValidator(differentValidator);
+        final SpreadsheetCell different = cell.setValidator(OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR);
         assertNotSame(
             cell,
             different
@@ -1141,16 +1098,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             FORMULA
         );
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
-        this.formatterAndCheck(different, FORMATTER);
+        this.formatterAndCheck(different, FORMATTER_SELECTOR);
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
         this.validatorAndCheck(
             different,
-            differentValidator
+            OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR
         );
         this.formattedValueAndCheck(different);
     }
@@ -1159,6 +1116,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.validatorAndCheck(
             cell,
             SpreadsheetCell.NO_VALIDATOR
+        );
+    }
+
+    private void validatorAndCheck(final SpreadsheetCell cell,
+                                   final ValidatorSelector expected) {
+        this.validatorAndCheck(
+            cell,
+            Optional.of(expected)
         );
     }
 
@@ -1208,17 +1173,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             FORMULA
         );
         this.currencyAndCheck(different, CURRENCY);
-        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER);
+        this.currencyExchangeRaterAndCheck(different, CURRENCY_EXCHANGE_RATER_SELECTOR);
         this.dateTimeSymbolsAndCheck(different, DATE_TIME_SYMBOLS);
         this.decimalNumberSymbolsAndCheck(different, DECIMAL_NUMBER_SYMBOLS);
         this.formatterAndCheck(
             different,
-            FORMATTER
+            FORMATTER_SELECTOR
         );
         this.localeAndCheck(different, LOCALE);
-        this.parserAndCheck(different, PARSER);
-        this.styleAndCheck(different, STYLE);
-        this.validatorAndCheck(different, VALIDATOR);
+        this.parserAndCheck(different, PARSER_SELECTOR);
+        this.styleAndCheck(different, TEXT_STYLE);
+        this.validatorAndCheck(different, VALIDATOR_SELECTOR);
         this.formattedValueAndCheck(
             different,
             DIFFERENT_FORMATTED_VALUE
@@ -1342,13 +1307,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             Optional.of(123)
                         )
                 ).setCurrency(OPTIONAL_CURRENCY)
-                .setCurrencyExchangeRater(CURRENCY_EXCHANGE_RATER)
+                .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
                 .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
                 .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
-                .setFormatter(FORMATTER)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
                 .setLocale(OPTIONAL_LOCALE)
-                .setParser(PARSER)
-                .setStyle(STYLE)
+                .setParser(OPTIONAL_PARSER_SELECTOR)
+                .setStyle(TEXT_STYLE)
                 .setValidator(
                     Optional.of(ValidatorSelector.parse("hello-validator"))
                 ).setFormattedValue(
@@ -1361,7 +1326,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             ).textNode()
                     )
                 ),
-            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",AUD,hello-currency-exchange-rater,\"\"\"am,pm\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\"\",\"-,+,0,$,.,e,\"\",\"\",∞,.,NaN,%,‰\",text @@,\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",date-time dd/mm/yyyy,font-style: ITALIC; font-weight: BOLD;,hello-validator,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\""
+            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",AUD,test-currency-exchange-rater-111,\"\"\"am,pm\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\"\",\"-,+,0,$,.,e,\"\",\"\",∞,.,NaN,%,‰\",formatter-selector-111,\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",parser-selector-111,color: black;,hello-validator,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\""
         );
     }
 
@@ -1456,10 +1421,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 )
                             ).textNode()
                     )
-                ).setFormatter(FORMATTER)
-                .setParser(PARSER)
-                .setStyle(STYLE)
-                .setValidator(VALIDATOR)
+                ).setFormatter(OPTIONAL_FORMATTER_SELECTOR)
+                .setParser(OPTIONAL_PARSER_SELECTOR)
+                .setStyle(TEXT_STYLE)
+                .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
         );
     }
 
@@ -1533,7 +1498,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testEqualsDifferentCurrencyExchangeRater() {
         this.checkNotEquals(
             this.createObject()
-                .setCurrencyExchangeRater(DIFFERENT_CURRENCY_EXCHANGE_RATER)
+                .setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR)
         );
     }
 
@@ -1567,7 +1532,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testEqualsDifferentTextStyle() {
         this.checkNotEquals(
             this.createObject()
-                .setStyle(DIFFERENT_STYLE)
+                .setStyle(DIFFERENT_TEXT_STYLE)
         );
     }
 
@@ -1575,7 +1540,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testEqualsDifferentValidator() {
         this.checkNotEquals(
             this.createObject()
-                .setValidator(DIFFERENT_VALIDATOR)
+                .setValidator(OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR)
         );
     }
 
@@ -1618,14 +1583,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 reference,
                 formula
             ).setCurrency(OPTIONAL_CURRENCY)
-            .setCurrencyExchangeRater(CURRENCY_EXCHANGE_RATER)
+            .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
             .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
             .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
-            .setFormatter(FORMATTER)
+            .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
             .setLocale(OPTIONAL_LOCALE)
-            .setParser(PARSER)
-            .setStyle(STYLE)
-            .setValidator(VALIDATOR)
+            .setParser(OPTIONAL_PARSER_SELECTOR)
+            .setStyle(TEXT_STYLE)
+            .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
             .setFormattedValue(FORMATTED_VALUE);
     }
 
@@ -1678,7 +1643,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     JSON_NODE_MARSHALL_CONTEXT.marshall(FORMULA))
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    JSON_NODE_MARSHALL_CONTEXT.marshall(STYLE)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(TEXT_STYLE)
                 )
         );
     }
@@ -1695,13 +1660,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             JSON_NODE_MARSHALL_CONTEXT.marshall(FORMULA)
                         ).set(
                             SpreadsheetCell.STYLE_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(STYLE)
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(TEXT_STYLE)
                         )
                 ),
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setStyle(STYLE)
+            ).setStyle(TEXT_STYLE)
         );
     }
 
@@ -1717,25 +1682,20 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     JsonNode.object()
                         .set(
                             SpreadsheetCell.FORMULA_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(
-                                FORMULA
-                            )
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(FORMULA)
                         ).set(
                             SpreadsheetCell.STYLE_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(STYLE)
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(TEXT_STYLE)
                         ).set(
                             SpreadsheetCell.FORMATTER_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(
-                                FORMATTER
-                                    .get()
-                            )
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(FORMATTER_SELECTOR)
                         )
                 ),
             SpreadsheetCell.with(
                     REFERENCE,
                     FORMULA
-                ).setStyle(STYLE)
-                .setFormatter(FORMATTER)
+                ).setStyle(TEXT_STYLE)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
         );
     }
 
@@ -1754,7 +1714,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             JSON_NODE_MARSHALL_CONTEXT.marshall(FORMULA)
                         ).set(
                             SpreadsheetCell.STYLE_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(STYLE)
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(TEXT_STYLE)
                         ).set(
                             SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
                             JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
@@ -1764,7 +1724,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         )
                 ),
             SpreadsheetCell.with(REFERENCE, FORMULA)
-                .setStyle(STYLE)
+                .setStyle(TEXT_STYLE)
                 .setFormattedValue(FORMATTED_VALUE));
     }
 
@@ -1793,10 +1753,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             JSON_NODE_MARSHALL_CONTEXT.marshall(formula)
                         ).set(
                             SpreadsheetCell.PARSER_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(
-                                PARSER
-                                    .get()
-                            )
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(PARSER_SELECTOR)
                         ).set(
                             SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
                             JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
@@ -1807,36 +1764,30 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 ),
             REFERENCE
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(PARSER)
+                .setParser(OPTIONAL_PARSER_SELECTOR)
                 .setFormula(formula)
                 .setFormattedValue(FORMATTED_VALUE)
         );
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectCurrency() {
-        final Optional<Currency> currency = this.currency(LOCALE);
-
         this.unmarshallAndCheck(
             JsonNode.object()
                 .set(JsonPropertyName.with(REFERENCE.toString()),
                     JsonNode.object()
                         .set(
                             SpreadsheetCell.CURRENCY_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(
-                                currency.get()
-                            )
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(CURRENCY)
                         )
                 ),
             SpreadsheetCell.with(
                 REFERENCE,
                 SpreadsheetFormula.EMPTY
-            ).setCurrency(currency)
+            ).setCurrency(OPTIONAL_CURRENCY)
         );
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectDateTimeSymbols() {
         this.unmarshallAndCheck(
@@ -1855,8 +1806,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectDecimalNumberSymbols() {
         this.unmarshallAndCheck(
@@ -1909,10 +1858,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             )
                         ).set(
                             SpreadsheetCell.FORMATTER_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(
-                                FORMATTER
-                                    .get()
-                            )
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(FORMATTER_SELECTOR)
                         ).set(
                             SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
                             JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
@@ -1922,7 +1868,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         )
                 ),
             SpreadsheetCell.with(REFERENCE, FORMULA)
-                .setFormatter(FORMATTER)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
                 .setFormattedValue(FORMATTED_VALUE));
     }
 
@@ -1941,13 +1887,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             )
                         ).set(
                             SpreadsheetCell.STYLE_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(STYLE)
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(TEXT_STYLE)
                         ).set(
                             SpreadsheetCell.FORMATTER_PROPERTY,
-                            JSON_NODE_MARSHALL_CONTEXT.marshall(
-                                FORMATTER
-                                    .get()
-                            )
+                            JSON_NODE_MARSHALL_CONTEXT.marshall(FORMATTER_SELECTOR)
                         ).set(
                             SpreadsheetCell.FORMATTED_VALUE_PROPERTY,
                             JSON_NODE_MARSHALL_CONTEXT.marshallWithType(
@@ -1956,8 +1899,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         )
                 ),
             SpreadsheetCell.with(REFERENCE, FORMULA)
-                .setStyle(STYLE)
-                .setFormatter(FORMATTER)
+                .setStyle(TEXT_STYLE)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
                 .setFormattedValue(FORMATTED_VALUE));
     }
 
@@ -2089,7 +2032,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 FORMULA
             ).setCurrency(
-                this.currency(LOCALE)
+                OPTIONAL_CURRENCY
             ),
             "{\n" +
                 "  \"A1\": {\n" +
@@ -2108,13 +2051,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setCurrencyExchangeRater(DIFFERENT_CURRENCY_EXCHANGE_RATER),
+            ).setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR),
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
-                "    \"currencyExchangeRater\": \"different-currency-exchange-rater\"\n" +
+                "    \"currencyExchangeRater\": \"test-different-currency-exchange-rater-222\"\n" +
                 "  }\n" +
                 "}"
         );
@@ -2222,22 +2165,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testMarshallWithStyle() {
-        final TextStyle italics = TextStyle.EMPTY
-            .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
-
         this.marshallAndCheck(
             SpreadsheetCell.with(
                     REFERENCE,
                     FORMULA
                 )
-                .setStyle(italics),
+                .setStyle(TEXT_STYLE),
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
                 "    \"style\": {\n" +
-                "      \"fontStyle\": \"ITALIC\"\n" +
+                "      \"color\": \"black\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "}"
@@ -2269,15 +2209,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testMarshallWithStyleAndFormattedValue() {
         this.marshallAndCheck(
             this.createCell()
-                .setStyle(STYLE)
+                .setStyle(TEXT_STYLE)
                 .setFormattedValue(FORMATTED_VALUE),
-            "{\n" +
+                "{\n" +
                 "  \"A1\": {\n" +
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
                 "    \"currency\": \"AUD\",\n" +
-                "    \"currencyExchangeRater\": \"hello-currency-exchange-rater\"," +
+                "    \"currencyExchangeRater\": \"test-currency-exchange-rater-111\",\n" +
                 "    \"dateTimeSymbols\": {\n" +
                 "      \"ampms\": [\n" +
                 "        \"am\",\n" +
@@ -2344,14 +2284,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      \"percentSymbol\": \"%\",\n" +
                 "      \"permillSymbol\": \"‰\"\n" +
                 "    },\n" +
-                "    \"formatter\": \"text @@\",\n" +
+                "    \"formatter\": \"formatter-selector-111\",\n" +
                 "    \"locale\": \"en-AU\",\n" +
-                "    \"parser\": \"date-time dd/mm/yyyy\",\n" +
+                "    \"parser\": \"parser-selector-111\",\n" +
                 "    \"style\": {\n" +
-                "      \"fontStyle\": \"ITALIC\",\n" +
-                "      \"fontWeight\": \"BOLD\"\n" +
+                "      \"color\": \"black\"\n" +
                 "    },\n" +
-                "    \"validator\": \"validator123\",\n" +
+                "    \"validator\": \"absolute-url\",\n" +
                 "    \"formattedValue\": {\n" +
                 "      \"type\": \"text\",\n" +
                 "      \"value\": \"formattedValue-text\"\n" +
@@ -2405,13 +2344,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             "{\n" +
                 "   \"A123\": {\n" +
                 "      \"style\": {\n" +
-                "          \"background-color\": \"#123456\"\n" +
+                "          \"color\": \"black\"\n" +
                 "      }\n" +
                 "   }\n" +
                 "}",
             SpreadsheetSelection.parseCell("A123")
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
+                .setStyle(TEXT_STYLE)
         );
     }
 
@@ -2514,8 +2453,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testPatchCurrency() {
-        final Optional<Currency> currency = currency(LOCALE);
-
         final SpreadsheetCell cell = SpreadsheetCell.with(
             SpreadsheetSelection.A1,
             FORMULA_EQ_1
@@ -2526,11 +2463,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.CURRENCY_PROPERTY,
-                    JSON_NODE_MARSHALL_CONTEXT.marshall(
-                        currency.get()
-                    )
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(CURRENCY)
                 ),
-            cell.setCurrency(currency)
+            cell.setCurrency(OPTIONAL_CURRENCY)
         );
     }
 
@@ -2547,10 +2482,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .set(
                     SpreadsheetCell.CURRENCY_EXCHANGE_RATER_PROPERTY,
                     JSON_NODE_MARSHALL_CONTEXT.marshall(
-                        CURRENCY_EXCHANGE_RATER.get()
+                        CURRENCY_EXCHANGE_RATER_SELECTOR
                     )
                 ),
-            cell.setCurrencyExchangeRater(CURRENCY_EXCHANGE_RATER)
+            cell.setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
         );
     }
 
@@ -2653,17 +2588,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             FORMULA_EQ_1
         );
 
-        final TextStyle style = TextStyle.EMPTY
-            .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"));
-
         this.patchAndCheck(
             cell,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    JSON_NODE_MARSHALL_CONTEXT.marshall(style)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(TEXT_STYLE)
                 ),
-            cell.setStyle(style)
+            cell.setStyle(TEXT_STYLE)
         );
     }
 
@@ -2674,30 +2606,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             FORMULA_EQ_1
         );
 
-        final TextStyle style = TextStyle.EMPTY
-            .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"))
-            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
-
         this.patchAndCheck(
             cell,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    JSON_NODE_MARSHALL_CONTEXT.marshall(style)
+                    JSON_NODE_MARSHALL_CONTEXT.marshall(DIFFERENT_TEXT_STYLE)
                 ),
-            cell.setStyle(style)
+            cell.setStyle(DIFFERENT_TEXT_STYLE)
         );
     }
 
     @Test
     public void testPatchStyleAddProperty() {
-        final TextStyle style = TextStyle.EMPTY
-            .set(TextStylePropertyName.BACKGROUND_COLOR, Color.BLACK);
-
         final SpreadsheetCell cell = SpreadsheetCell.with(
             SpreadsheetSelection.A1,
             FORMULA_EQ_1
-        ).setStyle(style);
+        ).setStyle(TEXT_STYLE);
 
         final TextStylePropertyName<Color> color = TextStylePropertyName.COLOR;
         final Color colorValue = Color.WHITE;
@@ -2712,7 +2637,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     )
                 ),
             cell.setStyle(
-                style.set(color, colorValue)
+                TEXT_STYLE.set(
+                    color,
+                    colorValue
+                )
             )
         );
     }
@@ -3179,7 +3107,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     .setToken(TOKEN)
                     .setExpression(EXPRESSION)
                     .setValue(VALUE)
-            ).setStyle(STYLE),
+            ).setStyle(TEXT_STYLE),
             "Cell A1\n" +
                 "  Formula\n" +
                 "    token:\n" +
@@ -3198,8 +3126,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      3\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC\n" +
-                "      font-weight=BOLD\n"
+                "      color=black\n"
         );
     }
 
@@ -3209,7 +3136,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 ABSOLUTE_A1,
                 FORMULA.setToken(TOKEN)
-            ).setCurrency(this.currency(LOCALE)),
+            ).setCurrency(OPTIONAL_CURRENCY),
             "Cell A1\n" +
                 "  Formula\n" +
                 "    token:\n" +
@@ -3231,7 +3158,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 ABSOLUTE_A1,
                 FORMULA
-            ).setCurrency(this.currency(LOCALE)),
+            ).setCurrency(OPTIONAL_CURRENCY),
             "Cell A1\n" +
                 "  Formula\n" +
                 "    text:\n" +
@@ -3366,8 +3293,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.treePrintAndCheck(
             ABSOLUTE_A1
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setStyle(STYLE)
-                .setParser(PARSER)
+                .setStyle(TEXT_STYLE)
+                .setParser(OPTIONAL_PARSER_SELECTOR)
                 .setFormula(
                     this.FORMULA
                         .setToken(this.TOKEN)
@@ -3391,12 +3318,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  parser:\n" +
-                "    date-time\n" +
-                "      \"dd/mm/yyyy\"\n" +
+                "    parser-selector-111\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC\n" +
-                "      font-weight=BOLD\n"
+                "      color=black\n"
         );
     }
 
@@ -3405,9 +3330,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.treePrintAndCheck(
             ABSOLUTE_A1
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setStyle(STYLE)
-                .setParser(PARSER)
-                .setFormatter(FORMATTER)
+                .setStyle(TEXT_STYLE)
+                .setParser(OPTIONAL_PARSER_SELECTOR)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
                 .setFormula(
                     FORMULA.setToken(this.TOKEN)
                         .setExpression(EXPRESSION)
@@ -3430,15 +3355,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  formatter:\n" +
-                "    text\n" +
-                "      \"@@\"\n" +
+                "    formatter-selector-111\n" +
                 "  parser:\n" +
-                "    date-time\n" +
-                "      \"dd/mm/yyyy\"\n" +
+                "    parser-selector-111\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC\n" +
-                "      font-weight=BOLD\n"
+                "      color=black\n"
         );
     }
 
@@ -3450,8 +3372,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     FORMULA.setToken(TOKEN)
                         .setExpression(EXPRESSION)
                         .setValue(VALUE)
-                ).setStyle(STYLE)
-                .setFormatter(FORMATTER),
+                ).setStyle(TEXT_STYLE)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR),
             "Cell A1\n" +
                 "  Formula\n" +
                 "    token:\n" +
@@ -3469,12 +3391,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  formatter:\n" +
-                "    text\n" +
-                "      \"@@\"\n" +
+                "    formatter-selector-111\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC\n" +
-                "      font-weight=BOLD\n"
+                "      color=black\n"
         );
     }
 
@@ -3486,8 +3406,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     FORMULA.setToken(TOKEN)
                         .setExpression(EXPRESSION)
                         .setValue(VALUE)
-                ).setStyle(STYLE)
-                .setFormatter(FORMATTER)
+                ).setStyle(TEXT_STYLE)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
                 .setFormattedValue(FORMATTED_VALUE),
             "Cell A1\n" +
                 "  Formula\n" +
@@ -3506,12 +3426,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  formatter:\n" +
-                "    text\n" +
-                "      \"@@\"\n" +
+                "    formatter-selector-111\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC\n" +
-                "      font-weight=BOLD\n" +
+                "      color=black\n" +
                 "  formattedValue:\n" +
                 "    Text \"formattedValue-text\"\n"
         );
@@ -3525,7 +3443,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 FORMULA.setToken(TOKEN)
                     .setExpression(EXPRESSION)
                     .setValue(VALUE)
-            ).setValidator(VALIDATOR),
+            ).setValidator(OPTIONAL_VALIDATOR_SELECTOR),
             "Cell A1\n" +
                 "  Formula\n" +
                 "    token:\n" +
@@ -3543,7 +3461,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  validator:\n" +
-                "    validator123\n"
+                "    absolute-url\n"
         );
     }
 
@@ -3556,11 +3474,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 ).setCurrency(OPTIONAL_CURRENCY)
                 .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
                 .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
-                .setFormatter(FORMATTER)
+                .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
                 .setLocale(OPTIONAL_LOCALE)
-                .setParser(PARSER)
-                .setStyle(STYLE)
-                .setValidator(VALIDATOR),
+                .setParser(OPTIONAL_PARSER_SELECTOR)
+                .setStyle(TEXT_STYLE)
+                .setValidator(OPTIONAL_VALIDATOR_SELECTOR),
             "Cell A1\n" +
                 "  Formula\n" +
                 "    text:\n" +
@@ -3641,19 +3559,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      permillSymbol\n" +
                 "        '‰'\n" +
                 "  formatter:\n" +
-                "    text\n" +
-                "      \"@@\"\n" +
+                "    formatter-selector-111\n" +
                 "  locale:\n" +
                 "    en_AU (java.util.Locale)\n" +
                 "  parser:\n" +
-                "    date-time\n" +
-                "      \"dd/mm/yyyy\"\n" +
+                "    parser-selector-111\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC\n" +
-                "      font-weight=BOLD\n" +
+                "      color=black\n" +
                 "  validator:\n" +
-                "    validator123\n"
+                "    absolute-url\n"
         );
     }
 
@@ -3673,7 +3588,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setCurrency(this.currency(LOCALE)),
+            ).setCurrency(OPTIONAL_CURRENCY),
             "A1 \"=1+2\" currency=\"AUD\""
         );
     }
@@ -3684,8 +3599,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setCurrencyExchangeRater(DIFFERENT_CURRENCY_EXCHANGE_RATER),
-            "A1 \"=1+2\" currencyExchangeRater=\"different-currency-exchange-rater\""
+            ).setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR),
+            "A1 \"=1+2\" currencyExchangeRater=\"test-different-currency-exchange-rater-222\""
         );
     }
 
@@ -3725,8 +3640,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setFormatter(FORMATTER),
-            "A1 \"=1+2\" formatter=\"text @@\""
+            ).setFormatter(OPTIONAL_FORMATTER_SELECTOR),
+            "A1 \"=1+2\" formatter=\"formatter-selector-111\""
         );
     }
 
@@ -3736,8 +3651,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setParser(PARSER),
-            "A1 \"=1+2\" parser=\"date-time dd/mm/yyyy\""
+            ).setParser(OPTIONAL_PARSER_SELECTOR),
+            "A1 \"=1+2\" parser=\"parser-selector-111\""
         );
     }
 
@@ -3747,8 +3662,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setStyle(STYLE),
-            "A1 \"=1+2\" style={font-style=ITALIC, font-weight=BOLD}"
+            ).setStyle(TEXT_STYLE),
+            "A1 \"=1+2\" style={color=black}"
         );
     }
 
@@ -3758,8 +3673,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                 REFERENCE,
                 FORMULA
-            ).setValidator(DIFFERENT_VALIDATOR),
-            "A1 \"=1+2\" validator=\"different-validator-456\""
+            ).setValidator(OPTIONAL_VALIDATOR_SELECTOR),
+            "A1 \"=1+2\" validator=\"absolute-url\""
         );
     }
 
@@ -3769,17 +3684,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetCell.with(
                     REFERENCE,
                     FORMULA
-                ).setFormatter(
-                    Optional.of(SpreadsheetFormatterSelector.parse("formatter111"))
-                ).setLocale(OPTIONAL_DIFFERENT_LOCALE)
-                .setParser(
-                    Optional.of(SpreadsheetParserSelector.parse("parser111"))
-                ).setStyle(
-                    TextStyle.parse("color: red;")
-                ).setValidator(
-                    Optional.of(ValidatorSelector.parse("validator111"))
-                ),
-            "A1 \"=1+2\" formatter=\"formatter111\" locale=\"en_NZ\" parser=\"parser111\" style={color=red} validator=\"validator111\""
+                ).setFormatter(OPTIONAL_FORMATTER_SELECTOR)
+                .setLocale(OPTIONAL_DIFFERENT_LOCALE)
+                .setParser(OPTIONAL_PARSER_SELECTOR)
+                .setStyle(TEXT_STYLE)
+                .setValidator(OPTIONAL_VALIDATOR_SELECTOR),
+            "A1 \"=1+2\" formatter=\"formatter-selector-111\" locale=\"en_NZ\" parser=\"parser-selector-111\" style={color=black} validator=\"absolute-url\""
         );
     }
 
