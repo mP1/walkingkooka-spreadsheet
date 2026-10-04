@@ -69,8 +69,8 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetFormHandlerContextTest implements SpreadsheetFormHandlerContextTesting<BasicSpreadsheetFormHandlerContext>,
-    HashCodeEqualsDefinedTesting2<BasicSpreadsheetFormHandlerContext> {
+public final class SpreadsheetFormHandlerContextBasicTest implements SpreadsheetFormHandlerContextTesting<SpreadsheetFormHandlerContextBasic>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetFormHandlerContextBasic> {
 
     private final static Form<SpreadsheetValidationReference> FORM = Form.with(
         FormName.with("Form123")
@@ -86,7 +86,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     public void testWithNullFormFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormHandlerContext.with(
+            () -> SpreadsheetFormHandlerContextBasic.with(
                 null,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 CELLS_SAVER,
@@ -99,7 +99,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     public void testWithNullSpreadsheetExpressionReferenceLoaderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormHandlerContext.with(
+            () -> SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 null,
                 CELLS_SAVER,
@@ -112,7 +112,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     public void testWithNullCellsSaverFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormHandlerContext.with(
+            () -> SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 null,
@@ -125,7 +125,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     public void testWithNullSpreadsheetEngineContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormHandlerContext.with(
+            () -> SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 CELLS_SAVER,
@@ -138,7 +138,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
     @Test
     public void testValidationContext() {
-        final BasicSpreadsheetFormHandlerContext context = this.createContext();
+        final SpreadsheetFormHandlerContextBasic context = this.createContext();
 
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetValidatorContext validatorContext = context.validatorContext(cell);
@@ -178,7 +178,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     @Test
     public void testLoadFormFieldValueCellMissing() {
         this.loadFormFieldValueAndCheck(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 new FakeSpreadsheetExpressionReferenceLoader() {
                     @Override
@@ -204,7 +204,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.loadFormFieldValueAndCheck(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 new FakeSpreadsheetExpressionReferenceLoader() {
                     @Override
@@ -234,7 +234,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String value = "*VALUE123*";
 
         this.loadFormFieldValueAndCheck(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 new FakeSpreadsheetExpressionReferenceLoader() {
 
@@ -269,7 +269,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("UnknownLabel");
 
         this.loadFormFieldValueAndCheck(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 new FakeSpreadsheetExpressionReferenceLoader() {
                     @Override
@@ -297,7 +297,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String value = "*VALUE123*";
 
         this.loadFormFieldValueAndCheck(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 Form.with(FormName.with("Form123")),
                 new FakeSpreadsheetExpressionReferenceLoader() {
                     @Override
@@ -335,7 +335,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
     @Test
     public void testSaveFormFieldValuesWithFormFieldWithMissingCell() {
-        final BasicSpreadsheetFormHandlerContext context = this.createContext();
+        final SpreadsheetFormHandlerContextBasic context = this.createContext();
 
         final SpreadsheetCellReference missingCell = SpreadsheetSelection.parseCell("Z99");
         final String value = "Value111";
@@ -362,7 +362,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
     @Test
     public void testSaveFormFieldValuesWithFormFieldWithCell() {
-        final BasicSpreadsheetFormHandlerContext context = this.createContext();
+        final SpreadsheetFormHandlerContextBasic context = this.createContext();
 
         final SpreadsheetCellReference a1Cell = SpreadsheetSelection.A1;
         final String a1Value = "A1Value111";
@@ -416,7 +416,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
     @Test
     public void testSaveFormFieldValuesWithFormFieldWithLabel() {
-        final BasicSpreadsheetFormHandlerContext context = this.createContext();
+        final SpreadsheetFormHandlerContextBasic context = this.createContext();
 
         final String a1Value = "A1Value111";
 
@@ -442,7 +442,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
     @Test
     public void testSaveFormFieldValuesWithFormFieldWithUnknownLabel() {
-        final BasicSpreadsheetFormHandlerContext context = this.createContext();
+        final SpreadsheetFormHandlerContextBasic context = this.createContext();
 
         final SpreadsheetCellReference a1Cell = SpreadsheetSelection.A1;
         final String a1Value = "A1Value111";
@@ -465,8 +465,8 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     // helper...........................................................................................................
 
     @Override
-    public BasicSpreadsheetFormHandlerContext createContext() {
-        return BasicSpreadsheetFormHandlerContext.with(
+    public SpreadsheetFormHandlerContextBasic createContext() {
+        return SpreadsheetFormHandlerContextBasic.with(
             FORM,
             SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             CELLS_SAVER,
@@ -665,13 +665,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
 
         this.checkEquals(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 CELLS_SAVER,
                 engineContext
             ),
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 CELLS_SAVER,
@@ -685,7 +685,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
 
         this.checkNotEquals(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 Form.with(
                     FormName.with("formName")
                 ),
@@ -693,7 +693,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 CELLS_SAVER,
                 engineContext
             ),
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 Form.with(
                     FormName.with("differentFormName")
                 ),
@@ -709,13 +709,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
 
         this.checkNotEquals(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 CELLS_SAVER,
                 engineContext
             ),
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 CELLS_SAVER,
@@ -729,13 +729,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
 
         this.checkNotEquals(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 CELLS_SAVER,
                 engineContext
             ),
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 (c) -> {
@@ -749,13 +749,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     @Test
     public void testEqualsDifferentEngineContext() {
         this.checkNotEquals(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 CELLS_SAVER,
                 SpreadsheetEngineContexts.fake()
             ),
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 CELLS_SAVER,
@@ -765,7 +765,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     }
 
     @Override
-    public BasicSpreadsheetFormHandlerContext createObject() {
+    public SpreadsheetFormHandlerContextBasic createObject() {
         return this.createContext();
     }
 
@@ -777,7 +777,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.fake();
 
         this.environmentContextAndCheck(
-            BasicSpreadsheetFormHandlerContext.with(
+            SpreadsheetFormHandlerContextBasic.with(
                 FORM,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 CELLS_SAVER,
@@ -790,7 +790,12 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetFormHandlerContext> type() {
-        return BasicSpreadsheetFormHandlerContext.class;
+    public Class<SpreadsheetFormHandlerContextBasic> type() {
+        return SpreadsheetFormHandlerContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

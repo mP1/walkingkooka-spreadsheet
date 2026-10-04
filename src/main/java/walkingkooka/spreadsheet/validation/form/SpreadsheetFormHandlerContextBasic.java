@@ -53,15 +53,15 @@ import java.util.function.Function;
  * A {@link SpreadsheetFormHandlerContext} that mixes some custom logic and calls to load and save cells from the provided
  * dependencies.
  */
-final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandlerContext,
+final class SpreadsheetFormHandlerContextBasic implements SpreadsheetFormHandlerContext,
     ConverterLikeDelegator,
     EnvironmentContextDelegator {
 
-    static BasicSpreadsheetFormHandlerContext with(final Form<SpreadsheetValidationReference> form,
+    static SpreadsheetFormHandlerContextBasic with(final Form<SpreadsheetValidationReference> form,
                                                    final SpreadsheetExpressionReferenceLoader loader,
                                                    final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                    final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetFormHandlerContext(
+        return new SpreadsheetFormHandlerContextBasic(
             Objects.requireNonNull(form, "form"),
             Objects.requireNonNull(loader, "loader"),
             Objects.requireNonNull(cellsSaver, "cellsSaver"),
@@ -69,7 +69,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         );
     }
 
-    private BasicSpreadsheetFormHandlerContext(final Form<SpreadsheetValidationReference> form,
+    private SpreadsheetFormHandlerContextBasic(final Form<SpreadsheetValidationReference> form,
                                                final SpreadsheetExpressionReferenceLoader loader,
                                                final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                final SpreadsheetEngineContext context) {
@@ -243,7 +243,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
         return context == clone ?
             this :
-            new BasicSpreadsheetFormHandlerContext(
+            new SpreadsheetFormHandlerContextBasic(
                 this.form,
                 this.loader,
                 this.cellsSaver,
@@ -258,7 +258,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
 
         return before == after ?
             this :
-            new BasicSpreadsheetFormHandlerContext(
+            new SpreadsheetFormHandlerContextBasic(
                 this.form,
                 this.loader,
                 this.cellsSaver,
@@ -288,11 +288,11 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof BasicSpreadsheetFormHandlerContext &&
-                this.equals0((BasicSpreadsheetFormHandlerContext) other));
+            (other instanceof SpreadsheetFormHandlerContextBasic &&
+                this.equals0((SpreadsheetFormHandlerContextBasic) other));
     }
 
-    private boolean equals0(final BasicSpreadsheetFormHandlerContext other) {
+    private boolean equals0(final SpreadsheetFormHandlerContextBasic other) {
         return this.form.equals(other.form) &&
             this.loader.equals(other.loader) &&
             this.cellsSaver.equals(other.cellsSaver) &&
