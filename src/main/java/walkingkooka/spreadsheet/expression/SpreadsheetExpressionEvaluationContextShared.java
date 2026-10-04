@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.currency.CurrencyCode;
@@ -87,7 +89,8 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     SpreadsheetConverterContextDelegator,
     SpreadsheetMetadataContextDelegator,
     LocaleContextDelegator,
-    TerminalContextDelegator {
+    TerminalContextDelegator,
+    UsesToStringBuilder {
 
     SpreadsheetExpressionEvaluationContextShared(final TerminalContext terminalContext) {
         super();
@@ -499,4 +502,11 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     abstract SpreadsheetStorageContext spreadsheetStorageContext();
+
+    // Object...........................................................................................................
+
+    @Override
+    public final String toString() {
+        return ToStringBuilder.buildFrom(this);
+    }
 }

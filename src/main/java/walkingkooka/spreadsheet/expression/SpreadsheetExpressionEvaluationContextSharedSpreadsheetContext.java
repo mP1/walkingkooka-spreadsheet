@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
@@ -524,10 +525,19 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         );
     }
 
-    // Object...........................................................................................................
+    // UsesToStringBuilder..............................................................................................
 
     @Override
-    public String toString() {
-        return this.cell().toString();
+    public void buildToString(final ToStringBuilder b) {
+        b.label("mode")
+            .value(this.mode)
+            .label("cell")
+            .value(this.cell)
+            .label("spreadsheetExpressionReferenceLoader")
+            .value(this.spreadsheetExpressionReferenceLoader)
+            .label("spreadsheetLabelNameResolver")
+            .value(this.spreadsheetLabelNameResolver)
+            .label("terminalContext")
+            .value(this.terminalContext);
     }
 }

@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.FakeSpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
-import walkingkooka.spreadsheet.SpreadsheetContextSuppliers;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
@@ -97,7 +96,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
-    private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = SpreadsheetContextSuppliers.fake();
+    private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = new FakeSpreadsheetContextSupplier() {
+        @Override
+        public String toString() {
+            return FakeSpreadsheetContextSupplier.class.getSimpleName();
+        }
+    };
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
@@ -1385,6 +1389,16 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         this.environmentContextAndCheck(
             context,
             context.spreadsheetEnvironmentContextFactory
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "mediaTypeDetector=application/octet-stream spreadsheetContextSupplier=FakeSpreadsheetContextSupplier spreadsheetEnvironmentContextFactory={charset=UTF-8, converter=collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic), currency=AUD, currentWorkingDirectory=/current1/working2/directory3, dateParser=date yyyy/mm/dd, dateTimeOffset=-25569, dateTimeParser=date-time yyyy/mm/dd hh:mm, dateTimeSymbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\", decimalNumberDigitCount=6, decimalNumberSymbols=negat"
         );
     }
 
