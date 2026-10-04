@@ -534,13 +534,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             this.terminalContext.equals(other.terminalContext);
     }
 
+    // UsesToStringBuilder..............................................................................................
+
     @Override
-    public String toString() {
-        return ToStringBuilder.empty()
-            .globalLength(Integer.MAX_VALUE)
-            .valueLength(Integer.MAX_VALUE)
-            .label("mode")
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("mode")
             .value(this.mode)
-            .build();
+            .label("spreadsheetContext")
+            .value(this.spreadsheetContext)
+            .label("terminalContext")
+            .value(this.terminalContext);
     }
 }
