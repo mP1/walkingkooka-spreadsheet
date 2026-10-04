@@ -24,6 +24,14 @@ import java.util.Optional;
 
 public interface HasOptionalSpreadsheetFormatterSelectorTesting extends Testing {
 
+    SpreadsheetFormatterSelector FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("formatter-selector-111");
+
+    SpreadsheetFormatterSelector DIFFERENT_FORMATTER_SELECTOR = SpreadsheetFormatterSelector.parse("different-formatter-selector-222");
+
+    Optional<SpreadsheetFormatterSelector> OPTIONAL_FORMATTER_SELECTOR = Optional.of(FORMATTER_SELECTOR);
+
+    Optional<SpreadsheetFormatterSelector> OPTIONAL_DIFFERENT_FORMATTER_SELECTOR = Optional.of(DIFFERENT_FORMATTER_SELECTOR);
+
     default void formatterSelectorAndCheck(final HasOptionalSpreadsheetFormatterSelector has) {
         this.formatterSelectorAndCheck(
             has,
