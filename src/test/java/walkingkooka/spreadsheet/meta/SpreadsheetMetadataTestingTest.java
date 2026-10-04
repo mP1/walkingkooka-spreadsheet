@@ -300,6 +300,14 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testTerminalContext() {
+        this.checkEquals(
+            "1, input: FakeTextReader, output: sink, error: sink {charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, terminalId=1, timeOffset=Z, user=user123@example.com}",
+            SpreadsheetMetadataTesting.TERMINAL_CONTEXT.toString()
+        );
+    }
+
+    @Test
     public void testSetUserFails() {
         assertThrows(
             ReadOnlyEnvironmentValueException.class,

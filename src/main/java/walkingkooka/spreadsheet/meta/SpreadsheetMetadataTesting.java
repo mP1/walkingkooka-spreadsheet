@@ -35,7 +35,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.environment.HasUserTesting;
-import walkingkooka.io.TextReaders;
+import walkingkooka.io.FakeTextReader;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.HasDecimalNumberSymbolsTesting;
@@ -487,7 +487,12 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
         () -> false, // closedx
-        TextReaders.fake(),
+        new FakeTextReader() {
+            @Override
+            public String toString() {
+                return FakeTextReader.class.getSimpleName();
+            }
+        },
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
         (final String expression,
