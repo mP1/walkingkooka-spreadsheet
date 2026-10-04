@@ -76,7 +76,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest extends SpreadsheetEngineContextSharedTestCase<SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext> {
 
-    private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = SpreadsheetContextSuppliers.fake();
+    private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = new FakeSpreadsheetContextSupplier() {
+        @Override
+        public String toString() {
+            return FakeSpreadsheetContext.class.getSimpleName();
+        }
+    };
     
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
@@ -970,7 +975,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{charset=UTF-8, converter=collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic), currency=AUD, currentWorkingDirectory=/current1/working2/directory3, dateParser=date yyyy/mm/dd, dateTimeOffset=-25569, dateTimeParser=date-time yyyy/mm/dd hh:mm, dateTimeSymbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\", decimalNumberDigitCount=6, decimalNumberSymbols=negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞"
+            "multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction spreadsheetEngine=SpreadsheetEngineBasic spreadsheetContextSupplier=FakeSpreadsheetContext spreadsheetEnvironmentContextFactory={charset=UTF-8, converter=collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic), currency=AUD, currentWorkingDirectory=/current1/working2/directory3, dateParser=date yyyy/mm/dd, dateTimeOffset=-25569, dateTimeParser=date-time yyyy/mm/dd hh:mm, dateTimeSymbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed"
         );
     }
 

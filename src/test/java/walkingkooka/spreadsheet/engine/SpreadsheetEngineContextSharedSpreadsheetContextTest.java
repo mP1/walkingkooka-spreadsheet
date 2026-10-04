@@ -1667,6 +1667,12 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 this.localeContext.equals(other.localeContext) &&
                 this.providerContext.equals(other.providerContext);
         }
+
+        @Override
+        public String toString() {
+            return this.getClass()
+                .getSimpleName();
+        }
     }
 
     // hashCode/equals..................................................................................................
@@ -1756,7 +1762,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "mode=FORMULA"
+            "mode=FORMULA spreadsheetContext=TestSpreadsheetContext terminalContext=1, input: FakeTextReader, output: sink, error: sink {charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, terminalId=1, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -1773,7 +1779,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 metadata,
                 SpreadsheetLabelStores.treeMap()
             ),
-            "mode=FORMULA"
+            "mode=FORMULA spreadsheetContext=TestSpreadsheetContext terminalContext=1, input: FakeTextReader, output: sink, error: sink {charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, terminalId=1, timeOffset=Z, user=user123@example.com}"
         );
     }
 

@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterLikeDelegator;
 import walkingkooka.currency.CurrencyContextDelegator;
@@ -45,7 +47,8 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     LocaleContextDelegator,
     ConverterLikeDelegator,
     SpreadsheetProviderDelegator,
-    SpreadsheetStorageContextDelegator {
+    SpreadsheetStorageContextDelegator,
+    UsesToStringBuilder {
 
     SpreadsheetEngineContextShared() {
         super();
@@ -151,4 +154,11 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
 
     @Override
     abstract public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext();
+
+    // Object...........................................................................................................
+
+    @Override
+    public final String toString() {
+        return ToStringBuilder.buildFrom(this);
+    }
 }

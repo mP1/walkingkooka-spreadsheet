@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
@@ -550,8 +551,21 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             this.terminalContext.equals(other.terminalContext);
     }
 
+    // UsesToStringBuilder..............................................................................................
+
     @Override
-    public String toString() {
-        return this.spreadsheetEnvironmentContextFactory.toString();
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("multiplier")
+            .value(this.multiplier)
+            .label("spreadsheetEngine")
+            .value(this.spreadsheetEngine)
+            .label("spreadsheetContextSupplier")
+            .value(this.spreadsheetContextSupplier)
+            .label("spreadsheetEnvironmentContextFactory")
+            .value(this.spreadsheetEnvironmentContextFactory)
+            .label("spreadsheetMetadataContext")
+            .value(this.spreadsheetMetadataContext)
+            .label("terminalContext")
+            .value(this.terminalContext);
     }
 }
