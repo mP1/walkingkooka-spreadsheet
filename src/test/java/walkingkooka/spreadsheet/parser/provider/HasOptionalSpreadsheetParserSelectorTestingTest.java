@@ -17,11 +17,28 @@
 
 package walkingkooka.spreadsheet.parser.provider;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PublicClassTesting;
 
 public final class HasOptionalSpreadsheetParserSelectorTestingTest implements HasOptionalSpreadsheetParserSelectorTesting,
     PublicClassTesting<HasOptionalSpreadsheetParserSelectorTesting> {
 
+    @Test
+    public void testConstants() {
+        this.checkNotEquals(
+            PARSER_SELECTOR,
+            DIFFERENT_PARSER_SELECTOR
+        );
+    }
+
+    @Test
+    public void testOptionalConstants() {
+        this.checkNotEquals(
+            OPTIONAL_PARSER_SELECTOR,
+            OPTIONAL_DIFFERENT_PARSER_SELECTOR
+        );
+    }
+    
     // class............................................................................................................
 
     @Override
