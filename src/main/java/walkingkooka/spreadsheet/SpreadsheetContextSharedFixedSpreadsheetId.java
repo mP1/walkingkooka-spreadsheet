@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpHandlerContext;
@@ -33,6 +34,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
@@ -40,7 +42,9 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
 
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -117,7 +121,20 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
         this.spreadsheetMetadataContext = null != spreadsheetMetadataContext ?
             spreadsheetMetadataContext :
             SpreadsheetMetadataContexts.basic(
-                this::createMetadata,
+                new SpreadsheetMetadataCreator() {
+                    @Override
+                    public SpreadsheetMetadata createMetadata(EmailAddress user, Optional<Locale> locale) {
+                        return this.createMetadata(
+                            user,
+                            locale
+                        );
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "this"; // necessary to avoid StackOverflowError during #toString
+                    }
+                },
                 storeRepository.metadatas()
             );
 

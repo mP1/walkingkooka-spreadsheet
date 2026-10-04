@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
 import walkingkooka.datetime.HasNowTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.meta.store.FakeSpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.store.StoreWatcher;
@@ -33,21 +35,38 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataContextBasicTest implements SpreadsheetMetadataContextTesting2<SpreadsheetMetadataContextBasic>,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadataContextBasic>,
-    HasNowTesting {
+    HasNowTesting,
+    ToStringTesting<SpreadsheetMetadataContextBasic> {
 
-    private final static SpreadsheetMetadataCreator CREATE_METADATA =
-        (e, dl) ->
-            SpreadsheetMetadata.EMPTY.set(
+    private final static SpreadsheetMetadataCreator CREATE_METADATA = new SpreadsheetMetadataCreator() {
+        @Override
+        public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                  final Optional<Locale> locale) {
+            return SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
-                    e,
+                    user,
                     NOW
                 )
             ).set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                dl.get()
+                locale.get()
             );
-    private final static SpreadsheetMetadataStore STORE = SpreadsheetMetadataStores.fake();
+        }
+
+        @Override
+        public String toString() {
+            return SpreadsheetMetadataCreator.class.getSimpleName();
+        }
+    };
+
+    private final static SpreadsheetMetadataStore STORE = new FakeSpreadsheetMetadataStore() {
+
+        @Override
+        public String toString() {
+            return FakeSpreadsheetMetadataStore.class.getSimpleName();
+        }
+    };
 
     @Test
     public void testWithNullCreateMetadataFails() {
@@ -167,6 +186,16 @@ public final class SpreadsheetMetadataContextBasicTest implements SpreadsheetMet
     @Override
     public SpreadsheetMetadataContextBasic createObject() {
         return this.createContext();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createObject(),
+            "createMetadata=SpreadsheetMetadataCreator store={}"
+        );
     }
 
     // class............................................................................................................
