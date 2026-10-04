@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.importer;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HasValueTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
@@ -44,13 +45,13 @@ import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.util.HasLocaleTesting;
 import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.provider.OptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,14 +59,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetReferenceTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetImporterCellValue>,
     HasCurrencyTesting,
+    HasLocaleTesting,
+    HasValueTesting,
     ToStringTesting<SpreadsheetImporterCellValue>,
     TreePrintableTesting,
     ClassTesting2<SpreadsheetImporterCellValue> {
-
-    private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.A1;
-
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
+    
     // cell.............................................................................................................
 
     @Test
@@ -117,7 +116,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.formula(
-                CELL_REFERENCE,
+                REFERENCE,
                 formula
             ),
             formula
@@ -154,7 +153,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.currency(
-                CELL_REFERENCE,
+                REFERENCE,
                 currency
             ),
             currency
@@ -197,7 +196,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.dateTimeSymbols(
-                CELL_REFERENCE,
+                REFERENCE,
                 dateTimeSymbols
             ),
             dateTimeSymbols
@@ -241,7 +240,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.decimalNumberSymbols(
-                CELL_REFERENCE,
+                REFERENCE,
                 decimalNumberSymbols
             ),
             decimalNumberSymbols
@@ -282,7 +281,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.formattedValue(
-                CELL_REFERENCE,
+                REFERENCE,
                 formattedValue
             ),
             formattedValue
@@ -323,7 +322,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.formatter(
-                CELL_REFERENCE,
+                REFERENCE,
                 formatter
             ),
             formatter
@@ -362,7 +361,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.locale(
-                CELL_REFERENCE,
+                REFERENCE,
                 locale
             ),
             locale
@@ -403,7 +402,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.parser(
-                CELL_REFERENCE,
+                REFERENCE,
                 parser
             ),
             parser
@@ -446,7 +445,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.style(
-                CELL_REFERENCE,
+                REFERENCE,
                 textStyle
             ),
             textStyle
@@ -487,7 +486,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.validator(
-                CELL_REFERENCE,
+                REFERENCE,
                 validator
             ),
             validator
@@ -528,7 +527,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
         this.check(
             SpreadsheetImporterCellValue.value(
-                CELL_REFERENCE,
+                REFERENCE,
                 value
             ),
             value
@@ -541,7 +540,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
                        final Object value) {
         this.check(
             importCellValue,
-            CELL_REFERENCE,
+            REFERENCE,
             value
         );
     }
@@ -553,10 +552,9 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
             importCellValue,
             reference
         );
-        this.checkEquals(
-            value,
-            importCellValue.value(),
-            "value"
+        this.valueAndCheck(
+            importCellValue,
+            value
         );
     }
 
@@ -566,7 +564,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     public void testEqualsDifferentValue() {
         this.checkNotEquals(
             SpreadsheetImporterCellValue.formula(
-                CELL_REFERENCE,
+                REFERENCE,
                 SpreadsheetFormula.EMPTY.setText("=123+456")
             )
         );
@@ -575,7 +573,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Override
     public SpreadsheetImporterCellValue createObject() {
         return SpreadsheetImporterCellValue.cell(
-            CELL_REFERENCE.setFormula(
+            REFERENCE.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=123+456")
             )
         );
@@ -587,7 +585,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetImporterCellValue.cell(
-                CELL_REFERENCE.setFormula(
+                REFERENCE.setFormula(
                     SpreadsheetFormula.EMPTY.setText("=123+456")
                 )
             ),
@@ -601,7 +599,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     public void testTreePrintableCell() {
         this.treePrintAndCheck(
             SpreadsheetImporterCellValue.cell(
-                CELL_REFERENCE.setFormula(
+                REFERENCE.setFormula(
                     SpreadsheetFormula.EMPTY.setText("=123+456")
                 )
             ),
@@ -617,7 +615,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     public void testTreePrintableFormula() {
         this.treePrintAndCheck(
             SpreadsheetImporterCellValue.formula(
-                CELL_REFERENCE,
+                REFERENCE,
                 SpreadsheetFormula.EMPTY.setText("=123+456")
             ),
             "A1\n" +
