@@ -523,7 +523,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         }
     };
 
-    SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+    SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.empty();
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
         SpreadsheetMetadata.NO_CELL,
