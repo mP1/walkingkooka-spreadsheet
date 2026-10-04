@@ -21,14 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 
-public final class EmptySpreadsheetExpressionReferenceLoaderTest implements SpreadsheetExpressionReferenceLoaderTesting2<EmptySpreadsheetExpressionReferenceLoader> {
+public final class SpreadsheetExpressionReferenceLoaderEmptyTest implements SpreadsheetExpressionReferenceLoaderTesting2<SpreadsheetExpressionReferenceLoaderEmpty> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
 
     @Test
     public void testLoadCell() {
         this.loadCellAndCheck(
-            EmptySpreadsheetExpressionReferenceLoader.INSTANCE,
+            SpreadsheetExpressionReferenceLoaderEmpty.INSTANCE,
             CELL,
             this.createContext()
         );
@@ -37,7 +37,7 @@ public final class EmptySpreadsheetExpressionReferenceLoaderTest implements Spre
     @Test
     public void testLoadCellRange() {
         this.loadCellRangeAndCheck(
-            EmptySpreadsheetExpressionReferenceLoader.INSTANCE,
+            SpreadsheetExpressionReferenceLoaderEmpty.INSTANCE,
             SpreadsheetSelection.parseCellRange("A1:B2"),
             this.createContext()
         );
@@ -46,14 +46,14 @@ public final class EmptySpreadsheetExpressionReferenceLoaderTest implements Spre
     @Test
     public void testLoadLabel() {
         this.loadLabelAndCheck(
-            EmptySpreadsheetExpressionReferenceLoader.INSTANCE,
+            SpreadsheetExpressionReferenceLoaderEmpty.INSTANCE,
             SpreadsheetSelection.labelName("Label123")
         );
     }
 
     @Override
-    public EmptySpreadsheetExpressionReferenceLoader createSpreadsheetExpressionReferenceLoader() {
-        return EmptySpreadsheetExpressionReferenceLoader.INSTANCE;
+    public SpreadsheetExpressionReferenceLoaderEmpty createSpreadsheetExpressionReferenceLoader() {
+        return SpreadsheetExpressionReferenceLoaderEmpty.INSTANCE;
     }
 
     @Override
