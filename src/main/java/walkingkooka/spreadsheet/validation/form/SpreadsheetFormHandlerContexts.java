@@ -35,13 +35,13 @@ import java.util.function.Function;
 public final class SpreadsheetFormHandlerContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetFormHandlerContext}
+     * {@see SpreadsheetFormHandlerContextBasic}
      */
     public static SpreadsheetFormHandlerContext basic(final Form<SpreadsheetValidationReference> form,
                                                       final SpreadsheetExpressionReferenceLoader loader,
                                                       final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                       final SpreadsheetEngineContext context) {
-        return BasicSpreadsheetFormHandlerContext.with(
+        return SpreadsheetFormHandlerContextBasic.with(
             form,
             loader,
             cellsSaver,
