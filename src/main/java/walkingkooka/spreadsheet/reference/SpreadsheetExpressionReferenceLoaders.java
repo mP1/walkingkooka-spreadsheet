@@ -41,10 +41,10 @@ public final class SpreadsheetExpressionReferenceLoaders implements PublicStatic
     }
 
     /**
-     * {@see SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader}
+     * {@see SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository}
      */
     public static SpreadsheetExpressionReferenceLoader spreadsheetStoreRepository(final SpreadsheetStoreRepository repository) {
-        return SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repository);
+        return SpreadsheetExpressionReferenceLoaderSpreadsheetStoreRepository.with(repository);
     }
 
     /**
