@@ -28,8 +28,7 @@ import walkingkooka.io.HasFileExtensionTesting;
 import walkingkooka.math.HasDecimalNumberSymbolsTesting;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelectorTesting;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.parser.provider.HasOptionalSpreadsheetParserSelectorTesting;
@@ -58,7 +57,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     HasSpreadsheetCellTesting,
     HasValueTesting,
     ParseStringTesting<SpreadsheetCellValueKind>,
-    ClassTesting<SpreadsheetCellValueKind> {
+    PublicClassTesting<SpreadsheetCellValueKind> {
 
     @Test
     public void testCellValue() {
@@ -628,10 +627,5 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     @Override
     public Class<SpreadsheetCellValueKind> type() {
         return SpreadsheetCellValueKind.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }
