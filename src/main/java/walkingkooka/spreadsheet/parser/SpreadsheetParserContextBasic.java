@@ -18,9 +18,10 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -35,7 +36,8 @@ import java.util.function.BiFunction;
  */
 final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
     DateTimeContextDelegator,
-    ExpressionNumberContextDelegator {
+    ExpressionNumberContextDelegator,
+    UsesToStringBuilder {
 
     /**
      * Creates a new {@link SpreadsheetParserContextBasic}.
@@ -114,12 +116,20 @@ final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
 
     @Override
     public String toString() {
-        return this.invalidCharacterExceptionFactory +
-            " " +
-            this.dateTimeContext +
-            " " +
-            this.expressionNumberContext +
-            " " +
-            CharSequences.quoteIfChars(this.valueSeparator);
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("invalidCharacterExceptionFactory")
+            .value(this.invalidCharacterExceptionFactory)
+            .label("dateTimeContext")
+            .value(this.dateTimeContext)
+            .label("expressionNumberContext")
+            .value(this.expressionNumberContext)
+            .label("valueSeparator")
+            .value(this.valueSeparator);
     }
 }
