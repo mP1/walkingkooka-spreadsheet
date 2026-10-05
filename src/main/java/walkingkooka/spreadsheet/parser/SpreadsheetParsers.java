@@ -60,11 +60,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * {@see ToStringSpreadsheetParser}
+     * {@see SpreadsheetParserToString}
      */
     public static SpreadsheetParser toString(final SpreadsheetParser parser,
                                              final String toString) {
-        return ToStringSpreadsheetParser.with(
+        return SpreadsheetParserToString.with(
             parser,
             toString
         );
