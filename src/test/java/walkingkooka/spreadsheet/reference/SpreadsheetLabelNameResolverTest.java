@@ -26,6 +26,16 @@ public final class SpreadsheetLabelNameResolverTest implements SpreadsheetLabelN
         return new TestSpreadsheetLabelNameResolver();
     }
 
+    @Override
+    public Class<TestSpreadsheetLabelNameResolver> type() {
+        return TestSpreadsheetLabelNameResolver.class;
+    }
+
+    @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
     final static class TestSpreadsheetLabelNameResolver implements SpreadsheetLabelNameResolverDelegator {
 
         @Override

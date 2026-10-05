@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetLabelNameResolverTesting2<R extends SpreadsheetLabelNameResolver> extends SpreadsheetLabelNameResolverTesting {
+public interface SpreadsheetLabelNameResolverTesting2<R extends SpreadsheetLabelNameResolver> extends SpreadsheetLabelNameResolverTesting,
+    PackagePrivateClassTesting<R> {
 
     @Test
     default void testResolveIfLabelWithNullSpreadsheetSelectionFails() {

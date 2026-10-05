@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetLabelNameResolverEmptyTest implements SpreadsheetLabelNameResolverTesting2<SpreadsheetLabelNameResolverEmpty>,
     ToStringTesting<SpreadsheetLabelNameResolverEmpty>,
@@ -54,10 +53,5 @@ public final class SpreadsheetLabelNameResolverEmptyTest implements SpreadsheetL
     @Override
     public Class<SpreadsheetLabelNameResolverEmpty> type() {
         return SpreadsheetLabelNameResolverEmpty.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
