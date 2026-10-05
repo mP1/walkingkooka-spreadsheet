@@ -141,7 +141,7 @@ public final class SpreadsheetParserContextBasicTest implements ClassTesting2<Sp
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            INVALID_CHARACTER_EXCEPTION_FACTORY + " " + DATE_TIME_CONTEXT + " " + EXPRESSION_NUMBER_CONTEXT + " ','"
+            "invalidCharacterExceptionFactory=POSITION dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\" locale=\"en-AU\" twoDigitYear=50 expressionNumberContext=expressionNumberKind=DOUBLE decimalNumberContext=decimalNumberDigitNumberCount=9 symbols=negativeSign='!' positiveSign='@' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator=':' exponentSymbol=\"^\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator=';' nanSymbol=\"Nan!\" percentSymbol='#' permillSymbol='?' locale=fr_CA mathContext=precision=7 roundingMode=HALF_EVEN valueSeparator=','"
         );
     }
 
