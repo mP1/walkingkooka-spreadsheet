@@ -17,17 +17,11 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public abstract class SpreadsheetViewportNavigationTestCase<T extends SpreadsheetViewportNavigation> implements ClassTesting<T> {
+public abstract class SpreadsheetViewportNavigationTestCase<T extends SpreadsheetViewportNavigation> implements PackagePrivateClassTesting<T> {
 
     SpreadsheetViewportNavigationTestCase() {
         super();
-    }
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
