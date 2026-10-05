@@ -26,6 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -111,6 +112,14 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public MathContext mathContext() {
         return this.mathContext0();
+    }
+
+    // ColorContext.....................................................................................................
+
+    @Override
+    public Optional<Color> lookupColor(final Color color) {
+        Objects.requireNonNull(color, "color");
+        return NO_LOOKUP_COLOR;
     }
 
     // SpreadsheetMetadataVisitor........................................................................................

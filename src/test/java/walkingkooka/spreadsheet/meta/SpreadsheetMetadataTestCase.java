@@ -24,6 +24,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorContextTesting2;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProvider;
@@ -76,6 +77,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
     ClassTesting2<SpreadsheetMetadata>,
+    ColorContextTesting2<SpreadsheetMetadata>,
     ConverterTesting,
     CurrencyLocaleContextTesting,
     HasContentTypeTesting,
@@ -1145,6 +1147,13 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return this.createObject();
     }
 
+    // ColorContext.....................................................................................................
+
+    @Override
+    public final SpreadsheetMetadata createContext() {
+        return this.createObject();
+    }
+
     // class...........................................................................................................
 
     @Override
@@ -1157,5 +1166,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Override
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    @Override
+    public final void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
