@@ -23,11 +23,11 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetLabelNameResolver} that never succeeds, all lookups fail.
  */
-final class EmptySpreadsheetLabelNameResolver implements SpreadsheetLabelNameResolver {
+final class SpreadsheetLabelNameResolverEmpty implements SpreadsheetLabelNameResolver {
 
-    final static EmptySpreadsheetLabelNameResolver INSTANCE = new EmptySpreadsheetLabelNameResolver();
+    final static SpreadsheetLabelNameResolverEmpty INSTANCE = new SpreadsheetLabelNameResolverEmpty();
 
-    private EmptySpreadsheetLabelNameResolver() {
+    private SpreadsheetLabelNameResolverEmpty() {
         super();
     }
 
