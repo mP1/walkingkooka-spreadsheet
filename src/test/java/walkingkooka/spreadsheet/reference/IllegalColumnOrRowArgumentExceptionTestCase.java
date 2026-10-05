@@ -18,15 +18,14 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends IllegalColumnOrRowArgumentException> implements ClassTesting<T>,
+public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends IllegalColumnOrRowArgumentException> implements PublicClassTesting<T>,
     ThrowableTesting {
 
     IllegalColumnOrRowArgumentExceptionTestCase() {
@@ -70,11 +69,4 @@ public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends Ille
     }
 
     abstract T createThrowable(final String message);
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
 }
