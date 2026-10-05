@@ -552,6 +552,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     // HasLineEndings...................................................................................................
 
     @Test
+    @Override
     public void testLineEnding() {
         final SpreadsheetEnvironmentContext context = SPREADSHEET_ENVIRONMENT_CONTEXT;
 
@@ -562,6 +563,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     }
 
     @Test
+    @Override
     public void testSetLineEnding() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
 
