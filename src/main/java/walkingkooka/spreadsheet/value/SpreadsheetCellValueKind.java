@@ -47,84 +47,84 @@ import java.util.Optional;
 public enum SpreadsheetCellValueKind implements HasContentType,
     HasFileExtension {
 
-    CELL(SpreadsheetMediaTypes.JSON_CELL) {
+    CELL(SpreadsheetMediaTypes.MEMORY_CELL) {
         @Override
         public SpreadsheetCell cellValue(final SpreadsheetCell cell) {
             return cell;
         }
     },
 
-    CURRENCY(SpreadsheetMediaTypes.JSON_CURRENCY) {
+    CURRENCY(SpreadsheetMediaTypes.MEMORY_CURRENCY) {
         @Override
         public Optional<Currency> cellValue(final SpreadsheetCell cell) {
             return cell.currency();
         }
     },
 
-    CURRENCY_EXCHANGE_RATER(SpreadsheetMediaTypes.JSON_CURRENCY_EXCHANGE_RATER) {
+    CURRENCY_EXCHANGE_RATER(SpreadsheetMediaTypes.MEMORY_CURRENCY_EXCHANGE_RATER) {
         @Override
         public Optional<CurrencyExchangeRaterSelector> cellValue(final SpreadsheetCell cell) {
             return cell.currencyExchangeRater();
         }
     },
 
-    DATE_TIME_SYMBOLS(SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS) {
+    DATE_TIME_SYMBOLS(SpreadsheetMediaTypes.MEMORY_DATE_TIME_SYMBOLS) {
         @Override
         public Optional<DateTimeSymbols> cellValue(final SpreadsheetCell cell) {
             return cell.dateTimeSymbols();
         }
     },
 
-    DECIMAL_NUMBER_SYMBOLS(SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS) {
+    DECIMAL_NUMBER_SYMBOLS(SpreadsheetMediaTypes.MEMORY_DECIMAL_NUMBER_SYMBOLS) {
         @Override
         public Optional<DecimalNumberSymbols> cellValue(final SpreadsheetCell cell) {
             return cell.decimalNumberSymbols();
         }
     },
 
-    FORMULA(SpreadsheetMediaTypes.JSON_FORMULA) {
+    FORMULA(SpreadsheetMediaTypes.MEMORY_FORMULA) {
         @Override
         public SpreadsheetFormula cellValue(final SpreadsheetCell cell) {
             return cell.formula();
         }
     },
 
-    FORMATTER(SpreadsheetMediaTypes.JSON_FORMATTER) {
+    FORMATTER(SpreadsheetMediaTypes.MEMORY_FORMATTER) {
         @Override
         public Optional<SpreadsheetFormatterSelector> cellValue(final SpreadsheetCell cell) {
             return cell.formatter();
         }
     },
 
-    LOCALE(SpreadsheetMediaTypes.JSON_LOCALE) {
+    LOCALE(SpreadsheetMediaTypes.MEMORY_LOCALE) {
         @Override
         public Optional<Locale> cellValue(final SpreadsheetCell cell) {
             return cell.locale();
         }
     },
 
-    PARSER(SpreadsheetMediaTypes.JSON_PARSER) {
+    PARSER(SpreadsheetMediaTypes.MEMORY_PARSER) {
         @Override
         public Optional<SpreadsheetParserSelector> cellValue(final SpreadsheetCell cell) {
             return cell.parser();
         }
     },
 
-    STYLE(SpreadsheetMediaTypes.JSON_STYLE) {
+    STYLE(SpreadsheetMediaTypes.MEMORY_STYLE) {
         @Override
         public TextStyle cellValue(final SpreadsheetCell cell) {
             return cell.style();
         }
     },
 
-    VALIDATOR(SpreadsheetMediaTypes.JSON_VALIDATOR) {
+    VALIDATOR(SpreadsheetMediaTypes.MEMORY_VALIDATOR) {
         @Override
         public Optional<ValidatorSelector> cellValue(final SpreadsheetCell cell) {
             return cell.validator();
         }
     },
 
-    VALUE(SpreadsheetMediaTypes.JSON_VALUE) {
+    VALUE(SpreadsheetMediaTypes.MEMORY_VALUE) {
         @Override
         public Optional<Object> cellValue(final SpreadsheetCell cell) {
             return cell.formula()
@@ -132,7 +132,7 @@ public enum SpreadsheetCellValueKind implements HasContentType,
         }
     },
 
-    VALUE_TYPE(SpreadsheetMediaTypes.JSON_VALUE_TYPE) {
+    VALUE_TYPE(SpreadsheetMediaTypes.MEMORY_VALUE_TYPE) {
         @Override
         public Optional<ValueType> cellValue(final SpreadsheetCell cell) {
             return cell.formula()
@@ -140,7 +140,7 @@ public enum SpreadsheetCellValueKind implements HasContentType,
         }
     },
 
-    FORMATTED_VALUE(SpreadsheetMediaTypes.JSON_FORMATTED_VALUE) {
+    FORMATTED_VALUE(SpreadsheetMediaTypes.MEMORY_FORMATTED_VALUE) {
         @Override
         public Optional<TextNode> cellValue(final SpreadsheetCell cell) {
             return cell.formattedValue();

@@ -632,7 +632,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testContentTypeWithCell() {
         this.contentTypeAndCheck(
             SpreadsheetCellValueKind.CELL,
-            SpreadsheetMediaTypes.JSON_CELL
+            SpreadsheetMediaTypes.MEMORY_CELL
         );
     }
 
@@ -642,7 +642,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
             this.contentTypeAndCheck(
                 kind,
                 MediaType.class.cast(
-                    SpreadsheetMediaTypes.class.getField("JSON_" + kind.name())
+                    SpreadsheetMediaTypes.class.getField("MEMORY_" + kind.name())
                         .get(null)
                 )
             );
