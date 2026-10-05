@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterTesting2Test.TestSpreadsheetExporter;
@@ -48,10 +47,7 @@ public final class SpreadsheetExporterTesting2Test implements SpreadsheetExporte
                     throw new IllegalArgumentException(message);
                 }
             },
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.empty()
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS),
             SpreadsheetCellValueKind.CELL,
             new IllegalArgumentException(message)
         );
@@ -65,10 +61,7 @@ public final class SpreadsheetExporterTesting2Test implements SpreadsheetExporte
             .setContentType(
                 Optional.of(MediaType.TEXT_PLAIN)
             );
-        final SpreadsheetCellRange cells = SpreadsheetCellRange.with(
-            SpreadsheetSelection.ALL_CELLS,
-            Sets.empty()
-        );
+        final SpreadsheetCellRange cells = SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS);
 
         this.exportAndCheck(
             new SpreadsheetExporterTesting2Test.TestSpreadsheetExporter() {

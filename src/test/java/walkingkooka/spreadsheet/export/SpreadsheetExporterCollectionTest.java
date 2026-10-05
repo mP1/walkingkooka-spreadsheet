@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -65,8 +64,7 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
     }
 
     private final static SpreadsheetCellRange CELL_RANGE = SpreadsheetCellRange.with(
-        SpreadsheetSelection.parseCellRange("A1:C3"),
-        Sets.empty()
+        SpreadsheetSelection.parseCellRange("A1:C3")
     );
 
     private final static WebEntity WEB_ENTITY = WebEntity.empty()

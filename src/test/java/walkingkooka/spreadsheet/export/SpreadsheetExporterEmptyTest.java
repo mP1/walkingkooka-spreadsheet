@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
@@ -30,10 +29,7 @@ public final class SpreadsheetExporterEmptyTest implements SpreadsheetExporterTe
     @Test
     public void testCanExportFalse() {
         this.canExportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.empty()
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS),
             SpreadsheetCellValueKind.CELL,
             false
         );
@@ -43,8 +39,7 @@ public final class SpreadsheetExporterEmptyTest implements SpreadsheetExporterTe
     public void testExportFails() {
         this.exportFails(
             SpreadsheetCellRange.with(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                Sets.empty()
+                SpreadsheetSelection.parseCellRange("A1:B2")
             ),
             SpreadsheetCellValueKind.CELL,
             new IllegalArgumentException("Cannot export A1:B2")

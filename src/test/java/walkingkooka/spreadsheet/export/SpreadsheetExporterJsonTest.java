@@ -87,21 +87,21 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithCells() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setCurrency(OPTIONAL_CURRENCY)
-                        .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
-                        .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
-                        .setFormatter(FORMATTER)
-                        .setLocale(OPTIONAL_LOCALE)
-                        .setParser(PARSER)
-                        .setStyle(STYLE)
-                        .setValidator(VALIDATOR)
-                        .setFormattedValue(FORMATTED_VALUE),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setCurrency(OPTIONAL_CURRENCY)
+                            .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
+                            .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
+                            .setFormatter(FORMATTER)
+                            .setLocale(OPTIONAL_LOCALE)
+                            .setParser(PARSER)
+                            .setStyle(STYLE)
+                            .setValidator(VALIDATOR)
+                            .setFormattedValue(FORMATTED_VALUE),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.CELL,
             "A1-XFD1048576.json",
             SpreadsheetMediaTypes.JSON_CELL,
@@ -201,13 +201,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithFormula() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setFormatter(FORMATTER),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setFormatter(FORMATTER),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.FORMULA,
             "A1-XFD1048576.formula.json",
             SpreadsheetMediaTypes.JSON_FORMULA,
@@ -221,8 +221,8 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithCurrency() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                    .setValue(
                 Sets.of(
                     CELL_A1.setCurrency(OPTIONAL_CURRENCY),
                     CELL_A2
@@ -241,13 +241,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithDateTimeSymbols() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
             "A1-XFD1048576.dateTimeSymbols.json",
             SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS,
@@ -312,13 +312,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithDecimalNumberSymbols() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
             "A1-XFD1048576.decimalNumberSymbols.json",
             SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS,
@@ -345,13 +345,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithFormatter() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setFormatter(FORMATTER),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setFormatter(FORMATTER),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.FORMATTER,
             "A1-XFD1048576.formatter.json",
             SpreadsheetMediaTypes.JSON_FORMATTER,
@@ -365,13 +365,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithLocale() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setLocale(OPTIONAL_LOCALE),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setLocale(OPTIONAL_LOCALE),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.LOCALE,
             "A1-XFD1048576.locale.json",
             SpreadsheetMediaTypes.JSON_LOCALE,
@@ -385,13 +385,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithParser() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setParser(PARSER),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setParser(PARSER),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.PARSER,
             "A1-XFD1048576.parser.json",
             SpreadsheetMediaTypes.JSON_PARSER,
@@ -405,13 +405,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithStyle() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setStyle(STYLE),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setStyle(STYLE),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.STYLE,
             "A1-XFD1048576.style.json",
             SpreadsheetMediaTypes.JSON_STYLE,
@@ -427,13 +427,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithValidator() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setValidator(VALIDATOR),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setValidator(VALIDATOR),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.VALIDATOR,
             "A1-XFD1048576.validator.json",
             SpreadsheetMediaTypes.JSON_VALIDATOR,
@@ -447,16 +447,16 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithValue() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setFormula(
-                        CELL_A1.formula()
-                            .setValue(VALUE)
-                    ),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setFormula(
+                            CELL_A1.formula()
+                                .setValue(VALUE)
+                        ),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.VALUE,
             "A1-XFD1048576.value.json",
             SpreadsheetMediaTypes.JSON_VALUE,
@@ -473,13 +473,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithMissingValue() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1,
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1,
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.VALUE,
             "A1-XFD1048576.value.json",
             SpreadsheetMediaTypes.JSON_VALUE,
@@ -493,20 +493,20 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithValueType() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                            .setValueType(
-                                Optional.of(
-                                    ValueType.DATE_TIME
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        SpreadsheetSelection.A1.setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=1+2")
+                                .setValueType(
+                                    Optional.of(
+                                        ValueType.DATE_TIME
+                                    )
                                 )
-                            )
-                    ),
-                    CELL_A2
-                )
-            ),
+                        ),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.VALUE_TYPE,
             "A1-XFD1048576.valueType.json",
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
@@ -520,13 +520,13 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Test
     public void testExportWithFormattedValue() {
         this.exportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1.setFormattedValue(FORMATTED_VALUE),
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setFormattedValue(FORMATTED_VALUE),
+                        CELL_A2
+                    )
+                ),
             SpreadsheetCellValueKind.FORMATTED_VALUE,
             "A1-XFD1048576.formattedValue.json",
             SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
