@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.collection.SpreadsheetCellSet;
@@ -76,7 +77,16 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStorageTestCase<SpreadsheetStorageSpreadsheetCell> {
+public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStorageTestCase<SpreadsheetStorageSpreadsheetCell>
+    implements HasSpreadsheetCellTesting {
+
+    private final static StoragePath STORAGE_PATH = StoragePath.parse("/A1");
+
+    private final static SpreadsheetCell CELL = HasSpreadsheetCellTesting.CELL.setFormula(
+            SpreadsheetFormula.EMPTY.setText("'Hello")
+        ).setFormatter(SpreadsheetCell.NO_FORMATTER)
+        .setStyle(TextStyle.EMPTY)
+        .setValidator(SpreadsheetCell.NO_VALIDATOR);
 
     @Test
     public void testCanWriteRootPath() {
@@ -108,7 +118,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         this.canWriteAndCheck(
             this.createStorage(),
-            StoragePath.parse("/A1"),
+            STORAGE_PATH,
             context,
             true
         );
@@ -138,11 +148,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     public void testLoadMissingCell() {
         final SpreadsheetStorageContext context = this.createContext();
 
-        final StoragePath path = StoragePath.parse("/A1");
-
         this.loadAndCheck(
             this.createStorage(),
-            path,
+            STORAGE_PATH,
             context
         );
     }
@@ -151,19 +159,15 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     public void testLoadCell() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
 
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
-        );
-
         SpreadsheetEngines.basic()
             .saveCell(
-                cell,
+                CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             );
 
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
-        final StoragePath path = StoragePath.parse("/A1");
+        final StoragePath path = STORAGE_PATH;
 
         this.loadAndCheck(
             this.createStorage(),
@@ -175,7 +179,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                         SpreadsheetCellSet.EMPTY.concat(
                             spreadsheetContext.storeRepository()
                                 .cells()
-                                .loadOrFail(cell.reference())
+                                .loadOrFail(REFERENCE)
                         )
                     )
                 ).setContentType(
@@ -188,13 +192,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     public void testLoadCellWithFileExtension() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
 
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
-        );
-
         SpreadsheetEngines.basic()
             .saveCell(
-                cell,
+                CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             );
 
@@ -212,7 +212,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                         SpreadsheetCellSet.EMPTY.concat(
                             spreadsheetContext.storeRepository()
                                 .cells()
-                                .loadOrFail(cell.reference())
+                                .loadOrFail(REFERENCE)
                         )
                     )
                 ).setContentType(
@@ -225,27 +225,18 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     public void testLoadCellRange() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
 
-        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
-        );
-
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=2")
-            );
-
         SpreadsheetEngines.basic()
             .saveCells(
                 Sets.of(
-                    a1,
-                    a2
+                    CELL,
+                    DIFFERENT_CELL
                 ),
                 spreadsheetContext.spreadsheetEngineContext()
             );
 
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
-        final StoragePath path = StoragePath.parse("/A1:A2");
+        final StoragePath path = StoragePath.parse("/A1:B2");
         final SpreadsheetCellStore cellStore = spreadsheetContext.storeRepository()
             .cells();
 
@@ -257,9 +248,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 .setValue(
                     Optional.of(
                         SpreadsheetCellSet.EMPTY.concat(
-                            cellStore.loadOrFail(a1.reference())
+                            cellStore.loadOrFail(REFERENCE)
                         ).concat(
-                            cellStore.loadOrFail(a2.reference())
+                            cellStore.loadOrFail(DIFFERENT_REFERENCE)
                         )
                     )
                 ).setContentType(
@@ -320,9 +311,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         final SpreadsheetCell cell = SpreadsheetEngines.basic()
             .saveCell(
-                SpreadsheetSelection.A1.setFormula(
-                    SpreadsheetFormula.EMPTY.setText("=1")
-                ),
+                CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             ).cells()
             .iterator()
@@ -354,30 +343,25 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     @Test
     public void testDelete() {
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
-        );
-
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
 
         SpreadsheetEngines.basic()
             .saveCell(
-                cell,
+                CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             );
 
-        final StoragePath path = StoragePath.parse("/A1");
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
         final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
         storage.delete(
-            path,
+            STORAGE_PATH,
             storageContext
         );
 
         this.loadAndCheck(
             storage,
-            path,
+            STORAGE_PATH,
             storageContext
         );
     }
@@ -403,23 +387,13 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     @Test
     public void testListWithoutSelection() {
-
-        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
-        );
-
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=2")
-            );
-
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
 
         SpreadsheetEngines.basic()
             .saveCells(
                 Sets.of(
-                    a1,
-                    a2
+                    CELL,
+                    DIFFERENT_CELL
                 ),
                 spreadsheetContext.spreadsheetEngineContext()
             );
@@ -433,11 +407,11 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             3,
             storageContext,
             StorageValueInfo.with(
-                StoragePath.parse("/A1"),
+                STORAGE_PATH,
                 storageContext.createdAuditInfo()
             ),
             StorageValueInfo.with(
-                StoragePath.parse("/A2"),
+                StoragePath.parse("/B2"),
                 storageContext.createdAuditInfo()
             )
         );
@@ -445,16 +419,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     @Test
     public void testList() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
-        );
-
-        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=2")
-            );
-
-        final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
+        final SpreadsheetCell c3 = SpreadsheetSelection.parseCell("C3")
             .setFormula(
                 SpreadsheetFormula.EMPTY.setText("=3")
             );
@@ -464,9 +429,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         SpreadsheetEngines.basic()
             .saveCells(
                 Sets.of(
-                    a1,
-                    a2,
-                    a3
+                    CELL,
+                    DIFFERENT_CELL,
+                    c3
                 ),
                 spreadsheetContext.spreadsheetEngineContext()
             );
@@ -482,11 +447,11 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             2,
             storageContext,
             StorageValueInfo.with(
-                StoragePath.parse("/A1"),
+                STORAGE_PATH,
                 storageContext.createdAuditInfo()
             ),
             StorageValueInfo.with(
-                StoragePath.parse("/A2"),
+                StoragePath.parse("/B2"),
                 storageContext.createdAuditInfo()
             )
         );
@@ -501,7 +466,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             () -> this.createStorage()
                 .setAuditInfo(
                     StorageValueInfo.with(
-                        StoragePath.parse("/A1"),
+                        STORAGE_PATH,
                         storageContext.createdAuditInfo()
                     ),
                     storageContext
@@ -514,25 +479,20 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("'Hello")
-        );
-
         final StoragePath path = StoragePath.ROOT;
 
         final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
 
         this.fired = false;
 
-        final StorageValue savedStorageValue = StorageValue.with(
-                StoragePath.parse("/A1")
-            ).setValue(
+        final StorageValue savedStorageValue = StorageValue.with(STORAGE_PATH)
+            .setValue(
                 Optional.of(
-                    cell.setFormula(
-                        cell.formula()
+                    CELL.setFormula(
+                        CELL.formula()
                             .setValue(
                                 Optional.of(
-                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
+                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser parser-selector-111")
                                 )
                             )
                     ).setFormattedValue(
@@ -571,7 +531,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             storage,
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(cell)
+                    Optional.of(CELL)
                 ),
             storageContext,
             savedStorageValue.setPath(
@@ -591,10 +551,6 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("'Hello")
-        );
-
         final StoragePath path = StoragePath.ROOT;
 
         final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
@@ -602,14 +558,14 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         this.fired = false;
 
         final StorageValue savedStorageValue = StorageValue.with(
-                StoragePath.parse("/A1")
+                STORAGE_PATH
             ).setValue(
                 Optional.of(
-                    cell.setFormula(
-                        cell.formula()
+                    CELL.setFormula(
+                        CELL.formula()
                             .setValue(
                                 Optional.of(
-                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
+                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser parser-selector-111")
                                 )
                             )
                     ).setFormattedValue(
@@ -648,7 +604,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             storage,
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(cell)
+                    Optional.of(CELL)
                 ),
             storageContext,
             savedStorageValue.setPath(StoragePath.ROOT)
@@ -663,7 +619,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         storage.save(
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(cell.setFormula(
+                    Optional.of(
+                        CELL.setFormula(
                         SpreadsheetFormula.EMPTY.setText("Different should not be seen by StoreWatcher<SpreadsheetCell>")
                     ))
                 ),
