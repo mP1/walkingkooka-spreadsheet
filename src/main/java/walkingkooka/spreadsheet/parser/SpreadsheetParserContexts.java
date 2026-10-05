@@ -29,13 +29,13 @@ import java.util.function.BiFunction;
 public final class SpreadsheetParserContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetParserContext}
+     * {@see SpreadsheetParserContextBasic}
      */
     public static SpreadsheetParserContext basic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                                  final DateTimeContext dateTimeContext,
                                                  final ExpressionNumberContext expressionNumberContext,
                                                  final char valueSeparator) {
-        return BasicSpreadsheetParserContext.with(
+        return SpreadsheetParserContextBasic.with(
             invalidCharacterExceptionFactory,
             dateTimeContext,
             expressionNumberContext,
