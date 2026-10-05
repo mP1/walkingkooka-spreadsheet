@@ -22,21 +22,21 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class EmptySpreadsheetLabelNameResolverTest implements SpreadsheetLabelNameResolverTesting2<EmptySpreadsheetLabelNameResolver>,
-    ToStringTesting<EmptySpreadsheetLabelNameResolver>,
-    ClassTesting<EmptySpreadsheetLabelNameResolver> {
+public final class SpreadsheetLabelNameResolverEmptyTest implements SpreadsheetLabelNameResolverTesting2<SpreadsheetLabelNameResolverEmpty>,
+    ToStringTesting<SpreadsheetLabelNameResolverEmpty>,
+    ClassTesting<SpreadsheetLabelNameResolverEmpty> {
 
     @Test
     public void testL() {
         this.resolveIfLabelAndCheck(
-            EmptySpreadsheetLabelNameResolver.INSTANCE,
+            SpreadsheetLabelNameResolverEmpty.INSTANCE,
             SpreadsheetSelection.labelName("Label123")
         );
     }
 
     @Override
-    public EmptySpreadsheetLabelNameResolver createSpreadsheetLabelNameResolver() {
-        return EmptySpreadsheetLabelNameResolver.INSTANCE;
+    public SpreadsheetLabelNameResolverEmpty createSpreadsheetLabelNameResolver() {
+        return SpreadsheetLabelNameResolverEmpty.INSTANCE;
     }
 
     // toString.........................................................................................................
@@ -44,16 +44,16 @@ public final class EmptySpreadsheetLabelNameResolverTest implements SpreadsheetL
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            EmptySpreadsheetLabelNameResolver.INSTANCE,
-            EmptySpreadsheetLabelNameResolver.class.getSimpleName()
+            SpreadsheetLabelNameResolverEmpty.INSTANCE,
+            SpreadsheetLabelNameResolverEmpty.class.getSimpleName()
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<EmptySpreadsheetLabelNameResolver> type() {
-        return EmptySpreadsheetLabelNameResolver.class;
+    public Class<SpreadsheetLabelNameResolverEmpty> type() {
+        return SpreadsheetLabelNameResolverEmpty.class;
     }
 
     @Override

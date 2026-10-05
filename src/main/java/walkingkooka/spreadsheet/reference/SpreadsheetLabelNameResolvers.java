@@ -26,10 +26,10 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 public final class SpreadsheetLabelNameResolvers implements PublicStaticHelper {
 
     /**
-     * {@see EmptySpreadsheetLabelNameResolver}
+     * {@see SpreadsheetLabelNameResolverEmpty}
      */
     public static SpreadsheetLabelNameResolver empty() {
-        return EmptySpreadsheetLabelNameResolver.INSTANCE;
+        return SpreadsheetLabelNameResolverEmpty.INSTANCE;
     }
 
     /**
