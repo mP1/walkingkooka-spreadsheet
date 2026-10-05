@@ -31,10 +31,10 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTesting2<ToStringSpreadsheetParser>,
-    HashCodeEqualsDefinedTesting2<ToStringSpreadsheetParser>,
-    ToStringTesting<ToStringSpreadsheetParser>,
-    ClassTesting2<ToStringSpreadsheetParser> {
+public final class SpreadsheetParserToStringTest implements SpreadsheetParserTesting2<SpreadsheetParserToString>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetParserToString>,
+    ToStringTesting<SpreadsheetParserToString>,
+    ClassTesting2<SpreadsheetParserToString> {
 
     private final static List<SpreadsheetParserSelectorToken> TOKENS = Lists.of(
         SpreadsheetParserSelectorToken.with(
@@ -75,7 +75,7 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     public void testWithNullParserFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ToStringSpreadsheetParser.with(
+            () -> SpreadsheetParserToString.with(
                 null,
                 TO_STRING
             )
@@ -86,7 +86,7 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     public void testWithNullToStringFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ToStringSpreadsheetParser.with(
+            () -> SpreadsheetParserToString.with(
                 PARSER,
                 null
             )
@@ -97,7 +97,7 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     public void testWithToStringSameToString() {
         assertSame(
             PARSER,
-            ToStringSpreadsheetParser.with(
+            SpreadsheetParserToString.with(
                 PARSER,
                 PARSER.toString()
             )
@@ -106,10 +106,10 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
 
     @Test
     public void testWithToStringSameToString2() {
-        final ToStringSpreadsheetParser parser = this.createParser();
+        final SpreadsheetParserToString parser = this.createParser();
         assertSame(
             parser,
-            ToStringSpreadsheetParser.with(
+            SpreadsheetParserToString.with(
                 parser,
                 parser.toString()
             )
@@ -118,11 +118,11 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
 
     @Test
     public void testWithToStringSpreadsheetParserUnwraps() {
-        final ToStringSpreadsheetParser parser = this.createParser();
+        final SpreadsheetParserToString parser = this.createParser();
 
         assertSame(
             parser,
-            ToStringSpreadsheetParser.with(
+            SpreadsheetParserToString.with(
                 parser,
                 PARSER.toString()
             )
@@ -139,9 +139,9 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     }
 
     @Override
-    public ToStringSpreadsheetParser createParser() {
-        return (ToStringSpreadsheetParser)
-            ToStringSpreadsheetParser.with(
+    public SpreadsheetParserToString createParser() {
+        return (SpreadsheetParserToString)
+            SpreadsheetParserToString.with(
                 PARSER,
                 TO_STRING
             );
@@ -157,7 +157,7 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
-            ToStringSpreadsheetParser.with(
+            SpreadsheetParserToString.with(
                 SpreadsheetParsers.fake(),
                 TO_STRING
             )
@@ -167,7 +167,7 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     @Test
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
-            ToStringSpreadsheetParser.with(
+            SpreadsheetParserToString.with(
                 PARSER,
                 "DifferentToString"
             )
@@ -175,7 +175,7 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     }
 
     @Override
-    public ToStringSpreadsheetParser createObject() {
+    public SpreadsheetParserToString createObject() {
         return this.createParser();
     }
 
@@ -195,16 +195,16 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
     public void testTreePrintable() {
         this.treePrintAndCheck(
             this.createParser(),
-            "ToStringSpreadsheetParser\n" +
-                "  TestSpreadsheetParser (walkingkooka.spreadsheet.parser.ToStringSpreadsheetParserTest$1)\n"
+            "SpreadsheetParserToString\n" +
+                "  TestSpreadsheetParser (walkingkooka.spreadsheet.parser.SpreadsheetParserToStringTest$1)\n"
         );
     }
 
     // Class............................................................................................................
 
     @Override
-    public Class<ToStringSpreadsheetParser> type() {
-        return ToStringSpreadsheetParser.class;
+    public Class<SpreadsheetParserToString> type() {
+        return SpreadsheetParserToString.class;
     }
 
     @Override

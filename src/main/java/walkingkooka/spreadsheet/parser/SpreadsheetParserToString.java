@@ -32,7 +32,7 @@ import java.util.Optional;
 /**
  * Wrapos another {@link SpreadsheetParser} and uses the provided {@link #toString()}.
  */
-final class ToStringSpreadsheetParser implements SpreadsheetParser,
+final class SpreadsheetParserToString implements SpreadsheetParser,
     TreePrintable {
 
     static SpreadsheetParser with(final SpreadsheetParser parser,
@@ -47,13 +47,13 @@ final class ToStringSpreadsheetParser implements SpreadsheetParser,
         if (temp.toString().equals(toString)) {
             parserWithToString = parser; // no need to wrap
         } else {
-            if (temp instanceof ToStringSpreadsheetParser) {
-                temp = ((ToStringSpreadsheetParser) temp).parser;
+            if (temp instanceof SpreadsheetParserToString) {
+                temp = ((SpreadsheetParserToString) temp).parser;
             }
             if (temp.toString().equals(toString)) {
                 parserWithToString = parser; // no need to wrap
             } else {
-                parserWithToString = new ToStringSpreadsheetParser(
+                parserWithToString = new SpreadsheetParserToString(
                     parser,
                     toString
                 );
@@ -63,7 +63,7 @@ final class ToStringSpreadsheetParser implements SpreadsheetParser,
         return parserWithToString;
     }
 
-    private ToStringSpreadsheetParser(final SpreadsheetParser parser,
+    private SpreadsheetParserToString(final SpreadsheetParser parser,
                                       final String toString) {
         super();
 
@@ -115,11 +115,11 @@ final class ToStringSpreadsheetParser implements SpreadsheetParser,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof ToStringSpreadsheetParser &&
+            other instanceof SpreadsheetParserToString &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final ToStringSpreadsheetParser other) {
+    private boolean equals0(final SpreadsheetParserToString other) {
         return this.parser.equals(other.parser) &&
             this.toString.equals(other.toString);
     }
