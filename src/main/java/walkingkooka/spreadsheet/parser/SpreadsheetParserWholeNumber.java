@@ -34,15 +34,15 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetParser} that only parsers whole numbers, with decimals and scientific numbers failing.
  */
-final class WholeNumberSpreadsheetParser implements SpreadsheetParser,
+final class SpreadsheetParserWholeNumber implements SpreadsheetParser,
     TreePrintable {
 
     /**
      * Singleton
      */
-    final static WholeNumberSpreadsheetParser INSTANCE = new WholeNumberSpreadsheetParser();
+    final static SpreadsheetParserWholeNumber INSTANCE = new SpreadsheetParserWholeNumber();
 
-    private WholeNumberSpreadsheetParser() {
+    private SpreadsheetParserWholeNumber() {
         super();
     }
 

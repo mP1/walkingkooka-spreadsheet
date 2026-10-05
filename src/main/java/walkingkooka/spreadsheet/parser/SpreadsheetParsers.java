@@ -71,10 +71,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * {@see WholeNumberSpreadsheetParser}
+     * {@see SpreadsheetParserWholeNumber}
      */
     public static SpreadsheetParser wholeNumber() {
-        return WholeNumberSpreadsheetParser.INSTANCE;
+        return SpreadsheetParserWholeNumber.INSTANCE;
     }
 
     /**

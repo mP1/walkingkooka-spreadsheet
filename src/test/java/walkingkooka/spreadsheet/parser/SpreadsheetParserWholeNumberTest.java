@@ -38,10 +38,10 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.Locale;
 
-public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParserTesting2<WholeNumberSpreadsheetParser>,
+public final class SpreadsheetParserWholeNumberTest implements SpreadsheetParserTesting2<SpreadsheetParserWholeNumber>,
     DecimalNumberContextTesting,
     TreePrintableTesting,
-    ClassTesting<WholeNumberSpreadsheetParser> {
+    ClassTesting<SpreadsheetParserWholeNumber> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -150,8 +150,8 @@ public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParser
     }
 
     @Override
-    public WholeNumberSpreadsheetParser createParser() {
-        return WholeNumberSpreadsheetParser.INSTANCE;
+    public SpreadsheetParserWholeNumber createParser() {
+        return SpreadsheetParserWholeNumber.INSTANCE;
     }
 
     @Override
@@ -214,7 +214,7 @@ public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParser
     public void testTreePrintable() {
         this.treePrintAndCheck(
             this.createParser(),
-            "WholeNumberSpreadsheetParser\n" +
+            "SpreadsheetParserWholeNumber\n" +
                 "  SpreadsheetNumberParsePatternSpreadsheetParser\n" +
                 "    pattern\n" +
                 "      number-parse-pattern\n" +
@@ -225,8 +225,8 @@ public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParser
     // class............................................................................................................
 
     @Override
-    public Class<WholeNumberSpreadsheetParser> type() {
-        return WholeNumberSpreadsheetParser.class;
+    public Class<SpreadsheetParserWholeNumber> type() {
+        return SpreadsheetParserWholeNumber.class;
     }
 
     @Override
