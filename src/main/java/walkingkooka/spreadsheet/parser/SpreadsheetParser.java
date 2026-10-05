@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorTokenAlternative;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorTokenList;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.validation.HasOptionalValueType;
 import walkingkooka.validation.ValueType;
 
 import java.util.List;
@@ -30,7 +31,8 @@ import java.util.Optional;
 /**
  * A specialised {@link Parser} that supports extra operations
  */
-public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
+public interface SpreadsheetParser extends Parser<SpreadsheetParserContext>,
+    HasOptionalValueType {
 
     /**
      * Useful constant for {@link SpreadsheetParser} with no text components.
@@ -47,11 +49,6 @@ public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
      * Constant for no value type.
      */
     Optional<ValueType> NO_VALUE_TYPE = Optional.empty();
-
-    /**
-     * Returns the {@link ValueType} that this parser returns.
-     */
-    Optional<ValueType> valueType();
 
     @Override
     default SpreadsheetParser setToString(final String toString) {
