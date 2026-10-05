@@ -33,18 +33,18 @@ import java.util.function.BiFunction;
 /**
  * A {@link SpreadsheetParserContext} without any functionality.
  */
-final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
+final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
     DateTimeContextDelegator,
     ExpressionNumberContextDelegator {
 
     /**
-     * Creates a new {@link BasicSpreadsheetParserContext}.
+     * Creates a new {@link SpreadsheetParserContextBasic}.
      */
-    static BasicSpreadsheetParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    static SpreadsheetParserContextBasic with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                               final DateTimeContext dateTimeContext,
                                               final ExpressionNumberContext expressionNumberContext,
                                               final char valueSeparator) {
-        return new BasicSpreadsheetParserContext(
+        return new SpreadsheetParserContextBasic(
             Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory"),
             Objects.requireNonNull(dateTimeContext, "dateTimeContext"),
             Objects.requireNonNull(expressionNumberContext, "expressionNumberContext"),
@@ -55,7 +55,7 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     /**
      * Private ctor use factory
      */
-    private BasicSpreadsheetParserContext(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    private SpreadsheetParserContextBasic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                           final DateTimeContext dateTimeContext,
                                           final ExpressionNumberContext expressionNumberContext,
                                           final char valueSeparator) {

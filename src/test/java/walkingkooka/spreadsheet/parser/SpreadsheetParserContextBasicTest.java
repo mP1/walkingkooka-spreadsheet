@@ -40,11 +40,11 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
-    SpreadsheetParserContextTesting<BasicSpreadsheetParserContext>,
+public final class SpreadsheetParserContextBasicTest implements ClassTesting2<SpreadsheetParserContextBasic>,
+    SpreadsheetParserContextTesting<SpreadsheetParserContextBasic>,
     DateTimeContextTesting,
     DecimalNumberContextDelegator,
-    ToStringTesting<BasicSpreadsheetParserContext> {
+    ToStringTesting<SpreadsheetParserContextBasic> {
 
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY = InvalidCharacterExceptionFactory.POSITION;
 
@@ -91,7 +91,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     public void testWithNullInvalidCharacterExceptionFactoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetParserContext.with(
+            () -> SpreadsheetParserContextBasic.with(
                 null,
                 DATE_TIME_CONTEXT,
                 EXPRESSION_NUMBER_CONTEXT,
@@ -103,7 +103,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     public void testWithNullDateTimeContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetParserContext.with(
+            () -> SpreadsheetParserContextBasic.with(
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
                 null,
                 EXPRESSION_NUMBER_CONTEXT,
@@ -115,7 +115,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     public void testWithNullExpressionNumberContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetParserContext.with(
+            () -> SpreadsheetParserContextBasic.with(
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
                 DATE_TIME_CONTEXT,
                 null,
@@ -134,7 +134,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
 
     @Test
     public void testValueSeparator() {
-        final BasicSpreadsheetParserContext context = this.createContext();
+        final SpreadsheetParserContextBasic context = this.createContext();
         this.checkEquals(',', context.valueSeparator(), "valueSeparator");
     }
 
@@ -147,8 +147,8 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Override
-    public BasicSpreadsheetParserContext createContext() {
-        return BasicSpreadsheetParserContext.with(
+    public SpreadsheetParserContextBasic createContext() {
+        return SpreadsheetParserContextBasic.with(
             INVALID_CHARACTER_EXCEPTION_FACTORY,
             DATE_TIME_CONTEXT,
             EXPRESSION_NUMBER_CONTEXT,
@@ -176,12 +176,17 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetParserContext> type() {
-        return BasicSpreadsheetParserContext.class;
+    public Class<SpreadsheetParserContextBasic> type() {
+        return SpreadsheetParserContextBasic.class;
     }
 
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
