@@ -51,7 +51,7 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
 
     public static SpreadsheetCellRange with(final SpreadsheetCellRangeReference range,
                                             final Set<SpreadsheetCell> value) {
-        checkRange(range);
+        Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
         final Set<SpreadsheetCell> copy = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -75,7 +75,7 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
     }
 
     public SpreadsheetCellRange setRange(final SpreadsheetCellRangeReference range) {
-        checkRange(range);
+        Objects.requireNonNull(range, "range");
 
         return this.range.equals(range) ?
             this :
@@ -99,10 +99,6 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
     }
 
     private final SpreadsheetCellRangeReference range;
-
-    private static SpreadsheetCellRangeReference checkRange(final SpreadsheetCellRangeReference range) {
-        return Objects.requireNonNull(range, "range");
-    }
 
     @Override
     public Set<SpreadsheetCell> value() {
@@ -157,7 +153,7 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
      * cells will be clipped and lost.
      */
     public SpreadsheetCellRange move(final SpreadsheetCellRangeReference range) {
-        checkRange(range);
+        Objects.requireNonNull(range, "range");
 
         return this.range.equalsIgnoreReferenceKind(range) ?
             this.setRange(range) :
