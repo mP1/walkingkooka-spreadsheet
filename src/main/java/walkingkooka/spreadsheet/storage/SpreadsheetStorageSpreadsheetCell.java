@@ -61,7 +61,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     @Override
     boolean canWriteNonNull(final StoragePath path,
                             final SpreadsheetStorageContext context) {
-        return null != this.toSpreadsheetExpressionReference(path);
+        return null != toSpreadsheetExpressionReference(path);
     }
 
     @Override
@@ -69,7 +69,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
                                        final SpreadsheetStorageContext context) {
         StorageValue value = null;
 
-        final SpreadsheetExpressionReference cellOrLabels = this.toSpreadsheetExpressionReference(path);
+        final SpreadsheetExpressionReference cellOrLabels = toSpreadsheetExpressionReference(path);
 
         if (null != cellOrLabels) {
             final Set<SpreadsheetCell> cells = context.loadCells(cellOrLabels);
@@ -84,7 +84,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
         return Optional.ofNullable(value);
     }
 
-    private SpreadsheetExpressionReference toSpreadsheetExpressionReference(final StoragePath path) {
+    private static SpreadsheetExpressionReference toSpreadsheetExpressionReference(final StoragePath path) {
         final List<StorageName> names = path.namesList();
 
         final SpreadsheetExpressionReference cellOrLabels;
