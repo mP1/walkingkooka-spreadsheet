@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -1304,11 +1303,6 @@ public final class SpreadsheetViewportNavigationContextBasicTest implements Clas
     @Override
     public Class<SpreadsheetViewportNavigationContextBasic> type() {
         return SpreadsheetViewportNavigationContextBasic.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override
