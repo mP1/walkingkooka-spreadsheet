@@ -189,14 +189,15 @@ public enum SpreadsheetCellValueKind implements HasContentType,
     // fromFileExtension................................................................................................
 
     /**
-     * From a {@link FileExtension} matches the appropriate {@link SpreadsheetCellValueKind}.
+     * From a {@link FileExtension} matches the appropriate {@link SpreadsheetCellValueKind}. If the file extension is
+     * unknown {@link Optional#empty()} is returned.
      * <pre>
      * a1.json -> {@link SpreadsheetCellValueKind#CELL}
      * a1.style -> {@link SpreadsheetCellValueKind#STYLE}
      * a1.style.json -> {@link SpreadsheetCellValueKind#STYLE}
      * </pre>
      */
-    public static SpreadsheetCellValueKind fromFileExtension(final Optional<FileExtension> fileExtension) {
+    public static Optional<SpreadsheetCellValueKind> fromFileExtension(final Optional<FileExtension> fileExtension) {
         Objects.requireNonNull(fileExtension, "fileExtension");
 
         SpreadsheetCellValueKind spreadsheetCellValueKind = null;
@@ -236,9 +237,7 @@ public enum SpreadsheetCellValueKind implements HasContentType,
             }
         }
 
-        return null != spreadsheetCellValueKind ?
-            spreadsheetCellValueKind :
-            CELL;
+        return Optional.ofNullable(spreadsheetCellValueKind);
     }
 
     private static SpreadsheetCellValueKind fromFileExtensionOrNull(final String fileExtension) {

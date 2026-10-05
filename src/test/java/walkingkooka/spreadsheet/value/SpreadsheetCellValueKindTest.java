@@ -435,32 +435,27 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
 
     @Test
     public void testFromFileExtensionWithEmpty() {
-        this.fromFileExtensionAndCheck(
-            SpreadsheetCellValueKind.CELL
-        );
+        this.fromFileExtensionAndCheck();
     }
 
     @Test
     public void testFromFileExtensionWithJson() {
         this.fromFileExtensionAndCheck(
-            FileExtension.JSON,
-            SpreadsheetCellValueKind.CELL
+            FileExtension.JSON
         );
     }
 
     @Test
     public void testFromFileExtensionWithTxt() {
         this.fromFileExtensionAndCheck(
-            FileExtension.TXT,
-            SpreadsheetCellValueKind.CELL
+            FileExtension.TXT
         );
     }
 
     @Test
     public void testFromFileExtensionWithSomethingTxt() {
         this.fromFileExtensionAndCheck(
-            FileExtension.parse("something.txt"),
-            SpreadsheetCellValueKind.CELL
+            FileExtension.parse("something.txt")
         );
     }
 
@@ -592,10 +587,17 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         );
     }
 
-    private void fromFileExtensionAndCheck(final SpreadsheetCellValueKind expected) {
+    private void fromFileExtensionAndCheck() {
         this.fromFileExtensionAndCheck(
             Optional.empty(),
-            expected
+            Optional.empty()
+        );
+    }
+
+    private void fromFileExtensionAndCheck(final FileExtension fileExtension) {
+        this.fromFileExtensionAndCheck(
+            Optional.of(fileExtension),
+            Optional.empty()
         );
     }
 
@@ -609,6 +611,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
 
     private void fromFileExtensionAndCheck(final Optional<FileExtension> fileExtension,
                                            final SpreadsheetCellValueKind expected) {
+        this.fromFileExtensionAndCheck(
+            fileExtension,
+            Optional.of(expected)
+        );
+    }
+
+    private void fromFileExtensionAndCheck(final Optional<FileExtension> fileExtension,
+                                           final Optional<SpreadsheetCellValueKind> expected) {
         this.checkEquals(
             expected,
             SpreadsheetCellValueKind.fromFileExtension(fileExtension),
