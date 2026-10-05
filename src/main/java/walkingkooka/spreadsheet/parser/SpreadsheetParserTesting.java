@@ -20,12 +20,12 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.parser.ParserTesting;
-import walkingkooka.validation.ValueType;
+import walkingkooka.validation.HasOptionalValueTypeTesting;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface SpreadsheetParserTesting extends ParserTesting {
+public interface SpreadsheetParserTesting extends ParserTesting,
+    HasOptionalValueTypeTesting {
 
     // tokensAndCheck...................................................................................................
 
@@ -45,32 +45,6 @@ public interface SpreadsheetParserTesting extends ParserTesting {
         this.checkEquals(
             expected,
             parser.tokens(context),
-            parser::toString
-        );
-    }
-
-    // valueTypeAndCheck................................................................................................
-
-    default void valueTypeAndCheck(final SpreadsheetParser parser) {
-        this.valueTypeAndCheck(
-            parser,
-            SpreadsheetParser.NO_VALUE_TYPE
-        );
-    }
-
-    default void valueTypeAndCheck(final SpreadsheetParser parser,
-                                   final ValueType expected) {
-        this.valueTypeAndCheck(
-            parser,
-            Optional.of(expected)
-        );
-    }
-
-    default void valueTypeAndCheck(final SpreadsheetParser parser,
-                                   final Optional<ValueType> expected) {
-        this.checkEquals(
-            expected,
-            parser.valueType(),
             parser::toString
         );
     }
