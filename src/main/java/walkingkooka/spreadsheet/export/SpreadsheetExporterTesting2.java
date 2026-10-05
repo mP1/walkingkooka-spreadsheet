@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
@@ -49,10 +48,7 @@ public interface SpreadsheetExporterTesting2<E extends SpreadsheetExporter> exte
             NullPointerException.class,
             () -> this.createSpreadsheetExporter()
                 .canExport(
-                    SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.empty()
-                    ),
+                    SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS),
                     null,
                     this.createContext()
                 )
@@ -65,10 +61,7 @@ public interface SpreadsheetExporterTesting2<E extends SpreadsheetExporter> exte
             NullPointerException.class,
             () -> this.createSpreadsheetExporter()
                 .canExport(
-                    SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.empty()
-                    ),
+                    SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS),
                     SpreadsheetCellValueKind.CELL,
                     null
                 )
@@ -120,10 +113,7 @@ public interface SpreadsheetExporterTesting2<E extends SpreadsheetExporter> exte
             NullPointerException.class,
             () -> this.createSpreadsheetExporter()
                 .export(
-                    SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.empty()
-                    ),
+                    SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS),
                     null,
                     this.createContext()
                 )
@@ -136,10 +126,7 @@ public interface SpreadsheetExporterTesting2<E extends SpreadsheetExporter> exte
             NullPointerException.class,
             () -> this.createSpreadsheetExporter()
                 .export(
-                    SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.empty()
-                    ),
+                    SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS),
                     SpreadsheetCellValueKind.CELL,
                     null
                 )

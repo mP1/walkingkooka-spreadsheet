@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.value;
 import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
@@ -49,18 +50,12 @@ import java.util.stream.Collectors;
 public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>>,
     TreePrintable {
 
-    public static SpreadsheetCellRange with(final SpreadsheetCellRangeReference range,
-                                            final Set<SpreadsheetCell> value) {
+    public static SpreadsheetCellRange with(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(value, "value");
-
-        final Set<SpreadsheetCell> copy = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        copy.addAll(value);
-        checkValues(range, copy);
 
         return new SpreadsheetCellRange(
             range,
-            copy
+            Sets.empty()
         );
     }
 

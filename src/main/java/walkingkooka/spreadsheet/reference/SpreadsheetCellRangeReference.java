@@ -375,10 +375,8 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
      * {@see SpreadsheetCellRange}
      */
     public SpreadsheetCellRange setValue(final Set<SpreadsheetCell> value) {
-        return SpreadsheetCellRange.with(
-            this,
-            value
-        );
+        return SpreadsheetCellRange.with(this)
+            .setValue(value);
     }
 
     // navigation.......................................................................................................

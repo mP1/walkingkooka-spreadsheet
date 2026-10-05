@@ -307,13 +307,13 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
     private void doImportAndCheck(final SpreadsheetCellValueKind valueKind,
                                   final SpreadsheetImporterCellValue... values) {
         this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    CELL_A1,
-                    CELL_A2
-                )
-            ),
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1,
+                        CELL_A2
+                    )
+                ),
             valueKind,
             values
         );

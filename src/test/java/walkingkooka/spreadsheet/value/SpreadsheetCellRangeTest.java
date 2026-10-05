@@ -96,54 +96,19 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetCellRange.with(
-                null,
-                VALUE
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullValueFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetCellRange.with(
-                RANGE,
                 null
             )
         );
     }
 
     @Test
-    public void testWithValueCellOutOfBoundsFails() {
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("$C$3");
-        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("D4");
-
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetCellRange.with(
-                RANGE,
-                Sets.of(
-                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                    c3.setFormula(SpreadsheetFormula.EMPTY),
-                    d4.setFormula(SpreadsheetFormula.EMPTY)
-                )
-            )
-        );
-
-        this.getMessageAndCheck(
-            thrown,
-            "Found 2 cells out of range A1:B2 got C3, D4"
-        );
-    }
-
-    @Test
     public void testWith() {
-        final SpreadsheetCellRange spreadsheetCellRange = SpreadsheetCellRange.with(
-            RANGE,
-            VALUE
-        );
+        final SpreadsheetCellRange spreadsheetCellRange = SpreadsheetCellRange.with(RANGE);
         this.checkRange(spreadsheetCellRange);
-        this.valueAndCheck(spreadsheetCellRange);
+        this.valueAndCheck(
+            spreadsheetCellRange,
+            Sets.empty()
+        );
     }
 
 
@@ -262,6 +227,31 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
     }
 
+
+    @Test
+    public void testSetValueOutOfBoundsFails2() {
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("$C$3");
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("D4");
+
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetCellRange.with(
+                RANGE
+            ).setValue(
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                    c3.setFormula(SpreadsheetFormula.EMPTY),
+                    d4.setFormula(SpreadsheetFormula.EMPTY)
+                )
+            )
+        );
+
+        this.getMessageAndCheck(
+            thrown,
+            "Found 2 cells out of range A1:B2 got C3, D4"
+        );
+    }
+
     @Test
     public void testSetValueDifferent() {
         final SpreadsheetCellRange spreadsheetCellRange = this.createObject();
@@ -361,7 +351,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.moveAndCheck(
             SpreadsheetCellRange.with(
-                RANGE,
+                RANGE
+            ).setValue(
                 Sets.of(
                     SpreadsheetSelection.A1
                         .setFormula(
@@ -392,7 +383,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
         this.moveAndCheck(
             SpreadsheetCellRange.with(
-                RANGE,
+                RANGE
+            ).setValue(
                 Sets.of(
                     SpreadsheetSelection.A1
                         .setFormula(
@@ -1180,9 +1172,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
     @Override
     public SpreadsheetCellRange createObject() {
-        return SpreadsheetCellRange.with(
-            RANGE,
-            VALUE
-        );
+        return SpreadsheetCellRange.with(RANGE)
+            .setValue(VALUE);
     }
 }
