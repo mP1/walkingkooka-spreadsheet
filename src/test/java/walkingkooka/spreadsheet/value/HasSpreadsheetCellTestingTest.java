@@ -17,10 +17,43 @@
 
 package walkingkooka.spreadsheet.value;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PublicClassTesting;
 
 public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTesting,
     PublicClassTesting<HasSpreadsheetCellTesting> {
+
+    @Test
+    public void testConstants() {
+        this.checkNotEquals(
+            CELL,
+            DIFFERENT_CELL
+        );
+    }
+
+    @Test
+    public void testOptionalConstants() {
+        this.checkNotEquals(
+            OPTIONAL_CELL,
+            OPTIONAL_DIFFERENT_CELL
+        );
+    }
+
+    @Test
+    public void testConstantAndOptionalConstants() {
+        this.checkEquals(
+            CELL,
+            OPTIONAL_CELL.get()
+        );
+    }
+
+    @Test
+    public void testConstantAndOptionalConstants2() {
+        this.checkEquals(
+            DIFFERENT_CELL,
+            OPTIONAL_DIFFERENT_CELL.get()
+        );
+    }
 
     // class............................................................................................................
 

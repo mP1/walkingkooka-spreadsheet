@@ -17,11 +17,73 @@
 
 package walkingkooka.spreadsheet.value;
 
-import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.currency.HasCurrencyTesting;
+import walkingkooka.currency.provider.HasOptionalCurrencyExchangeRaterSelectorTesting;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
+import walkingkooka.io.HasFileExtensionTesting;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
+import walkingkooka.net.header.HasContentTypeTesting;
+import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelectorTesting;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.provider.HasOptionalSpreadsheetParserSelectorTesting;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
+import walkingkooka.tree.text.HasTextStyleTesting;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.HasOptionalValueTypeTesting;
+import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 
 import java.util.Optional;
 
-public interface HasSpreadsheetCellTesting extends TreePrintableTesting {
+public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
+    HasCurrencyTesting,
+    HasDateTimeSymbolsTesting,
+    HasDecimalNumberSymbolsTesting,
+    HasFileExtensionTesting,
+    HasOptionalCurrencyExchangeRaterSelectorTesting,
+    HasOptionalSpreadsheetFormatterSelectorTesting,
+    HasOptionalSpreadsheetParserSelectorTesting,
+    HasOptionalValidatorSelectorTesting,
+    HasOptionalValueTypeTesting,
+    HasSpreadsheetReferenceTesting,
+    HasTextStyleTesting {
+
+    SpreadsheetCell CELL = REFERENCE.setFormula(
+            SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
+        ).setCurrency(OPTIONAL_CURRENCY)
+        .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
+        .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
+        .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
+        .setLocale(OPTIONAL_LOCALE)
+        .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
+        .setParser(OPTIONAL_PARSER_SELECTOR)
+        .setStyle(TEXT_STYLE)
+        .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
+        .setFormattedValue(
+            Optional.of(
+                TextNode.text("formatted-value")
+            )
+        );
+
+    SpreadsheetCell DIFFERENT_CELL = DIFFERENT_REFERENCE.setFormula(
+            SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_DIFFERENT_VALUE_TYPE)
+        ).setCurrency(OPTIONAL_DIFFERENT_CURRENCY)
+        .setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR)
+        .setDateTimeSymbols(OPTIONAL_DIFFERENT_DATE_TIME_SYMBOLS)
+        .setDecimalNumberSymbols(OPTIONAL_DIFFERENT_DECIMAL_NUMBER_SYMBOLS)
+        .setLocale(OPTIONAL_DIFFERENT_LOCALE)
+        .setFormatter(OPTIONAL_DIFFERENT_FORMATTER_SELECTOR)
+        .setParser(OPTIONAL_DIFFERENT_PARSER_SELECTOR)
+        .setStyle(DIFFERENT_TEXT_STYLE)
+        .setValidator(OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR)
+        .setFormattedValue(
+            Optional.of(
+                TextNode.text("different-formatted-value")
+            )
+        );
+
+    Optional<SpreadsheetCell> OPTIONAL_CELL = Optional.of(CELL);
+
+    Optional<SpreadsheetCell> OPTIONAL_DIFFERENT_CELL = Optional.of(DIFFERENT_CELL);
 
     default void cellAndCheck(final HasSpreadsheetCell hasCell) {
         this.cellAndCheck(
