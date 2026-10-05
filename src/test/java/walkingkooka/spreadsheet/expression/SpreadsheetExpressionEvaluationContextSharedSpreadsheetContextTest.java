@@ -79,12 +79,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextTest extends SpreadsheetExpressionEvaluationContextSharedTestCase<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext> {
 
-    private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.parseCell("Z9");
-
-    private final static Optional<SpreadsheetCell> CELL = Optional.of(
-        CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("'CurrentCell"))
-    );
-
     private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = new FakeSpreadsheetExpressionReferenceLoader() {
         @Override
         public String toString() {
@@ -135,7 +129,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 null,
-                CELL,
+                OPTIONAL_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -165,7 +159,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                CELL,
+                OPTIONAL_CELL,
                 null,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -180,7 +174,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                CELL,
+                OPTIONAL_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
                 SPREADSHEET_CONTEXT,
@@ -195,7 +189,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                CELL,
+                OPTIONAL_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 null,
@@ -210,7 +204,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                CELL,
+                OPTIONAL_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -307,7 +301,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyColumnAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                CELL,
+                OPTIONAL_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -333,7 +327,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyRowAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                CELL,
+                OPTIONAL_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -938,7 +932,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                                                          final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             MODE,
-            CELL,
+            OPTIONAL_CELL,
             spreadsheetExpressionReferenceLoader,
             labelNameResolver,
             spreadsheetContext(
@@ -1085,7 +1079,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "mode=FORMULA cell=Z9 \"'CurrentCell\" spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader spreadsheetLabelNameResolver=EmptySpreadsheetLabelNameResolver terminalContext=FakeTerminalContext"
+            "mode=FORMULA cell=A1 valueType=text/Text currency=\"AUD\" currencyExchangeRater=\"test-currency-exchange-rater-111\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'\" formatter=\"formatter-selector-111\" formattedValue=\"formatted-value\" locale=\"en_AU\" parser=\"parse spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader"
         );
     }
 
