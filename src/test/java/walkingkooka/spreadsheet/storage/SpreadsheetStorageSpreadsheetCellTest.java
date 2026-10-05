@@ -82,11 +82,21 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     private final static StoragePath STORAGE_PATH = StoragePath.parse("/A1");
 
-    private final static SpreadsheetCell CELL = HasSpreadsheetCellTesting.CELL.setFormula(
-            SpreadsheetFormula.EMPTY.setText("'Hello")
-        ).setFormatter(SpreadsheetCell.NO_FORMATTER)
-        .setStyle(TextStyle.EMPTY)
-        .setValidator(SpreadsheetCell.NO_VALIDATOR);
+    private final static SpreadsheetCell SAVED_CELL = CELL.setFormula(
+        CELL.formula()
+            .setError(
+                Optional.of(
+                    SpreadsheetErrorKind.FORMATTING.setMessageAndValue(
+                        "Unknown formatter formatter-selector-111",
+                        FORMATTER_SELECTOR
+                    )
+                )
+            )
+    ).setFormattedValue(
+        Optional.of(
+            TextNode.text("#ERROR")
+        )
+    );
 
     @Test
     public void testCanWriteRootPath() {
@@ -487,20 +497,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         final StorageValue savedStorageValue = StorageValue.with(STORAGE_PATH)
             .setValue(
-                Optional.of(
-                    CELL.setFormula(
-                        CELL.formula()
-                            .setValue(
-                                Optional.of(
-                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser parser-selector-111")
-                                )
-                            )
-                    ).setFormattedValue(
-                        Optional.of(
-                            TextNode.text("#VALUE!")
-                        )
-                    )
-                )
+                Optional.of(SAVED_CELL)
             ).setContentType(
                 Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
             );
@@ -560,20 +557,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         final StorageValue savedStorageValue = StorageValue.with(
                 STORAGE_PATH
             ).setValue(
-                Optional.of(
-                    CELL.setFormula(
-                        CELL.formula()
-                            .setValue(
-                                Optional.of(
-                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser parser-selector-111")
-                                )
-                            )
-                    ).setFormattedValue(
-                        Optional.of(
-                            TextNode.text("#VALUE!")
-                        )
-                    )
-                )
+                Optional.of(SAVED_CELL)
             ).setContentType(
                 Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
             );
