@@ -31,16 +31,10 @@ import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelectorTesting;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.parser.provider.HasOptionalSpreadsheetParserSelectorTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
-import walkingkooka.tree.text.TextAlign;
-import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextStyle;
-import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.HasOptionalValueTypeTesting;
 import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 
@@ -61,30 +55,10 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     HasOptionalSpreadsheetParserSelectorTesting,
     HasOptionalValidatorSelectorTesting,
     HasOptionalValueTypeTesting,
+    HasSpreadsheetCellTesting,
     HasValueTesting,
     ParseStringTesting<SpreadsheetCellValueKind>,
     ClassTesting<SpreadsheetCellValueKind> {
-
-    private final static SpreadsheetCell CELL = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
-        ).setCurrency(OPTIONAL_CURRENCY)
-        .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
-        .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
-        .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
-        .setLocale(OPTIONAL_LOCALE)
-        .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
-        .setParser(OPTIONAL_PARSER_SELECTOR)
-        .setStyle(
-            TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
-            )
-        ).setValidator(OPTIONAL_VALIDATOR_SELECTOR)
-        .setFormattedValue(
-            Optional.of(
-                TextNode.text("formatted-value")
-            )
-        );
 
     @Test
     public void testCellValue() {
