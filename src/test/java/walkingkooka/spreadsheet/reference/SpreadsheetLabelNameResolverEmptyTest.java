@@ -26,7 +26,7 @@ public final class SpreadsheetLabelNameResolverEmptyTest implements SpreadsheetL
     ClassTesting<SpreadsheetLabelNameResolverEmpty> {
 
     @Test
-    public void testL() {
+    public void testResolveIfLabelWithLabel() {
         this.resolveIfLabelAndCheck(
             SpreadsheetLabelNameResolverEmpty.INSTANCE,
             SpreadsheetSelection.labelName("Label123")
