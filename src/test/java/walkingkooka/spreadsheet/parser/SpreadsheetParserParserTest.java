@@ -28,9 +28,9 @@ import walkingkooka.text.cursor.parser.Parsers;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesting2<ParserSpreadsheetParser>,
-    HashCodeEqualsDefinedTesting2<ParserSpreadsheetParser>,
-    ToStringTesting<ParserSpreadsheetParser> {
+public final class SpreadsheetParserParserTest implements SpreadsheetParserTesting2<SpreadsheetParserParser>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetParserParser>,
+    ToStringTesting<SpreadsheetParserParser> {
 
     private final static String TOKEN = "Hello123";
 
@@ -43,7 +43,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     public void testWithNullParserFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ParserSpreadsheetParser.with(
+            () -> SpreadsheetParserParser.with(
                 null,
                 SpreadsheetParser.NO_VALUE_TYPE
             )
@@ -54,7 +54,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     public void testWithNullValueTypeFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ParserSpreadsheetParser.with(
+            () -> SpreadsheetParserParser.with(
                 Parsers.fake(),
                 null
             )
@@ -66,7 +66,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
         final SpreadsheetParser wrapped = SpreadsheetParsers.fake();
         assertSame(
             wrapped,
-            ParserSpreadsheetParser.with(
+            SpreadsheetParserParser.with(
                 wrapped,
                 SpreadsheetParser.NO_VALUE_TYPE
             )
@@ -103,8 +103,8 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     }
 
     @Override
-    public ParserSpreadsheetParser createParser() {
-        return (ParserSpreadsheetParser) ParserSpreadsheetParser.with(
+    public SpreadsheetParserParser createParser() {
+        return (SpreadsheetParserParser) SpreadsheetParserParser.with(
             PARSER,
             SpreadsheetParser.NO_VALUE_TYPE
         );
@@ -120,11 +120,11 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
-            ParserSpreadsheetParser.with(
+            SpreadsheetParserParser.with(
                 Parsers.fake(),
                 SpreadsheetParser.NO_VALUE_TYPE
             ),
-            ParserSpreadsheetParser.with(
+            SpreadsheetParserParser.with(
                 Parsers.fake(),
                 SpreadsheetParser.NO_VALUE_TYPE
             )
@@ -132,7 +132,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     }
 
     @Override
-    public ParserSpreadsheetParser createObject() {
+    public SpreadsheetParserParser createObject() {
         return this.createParser();
     }
 
@@ -141,7 +141,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            ParserSpreadsheetParser.with(
+            SpreadsheetParserParser.with(
                 PARSER,
                 SpreadsheetParser.NO_VALUE_TYPE
             ),
@@ -152,7 +152,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     // type.............................................................................................................
 
     @Override
-    public Class<ParserSpreadsheetParser> type() {
-        return ParserSpreadsheetParser.class;
+    public Class<SpreadsheetParserParser> type() {
+        return SpreadsheetParserParser.class;
     }
 }

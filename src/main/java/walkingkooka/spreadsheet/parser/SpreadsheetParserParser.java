@@ -32,19 +32,19 @@ import java.util.Optional;
  * A {@link SpreadsheetParser} that wraps a non {@link Parser} that is not a {@link SpreadsheetParser}.
  * It adds no additional functionality and delegates all methods to the wrapped parser.
  */
-final class ParserSpreadsheetParser implements SpreadsheetParser {
+final class SpreadsheetParserParser implements SpreadsheetParser {
 
     public static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
                                          final Optional<ValueType> valueType) {
         return parser instanceof SpreadsheetParser ?
             (SpreadsheetParser) parser :
-            new ParserSpreadsheetParser(
+            new SpreadsheetParserParser(
                 Objects.requireNonNull(parser, "parser"),
                 Objects.requireNonNull(valueType, "valueType")
             );
     }
 
-    private ParserSpreadsheetParser(final Parser<SpreadsheetParserContext> parser,
+    private SpreadsheetParserParser(final Parser<SpreadsheetParserContext> parser,
                                     final Optional<ValueType> valueType) {
         this.parser = parser;
         this.valueType = valueType;
@@ -95,11 +95,11 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof ParserSpreadsheetParser &&
+            other instanceof SpreadsheetParserParser &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final ParserSpreadsheetParser other) {
+    private boolean equals0(final SpreadsheetParserParser other) {
         return this.parser.equals(other.parser);
     }
 
