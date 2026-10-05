@@ -49,11 +49,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         .setToString("general");
 
     /**
-     * {@see ParserSpreadsheetParser}
+     * {@see SpreadsheetParserParser}
      */
     public static SpreadsheetParser parser(final Parser<SpreadsheetParserContext> parser,
                                            final Optional<ValueType> valueType) {
-        return ParserSpreadsheetParser.with(
+        return SpreadsheetParserParser.with(
             parser,
             valueType
         );
