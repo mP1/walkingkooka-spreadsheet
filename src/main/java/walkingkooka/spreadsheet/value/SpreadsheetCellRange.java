@@ -117,8 +117,8 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
         return this.value.equals(copy) ?
             this :
             new SpreadsheetCellRange(
-                range,
-                value
+                this.range,
+                copy
             );
     }
 
