@@ -525,9 +525,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"TSV\"\n" +
                 "      ConverterCollection\n" +
+                "        to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "        TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "        TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "        to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"URL\"\n" +
                 "      ConverterCollection\n" +
@@ -571,9 +571,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"TSV\"\n" +
                 "            ConverterCollection\n" +
+                "              to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "              TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "              TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "              to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "        Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        * to String (walkingkooka.convert.ConverterObjectToString)\n" +
@@ -652,9 +652,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              ConverterCustomToString\n" +
                 "                \"TSV\"\n" +
                 "                  ConverterCollection\n" +
+                "                    to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                    TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                    TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "                    to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "              to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "              * to String (walkingkooka.convert.ConverterObjectToString)\n" +
@@ -4088,9 +4088,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            * to String (walkingkooka.convert.ConverterObjectToString)\n" +
@@ -4977,9 +4977,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"TSV\"\n" +
                 "    ConverterCollection\n" +
+                "      to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "      TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "      TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "      to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n"
+                "      TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n"
         );
     }
     
