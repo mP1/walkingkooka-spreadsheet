@@ -1594,7 +1594,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "      to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "      to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
-                "      * to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n"
+                "      to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n"
         );
     }
 
@@ -3549,7 +3549,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "            to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "            to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
-                "            * to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
+                "            to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"basic\"\n" +
                 "          ConverterCollection\n" +
