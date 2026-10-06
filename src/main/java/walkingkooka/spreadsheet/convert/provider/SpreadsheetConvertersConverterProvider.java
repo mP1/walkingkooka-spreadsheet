@@ -862,6 +862,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toSpreadsheetFormatterSelector();
                 break;
+            case TO_HAS_HOST_ADDRESS_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toHasHostAddress();
+                break;
             case TO_HOST_ADDRESS_STRING:
                 this.noParameterCheck(copy);
 
@@ -1630,6 +1635,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_FORMATTER_SELECTOR = ConverterName.with(TO_FORMATTER_SELECTOR_STRING);
 
+    private final static String TO_HAS_HOST_ADDRESS_STRING = "to-has-host-address";
+
+    final static ConverterName TO_HAS_HOST_ADDRESS = ConverterName.with(TO_HAS_HOST_ADDRESS_STRING);
+
     private final static String TO_HOST_ADDRESS_STRING = "to-host-address";
 
     final static ConverterName TO_HOST_ADDRESS = ConverterName.with(TO_HOST_ADDRESS_STRING);
@@ -1896,6 +1905,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TO_DECIMAL_NUMBER_SYMBOLS),
             converterInfo(TO_ENVIRONMENT),
             converterInfo(TO_FORMATTER_SELECTOR),
+            converterInfo(TO_HAS_HOST_ADDRESS),
             converterInfo(TO_HOST_ADDRESS),
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_LOCALE),
