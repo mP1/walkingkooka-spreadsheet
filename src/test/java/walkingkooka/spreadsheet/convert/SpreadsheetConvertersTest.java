@@ -295,12 +295,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"FORM-AND-VALIDATION\"\n" +
                 "      ConverterCollection\n" +
-                "        TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
-                "        TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "        to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "        to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "        to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
                 "        to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
+                "        TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
+                "        TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "  HasSpreadsheetReference (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetSelection)\n" +
                 "  HasValue to (walkingkooka.convert.ConverterToValue)\n" +
                 "  ConverterCustomToString\n" +
@@ -770,12 +770,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"form-and-validation\"\n" +
                 "            ConverterCollection\n" +
-                "              TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
-                "              TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "              to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "              to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "              to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
                 "              to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
+                "              TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
+                "              TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"basic\"\n" +
                 "            ConverterCollection\n" +
@@ -2250,12 +2250,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"FORM-AND-VALIDATION\"\n" +
                 "    ConverterCollection\n" +
-                "      TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
-                "      TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "      to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "      to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "      to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
-                "      to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n"
+                "      to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
+                "      TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
+                "      TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n"
         );
     }
 
@@ -4206,12 +4206,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"form-and-validation\"\n" +
                 "          ConverterCollection\n" +
-                "            TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
-                "            TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "            to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "            to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "            to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
                 "            to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
+                "            TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
+                "            TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"basic\"\n" +
                 "          ConverterCollection\n" +
