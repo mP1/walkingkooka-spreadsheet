@@ -997,7 +997,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.treePrintAndCheck(
             SpreadsheetConverters.dateTimeSymbols(),
             "ConverterCollection\n" +
-                "  toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
+                "  to DateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
                 "  LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "  Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n"
         );
@@ -2022,7 +2022,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      LocaleLike to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
                 "      LocaleLike to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
                 "      ConverterCollection\n" +
-                "        toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
+                "        to DateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
                 "        LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "        Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
                 "      ConverterCollection\n" +
@@ -3384,7 +3384,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            LocaleLike to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
                 "            LocaleLike to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
                 "            ConverterCollection\n" +
-                "              toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
+                "              to DateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
                 "              LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "              Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
                 "            ConverterCollection\n" +
