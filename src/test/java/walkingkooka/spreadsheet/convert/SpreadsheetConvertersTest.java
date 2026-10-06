@@ -1591,7 +1591,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "    ConverterCollection\n" +
                 "      TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
                 "      TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
-                "      * to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
+                "      to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "      to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "      * to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
                 "      * to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n"
@@ -3546,7 +3546,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "          ConverterCollection\n" +
                 "            TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
                 "            TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
-                "            * to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
+                "            to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
                 "            to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
                 "            * to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
                 "            * to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
