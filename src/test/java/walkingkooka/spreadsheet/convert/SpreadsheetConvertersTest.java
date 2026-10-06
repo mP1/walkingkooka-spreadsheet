@@ -1087,7 +1087,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.treePrintAndCheck(
             SpreadsheetConverters.decimalNumberSymbols(),
             "ConverterCollection\n" +
-                "  toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
+                "  to DecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
                 "  LocaleLike to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
                 "  Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n"
         );
@@ -2026,7 +2026,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "        Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
                 "      ConverterCollection\n" +
-                "        toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
+                "        to DecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
                 "        LocaleLike to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
                 "        Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n" +
                 "      TEXT to LocaleLanguageTag (walkingkooka.convert.ConverterTextToLocaleLanguageTag)\n"
@@ -3388,7 +3388,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "              Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
                 "            ConverterCollection\n" +
-                "              toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
+                "              to DecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
                 "              LocaleLike to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
                 "              Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n" +
                 "            TEXT to LocaleLanguageTag (walkingkooka.convert.ConverterTextToLocaleLanguageTag)\n" +
