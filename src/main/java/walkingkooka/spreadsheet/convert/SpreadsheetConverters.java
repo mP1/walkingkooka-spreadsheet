@@ -855,13 +855,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             STYLE = namedCollection(
                 "STYLE",
                 toStyle(),
+                toStyleable(),
+                propertiesToTextStyle(),
                 textToBorder(),
                 textToMargin(),
                 textToPadding(),
                 textToTextStyle(),
-                textToTextStylePropertyName(),
-                toStyleable(),
-                propertiesToTextStyle()
+                textToTextStylePropertyName()
             );
         }
         return STYLE;

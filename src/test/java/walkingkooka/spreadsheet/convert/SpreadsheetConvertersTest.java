@@ -2905,13 +2905,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  \"STYLE\"\n" +
                 "    ConverterCollection\n" +
                 "      to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
+                "      to Styleable (walkingkooka.tree.text.convert.TreeTextConverterToStyleable)\n" +
+                "      Properties to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterPropertiesToTextStyle)\n" +
                 "      TEXT to Border (walkingkooka.tree.text.convert.TreeTextConverterTextToBorder)\n" +
                 "      TEXT to Margin (walkingkooka.tree.text.convert.TreeTextConverterTextToMargin)\n" +
                 "      TEXT to Padding (walkingkooka.tree.text.convert.TreeTextConverterTextToPadding)\n" +
                 "      TEXT to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStyle)\n" +
-                "      TEXT to TextStylePropertyName (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStylePropertyName)\n" +
-                "      to Styleable (walkingkooka.tree.text.convert.TreeTextConverterToStyleable)\n" +
-                "      Properties to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterPropertiesToTextStyle)\n"
+                "      TEXT to TextStylePropertyName (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStylePropertyName)\n"
         );
     }
 
@@ -3510,13 +3510,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
                 "            to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
+                "            to Styleable (walkingkooka.tree.text.convert.TreeTextConverterToStyleable)\n" +
+                "            Properties to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterPropertiesToTextStyle)\n" +
                 "            TEXT to Border (walkingkooka.tree.text.convert.TreeTextConverterTextToBorder)\n" +
                 "            TEXT to Margin (walkingkooka.tree.text.convert.TreeTextConverterTextToMargin)\n" +
                 "            TEXT to Padding (walkingkooka.tree.text.convert.TreeTextConverterTextToPadding)\n" +
                 "            TEXT to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStyle)\n" +
                 "            TEXT to TextStylePropertyName (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStylePropertyName)\n" +
-                "            to Styleable (walkingkooka.tree.text.convert.TreeTextConverterToStyleable)\n" +
-                "            Properties to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterPropertiesToTextStyle)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text-node\"\n" +
                 "          ConverterCollection\n" +
