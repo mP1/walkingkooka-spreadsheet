@@ -3482,7 +3482,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
                 "            TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
-                "            toCurrency (walkingkooka.convert.ConverterToCurrency)\n" +
+                "            to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
                 "            toCurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"plugins\"\n" +
