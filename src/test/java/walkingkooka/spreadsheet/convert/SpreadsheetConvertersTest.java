@@ -2774,971 +2774,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    // spreadsheetValue.................................................................................................
-
-    @Test
-    public void testValueConvertSpreadsheetErrorToNumber() {
-        final SpreadsheetError spreadsheetError = SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1);
-
-        this.valueConvertAndCheck(
-            spreadsheetError,
-            ExpressionNumber.class,
-            EXPRESSION_NUMBER_KIND.zero()
-        );
-    }
-
-    @Test
-    public void testValueConvertNullToNumber() {
-        this.valueConvertAndCheck(
-            null,
-            Number.class,
-            EXPRESSION_NUMBER_KIND.zero()
-        );
-    }
-
-    @Test
-    public void testValueConvertJsonObjectToMultiValueText() {
-        final String text = "{\"Hello\": \"World\" }";
-
-        this.valueConvertAndCheck(
-            JsonNode.parse(text),
-            MultiLineText.with(
-                "{\n" +
-                    "  \"Hello\": \"World\"\n" +
-                    "}"
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertBinaryToString() {
-        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
-
-        this.valueConvertAndCheck(
-            jsonNode.binary(CHARSET),
-            jsonNode.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertByteToString() {
-        final Byte byteValue = 123;
-
-        this.valueConvertAndCheck(
-            byteValue,
-            byteValue.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertDateToString() {
-        final LocalDate date = LocalDate.of(
-            1999,
-            12,
-            31
-        );
-
-        this.valueConvertAndCheck(
-            date,
-            date.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertDateTimeToString() {
-        final LocalDateTime dateTime = LocalDateTime.of(
-            1999,
-            12,
-            31,
-            12,
-            58,
-            59
-        );
-
-        this.valueConvertAndCheck(
-            dateTime,
-            dateTime.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertExpressionNumberBigDecimalToString() {
-        final ExpressionNumber expressionNumber = ExpressionNumberKind.BIG_DECIMAL.create(123);
-
-        this.valueConvertAndCheck(
-            expressionNumber,
-            expressionNumber.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertExpressionNumberDoubleToString() {
-        final ExpressionNumber expressionNumber = ExpressionNumberKind.DOUBLE.create(123);
-
-        this.valueConvertAndCheck(
-            expressionNumber,
-            expressionNumber.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertIntegerToString() {
-        final Integer integer = 123;
-
-        this.valueConvertAndCheck(
-            integer,
-            integer.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertLongToString() {
-        final Long longValue = 456L;
-
-        this.valueConvertAndCheck(
-            longValue,
-            longValue.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetCellReference() {
-        this.valueConvertAndCheck(
-            SpreadsheetSelection.A1,
-            SpreadsheetSelection.A1
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetCellRangeReference() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-
-        this.valueConvertAndCheck(
-            cell,
-            cell.toRange()
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetColumnReference() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-
-        this.valueConvertAndCheck(
-            cell,
-            cell.toColumn()
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetRowReference() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-
-        this.valueConvertAndCheck(
-            cell,
-            cell.toRow()
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetErrorToSpreadsheetError() {
-        final SpreadsheetError error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero is not allowed 123");
-
-        this.valueConvertAndCheck(
-            error,
-            SpreadsheetError.class,
-            error
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetSelectionFails() {
-        this.convertFails(
-            SpreadsheetConverters.value(),
-            SpreadsheetSelection.A1.text(),
-            SpreadsheetSelection.class,
-            SPREADSHEET_VALUE_CONVERTER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetCellReference() {
-        this.valueConvertAndCheck(
-            SpreadsheetSelection.A1.text(),
-            SpreadsheetSelection.A1
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetCellRangeReference() {
-        this.valueConvertAndCheck(
-            SpreadsheetSelection.A1.text(),
-            SpreadsheetSelection.A1.toRange()
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetCellRangeReferenceWithColumn() {
-        this.valueConvertAndCheck(
-            SpreadsheetSelection.parseColumn("B"),
-            SpreadsheetSelection.parseColumnRange("B")
-                .setRowRange(SpreadsheetSelection.ALL_ROWS)
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetCellRangeReferenceWithRow() {
-        this.valueConvertAndCheck(
-            SpreadsheetSelection.parseRow("3"),
-            SpreadsheetSelection.parseRowRange("3")
-                .setColumnRange(SpreadsheetSelection.ALL_COLUMNS)
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetColumnReference() {
-        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
-
-        this.valueConvertAndCheck(
-            column.toString(),
-            column
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetColumnRangeReference() {
-        final SpreadsheetColumnRangeReference column = SpreadsheetSelection.parseColumnRange("C:D");
-
-        this.valueConvertAndCheck(
-            column.toString(),
-            column
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetLabelName() {
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
-
-        this.valueConvertAndCheck(
-            label.toString(),
-            label
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetLabelNameWithRowFails() {
-        this.convertFails(
-            SpreadsheetConverters.value(),
-            "2",
-            SpreadsheetLabelName.class,
-            SPREADSHEET_VALUE_CONVERTER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetRowReference() {
-        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("5");
-
-        this.valueConvertAndCheck(
-            row.toString(),
-            row
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetRowRangeReference() {
-        final SpreadsheetRowRangeReference row = SpreadsheetSelection.parseRowRange("6:77");
-
-        this.valueConvertAndCheck(
-            row.toString(),
-            row
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToSpreadsheetError() {
-        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Value error 123");
-
-        this.valueConvertAndCheck(
-            error.toString(),
-            error
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellReferenceToString() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-
-        this.valueConvertAndCheck(
-            cell,
-            "A1"
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellReferenceToString2() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1.toAbsolute();
-
-        this.valueConvertAndCheck(
-            cell,
-            "$A$1"
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellRangeReferenceToString() {
-        final String text = "B2:C3";
-
-        this.valueConvertAndCheck(
-            SpreadsheetSelection.parseCellRange(text),
-            text
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellToSpreadsheetSelection() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final SpreadsheetCell spreadsheetCell = cell.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        );
-
-        this.valueConvertAndCheck(
-            spreadsheetCell,
-            cell
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellToSpreadsheetCellSet() {
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        );
-
-        this.valueConvertAndCheck(
-            cell,
-            SpreadsheetCellSet.class,
-            SpreadsheetCellSet.EMPTY.concat(cell)
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellToSpreadsheetCellReference() {
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        );
-
-        this.valueConvertAndCheck(
-            cell,
-            SpreadsheetCellReference.class,
-            cell.reference()
-        );
-    }
-
-    @Test
-    public void testValueConvertSpreadsheetCellToValueType() {
-        this.valueConvertAndCheck(
-            SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
-            ),
-            VALUE_TYPE
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToTsvStringSet() {
-        final TsvStringSet set = TsvStringSet.EMPTY.concat("abc")
-            .concat("def")
-            .concat("gh\t i");
-
-        this.valueConvertAndCheck(
-            set.text(),
-            set
-        );
-    }
-
-    @Test
-    public void testValueType() {
-        final ValueType type = SpreadsheetValueType.NUMBER;
-
-        this.valueConvertAndCheck(
-            type.toString(),
-            type
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToZoneOffset() {
-        final ZoneOffset zoneOffset = ZoneOffset.of("+11");
-
-        this.valueConvertAndCheck(
-            zoneOffset,
-            zoneOffset.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertListOfBooleanToBooleanList() {
-        final List<Boolean> booleans = Lists.of(
-            true,
-            false,
-            true,
-            null
-        );
-
-        this.valueConvertAndCheck(
-            booleans,
-            BooleanList.EMPTY.setElements(booleans)
-        );
-    }
-
-    @Test
-    public void testValueConvertListOfStringsToCsvStringList() {
-        final List<String> strings = Lists.of(
-            "Apple",
-            "Banana",
-            "333"
-        );
-
-        this.valueConvertAndCheck(
-            strings,
-            CsvStringList.EMPTY.setElements(strings)
-        );
-    }
-
-    @Test
-    public void testValueConvertListOfDateToLocalDateList() {
-        final List<LocalDate> dates = Lists.of(
-            LocalDate.of(
-                1999,
-                12,
-                31
-            ),
-            LocalDate.of(
-                2000,
-                2,
-                2
-            ),
-            null
-        );
-
-        this.valueConvertAndCheck(
-            dates,
-            LocalDateList.EMPTY.setElements(dates)
-        );
-    }
-
-    @Test
-    public void testValueConvertListOfDateTimeToLocalDateTimeList() {
-        final List<LocalDateTime> datesTimes = Lists.of(
-            LocalDateTime.of(
-                1999,
-                12,
-                31,
-                12,
-                0,
-                0
-            ),
-            LocalDateTime.of(
-                2000,
-                2,
-                2,
-                2,
-                22,
-                22
-            ),
-            null
-        );
-
-        this.valueConvertAndCheck(
-            datesTimes,
-            LocalDateTimeList.EMPTY.setElements(datesTimes)
-        );
-    }
-
-    @Test
-    public void testValueConvertListOfTimeToLocalTimeList() {
-        final List<LocalTime> times = Lists.of(
-            LocalTime.of(
-                12,
-                58,
-                59
-            ),
-            LocalTime.of(
-                2,
-                22,
-                22
-            ),
-            null
-        );
-
-        this.valueConvertAndCheck(
-            times,
-            LocalTimeList.EMPTY.setElements(times)
-        );
-    }
-
-    @Test
-    public void testValueConvertListOfNumbersToNumberList() {
-        final List<Number> numbers = Lists.of(
-            EXPRESSION_NUMBER_KIND.create(1),
-            EXPRESSION_NUMBER_KIND.create(22),
-            EXPRESSION_NUMBER_KIND.create(333.5),
-            null
-        );
-
-        this.valueConvertAndCheck(
-            numbers,
-            NumberList.EMPTY.setElements(numbers)
-        );
-    }
-
-    @Test
-    public void testValueConvertListOfStringsToStringList() {
-        final List<String> strings = Lists.of(
-            "Apple",
-            "Banana",
-            null
-        );
-
-        this.valueConvertAndCheck(
-            strings,
-            StringList.EMPTY.setElements(strings)
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToBooleanList() {
-        this.valueConvertAndCheck(
-            "TRUE, FALSE, true",
-            BooleanList.EMPTY.setElements(
-                Lists.of(
-                    true,
-                    false,
-                    true
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToCsvStringList() {
-        this.valueConvertAndCheck(
-            "Apple,Banana,\"333 444\"",
-            CsvStringList.EMPTY.setElements(
-                Lists.of(
-                    "Apple",
-                    "Banana",
-                    "333 444"
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToCsvStringSet() {
-        this.valueConvertAndCheck(
-            "Apple,Banana,\"333 444\"",
-            CsvStringSet.EMPTY.setElements(
-                Sets.of(
-                    "Apple",
-                    "Banana",
-                    "333 444"
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToLocalDateList() {
-        this.valueConvertAndCheck(
-            "1999/12/31, 2000/2/2",
-            LocalDateList.EMPTY.setElements(
-                Lists.of(
-                    LocalDate.of(
-                        1999,
-                        12,
-                        31
-                    ),
-                    LocalDate.of(
-                        2000,
-                        2,
-                        2
-                    )
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToLocalDateTimeList() {
-        this.valueConvertAndCheck(
-            "1999/12/31 12:0:0, 2000/2/2 2:22:22",
-            LocalDateTimeList.EMPTY.setElements(
-                Lists.of(
-                    LocalDateTime.of(
-                        1999,
-                        12,
-                        31,
-                        12,
-                        0,
-                        0
-                    ),
-                    LocalDateTime.of(
-                        2000,
-                        2,
-                        2,
-                        2,
-                        22,
-                        22
-                    )
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToLocalTimeList() {
-        this.valueConvertAndCheck(
-            "12:58:59,2:22:22",
-            LocalTimeList.EMPTY.setElements(
-                Lists.of(
-                    LocalTime.of(
-                        12,
-                        58,
-                        59
-                    ),
-                    LocalTime.of(
-                        2,
-                        22,
-                        22
-                    )
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToMultiValueText() {
-        final String text = "Hello World 123";
-
-        this.valueConvertAndCheck(
-            text,
-            MultiLineText.with(text)
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToNumberList() {
-        this.valueConvertAndCheck(
-            "1,22,333.5",
-            NumberList.EMPTY.setElements(
-                Lists.of(
-                    EXPRESSION_NUMBER_KIND.create(1),
-                    EXPRESSION_NUMBER_KIND.create(22),
-                    EXPRESSION_NUMBER_KIND.create(333.5)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToStringList() {
-        this.valueConvertAndCheck(
-            "Apple, Banana, Carrot ",
-            StringList.EMPTY.setElements(
-                Lists.of(
-                    "Apple",
-                    "Banana",
-                    "Carrot"
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testValueConvertStorageBinaryToString() {
-        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
-
-        final StorageBinary storageBinary = StorageBinary.with(
-            StoragePath.parse("/storage1/file2.txt"),
-            jsonNode.binary(CHARSET)
-        );
-
-        this.valueConvertAndCheck(
-            storageBinary,
-            jsonNode.toString()
-        );
-    }
-
-    @Test
-    public void testValueConvertTimeToString() {
-        final LocalTime time = LocalTime.of(
-            12,
-            58,
-            59
-        );
-
-        this.valueConvertAndCheck(
-            time,
-            time.toString()
-        );
-    }
-
-    private void valueConvertAndCheck(final Object value,
-                                      final Object expected) {
-        this.valueConvertAndCheck(
-            value,
-            expected.getClass(),
-            Cast.to(expected)
-        );
-    }
-
-    private <T> void valueConvertAndCheck(final Object value,
-                                          final Class<T> type,
-                                          final T expected) {
-        this.convertAndCheck(
-            SpreadsheetConverters.value(),
-            value,
-            type,
-            SPREADSHEET_VALUE_CONVERTER_CONTEXT,
-            expected
-        );
-    }
-
-    private final static SpreadsheetConverterContext SPREADSHEET_VALUE_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
-        @Override
-        public boolean canConvert(final Object value,
-                                  final Class<?> type) {
-            return this.converter.canConvert(
-                value,
-                type,
-                this
-            );
-        }
-
-        @Override
-        public <T> Either<T, String> convert(final Object value,
-                                             final Class<T> target) {
-            return this.converter.convert(
-                value,
-                target,
-                this
-            );
-        }
-
-        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
-            Lists.of(
-                SpreadsheetConverters.basic(),
-                SpreadsheetConverters.text(),
-                SpreadsheetConverters.numberToNumber(),
-                SpreadsheetConverters.toBoolean(),
-                SpreadsheetConverters.textToNumber(
-                    SpreadsheetPattern.parseNumberParsePattern("#.##;#")
-                        .parser()
-                ),
-                SpreadsheetConverters.textToDate(
-                    SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                        .parser()
-                ),
-                SpreadsheetConverters.textToDateTime(
-                    SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
-                        .parser()
-                ),
-                SpreadsheetConverters.textToTime(
-                    SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
-                        .parser()
-                )
-            )
-        );
-
-        @Override
-        public ExpressionNumberKind expressionNumberKind() {
-            return EXPRESSION_NUMBER_KIND;
-        }
-
-        @Override
-        public boolean canNumbersHaveGroupSeparator() {
-            return false;
-        }
-
-        @Override
-        public Charset charset() {
-            return CHARSET;
-        }
-
-        @Override
-        public char valueSeparator() {
-            return ',';
-        }
-
-        @Override
-        public String currencySymbol() {
-            return DECIMAL_NUMBER_CONTEXT.currencySymbol();
-        }
-
-        @Override
-        public char decimalSeparator() {
-            return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
-        }
-
-        @Override
-        public String exponentSymbol() {
-            return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
-        }
-
-        @Override
-        public char groupSeparator() {
-            return DECIMAL_NUMBER_CONTEXT.groupSeparator();
-        }
-
-        @Override
-        public String infinitySymbol() {
-            return DECIMAL_NUMBER_CONTEXT.infinitySymbol();
-        }
-
-        @Override
-        public char monetaryDecimalSeparator() {
-            return DECIMAL_NUMBER_CONTEXT.monetaryDecimalSeparator();
-        }
-
-        @Override
-        public String nanSymbol() {
-            return DECIMAL_NUMBER_CONTEXT.nanSymbol();
-        }
-
-        @Override
-        public char negativeSign() {
-            return DECIMAL_NUMBER_CONTEXT.negativeSign();
-        }
-
-        @Override
-        public char percentSymbol() {
-            return DECIMAL_NUMBER_CONTEXT.percentSymbol();
-        }
-
-        @Override
-        public char permillSymbol() {
-            return DECIMAL_NUMBER_CONTEXT.permillSymbol();
-        }
-
-        @Override
-        public char positiveSign() {
-            return DECIMAL_NUMBER_CONTEXT.positiveSign();
-        }
-
-        @Override
-        public char zeroDigit() {
-            return DECIMAL_NUMBER_CONTEXT.zeroDigit();
-        }
-
-        @Override
-        public DecimalNumberSymbols decimalNumberSymbols() {
-            return DECIMAL_NUMBER_CONTEXT.decimalNumberSymbols();
-        }
-
-        @Override
-        public Locale locale() {
-            return DECIMAL_NUMBER_CONTEXT.locale();
-        }
-
-        @Override
-        public MathContext mathContext() {
-            return DECIMAL_NUMBER_CONTEXT.mathContext();
-        }
-
-        @Override
-        public List<String> ampms() {
-            return DATE_TIME_CONTEXT.ampms();
-        }
-
-        @Override
-        public String ampm(final int hourOfDay) {
-            return DATE_TIME_CONTEXT.ampm(hourOfDay);
-        }
-
-        @Override
-        public int defaultYear() {
-            return DATE_TIME_CONTEXT.defaultYear();
-        }
-
-        @Override
-        public List<String> monthNames() {
-            return DATE_TIME_CONTEXT.ampms();
-        }
-
-        @Override
-        public String monthName(final int month) {
-            return DATE_TIME_CONTEXT.monthName(month);
-        }
-
-        @Override
-        public List<String> monthNameAbbreviations() {
-            return DATE_TIME_CONTEXT.monthNameAbbreviations();
-        }
-
-        @Override
-        public String monthNameAbbreviation(final int month) {
-            return DATE_TIME_CONTEXT.monthNameAbbreviation(month);
-        }
-
-        @Override
-        public int twoDigitYear() {
-            return DATE_TIME_CONTEXT.twoDigitYear();
-        }
-
-        @Override
-        public List<String> weekDayNames() {
-            return DATE_TIME_CONTEXT.weekDayNames();
-        }
-
-        @Override
-        public String weekDayName(final int day) {
-            return DATE_TIME_CONTEXT.weekDayName(day);
-        }
-
-        @Override
-        public List<String> weekDayNameAbbreviations() {
-            return DATE_TIME_CONTEXT.weekDayNameAbbreviations();
-        }
-
-        @Override
-        public String weekDayNameAbbreviation(final int day) {
-            return DATE_TIME_CONTEXT.weekDayNameAbbreviation(day);
-        }
-
-        @Override
-        public DateTimeSymbols dateTimeSymbols() {
-            return DATE_TIME_CONTEXT.dateTimeSymbols();
-        }
-
-        @Override
-        public long dateOffset() {
-            return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
-        }
-
-        @Override
-        public Indentation indentation() {
-            return INDENTATION;
-        }
-
-        @Override
-        public LineEnding lineEnding() {
-            return LINE_ENDING;
-        }
-    };
-
-    @Test
-    public void testValuePrintTree() {
-        this.treePrintAndCheck(
-            SpreadsheetConverters.basic(),
-            "ConverterCustomToString\n" +
-                "  \"BASIC\"\n" +
-                "    ConverterCollection\n" +
-                "      if type (walkingkooka.convert.ConverterSimple)\n" +
-                "      Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "      Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
-        );
-    }
-
     // style............................................................................................................
 
     private final TextStyle STYLE = TextStyle.parse("background-color: red");
@@ -5364,6 +4399,971 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
             LocaleContexts.fake()
+        );
+    }
+
+    // value...........................................................................................................
+
+    @Test
+    public void testValueConvertSpreadsheetErrorToNumber() {
+        final SpreadsheetError spreadsheetError = SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1);
+
+        this.valueConvertAndCheck(
+            spreadsheetError,
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testValueConvertNullToNumber() {
+        this.valueConvertAndCheck(
+            null,
+            Number.class,
+            EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testValueConvertJsonObjectToMultiValueText() {
+        final String text = "{\"Hello\": \"World\" }";
+
+        this.valueConvertAndCheck(
+            JsonNode.parse(text),
+            MultiLineText.with(
+                "{\n" +
+                    "  \"Hello\": \"World\"\n" +
+                    "}"
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertBinaryToString() {
+        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
+
+        this.valueConvertAndCheck(
+            jsonNode.binary(CHARSET),
+            jsonNode.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertByteToString() {
+        final Byte byteValue = 123;
+
+        this.valueConvertAndCheck(
+            byteValue,
+            byteValue.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertDateToString() {
+        final LocalDate date = LocalDate.of(
+            1999,
+            12,
+            31
+        );
+
+        this.valueConvertAndCheck(
+            date,
+            date.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertDateTimeToString() {
+        final LocalDateTime dateTime = LocalDateTime.of(
+            1999,
+            12,
+            31,
+            12,
+            58,
+            59
+        );
+
+        this.valueConvertAndCheck(
+            dateTime,
+            dateTime.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertExpressionNumberBigDecimalToString() {
+        final ExpressionNumber expressionNumber = ExpressionNumberKind.BIG_DECIMAL.create(123);
+
+        this.valueConvertAndCheck(
+            expressionNumber,
+            expressionNumber.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertExpressionNumberDoubleToString() {
+        final ExpressionNumber expressionNumber = ExpressionNumberKind.DOUBLE.create(123);
+
+        this.valueConvertAndCheck(
+            expressionNumber,
+            expressionNumber.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertIntegerToString() {
+        final Integer integer = 123;
+
+        this.valueConvertAndCheck(
+            integer,
+            integer.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertLongToString() {
+        final Long longValue = 456L;
+
+        this.valueConvertAndCheck(
+            longValue,
+            longValue.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetCellReference() {
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.A1,
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetCellRangeReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.valueConvertAndCheck(
+            cell,
+            cell.toRange()
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetColumnReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.valueConvertAndCheck(
+            cell,
+            cell.toColumn()
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellReferenceToSpreadsheetRowReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.valueConvertAndCheck(
+            cell,
+            cell.toRow()
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetErrorToSpreadsheetError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero is not allowed 123");
+
+        this.valueConvertAndCheck(
+            error,
+            SpreadsheetError.class,
+            error
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetSelectionFails() {
+        this.convertFails(
+            SpreadsheetConverters.value(),
+            SpreadsheetSelection.A1.text(),
+            SpreadsheetSelection.class,
+            SPREADSHEET_VALUE_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetCellReference() {
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.A1.text(),
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetCellRangeReference() {
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.A1.text(),
+            SpreadsheetSelection.A1.toRange()
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetCellRangeReferenceWithColumn() {
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.parseColumn("B"),
+            SpreadsheetSelection.parseColumnRange("B")
+                .setRowRange(SpreadsheetSelection.ALL_ROWS)
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetCellRangeReferenceWithRow() {
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.parseRow("3"),
+            SpreadsheetSelection.parseRowRange("3")
+                .setColumnRange(SpreadsheetSelection.ALL_COLUMNS)
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetColumnReference() {
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
+
+        this.valueConvertAndCheck(
+            column.toString(),
+            column
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetColumnRangeReference() {
+        final SpreadsheetColumnRangeReference column = SpreadsheetSelection.parseColumnRange("C:D");
+
+        this.valueConvertAndCheck(
+            column.toString(),
+            column
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetLabelName() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.valueConvertAndCheck(
+            label.toString(),
+            label
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetLabelNameWithRowFails() {
+        this.convertFails(
+            SpreadsheetConverters.value(),
+            "2",
+            SpreadsheetLabelName.class,
+            SPREADSHEET_VALUE_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetRowReference() {
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("5");
+
+        this.valueConvertAndCheck(
+            row.toString(),
+            row
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetRowRangeReference() {
+        final SpreadsheetRowRangeReference row = SpreadsheetSelection.parseRowRange("6:77");
+
+        this.valueConvertAndCheck(
+            row.toString(),
+            row
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToSpreadsheetError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Value error 123");
+
+        this.valueConvertAndCheck(
+            error.toString(),
+            error
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellReferenceToString() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.valueConvertAndCheck(
+            cell,
+            "A1"
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellReferenceToString2() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1.toAbsolute();
+
+        this.valueConvertAndCheck(
+            cell,
+            "$A$1"
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellRangeReferenceToString() {
+        final String text = "B2:C3";
+
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.parseCellRange(text),
+            text
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellToSpreadsheetSelection() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+        );
+
+        this.valueConvertAndCheck(
+            spreadsheetCell,
+            cell
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellToSpreadsheetCellSet() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+        );
+
+        this.valueConvertAndCheck(
+            cell,
+            SpreadsheetCellSet.class,
+            SpreadsheetCellSet.EMPTY.concat(cell)
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellToSpreadsheetCellReference() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+        );
+
+        this.valueConvertAndCheck(
+            cell,
+            SpreadsheetCellReference.class,
+            cell.reference()
+        );
+    }
+
+    @Test
+    public void testValueConvertSpreadsheetCellToValueType() {
+        this.valueConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
+            ),
+            VALUE_TYPE
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToTsvStringSet() {
+        final TsvStringSet set = TsvStringSet.EMPTY.concat("abc")
+            .concat("def")
+            .concat("gh\t i");
+
+        this.valueConvertAndCheck(
+            set.text(),
+            set
+        );
+    }
+
+    @Test
+    public void testValueType() {
+        final ValueType type = SpreadsheetValueType.NUMBER;
+
+        this.valueConvertAndCheck(
+            type.toString(),
+            type
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToZoneOffset() {
+        final ZoneOffset zoneOffset = ZoneOffset.of("+11");
+
+        this.valueConvertAndCheck(
+            zoneOffset,
+            zoneOffset.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertListOfBooleanToBooleanList() {
+        final List<Boolean> booleans = Lists.of(
+            true,
+            false,
+            true,
+            null
+        );
+
+        this.valueConvertAndCheck(
+            booleans,
+            BooleanList.EMPTY.setElements(booleans)
+        );
+    }
+
+    @Test
+    public void testValueConvertListOfStringsToCsvStringList() {
+        final List<String> strings = Lists.of(
+            "Apple",
+            "Banana",
+            "333"
+        );
+
+        this.valueConvertAndCheck(
+            strings,
+            CsvStringList.EMPTY.setElements(strings)
+        );
+    }
+
+    @Test
+    public void testValueConvertListOfDateToLocalDateList() {
+        final List<LocalDate> dates = Lists.of(
+            LocalDate.of(
+                1999,
+                12,
+                31
+            ),
+            LocalDate.of(
+                2000,
+                2,
+                2
+            ),
+            null
+        );
+
+        this.valueConvertAndCheck(
+            dates,
+            LocalDateList.EMPTY.setElements(dates)
+        );
+    }
+
+    @Test
+    public void testValueConvertListOfDateTimeToLocalDateTimeList() {
+        final List<LocalDateTime> datesTimes = Lists.of(
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                0,
+                0
+            ),
+            LocalDateTime.of(
+                2000,
+                2,
+                2,
+                2,
+                22,
+                22
+            ),
+            null
+        );
+
+        this.valueConvertAndCheck(
+            datesTimes,
+            LocalDateTimeList.EMPTY.setElements(datesTimes)
+        );
+    }
+
+    @Test
+    public void testValueConvertListOfTimeToLocalTimeList() {
+        final List<LocalTime> times = Lists.of(
+            LocalTime.of(
+                12,
+                58,
+                59
+            ),
+            LocalTime.of(
+                2,
+                22,
+                22
+            ),
+            null
+        );
+
+        this.valueConvertAndCheck(
+            times,
+            LocalTimeList.EMPTY.setElements(times)
+        );
+    }
+
+    @Test
+    public void testValueConvertListOfNumbersToNumberList() {
+        final List<Number> numbers = Lists.of(
+            EXPRESSION_NUMBER_KIND.create(1),
+            EXPRESSION_NUMBER_KIND.create(22),
+            EXPRESSION_NUMBER_KIND.create(333.5),
+            null
+        );
+
+        this.valueConvertAndCheck(
+            numbers,
+            NumberList.EMPTY.setElements(numbers)
+        );
+    }
+
+    @Test
+    public void testValueConvertListOfStringsToStringList() {
+        final List<String> strings = Lists.of(
+            "Apple",
+            "Banana",
+            null
+        );
+
+        this.valueConvertAndCheck(
+            strings,
+            StringList.EMPTY.setElements(strings)
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToBooleanList() {
+        this.valueConvertAndCheck(
+            "TRUE, FALSE, true",
+            BooleanList.EMPTY.setElements(
+                Lists.of(
+                    true,
+                    false,
+                    true
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToCsvStringList() {
+        this.valueConvertAndCheck(
+            "Apple,Banana,\"333 444\"",
+            CsvStringList.EMPTY.setElements(
+                Lists.of(
+                    "Apple",
+                    "Banana",
+                    "333 444"
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToCsvStringSet() {
+        this.valueConvertAndCheck(
+            "Apple,Banana,\"333 444\"",
+            CsvStringSet.EMPTY.setElements(
+                Sets.of(
+                    "Apple",
+                    "Banana",
+                    "333 444"
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToLocalDateList() {
+        this.valueConvertAndCheck(
+            "1999/12/31, 2000/2/2",
+            LocalDateList.EMPTY.setElements(
+                Lists.of(
+                    LocalDate.of(
+                        1999,
+                        12,
+                        31
+                    ),
+                    LocalDate.of(
+                        2000,
+                        2,
+                        2
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToLocalDateTimeList() {
+        this.valueConvertAndCheck(
+            "1999/12/31 12:0:0, 2000/2/2 2:22:22",
+            LocalDateTimeList.EMPTY.setElements(
+                Lists.of(
+                    LocalDateTime.of(
+                        1999,
+                        12,
+                        31,
+                        12,
+                        0,
+                        0
+                    ),
+                    LocalDateTime.of(
+                        2000,
+                        2,
+                        2,
+                        2,
+                        22,
+                        22
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToLocalTimeList() {
+        this.valueConvertAndCheck(
+            "12:58:59,2:22:22",
+            LocalTimeList.EMPTY.setElements(
+                Lists.of(
+                    LocalTime.of(
+                        12,
+                        58,
+                        59
+                    ),
+                    LocalTime.of(
+                        2,
+                        22,
+                        22
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToMultiValueText() {
+        final String text = "Hello World 123";
+
+        this.valueConvertAndCheck(
+            text,
+            MultiLineText.with(text)
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToNumberList() {
+        this.valueConvertAndCheck(
+            "1,22,333.5",
+            NumberList.EMPTY.setElements(
+                Lists.of(
+                    EXPRESSION_NUMBER_KIND.create(1),
+                    EXPRESSION_NUMBER_KIND.create(22),
+                    EXPRESSION_NUMBER_KIND.create(333.5)
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStringToStringList() {
+        this.valueConvertAndCheck(
+            "Apple, Banana, Carrot ",
+            StringList.EMPTY.setElements(
+                Lists.of(
+                    "Apple",
+                    "Banana",
+                    "Carrot"
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValueConvertStorageBinaryToString() {
+        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
+
+        final StorageBinary storageBinary = StorageBinary.with(
+            StoragePath.parse("/storage1/file2.txt"),
+            jsonNode.binary(CHARSET)
+        );
+
+        this.valueConvertAndCheck(
+            storageBinary,
+            jsonNode.toString()
+        );
+    }
+
+    @Test
+    public void testValueConvertTimeToString() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+
+        this.valueConvertAndCheck(
+            time,
+            time.toString()
+        );
+    }
+
+    private void valueConvertAndCheck(final Object value,
+                                      final Object expected) {
+        this.valueConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void valueConvertAndCheck(final Object value,
+                                          final Class<T> type,
+                                          final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.value(),
+            value,
+            type,
+            SPREADSHEET_VALUE_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext SPREADSHEET_VALUE_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.text(),
+                SpreadsheetConverters.numberToNumber(),
+                SpreadsheetConverters.toBoolean(),
+                SpreadsheetConverters.textToNumber(
+                    SpreadsheetPattern.parseNumberParsePattern("#.##;#")
+                        .parser()
+                ),
+                SpreadsheetConverters.textToDate(
+                    SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                        .parser()
+                ),
+                SpreadsheetConverters.textToDateTime(
+                    SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
+                        .parser()
+                ),
+                SpreadsheetConverters.textToTime(
+                    SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+                        .parser()
+                )
+            )
+        );
+
+        @Override
+        public ExpressionNumberKind expressionNumberKind() {
+            return EXPRESSION_NUMBER_KIND;
+        }
+
+        @Override
+        public boolean canNumbersHaveGroupSeparator() {
+            return false;
+        }
+
+        @Override
+        public Charset charset() {
+            return CHARSET;
+        }
+
+        @Override
+        public char valueSeparator() {
+            return ',';
+        }
+
+        @Override
+        public String currencySymbol() {
+            return DECIMAL_NUMBER_CONTEXT.currencySymbol();
+        }
+
+        @Override
+        public char decimalSeparator() {
+            return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
+        }
+
+        @Override
+        public String exponentSymbol() {
+            return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
+        }
+
+        @Override
+        public char groupSeparator() {
+            return DECIMAL_NUMBER_CONTEXT.groupSeparator();
+        }
+
+        @Override
+        public String infinitySymbol() {
+            return DECIMAL_NUMBER_CONTEXT.infinitySymbol();
+        }
+
+        @Override
+        public char monetaryDecimalSeparator() {
+            return DECIMAL_NUMBER_CONTEXT.monetaryDecimalSeparator();
+        }
+
+        @Override
+        public String nanSymbol() {
+            return DECIMAL_NUMBER_CONTEXT.nanSymbol();
+        }
+
+        @Override
+        public char negativeSign() {
+            return DECIMAL_NUMBER_CONTEXT.negativeSign();
+        }
+
+        @Override
+        public char percentSymbol() {
+            return DECIMAL_NUMBER_CONTEXT.percentSymbol();
+        }
+
+        @Override
+        public char permillSymbol() {
+            return DECIMAL_NUMBER_CONTEXT.permillSymbol();
+        }
+
+        @Override
+        public char positiveSign() {
+            return DECIMAL_NUMBER_CONTEXT.positiveSign();
+        }
+
+        @Override
+        public char zeroDigit() {
+            return DECIMAL_NUMBER_CONTEXT.zeroDigit();
+        }
+
+        @Override
+        public DecimalNumberSymbols decimalNumberSymbols() {
+            return DECIMAL_NUMBER_CONTEXT.decimalNumberSymbols();
+        }
+
+        @Override
+        public Locale locale() {
+            return DECIMAL_NUMBER_CONTEXT.locale();
+        }
+
+        @Override
+        public MathContext mathContext() {
+            return DECIMAL_NUMBER_CONTEXT.mathContext();
+        }
+
+        @Override
+        public List<String> ampms() {
+            return DATE_TIME_CONTEXT.ampms();
+        }
+
+        @Override
+        public String ampm(final int hourOfDay) {
+            return DATE_TIME_CONTEXT.ampm(hourOfDay);
+        }
+
+        @Override
+        public int defaultYear() {
+            return DATE_TIME_CONTEXT.defaultYear();
+        }
+
+        @Override
+        public List<String> monthNames() {
+            return DATE_TIME_CONTEXT.ampms();
+        }
+
+        @Override
+        public String monthName(final int month) {
+            return DATE_TIME_CONTEXT.monthName(month);
+        }
+
+        @Override
+        public List<String> monthNameAbbreviations() {
+            return DATE_TIME_CONTEXT.monthNameAbbreviations();
+        }
+
+        @Override
+        public String monthNameAbbreviation(final int month) {
+            return DATE_TIME_CONTEXT.monthNameAbbreviation(month);
+        }
+
+        @Override
+        public int twoDigitYear() {
+            return DATE_TIME_CONTEXT.twoDigitYear();
+        }
+
+        @Override
+        public List<String> weekDayNames() {
+            return DATE_TIME_CONTEXT.weekDayNames();
+        }
+
+        @Override
+        public String weekDayName(final int day) {
+            return DATE_TIME_CONTEXT.weekDayName(day);
+        }
+
+        @Override
+        public List<String> weekDayNameAbbreviations() {
+            return DATE_TIME_CONTEXT.weekDayNameAbbreviations();
+        }
+
+        @Override
+        public String weekDayNameAbbreviation(final int day) {
+            return DATE_TIME_CONTEXT.weekDayNameAbbreviation(day);
+        }
+
+        @Override
+        public DateTimeSymbols dateTimeSymbols() {
+            return DATE_TIME_CONTEXT.dateTimeSymbols();
+        }
+
+        @Override
+        public long dateOffset() {
+            return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
+        }
+
+        @Override
+        public Indentation indentation() {
+            return INDENTATION;
+        }
+
+        @Override
+        public LineEnding lineEnding() {
+            return LINE_ENDING;
+        }
+    };
+
+    @Test
+    public void testValuePrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.basic(),
+            "ConverterCustomToString\n" +
+                "  \"BASIC\"\n" +
+                "    ConverterCollection\n" +
+                "      if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
+                "      Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
         );
     }
 
