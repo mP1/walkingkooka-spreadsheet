@@ -67,6 +67,16 @@ public final class SpreadsheetConverterToSpreadsheetParserSelectorTest extends S
         return SpreadsheetConverterContexts.fake();
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createConverter(),
+            "to SpreadsheetParserSelector"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
