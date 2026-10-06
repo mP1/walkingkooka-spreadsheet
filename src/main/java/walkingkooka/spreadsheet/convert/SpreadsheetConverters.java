@@ -125,9 +125,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == BINARY) {
             BINARY = namedCollection(
                 "BINARY",
-                textToBinary(),
                 toBinary(),
-                binaryToText()
+                binaryToText(),
+                textToBinary()
             );
         }
         return BINARY;

@@ -227,9 +227,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"BINARY\"\n" +
                 "      ConverterCollection\n" +
-                "        TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "        to Binary (walkingkooka.convert.ConverterToBinary)\n" +
                 "        Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "        TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"BOOLEAN\"\n" +
                 "      ConverterCollection\n" +
@@ -411,9 +411,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"BINARY\"\n" +
                 "            ConverterCollection\n" +
-                "              TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "              to Binary (walkingkooka.convert.ConverterToBinary)\n" +
                 "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "              TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"STYLE\"\n" +
                 "      ConverterCollection\n" +
@@ -1040,9 +1040,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"BINARY\"\n" +
                 "    ConverterCollection\n" +
-                "      TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n"
+                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "      TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n"
         );
     }
 
