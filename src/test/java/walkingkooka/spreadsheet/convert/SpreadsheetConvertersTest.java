@@ -256,9 +256,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"CSV\"\n" +
                 "      ConverterCollection\n" +
+                "        to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "        TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "        TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "        to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"CURRENCY\"\n" +
                 "      ConverterCollection\n" +
@@ -565,9 +565,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"CSV\"\n" +
                 "            ConverterCollection\n" +
+                "              to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "              TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "              TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "              to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"TSV\"\n" +
                 "            ConverterCollection\n" +
@@ -646,9 +646,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              ConverterCustomToString\n" +
                 "                \"CSV\"\n" +
                 "                  ConverterCollection\n" +
+                "                    to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                    TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                    TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "                    to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "              ConverterCustomToString\n" +
                 "                \"TSV\"\n" +
                 "                  ConverterCollection\n" +
@@ -1445,9 +1445,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"CSV\"\n" +
                 "    ConverterCollection\n" +
+                "      to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "      TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "      TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "      to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n"
+                "      TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n"
         );
     }
 
@@ -4082,9 +4082,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            ConverterCustomToString\n" +
                 "              \"CSV\"\n" +
                 "                ConverterCollection\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +

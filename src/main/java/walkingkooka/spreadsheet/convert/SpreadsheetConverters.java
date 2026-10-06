@@ -230,9 +230,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == CSV) {
             CSV = namedCollection(
                 "CSV",
+                toCsvStringList(),
                 textToCsvStringList(),
-                textToCsvStringSet(),
-                toCsvStringList()
+                textToCsvStringSet()
             );
         }
         return CSV;
