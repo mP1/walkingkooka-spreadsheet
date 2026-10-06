@@ -901,15 +901,15 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"CURRENCY\"\n" +
                 "    ConverterCollection\n" +
+                "      to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
+                "      to CurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n" +
                 "      CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
                 "      CurrencyValue to Number (walkingkooka.convert.ConverterCurrencyValueToNumber)\n" +
                 "      CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
                 "      Number to CurrencyValue (walkingkooka.convert.ConverterNumberToCurrencyValue)\n" +
                 "      TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "      TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
-                "      TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
-                "      to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
-                "      to CurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n"
+                "      TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n"
         );
     }
 
@@ -3475,6 +3475,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"currency\"\n" +
                 "          ConverterCollection\n" +
+                "            to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
+                "            to CurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n" +
                 "            CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
                 "            CurrencyValue to Number (walkingkooka.convert.ConverterCurrencyValueToNumber)\n" +
                 "            CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
@@ -3482,8 +3484,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
                 "            TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
-                "            to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
-                "            to CurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"plugins\"\n" +
                 "          ConverterCollection\n" +

@@ -247,15 +247,15 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == CURRENCY) {
             CURRENCY = namedCollection(
                 "CURRENCY",
+                toCurrency(),
+                toCurrencyCode(),
                 currencyCodeToCurrency(),
                 currencyValueToNumber(),
                 currencyValueTo(),
                 numberToCurrencyValue(),
                 textToCurrency(),
                 textToCurrencyCode(),
-                textToCurrencyValue(),
-                toCurrency(),
-                toCurrencyCode()
+                textToCurrencyValue()
             );
         }
         return CURRENCY;
