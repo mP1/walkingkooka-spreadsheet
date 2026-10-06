@@ -56,6 +56,6 @@ final class SpreadsheetConverterToSpreadsheetFormatterSelector extends Spreadshe
 
     @Override
     public String toString() {
-        return HasOptionalSpreadsheetFormatterSelector.class.getSimpleName();
+        return "to " + SpreadsheetFormatterSelector.class.getSimpleName();
     }
 }

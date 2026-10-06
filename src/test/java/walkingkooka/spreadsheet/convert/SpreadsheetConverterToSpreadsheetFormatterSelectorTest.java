@@ -67,6 +67,16 @@ public final class SpreadsheetConverterToSpreadsheetFormatterSelectorTest extend
         return SpreadsheetConverterContexts.fake();
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createConverter(),
+            "to SpreadsheetFormatterSelector"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
