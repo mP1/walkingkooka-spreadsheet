@@ -3520,12 +3520,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"text-node\"\n" +
                 "          ConverterCollection\n" +
-                "            TEXT to Flag (walkingkooka.tree.text.convert.TreeTextConverterTextToFlag)\n" +
-                "            TEXT to SpreadsheetText (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetText)\n" +
-                "            TEXT to TextNode (walkingkooka.tree.text.convert.TreeTextConverterTextToTextNode)\n" +
                 "            to TextNode (walkingkooka.tree.text.convert.TreeTextConverterToTextNode)\n" +
                 "            Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
                 "            Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n" +
+                "            TEXT to Flag (walkingkooka.tree.text.convert.TreeTextConverterTextToFlag)\n" +
+                "            TEXT to SpreadsheetText (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetText)\n" +
+                "            TEXT to TextNode (walkingkooka.tree.text.convert.TreeTextConverterTextToTextNode)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"template\"\n" +
                 "          TEXT to TemplateValueName (walkingkooka.template.convert.TextToTemplateValueNameConverter)\n" +
@@ -4221,12 +4221,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"TEXTNODE\"\n" +
                 "    ConverterCollection\n" +
-                "      TEXT to Flag (walkingkooka.tree.text.convert.TreeTextConverterTextToFlag)\n" +
-                "      TEXT to SpreadsheetText (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetText)\n" +
-                "      TEXT to TextNode (walkingkooka.tree.text.convert.TreeTextConverterTextToTextNode)\n" +
                 "      to TextNode (walkingkooka.tree.text.convert.TreeTextConverterToTextNode)\n" +
                 "      Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
-                "      Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n"
+                "      Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n" +
+                "      TEXT to Flag (walkingkooka.tree.text.convert.TreeTextConverterTextToFlag)\n" +
+                "      TEXT to SpreadsheetText (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetText)\n" +
+                "      TEXT to TextNode (walkingkooka.tree.text.convert.TreeTextConverterTextToTextNode)\n"
         );
     }
 

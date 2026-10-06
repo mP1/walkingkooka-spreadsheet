@@ -957,12 +957,12 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == TEXT_NODE) {
             TEXT_NODE = namedCollection(
                 "TEXTNODE",
-                textToFlag(),
-                textToSpreadsheetText(),
-                textToTextNode(),
                 toTextNode(),
                 urlToHyperlink(),
-                urlToImage()
+                urlToImage(),
+                textToFlag(),
+                textToSpreadsheetText(),
+                textToTextNode()
             );
         }
         return TEXT_NODE;
