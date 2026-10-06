@@ -19,14 +19,13 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
 public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNodeUnmarshallContextTesting,
-    ClassTesting<SpreadsheetMetadataDefaultTextResource> {
+    PackagePrivateClassTesting<SpreadsheetMetadataDefaultTextResource> {
 
     @Test
     public void testDateTimeOffsetExcelOffset() {
@@ -47,10 +46,5 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     @Override
     public Class<SpreadsheetMetadataDefaultTextResource> type() {
         return SpreadsheetMetadataDefaultTextResource.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
