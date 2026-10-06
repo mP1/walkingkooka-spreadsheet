@@ -1708,9 +1708,9 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == TSV) {
             TSV = namedCollection(
                 "TSV",
+                toTsvStringList(),
                 textToTsvStringList(),
-                textToTsvStringSet(),
-                toTsvStringList()
+                textToTsvStringSet()
             );
         }
         return TSV;
