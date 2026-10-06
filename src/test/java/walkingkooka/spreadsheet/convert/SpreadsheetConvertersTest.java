@@ -111,6 +111,7 @@ import walkingkooka.text.HasText;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.MultiLineText;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -279,6 +280,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testBasicPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.basic(),
+            "ConverterCustomToString\n" +
+                "  \"BASIC\"\n" +
+                "    ConverterCollection\n" +
+                "      if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
+                "      Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+        );
+    }
+
     // binary..........................................................................................................
 
     @Test
@@ -355,6 +369,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
             },
             expected
+        );
+    }
+
+    @Test
+    public void testBinaryPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.binary(),
+            "ConverterCustomToString\n" +
+                "  \"BINARY\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
+                "      to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n"
         );
     }
 
@@ -456,6 +483,18 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.text();
             },
             expected
+        );
+    }
+
+    @Test
+    public void testBooleanPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.booleans(),
+            "ConverterCustomToString\n" +
+                "  \"BOOLEAN\"\n" +
+                "    ConverterCollection\n" +
+                "      to Boolean (walkingkooka.spreadsheet.convert.SpreadsheetConverterToBoolean)\n" +
+                "      Boolean to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterBooleanToText)\n"
         );
     }
 
@@ -637,6 +676,29 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testColorPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.color(),
+            "ConverterCustomToString\n" +
+                "  \"COLOR\"\n" +
+                "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"TEXT\"\n" +
+                "          ConverterCollection\n" +
+                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
+                "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
+                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "      Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "      TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
+                "      Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
+                "      Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
+                "      TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
+                "      TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n"
+        );
+    }
+
     // csv..............................................................................................................
 
     @Test
@@ -714,7 +776,20 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
-    
+
+    @Test
+    public void testCsvPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.csv(),
+            "ConverterCustomToString\n" +
+                "  \"CSV\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "      TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "      to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n"
+        );
+    }
+
     // currency.........................................................................................................
 
     private final static CurrencyCode FROM_CURRENCY_CODE = CurrencyCode.parse("AUD");
@@ -819,6 +894,25 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testCurrencyPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.currency(),
+            "ConverterCustomToString\n" +
+                "  \"CURRENCY\"\n" +
+                "    ConverterCollection\n" +
+                "      CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
+                "      CurrencyValue to Number (walkingkooka.convert.ConverterCurrencyValueToNumber)\n" +
+                "      CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
+                "      Number to CurrencyValue (walkingkooka.convert.ConverterNumberToCurrencyValue)\n" +
+                "      TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
+                "      TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
+                "      TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
+                "      toCurrency (walkingkooka.convert.ConverterToCurrency)\n" +
+                "      toCurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n"
+        );
+    }
+
     // dateTimeSymbols..................................................................................................
 
     @Test
@@ -898,6 +992,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
     };
 
+    @Test
+    public void testDateTimeSymbolsPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.dateTimeSymbols(),
+            "ConverterCollection\n" +
+                "  toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
+                "  to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
+                "  Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n"
+        );
+    }
+
     // decimalNumberSymbols.............................................................................................
 
     @Test
@@ -976,6 +1081,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             );
         }
     };
+
+    @Test
+    public void testDecimalNumberSymbolsPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.decimalNumberSymbols(),
+            "ConverterCollection\n" +
+                "  toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
+                "  to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
+                "  Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n"
+        );
+    }
 
     // environment......................................................................................................
 
@@ -1079,6 +1195,21 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             return LINE_ENDING;
         }
     };
+
+    @Test
+    public void testEnvironmentPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.environment(),
+            "ConverterCustomToString\n" +
+                "  \"ENVIRONMENT\"\n" +
+                "    ConverterCollection\n" +
+                "      to Environment (walkingkooka.environment.convert.EnvironmentConverterToEnvironment)\n" +
+                "      Environment to Binary (walkingkooka.environment.convert.EnvironmentConverterEnvironmentToBinary)\n" +
+                "      Environment to TEXT (walkingkooka.environment.convert.EnvironmentConverterEnvironmentToString)\n" +
+                "      TEXT to Environment (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironment)\n" +
+                "      TEXT to EnvironmentValueName (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironmentValueName)\n"
+        );
+    }
 
     // expression.......................................................................................................
 
@@ -1244,6 +1375,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             return ',';
         }
     };
+
+    @Test
+    public void testExpressionPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.expression(),
+            "ConverterCustomToString\n" +
+                "  \"EXPRESSION\"\n" +
+                "    TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n"
+        );
+    }
 
     // formAndValidation................................................................................................
 
@@ -1441,6 +1582,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
     };
 
+    @Test
+    public void testFormAndValidationPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.formAndValidation(),
+            "ConverterCustomToString\n" +
+                "  \"FORM-AND-VALIDATION\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
+                "      TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
+                "      * to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
+                "      to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
+                "      * to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
+                "      * to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n"
+        );
+    }
+
     // json.............................................................................................................
 
     @Test
@@ -1570,6 +1727,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             );
         }
     };
+
+    @Test
+    public void testJsonPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.json(),
+            "ConverterCustomToString\n" +
+                "  \"JSON\"\n" +
+                "    ConverterCollection\n" +
+                "      JsonNode to type (walkingkooka.tree.json.convert.JsonNodeConverterJsonNodeTo)\n" +
+                "      Json TEXT to Object (walkingkooka.tree.json.convert.JsonNodeConverterTextToObject)\n" +
+                "      * to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterToJsonNode)\n" +
+                "      TEXT to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonNode)\n" +
+                "      TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
+                "      TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n"
+        );
+    }
 
     // locale...........................................................................................................
 
@@ -1837,6 +2010,28 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
     };
+
+    @Test
+    public void testLocalePrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.locale(),
+            "ConverterCustomToString\n" +
+                "  \"LOCALE\"\n" +
+                "    ConverterCollection\n" +
+                "      Locale to String (walkingkooka.convert.ConverterLocaleToString)\n" +
+                "      to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
+                "      to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
+                "      ConverterCollection\n" +
+                "        toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
+                "        to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
+                "        Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
+                "      ConverterCollection\n" +
+                "        toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
+                "        to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
+                "        Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n" +
+                "      TEXT to LocaleLanguageTag (walkingkooka.convert.ConverterTextToLocaleLanguageTag)\n"
+        );
+    }
 
     // number...........................................................................................................
 
@@ -2233,6 +2428,20 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
     };
 
+    @Test
+    public void testNumberPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.number(),
+            "ConverterCustomToString\n" +
+                "  \"NUMBER\"\n" +
+                "    ConverterCollection\n" +
+                "      null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
+                "      to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
+                "      Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n"
+        );
+    }
+
     // spreadsheetMetadata..............................................................................................
 
     @Test
@@ -2387,6 +2596,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
     };
 
+    @Test
+    public void testSpreadsheetMetadataPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.spreadsheetMetadata(),
+            "ConverterCustomToString\n" +
+                "  \"SPREADSHEET METADATA\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to SpreadsheetId (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetId)\n" +
+                "      TEXT to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadata)\n" +
+                "      TEXT to SpreadsheetMetadataPropertyName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataPropertyName)\n" +
+                "      TEXT to SpreadsheetName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetName)\n" +
+                "      Properties to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterPropertiesToSpreadsheetMetadata)\n" +
+                "      SpreadsheetId to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata)\n"
+        );
+    }
+
     // plugins..........................................................................................................
 
     @Test
@@ -2528,6 +2753,26 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
+
+    @Test
+    public void testPluginsPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.plugins(),
+            "ConverterCustomToString\n" +
+                "  \"PLUGINS\"\n" +
+                "    ConverterCollection\n" +
+                "      HasOptionalSpreadsheetFormatterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetFormatterSelector)\n" +
+                "      HasOptionalSpreadsheetParserSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetParserSelector)\n" +
+                "      HasOptionalValidatorSelector (walkingkooka.validation.convert.ValidationConverterToValidatorSelector)\n" +
+                "      TEXT to ConverterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToConverterSelector)\n" +
+                "      TEXT to CurrencyExchangeRaterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToCurrencyExchangeRaterSelector)\n" +
+                "      TEXT to ExpressionFunctionSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpressionFunctionSelector)\n" +
+                "      TEXT to SpreadsheetComparatorSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetComparatorSelector)\n" +
+                "      TEXT to SpreadsheetFormatterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetFormatterSelector)\n" +
+                "      TEXT to SpreadsheetParserSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetParserSelector)\n" +
+                "      TEXT to ValidatorSelector (walkingkooka.validation.convert.ValidationConverterTextToValidatorSelector)\n"
+        );
+    }
 
     // spreadsheetValue.................................................................................................
 
@@ -3481,6 +3726,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
     };
 
+    @Test
+    public void testValuePrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.basic(),
+            "ConverterCustomToString\n" +
+                "  \"BASIC\"\n" +
+                "    ConverterCollection\n" +
+                "      if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
+                "      Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+        );
+    }
+
     // style............................................................................................................
 
     private final TextStyle STYLE = TextStyle.parse("background-color: red");
@@ -3603,6 +3861,24 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
+
+    @Test
+    public void testStylePrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.style(),
+            "ConverterCustomToString\n" +
+                "  \"STYLE\"\n" +
+                "    ConverterCollection\n" +
+                "      TextStyle to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
+                "      TEXT to Border (walkingkooka.tree.text.convert.TreeTextConverterTextToBorder)\n" +
+                "      TEXT to Margin (walkingkooka.tree.text.convert.TreeTextConverterTextToMargin)\n" +
+                "      TEXT to Padding (walkingkooka.tree.text.convert.TreeTextConverterTextToPadding)\n" +
+                "      TEXT to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStyle)\n" +
+                "      TEXT to TextStylePropertyName (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStylePropertyName)\n" +
+                "      to Styleable (walkingkooka.tree.text.convert.TreeTextConverterToStyleable)\n" +
+                "      Properties to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterPropertiesToTextStyle)\n"
+        );
+    }
 
     // system...........................................................................................................
 
@@ -4037,6 +4313,217 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testSystemPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.system(),
+            "ConverterCustomToString\n" +
+                "  \"collection (text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)\"\n" +
+                "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"text\"\n" +
+                "          ConverterCollection\n" +
+                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
+                "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
+                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"boolean\"\n" +
+                "          ConverterCollection\n" +
+                "            to Boolean (walkingkooka.spreadsheet.convert.SpreadsheetConverterToBoolean)\n" +
+                "            Boolean to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterBooleanToText)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"number\"\n" +
+                "          ConverterCollection\n" +
+                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
+                "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
+                "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"date-time\"\n" +
+                "          dateTime (walkingkooka.spreadsheet.convert.SpreadsheetConverterDateTime)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"locale\"\n" +
+                "          ConverterCollection\n" +
+                "            Locale to String (walkingkooka.convert.ConverterLocaleToString)\n" +
+                "            to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
+                "            to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
+                "            ConverterCollection\n" +
+                "              toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
+                "              to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
+                "              Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
+                "            ConverterCollection\n" +
+                "              toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
+                "              to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
+                "              Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n" +
+                "            TEXT to LocaleLanguageTag (walkingkooka.convert.ConverterTextToLocaleLanguageTag)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"value\"\n" +
+                "          ConverterCollection\n" +
+                "            SpreadsheetError to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorToNumber)\n" +
+                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"SPREADSHEET SELECTION\"\n" +
+                "                ConverterCollection\n" +
+                "                  HasSpreadsheetReference (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetSelection)\n" +
+                "                  SELECTION to SELECTION (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection)\n" +
+                "                  SELECTION to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetSelectionToText)\n" +
+                "                  TEXT to SELECTION (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetSelection)\n" +
+                "            SpreadsheetError to SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorToSpreadsheetError)\n" +
+                "            TEXT to SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetError)\n" +
+                "            to ValueType (walkingkooka.validation.convert.ValidationConverterToValueType)\n" +
+                "            TEXT to ValueType (walkingkooka.validation.convert.ValidationConverterTextToValueType)\n" +
+                "            TEXT to ZoneOffset (walkingkooka.convert.ConverterTextToZoneOffset)\n" +
+                "            SpreadsheetCellSet (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetCellSet)\n" +
+                "            Collection to List (walkingkooka.convert.ConverterCollectionToList)\n" +
+                "            TEXT to BooleanList (walkingkooka.convert.ConverterTextToCollectionListBooleanList)\n" +
+                "            TEXT to LocalDateList (walkingkooka.convert.ConverterTextToCollectionListLocalDateList)\n" +
+                "            TEXT to LocalDateTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalDateTimeList)\n" +
+                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
+                "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
+                "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"CSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
+                "            * to String (walkingkooka.convert.ConverterObjectToString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"error-throwing\"\n" +
+                "          throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"color\"\n" +
+                "          ConverterCollection\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TEXT\"\n" +
+                "                ConverterCollection\n" +
+                "                  Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
+                "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
+                "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "            Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
+                "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
+                "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
+                "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
+                "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"expression\"\n" +
+                "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"environment\"\n" +
+                "          ConverterCollection\n" +
+                "            to Environment (walkingkooka.environment.convert.EnvironmentConverterToEnvironment)\n" +
+                "            Environment to Binary (walkingkooka.environment.convert.EnvironmentConverterEnvironmentToBinary)\n" +
+                "            Environment to TEXT (walkingkooka.environment.convert.EnvironmentConverterEnvironmentToString)\n" +
+                "            TEXT to Environment (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironment)\n" +
+                "            TEXT to EnvironmentValueName (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironmentValueName)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"json\"\n" +
+                "          ConverterCollection\n" +
+                "            JsonNode to type (walkingkooka.tree.json.convert.JsonNodeConverterJsonNodeTo)\n" +
+                "            Json TEXT to Object (walkingkooka.tree.json.convert.JsonNodeConverterTextToObject)\n" +
+                "            * to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterToJsonNode)\n" +
+                "            TEXT to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonNode)\n" +
+                "            TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
+                "            TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"currency\"\n" +
+                "          ConverterCollection\n" +
+                "            CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
+                "            CurrencyValue to Number (walkingkooka.convert.ConverterCurrencyValueToNumber)\n" +
+                "            CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
+                "            Number to CurrencyValue (walkingkooka.convert.ConverterNumberToCurrencyValue)\n" +
+                "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
+                "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
+                "            TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
+                "            toCurrency (walkingkooka.convert.ConverterToCurrency)\n" +
+                "            toCurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"plugins\"\n" +
+                "          ConverterCollection\n" +
+                "            HasOptionalSpreadsheetFormatterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetFormatterSelector)\n" +
+                "            HasOptionalSpreadsheetParserSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetParserSelector)\n" +
+                "            HasOptionalValidatorSelector (walkingkooka.validation.convert.ValidationConverterToValidatorSelector)\n" +
+                "            TEXT to ConverterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToConverterSelector)\n" +
+                "            TEXT to CurrencyExchangeRaterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToCurrencyExchangeRaterSelector)\n" +
+                "            TEXT to ExpressionFunctionSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpressionFunctionSelector)\n" +
+                "            TEXT to SpreadsheetComparatorSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetComparatorSelector)\n" +
+                "            TEXT to SpreadsheetFormatterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetFormatterSelector)\n" +
+                "            TEXT to SpreadsheetParserSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetParserSelector)\n" +
+                "            TEXT to ValidatorSelector (walkingkooka.validation.convert.ValidationConverterTextToValidatorSelector)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"spreadsheet-metadata\"\n" +
+                "          ConverterCollection\n" +
+                "            TEXT to SpreadsheetId (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetId)\n" +
+                "            TEXT to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadata)\n" +
+                "            TEXT to SpreadsheetMetadataPropertyName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataPropertyName)\n" +
+                "            TEXT to SpreadsheetName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetName)\n" +
+                "            Properties to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterPropertiesToSpreadsheetMetadata)\n" +
+                "            SpreadsheetId to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"style\"\n" +
+                "          ConverterCollection\n" +
+                "            TextStyle to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
+                "            TEXT to Border (walkingkooka.tree.text.convert.TreeTextConverterTextToBorder)\n" +
+                "            TEXT to Margin (walkingkooka.tree.text.convert.TreeTextConverterTextToMargin)\n" +
+                "            TEXT to Padding (walkingkooka.tree.text.convert.TreeTextConverterTextToPadding)\n" +
+                "            TEXT to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStyle)\n" +
+                "            TEXT to TextStylePropertyName (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStylePropertyName)\n" +
+                "            to Styleable (walkingkooka.tree.text.convert.TreeTextConverterToStyleable)\n" +
+                "            Properties to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterPropertiesToTextStyle)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"text-node\"\n" +
+                "          ConverterCollection\n" +
+                "            TEXT to Flag (walkingkooka.tree.text.convert.TreeTextConverterTextToFlag)\n" +
+                "            TEXT to SpreadsheetText (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetText)\n" +
+                "            TEXT to TextNode (walkingkooka.tree.text.convert.TreeTextConverterTextToTextNode)\n" +
+                "            to TextNode (walkingkooka.tree.text.convert.TreeTextConverterToTextNode)\n" +
+                "            Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
+                "            Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"template\"\n" +
+                "          TEXT to TemplateValueName (walkingkooka.template.convert.TextToTemplateValueNameConverter)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"net\"\n" +
+                "          ConverterCollection\n" +
+                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            TEXT to HasHostAddress (walkingkooka.net.convert.NetConverterTextToHasHostAddress)\n" +
+                "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
+                "            TEXT to EmailAddress (walkingkooka.net.convert.NetConverterTextToEmailAddress)\n" +
+                "            TEXT to HostAddress (walkingkooka.net.convert.NetConverterTextToHostAddress)\n" +
+                "            TEXT to MediaType (walkingkooka.net.convert.NetConverterTextToMediaType)\n" +
+                "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
+                "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
+                "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"form-and-validation\"\n" +
+                "          ConverterCollection\n" +
+                "            TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
+                "            TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
+                "            * to ValidationCheckbox (walkingkooka.validation.convert.ValidationConverterValidationCheckbox)\n" +
+                "            to ValidationChoice (walkingkooka.validation.convert.ValidationConverterToValidationChoice)\n" +
+                "            * to ValidationChoiceList (walkingkooka.validation.convert.ValidationConverterValidationChoiceList)\n" +
+                "            * to ValidationErrorList (walkingkooka.validation.convert.ValidationConverterValidationErrorList)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"basic\"\n" +
+                "          ConverterCollection\n" +
+                "            if type (walkingkooka.convert.ConverterSimple)\n" +
+                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
+                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+        );
+    }
+
     // text.............................................................................................................
 
     @Test
@@ -4156,7 +4643,21 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             expected
         );
     }
-    
+
+    @Test
+    public void testTextPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.text(),
+            "ConverterCustomToString\n" +
+                "  \"TEXT\"\n" +
+                "    ConverterCollection\n" +
+                "      Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "      TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
+                "      TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
+                "      TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n"
+        );
+    }
+
     // textNode.........................................................................................................
 
     private final static String TEXT = "Hello World 123!";
@@ -4282,6 +4783,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
+
+    @Test
+    public void testTextNodePrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.textNode(),
+            "ConverterCustomToString\n" +
+                "  \"TEXTNODE\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to Flag (walkingkooka.tree.text.convert.TreeTextConverterTextToFlag)\n" +
+                "      TEXT to SpreadsheetText (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetText)\n" +
+                "      TEXT to TextNode (walkingkooka.tree.text.convert.TreeTextConverterTextToTextNode)\n" +
+                "      to TextNode (walkingkooka.tree.text.convert.TreeTextConverterToTextNode)\n" +
+                "      Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
+                "      Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n"
+        );
+    }
 
     // textToDate.......................................................................................................
 
@@ -4708,6 +5225,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
+
+    @Test
+    public void testTsvPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.tsv(),
+            "ConverterCustomToString\n" +
+                "  \"TSV\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "      TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
+                "      to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n"
+        );
+    }
     
     // url..............................................................................................................
 
@@ -4899,6 +5429,27 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
+
+    @Test
+    public void testUrlPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.url(),
+            "ConverterCustomToString\n" +
+                "  \"URL\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
+                "      Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
+                "      Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n"
+        );
+    }
+
+    private void treePrintAndCheck(final Converter<?> converter,
+                                   final String expected) {
+        this.treePrintAndCheck(
+            (TreePrintable) converter,
+            expected
+        );
+    }
 
     // PublicStaticHelperTesting........................................................................................
 
