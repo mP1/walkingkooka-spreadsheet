@@ -4327,7 +4327,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://www.example.com/123");
 
     @Test
-    public void testConvertUrlToString() {
+    public void testUrlConvertUrlToString() {
         final String url = "https://www.example.com";
         final SpreadsheetConverterContext context = this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL);
 
