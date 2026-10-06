@@ -676,12 +676,12 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == SPREADSHEET_METADATA) {
             SPREADSHEET_METADATA = namedCollection(
                 "SPREADSHEET METADATA",
+                propertiesToSpreadsheetMetadata(),
+                spreadsheetIdToSpreadsheetMetadata(),
                 textToSpreadsheetId(),
                 textToSpreadsheetMetadata(),
                 textToSpreadsheetMetadataPropertyName(),
-                textToSpreadsheetName(),
-                propertiesToSpreadsheetMetadata(),
-                spreadsheetIdToSpreadsheetMetadata()
+                textToSpreadsheetName()
             );
         }
         return SPREADSHEET_METADATA;
