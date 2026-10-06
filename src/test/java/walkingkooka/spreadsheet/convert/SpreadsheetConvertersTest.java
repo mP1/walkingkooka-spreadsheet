@@ -3533,6 +3533,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        \"net\"\n" +
                 "          ConverterCollection\n" +
                 "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            to HasHostAddress (walkingkooka.net.convert.NetConverterToHasHostAddress)\n" +
+                "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "            TEXT to HasHostAddress (walkingkooka.net.convert.NetConverterTextToHasHostAddress)\n" +
                 "            TEXT to EmailAddress (walkingkooka.net.convert.NetConverterTextToEmailAddress)\n" +
                 "            TEXT to HostAddress (walkingkooka.net.convert.NetConverterTextToHostAddress)\n" +
@@ -3540,7 +3542,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
-                "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"form-and-validation\"\n" +
                 "          ConverterCollection\n" +
