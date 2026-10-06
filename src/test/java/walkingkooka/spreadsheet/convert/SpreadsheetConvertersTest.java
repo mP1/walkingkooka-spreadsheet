@@ -3532,9 +3532,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"net\"\n" +
                 "          ConverterCollection\n" +
+                "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
                 "            TEXT to HasHostAddress (walkingkooka.net.convert.NetConverterTextToHasHostAddress)\n" +
-                "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "            TEXT to EmailAddress (walkingkooka.net.convert.NetConverterTextToEmailAddress)\n" +
                 "            TEXT to HostAddress (walkingkooka.net.convert.NetConverterTextToHostAddress)\n" +
                 "            TEXT to MediaType (walkingkooka.net.convert.NetConverterTextToMediaType)\n" +
