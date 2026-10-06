@@ -406,12 +406,12 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == FORM_AND_VALIDATION) {
             FORM_AND_VALIDATION = namedCollection(
                 "FORM-AND-VALIDATION",
-                textToFormName(),
-                textToValidationError(),
                 toValidationCheckbox(),
                 toValidationChoice(),
                 toValidationChoiceList(),
-                toValidationErrorList()
+                toValidationErrorList(),
+                textToFormName(),
+                textToValidationError()
             );
         }
         return FORM_AND_VALIDATION;
