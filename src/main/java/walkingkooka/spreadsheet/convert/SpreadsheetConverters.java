@@ -677,8 +677,8 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             SPREADSHEET_METADATA = namedCollection(
                 "SPREADSHEET METADATA",
                 propertiesToSpreadsheetMetadata(),
-                spreadsheetIdToSpreadsheetMetadata(),
                 textToSpreadsheetId(),
+                spreadsheetIdToSpreadsheetMetadata(), // must appear after textToSpreadsheetId to avoid StackOverflowError
                 textToSpreadsheetMetadata(),
                 textToSpreadsheetMetadataPropertyName(),
                 textToSpreadsheetName()
