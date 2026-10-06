@@ -3846,7 +3846,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             ),
             "1999/12", // missing day
             LocalDate.class,
-            this.dateTimeSpreadsheetConverterContext()
+            this.textToDateOrDateTimeOrTimeSpreadsheetConverterContext()
         );
     }
 
@@ -3859,7 +3859,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             ),
             "1999/12/31",
             LocalDate.class,
-            this.dateTimeSpreadsheetConverterContext(),
+            this.textToDateOrDateTimeOrTimeSpreadsheetConverterContext(),
             LocalDate.of(1999, 12, 31)
         );
     }
@@ -3875,7 +3875,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             ),
             "1999/12", // missing day
             LocalDateTime.class,
-            this.dateTimeSpreadsheetConverterContext()
+            this.textToDateOrDateTimeOrTimeSpreadsheetConverterContext()
         );
     }
 
@@ -3888,7 +3888,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             ),
             "1999/12/31 12:59",
             LocalDateTime.class,
-            this.dateTimeSpreadsheetConverterContext(),
+            this.textToDateOrDateTimeOrTimeSpreadsheetConverterContext(),
             LocalDateTime.of(1999, 12, 31, 12, 59)
         );
     }
@@ -3904,7 +3904,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             ),
             "12:", // missing minutes
             LocalTime.class,
-            this.dateTimeSpreadsheetConverterContext()
+            this.textToDateOrDateTimeOrTimeSpreadsheetConverterContext()
         );
     }
 
@@ -3917,12 +3917,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             ),
             "12:59",
             LocalTime.class,
-            this.dateTimeSpreadsheetConverterContext(),
+            this.textToDateOrDateTimeOrTimeSpreadsheetConverterContext(),
             LocalTime.of(12, 59)
         );
     }
 
-    private SpreadsheetConverterContext dateTimeSpreadsheetConverterContext() {
+    private SpreadsheetConverterContext textToDateOrDateTimeOrTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
             HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
