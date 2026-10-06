@@ -2904,7 +2904,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"STYLE\"\n" +
                 "    ConverterCollection\n" +
-                "      TextStyle to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
+                "      to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
                 "      TEXT to Border (walkingkooka.tree.text.convert.TreeTextConverterTextToBorder)\n" +
                 "      TEXT to Margin (walkingkooka.tree.text.convert.TreeTextConverterTextToMargin)\n" +
                 "      TEXT to Padding (walkingkooka.tree.text.convert.TreeTextConverterTextToPadding)\n" +
@@ -3509,7 +3509,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
-                "            TextStyle to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
+                "            to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
                 "            TEXT to Border (walkingkooka.tree.text.convert.TreeTextConverterTextToBorder)\n" +
                 "            TEXT to Margin (walkingkooka.tree.text.convert.TreeTextConverterTextToMargin)\n" +
                 "            TEXT to Padding (walkingkooka.tree.text.convert.TreeTextConverterTextToPadding)\n" +
