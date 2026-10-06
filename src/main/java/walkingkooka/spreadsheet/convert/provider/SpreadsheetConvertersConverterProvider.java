@@ -337,6 +337,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.propertiesToTextStyle();
                 break;
+            case SIMPLE_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.simple();
+                break;
             case SPREADSHEET_CELL_SET_STRING:
                 this.noParameterCheck(copy);
 
@@ -1215,6 +1220,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName PROPERTIES_TO_TEXT_STYLE = ConverterName.with(PROPERTIES_TO_TEXT_STYLE_STRING);
 
+    private final static String SIMPLE_STRING = "simple";
+
+    final static ConverterName SIMPLE = ConverterName.with(SIMPLE_STRING);
+
     private final static String SPREADSHEET_CELL_SET_STRING = "spreadsheet-cell-set";
 
     final static ConverterName SPREADSHEET_CELL_SET = ConverterName.with(SPREADSHEET_CELL_SET_STRING);
@@ -1800,6 +1809,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(PROPERTIES_TO_DECIMAL_NUMBER_SYMBOLS),
             converterInfo(PROPERTIES_TO_SPREADSHEET_METADATA),
             converterInfo(PROPERTIES_TO_TEXT_STYLE),
+            converterInfo(SIMPLE),
             converterInfo(SPREADSHEET_CELL_SET),
             converterInfo(SPREADSHEET_ID_TO_SPREADSHEET_METADATA),
             converterInfo(SPREADSHEET_METADATA),

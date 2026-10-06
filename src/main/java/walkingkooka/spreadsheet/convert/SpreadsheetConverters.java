@@ -656,6 +656,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link Converters#simple()}
+     */
+    public static Converter<SpreadsheetConverterContext> simple() {
+        return Converters.simple();
+    }
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetCellSet}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetCellSet() {

@@ -1521,6 +1521,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/properties-to-decimal-number-symbols properties-to-decimal-number-symbols\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/properties-to-spreadsheet-metadata properties-to-spreadsheet-metadata\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/properties-to-text-style properties-to-text-style\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/simple simple\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-set spreadsheet-cell-set\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-id-to-spreadsheet-metadata spreadsheet-id-to-spreadsheet-metadata\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-metadata spreadsheet-metadata\n" +
