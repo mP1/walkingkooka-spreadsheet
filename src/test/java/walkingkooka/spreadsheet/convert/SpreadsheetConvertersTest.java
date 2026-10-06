@@ -782,6 +782,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              if type (walkingkooka.convert.ConverterSimple)\n" +
                 "              Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
                 "              Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "  if type (walkingkooka.convert.ConverterSimple)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"net\"\n" +
                 "      ConverterCollection\n" +
