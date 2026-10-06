@@ -998,7 +998,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverters.dateTimeSymbols(),
             "ConverterCollection\n" +
                 "  toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
-                "  to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
+                "  LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "  Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n"
         );
     }
@@ -1088,7 +1088,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverters.decimalNumberSymbols(),
             "ConverterCollection\n" +
                 "  toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
-                "  to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
+                "  LocaleLike to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
                 "  Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n"
         );
     }
@@ -2019,15 +2019,15 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  \"LOCALE\"\n" +
                 "    ConverterCollection\n" +
                 "      Locale to String (walkingkooka.convert.ConverterLocaleToString)\n" +
-                "      to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
-                "      to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
+                "      LocaleLike to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
+                "      LocaleLike to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
                 "      ConverterCollection\n" +
                 "        toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
-                "        to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
+                "        LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "        Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
                 "      ConverterCollection\n" +
                 "        toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
-                "        to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
+                "        LocaleLike to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
                 "        Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n" +
                 "      TEXT to LocaleLanguageTag (walkingkooka.convert.ConverterTextToLocaleLanguageTag)\n"
         );
@@ -3381,15 +3381,15 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        \"locale\"\n" +
                 "          ConverterCollection\n" +
                 "            Locale to String (walkingkooka.convert.ConverterLocaleToString)\n" +
-                "            to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
-                "            to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
+                "            LocaleLike to Locale (walkingkooka.convert.ConverterLocaleToLocale)\n" +
+                "            LocaleLike to LocaleLanguageTag (walkingkooka.convert.ConverterLocaleToLocaleLanguageTag)\n" +
                 "            ConverterCollection\n" +
                 "              toDateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
-                "              to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
+                "              LocaleLike to DateTimeSymbols (walkingkooka.convert.ConverterLocaleToDateTimeSymbols)\n" +
                 "              Properties to DateTimeSymbols (walkingkooka.convert.ConverterPropertiesToDateTimeSymbols)\n" +
                 "            ConverterCollection\n" +
                 "              toDecimalNumberSymbols (walkingkooka.convert.ConverterToDecimalNumberSymbols)\n" +
-                "              to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
+                "              LocaleLike to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
                 "              Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n" +
                 "            TEXT to LocaleLanguageTag (walkingkooka.convert.ConverterTextToLocaleLanguageTag)\n" +
                 "      ConverterCustomToString\n" +
