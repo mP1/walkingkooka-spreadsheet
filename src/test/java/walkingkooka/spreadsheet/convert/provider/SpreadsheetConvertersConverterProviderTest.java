@@ -1626,6 +1626,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-decimal-number-symbols to-decimal-number-symbols\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-environment to-environment\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-formatter-selector to-formatter-selector\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-has-host-address to-has-host-address\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-host-address to-host-address\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-json-node to-json-node\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-locale to-locale\n" +
