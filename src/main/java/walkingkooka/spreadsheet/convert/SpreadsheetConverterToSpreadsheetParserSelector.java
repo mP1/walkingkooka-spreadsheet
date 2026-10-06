@@ -56,6 +56,6 @@ final class SpreadsheetConverterToSpreadsheetParserSelector extends SpreadsheetC
 
     @Override
     public String toString() {
-        return HasOptionalSpreadsheetParserSelector.class.getSimpleName();
+        return "to " + SpreadsheetParserSelector.class.getSimpleName();
     }
 }
