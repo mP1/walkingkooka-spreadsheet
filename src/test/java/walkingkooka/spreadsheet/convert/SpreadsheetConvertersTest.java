@@ -4381,6 +4381,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testUrlPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetConverters.url(),
+            "ConverterCustomToString\n" +
+                "  \"URL\"\n" +
+                "    ConverterCollection\n" +
+                "      TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
+                "      Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
+                "      Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n"
+        );
+    }
+
     private void urlConvertAndCheck(final Object value,
                                     final Object expected) {
         this.urlConvertAndCheck(
@@ -5427,19 +5440,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
                 "      Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
-        );
-    }
-
-    @Test
-    public void testUrlPrintTree() {
-        this.treePrintAndCheck(
-            SpreadsheetConverters.url(),
-            "ConverterCustomToString\n" +
-                "  \"URL\"\n" +
-                "    ConverterCollection\n" +
-                "      TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
-                "      Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
-                "      Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n"
         );
     }
 
