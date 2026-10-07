@@ -328,7 +328,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -462,6 +462,9 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
                 "            TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"logging\"\n" +
+                "          TEXT to LoggingLevel (walkingkooka.convert.ConverterTextToLoggingLevel)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"plugins\"\n" +
                 "          ConverterCollection\n" +
@@ -566,7 +569,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -700,6 +703,9 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
                 "            TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"logging\"\n" +
+                "          TEXT to LoggingLevel (walkingkooka.convert.ConverterTextToLoggingLevel)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"plugins\"\n" +
                 "          ConverterCollection\n" +
@@ -1319,7 +1325,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -1425,6 +1431,9 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 "              LocaleLike to DecimalNumberSymbols (walkingkooka.convert.ConverterLocaleToDecimalNumberSymbols)\n" +
                 "              Properties to DecimalNumberSymbols (walkingkooka.convert.ConverterPropertiesToDecimalNumberSymbols)\n" +
                 "            TEXT to LocaleLanguageTag (walkingkooka.convert.ConverterTextToLocaleLanguageTag)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"logging\"\n" +
+                "          TEXT to LoggingLevel (walkingkooka.convert.ConverterTextToLoggingLevel)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"plugins\"\n" +
                 "          ConverterCollection\n" +

@@ -247,7 +247,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             EXPRESSION_NUMBER_KIND
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)")
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CURRENCY_EXCHANGE_RATER,
             CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
@@ -263,7 +263,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             FormHandlerAliasSet.EMPTY
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)")
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_CURRENCY_EXCHANGE_RATER,
             CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
@@ -354,7 +354,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 .aliasSet()
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, optional-to, collection-to)")
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CURRENCY_EXCHANGE_RATER,
             CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")

@@ -570,7 +570,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "  ConverterCustomToString\n" +
-                "    \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
+                "    \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
                 "      ConverterCollection\n" +
                 "        ConverterCustomToString\n" +
                 "          \"null-to-number\"\n" +
@@ -704,6 +704,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "              TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
                 "              TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
+                "        ConverterCustomToString\n" +
+                "          \"logging\"\n" +
+                "            TEXT to LoggingLevel (walkingkooka.convert.ConverterTextToLoggingLevel)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"plugins\"\n" +
                 "            ConverterCollection\n" +
@@ -3890,7 +3893,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.treePrintAndCheck(
             SpreadsheetConverters.system(),
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -4024,6 +4027,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
                 "            TEXT to CurrencyValue (walkingkooka.convert.ConverterTextToCurrencyValue)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"logging\"\n" +
+                "          TEXT to LoggingLevel (walkingkooka.convert.ConverterTextToLoggingLevel)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"plugins\"\n" +
                 "          ConverterCollection\n" +
