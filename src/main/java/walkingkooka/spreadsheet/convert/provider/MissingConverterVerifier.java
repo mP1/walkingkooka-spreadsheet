@@ -82,6 +82,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
@@ -432,6 +433,11 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
     private final static ValidationError VALIDATION_ERROR = SpreadsheetForms.error(CELL)
         .setMessage("Error message 123");
 
+    private final static ValidationErrorList<SpreadsheetValidationReference> VALIDATION_ERROR_LIST = SpreadsheetForms.errorList()
+        .concat(
+            VALIDATION_ERROR
+        );
+
     private final static Predicate<Object> IS_ABSOLUTE_URL = v -> v instanceof AbsoluteUrl;
 
     private final static Predicate<Object> IS_BINARY = v -> v instanceof Binary;
@@ -536,8 +542,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
     private final static Predicate<Object> IS_VALIDATION_ERROR = v -> v instanceof ValidationError;
 
-    private final static Predicate<Object> IS_VALIDATION_ERROR_LIST = v -> v instanceof ValidationErrorList;
-        
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
      * does not support the {@link CharSequence} interface types like {@link StringBuilder} etc.
@@ -2408,14 +2412,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
                     // to-validation-error-list.........................................................................
                     verifier.addIfConversionFail(
-                        Lists.of(
-                            "Validation error message 1",
-                            SpreadsheetForms.error(SpreadsheetSelection.A1)
-                                .setMessage("Validation error message2")
-                        ),
+                        VALIDATION_ERROR_LIST,
                         ValidationErrorList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
-                        IS_VALIDATION_ERROR_LIST
+                        VALIDATION_ERROR_LIST
                     );
                 }
             }
