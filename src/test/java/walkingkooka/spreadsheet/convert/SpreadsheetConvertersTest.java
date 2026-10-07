@@ -575,9 +575,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"null-to-number\"\n" +
                 "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "        ConverterCustomToString\n" +
-                "          \"simple\"\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
+                "        simple (walkingkooka.convert.ConverterSimple)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"text\"\n" +
                 "            ConverterCollection\n" +
@@ -779,7 +777,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"collection-to\"\n" +
                 "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "  if type (walkingkooka.convert.ConverterSimple)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"net\"\n" +
                 "      ConverterCollection\n" +
@@ -795,6 +792,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
                 "  never (walkingkooka.convert.ConverterNever)\n" +
                 "  null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "  simple (walkingkooka.convert.ConverterSimple)\n" +
                 "  throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
                 "  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
                 "  to Boolean (walkingkooka.spreadsheet.convert.SpreadsheetConverterToBoolean)\n" +
@@ -3896,9 +3894,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"simple\"\n" +
-                "          if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      simple (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
