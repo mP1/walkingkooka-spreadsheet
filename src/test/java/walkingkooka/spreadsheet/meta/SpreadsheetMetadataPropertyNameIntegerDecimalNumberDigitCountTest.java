@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCountTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount> {
 
     @Test
-    public void testNegativeValueFails() {
+    public void testCheckValueWithNegativeValueFails() {
         this.checkValueFails(
             -1,
             "Metadata decimalNumberDigitCount=-1, < 0"
@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount
     }
 
     @Test
-    public void testZeroValue() {
+    public void testCheckValueWithZeroValue() {
         this.checkValue(0);
     }
 
     @Test
-    public void testEightValue() {
+    public void testCheckValueWithEightValue() {
         this.checkValue(8);
     }
 
