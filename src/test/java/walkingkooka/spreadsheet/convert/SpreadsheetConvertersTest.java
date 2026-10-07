@@ -577,8 +577,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "  ConverterCustomToString\n" +
-                "    \"collection (text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)\"\n" +
+                "    \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
                 "      ConverterCollection\n" +
+                "        ConverterCustomToString\n" +
+                "          \"null-to-number\"\n" +
+                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "        ConverterCustomToString\n" +
+                "          \"simple\"\n" +
+                "            if type (walkingkooka.convert.ConverterSimple)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"text\"\n" +
                 "            ConverterCollection\n" +
@@ -775,11 +781,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
                 "              TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "        ConverterCustomToString\n" +
-                "          \"basic\"\n" +
-                "            ConverterCollection\n" +
-                "              if type (walkingkooka.convert.ConverterSimple)\n" +
-                "              Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "              Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "          \"optional-to\"\n" +
+                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "        ConverterCustomToString\n" +
+                "          \"collection-to\"\n" +
+                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
                 "  if type (walkingkooka.convert.ConverterSimple)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"net\"\n" +
@@ -4012,8 +4018,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.treePrintAndCheck(
             SpreadsheetConverters.system(),
             "ConverterCustomToString\n" +
-                "  \"collection (text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, basic)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"null-to-number\"\n" +
+                "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"simple\"\n" +
+                "          if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -4210,11 +4222,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to FormName (walkingkooka.validation.convert.ValidationConverterTextToFormName)\n" +
                 "            TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "      ConverterCustomToString\n" +
-                "        \"basic\"\n" +
-                "          ConverterCollection\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
-                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "        \"optional-to\"\n" +
+                "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"collection-to\"\n" +
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
         );
     }
 
