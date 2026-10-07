@@ -83,6 +83,43 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     }
 
     @Test
+    public void testCheckValueWithHslColor() {
+        this.checkValue(
+            Color.BLACK.toHsl()
+        );
+    }
+
+    @Test
+    public void testCheckValueWithHsvColor() {
+        this.checkValue(
+            Color.BLACK.toHsv()
+        );
+    }
+
+    @Test
+    public void testCheckValueWithIndexedColorFails() {
+        this.checkValueFails(
+            Color.indexed(1),
+            "Metadata color12=1, Invalid color type 1 must not be indexed or named"
+        );
+    }
+
+    @Test
+    public void testCheckValueWithNamedColor() {
+        this.checkValueFails(
+            Color.named("Named123"),
+            "Metadata color12=\"Named123\", Invalid color type \"Named123\" must not be indexed or named"
+        );
+    }
+
+    @Test
+    public void testCheckValueWithRgbColor() {
+        this.checkValue(
+            Color.BLACK
+        );
+    }
+
+    @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck();
     }
