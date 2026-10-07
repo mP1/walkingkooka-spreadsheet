@@ -753,6 +753,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-zone-offset\n" +
                 "    to-binary\n" +
                 "    to-boolean\n" +
+                "    to-color-properties\n" +
                 "    to-csv-string-list\n" +
                 "    to-currency\n" +
                 "    to-currency-code\n" +

@@ -1137,6 +1137,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToColorProperties() {
+        this.converterAndCheck(
+            "to-color-properties",
+            SpreadsheetConverters.toColorProperties()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToCsvStringList() {
         this.converterAndCheck(
             "to-csv-string-list",
@@ -1611,6 +1619,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-zone-offset text-to-zone-offset\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-binary to-binary\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-boolean to-boolean\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-color-properties to-color-properties\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-csv-string-list to-csv-string-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-currency to-currency\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-currency-code to-currency-code\n" +

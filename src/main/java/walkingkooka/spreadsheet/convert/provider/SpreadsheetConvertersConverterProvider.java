@@ -827,6 +827,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toBoolean();
                 break;
+            case TO_COLOR_PROPERTIES_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toColorProperties();
+                break;
             case TO_CSV_STRING_LIST_STRING:
                 this.noParameterCheck(copy);
 
@@ -1607,6 +1612,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_BOOLEAN = ConverterName.with(TO_BOOLEAN_STRING);
 
+    private final static String TO_COLOR_PROPERTIES_STRING = "to-color-properties";
+
+    final static ConverterName TO_COLOR_PROPERTIES = ConverterName.with(TO_COLOR_PROPERTIES_STRING);
+
     private final static String TO_CSV_STRING_LIST_STRING = "to-csv-string-list";
 
     final static ConverterName TO_CSV_STRING_LIST = ConverterName.with(TO_CSV_STRING_LIST_STRING);
@@ -1898,6 +1907,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_ZONE_OFFSET),
             converterInfo(TO_BINARY),
             converterInfo(TO_BOOLEAN),
+            converterInfo(TO_COLOR_PROPERTIES),
             converterInfo(TO_CSV_STRING_LIST),
             converterInfo(TO_CURRENCY),
             converterInfo(TO_CURRENCY_CODE),

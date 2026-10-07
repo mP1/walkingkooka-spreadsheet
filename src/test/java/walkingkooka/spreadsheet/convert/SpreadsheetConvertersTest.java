@@ -796,6 +796,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
                 "  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
                 "  to Boolean (walkingkooka.spreadsheet.convert.SpreadsheetConverterToBoolean)\n" +
+                "  to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
                 "  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "  to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
                 "  to CurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n" +
