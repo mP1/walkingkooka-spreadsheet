@@ -56,8 +56,14 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"null-to-number\"\n" +
+                "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"simple\"\n" +
+                "          if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -73,7 +79,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -278,11 +283,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
                 "      ConverterCustomToString\n" +
-                "        \"basic\"\n" +
-                "          ConverterCollection\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
-                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "        \"optional-to\"\n" +
+                "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"collection-to\"\n" +
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
         );
     }
 
@@ -291,8 +296,14 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"null-to-number\"\n" +
+                "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"simple\"\n" +
+                "          if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -308,7 +319,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -513,11 +523,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
                 "      ConverterCustomToString\n" +
-                "        \"basic\"\n" +
-                "          ConverterCollection\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
-                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "        \"optional-to\"\n" +
+                "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"collection-to\"\n" +
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
         );
     }
 
@@ -526,8 +536,14 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, basic)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"null-to-number\"\n" +
+                "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"simple\"\n" +
+                "          if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -543,7 +559,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -687,11 +702,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
                 "      ConverterCustomToString\n" +
-                "        \"basic\"\n" +
-                "          ConverterCollection\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
-                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "        \"optional-to\"\n" +
+                "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"collection-to\"\n" +
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
         );
     }
 
@@ -700,8 +715,14 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"null-to-number\"\n" +
+                "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"simple\"\n" +
+                "          if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -717,7 +738,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -925,11 +945,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
                 "      ConverterCustomToString\n" +
-                "        \"basic\"\n" +
-                "          ConverterCollection\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
-                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "        \"optional-to\"\n" +
+                "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"collection-to\"\n" +
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
         );
     }
 
@@ -938,8 +958,14 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (text, boolean, number, date-time, locale, value, url, basic)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, url, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"null-to-number\"\n" +
+                "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"simple\"\n" +
+                "          if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -955,7 +981,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -1025,11 +1050,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            Url to Hyperlink (walkingkooka.tree.text.convert.TreeTextConverterUrlToHyperlink)\n" +
                 "            Url to Image (walkingkooka.tree.text.convert.TreeTextConverterUrlToImage)\n" +
                 "      ConverterCustomToString\n" +
-                "        \"basic\"\n" +
-                "          ConverterCollection\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
-                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "        \"optional-to\"\n" +
+                "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"collection-to\"\n" +
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
         );
     }
 
@@ -1038,8 +1063,14 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
+                "      ConverterCustomToString\n" +
+                "        \"null-to-number\"\n" +
+                "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"simple\"\n" +
+                "          if type (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -1055,7 +1086,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -1172,11 +1202,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
                 "            TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n" +
                 "      ConverterCustomToString\n" +
-                "        \"basic\"\n" +
-                "          ConverterCollection\n" +
-                "            if type (walkingkooka.convert.ConverterSimple)\n" +
-                "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "            Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "        \"optional-to\"\n" +
+                "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"collection-to\"\n" +
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
         );
     }
 

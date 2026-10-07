@@ -338,7 +338,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"NUMBER\"\n" +
                 "      ConverterCollection\n" +
-                "        null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "        Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "        to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "        Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -595,7 +594,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"number\"\n" +
                 "            ConverterCollection\n" +
-                "              null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "              Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "              to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "              Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
@@ -2702,7 +2700,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.numberConvertAndCheck(
             null,
             ExpressionNumber.class,
-            EXPRESSION_NUMBER_KIND.zero()
+            null // convert null-to-number not included in number
         );
     }
 
@@ -3097,7 +3095,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"NUMBER\"\n" +
                 "    ConverterCollection\n" +
-                "      null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "      Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "      to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "      Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n"
@@ -4032,7 +4029,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
