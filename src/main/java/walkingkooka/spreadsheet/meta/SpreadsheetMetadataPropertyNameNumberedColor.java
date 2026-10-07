@@ -28,7 +28,8 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
- * The {@link Name} of metadata property for numbered colors.
+ * The {@link Name} of metadata property for numbered colors. Note values not be a indirect color, {@link Color#isIndexed()}
+ * or {@link Color#isNamed()} must both return false.
  */
 final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMetadataPropertyName<Color> {
 
@@ -79,10 +80,18 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
 
     @Override
     Color checkValueNonNull(final Object value) {
-        return this.checkValueType(
+        final Color color = this.checkValueType(
             value,
             v -> v instanceof Color
         );
+        if (color.isIndexed() || color.isNamed()) {
+            throw new SpreadsheetMetadataPropertyValueException(
+                "Invalid color type " + color + " must not be indexed or named",
+                this,
+                color
+            );
+        }
+        return color;
     }
 
     @Override
@@ -105,7 +114,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     @Override
     Color parseValueTextNonNull(final String value,
                                 final CurrencyCodeLanguageTagContext context) {
-        return Color.parse(value);
+        return Color.parseNotIndirect(value);
     }
 
     // SpreadsheetMetadataVisitor.......................................................................................
