@@ -32,6 +32,7 @@ import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorProperties;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
@@ -70,6 +71,7 @@ import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
+import walkingkooka.props.Properties;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -244,8 +246,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "        Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "        Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
+                "        to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
                 "        TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "        TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
+                "        ConverterCustomToString\n" +
+                "          \"PROPERTIES\"\n" +
+                "            ConverterCollection\n" +
+                "              to Properties (walkingkooka.convert.ConverterToProperties)\n" +
+                "              TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"CSV\"\n" +
                 "      ConverterCollection\n" +
@@ -670,8 +678,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "              Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "              Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
+                "              to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
                 "              TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "              TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
+                "              ConverterCustomToString\n" +
+                "                \"PROPERTIES\"\n" +
+                "                  ConverterCollection\n" +
+                "                    to Properties (walkingkooka.convert.ConverterToProperties)\n" +
+                "                    TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"expression\"\n" +
                 "            TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
@@ -1103,6 +1117,23 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testColorConvertStringToColorProperties() {
+        final String text = "hello.world=BLACK";
+
+        this.colorConvertAndCheck(
+            text,
+            Properties.class,
+            Properties.parse(text)
+        );
+
+        this.colorConvertAndCheck(
+            text,
+            ColorProperties.class,
+            ColorProperties.parse(text)
+        );
+    }
+
+    @Test
     public void testColorConvertStringToRgbColor() {
         final String text = "#123";
 
@@ -1192,8 +1223,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     Lists.of(
                         SpreadsheetConverters.simple(),
                         SpreadsheetConverters.text(),
-                        SpreadsheetConverters.numberToNumber()//,
-                        //SpreadsheetConverters.color()
+                        SpreadsheetConverters.numberToNumber(),
+                        SpreadsheetConverters.color()
                     )
                 );
 
@@ -1235,8 +1266,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "      Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "      Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
+                "      to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
                 "      TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
-                "      TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n"
+                "      TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"PROPERTIES\"\n" +
+                "          ConverterCollection\n" +
+                "            to Properties (walkingkooka.convert.ConverterToProperties)\n" +
+                "            TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n"
         );
     }
 
@@ -3993,8 +4030,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
+                "            to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"PROPERTIES\"\n" +
+                "                ConverterCollection\n" +
+                "                  to Properties (walkingkooka.convert.ConverterToProperties)\n" +
+                "                  TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"expression\"\n" +
                 "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
