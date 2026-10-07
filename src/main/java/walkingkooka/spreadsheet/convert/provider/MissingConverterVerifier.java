@@ -2412,6 +2412,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
                     // to-validation-error-list.........................................................................
                     verifier.addIfConversionFail(
+                        Lists.of(VALIDATION_ERROR),
+                        ValidationErrorList.class,
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
+                        VALIDATION_ERROR_LIST
+                    );
+
+                    verifier.addIfConversionFail(
                         VALIDATION_ERROR_LIST,
                         ValidationErrorList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
