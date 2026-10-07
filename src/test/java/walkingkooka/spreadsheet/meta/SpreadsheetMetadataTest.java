@@ -730,7 +730,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         this.toStringAndCheck(
             converter,
-            "formulaConverter: collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)"
+            "formulaConverter: collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)"
         );
     }
 
@@ -756,7 +756,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         this.toStringAndCheck(
             converter,
-            "formattingConverter: collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)"
+            "formattingConverter: collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)"
         );
     }
 
@@ -1742,10 +1742,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "expressionNumberKind=BIG_DECIMAL\n" +
                                 "formHandlers=\n" +
                                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-                                "formattingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
+                                "formattingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
                                 "formattingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "formattingFunctions=\n" +
-                                "formulaConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
+                                "formulaConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
                                 "formulaCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "formulaFunctions=\n" +
                                 "functions=\n" +
@@ -1775,7 +1775,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "timeFormatter=time hh:mm:ss\n" +
                                 "timeParser=time hh:mm:ss\n" +
                                 "twoDigitYear=50\n" +
-                                "validationConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, optional-to, collection-to)\n" +
+                                "validationConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\n" +
                                 "validationCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "validationFunctions=\n" +
                                 "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
@@ -1924,10 +1924,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             "expressionNumberKind=BIG_DECIMAL\n" +
             "formHandlers=\n" +
             "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-            "formattingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
+            "formattingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
             "formattingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
             "formattingFunctions=\n" +
-            "formulaConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
+            "formulaConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
             "formulaCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
             "formulaFunctions=\n" +
             "functions=\n" +
@@ -1957,7 +1957,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             "timeFormatter=time hh:mm:ss\n" +
             "timeParser=time hh:mm:ss\n" +
             "twoDigitYear=50\n" +
-            "validationConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, optional-to, collection-to)\n" +
+            "validationConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\n" +
             "validationCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
             "validationFunctions=\n" +
             "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
