@@ -102,23 +102,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             .toLocalTime();
 
     /**
-     * {@see SpreadsheetConverterBasic}
-     */
-    public static Converter<SpreadsheetConverterContext> basic() {
-        if (null == BASIC) {
-            BASIC = namedCollection(
-                "BASIC",
-                Converters.simple(),
-                collectionTo(),
-                optionalTo()
-            );
-        }
-        return BASIC;
-    }
-
-    private static Converter<SpreadsheetConverterContext> BASIC;
-
-    /**
      * A {@link Converter} that handles converting from or to a {@link Binary} value
      */
     public static Converter<SpreadsheetConverterContext> binary() {

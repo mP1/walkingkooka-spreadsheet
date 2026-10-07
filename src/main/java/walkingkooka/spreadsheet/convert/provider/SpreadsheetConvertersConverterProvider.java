@@ -94,11 +94,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
         final String nameString = name.value();
         switch (nameString) {
-            case BASIC_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.basic();
-                break;
             case BINARY_STRING:
                 this.noParameterCheck(copy);
 
@@ -1028,10 +1023,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
         return SpreadsheetConverters.textToPath();
     }
 
-    private final static String BASIC_STRING = "basic";
-
-    final static ConverterName BASIC = ConverterName.with(BASIC_STRING);
-
     private final static String BINARY_STRING = "binary";
 
     final static ConverterName BINARY = ConverterName.with(BINARY_STRING);
@@ -1760,7 +1751,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     // @see SpreadsheetConverters constants
     final static ConverterInfoSet INFOS = ConverterInfoSet.EMPTY.setElements(
         Sets.of(
-            converterInfo(BASIC),
             converterInfo(BINARY),
             converterInfo(BINARY_TO_TEXT),
             converterInfo(BOOLEAN),

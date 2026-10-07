@@ -154,7 +154,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -218,12 +217,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  *.properties to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedProperties)\n" +
                 "  *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "  *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
-                "  ConverterCustomToString\n" +
-                "    \"BASIC\"\n" +
-                "      ConverterCollection\n" +
-                "        if type (walkingkooka.convert.ConverterSimple)\n" +
-                "        Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "        Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"BINARY\"\n" +
                 "      ConverterCollection\n" +
@@ -839,126 +832,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    // basic............................................................................................................
-
-    @Test
-    public void testBasicConvertNullToNumber() {
-        this.basicConvertAndCheck(
-            null,
-            Integer.class,
-            null
-        );
-    }
-
-    @Test
-    public void testBasicConvertListNullToNumber() {
-        this.basicConvertAndCheck(
-            Arrays.asList((Object) null),
-            Integer.class,
-            0
-        );
-    }
-
-    @Test
-    public void testBasicConvertListIntegerToLong() {
-        this.basicConvertAndCheck(
-            Lists.of(123),
-            123L
-        );
-    }
-
-    @Test
-    public void testBasicConvertSetIntegerToLong() {
-        this.basicConvertAndCheck(
-            Sets.of(123),
-            123L
-        );
-    }
-
-    @Test
-    public void testBasicConvertOptionalEmptyToNumber() {
-        this.basicConvertAndCheck(
-            Optional.empty(),
-            Integer.class,
-            0
-        );
-    }
-
-    @Test
-    public void testBasicConvertOptionalIntegerToLong() {
-        this.basicConvertAndCheck(
-            Optional.of(123),
-            123L
-        );
-    }
-
-    private void basicConvertAndCheck(final Object value,
-                                      final Object expected) {
-        this.basicConvertAndCheck(
-            value,
-            expected.getClass(),
-            Cast.to(expected)
-        );
-    }
-
-    private <T> void basicConvertAndCheck(final Object value,
-                                          final Class<T> type,
-                                          final T expected) {
-        this.convertAndCheck(
-            SpreadsheetConverters.basic(),
-            value,
-            type,
-            new FakeSpreadsheetConverterContext() {
-                @Override
-                public boolean canConvert(final Object value,
-                                          final Class<?> type) {
-                    return this.converter.canConvert(
-                        value,
-                        type,
-                        this
-                    );
-                }
-
-                @Override
-                public <TT> Either<TT, String> convert(final Object value,
-                                                       final Class<TT> target) {
-                    return this.converter.convert(
-                        value,
-                        target,
-                        this
-                    );
-                }
-
-                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
-                    Lists.of(
-                        SpreadsheetConverters.nullToNumber(),
-                        SpreadsheetConverters.numberToNumber(),
-                        SpreadsheetConverters.text()
-                    )
-                );
-
-                @Override
-                public ExpressionNumberKind expressionNumberKind() {
-                    return EXPRESSION_NUMBER_KIND;
-                }
-            },
-            expected
-        );
-    }
-
-    @Test
-    public void testBasicPrintTree() {
-        this.treePrintAndCheck(
-            SpreadsheetConverters.basic(),
-            "ConverterCustomToString\n" +
-                "  \"BASIC\"\n" +
-                "    ConverterCollection\n" +
-                "      if type (walkingkooka.convert.ConverterSimple)\n" +
-                "      Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "      Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
-        );
-    }
-
     // binary..........................................................................................................
 
     @Test
@@ -1315,7 +1188,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
                     Lists.of(
-                        SpreadsheetConverters.basic(),
+                        SpreadsheetConverters.simple(),
                         SpreadsheetConverters.text(),
                         SpreadsheetConverters.numberToNumber()//,
                         //SpreadsheetConverters.color()
@@ -1437,7 +1310,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text()
             )
         );
@@ -2229,7 +2102,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text(),
                 Converters.objectToString(),
                 SpreadsheetConverters.textToCsvStringList(),
@@ -2369,7 +2242,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text()
             )
         );
@@ -3224,7 +3097,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text(),
                 SpreadsheetConverters.json(),
                 SpreadsheetConverters.textToSpreadsheetId()
@@ -3413,7 +3286,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text()
             )
         );
@@ -3555,7 +3428,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text(),
                 SpreadsheetConverters.style()
             )
@@ -4287,7 +4160,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text()
             )
         );
@@ -4879,7 +4752,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text()
             )
         );
@@ -4973,7 +4846,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text()
             )
         );
@@ -5109,7 +4982,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text()
             )
         );
@@ -5902,7 +5775,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.basic(),
+                SpreadsheetConverters.simple(),
                 SpreadsheetConverters.text(),
                 SpreadsheetConverters.numberToNumber(),
                 SpreadsheetConverters.toBoolean(),

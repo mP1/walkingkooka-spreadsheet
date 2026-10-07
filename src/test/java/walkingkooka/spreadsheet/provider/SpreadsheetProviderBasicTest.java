@@ -494,7 +494,6 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "  converterProvider\n" +
                 "    SpreadsheetConvertersConverterProvider\n" +
                 "      ConverterInfoSet\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic basic\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/binary binary\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/binary-to-text binary-to-text\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/boolean boolean\n" +
