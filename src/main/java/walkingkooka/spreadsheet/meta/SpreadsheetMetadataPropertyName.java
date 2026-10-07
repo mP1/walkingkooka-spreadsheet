@@ -634,7 +634,17 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             throw new SpreadsheetMetadataPropertyValueException("Missing value", this, value);
         }
 
-        return this.checkValueNonNull(value);
+        try {
+            return this.checkValueNonNull(value);
+        } catch (final SpreadsheetMetadataPropertyValueException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException cause) {
+            throw new SpreadsheetMetadataPropertyValueException(
+                cause.getMessage(),
+                this,
+                value
+            );
+        }
     }
 
     abstract T checkValueNonNull(final Object value);

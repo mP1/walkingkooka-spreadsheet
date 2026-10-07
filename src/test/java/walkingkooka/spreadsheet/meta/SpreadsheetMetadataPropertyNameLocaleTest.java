@@ -29,6 +29,22 @@ public final class SpreadsheetMetadataPropertyNameLocaleTest extends Spreadsheet
     }
 
     @Test
+    public void testCheckValueWithRootLocaleFails() {
+        this.checkValueFails(
+            Locale.ROOT,
+            "Metadata locale=, Invalid locale \"\""
+        );
+    }
+
+    @Test
+    public void testCheckValueWithUndefinedLocaleFails() {
+        this.checkValueFails(
+            Locale.forLanguageTag("UND"),
+            "Metadata locale=und, Invalid locale \"und\""
+        );
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetMetadataPropertyNameLocale.instance(), "locale");
     }
