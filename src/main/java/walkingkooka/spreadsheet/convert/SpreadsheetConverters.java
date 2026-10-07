@@ -1495,6 +1495,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@link ColorConverters#toColorProperties()}
+     */
+    public static Converter<SpreadsheetConverterContext> toColorProperties() {
+        return ColorConverters.toColorProperties();
+    }
+
+    /**
      * {@link Converters#toCsvStringList()}
      */
     public static Converter<SpreadsheetConverterContext> toCsvStringList() {
