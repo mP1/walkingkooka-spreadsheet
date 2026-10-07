@@ -520,7 +520,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
         if (null == NUMBER) {
             NUMBER = namedCollection(
                 "NUMBER",
-                nullToNumber(),
                 numberToNumber(),
                 toNumber(),
                 numberToText()

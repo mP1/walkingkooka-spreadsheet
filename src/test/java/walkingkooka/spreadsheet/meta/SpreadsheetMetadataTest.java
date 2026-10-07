@@ -730,7 +730,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         this.toStringAndCheck(
             converter,
-            "formulaConverter: collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)"
+            "formulaConverter: collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)"
         );
     }
 
@@ -756,7 +756,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         this.toStringAndCheck(
             converter,
-            "formattingConverter: collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)"
+            "formattingConverter: collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)"
         );
     }
 
@@ -1742,10 +1742,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "expressionNumberKind=BIG_DECIMAL\n" +
                                 "formHandlers=\n" +
                                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-                                "formattingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
+                                "formattingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
                                 "formattingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "formattingFunctions=\n" +
-                                "formulaConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
+                                "formulaConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
                                 "formulaCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "formulaFunctions=\n" +
                                 "functions=\n" +
@@ -1756,10 +1756,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "parsers=date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\n" +
                                 "plugins=\n" +
                                 "precision=7\n" +
-                                "queryConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, basic)\n" +
+                                "queryConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\n" +
                                 "queryFunctions=\n" +
                                 "roundingMode=HALF_UP\n" +
-                                "scriptingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
+                                "scriptingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
                                 "scriptingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "scriptingFunctions=\n" +
                                 "showFormulaEditor=true\n" +
@@ -1767,7 +1767,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "showGridLines=true\n" +
                                 "showHeadings=true\n" +
                                 "sortComparators=background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\n" +
-                                "sortConverter=collection(text, boolean, number, date-time, locale, value, basic)\n" +
+                                "sortConverter=collection(null-to-number, simple, text, boolean, number, date-time, locale, value, optional-to, collection-to)\n" +
                                 "spreadsheetId=1\n" +
                                 "style.height=50px\n" +
                                 "style.width=100px\n" +
@@ -1775,7 +1775,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                                 "timeFormatter=time hh:mm:ss\n" +
                                 "timeParser=time hh:mm:ss\n" +
                                 "twoDigitYear=50\n" +
-                                "validationConverter=collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
+                                "validationConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, optional-to, collection-to)\n" +
                                 "validationCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
                                 "validationFunctions=\n" +
                                 "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
@@ -1896,73 +1896,73 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     @Test
     public void testFromPropertiesAllProperties() {
         this.fromPropertiesAndCheck(
-                "auditInfo.createdBy=user123@example.com\n" +
-                "auditInfo.createdTimestamp=1999-12-31T12:58:59\n" +
-                "auditInfo.modifiedBy=user123@example.com\n" +
-                "auditInfo.modifiedTimestamp=1999-12-31T12:58:59\n" +
-                "autoHideScrollbars=false\n" +
-                "cellCharacterWidth=1\n" +
-                "color1=black\n" +
-                "color2=white\n" +
-                "colorBlack=1\n" +
-                "colorWhite=2\n" +
-                "comparators=background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, date-time, day-of-month, day-of-week, error, formatter, hour-of-am-pm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, text-decoration-color, text-with-numbers, text-with-numbers-case-insensitive, time, validator, value-type, year\n" +
-                "converters=basic, binary, binary-to-text, boolean, boolean-to-text, collection, collection-to, collection-to-list, color, color-to-color, color-to-number, csv, currency, currency-code-to-currency, currency-value-to, currency-value-to-number, date-time, date-time-symbols, decimal-number-symbols, environment, environment-to-binary, environment-to-text, error-throwing, error-to-error, error-to-number, expression, form-and-validation, format-pattern-to-string, json, json-to, locale, locale-to-text, logging, net, never, null-to-number, number, number-to-color, number-to-currency-value, number-to-number, number-to-text, optional-to, plugins, properties, properties-to-date-time-symbols, properties-to-decimal-number-symbols, properties-to-spreadsheet-metadata, properties-to-text-style, simple, spreadsheet-cell-set, spreadsheet-id-to-spreadsheet-metadata, spreadsheet-metadata, spreadsheet-selection, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, storage, storage-binary-to-storage-value-binary, storage-binary-to-storage-value-csv, storage-binary-to-storage-value-environment, storage-binary-to-storage-value-expression, storage-binary-to-storage-value-json, storage-binary-to-storage-value-properties, storage-binary-to-storage-value-tsv, storage-binary-to-storage-value-txt, storage-value-info-list-to-text, storage-value-to-storage-binary-binary, storage-value-to-storage-binary-csv, storage-value-to-storage-binary-environment, storage-value-to-storage-binary-expression, storage-value-to-storage-binary-json, storage-value-to-storage-binary-properties, storage-value-to-storage-binary-tsv, storage-value-to-storage-binary-txt, style, system, template, text, text-node, text-to-binary, text-to-boolean-list, text-to-border, text-to-charset, text-to-color, text-to-converter-selector, text-to-csv-string-list, text-to-csv-string-set, text-to-currency, text-to-currency-code, text-to-currency-exchange-rater-selector, text-to-currency-value, text-to-date-list, text-to-date-time-list, text-to-email-address, text-to-environment, text-to-environment-value-name, text-to-error, text-to-expression, text-to-expression-function-selector, text-to-flag, text-to-form-name, text-to-has-host-address, text-to-host-address, text-to-indentation, text-to-json, text-to-json-pointer, text-to-json-selector, text-to-line-ending, text-to-locale, text-to-locale-language-tag, text-to-logging-level, text-to-margin, text-to-media-type, text-to-number-list, text-to-object, text-to-padding, text-to-path, text-to-properties, text-to-spreadsheet-color-name, text-to-spreadsheet-comparator-selector, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-parser-selector, text-to-spreadsheet-selection, text-to-spreadsheet-text, text-to-storage-path, text-to-string-list, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-time-list, text-to-tsv-string-list, text-to-tsv-string-set, text-to-url, text-to-url-fragment, text-to-url-query-string, text-to-validation-error, text-to-validator-selector, text-to-value-type, text-to-zone-offset, to-binary, to-boolean, to-csv-string-list, to-currency, to-currency-code, to-date-time-symbols, to-decimal-number-symbols, to-environment, to-formatter-selector, to-has-host-address, to-host-address, to-json-node, to-locale, to-locale-language-tag, to-multi-line-text, to-number, to-parser-selector, to-properties, to-spreadsheet-selection, to-string, to-style, to-styleable, to-text-node, to-tsv-string-list, to-validation-checkbox, to-validation-choice, to-validation-choice-list, to-validation-error-list, to-validator-selector, to-value, to-value-type, tsv, url, url-to-hyperlink, url-to-image, value\n" +
-                "currency=AUD\n" +
-                "dateFormatter=date yyyy/mm/dd\n" +
-                "dateParser=date yyyy/mm/dd\n" +
-                "dateTimeFormatter=date-time yyyy/mm/dd hh:mm\n" +
-                "dateTimeOffset=-25569\n" +
-                "dateTimeParser=date-time yyyy/mm/dd hh:mm\n" +
-                "dateTimeSymbols=\"am,pm\",\"January,February,March,April,May,June,July,August,September,October,November,December\",\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\",\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\",\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\n" +
-                "decimalNumberDigitCount=8\n" +
-                "decimalNumberSymbols=-,+,0,$,.,e,\",\",\\u221e,.,NaN,%,\\u2030\n" +
-                "defaultFormHandler=basic\n" +
-                "defaultYear=2000\n" +
-                "errorFormatter=badge-error text @\n" +
-                "exporters=collection, empty, json\n" +
-                "expressionNumberKind=BIG_DECIMAL\n" +
-                "formHandlers=\n" +
-                "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
-                "formattingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
-                "formattingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
-                "formattingFunctions=\n" +
-                "formulaConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
-                "formulaCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
-                "formulaFunctions=\n" +
-                "functions=\n" +
-                "importers=collection, empty, json\n" +
-                "locale=en-AU\n" +
-                "numberFormatter=number 0.#;0.#;0\n" +
-                "numberParser=number 0.#;0.#;0\n" +
-                "parsers=date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\n" +
-                "plugins=\n" +
-                "precision=7\n" +
-                "queryConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, basic)\n" +
-                "queryFunctions=\n" +
-                "roundingMode=HALF_UP\n" +
-                "scriptingConverter=collection(text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, basic)\n" +
-                "scriptingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
-                "scriptingFunctions=\n" +
-                "showFormulaEditor=true\n" +
-                "showFormulas=false\n" +
-                "showGridLines=true\n" +
-                "showHeadings=true\n" +
-                "sortComparators=background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\n" +
-                "sortConverter=collection(text, boolean, number, date-time, locale, value, basic)\n" +
-                "spreadsheetId=1\n" +
-                "style.height=50px\n" +
-                "style.width=100px\n" +
-                "textFormatter=text @\n" +
-                "timeFormatter=time hh:mm:ss\n" +
-                "timeParser=time hh:mm:ss\n" +
-                "twoDigitYear=50\n" +
-                "validationConverter=collection(text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, basic)\n" +
-                "validationCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
-                "validationFunctions=\n" +
-                "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
-                "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
-                "valueSeparator=,\n",
+            "auditInfo.createdBy=user123@example.com\n" +
+            "auditInfo.createdTimestamp=1999-12-31T12:58:59\n" +
+            "auditInfo.modifiedBy=user123@example.com\n" +
+            "auditInfo.modifiedTimestamp=1999-12-31T12:58:59\n" +
+            "autoHideScrollbars=false\n" +
+            "cellCharacterWidth=1\n" +
+            "color1=black\n" +
+            "color2=white\n" +
+            "colorBlack=1\n" +
+            "colorWhite=2\n" +
+            "comparators=background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, date-time, day-of-month, day-of-week, error, formatter, hour-of-am-pm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, text-decoration-color, text-with-numbers, text-with-numbers-case-insensitive, time, validator, value-type, year\n" +
+            "converters=basic, binary, binary-to-text, boolean, boolean-to-text, collection, collection-to, collection-to-list, color, color-to-color, color-to-number, csv, currency, currency-code-to-currency, currency-value-to, currency-value-to-number, date-time, date-time-symbols, decimal-number-symbols, environment, environment-to-binary, environment-to-text, error-throwing, error-to-error, error-to-number, expression, form-and-validation, format-pattern-to-string, json, json-to, locale, locale-to-text, logging, net, never, null-to-number, number, number-to-color, number-to-currency-value, number-to-number, number-to-text, optional-to, plugins, properties, properties-to-date-time-symbols, properties-to-decimal-number-symbols, properties-to-spreadsheet-metadata, properties-to-text-style, simple, spreadsheet-cell-set, spreadsheet-id-to-spreadsheet-metadata, spreadsheet-metadata, spreadsheet-selection, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, storage, storage-binary-to-storage-value-binary, storage-binary-to-storage-value-csv, storage-binary-to-storage-value-environment, storage-binary-to-storage-value-expression, storage-binary-to-storage-value-json, storage-binary-to-storage-value-properties, storage-binary-to-storage-value-tsv, storage-binary-to-storage-value-txt, storage-value-info-list-to-text, storage-value-to-storage-binary-binary, storage-value-to-storage-binary-csv, storage-value-to-storage-binary-environment, storage-value-to-storage-binary-expression, storage-value-to-storage-binary-json, storage-value-to-storage-binary-properties, storage-value-to-storage-binary-tsv, storage-value-to-storage-binary-txt, style, system, template, text, text-node, text-to-binary, text-to-boolean-list, text-to-border, text-to-charset, text-to-color, text-to-converter-selector, text-to-csv-string-list, text-to-csv-string-set, text-to-currency, text-to-currency-code, text-to-currency-exchange-rater-selector, text-to-currency-value, text-to-date-list, text-to-date-time-list, text-to-email-address, text-to-environment, text-to-environment-value-name, text-to-error, text-to-expression, text-to-expression-function-selector, text-to-flag, text-to-form-name, text-to-has-host-address, text-to-host-address, text-to-indentation, text-to-json, text-to-json-pointer, text-to-json-selector, text-to-line-ending, text-to-locale, text-to-locale-language-tag, text-to-logging-level, text-to-margin, text-to-media-type, text-to-number-list, text-to-object, text-to-padding, text-to-path, text-to-properties, text-to-spreadsheet-color-name, text-to-spreadsheet-comparator-selector, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-parser-selector, text-to-spreadsheet-selection, text-to-spreadsheet-text, text-to-storage-path, text-to-string-list, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-time-list, text-to-tsv-string-list, text-to-tsv-string-set, text-to-url, text-to-url-fragment, text-to-url-query-string, text-to-validation-error, text-to-validator-selector, text-to-value-type, text-to-zone-offset, to-binary, to-boolean, to-csv-string-list, to-currency, to-currency-code, to-date-time-symbols, to-decimal-number-symbols, to-environment, to-formatter-selector, to-has-host-address, to-host-address, to-json-node, to-locale, to-locale-language-tag, to-multi-line-text, to-number, to-parser-selector, to-properties, to-spreadsheet-selection, to-string, to-style, to-styleable, to-text-node, to-tsv-string-list, to-validation-checkbox, to-validation-choice, to-validation-choice-list, to-validation-error-list, to-validator-selector, to-value, to-value-type, tsv, url, url-to-hyperlink, url-to-image, value\n" +
+            "currency=AUD\n" +
+            "dateFormatter=date yyyy/mm/dd\n" +
+            "dateParser=date yyyy/mm/dd\n" +
+            "dateTimeFormatter=date-time yyyy/mm/dd hh:mm\n" +
+            "dateTimeOffset=-25569\n" +
+            "dateTimeParser=date-time yyyy/mm/dd hh:mm\n" +
+            "dateTimeSymbols=\"am,pm\",\"January,February,March,April,May,June,July,August,September,October,November,December\",\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\",\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\",\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\n" +
+            "decimalNumberDigitCount=8\n" +
+            "decimalNumberSymbols=-,+,0,$,.,e,\",\",\\u221e,.,NaN,%,\\u2030\n" +
+            "defaultFormHandler=basic\n" +
+            "defaultYear=2000\n" +
+            "errorFormatter=badge-error text @\n" +
+            "exporters=collection, empty, json\n" +
+            "expressionNumberKind=BIG_DECIMAL\n" +
+            "formHandlers=\n" +
+            "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
+            "formattingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
+            "formattingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
+            "formattingFunctions=\n" +
+            "formulaConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
+            "formulaCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
+            "formulaFunctions=\n" +
+            "functions=\n" +
+            "importers=collection, empty, json\n" +
+            "locale=en-AU\n" +
+            "numberFormatter=number 0.#;0.#;0\n" +
+            "numberParser=number 0.#;0.#;0\n" +
+            "parsers=date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\n" +
+            "plugins=\n" +
+            "precision=7\n" +
+            "queryConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\n" +
+            "queryFunctions=\n" +
+            "roundingMode=HALF_UP\n" +
+            "scriptingConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\n" +
+            "scriptingCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
+            "scriptingFunctions=\n" +
+            "showFormulaEditor=true\n" +
+            "showFormulas=false\n" +
+            "showGridLines=true\n" +
+            "showHeadings=true\n" +
+            "sortComparators=background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\n" +
+            "sortConverter=collection(null-to-number, simple, text, boolean, number, date-time, locale, value, optional-to, collection-to)\n" +
+            "spreadsheetId=1\n" +
+            "style.height=50px\n" +
+            "style.width=100px\n" +
+            "textFormatter=text @\n" +
+            "timeFormatter=time hh:mm:ss\n" +
+            "timeParser=time hh:mm:ss\n" +
+            "twoDigitYear=50\n" +
+            "validationConverter=collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json, optional-to, collection-to)\n" +
+            "validationCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
+            "validationFunctions=\n" +
+            "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
+            "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
+            "valueSeparator=,\n",
             SpreadsheetMetadataTesting.METADATA_EN_AU
                 .set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,

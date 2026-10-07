@@ -1952,7 +1952,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
                 verifier.addIfConversionFail(
                     STORAGE_VALUE_BINARY,
-                    StorageValue.class,
+                    StorageBinary.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_VALUE_TO_STORAGE_BINARY_BINARY,
                     STORAGE_BINARY_BINARY
                 );
