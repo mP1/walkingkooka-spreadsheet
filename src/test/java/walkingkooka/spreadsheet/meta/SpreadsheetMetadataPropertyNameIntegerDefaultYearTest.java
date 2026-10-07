@@ -22,17 +22,17 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetMetadataPropertyNameIntegerDefaultYearTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerDefaultYear> {
 
     @Test
-    public void testZeroValue() {
+    public void testCheckWithZeroValue() {
         this.checkValue(0);
     }
 
     @Test
-    public void test1900() {
+    public void testCheckValueWith1900() {
         this.checkValue(1900);
     }
 
     @Test
-    public void test2000() {
+    public void testCheckValueWith2000() {
         this.checkValue(2000);
     }
 
