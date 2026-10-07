@@ -42,8 +42,10 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
 
     @Override
     Locale checkValueNonNull(final Object value) {
-        return this.checkValueType(value,
+        final Locale locale = this.checkValueType(value,
             v -> v instanceof Locale);
+        LocaleLanguageTag.requireValidLocale(locale);
+        return locale;
     }
 
     @Override
