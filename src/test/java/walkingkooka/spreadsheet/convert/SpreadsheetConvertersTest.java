@@ -6104,13 +6104,48 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testValuePrintTree() {
         this.treePrintAndCheck(
-            SpreadsheetConverters.basic(),
+            SpreadsheetConverters.value(),
             "ConverterCustomToString\n" +
-                "  \"BASIC\"\n" +
+                "  \"VALUE\"\n" +
                 "    ConverterCollection\n" +
-                "      if type (walkingkooka.convert.ConverterSimple)\n" +
-                "      Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
-                "      Optional to (walkingkooka.convert.ConverterOptionalTo)\n"
+                "      SpreadsheetError to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorToNumber)\n" +
+                "      null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"SPREADSHEET SELECTION\"\n" +
+                "          ConverterCollection\n" +
+                "            HasSpreadsheetReference (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetSelection)\n" +
+                "            SELECTION to SELECTION (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection)\n" +
+                "            SELECTION to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetSelectionToText)\n" +
+                "            TEXT to SELECTION (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetSelection)\n" +
+                "      SpreadsheetError to SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorToSpreadsheetError)\n" +
+                "      TEXT to SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetError)\n" +
+                "      to ValueType (walkingkooka.validation.convert.ValidationConverterToValueType)\n" +
+                "      TEXT to ValueType (walkingkooka.validation.convert.ValidationConverterTextToValueType)\n" +
+                "      TEXT to ZoneOffset (walkingkooka.convert.ConverterTextToZoneOffset)\n" +
+                "      SpreadsheetCellSet (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetCellSet)\n" +
+                "      Collection to List (walkingkooka.convert.ConverterCollectionToList)\n" +
+                "      TEXT to BooleanList (walkingkooka.convert.ConverterTextToCollectionListBooleanList)\n" +
+                "      TEXT to LocalDateList (walkingkooka.convert.ConverterTextToCollectionListLocalDateList)\n" +
+                "      TEXT to LocalDateTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalDateTimeList)\n" +
+                "      TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "      TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
+                "      TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
+                "      TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"CSV\"\n" +
+                "          ConverterCollection\n" +
+                "            to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "            TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "            TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"TSV\"\n" +
+                "          ConverterCollection\n" +
+                "            to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "            TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "            TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
+                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "      to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
+                "      * to String (walkingkooka.convert.ConverterObjectToString)\n"
         );
     }
 
