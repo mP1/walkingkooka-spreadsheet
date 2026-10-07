@@ -815,7 +815,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * Returns the {@link SpreadsheetMetadataPropertyName} that matches this {@link SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet}.
      */
-    public SpreadsheetMetadataPropertyName<ConverterSelector> toConverterSelector() {
+    public final SpreadsheetMetadataPropertyName<ConverterSelector> toConverterSelector() {
         SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
 
         if (this instanceof SpreadsheetMetadataPropertyNameConverterSelector) {
@@ -866,7 +866,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * Getter that returns this {@link SpreadsheetMetadataPropertyName} as a {@link EnvironmentValueName}.
      */
-    public EnvironmentValueName<T> toEnvironmentValueName() {
+    public final EnvironmentValueName<T> toEnvironmentValueName() {
         if (null == this.environmentValueName) {
             this.environmentValueName = EnvironmentValueName.registerConstant(
                 this.name,
@@ -917,7 +917,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     // toUrlPathName....................................................................................................
 
-    public UrlPathName toUrlPathName() {
+    public final UrlPathName toUrlPathName() {
         return this.urlPathName;
     }
 
