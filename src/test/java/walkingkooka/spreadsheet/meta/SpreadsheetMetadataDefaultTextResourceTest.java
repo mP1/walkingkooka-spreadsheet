@@ -61,9 +61,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"simple\"\n" +
-                "          if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      simple (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -301,9 +299,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"simple\"\n" +
-                "          if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      simple (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -541,9 +537,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"simple\"\n" +
-                "          if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      simple (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -720,9 +714,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"simple\"\n" +
-                "          if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      simple (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -963,9 +955,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"simple\"\n" +
-                "          if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      simple (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
@@ -1068,9 +1058,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"simple\"\n" +
-                "          if type (walkingkooka.convert.ConverterSimple)\n" +
+                "      simple (walkingkooka.convert.ConverterSimple)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
