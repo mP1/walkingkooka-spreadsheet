@@ -1451,7 +1451,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
                 DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
             ).set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-            .set(converterSelector, ConverterSelector.parse("collection(text, number, date-time, basic, value)"))
+            .set(converterSelector, ConverterSelector.parse("collection(text, number, date-time, simple, value)"))
             .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)

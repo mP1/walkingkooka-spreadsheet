@@ -607,7 +607,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    value-type\n" +
                 "    year\n" +
                 "  converters\n" +
-                "    basic\n" +
                 "    binary\n" +
                 "    binary-to-text\n" +
                 "    boolean\n" +

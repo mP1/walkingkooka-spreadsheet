@@ -601,25 +601,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             Optional.of(VALIDATOR_SELECTOR)
         ).setStyle(STYLE);
 
-        // basic........................................................................................................
-        verifier.addIfConversionFail(
-             null,
-            Object.class,
-            SpreadsheetConvertersConverterProvider.BASIC
-        );
-
-        verifier.addIfConversionFail(
-                1,
-            Object.class,
-            SpreadsheetConvertersConverterProvider.BASIC
-        );
-
-        verifier.addIfConversionFail(
-            spreadsheetCell,
-            Object.class,
-            SpreadsheetConvertersConverterProvider.BASIC
-        );
-
         // boolean......................................................................................................
         verifier.addIfConversionFail(
             Lists.of(

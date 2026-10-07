@@ -501,7 +501,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 p
             )
         ).converter(
-            ConverterSelector.parse("basic"),
+            ConverterSelector.parse("simple"),
             PROVIDER_CONTEXT
         );
 

@@ -51,14 +51,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     ConverterTesting {
 
     @Test
-    public void testConverterSelectorWithBasic() {
-        this.converterAndCheck(
-            "basic",
-            SpreadsheetConverters.basic()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithBinary() {
         this.converterAndCheck(
             "binary",
@@ -1473,7 +1465,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             this.createConverterProvider(),
             "SpreadsheetConvertersConverterProvider\n" +
                 "  ConverterInfoSet\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/basic basic\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/binary binary\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/binary-to-text binary-to-text\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/boolean boolean\n" +

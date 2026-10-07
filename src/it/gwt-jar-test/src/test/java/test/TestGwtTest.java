@@ -1,3 +1,20 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package test;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -258,8 +275,8 @@ public class TestGwtTest extends GWTTestCase {
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
                 .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-                .set(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER, ConverterSelector.parse("collection(text, boolean, number, date-time, basic, locale, value, error-throwing, color, expression, environment, currency, plugins, style, text-node, template, net)"))
-                .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection(text, boolean, number, date-time, basic, locale, value, error-throwing, color, expression, environment, currency, template, net)"))
+                .set(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER, ConverterSelector.parse("collection(simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, currency, plugins, style, text-node, template, net)"))
+                .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection(simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, currency, template, net)"))
                 .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
                 .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
