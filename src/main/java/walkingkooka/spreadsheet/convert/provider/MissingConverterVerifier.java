@@ -30,6 +30,7 @@ import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorProperties;
 import walkingkooka.color.HslColor;
 import walkingkooka.color.HsvColor;
 import walkingkooka.color.RgbColor;
@@ -331,8 +332,9 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
     private final static JsonSelector JSON_SELECTOR = JsonSelector.parse("//*/json1/pointer2/.");
 
+    private final static ColorProperties COLOR_PROPERTIES = ColorProperties.parse("hello=BLACK\n");
     private final static Properties PROPERTIES = Properties.parse("hello=world");
-    
+
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
     private final static SpreadsheetCellRangeReference CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
     private final static SpreadsheetColumnReference COLUMN = SpreadsheetSelection.parseColumn("A");
@@ -837,6 +839,14 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 SpreadsheetColorName.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME,
                 spreadsheetColorName
+            );
+
+            // to-color-properties......................................................................................
+            verifier.addIfConversionFail(
+                COLOR_PROPERTIES.text(),
+                ColorProperties.class,
+                SpreadsheetConvertersConverterProvider.TO_COLOR_PROPERTIES,
+                COLOR_PROPERTIES
             );
         }
 

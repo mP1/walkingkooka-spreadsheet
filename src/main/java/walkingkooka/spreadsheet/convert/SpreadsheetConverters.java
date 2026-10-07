@@ -183,8 +183,10 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 textToColor(),
                 colorToNumber(),
                 numberToColor(),
+                toColorProperties(),
                 textToSpreadsheetColorName(),
-                textToSpreadsheetMetadataColor()
+                textToSpreadsheetMetadataColor(),
+                properties()
             );
         }
         return COLOR;
