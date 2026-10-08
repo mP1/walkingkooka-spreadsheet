@@ -48,8 +48,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     ColorContextDelegator {
 
     static SpreadsheetFormatterContextBasic with(final HasSpreadsheetCell hasSpreadsheetCell,
-                                                 final Function<Integer, Optional<Color>> numberToColor,
-                                                 final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int cellCharacterWidth,
                                                  final SpreadsheetFormatter formatter,
                                                  final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
@@ -57,8 +55,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
                                                  final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                  final ProviderContext providerContext) {
         Objects.requireNonNull(hasSpreadsheetCell, "hasSpreadsheetCell");
-        Objects.requireNonNull(numberToColor, "numberToColor");
-        Objects.requireNonNull(nameToColor, "nameToColor");
         if (cellCharacterWidth <= 0) {
             throw new IllegalArgumentException("Invalid cellCharacterWidth " + cellCharacterWidth + " <= 0");
         }
@@ -70,8 +66,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
 
         return new SpreadsheetFormatterContextBasic(
             hasSpreadsheetCell,
-            numberToColor,
-            nameToColor,
             cellCharacterWidth,
             formatter,
             spreadsheetExpressionEvaluationContext,
@@ -82,8 +76,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     }
 
     private SpreadsheetFormatterContextBasic(final HasSpreadsheetCell hasSpreadsheetCell,
-                                             final Function<Integer, Optional<Color>> numberToColor,
-                                             final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int cellCharacterWidth,
                                              final SpreadsheetFormatter formatter,
                                              final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
@@ -94,8 +86,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
 
         this.hasSpreadsheetCell = hasSpreadsheetCell;
 
-        this.numberToColor = numberToColor;
-        this.nameToColor = nameToColor;
         this.cellCharacterWidth = cellCharacterWidth;
 
         this.formatter = formatter;
@@ -125,17 +115,19 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
 
     @Override
     public Optional<Color> colorNumber(final int number) {
-        return this.numberToColor.apply(number);
+        return this.lookupColor(
+            Color.indexed(number)
+        );
     }
-
-    private final Function<Integer, Optional<Color>> numberToColor;
 
     @Override
     public Optional<Color> colorName(final SpreadsheetColorName name) {
-        return this.nameToColor.apply(name);
+        return this.lookupColor(
+            Color.named(
+                name.value()
+            )
+        );
     }
-
-    private final Function<SpreadsheetColorName, Optional<Color>> nameToColor;
 
     @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
@@ -232,8 +224,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
             this :
             new SpreadsheetFormatterContextBasic(
                 this.hasSpreadsheetCell,
-                this.numberToColor,
-                this.nameToColor,
                 this.cellCharacterWidth,
                 this.formatter,
                 this.spreadsheetExpressionEvaluationContext,
@@ -257,8 +247,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
         return ToStringBuilder.empty()
             .label("cellCharacterWidth").value(this.cellCharacterWidth)
             .label("hasSpreadsheetCell").value(this.hasSpreadsheetCell)
-            .label("numberToColor").value(this.numberToColor)
-            .label("nameToColor").value(this.nameToColor)
             .label("spreadsheetConverterContext").value(this.spreadsheetConverterContext)
             .label("spreadsheetFormatterProvider").value(this.spreadsheetFormatterProvider)
             .label("providerContext").value(this.providerContext)

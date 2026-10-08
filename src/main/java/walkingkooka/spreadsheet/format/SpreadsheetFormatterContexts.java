@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.color.Color;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -34,8 +33,6 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
      * {@see SpreadsheetFormatterContextBasic}
      */
     public static SpreadsheetFormatterContext basic(final HasSpreadsheetCell hasSpreadsheetCell,
-                                                    final Function<Integer, Optional<Color>> numberToColor,
-                                                    final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                     final int cellCharacterWidth,
                                                     final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                     final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
@@ -44,8 +41,6 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
                                                     final ProviderContext providerContext) {
         return SpreadsheetFormatterContextBasic.with(
             hasSpreadsheetCell,
-            numberToColor,
-            nameToColor,
             cellCharacterWidth,
             defaultSpreadsheetFormatter,
             spreadsheetExpressionEvaluationContext,

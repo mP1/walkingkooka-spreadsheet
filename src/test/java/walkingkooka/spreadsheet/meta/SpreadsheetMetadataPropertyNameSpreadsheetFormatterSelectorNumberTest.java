@@ -98,12 +98,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {
         return SpreadsheetFormatterContexts.basic(
             HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL,
-            (n -> {
-                throw new UnsupportedOperationException();
-            }),
-            (n -> {
-                throw new UnsupportedOperationException();
-            }),
             1, // cellCharacterWidth
             SpreadsheetFormatters.fake(),
             (final Optional<Object> value) -> {

@@ -68,31 +68,9 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
 
     private final static Color COLOR = Color.fromRgb(0x123456);
 
-    private final static Function<Integer, Optional<Color>> NUMBER_TO_COLOR = new Function<>() {
+    private final static int COLOR_NUMBER = 2;
 
-        @Override
-        public Optional<Color> apply(final Integer number) {
-            return Optional.of(COLOR);
-        }
-
-        @Override
-        public String toString() {
-            return 1 + "=" + COLOR;
-        }
-    };
-
-    private final static Function<SpreadsheetColorName, Optional<Color>> NAME_TO_COLOR = new Function<>() {
-
-        @Override
-        public Optional<Color> apply(final SpreadsheetColorName name) {
-            return Optional.of(COLOR);
-        }
-
-        @Override
-        public String toString() {
-            return "bingo=" + COLOR;
-        }
-    };
+    private final static SpreadsheetColorName SPREADSHEET_COLOR_NAME = SpreadsheetColorName.with("Bingo");
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = new FakeSpreadsheetLabelNameResolver() {
 
@@ -209,6 +187,12 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
+    ).set(
+        SpreadsheetMetadataPropertyName.numberedColor(COLOR_NUMBER),
+        COLOR
+    ).set(
+        SpreadsheetMetadataPropertyName.namedColor(SPREADSHEET_COLOR_NAME),
+        COLOR_NUMBER
     );
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
@@ -278,44 +262,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
                 null,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
-                CELL_CHARACTER_WIDTH,
-                FORMATTER,
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullNumberToColorFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetFormatterContextBasic.with(
-                HAS_SPREADSHEET_CELL,
-                null,
-                NAME_TO_COLOR,
-                CELL_CHARACTER_WIDTH,
-                FORMATTER,
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullNameToColorFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetFormatterContextBasic.with(
-                HAS_SPREADSHEET_CELL,
-                NUMBER_TO_COLOR,
-                null,
                 CELL_CHARACTER_WIDTH,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -332,8 +278,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             IllegalArgumentException.class,
             () -> SpreadsheetFormatterContextBasic.with(
                 HAS_SPREADSHEET_CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
                 -1,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -350,8 +294,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             IllegalArgumentException.class,
             () -> SpreadsheetFormatterContextBasic.with(
                 HAS_SPREADSHEET_CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
                 0,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -368,8 +310,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
                 HAS_SPREADSHEET_CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 null,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -386,8 +326,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
                 HAS_SPREADSHEET_CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -404,8 +342,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
                 HAS_SPREADSHEET_CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -422,8 +358,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
                 HAS_SPREADSHEET_CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -446,7 +380,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     public void testColorNumber() {
         this.colorNumberAndCheck(
             this.createContext(),
-            1,
+            COLOR_NUMBER,
             Optional.of(COLOR)
         );
     }
@@ -455,7 +389,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     public void testColorName() {
         this.colorNameAndCheck(
             this.createContext(),
-            SpreadsheetColorName.with("bingo"),
+            SPREADSHEET_COLOR_NAME,
             Optional.of(COLOR)
         );
     }
@@ -529,8 +463,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     public SpreadsheetFormatterContextBasic createContext() {
         return SpreadsheetFormatterContextBasic.with(
             HAS_SPREADSHEET_CELL,
-            NUMBER_TO_COLOR,
-            NAME_TO_COLOR,
             CELL_CHARACTER_WIDTH,
             FORMATTER,
             SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,

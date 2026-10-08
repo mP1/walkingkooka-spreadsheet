@@ -1380,8 +1380,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetFormatterContexts.basic(
             hasSpreadsheetCell,
-            this.numberToColor(),
-            this.nameToColor(),
             characterWidth,
             spreadsheetFormatter,
             spreadsheetExpressionEvaluationContext,
