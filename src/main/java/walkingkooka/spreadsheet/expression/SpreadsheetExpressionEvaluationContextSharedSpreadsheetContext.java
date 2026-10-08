@@ -333,11 +333,13 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(cell, "cell");
+
         final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
         return this.spreadsheetMetadata()
             .spreadsheetFormatterContext(
-                cell,
+                () -> cell,
                 (final Optional<Object> v) -> this.setMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).addLocalVariable(

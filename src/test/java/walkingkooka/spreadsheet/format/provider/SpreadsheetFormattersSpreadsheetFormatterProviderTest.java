@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
@@ -110,7 +111,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
             METADATA_EN_AU.spreadsheetFormatterContext(
-                SpreadsheetMetadata.NO_CELL,
+                HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL,
                 (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetMetadata.NO_CELL,

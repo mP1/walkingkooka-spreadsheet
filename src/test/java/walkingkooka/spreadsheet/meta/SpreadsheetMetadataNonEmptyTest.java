@@ -2211,7 +2211,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
             null,
             metadata.spreadsheetFormatterContext(
-                SpreadsheetMetadata.NO_CELL,
+                () -> SpreadsheetMetadata.NO_CELL,
                 (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },

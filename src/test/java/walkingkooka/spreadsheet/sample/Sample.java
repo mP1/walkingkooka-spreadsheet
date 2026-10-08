@@ -473,7 +473,7 @@ public final class Sample {
                 ).format(
                     value,
                     metadata.spreadsheetFormatterContext(
-                        Optional.of(cell),
+                        () -> Optional.of(cell),
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },

@@ -269,7 +269,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testSpreadsheetFormatterContext() {
         METADATA_EN_AU.spreadsheetFormatterContext(
-            SpreadsheetMetadata.NO_CELL,
+            HAS_SPREADSHEET_CELL,
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },
