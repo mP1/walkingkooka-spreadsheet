@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
@@ -41,7 +43,8 @@ import java.util.function.Function;
  * A {@link SpreadsheetFormatterContext} that basically delegates each of its methods to a dependency given at create time.
  */
 final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterContext,
-    SpreadsheetConverterContextDelegator {
+    SpreadsheetConverterContextDelegator,
+    ColorContextDelegator {
 
     static SpreadsheetFormatterContextBasic with(final Optional<SpreadsheetCell> cell,
                                                  final Function<Integer, Optional<Color>> numberToColor,
@@ -237,6 +240,13 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
                 this.spreadsheetFormatterProvider,
                 this.providerContext
             );
+    }
+
+    // ColorContextDelegator............................................................................................
+
+    @Override
+    public ColorContext colorContext() {
+        return this.spreadsheetMetadata();
     }
 
     // Object...........................................................................................................

@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -33,7 +35,8 @@ import java.util.Optional;
  * Simplifies implementing a delegate to a wrapped {@link SpreadsheetFormatterContext}.
  */
 public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatterContext,
-    SpreadsheetConverterContextDelegator {
+    SpreadsheetConverterContextDelegator,
+    ColorContextDelegator {
 
     @Override
     default SpreadsheetConverterContext spreadsheetConverterContext() {
@@ -100,4 +103,11 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     }
 
     SpreadsheetFormatterContext spreadsheetFormatterContext();
+
+    // ColorContextDelegator............................................................................................
+
+    @Override
+    default ColorContext colorContext() {
+        return this.spreadsheetFormatterContext();
+    }
 }
