@@ -55,6 +55,30 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
         );
     }
 
+    @Test
+    public void testConstantHasSpreadsheetCell() {
+        this.checkNotEquals(
+            HAS_SPREADSHEET_CELL,
+            DIFFERENT_HAS_SPREADSHEET_CELL
+        );
+    }
+
+    @Test
+    public void testHasSpreadsheetCellConstants() {
+        this.cellAndCheck(
+            HAS_SPREADSHEET_CELL,
+            CELL
+        );
+    }
+
+    @Test
+    public void testDifferentHasSpreadsheetCellConstants() {
+        this.cellAndCheck(
+            DIFFERENT_HAS_SPREADSHEET_CELL,
+            DIFFERENT_CELL
+        );
+    }
+
     // class............................................................................................................
 
     @Override
