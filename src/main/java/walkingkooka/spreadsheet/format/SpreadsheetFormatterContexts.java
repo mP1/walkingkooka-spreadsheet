@@ -23,7 +23,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -33,7 +33,7 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetFormatterContextBasic}
      */
-    public static SpreadsheetFormatterContext basic(final Optional<SpreadsheetCell> cell,
+    public static SpreadsheetFormatterContext basic(final HasSpreadsheetCell hasSpreadsheetCell,
                                                     final Function<Integer, Optional<Color>> numberToColor,
                                                     final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                     final int cellCharacterWidth,
@@ -43,7 +43,7 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
                                                     final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                     final ProviderContext providerContext) {
         return SpreadsheetFormatterContextBasic.with(
-            cell,
+            hasSpreadsheetCell,
             numberToColor,
             nameToColor,
             cellCharacterWidth,

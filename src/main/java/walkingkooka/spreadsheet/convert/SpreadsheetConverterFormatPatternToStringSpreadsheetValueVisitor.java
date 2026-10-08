@@ -224,7 +224,7 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                 .formatOrEmptyText(
                     Optional.of(value),
                     SpreadsheetFormatterContexts.basic(
-                        HasSpreadsheetCell.NO_CELL,
+                        HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL,
                         this::numberToColor,
                         this::nameToColor,
                         1,
