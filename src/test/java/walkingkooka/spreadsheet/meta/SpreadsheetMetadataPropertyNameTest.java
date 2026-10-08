@@ -65,6 +65,8 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     JsonNodeUnmarshallContextTesting,
     ThrowableTesting {
 
+    // with.............................................................................................................
+
     @Test
     public void testWithUnknownConstantFails() {
         assertThrows(
@@ -651,7 +653,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    // JsonNodeMarshallerTesting........................................................................................
+    // NameTesting......................................................................................................
 
     @Override
     public SpreadsheetMetadataPropertyName<?> createName(final String name) {
