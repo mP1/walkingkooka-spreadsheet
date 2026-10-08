@@ -18,13 +18,15 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorContextTesting;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
-public interface SpreadsheetFormatterContextTesting extends HasSpreadsheetCellTesting {
+public interface SpreadsheetFormatterContextTesting extends HasSpreadsheetCellTesting,
+    ColorContextTesting {
 
     default void colorNumberAndCheck(final SpreadsheetFormatterContext context,
                                      final int number,

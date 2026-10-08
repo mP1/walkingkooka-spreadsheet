@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -147,7 +150,8 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
     }
 
     static class TestSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
-        SpreadsheetConverterContextDelegator {
+        SpreadsheetConverterContextDelegator,
+        ColorContextDelegator {
 
         // SpreadsheetConverterContextDelegator.........................................................................
 
@@ -213,6 +217,15 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
         public SpreadsheetValidationReference validationReference() {
             throw new UnsupportedOperationException();
         }
+
+        // ColorContextDelegator........................................................................................
+
+        @Override
+        public ColorContext colorContext() {
+            return ColorContexts.basic();
+        }
+
+        // Object.......................................................................................................
 
         @Override
         public String toString() {

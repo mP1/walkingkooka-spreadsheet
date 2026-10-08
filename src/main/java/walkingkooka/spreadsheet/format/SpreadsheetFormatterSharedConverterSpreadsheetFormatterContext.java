@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.CanParseEnvironmentValueName;
@@ -48,6 +51,7 @@ import java.util.Optional;
 
 final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
     CanParseEnvironmentValueNameDelegator,
+    ColorContextDelegator,
     StorageConverterContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator {
 
@@ -187,6 +191,15 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
         return this.context.loadMetadata(id);
     }
+
+    // ColorContextDelegator............................................................................................
+
+    @Override
+    public ColorContext colorContext() {
+        return COLOR_CONTEXT;
+    }
+
+    private final static ColorContext COLOR_CONTEXT = ColorContexts.basic();
 
     // Object...........................................................................................................
 
