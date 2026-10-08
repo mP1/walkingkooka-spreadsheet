@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -46,7 +47,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     SpreadsheetConverterContextDelegator,
     ColorContextDelegator {
 
-    static SpreadsheetFormatterContextBasic with(final Optional<SpreadsheetCell> cell,
+    static SpreadsheetFormatterContextBasic with(final HasSpreadsheetCell hasSpreadsheetCell,
                                                  final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int cellCharacterWidth,
@@ -55,7 +56,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
                                                  final SpreadsheetConverterContext spreadsheetConverterContext,
                                                  final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                  final ProviderContext providerContext) {
-        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(hasSpreadsheetCell, "hasSpreadsheetCell");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (cellCharacterWidth <= 0) {
@@ -68,7 +69,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetFormatterContextBasic(
-            cell,
+            hasSpreadsheetCell,
             numberToColor,
             nameToColor,
             cellCharacterWidth,
@@ -80,7 +81,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
         );
     }
 
-    private SpreadsheetFormatterContextBasic(final Optional<SpreadsheetCell> cell,
+    private SpreadsheetFormatterContextBasic(final HasSpreadsheetCell hasSpreadsheetCell,
                                              final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int cellCharacterWidth,
@@ -91,7 +92,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
                                              final ProviderContext providerContext) {
         super();
 
-        this.cell = cell;
+        this.hasSpreadsheetCell = hasSpreadsheetCell;
 
         this.numberToColor = numberToColor;
         this.nameToColor = nameToColor;
@@ -110,10 +111,10 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
 
     @Override
     public Optional<SpreadsheetCell> cell() {
-        return this.cell;
+        return this.hasSpreadsheetCell.cell();
     }
 
-    private final Optional<SpreadsheetCell> cell;
+    private final HasSpreadsheetCell hasSpreadsheetCell;
 
     @Override
     public int cellCharacterWidth() {
@@ -230,7 +231,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
         return this.spreadsheetConverterContext.equals(context) ?
             this :
             new SpreadsheetFormatterContextBasic(
-                this.cell,
+                this.hasSpreadsheetCell,
                 this.numberToColor,
                 this.nameToColor,
                 this.cellCharacterWidth,
@@ -254,8 +255,8 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-            .label("cell").value(this.cell)
             .label("cellCharacterWidth").value(this.cellCharacterWidth)
+            .label("hasSpreadsheetCell").value(this.hasSpreadsheetCell)
             .label("numberToColor").value(this.numberToColor)
             .label("nameToColor").value(this.nameToColor)
             .label("spreadsheetConverterContext").value(this.spreadsheetConverterContext)
