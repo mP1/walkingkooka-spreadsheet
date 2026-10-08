@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -28,7 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterProviderSamplesContextBasicTest implements SpreadsheetFormatterProviderSamplesContextTesting<SpreadsheetFormatterProviderSamplesContextBasic>,
     SpreadsheetMetadataTesting,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    ToStringTesting<SpreadsheetFormatterProviderSamplesContextBasic> {
 
     @Test
     public void testWithNullSpreadsheetFormatterContextFails() {
@@ -75,6 +77,16 @@ public final class SpreadsheetFormatterProviderSamplesContextBasicTest implement
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return SPREADSHEET_FORMATTER_CONTEXT;
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "spreadsheetFormatterContext=cellCharacterWidth=1 numberToColor={1=black, 2=white} nameToColor={Black=black, White=white} spreadsheetConverterContext=formattingConverter: collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to) application/octet-stream SpreadsheetLabelNameResolverEmpty binaryTextContext={charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, timeOffset=Z, user=user123@example.com} dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \" providerContext=ReadOnly mediaTypeDetector=application/octet-stream multiplier=walkingkooka.tree.ex"
+        );
     }
 
     // class............................................................................................................
