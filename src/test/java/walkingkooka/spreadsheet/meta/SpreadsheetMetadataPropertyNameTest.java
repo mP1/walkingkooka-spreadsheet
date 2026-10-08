@@ -660,7 +660,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Override
     public CaseSensitivity caseSensitivity() {
-        return CaseSensitivity.SENSITIVE;
+        return SpreadsheetColorName.CASE_SENSITIVITY;
     }
 
     @Override
