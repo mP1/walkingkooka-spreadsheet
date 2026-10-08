@@ -81,6 +81,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
@@ -129,6 +130,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     HasExpressionNumberKindTesting,
     HasLocaleTesting,
     HasNowTesting,
+    HasSpreadsheetCellTesting,
     HasUserTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     LocaleContextTesting,
@@ -573,7 +575,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         };
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
-        SpreadsheetMetadata.NO_CELL,
+        HAS_SPREADSHEET_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,

@@ -316,7 +316,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
 
         return this.spreadsheetMetadata()
             .spreadsheetFormatterContext(
-                cell,
+                () -> cell,
                 (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).spreadsheetExpressionEvaluationContext(

@@ -112,6 +112,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
@@ -1319,7 +1320,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
+    public final SpreadsheetFormatterContext spreadsheetFormatterContext(final HasSpreadsheetCell hasSpreadsheetCell,
                                                                          final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final MediaTypeDetector mediaTypeDetector,
@@ -1329,7 +1330,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
-        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(hasSpreadsheetCell, "hasSpreadsheetCell");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
@@ -1356,7 +1357,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetConverterContext formatSpreadsheetConverterContext;
         try {
             formatSpreadsheetConverterContext = this.spreadsheetConverterContext(
-                cell,
+                hasSpreadsheetCell.cell(),
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                 labelNameResolver,
@@ -1378,7 +1379,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetFormatterContexts.basic(
-            cell,
+            hasSpreadsheetCell.cell(),
             this.numberToColor(),
             this.nameToColor(),
             characterWidth,
@@ -1407,7 +1408,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
             this.spreadsheetFormatterContext(
-                cell,
+                () -> cell,
                 spreadsheetExpressionEvaluationContext,
                 labelNameResolver,
                 mediaTypeDetector,
