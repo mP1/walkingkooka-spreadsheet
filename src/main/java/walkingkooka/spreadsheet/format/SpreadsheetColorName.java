@@ -36,7 +36,7 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
     /**
      * Early declaration prevents NPE within DEFAULTS Sets#of.
      */
-    private final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
+    public final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
 
     /**
      * Used to validate the characters within a name.
