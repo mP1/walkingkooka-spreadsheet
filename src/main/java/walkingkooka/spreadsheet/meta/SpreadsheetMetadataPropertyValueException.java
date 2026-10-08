@@ -75,12 +75,16 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
             super.getMessage();
     }
 
+    // HasName..........................................................................................................
+
     @Override
     public SpreadsheetMetadataPropertyName<?> name() {
         return this.name;
     }
 
     private final SpreadsheetMetadataPropertyName<?> name;
+
+    // HasValue.........................................................................................................
 
     @Override
     public Object value() {
