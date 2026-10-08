@@ -26,32 +26,32 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
     @Test
     public void testConstants() {
         this.checkNotEquals(
-            CELL,
-            DIFFERENT_CELL
+            SPREADSHEET_CELL,
+            DIFFERENT_SPREADSHEET_CELL
         );
     }
 
     @Test
     public void testOptionalConstants() {
         this.checkNotEquals(
-            OPTIONAL_CELL,
-            OPTIONAL_DIFFERENT_CELL
+            OPTIONAL_SPREADSHEET_CELL,
+            OPTIONAL_DIFFERENT_SPEADSHEET_CELL
         );
     }
 
     @Test
     public void testConstantAndOptionalConstants() {
         this.checkEquals(
-            CELL,
-            OPTIONAL_CELL.get()
+            SPREADSHEET_CELL,
+            OPTIONAL_SPREADSHEET_CELL.get()
         );
     }
 
     @Test
     public void testConstantAndOptionalConstants2() {
         this.checkEquals(
-            DIFFERENT_CELL,
-            OPTIONAL_DIFFERENT_CELL.get()
+            DIFFERENT_SPREADSHEET_CELL,
+            OPTIONAL_DIFFERENT_SPEADSHEET_CELL.get()
         );
     }
 
@@ -67,7 +67,7 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
     public void testHasSpreadsheetCellConstants() {
         this.cellAndCheck(
             HAS_SPREADSHEET_CELL,
-            CELL
+            SPREADSHEET_CELL
         );
     }
 
@@ -75,7 +75,7 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
     public void testDifferentHasSpreadsheetCellConstants() {
         this.cellAndCheck(
             DIFFERENT_HAS_SPREADSHEET_CELL,
-            DIFFERENT_CELL
+            DIFFERENT_SPREADSHEET_CELL
         );
     }
 

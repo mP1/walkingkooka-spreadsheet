@@ -129,7 +129,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 null,
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -159,7 +159,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 null,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -174,7 +174,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
                 SPREADSHEET_CONTEXT,
@@ -189,7 +189,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 null,
@@ -204,7 +204,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -301,7 +301,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyColumnAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -327,7 +327,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyRowAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -934,7 +934,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                                                          final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             MODE,
-            OPTIONAL_CELL,
+            OPTIONAL_SPREADSHEET_CELL,
             spreadsheetExpressionReferenceLoader,
             labelNameResolver,
             spreadsheetContext(

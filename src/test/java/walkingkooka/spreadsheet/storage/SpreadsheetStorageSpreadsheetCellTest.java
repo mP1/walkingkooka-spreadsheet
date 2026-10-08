@@ -82,8 +82,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     private final static StoragePath STORAGE_PATH = StoragePath.parse("/A1");
 
-    private final static SpreadsheetCell SAVED_CELL = CELL.setFormula(
-        CELL.formula()
+    private final static SpreadsheetCell SAVED_CELL = SPREADSHEET_CELL.setFormula(
+        SPREADSHEET_CELL.formula()
             .setError(
                 Optional.of(
                     SpreadsheetErrorKind.FORMATTING.setMessageAndValue(
@@ -171,7 +171,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         SpreadsheetEngines.basic()
             .saveCell(
-                CELL,
+                SPREADSHEET_CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             );
 
@@ -204,7 +204,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         SpreadsheetEngines.basic()
             .saveCell(
-                CELL,
+                SPREADSHEET_CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             );
 
@@ -238,8 +238,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         SpreadsheetEngines.basic()
             .saveCells(
                 Sets.of(
-                    CELL,
-                    DIFFERENT_CELL
+                    SPREADSHEET_CELL,
+                    DIFFERENT_SPREADSHEET_CELL
                 ),
                 spreadsheetContext.spreadsheetEngineContext()
             );
@@ -321,7 +321,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         final SpreadsheetCell cell = SpreadsheetEngines.basic()
             .saveCell(
-                CELL,
+                SPREADSHEET_CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             ).cells()
             .iterator()
@@ -357,7 +357,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         SpreadsheetEngines.basic()
             .saveCell(
-                CELL,
+                SPREADSHEET_CELL,
                 spreadsheetContext.spreadsheetEngineContext()
             );
 
@@ -402,8 +402,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         SpreadsheetEngines.basic()
             .saveCells(
                 Sets.of(
-                    CELL,
-                    DIFFERENT_CELL
+                    SPREADSHEET_CELL,
+                    DIFFERENT_SPREADSHEET_CELL
                 ),
                 spreadsheetContext.spreadsheetEngineContext()
             );
@@ -439,8 +439,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         SpreadsheetEngines.basic()
             .saveCells(
                 Sets.of(
-                    CELL,
-                    DIFFERENT_CELL,
+                    SPREADSHEET_CELL,
+                    DIFFERENT_SPREADSHEET_CELL,
                     c3
                 ),
                 spreadsheetContext.spreadsheetEngineContext()
@@ -528,7 +528,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             storage,
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(CELL)
+                    Optional.of(SPREADSHEET_CELL)
                 ),
             storageContext,
             savedStorageValue.setPath(
@@ -588,7 +588,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             storage,
             StorageValue.with(path)
                 .setValue(
-                    Optional.of(CELL)
+                    Optional.of(SPREADSHEET_CELL)
                 ),
             storageContext,
             savedStorageValue.setPath(StoragePath.ROOT)
@@ -604,7 +604,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             StorageValue.with(path)
                 .setValue(
                     Optional.of(
-                        CELL.setFormula(
+                        SPREADSHEET_CELL.setFormula(
                         SpreadsheetFormula.EMPTY.setText("Different should not be seen by StoreWatcher<SpreadsheetCell>")
                     ))
                 ),
