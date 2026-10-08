@@ -85,6 +85,30 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
 
     Optional<SpreadsheetCell> OPTIONAL_DIFFERENT_CELL = Optional.of(DIFFERENT_CELL);
 
+    HasSpreadsheetCell HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
+        @Override
+        public Optional<SpreadsheetCell> cell() {
+            return OPTIONAL_CELL;
+        }
+
+        @Override
+        public String toString() {
+            return "HAS_SPREADSHEET_CELL";
+        }
+    };
+
+    HasSpreadsheetCell DIFFERENT_HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
+        @Override
+        public Optional<SpreadsheetCell> cell() {
+            return OPTIONAL_DIFFERENT_CELL;
+        }
+
+        @Override
+        public String toString() {
+            return "DIFFERENT_HAS_SPREADSHEET_CELL";
+        }
+    };
+
     default void cellAndCheck(final HasSpreadsheetCell hasCell) {
         this.cellAndCheck(
             hasCell,
