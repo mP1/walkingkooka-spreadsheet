@@ -2297,26 +2297,25 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // TO_STYLEABLE
                 );
 
-                verifier.addIfConversionFail(
-                    Lists.of(
-                        'A',
-                        "Text123",
-                        TextNode.text("Text123")
-                    ),
-                    TextNode.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // HAS_TEXT_NODE
-                    IS_TEXT_NODE
-                );
-
                 // text-to-textNode.....................................................................................
                 verifier.addIfConversionFail(
-                    Lists.of(
-                        'A',
-                        "Text"
-                    ),
+                    'A',
                     TextNode.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // TEXT_TO_TEXT_NODE
-                    IS_TEXT_NODE
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // HAS_TEXT_NODE
+                    TextNode.text("A")
+                );
+
+                verifier.addIfConversionFail2(
+                    "Text123",
+                    TextNode.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE, // HAS_TEXT_NODE
+                    TextNode::text
+                );
+
+                verifier.addIfConversionFail(
+                    TextNode.text("Text123"),
+                    TextNode.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // HAS_TEXT_NODE
                 );
 
                 // url-to-hyperlink.....................................................................................
@@ -2820,16 +2819,28 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         }
     }
 
+    private <VALUE, EXPECTED> void addIfConversionFail2(final VALUE value,
+                                                        final Class<EXPECTED> type,
+                                                        final ConverterName name,
+                                                        final Function<VALUE, EXPECTED> expected) {
+        this.addIfConversionFail(
+            value,
+            type,
+            name,
+            expected.apply(value)
+        );
+    }
+
     private <VALUE, EXPECTED> void addIfConversionFail2(final List<VALUE> values,
                                                         final Class<EXPECTED> type,
                                                         final ConverterName name,
                                                         final Function<VALUE, EXPECTED> expected) {
         for (final VALUE value : values) {
-            this.addIfConversionFail(
+            this.addIfConversionFail2(
                 value,
                 type,
                 name,
-                expected.apply(value)
+                expected
             );
         }
     }
