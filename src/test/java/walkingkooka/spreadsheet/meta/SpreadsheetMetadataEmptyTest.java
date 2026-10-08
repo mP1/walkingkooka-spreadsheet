@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.color.Color;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -49,6 +50,24 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testValue() {
         assertSame(SpreadsheetMetadata.EMPTY.value(), SpreadsheetMetadata.EMPTY.value());
+    }
+
+    // ColorContext.....................................................................................................
+
+    @Test
+    public void testLookupColorWithColor1() {
+        this.lookupColorAndCheck(
+            this.createObject(),
+            Color.indexed(1)
+        );
+    }
+
+    @Test
+    public void testLookupColorWithNamedColorBlack() {
+        this.lookupColorAndCheck(
+            this.createObject(),
+            Color.named("BLACK")
+        );
     }
 
     // effectiveStyle...................................................................................................

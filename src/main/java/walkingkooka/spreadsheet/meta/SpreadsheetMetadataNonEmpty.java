@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -28,6 +30,7 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -197,6 +200,49 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Cache {link Function}
      */
     private Function<Integer, Optional<SpreadsheetColorName>> numberToColorName;
+
+    // ColorContext.....................................................................................................
+
+    @Override
+    public Optional<Color> lookupColor(final Color color) {
+        Objects.requireNonNull(color, "color");
+
+        Optional<Color> lookup = null;
+
+        final boolean isIndexed = color.isIndexed();
+        if (isIndexed || color.isNamed()) {
+            final Integer index;
+
+            if (isIndexed) {
+                final IndexedColor indexedColor = (IndexedColor) color;
+                index = indexedColor.index();
+            } else {
+                final NamedColor namedColor = (NamedColor) color;
+
+                index = (Integer) this.value.get(
+                    // ColorRED -> RED
+                    SpreadsheetMetadataPropertyName.namedColor(
+                        SpreadsheetColorName.with(
+                            namedColor.value()
+                        )
+                    )
+                );
+            }
+
+            if (null != index) {
+                lookup = this.numberToColor()
+                    .apply(index);
+            } else {
+                lookup = NO_LOOKUP_COLOR;
+            }
+        } else {
+            lookup = Optional.of(color);
+        }
+
+        return lookup;
+    }
+
+    // HasMathContext...................................................................................................
 
     @Override
     public MathContext mathContext() {
