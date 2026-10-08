@@ -32,6 +32,7 @@ import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKindTesting;
@@ -650,6 +651,24 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
             action,
             name.spreadsheetCellStoreAction(),
             () -> name + " spreadsheetCellStoreAction"
+        );
+    }
+
+    // CaseSensitivity..................................................................................................
+
+    @Test
+    public void testCaseSensitivitySpreadsheetColorNameCaseSensitivity() {
+        assertSame(
+            SpreadsheetMetadataPropertyName.CASE_SENSITIVITY,
+            SpreadsheetColorName.CASE_SENSITIVITY
+        );
+    }
+
+    @Test
+    public void testCaseSensitivitySpreadsheetStringsCaseSensitivity() {
+        assertSame(
+            SpreadsheetMetadataPropertyName.CASE_SENSITIVITY,
+            SpreadsheetStrings.CASE_SENSITIVITY
         );
     }
 
