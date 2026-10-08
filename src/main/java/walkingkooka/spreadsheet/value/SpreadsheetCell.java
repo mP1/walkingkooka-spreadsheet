@@ -100,6 +100,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasOptionalSpreadsheetParserSelector,
     HasOptionalValidatorSelector,
     HasOptionalValueType,
+    HasSpreadsheetCell,
     HasSpreadsheetReference<SpreadsheetCellReference>,
     HasTextNode,
     HasTextStyle,
@@ -1689,4 +1690,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetCell.class);
+
+    // HasSpreadsheetCell...............................................................................................
+
+    @Override
+    public Optional<SpreadsheetCell> cell() {
+        return Optional.of(this);
+    }
 }
