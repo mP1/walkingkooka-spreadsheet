@@ -321,6 +321,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         }
     );
 
+    private final static Indentation INDENTATION = Indentation.SPACES2;
+
+    private final static Indentation INDENTATION2 = Indentation.SPACES4;
+
     private final static String EXPRESSION_TEXT = "1+2";
 
     private final static JsonObject JSON_OBJECT = JsonNode.object()
@@ -2574,10 +2578,24 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             );
 
             verifier.addIfConversionFail(
-                "   ",
+                INDENTATION.text(),
                 Indentation.class,
                 SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_INDENTATION
+                INDENTATION
+            );
+
+            verifier.addIfConversionFail(
+                INDENTATION2.text(),
+                Indentation.class,
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                INDENTATION2
+            );
+
+            verifier.addIfConversionFail(
+                indentation,
+                Indentation.class,
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                indentation
             );
 
             verifier.addIfConversionFail(
