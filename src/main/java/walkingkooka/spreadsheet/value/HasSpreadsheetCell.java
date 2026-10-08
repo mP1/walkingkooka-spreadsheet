@@ -29,6 +29,19 @@ public interface HasSpreadsheetCell {
      */
     Optional<SpreadsheetCell> NO_CELL = Optional.empty();
 
+    HasSpreadsheetCell EMPTY_HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
+
+        @Override
+        public Optional<SpreadsheetCell> cell() {
+            return NO_CELL;
+        }
+
+        @Override
+        public String toString() {
+            return "";
+        }
+    };
+
     /**
      * Returns the current cell that owns the expression or formula being executed.
      */

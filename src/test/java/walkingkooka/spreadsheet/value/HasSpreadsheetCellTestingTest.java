@@ -79,6 +79,13 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
         );
     }
 
+    @Test
+    public void testEmptyHasSpreadsheetCell() {
+        this.cellAndCheck(
+            HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL
+        );
+    }
+
     // class............................................................................................................
 
     @Override
