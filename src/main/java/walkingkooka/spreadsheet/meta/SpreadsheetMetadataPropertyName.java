@@ -92,7 +92,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     // constants
 
-    private static final CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+    private static final CaseSensitivity CASE_SENSITIVITY = SpreadsheetColorName.CASE_SENSITIVITY;
 
     /**
      * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
@@ -102,18 +102,22 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
      */
-    private static final Map<String, SpreadsheetMetadataPropertyName<?>> ENVIRONMENT_VALUE_NAME_CONSTANTS = Maps.sorted();
+    private static final Map<String, SpreadsheetMetadataPropertyName<?>> ENVIRONMENT_VALUE_NAME_CONSTANTS = Maps.sorted(
+        EnvironmentValueName.CASE_SENSITIVITY.comparator()
+    );
 
     /**
      * Registers a new {@link SpreadsheetMetadataPropertyName}.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final SpreadsheetMetadataPropertyName<T> constant) {
+        final String name = constant.name;
+
         SpreadsheetMetadataPropertyName.CONSTANTS.put(
-            constant.name,
+            name,
             constant
         );
         SpreadsheetMetadataPropertyName.ENVIRONMENT_VALUE_NAME_CONSTANTS.put(
-            constant.name.toLowerCase(),
+            name,
             constant
         );
         return constant;
@@ -853,7 +857,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         Objects.requireNonNull(name, "name");
 
         final String nameString = name.value();
-        final SpreadsheetMetadataPropertyName<?> spreadsheetMetadataPropertyName = ENVIRONMENT_VALUE_NAME_CONSTANTS.get(nameString.toLowerCase());
+        final SpreadsheetMetadataPropertyName<?> spreadsheetMetadataPropertyName = ENVIRONMENT_VALUE_NAME_CONSTANTS.get(nameString);
         if(null == spreadsheetMetadataPropertyName) {
             throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(nameString));
         }

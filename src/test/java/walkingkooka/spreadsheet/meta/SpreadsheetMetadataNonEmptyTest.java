@@ -3018,10 +3018,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      exporter2\n" +
                 "      exporter3\n" +
                 "    expressionNumberKind: BIG_DECIMAL\n" +
-                "    formHandlers: \n" +
-                "      handler1\n" +
-                "      handler2\n" +
-                "      handler3\n" +
                 "    formatters: \n" +
                 "      accounting\n" +
                 "      automatic\n" +
@@ -3051,6 +3047,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      short-time\n" +
                 "      text\n" +
                 "      time\n" +
+                "    formHandlers: \n" +
+                "      handler1\n" +
+                "      handler2\n" +
+                "      handler3\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
                 "        \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
@@ -3258,10 +3258,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      exporter2\n" +
                 "      exporter3\n" +
                 "    expressionNumberKind: BIG_DECIMAL\n" +
-                "    formHandlers: \n" +
-                "      handler1\n" +
-                "      handler2\n" +
-                "      handler3\n" +
                 "    formatters: \n" +
                 "      accounting\n" +
                 "      automatic\n" +
@@ -3291,6 +3287,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      short-time\n" +
                 "      text\n" +
                 "      time\n" +
+                "    formHandlers: \n" +
+                "      handler1\n" +
+                "      handler2\n" +
+                "      handler3\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
                 "        \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
@@ -3496,10 +3496,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    exporter2\n" +
                 "    exporter3\n" +
                 "  expressionNumberKind: BIG_DECIMAL\n" +
-                "  formHandlers: \n" +
-                "    handler1\n" +
-                "    handler2\n" +
-                "    handler3\n" +
                 "  formatters: \n" +
                 "    accounting\n" +
                 "    automatic\n" +
@@ -3529,6 +3525,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    short-time\n" +
                 "    text\n" +
                 "    time\n" +
+                "  formHandlers: \n" +
+                "    handler1\n" +
+                "    handler2\n" +
+                "    handler3\n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
                 "      \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +

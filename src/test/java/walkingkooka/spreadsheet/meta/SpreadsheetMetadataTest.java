@@ -1208,7 +1208,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         );
 
         this.checkEquals(
-            "Metadata missing: comparators, converters, exporters, formHandlers, formatters, functions, importers, parsers, validators",
+            "Metadata missing: comparators, converters, exporters, formatters, formHandlers, functions, importers, parsers, validators",
             thrown.getMessage()
         );
     }
