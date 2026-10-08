@@ -92,7 +92,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     // constants
 
-    private static final CaseSensitivity CASE_SENSITIVITY = SpreadsheetColorName.CASE_SENSITIVITY;
+    /**
+     * Case sensitivity must be insensitive because name equality should match {@link EnvironmentValueName#CASE_SENSITIVITY}.
+     */
+    public static final CaseSensitivity CASE_SENSITIVITY = SpreadsheetColorName.CASE_SENSITIVITY;
 
     /**
      * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
