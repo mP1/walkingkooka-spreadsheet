@@ -792,13 +792,23 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             // color-to-color...........................................................................................
             verifier.addIfConversionFail(
                 Color.BLACK,
-                Lists.of(
-                    HslColor.class,
-                    HsvColor.class,
-                    RgbColor.class
-                ),
+                HslColor.class,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_COLOR
-                IS_COLOR
+                Color.BLACK.toHsl()
+            );
+
+            verifier.addIfConversionFail(
+                Color.BLACK,
+                HsvColor.class,
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_COLOR
+                Color.BLACK.toHsv()
+            );
+
+            verifier.addIfConversionFail(
+                Color.BLACK,
+                RgbColor.class,
+                SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_COLOR
+                Color.BLACK
             );
 
             // color-to-number..........................................................................................
