@@ -2124,18 +2124,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
             // text-to-csv-string-list..............................................................................
             verifier.addIfConversionFail(
-                "apple,banana,\"333 444\"",
+                CSV_STRING_LIST.text(),
                 CsvStringList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST,
-                IS_CSV_STRING_LIST
-            );
-
-            // text-to-csv-string-set..............................................................................
-            verifier.addIfConversionFail(
-                "apple,banana,\"333 444\"",
-                CsvStringSet.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_SET,
-                IS_CSV_STRING_SET
+                CSV_STRING_LIST
             );
 
             // text-to-date-list....................................................................................
