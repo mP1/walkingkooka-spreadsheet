@@ -27,11 +27,11 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 public final class SpreadsheetFormatterProviderSamplesContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetFormatterProviderSamplesContext}
+     * {@see SpreadsheetFormatterProviderSamplesContextBasic}
      */
     public static SpreadsheetFormatterProviderSamplesContext basic(final SpreadsheetFormatterContext spreadsheetFormatterContext,
                                                                    final ProviderContext providerContext) {
-        return BasicSpreadsheetFormatterProviderSamplesContext.with(
+        return SpreadsheetFormatterProviderSamplesContextBasic.with(
             spreadsheetFormatterContext,
             providerContext
         );

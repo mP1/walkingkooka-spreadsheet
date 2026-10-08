@@ -28,12 +28,12 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-final class BasicSpreadsheetFormatterProviderSamplesContext implements SpreadsheetFormatterProviderSamplesContext,
+final class SpreadsheetFormatterProviderSamplesContextBasic implements SpreadsheetFormatterProviderSamplesContext,
     SpreadsheetFormatterContextDelegator {
 
-    static BasicSpreadsheetFormatterProviderSamplesContext with(final SpreadsheetFormatterContext spreadsheetFormatterContext,
+    static SpreadsheetFormatterProviderSamplesContextBasic with(final SpreadsheetFormatterContext spreadsheetFormatterContext,
                                                                 final ProviderContext providerContext) {
-        return new BasicSpreadsheetFormatterProviderSamplesContext(
+        return new SpreadsheetFormatterProviderSamplesContextBasic(
             Objects.requireNonNull(
                 spreadsheetFormatterContext, "spreadsheetFormatterContext"
             ),
@@ -43,7 +43,7 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
         );
     }
 
-    private BasicSpreadsheetFormatterProviderSamplesContext(final SpreadsheetFormatterContext spreadsheetFormatterContext,
+    private SpreadsheetFormatterProviderSamplesContextBasic(final SpreadsheetFormatterContext spreadsheetFormatterContext,
                                                             final ProviderContext providerContext) {
         this.spreadsheetFormatterContext = spreadsheetFormatterContext;
         this.providerContext = providerContext;
@@ -56,7 +56,7 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
 
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetFormatterProviderSamplesContext(
+            new SpreadsheetFormatterProviderSamplesContextBasic(
                 after,
                 this.providerContext
             );
@@ -69,7 +69,7 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
 
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetFormatterProviderSamplesContext(
+            new SpreadsheetFormatterProviderSamplesContextBasic(
                 after,
                 this.providerContext
             );
