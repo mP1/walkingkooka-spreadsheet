@@ -225,8 +225,6 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                     Optional.of(value),
                     SpreadsheetFormatterContexts.basic(
                         HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL,
-                        this::numberToColor,
-                        this::nameToColor,
                         1,
                         SpreadsheetFormatters.fake(), // should never be called
                         (final Optional<Object> v) -> {
