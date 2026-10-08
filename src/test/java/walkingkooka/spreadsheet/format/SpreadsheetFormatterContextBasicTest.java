@@ -213,7 +213,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         HasUserDirectorieses.fake(),
-        SpreadsheetConverterContexts.NO_METADATA,
+        Optional.of(SPREADSHEET_METADATA),
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.collection(
             Cast.to(
