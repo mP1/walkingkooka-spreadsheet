@@ -1988,10 +1988,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 );
 
                 verifier.addIfConversionFail(
-                    "/path1/file2.txt",
+                    STORAGE_PATH.text(),
                     StoragePath.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH,
-                    IS_STORAGE_PATH
+                    STORAGE_PATH
                 );
             }
         }
