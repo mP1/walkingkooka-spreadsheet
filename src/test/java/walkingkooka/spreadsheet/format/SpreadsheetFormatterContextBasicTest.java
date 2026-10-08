@@ -295,7 +295,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 null,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -313,7 +313,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 NUMBER_TO_COLOR,
                 null,
                 CELL_CHARACTER_WIDTH,
@@ -331,7 +331,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             IllegalArgumentException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 -1,
@@ -349,7 +349,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             IllegalArgumentException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 0,
@@ -367,7 +367,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -385,7 +385,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -403,7 +403,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -421,7 +421,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
-                OPTIONAL_CELL,
+                OPTIONAL_SPREADSHEET_CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -438,7 +438,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     public void testCell() {
         this.cellAndCheck(
             this.createContext(),
-            OPTIONAL_CELL
+            OPTIONAL_SPREADSHEET_CELL
         );
     }
 
@@ -528,7 +528,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     @Override
     public SpreadsheetFormatterContextBasic createContext() {
         return SpreadsheetFormatterContextBasic.with(
-            OPTIONAL_CELL,
+            OPTIONAL_SPREADSHEET_CELL,
             NUMBER_TO_COLOR,
             NAME_TO_COLOR,
             CELL_CHARACTER_WIDTH,

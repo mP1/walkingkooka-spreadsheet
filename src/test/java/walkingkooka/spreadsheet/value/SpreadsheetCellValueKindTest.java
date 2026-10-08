@@ -64,7 +64,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         final Set<Object> values = Sets.hash();
         for (final SpreadsheetCellValueKind kind : SpreadsheetCellValueKind.values()) {
             final Object value = values.add(
-                kind.cellValue(CELL)
+                kind.cellValue(SPREADSHEET_CELL)
             );
             this.checkNotEquals(
                 Optional.empty(),
@@ -198,8 +198,8 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
                                    final Function<SpreadsheetCell, Object> expected) {
         this.cellValueAndCheck(
             kind,
-            CELL,
-            expected.apply(CELL)
+            SPREADSHEET_CELL,
+            expected.apply(SPREADSHEET_CELL)
         );
     }
 

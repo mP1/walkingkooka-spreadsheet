@@ -47,7 +47,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
     HasSpreadsheetReferenceTesting,
     HasTextStyleTesting {
 
-    SpreadsheetCell CELL = REFERENCE.setFormula(
+    SpreadsheetCell SPREADSHEET_CELL = REFERENCE.setFormula(
             SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
         ).setCurrency(OPTIONAL_CURRENCY)
         .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
@@ -64,7 +64,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
             )
         );
 
-    SpreadsheetCell DIFFERENT_CELL = DIFFERENT_REFERENCE.setFormula(
+    SpreadsheetCell DIFFERENT_SPREADSHEET_CELL = DIFFERENT_REFERENCE.setFormula(
             SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_DIFFERENT_VALUE_TYPE)
         ).setCurrency(OPTIONAL_DIFFERENT_CURRENCY)
         .setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR)
@@ -81,14 +81,14 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
             )
         );
 
-    Optional<SpreadsheetCell> OPTIONAL_CELL = Optional.of(CELL);
+    Optional<SpreadsheetCell> OPTIONAL_SPREADSHEET_CELL = Optional.of(SPREADSHEET_CELL);
 
-    Optional<SpreadsheetCell> OPTIONAL_DIFFERENT_CELL = Optional.of(DIFFERENT_CELL);
+    Optional<SpreadsheetCell> OPTIONAL_DIFFERENT_SPEADSHEET_CELL = Optional.of(DIFFERENT_SPREADSHEET_CELL);
 
     HasSpreadsheetCell HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
         @Override
         public Optional<SpreadsheetCell> cell() {
-            return OPTIONAL_CELL;
+            return OPTIONAL_SPREADSHEET_CELL;
         }
 
         @Override
@@ -100,7 +100,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
     HasSpreadsheetCell DIFFERENT_HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
         @Override
         public Optional<SpreadsheetCell> cell() {
-            return OPTIONAL_DIFFERENT_CELL;
+            return OPTIONAL_DIFFERENT_SPEADSHEET_CELL;
         }
 
         @Override
