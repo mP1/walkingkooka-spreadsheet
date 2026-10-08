@@ -146,6 +146,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -2391,14 +2392,14 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
                     // to-validation-choice-list........................................................................
                     verifier.addIfConversionFail(
-                        VALIDATION_CHOICE_LIST.toList(),
+                        (Object)VALIDATION_CHOICE_LIST.toList(),
                         ValidationChoiceList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
                         VALIDATION_CHOICE_LIST
                     );
 
                     verifier.addIfConversionFail(
-                        VALIDATION_CHOICE_LIST,
+                        (Object)VALIDATION_CHOICE_LIST,
                         ValidationChoiceList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
                         VALIDATION_CHOICE_LIST
@@ -2406,14 +2407,14 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
                     // to-validation-error-list.........................................................................
                     verifier.addIfConversionFail(
-                        Lists.of(VALIDATION_ERROR),
+                        (Object)Lists.of(VALIDATION_ERROR),
                         ValidationErrorList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
                         VALIDATION_ERROR_LIST
                     );
 
                     verifier.addIfConversionFail(
-                        VALIDATION_ERROR_LIST,
+                        (Object)VALIDATION_ERROR_LIST,
                         ValidationErrorList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
                         VALIDATION_ERROR_LIST
@@ -2464,17 +2465,17 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
             // spreadsheet-selection-to-spreadsheet-selection...............................................................
             if (formula) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFail2(
                     Lists.of(
                         CELL,
                         CELL_RANGE
                     ),
                     SpreadsheetCellReference.class,
                     SpreadsheetConvertersConverterProvider.VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                    IS_CELL_REFERENCE
+                    SpreadsheetSelection::toCell
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFail2(
                     Lists.of(
                         CELL,
                         CELL_RANGE,
@@ -2485,7 +2486,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ),
                     SpreadsheetCellRangeReference.class,
                     SpreadsheetConvertersConverterProvider.VALUE, // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
-                    IS_CELL_RANGE_REFERENCE
+                    SpreadsheetSelection::toCellRange
                 );
 
                 verifier.addIfConversionFail(
@@ -2523,7 +2524,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             // spreadsheet-selection-to-text............................................................................
 
             if (formula || scripting || validation) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFail2(
                     Lists.of(
                         CELL,
                         CELL_RANGE,
@@ -2535,7 +2536,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ),
                     String.class,
                     SpreadsheetConvertersConverterProvider.VALUE,
-                    IS_STRING
+                    SpreadsheetSelection::toString
                 );
             }
 
@@ -2805,16 +2806,30 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         this.missing = Maps.sorted();
     }
 
-    private void addIfConversionFail(final List<Object> values,
-                                     final Class<?> type,
-                                     final ConverterName name,
-                                     final Object expected) {
+    private <T> void addIfConversionFail(final List<?> values,
+                                         final Class<T> type,
+                                         final ConverterName name,
+                                         final T expected) {
         for (final Object value : values) {
             this.addIfConversionFail(
                 value,
                 type,
                 name,
                 expected
+            );
+        }
+    }
+
+    private <VALUE, EXPECTED> void addIfConversionFail2(final List<VALUE> values,
+                                                        final Class<EXPECTED> type,
+                                                        final ConverterName name,
+                                                        final Function<VALUE, EXPECTED> expected) {
+        for (final VALUE value : values) {
+            this.addIfConversionFail(
+                value,
+                type,
+                name,
+                expected.apply(value)
             );
         }
     }
