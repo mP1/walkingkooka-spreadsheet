@@ -26,7 +26,7 @@ import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetFormatterProviderSamplesContextTest implements SpreadsheetFormatterProviderSamplesContextTesting<BasicSpreadsheetFormatterProviderSamplesContext>,
+public final class SpreadsheetFormatterProviderSamplesContextBasicTest implements SpreadsheetFormatterProviderSamplesContextTesting<SpreadsheetFormatterProviderSamplesContextBasic>,
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 
@@ -34,7 +34,7 @@ public final class BasicSpreadsheetFormatterProviderSamplesContextTest implement
     public void testWithNullSpreadsheetFormatterContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterProviderSamplesContext.with(
+            () -> SpreadsheetFormatterProviderSamplesContextBasic.with(
                 null,
                 PROVIDER_CONTEXT
             )
@@ -45,7 +45,7 @@ public final class BasicSpreadsheetFormatterProviderSamplesContextTest implement
     public void testWithNullProviderContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterProviderSamplesContext.with(
+            () -> SpreadsheetFormatterProviderSamplesContextBasic.with(
                 SPREADSHEET_FORMATTER_CONTEXT,
                 null
             )
@@ -53,8 +53,8 @@ public final class BasicSpreadsheetFormatterProviderSamplesContextTest implement
     }
 
     @Override
-    public BasicSpreadsheetFormatterProviderSamplesContext createContext() {
-        return BasicSpreadsheetFormatterProviderSamplesContext.with(
+    public SpreadsheetFormatterProviderSamplesContextBasic createContext() {
+        return SpreadsheetFormatterProviderSamplesContextBasic.with(
             SPREADSHEET_FORMATTER_CONTEXT,
             PROVIDER_CONTEXT
         );
@@ -80,7 +80,12 @@ public final class BasicSpreadsheetFormatterProviderSamplesContextTest implement
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetFormatterProviderSamplesContext> type() {
-        return BasicSpreadsheetFormatterProviderSamplesContext.class;
+    public Class<SpreadsheetFormatterProviderSamplesContextBasic> type() {
+        return SpreadsheetFormatterProviderSamplesContextBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
