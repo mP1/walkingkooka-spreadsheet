@@ -430,6 +430,20 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
     private final static FormName FORM_NAME = FormName.with("Form123");
 
+    private final static ValidationChoiceList VALIDATION_CHOICE_LIST = ValidationChoiceList.EMPTY.setElements(
+        Lists.of(
+            ValidationChoice.with(
+                "Choice1",
+                Optional.of(111)
+            ),
+            ValidationChoice.with(
+                "Choice2",
+                Optional.of(222
+                )
+            )
+        )
+    );
+
     private final static ValidationError VALIDATION_ERROR = SpreadsheetForms.error(CELL)
         .setMessage("Error message 123");
 
@@ -2371,43 +2385,17 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
                     // to-validation-choice-list........................................................................
                     verifier.addIfConversionFail(
-                        Lists.of(
-                            Lists.of(
-                                ValidationChoice.with(
-                                    "Choice1",
-                                    Optional.of(111)
-                                ),
-                                ValidationChoice.with(
-                                    "Choice2",
-                                    Optional.of(222
-                                    )
-                                )
-                            ),
-                            Lists.of(
-                                ValidationChoice.with(
-                                    "",
-                                    Optional.empty()
-                                ),
-                                ValidationChoice.with(
-                                    "Choice100",
-                                    Optional.of(
-                                        1000
-                                    )
-                                ),
-                                ValidationChoice.with(
-                                    "Choice200",
-                                    Optional.of(
-                                        2000
-                                    )
-                                )
-                            ),
-                            Lists.of(
-                                "Choice1000,Choice2000,Choice3000,"
-                            )
-                        ),
+                        VALIDATION_CHOICE_LIST.toList(),
                         ValidationChoiceList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
-                        IS_VALIDATION_CHOICE_LIST
+                        VALIDATION_CHOICE_LIST
+                    );
+
+                    verifier.addIfConversionFail(
+                        VALIDATION_CHOICE_LIST,
+                        ValidationChoiceList.class,
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION, // TO_VALIDATION_ERROR_LIST
+                        VALIDATION_CHOICE_LIST
                     );
 
                     // to-validation-error-list.........................................................................
