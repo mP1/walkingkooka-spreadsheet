@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import walkingkooka.Either;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -29,7 +31,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 final class SpreadsheetFormatterProviderSamplesContextBasic implements SpreadsheetFormatterProviderSamplesContext,
-    SpreadsheetFormatterContextDelegator {
+    SpreadsheetFormatterContextDelegator,
+    UsesToStringBuilder {
 
     static SpreadsheetFormatterProviderSamplesContextBasic with(final SpreadsheetFormatterContext spreadsheetFormatterContext,
                                                                 final ProviderContext providerContext) {
@@ -121,8 +124,20 @@ final class SpreadsheetFormatterProviderSamplesContextBasic implements Spreadshe
 
     private final ProviderContext providerContext;
 
+    // Object...........................................................................................................
+
     @Override
     public String toString() {
-        return this.spreadsheetFormatterContext + " " + this.providerContext;
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("spreadsheetFormatterContext")
+            .value(this.spreadsheetFormatterContext)
+            .label("providerContext")
+            .value(this.providerContext);
     }
 }
