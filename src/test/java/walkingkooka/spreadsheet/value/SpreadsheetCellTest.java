@@ -94,6 +94,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasOptionalSpreadsheetParserSelectorTesting,
     HasOptionalValidatorSelectorTesting,
     HasOptionalValueTypeTesting,
+    HasSpreadsheetCellTesting,
     HasSpreadsheetReferenceTesting,
     HasTextNodeTesting,
     HasTextStyleTesting,
@@ -3791,6 +3792,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.contentTypeAndCheck(
             this.createObject(),
             "application/json+walkingkooka.spreadsheet.value.SpreadsheetCell"
+        );
+    }
+
+    // HasSpreadsheetCell...............................................................................................
+
+    @Test
+    public void testCell() {
+        final SpreadsheetCell spreadsheetCell = this.createCell();
+
+        this.cellAndCheck(
+            spreadsheetCell,
+            spreadsheetCell
         );
     }
 
