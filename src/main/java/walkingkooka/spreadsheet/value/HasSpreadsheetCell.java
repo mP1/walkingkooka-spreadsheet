@@ -29,6 +29,9 @@ public interface HasSpreadsheetCell {
      */
     Optional<SpreadsheetCell> NO_CELL = Optional.empty();
 
+    /**
+     * A {@link HasSpreadsheetCell} that always returns {@link #NO_CELL}.
+     */
     HasSpreadsheetCell EMPTY_HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
 
         @Override
