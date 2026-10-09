@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorErrorTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorError>
-    implements SpreadsheetMetadataTesting {
+    implements HasSpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() {

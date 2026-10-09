@@ -20,13 +20,13 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetMetadataTestingPrivateTest implements ClassTesting<SpreadsheetMetadataTestingPrivate> {
+public final class HasSpreadsheetMetadataTestingPrivateTest implements ClassTesting<HasSpreadsheetMetadataTestingPrivate> {
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataTestingPrivate> type() {
-        return SpreadsheetMetadataTestingPrivate.class;
+    public Class<HasSpreadsheetMetadataTestingPrivate> type() {
+        return HasSpreadsheetMetadataTestingPrivate.class;
     }
 
     @Override

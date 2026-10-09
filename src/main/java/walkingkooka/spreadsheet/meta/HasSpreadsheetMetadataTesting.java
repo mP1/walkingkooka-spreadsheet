@@ -17,9 +17,605 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import javaemul.internal.annotations.GwtIncompatible;
+import walkingkooka.Cast;
+import walkingkooka.color.Color;
+import walkingkooka.convert.BinaryNumberConverterFunction;
+import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterProvider;
+import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.currency.HasCurrencyTesting;
+import walkingkooka.currency.provider.CurrencyExchangeRaterProvider;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
+import walkingkooka.datetime.DateTimeContextTesting;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
+import walkingkooka.datetime.HasNowTesting;
+import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.HasAuditInfoTesting;
+import walkingkooka.environment.HasUserTesting;
+import walkingkooka.io.FakeTextReader;
+import walkingkooka.locale.LocaleContextTesting;
+import walkingkooka.math.DecimalNumberContextTesting;
+import walkingkooka.math.HasDecimalNumberSymbolsTesting;
+import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.CharsetName;
+import walkingkooka.net.header.MediaTypeDetectorTesting;
+import walkingkooka.plugin.PluginNameSet;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviderSamplesContext;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProvider;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderContexts;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
+import walkingkooka.storage.StorageEnvironmentContexts;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.terminal.TerminalId;
+import walkingkooka.terminal.server.FakeTerminalServerContext;
+import walkingkooka.terminal.server.TerminalServerContext;
+import walkingkooka.text.BinaryTextContextTesting;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextTesting;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.util.HasLocaleTesting;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerProvider;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
+import walkingkooka.validation.provider.ValidatorAliasSet;
+import walkingkooka.validation.provider.ValidatorProvider;
+import walkingkooka.validation.provider.ValidatorProviders;
 
-public interface HasSpreadsheetMetadataTesting extends TreePrintableTesting {
+import java.math.RoundingMode;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
+
+/**
+ * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
+ */
+@GwtIncompatible
+public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
+    CurrencyLocaleContextTesting,
+    DateTimeContextTesting,
+    DecimalNumberContextTesting,
+    HasAuditInfoTesting,
+    HasCurrencyTesting,
+    HasDateTimeSymbolsTesting,
+    HasDecimalNumberSymbolsTesting,
+    HasExpressionNumberKindTesting,
+    HasLocaleTesting,
+    HasNowTesting,
+    HasSpreadsheetCellTesting,
+    HasUserTesting,
+    JsonNodeMarshallUnmarshallContextTesting,
+    LocaleContextTesting,
+    MediaTypeDetectorTesting,
+    SpreadsheetEnvironmentContextTesting,
+    TreePrintableTesting {
+
+    SpreadsheetName SPREADSHEET_NAME = SpreadsheetName.with("SpreadsheetName456");
+
+    SpreadsheetName DIFFERENT_SPREADSHEET_NAME = SpreadsheetName.with("DifferentSpreadsheetName789");
+
+    CharsetName CHARSET_NAME = CharsetName.UTF_8;
+
+    int DECIMAL_NUMBER_DIGIT_COUNT = 8;
+
+    ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
+        SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
+    );
+
+    SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
+
+    CurrencyExchangeRaterProvider CURRENCY_EXCHANGE_RATER_PROVIDER = SpreadsheetCurrencyExchangeRaterProviders.spreadsheetCurrency(
+        (String text) -> EXPRESSION_NUMBER_KIND.parse(text)
+    );
+
+    SpreadsheetExporterProvider SPREADSHEET_EXPORTER_PROVIDER = SpreadsheetExporterProviders.spreadsheetExport();
+
+    SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
+
+    FormHandlerProvider FORM_HANDLER_PROVIDER = FormHandlerProviders.validation();
+
+    SpreadsheetImporterProvider SPREADSHEET_IMPORTER_PROVIDER = SpreadsheetImporterProviders.spreadsheetImport();
+
+    SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
+        SPREADSHEET_FORMATTER_PROVIDER
+    );
+
+    ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+        (final ProviderContext p) ->
+            HasSpreadsheetMetadataTestingPrivate.CONVERTER_PROVIDER_SPREADSHEET_METADATA.dateTimeConverter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                p
+            )
+    );
+
+    ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
+
+    /**
+     * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
+     */
+    SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY
+        .set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            LOCALE
+        ).loadFromLocale(
+            CURRENCY_LOCALE_CONTEXT
+        ).set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AUDIT_INFO
+        ).set(
+            SpreadsheetMetadataPropertyName.AUTO_HIDE_SCROLLBARS,
+            false
+        ).set(
+            SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH,
+            1
+        ).set(
+            SpreadsheetMetadataPropertyName.COMPARATORS,
+            SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            CONVERTER_PROVIDER.converterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+            SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_PARSER,
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
+            Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+            SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+            DATE_TIME_SYMBOLS
+        ).set(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
+            DECIMAL_NUMBER_DIGIT_COUNT
+        ).set(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+            DECIMAL_NUMBER_SYMBOLS
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse("basic")
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+            2000
+        ).set(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            SpreadsheetFormatterSelector.parse(
+                "badge-error " + SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.EXPORTERS,
+            SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
+            EXPRESSION_NUMBER_KIND
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)")
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTERS,
+            SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)")
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.IMPORTERS,
+            SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+            SpreadsheetPattern.parseNumberFormatPattern("0.#;0.#;0").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+            SpreadsheetPattern.parseNumberParsePattern("0.#;0.#;0").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.PARSERS,
+            SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.PLUGINS,
+            PluginNameSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.PRECISION,
+            7
+        ).set(
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)")
+        ).set(
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+            RoundingMode.HALF_UP
+        ).set(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)"
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
+        ).set(
+            SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.SHOW_FORMULA_EDITOR,
+            true
+        ).set(
+            SpreadsheetMetadataPropertyName.SHOW_FORMULAS,
+            false
+        ).set(
+            SpreadsheetMetadataPropertyName.SHOW_GRID_LINES,
+            true
+        ).set(
+            SpreadsheetMetadataPropertyName.SHOW_HEADINGS,
+            true
+        ).set(
+            SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
+            SpreadsheetComparatorNameList.parse("background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year")
+        ).set(
+            SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, locale, value, optional-to, collection-to)")
+        ).set(
+            SpreadsheetMetadataPropertyName.STYLE,
+            TextStyle.EMPTY
+                .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
+                .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
+        ).set(
+            SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+            SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+            SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.TIME_PARSER,
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
+            50
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorProviders.validators()
+                .validatorInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            ConverterSelector.parse("collection(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)")
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_CURRENCY_EXCHANGE_RATER,
+            CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+            ValidatorAliasSet.parse("absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask")
+        ).set(
+            SpreadsheetMetadataPropertyName.numberedColor(1),
+            Color.BLACK
+        ).set(
+            SpreadsheetMetadataPropertyName.numberedColor(2),
+            Color.WHITE
+        ).set(
+            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK),
+            1
+        ).set(
+            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE),
+            2
+        );
+
+    EnvironmentValueName<String> DUMMY_ENVIRONMENTAL_VALUE_NAME = EnvironmentValueName.with(
+        "Dummy123",
+        String.class
+    );
+
+    String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
+
+    SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
+
+    private static SpreadsheetEnvironmentContext providerContextSpreadsheetEnvironmentContext() {
+        final SpreadsheetEnvironmentContext spreadsheeEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheeEnvironmentContext.setEnvironmentValue(
+            DUMMY_ENVIRONMENTAL_VALUE_NAME,
+            DUMMY_ENVIRONMENTAL_VALUE
+        );
+        return spreadsheeEnvironmentContext;
+    }
+
+    SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.empty();
+
+    SpreadsheetMetadataCreator SPREADSHEET_METADATA_CREATOR = new SpreadsheetMetadataCreator() {
+        @Override
+        public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                  final Optional<Locale> locale) {
+            SpreadsheetMetadata metadata = SPREADSHEET_METADATA.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    user,
+                    NOW
+                )
+            );
+            if (locale.isPresent()) {
+                metadata = metadata.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    locale.get()
+                );
+            }
+            return metadata;
+        }
+
+        @Override
+        public String toString() {
+            return HasSpreadsheetMetadataTesting.class.getSimpleName() + "$" + SpreadsheetMetadataCreator.class.getSimpleName();
+        }
+    };
+
+    BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
+
+    ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
+        SpreadsheetProviderContexts.spreadsheet(
+            MEDIA_TYPE_DETECTOR,
+            MULTIPLIER,
+            Cast.to(STORAGE_SPREADSHEET_STORAGE_CONTEXT),
+            CURRENCY_LOCALE_CONTEXT,
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_PARSER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.TIME_PARSER,
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
+            ).spreadsheetEnvironmentContext(
+                SpreadsheetEnvironmentContexts.readOnly(
+                    Predicates.always(), // everything is read only
+                    providerContextSpreadsheetEnvironmentContext()
+                )
+            ),
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+        )
+    );
+
+    private static SpreadsheetEnvironmentContext terminalContextSpreadsheetEnvironmentContext() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            TerminalContext.TERMINAL_ID,
+            TerminalId.with(1)
+        );
+        return spreadsheetEnvironmentContext;
+    }
+
+    TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
+        TerminalId.with(1),
+        () -> false, // closedx
+        new FakeTextReader() {
+            @Override
+            public String toString() {
+                return FakeTextReader.class.getSimpleName();
+            }
+        },
+        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
+        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
+        (final String expression,
+         final TerminalContext terminalContext) -> {
+            throw new UnsupportedOperationException();
+        },
+        (final Object exitValue) -> {
+            throw new UnsupportedOperationException();
+        },
+        StorageEnvironmentContexts.readOnly(
+            Predicates.always(), // all values are read-only
+            terminalContextSpreadsheetEnvironmentContext()
+        )
+    );
+
+    TerminalServerContext TERMINAL_SERVER_CONTEXT = new FakeTerminalServerContext() {
+        @Override
+        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+            Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<TerminalContext> terminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public TerminalServerContext removeTerminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+    };
+
+    SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.empty();
+
+    SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = SPREADSHEET_METADATA.spreadsheetConverterContext(
+        SpreadsheetMetadata.NO_CELL,
+        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        MEDIA_TYPE_DETECTOR,
+        MULTIPLIER,
+        SPREADSHEET_METADATA_LOADER,
+        CONVERTER_PROVIDER,
+        CURRENCY_LOCALE_CONTEXT,
+        SPREADSHEET_ENVIRONMENT_CONTEXT,
+        PROVIDER_CONTEXT
+    );
+
+    SpreadsheetComparatorContext SPREADSHEET_COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
+        (Object left, Object right) -> {
+            throw new UnsupportedOperationException();
+        },
+        SPREADSHEET_FORMULA_CONVERTER_CONTEXT
+    );
+
+    SpreadsheetProvider SPREADSHEET_PROVIDER = SPREADSHEET_METADATA.spreadsheetProvider(
+        SpreadsheetProviders.basic(
+            SPREADSHEET_COMPARATOR_PROVIDER,
+            CONVERTER_PROVIDER,
+            CURRENCY_EXCHANGE_RATER_PROVIDER,
+            SPREADSHEET_EXPORTER_PROVIDER,
+            EXPRESSION_FUNCTION_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            FORM_HANDLER_PROVIDER,
+            SPREADSHEET_IMPORTER_PROVIDER,
+            SPREADSHEET_PARSER_PROVIDER,
+            VALIDATOR_PROVIDER
+        )
+    );
+
+    Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION =
+        (final Optional<Object> value) -> {
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
+        };
+
+    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = SPREADSHEET_METADATA.spreadsheetFormatterContext(
+        HAS_SPREADSHEET_CELL,
+        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        MEDIA_TYPE_DETECTOR,
+        MULTIPLIER,
+        SPREADSHEET_METADATA_LOADER,
+        CURRENCY_LOCALE_CONTEXT,
+        SPREADSHEET_ENVIRONMENT_CONTEXT,
+        SPREADSHEET_PROVIDER,
+        PROVIDER_CONTEXT
+    );
+
+    SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SPREADSHEET_METADATA.spreadsheetFormatterProviderSamplesContext(
+        SpreadsheetMetadata.NO_CELL,
+        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        MEDIA_TYPE_DETECTOR,
+        MULTIPLIER,
+        SPREADSHEET_METADATA_LOADER,
+        CURRENCY_LOCALE_CONTEXT,
+        SPREADSHEET_ENVIRONMENT_CONTEXT,
+        SPREADSHEET_PROVIDER,
+        PROVIDER_CONTEXT
+    );
+
+    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = SPREADSHEET_METADATA.spreadsheetParserContext(
+        SpreadsheetMetadata.NO_CELL,
+        LOCALE_CONTEXT,
+        HAS_NOW
+    );
+
+    static SpreadsheetFormula parseFormula(final String text) {
+        return SpreadsheetFormula.parse(
+            TextCursors.charSequence(text),
+            SPREADSHEET_METADATA.spreadsheetParser(
+                SPREADSHEET_PARSER_PROVIDER,
+                PROVIDER_CONTEXT
+            ),
+            SPREADSHEET_PARSER_CONTEXT
+        );
+    }
 
     default void spreadsheetMetadataAndCheck(final HasSpreadsheetMetadata has,
                                              final SpreadsheetMetadata expected) {

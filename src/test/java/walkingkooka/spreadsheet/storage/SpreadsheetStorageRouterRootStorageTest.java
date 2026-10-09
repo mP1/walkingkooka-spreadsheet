@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageTesting2;
@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public final class SpreadsheetStorageRouterRootStorageTest implements StorageTesting2<SpreadsheetStorageRouterRootStorage, SpreadsheetStorageContext>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static AuditInfo AUDIT_INFO = SPREADSHEET_ENVIRONMENT_CONTEXT.createdAuditInfo();
 

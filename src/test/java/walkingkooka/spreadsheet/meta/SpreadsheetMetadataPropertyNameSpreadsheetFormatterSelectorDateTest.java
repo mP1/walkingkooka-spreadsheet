@@ -44,7 +44,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
         final String formatted = pattern.formatter()
             .format(
                 Optional.of(date),
-                SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
+                HasSpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
             ).get()
             .text();
 

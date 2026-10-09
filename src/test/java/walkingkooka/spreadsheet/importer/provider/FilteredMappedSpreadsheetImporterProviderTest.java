@@ -25,14 +25,14 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.importer.FakeSpreadsheetImporter;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FilteredMappedSpreadsheetImporterProviderTest implements SpreadsheetImporterProviderTesting<FilteredMappedSpreadsheetImporterProvider>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 

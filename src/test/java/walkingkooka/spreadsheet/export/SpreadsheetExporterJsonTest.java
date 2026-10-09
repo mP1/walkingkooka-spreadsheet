@@ -28,7 +28,7 @@ import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -45,7 +45,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.util.Optional;
 
 public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTesting2<SpreadsheetExporterJson>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     DateTimeContextTesting,
     HasDateTimeSymbolsTesting,
     DecimalNumberContextTesting {
@@ -567,8 +567,8 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
     @Override
     public SpreadsheetExporterContext createContext() {
         return SpreadsheetExporterContexts.basic(
-            SpreadsheetMetadataTesting.SPREADSHEET_METADATA,
-            SpreadsheetMetadataTesting.JSON_NODE_MARSHALL_CONTEXT
+            HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA,
+            HasSpreadsheetMetadataTesting.JSON_NODE_MARSHALL_CONTEXT
         );
     }
 }

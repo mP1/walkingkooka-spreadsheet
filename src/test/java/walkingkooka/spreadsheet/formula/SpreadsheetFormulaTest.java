@@ -44,9 +44,9 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -1691,9 +1691,9 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         this.parseAndCheck(
             text,
             SpreadsheetFormulaParsers.valueOrExpression(
-                SpreadsheetMetadataTesting.SPREADSHEET_METADATA.spreadsheetParser(
-                    SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER,
-                    SpreadsheetMetadataTesting.PROVIDER_CONTEXT
+                HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.spreadsheetParser(
+                    HasSpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER,
+                    HasSpreadsheetMetadataTesting.PROVIDER_CONTEXT
                 )
             ),
             SpreadsheetFormula.EMPTY.setText(text)

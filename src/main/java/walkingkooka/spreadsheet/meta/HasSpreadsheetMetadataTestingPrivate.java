@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
-final class SpreadsheetMetadataTestingPrivate {
+final class HasSpreadsheetMetadataTestingPrivate {
 
     final static SpreadsheetMetadata CONVERTER_PROVIDER_SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY
         .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector())
@@ -35,7 +35,7 @@ final class SpreadsheetMetadataTestingPrivate {
     /**
      * Provider context
      */
-    private SpreadsheetMetadataTestingPrivate() {
+    private HasSpreadsheetMetadataTestingPrivate() {
         throw new UnsupportedOperationException();
     }
 }

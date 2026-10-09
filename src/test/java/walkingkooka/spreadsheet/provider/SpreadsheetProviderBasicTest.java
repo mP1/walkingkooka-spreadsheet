@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTesting<SpreadsheetProviderBasic>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderBasic>,
     ToStringTesting<SpreadsheetProviderBasic>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     TreePrintableTesting {
 
     // with.............................................................................................................

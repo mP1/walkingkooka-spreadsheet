@@ -63,10 +63,10 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -125,7 +125,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
     static {
-        final SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext context = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         SPREADSHEET_ENVIRONMENT_CONTEXT = context;
@@ -1289,7 +1289,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             SpreadsheetStorages.treeMapStore(),
-            SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 

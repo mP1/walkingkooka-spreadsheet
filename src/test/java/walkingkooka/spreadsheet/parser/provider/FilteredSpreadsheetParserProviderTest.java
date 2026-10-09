@@ -23,12 +23,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 
 import java.util.List;
 
 public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<FilteredSpreadsheetParserProvider>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     ToStringTesting<FilteredSpreadsheetParserProvider> {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();

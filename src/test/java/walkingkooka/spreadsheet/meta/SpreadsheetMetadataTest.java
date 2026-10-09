@@ -1709,7 +1709,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     @Test
     public void testProperties() {
         this.propertiesAndCheck(
-            SpreadsheetMetadataTesting.SPREADSHEET_METADATA
+            HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
                 .set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SpreadsheetId.with(1)
@@ -1963,7 +1963,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
             "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\n" +
             "valueSeparator=,\n",
-            SpreadsheetMetadataTesting.SPREADSHEET_METADATA
+            HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
                 .set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SpreadsheetId.with(1)
@@ -1973,7 +1973,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
     @Test
     public void testFromPropertiesAndPropertiesRoundtrip() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.SPREADSHEET_METADATA;
+        final SpreadsheetMetadata metadata = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA;
 
         this.fromPropertiesAndCheck(
             metadata.properties(),

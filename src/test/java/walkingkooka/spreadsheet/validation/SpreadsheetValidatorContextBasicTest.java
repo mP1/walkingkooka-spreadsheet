@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.validation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.ValidatorContext;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetValidatorContextBasicTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextBasic>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     @Test
     public void testWithNullContextFails() {

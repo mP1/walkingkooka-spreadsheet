@@ -30,10 +30,10 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -88,7 +88,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     private final static SpreadsheetMetadataMode MODE = SpreadsheetMetadataMode.FORMULA;
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
+    private final static SpreadsheetMetadata METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     ).set(
@@ -100,7 +100,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     );
 
     static {
-        final SpreadsheetEnvironmentContext c = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext c = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         c.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
         c.setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY);
         SPREADSHEET_ENVIRONMENT_CONTEXT = c;

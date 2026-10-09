@@ -25,7 +25,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviderTestingTest.TestSpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterProviderTestingTest implements SpreadsheetFormatterProviderTesting<TestSpreadsheetFormatterProvider>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static String SELECTOR = "text @@";
 

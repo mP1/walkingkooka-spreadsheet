@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContextTestingTest.TestSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -38,7 +38,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterContextTestingTest implements SpreadsheetFormatterContextTesting2<TestSpreadsheetFormatterContext>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 123;
 

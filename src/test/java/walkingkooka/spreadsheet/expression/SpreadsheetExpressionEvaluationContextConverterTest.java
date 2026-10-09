@@ -43,10 +43,10 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -86,7 +86,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextConverterTest implements SpreadsheetExpressionEvaluationContextTesting2<SpreadsheetExpressionEvaluationContext>,
     DecimalNumberContextDelegator,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     // must be 1 because TreeStore's first ID is 1
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
@@ -294,7 +294,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
 
     // SpreadsheetMetadataContext.......................................................................................
 
-    //private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
+    //private final static SpreadsheetMetadata METADATA = HasSpreadsheetMetadataTesting.METADATA_EN_AU;
 
     @Test
     public void testSaveMetadataAndLoadMetadata() {

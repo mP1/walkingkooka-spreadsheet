@@ -34,8 +34,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -47,7 +47,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class SpreadsheetConvertersConverterProviderTest implements ConverterProviderTesting<SpreadsheetConvertersConverterProvider>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     ConverterTesting {
 
     @Test
@@ -1403,7 +1403,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Override
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
-            (final ProviderContext context) -> SpreadsheetMetadataTesting.SPREADSHEET_METADATA.dateTimeConverter(
+            (final ProviderContext context) -> HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.dateTimeConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 context

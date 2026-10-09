@@ -30,8 +30,8 @@ import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationCo
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -54,7 +54,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetEngineBasicFilterCellsPredicateTest implements PredicateTesting2<SpreadsheetEngineBasicFilterCellsPredicate, SpreadsheetCell>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static String CONTEXT_TO_STRING = "FakeSpreadsheetEngineContext123";
 

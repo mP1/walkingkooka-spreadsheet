@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.validation.ValidationError;
 
 public final class SpreadsheetConverterTextToValidationErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToValidationError>
-    implements SpreadsheetMetadataTesting {
+    implements HasSpreadsheetMetadataTesting {
 
     @Test
     public void testConvertEmptyString() {

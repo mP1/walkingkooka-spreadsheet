@@ -25,8 +25,8 @@ import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.logging.CanLog;
 import walkingkooka.logging.CanLogs;
 import walkingkooka.logging.LoggingLevel;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEnvironmentContextBasicTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextBasic>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetEnvironmentContextBasic> {
 

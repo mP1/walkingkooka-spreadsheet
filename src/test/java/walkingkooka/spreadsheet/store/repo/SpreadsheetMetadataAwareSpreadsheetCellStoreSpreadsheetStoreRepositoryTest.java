@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.store.repo;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static SpreadsheetId ID = SpreadsheetId.with(0x1234);
     private final static SpreadsheetStoreRepository REPOSITORY = new FakeSpreadsheetStoreRepository() {

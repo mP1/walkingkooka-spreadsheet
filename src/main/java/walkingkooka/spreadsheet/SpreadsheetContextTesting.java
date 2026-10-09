@@ -21,6 +21,7 @@ import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
@@ -39,8 +40,8 @@ public interface SpreadsheetContextTesting extends SpreadsheetEnvironmentContext
     //@Override
     default void setCurrencyAndCheck(final SpreadsheetContext context,
                                      final Currency currency) {
-        SpreadsheetEnvironmentContextTesting.super.setCurrencyAndCheck(
-            context,
+        this.setCurrencyAndCheck(
+            (SpreadsheetEnvironmentContext) context,
             currency
         );
     }

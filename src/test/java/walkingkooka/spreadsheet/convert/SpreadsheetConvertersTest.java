@@ -85,11 +85,11 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterSelector;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -1230,7 +1230,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 @Override
                 public SpreadsheetMetadata spreadsheetMetadata() {
-                    return SpreadsheetMetadataTesting.SPREADSHEET_METADATA
+                    return HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
                         .set(
                             SpreadsheetMetadataPropertyName.namedColor(
                                 SpreadsheetColorName.with(SPREADSHEET_COLOR_NAME)

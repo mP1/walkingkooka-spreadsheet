@@ -76,9 +76,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
             .get();
 
         final ExpressionNumber value = SpreadsheetConverters.textToNumber(
-            SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
+            HasSpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
                 parserSelector,
-                SpreadsheetMetadataTesting.PROVIDER_CONTEXT
+                HasSpreadsheetMetadataTesting.PROVIDER_CONTEXT
             )
         ).convertOrFail(
             text,

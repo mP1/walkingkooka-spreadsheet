@@ -25,9 +25,9 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -48,13 +48,13 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements SpreadsheetCellStoreTesting<S>,
     TypeNameTesting<S>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.RELATIVE
         .column(1)
         .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
 
-    final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
+    final static SpreadsheetMetadata METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.DATE_PARSER,
         SpreadsheetPattern.parseDateParsePattern("d/m/y").spreadsheetParserSelector()
     ).set(

@@ -25,13 +25,13 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporters;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviderTestingTest.TestSpreadsheetImporterProvider;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 
 import java.util.List;
 import java.util.Objects;
 
 public final class SpreadsheetImporterProviderTestingTest implements SpreadsheetImporterProviderTesting<TestSpreadsheetImporterProvider>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static String SELECTOR = "text @@";
 

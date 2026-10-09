@@ -25,13 +25,13 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.tree.text.TextNode;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FilteredMappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<FilteredMappedSpreadsheetFormatterProvider>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 

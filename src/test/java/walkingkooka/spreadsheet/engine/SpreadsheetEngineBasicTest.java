@@ -85,11 +85,11 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -232,7 +232,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SuppressWarnings("PointlessArithmeticExpression")
 public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTestCase<SpreadsheetEngineBasic>
     implements SpreadsheetEngineTesting2<SpreadsheetEngineBasic>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     MathTesting,
     ThrowableTesting {
 
@@ -517,7 +517,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     static {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
             .cloneEnvironment();
         spreadsheetEnvironmentContext.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
@@ -749,7 +749,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             this.localeContext.setLocale(locale);
         }
 
-        private final LocaleContext localeContext = LocaleContexts.jre(SpreadsheetMetadataTesting.LOCALE);
+        private final LocaleContext localeContext = LocaleContexts.jre(HasSpreadsheetMetadataTesting.LOCALE);
 
         // SpreadsheetContext...........................................................................................
 
