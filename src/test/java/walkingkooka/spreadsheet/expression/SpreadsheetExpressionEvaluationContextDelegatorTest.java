@@ -281,7 +281,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                                 public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
                                     return Optional.ofNullable(
                                         id.equals(spreadsheetId) ?
-                                            METADATA_EN_AU.set(
+                                            SPREADSHEET_METADATA.set(
                                                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                                                 spreadsheetId
                                             ) :

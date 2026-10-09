@@ -116,7 +116,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             context.setEnvironmentValue(
                 name,
                 Cast.to(
-                    METADATA_EN_AU.getOrFail(
+                    SPREADSHEET_METADATA.getOrFail(
                         SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
                     )
                 )
@@ -125,7 +125,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
-            METADATA_EN_AU.getOrFail(
+            SPREADSHEET_METADATA.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
         );
@@ -988,7 +988,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     // SpreadsheetMetadataContext.......................................................................................
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.SPREADSHEET_METADATA;
 
     @Test
     public void testSaveMetadataAndLoadMetadata() {

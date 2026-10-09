@@ -126,7 +126,7 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
 
             final SpreadsheetMetadataStore spreadsheetMetadataStore = SpreadsheetMetadataStores.treeMap();
             spreadsheetMetadataStore.save(
-                SpreadsheetMetadataTesting.METADATA_EN_AU.set(
+                SpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     spreadsheetId
                 )

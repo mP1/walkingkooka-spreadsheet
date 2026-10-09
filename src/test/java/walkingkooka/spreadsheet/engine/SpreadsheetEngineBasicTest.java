@@ -533,7 +533,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
     static {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
-        METADATA = METADATA_EN_AU
+        METADATA = SPREADSHEET_METADATA
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SPREADSHEET_ID)
             .set(
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,

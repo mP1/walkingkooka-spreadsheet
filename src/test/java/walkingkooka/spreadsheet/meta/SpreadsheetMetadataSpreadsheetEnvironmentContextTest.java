@@ -58,7 +58,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     private final static SpreadsheetEnvironmentContext CONTEXT;
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     );
@@ -144,7 +144,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     @Test
     public void testSetEnvironmentContextWithSame() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT.cloneEnvironment();
-        final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.SPREADSHEET_METADATA;
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             metadata,

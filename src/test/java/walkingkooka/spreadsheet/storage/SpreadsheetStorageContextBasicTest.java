@@ -1086,7 +1086,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
         final SpreadsheetMetadataStore metadataStore = repo.metadatas();
 
         metadataStore.save(
-            METADATA_EN_AU.set(
+            SPREADSHEET_METADATA.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SPREADSHEET_ID
             )

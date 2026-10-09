@@ -54,7 +54,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         .column(1)
         .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
 
-    final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
+    final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.DATE_PARSER,
         SpreadsheetPattern.parseDateParsePattern("d/m/y").spreadsheetParserSelector()
     ).set(

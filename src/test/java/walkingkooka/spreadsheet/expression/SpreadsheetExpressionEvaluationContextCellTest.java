@@ -64,7 +64,7 @@ public final class SpreadsheetExpressionEvaluationContextCellTest implements Spr
             context.setEnvironmentValue(
                 name,
                 Cast.to(
-                    METADATA_EN_AU.getOrFail(
+                    SPREADSHEET_METADATA.getOrFail(
                         SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
                     )
                 )
@@ -73,7 +73,7 @@ public final class SpreadsheetExpressionEvaluationContextCellTest implements Spr
 
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
-            METADATA_EN_AU.getOrFail(
+            SPREADSHEET_METADATA.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
         );

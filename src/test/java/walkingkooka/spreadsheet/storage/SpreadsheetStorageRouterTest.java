@@ -88,7 +88,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
     private final static SpreadsheetId SPREADSHEET_ID3 = SpreadsheetId.with(0x333);
 
-    private final static SpreadsheetMetadata METADATA1 = METADATA_EN_AU.set(
+    private final static SpreadsheetMetadata METADATA1 = SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.LOCALE,
         LOCALE
     ).set(
@@ -2692,7 +2692,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
-            SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER)
+            SpreadsheetMetadataTesting.SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER)
         );
         spreadsheetEnvironmentContext.setEnvironmentValue(
             SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName(),
