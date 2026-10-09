@@ -30,7 +30,7 @@ import walkingkooka.datetime.HasOptionalDateTimeSymbolsTesting;
 import walkingkooka.math.HasOptionalDecimalNumberSymbolsTesting;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
-import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -81,7 +81,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellTest implements CanBeEmptyTesting,
-    ClassTesting2<SpreadsheetCell>,
+    PublicClassTesting<SpreadsheetCell>,
     CanReplaceReferencesTesting2<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
     HasContentTypeTesting,
