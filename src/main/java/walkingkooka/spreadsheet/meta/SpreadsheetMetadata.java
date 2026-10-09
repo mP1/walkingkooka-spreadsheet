@@ -1031,50 +1031,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME);
     }
 
-    // Function<SpreadsheetColorName, Optional<Color>>..................................................................
-
-    /**
-     * Returns a {@link Function} that returns a {@link Color} given its {@link SpreadsheetColorName}
-     */
-    public abstract Function<SpreadsheetColorName, Optional<Color>> nameToColor();
-
-    /**
-     * Lazy factory that maps a {@link SpreadsheetColorName} to its eventual color number and then its {@link Color}.
-     */
-    final Function<SpreadsheetColorName, Optional<Color>> nameToColor0() {
-        return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor.nameToColorMap(this));
-    }
-
-    // Function<Integer, Optional<Color>>................................................................................
-
-    /**
-     * Returns a {@link Function} that returns a {@link Color} given its number.
-     */
-    public abstract Function<Integer, Optional<Color>> numberToColor();
-
-    /**
-     * Lazy factory that creates a {@link Function} that maps an integer to a {@link Color}
-     */
-    final Function<Integer, Optional<Color>> numberToColor0() {
-        return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor.numberToColorMap(this));
-    }
-
-    // Function<Integer, Optional<SpreadsheetColorName>>................................................................
-
-    /**
-     * Returns a {@link Function} that returns a {@link SpreadsheetColorName} given its number.
-     */
-    public abstract Function<Integer, Optional<SpreadsheetColorName>> numberToColorName();
-
-    /**
-     * Lazy factory that creates a {@link Function} that maps an integer to a {@link SpreadsheetColorName}
-     */
-    final Function<Integer, Optional<SpreadsheetColorName>> numberToColorName0() {
-        return SpreadsheetMetadataColorFunction.with(
-            SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor.numberToColorNameMap(this)
-        );
-    }
-
     // sort.............................................................................................................
 
     /**

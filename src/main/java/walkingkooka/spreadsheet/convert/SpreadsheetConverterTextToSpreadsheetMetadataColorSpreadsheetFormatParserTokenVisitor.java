@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserTo
 import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
@@ -49,18 +50,22 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
         final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
 
         final SpreadsheetColorName colorName = token.cast(ColorNameSpreadsheetFormatParserToken.class).colorName();
-        this.color = metadata.nameToColor()
-            .apply(colorName)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid color name"));
+        final Integer colorIndex = metadata.get(
+            SpreadsheetMetadataPropertyName.namedColor(colorName)
+        ).orElseThrow(() -> new IllegalArgumentException("Invalid color name"));
+
+        this.color = metadata.get(
+            SpreadsheetMetadataPropertyName.numberedColor(colorIndex)
+        ).orElseThrow(() -> new IllegalArgumentException("Invalid color index"));
     }
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
         final int colorNumber = token.cast(ColorNumberSpreadsheetFormatParserToken.class).value();
-        this.color = metadata.numberToColor()
-            .apply(colorNumber)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid color number"));
+        this.color = metadata.get(
+            SpreadsheetMetadataPropertyName.numberedColor(colorNumber)
+        ).orElseThrow(() -> new IllegalArgumentException("Invalid color number"));
     }
 
     private final SpreadsheetConverterContext context;
