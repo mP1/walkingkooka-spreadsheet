@@ -89,7 +89,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public void testWithUnwrapsSpreadsheetMetadataEnvironmentContext() {
         final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
-            Locale.FRENCH
+            DIFFERENT_LOCALE
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
 
@@ -113,7 +113,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public void testWithSpreadsheetMetadataEnvironmentContextDifferentSpreadsheetMetadata() {
         final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
-            Locale.FRENCH
+            DIFFERENT_LOCALE
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
 
@@ -217,7 +217,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                    SpreadsheetId.with(1)
+                    SPREADSHEET_ID
                 ),
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
@@ -241,8 +241,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testEnvironmentValueNames3() {
-        final Locale locale = Locale.GERMAN;
-
         this.environmentValueNamesAndCheck(
             SpreadsheetMetadata.EMPTY
                 .set(
@@ -253,12 +251,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     SpreadsheetName.with("Hello-spreadsheet-123")
                 ).set(
                     SpreadsheetMetadataPropertyName.LOCALE,
-                    locale
+                    DIFFERENT_LOCALE
                 ).setDefaults(
                     SpreadsheetMetadata.EMPTY
                         .set(
                             SpreadsheetMetadataPropertyName.LOCALE,
-                            locale
+                            DIFFERENT_LOCALE
                         ).set(
                             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
                             RoundingMode.FLOOR
@@ -331,18 +329,16 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     
     @Test
     public void testLocale() {
-        final Locale metadataLocale = Locale.ENGLISH;
-
         final SpreadsheetMetadataSpreadsheetEnvironmentContext context = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             METADATA.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                metadataLocale
+                DIFFERENT_LOCALE
             ),
             CONTEXT.cloneEnvironment()
         );
 
         this.checkNotEquals(
-            metadataLocale,
+            DIFFERENT_LOCALE,
             CONTEXT.locale(),
             "locale"
         );
@@ -356,18 +352,16 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetLocaleUpdatesContext() {
-        final Locale metadataLocale = Locale.ENGLISH;
-
         final SpreadsheetMetadataSpreadsheetEnvironmentContext context = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             METADATA.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                metadataLocale
+                DIFFERENT_LOCALE
             ),
             CONTEXT.cloneEnvironment()
         );
 
         this.checkNotEquals(
-            metadataLocale,
+            DIFFERENT_LOCALE,
             CONTEXT.locale(),
             "locale"
         );
@@ -379,7 +373,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
         this.setLocaleAndCheck(
             context,
-            Locale.GERMANY
+            DIFFERENT_LOCALE
         );
     }
 
