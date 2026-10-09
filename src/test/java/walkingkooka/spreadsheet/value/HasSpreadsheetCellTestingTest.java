@@ -65,7 +65,7 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
 
     @Test
     public void testHasSpreadsheetCellConstants() {
-        this.cellAndCheck(
+        this.spreadsheetCellAndCheck(
             HAS_SPREADSHEET_CELL,
             SPREADSHEET_CELL
         );
@@ -73,7 +73,7 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
 
     @Test
     public void testDifferentHasSpreadsheetCellConstants() {
-        this.cellAndCheck(
+        this.spreadsheetCellAndCheck(
             DIFFERENT_HAS_SPREADSHEET_CELL,
             DIFFERENT_SPREADSHEET_CELL
         );
@@ -81,7 +81,7 @@ public final class HasSpreadsheetCellTestingTest implements HasSpreadsheetCellTe
 
     @Test
     public void testEmptyHasSpreadsheetCell() {
-        this.cellAndCheck(
+        this.spreadsheetCellAndCheck(
             HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL
         );
     }

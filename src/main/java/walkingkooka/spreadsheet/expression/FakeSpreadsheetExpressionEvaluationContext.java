@@ -115,7 +115,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
+    public Optional<SpreadsheetCell> spreadsheetCell() {
         throw new UnsupportedOperationException();
     }
 

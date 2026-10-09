@@ -517,7 +517,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public Optional<SpreadsheetCell> cell() {
+        public Optional<SpreadsheetCell> spreadsheetCell() {
             return Optional.empty();
         }
 

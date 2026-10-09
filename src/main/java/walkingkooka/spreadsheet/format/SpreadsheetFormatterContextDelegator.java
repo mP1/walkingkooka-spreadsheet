@@ -44,9 +44,9 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     }
 
     @Override
-    default Optional<SpreadsheetCell> cell() {
+    default Optional<SpreadsheetCell> spreadsheetCell() {
         return this.spreadsheetFormatterContext()
-            .cell();
+            .spreadsheetCell();
     }
 
     @Override

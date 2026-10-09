@@ -1694,7 +1694,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     // HasSpreadsheetCell...............................................................................................
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
+    public Optional<SpreadsheetCell> spreadsheetCell() {
         return Optional.of(this);
     }
 }

@@ -621,7 +621,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testCell() {
-        this.cellAndCheck(
+        this.spreadsheetCellAndCheck(
             this.createContext()
         );
     }

@@ -34,7 +34,7 @@ import java.util.Optional;
 public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterContext implements SpreadsheetFormatterContext {
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
+    public Optional<SpreadsheetCell> spreadsheetCell() {
         throw new UnsupportedOperationException();
     }
 

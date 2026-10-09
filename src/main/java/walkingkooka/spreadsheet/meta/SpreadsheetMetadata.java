@@ -1320,7 +1320,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetConverterContext formatSpreadsheetConverterContext;
         try {
             formatSpreadsheetConverterContext = this.spreadsheetConverterContext(
-                hasSpreadsheetCell.cell(),
+                hasSpreadsheetCell.spreadsheetCell(),
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                 labelNameResolver,

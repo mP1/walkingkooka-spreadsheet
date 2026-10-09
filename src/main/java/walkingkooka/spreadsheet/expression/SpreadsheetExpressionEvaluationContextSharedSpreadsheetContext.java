@@ -149,7 +149,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     }
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
+    public Optional<SpreadsheetCell> spreadsheetCell() {
         return this.cell;
     }
 

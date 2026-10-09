@@ -144,7 +144,7 @@ public final class Sample {
             Optional.empty(),
             new FakeSpreadsheetExpressionEvaluationContext() {
                 @Override
-                public Optional<SpreadsheetCell> cell() {
+                public Optional<SpreadsheetCell> spreadsheetCell() {
                     return Optional.empty();
                 }
             }
@@ -547,7 +547,7 @@ public final class Sample {
         }
 
         @Override
-        public Optional<SpreadsheetCell> cell() {
+        public Optional<SpreadsheetCell> spreadsheetCell() {
             return this.cell;
         }
 

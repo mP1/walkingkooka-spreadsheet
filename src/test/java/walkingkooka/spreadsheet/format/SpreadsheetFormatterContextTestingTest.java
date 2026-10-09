@@ -209,7 +209,7 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public Optional<SpreadsheetCell> cell() {
+        public Optional<SpreadsheetCell> spreadsheetCell() {
             return Optional.empty();
         }
 

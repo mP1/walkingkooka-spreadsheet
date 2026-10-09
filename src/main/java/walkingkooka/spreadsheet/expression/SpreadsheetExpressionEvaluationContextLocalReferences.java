@@ -159,8 +159,8 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
-        return this.context.cell();
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.context.spreadsheetCell();
     }
 
     @Override
