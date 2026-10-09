@@ -159,6 +159,23 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), defaults);
     }
 
+    // colorName........................................................................................................
+
+    @Override
+    public Optional<SpreadsheetColorName> colorName(final int colorNumber) {
+        if (null == this.numberToColorName) {
+            this.numberToColorName = SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor.numberToColorNameMap(this);
+        }
+        return Optional.ofNullable(
+            this.numberToColorName.get(colorNumber)
+        );
+    }
+
+    /**
+     * Cached color number to {@link SpreadsheetColorName} lookup.
+     */
+    private Map<Integer, SpreadsheetColorName> numberToColorName;
+
     // ColorContext.....................................................................................................
 
     @Override
