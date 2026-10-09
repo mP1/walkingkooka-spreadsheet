@@ -38,12 +38,12 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
@@ -106,7 +106,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
     static {
-        SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        SpreadsheetEnvironmentContext context = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
             if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {
@@ -988,7 +988,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     // SpreadsheetMetadataContext.......................................................................................
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.SPREADSHEET_METADATA;
+    private final static SpreadsheetMetadata METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA;
 
     @Test
     public void testSaveMetadataAndLoadMetadata() {

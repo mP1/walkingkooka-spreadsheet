@@ -42,7 +42,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
+public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMetadataTesting,
     LocaleContextTesting,
     SpreadsheetEnvironmentContextTesting,
     TreePrintableTesting {
@@ -59,7 +59,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testCurrencyContextReadOnly() {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> SpreadsheetMetadataTesting.CURRENCY_CONTEXT.setCurrency(DIFFERENT_CURRENCY)
+            () -> HasSpreadsheetMetadataTesting.CURRENCY_CONTEXT.setCurrency(DIFFERENT_CURRENCY)
         );
     }
 
@@ -180,7 +180,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                     )
                 )
             ),
-            SpreadsheetMetadataTesting.parseFormula(
+            HasSpreadsheetMetadataTesting.parseFormula(
                 "=1"
             )
         );
@@ -297,7 +297,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         SPREADSHEET_METADATA
             .spreadsheetParserContext(
                 SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadataTesting.LOCALE_CONTEXT,
+                HasSpreadsheetMetadataTesting.LOCALE_CONTEXT,
                 HAS_NOW
             );
     }
@@ -306,7 +306,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testTerminalContext() {
         this.checkEquals(
             "1, input: FakeTextReader, output: sink, error: sink {charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, terminalId=1, timeOffset=Z, user=user123@example.com}",
-            SpreadsheetMetadataTesting.TERMINAL_CONTEXT.toString()
+            HasSpreadsheetMetadataTesting.TERMINAL_CONTEXT.toString()
         );
     }
 

@@ -32,7 +32,7 @@ import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
 public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNodeUnmarshallContextTesting,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     PackagePrivateClassTesting<SpreadsheetMetadataDefaultTextResource> {
 
     @Test

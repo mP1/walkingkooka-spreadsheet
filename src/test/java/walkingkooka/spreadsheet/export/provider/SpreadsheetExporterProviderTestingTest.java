@@ -25,13 +25,13 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.export.SpreadsheetExporter;
 import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviderTestingTest.TestSpreadsheetExporterProvider;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 
 import java.util.List;
 import java.util.Objects;
 
 public final class SpreadsheetExporterProviderTestingTest implements SpreadsheetExporterProviderTesting<TestSpreadsheetExporterProvider>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static String SELECTOR = "export-123 @@";
 

@@ -34,8 +34,8 @@ import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTesting<SpreadsheetImporterJson>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     ToStringTesting<SpreadsheetImporterJson>,
     ClassTesting2<SpreadsheetImporterJson> {
 

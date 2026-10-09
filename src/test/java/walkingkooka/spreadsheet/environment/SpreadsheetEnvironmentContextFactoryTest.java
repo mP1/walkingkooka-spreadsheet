@@ -40,9 +40,9 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.storage.Storages;
@@ -61,14 +61,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEnvironmentContextFactoryTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextFactory>,
     ConverterTesting,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetEnvironmentContextFactory>,
     ClassTesting2<SpreadsheetEnvironmentContextFactory> {
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
     static {
-        SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        SpreadsheetEnvironmentContext context = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
             if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {

@@ -25,7 +25,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -39,7 +39,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     @Override
     public TestSpreadsheetValidatorContext createContext() {
@@ -78,7 +78,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
         @Override
         public ConverterContext converterContext() {
-            return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
+            return HasSpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
         }
 
         @Override
@@ -132,7 +132,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
             return this.environmentContext;
         }
 
-        private final EnvironmentContext environmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        private final EnvironmentContext environmentContext = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         @Override
         public SpreadsheetValidatorContext setValidationReference(final SpreadsheetValidationReference cellOrLabel) {

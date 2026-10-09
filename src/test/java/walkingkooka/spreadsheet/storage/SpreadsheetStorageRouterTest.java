@@ -40,12 +40,12 @@ import walkingkooka.spreadsheet.file.SpreadsheetFileExtensions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -2692,7 +2692,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
-            SpreadsheetMetadataTesting.SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER)
+            HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER)
         );
         spreadsheetEnvironmentContext.setEnvironmentValue(
             SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName(),

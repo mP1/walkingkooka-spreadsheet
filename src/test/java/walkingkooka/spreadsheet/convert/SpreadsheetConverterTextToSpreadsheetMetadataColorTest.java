@@ -24,9 +24,9 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
 public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadataColor> {
 
@@ -138,7 +138,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
 
             @Override
             public SpreadsheetMetadata spreadsheetMetadata() {
-                return SpreadsheetMetadataTesting.SPREADSHEET_METADATA
+                return HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
                     .set(
                         SpreadsheetMetadataPropertyName.namedColor(
                             SpreadsheetColorName.with("HelloColor")

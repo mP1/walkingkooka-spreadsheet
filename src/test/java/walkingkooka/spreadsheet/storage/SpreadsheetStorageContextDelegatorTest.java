@@ -37,9 +37,9 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataCreator;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
@@ -119,14 +119,14 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
         {
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
             spreadsheetEnvironmentContext.setSpreadsheetId(
                 Optional.of(spreadsheetId)
             );
 
             final SpreadsheetMetadataStore spreadsheetMetadataStore = SpreadsheetMetadataStores.treeMap();
             spreadsheetMetadataStore.save(
-                SpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
+                HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     spreadsheetId
                 )

@@ -51,7 +51,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
         final String formatted = pattern.formatter()
             .format(
                 Optional.of(time),
-                SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
+                HasSpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
             ).get()
             .text();
 

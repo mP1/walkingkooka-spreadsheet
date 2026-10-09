@@ -20,8 +20,8 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviderSamplesContextDelegatorTest.TestSpreadsheetFormatterProviderSamplesContextDelegator;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
@@ -29,7 +29,7 @@ import java.math.MathContext;
 import java.util.Objects;
 
 public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements SpreadsheetFormatterProviderSamplesContextTesting<TestSpreadsheetFormatterProviderSamplesContextDelegator>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 
     @Override

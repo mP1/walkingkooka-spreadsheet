@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadshe
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetCellRange>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     ThrowableTesting,
     TreePrintableTesting,
     HasValueTesting {
@@ -356,10 +356,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 Sets.of(
                     SpreadsheetSelection.A1
                         .setFormula(
-                            SpreadsheetMetadataTesting.parseFormula("=100+B2")
+                            HasSpreadsheetMetadataTesting.parseFormula("=100+B2")
                         ),
                     B2.setFormula(
-                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
+                        HasSpreadsheetMetadataTesting.parseFormula("=200+B3")
                     )
                 )
             ),
@@ -367,10 +367,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
             moveTo.setValue(
                 Sets.of(
                     B2.setFormula(
-                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
+                        HasSpreadsheetMetadataTesting.parseFormula("=100+C3")
                     ),
                     C3.setFormula(
-                        SpreadsheetMetadataTesting.parseFormula("=200+C4")
+                        HasSpreadsheetMetadataTesting.parseFormula("=200+C4")
                     )
                 )
             )
@@ -388,10 +388,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 Sets.of(
                     SpreadsheetSelection.A1
                         .setFormula(
-                            SpreadsheetMetadataTesting.parseFormula("=100+B2")
+                            HasSpreadsheetMetadataTesting.parseFormula("=100+B2")
                         ),
                     B2.setFormula(
-                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
+                        HasSpreadsheetMetadataTesting.parseFormula("=200+B3")
                     )
                 )
             ),
@@ -399,7 +399,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
             moveTo.setValue(
                 Sets.of(
                     B2.setFormula(
-                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
+                        HasSpreadsheetMetadataTesting.parseFormula("=100+C3")
                     )
                 )
             )
@@ -1054,7 +1054,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                                             final Optional<Object> value) {
         return SpreadsheetSelection.parseCell(reference)
             .setFormula(
-                SpreadsheetMetadataTesting.parseFormula(formula)
+                HasSpreadsheetMetadataTesting.parseFormula(formula)
                     .setValue(
                         value
                     )

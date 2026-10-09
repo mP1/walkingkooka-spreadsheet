@@ -34,10 +34,10 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.FakeSpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
@@ -58,7 +58,7 @@ import java.util.Optional;
 
 public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
     ToStringTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
-    SpreadsheetMetadataTesting {
+    HasSpreadsheetMetadataTesting {
 
     private final static ProviderContext PROVIDER_CONTEXT = new FakeProviderContext() {
         @Override
@@ -69,7 +69,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     .convertOrFail(
                         value,
                         type,
-                        SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
+                        HasSpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
                     );
             }
             if (value instanceof Double && type == Integer.class) {
@@ -87,12 +87,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         @Override
         public Locale locale() {
-            return SpreadsheetMetadataTesting.LOCALE;
+            return HasSpreadsheetMetadataTesting.LOCALE;
         }
 
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-            return SpreadsheetMetadataTesting.PROVIDER_CONTEXT.environmentValue(name);
+            return HasSpreadsheetMetadataTesting.PROVIDER_CONTEXT.environmentValue(name);
         }
 
         @Override

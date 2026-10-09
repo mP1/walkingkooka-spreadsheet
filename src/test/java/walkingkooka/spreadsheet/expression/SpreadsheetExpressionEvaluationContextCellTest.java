@@ -26,10 +26,10 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.terminal.TerminalContextTesting;
 
@@ -38,7 +38,7 @@ import java.math.RoundingMode;
 
 public final class SpreadsheetExpressionEvaluationContextCellTest implements SpreadsheetExpressionEvaluationContextTesting2<SpreadsheetExpressionEvaluationContextCell>,
     DecimalNumberContextDelegator,
-    SpreadsheetMetadataTesting,
+    HasSpreadsheetMetadataTesting,
     TerminalContextTesting,
     ToStringTesting<SpreadsheetExpressionEvaluationContextCell> {
 
@@ -54,7 +54,7 @@ public final class SpreadsheetExpressionEvaluationContextCellTest implements Spr
     );
 
     static {
-        SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        SpreadsheetEnvironmentContext context = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
             if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {
