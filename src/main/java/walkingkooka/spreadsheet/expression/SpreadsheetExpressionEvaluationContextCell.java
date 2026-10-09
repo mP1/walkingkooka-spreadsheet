@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -43,7 +45,8 @@ import java.util.Set;
 /**
  * Wraps another {@link SpreadsheetExpressionEvaluationContext}, but holds a local {@link SpreadsheetCell} property.
  */
-final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExpressionEvaluationContextDelegator {
+final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExpressionEvaluationContextDelegator,
+    UsesToStringBuilder {
 
     static SpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                        final SpreadsheetExpressionEvaluationContext context) {
@@ -224,8 +227,20 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
 
     private final SpreadsheetExpressionEvaluationContext context;
 
+    // Object...........................................................................................................
+
     @Override
     public String toString() {
         return this.cell.toString();
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("cell")
+            .value(this.cell)
+            .label("context")
+            .value(this.context);
     }
 }
