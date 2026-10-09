@@ -75,7 +75,7 @@ import java.util.Set;
  * Delegates all {@link ExpressionEvaluationContextDelegator} and most {@link SpreadsheetExpressionEvaluationContext}
  * except for cell getter and loaders:
  * <ul>
- *     <li>{@link #cell()}</li>
+ *     <li>{@link #spreadsheetCell()}</li>
  *     <li>{@link #loadCell(SpreadsheetCellReference)}</li>
  *     <li>{@link #loadCellRange(SpreadsheetCellRangeReference)}</li>
  * </ul>
@@ -311,9 +311,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default Optional<SpreadsheetCell> cell() {
+    default Optional<SpreadsheetCell> spreadsheetCell() {
         return this.spreadsheetExpressionEvaluationContext()
-            .cell();
+            .spreadsheetCell();
     }
 
     @Override

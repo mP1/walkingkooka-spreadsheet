@@ -53,7 +53,7 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(context, "context");
 
-        return cell.equals(context.cell()) ?
+        return cell.equals(context.spreadsheetCell()) ?
             context :
             new SpreadsheetExpressionEvaluationContextCell(
                 cell,
@@ -81,7 +81,7 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
     }
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
+    public Optional<SpreadsheetCell> spreadsheetCell() {
         return this.cell;
     }
 

@@ -35,7 +35,7 @@ public interface HasSpreadsheetCell {
     HasSpreadsheetCell EMPTY_HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
 
         @Override
-        public Optional<SpreadsheetCell> cell() {
+        public Optional<SpreadsheetCell> spreadsheetCell() {
             return NO_SPREADSHEET_CELL;
         }
 
@@ -48,10 +48,10 @@ public interface HasSpreadsheetCell {
     /**
      * Returns the current cell that owns the expression or formula being executed.
      */
-    Optional<SpreadsheetCell> cell();
+    Optional<SpreadsheetCell> spreadsheetCell();
 
-    default SpreadsheetCell cellOrFail() {
-        return this.cell()
+    default SpreadsheetCell spreadsheetCellOrFail() {
+        return this.spreadsheetCell()
             .orElseThrow(() -> new IllegalStateException("Missing cell"));
     }
 }

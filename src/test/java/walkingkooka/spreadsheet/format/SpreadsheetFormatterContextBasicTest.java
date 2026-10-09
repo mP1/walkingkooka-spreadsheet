@@ -369,8 +369,8 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     }
 
     @Test
-    public void testCell() {
-        this.cellAndCheck(
+    public void testSpreadsheetCell() {
+        this.spreadsheetCellAndCheck(
             this.createContext(),
             OPTIONAL_SPREADSHEET_CELL
         );

@@ -254,7 +254,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
         this.checkEquals(
             differentCell,
-            different.cell(),
+            different.spreadsheetCell(),
             "serverUrl"
         );
     }

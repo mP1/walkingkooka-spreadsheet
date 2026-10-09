@@ -607,7 +607,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             new FakeSpreadsheetFormatterProviderSamplesContext() {
                 @Override
-                public Optional<SpreadsheetCell> cell() {
+                public Optional<SpreadsheetCell> spreadsheetCell() {
                     return Optional.empty();
                 }
 

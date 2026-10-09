@@ -87,7 +87,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
 
     HasSpreadsheetCell HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
         @Override
-        public Optional<SpreadsheetCell> cell() {
+        public Optional<SpreadsheetCell> spreadsheetCell() {
             return OPTIONAL_SPREADSHEET_CELL;
         }
 
@@ -99,7 +99,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
 
     HasSpreadsheetCell DIFFERENT_HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
         @Override
-        public Optional<SpreadsheetCell> cell() {
+        public Optional<SpreadsheetCell> spreadsheetCell() {
             return OPTIONAL_DIFFERENT_SPEADSHEET_CELL;
         }
 
@@ -109,26 +109,26 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
         }
     };
 
-    default void cellAndCheck(final HasSpreadsheetCell hasCell) {
-        this.cellAndCheck(
-            hasCell,
+    default void spreadsheetCellAndCheck(final HasSpreadsheetCell has) {
+        this.spreadsheetCellAndCheck(
+            has,
             HasSpreadsheetCell.NO_SPREADSHEET_CELL
         );
     }
 
-    default void cellAndCheck(final HasSpreadsheetCell hasCell,
-                              final SpreadsheetCell expected) {
-        this.cellAndCheck(
-            hasCell,
+    default void spreadsheetCellAndCheck(final HasSpreadsheetCell has,
+                                         final SpreadsheetCell expected) {
+        this.spreadsheetCellAndCheck(
+            has,
             Optional.of(expected)
         );
     }
 
-    default void cellAndCheck(final HasSpreadsheetCell hasCell,
-                              final Optional<SpreadsheetCell> expected) {
+    default void spreadsheetCellAndCheck(final HasSpreadsheetCell has,
+                                         final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
             expected,
-            hasCell.cell()
+            has.spreadsheetCell()
         );
     }
 }

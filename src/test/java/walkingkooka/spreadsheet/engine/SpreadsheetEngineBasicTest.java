@@ -18089,7 +18089,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                                 public Object apply(final List<Object> parameters,
                                                     final SpreadsheetExpressionEvaluationContext context) {
                                     return Boolean.parseBoolean(
-                                        context.cell()
+                                        context.spreadsheetCell()
                                             .map(c -> c.formula().text())
                                             .orElse(null)
                                     );
@@ -19202,7 +19202,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                                 public Object apply(final List<Object> parameters,
                                                     final SpreadsheetExpressionEvaluationContext context) {
                                     return SpreadsheetSelection.A1.equalsIgnoreReferenceKind(
-                                        context.cell()
+                                        context.spreadsheetCell()
                                             .map(SpreadsheetCell::reference)
                                             .orElse(null)
                                     );

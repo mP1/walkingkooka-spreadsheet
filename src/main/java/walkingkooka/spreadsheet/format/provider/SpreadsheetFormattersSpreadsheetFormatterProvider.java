@@ -678,7 +678,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             accountingSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -721,7 +721,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             currencySample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -863,7 +863,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             fullDateSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -889,7 +889,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             fullDateTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -915,7 +915,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             fullTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -953,7 +953,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             generalSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -983,7 +983,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             longDateSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1009,7 +1009,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             longDateTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1035,7 +1035,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             longTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1061,7 +1061,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             mediumDateSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1087,7 +1087,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             mediumDateTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1113,7 +1113,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             mediumTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1259,7 +1259,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             percentSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1298,7 +1298,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             scientificSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1325,7 +1325,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             shortDateSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1351,7 +1351,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             shortDateTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1377,7 +1377,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             shortTimeSample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1406,7 +1406,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             sample(
-                                context.cell()
+                                context.spreadsheetCell()
                                     .get()
                                     .reference()
                                     .text(),
@@ -1903,7 +1903,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static Object cellValueOr(final SpreadsheetFormatterContext context,
                                       final Supplier<Object> defaultValue) {
-        Object value = context.cell()
+        Object value = context.spreadsheetCell()
             .flatMap(c -> c.formula().value())
             .orElse(null);
 

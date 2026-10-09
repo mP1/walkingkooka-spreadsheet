@@ -100,8 +100,8 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     // SpreadsheetFormatterContextBasic................................................................................
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
-        return this.hasSpreadsheetCell.cell();
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.hasSpreadsheetCell.spreadsheetCell();
     }
 
     private final HasSpreadsheetCell hasSpreadsheetCell;

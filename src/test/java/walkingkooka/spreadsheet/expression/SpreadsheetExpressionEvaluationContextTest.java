@@ -61,15 +61,15 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void testCellOrFail() {
+    public void testSpreadsheetCellOrFail() {
         final IllegalStateException thrown = assertThrows(
             IllegalStateException.class,
             () -> new FakeSpreadsheetExpressionEvaluationContext() {
                 @Override
-                public Optional<SpreadsheetCell> cell() {
+                public Optional<SpreadsheetCell> spreadsheetCell() {
                     return Optional.empty();
                 }
-            }.cellOrFail()
+            }.spreadsheetCellOrFail()
         );
 
         this.getMessageAndCheck(

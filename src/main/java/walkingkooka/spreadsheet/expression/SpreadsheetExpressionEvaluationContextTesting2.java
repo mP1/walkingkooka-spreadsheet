@@ -253,7 +253,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
         assertSame(
             context,
             context.setCell(
-                context.cell()
+                context.spreadsheetCell()
             )
         );
     }

@@ -3801,7 +3801,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testCell() {
         final SpreadsheetCell spreadsheetCell = this.createCell();
 
-        this.cellAndCheck(
+        this.spreadsheetCellAndCheck(
             spreadsheetCell,
             spreadsheetCell
         );
