@@ -119,7 +119,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting extends FormHandl
         this.loadCellAndCheck(
             context,
             cellReference,
-            SpreadsheetExpressionEvaluationContext.NO_CELL
+            SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL
         );
     }
 

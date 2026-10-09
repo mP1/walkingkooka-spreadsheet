@@ -112,7 +112,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
     default void cellAndCheck(final HasSpreadsheetCell hasCell) {
         this.cellAndCheck(
             hasCell,
-            HasSpreadsheetCell.NO_CELL
+            HasSpreadsheetCell.NO_SPREADSHEET_CELL
         );
     }
 

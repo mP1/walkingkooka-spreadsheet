@@ -594,7 +594,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     }
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = SPREADSHEET_METADATA.decimalNumberContext(
-        SpreadsheetExpressionEvaluationContext.NO_CELL,
+        SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
         LOCALE_CONTEXT
     );
 

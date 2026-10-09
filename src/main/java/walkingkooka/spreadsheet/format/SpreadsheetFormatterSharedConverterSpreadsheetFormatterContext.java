@@ -67,7 +67,7 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
 
     @Override
     public Optional<SpreadsheetCell> cell() {
-        return HasSpreadsheetCell.NO_CELL;
+        return HasSpreadsheetCell.NO_SPREADSHEET_CELL;
     }
 
     @Override

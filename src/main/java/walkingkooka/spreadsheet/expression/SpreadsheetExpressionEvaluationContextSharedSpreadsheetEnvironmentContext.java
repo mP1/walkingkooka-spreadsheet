@@ -188,7 +188,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     @Override
     public Optional<SpreadsheetCell> cell() {
-        return NO_CELL;
+        return NO_SPREADSHEET_CELL;
     }
 
     @Override

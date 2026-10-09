@@ -238,7 +238,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
 
                 return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
-                    SpreadsheetExpressionEvaluationContext.NO_CELL,
+                    SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SpreadsheetLabelNameResolvers.fake(),
                     SpreadsheetContexts.fixedSpreadsheetId(

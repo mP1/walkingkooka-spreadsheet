@@ -265,7 +265,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
             this.spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
-                SpreadsheetExpressionEvaluationContext.NO_CELL,
+                SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SpreadsheetContexts.fixedSpreadsheetId(
