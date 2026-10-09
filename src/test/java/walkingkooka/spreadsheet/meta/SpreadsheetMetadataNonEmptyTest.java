@@ -1082,6 +1082,39 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
+    @Test
+    public void testLookupColorWithNamedColorDefaults() {
+        final SpreadsheetColorName colorName1 = SpreadsheetColorName.CYAN;
+        final Color color1 = Color.fromRgb(0x111);
+        final int number1 = 1;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+            .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
+            .setDefaults(
+                SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
+                    SpreadsheetMetadataPropertyName.numberedColor(number1),
+                    color1
+                ).set(
+                    SpreadsheetMetadataPropertyName.namedColor(colorName1),
+                    number1
+                )
+            );
+
+        this.colorNameAndCheck(
+            metadata,
+            number1,
+            colorName1
+        );
+
+        this.lookupColorAndCheck(
+            metadata,
+            Color.named("CYAN"),
+            color1
+        );
+    }
+
     // setDefaults......................................................................................................
 
     @Test

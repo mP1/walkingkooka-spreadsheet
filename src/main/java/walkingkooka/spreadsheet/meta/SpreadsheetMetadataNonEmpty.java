@@ -194,14 +194,14 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             } else {
                 final NamedColor namedColor = (NamedColor) color;
 
-                index = (Integer) this.value.get(
+                index = this.get(
                     // ColorRED -> RED
                     SpreadsheetMetadataPropertyName.namedColor(
                         SpreadsheetColorName.with(
                             namedColor.value()
                         )
                     )
-                );
+                ).orElse(null);
             }
 
             if (null != index) {
