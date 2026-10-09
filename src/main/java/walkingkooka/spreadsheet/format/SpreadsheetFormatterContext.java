@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Context;
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -43,16 +42,6 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
      * This value affects STAR operator.
      */
     int cellCharacterWidth();
-
-    /**
-     * Returns the {@link Color} with the given number.
-     */
-    Optional<Color> colorNumber(final int number);
-
-    /**
-     * Returns the {@link Color} with the given name.
-     */
-    Optional<Color> colorName(final SpreadsheetColorName name);
 
     /**
      * Formats the given value using the default {@link SpreadsheetFormatter}.

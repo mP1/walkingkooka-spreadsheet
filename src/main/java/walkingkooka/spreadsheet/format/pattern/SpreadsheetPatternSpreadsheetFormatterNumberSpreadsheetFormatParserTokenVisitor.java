@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
@@ -40,6 +41,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter} that handles numbers.
@@ -76,16 +78,25 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
 
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
-        this.color = token.colorName();
+        this.color = Optional.of(
+            Color.named(
+                token.colorName()
+                    .value()
+            )
+        );
     }
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
-        this.color = token.value();
+        this.color = Optional.of(
+            Color.indexed(
+                token.value()
+            )
+        );
     }
 
     // the color name or color number
-    Object color = null;
+    Optional<Color> color = Optional.empty();
 
     @Override
     protected void visit(final CurrencySpreadsheetFormatParserToken token) {

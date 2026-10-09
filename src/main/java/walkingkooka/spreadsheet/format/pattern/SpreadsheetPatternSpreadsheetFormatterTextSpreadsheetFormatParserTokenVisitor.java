@@ -67,15 +67,20 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
 
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
-        this.color = this.context.colorName(
-            token.colorName()
+        this.color = Optional.of(
+            this.context.namedColor(
+                token.colorName()
+                    .value()
+            )
         );
     }
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
-        this.color = this.context.colorNumber(
-            token.value()
+        this.color = Optional.of(
+            this.context.indexedColor(
+                token.value()
+            )
         );
     }
 

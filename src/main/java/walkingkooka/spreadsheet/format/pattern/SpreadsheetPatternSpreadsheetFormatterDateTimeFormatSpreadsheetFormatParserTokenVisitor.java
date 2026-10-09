@@ -160,15 +160,26 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
 
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
-        this.color = this.context.colorName(
+//        this.color = this.context.colorName(
+//            token.colorName()
+//        );
+        this.color = Optional.of(
+            Color.named(
             token.colorName()
+                .value()
+        )
         );
     }
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
-        this.color = this.context.colorNumber(
-            token.value()
+//        this.color = this.context.colorNumber(
+//            token.value()
+//        );
+        this.color = Optional.of(
+            Color.indexed(
+                token.value()
+            )
         );
     }
 

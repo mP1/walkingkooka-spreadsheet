@@ -376,23 +376,23 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         );
     }
 
-    @Test
-    public void testColorNumber() {
-        this.colorNumberAndCheck(
-            this.createContext(),
-            COLOR_NUMBER,
-            Optional.of(COLOR)
-        );
-    }
-
-    @Test
-    public void testColorName() {
-        this.colorNameAndCheck(
-            this.createContext(),
-            SPREADSHEET_COLOR_NAME,
-            Optional.of(COLOR)
-        );
-    }
+//    @Test
+//    public void testColorNumber() {
+//        this.colorNumberAndCheck(
+//            this.createContext(),
+//            COLOR_NUMBER,
+//            Optional.of(COLOR)
+//        );
+//    }
+//
+//    @Test
+//    public void testColorName() {
+//        this.colorNameAndCheck(
+//            this.createContext(),
+//            SPREADSHEET_COLOR_NAME,
+//            Optional.of(COLOR)
+//        );
+//    }
 
     @Test
     public void testConvertNumberOneToBoolean() {

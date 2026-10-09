@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.color.ColorContexts;
@@ -163,16 +162,6 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
         @Override
         public int cellCharacterWidth() {
             return 0;
-        }
-
-        @Override
-        public Optional<Color> colorNumber(final int number) {
-            return Optional.empty();
-        }
-
-        @Override
-        public Optional<Color> colorName(final SpreadsheetColorName name) {
-            return Optional.empty();
         }
 
         @Override

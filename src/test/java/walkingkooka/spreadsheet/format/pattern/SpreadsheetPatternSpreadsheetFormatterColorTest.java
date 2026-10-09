@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
@@ -112,12 +111,13 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
             this.createFormatter("[BLACK]"),
             Optional.empty(), // value
             new TestSpreadsheetFormatterContext() {
+
                 @Override
-                public Optional<Color> colorName(final SpreadsheetColorName name) {
+                public Optional<Color> lookupColor(final Color c) {
                     checkEquals(
-                        SpreadsheetColorName.with("BLACK"),
-                        name,
-                        "color name"
+                        Color.named("BLACK"),
+                        c,
+                        "color"
                     );
                     return color;
                 }
@@ -134,9 +134,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
             "[RED]",
             text,
             new TestSpreadsheetFormatterContext() {
+
                 @Override
-                public Optional<Color> colorName(final SpreadsheetColorName name) {
-                    checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
+                public Optional<Color> lookupColor(final Color c) {
+                    checkEquals(
+                        Color.named("RED"),
+                        c,
+                        "color"
+                    );
                     return color;
                 }
             },
@@ -153,9 +158,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
             "[RED]",
             text,
             new TestSpreadsheetFormatterContext() {
+
                 @Override
-                public Optional<Color> colorName(final SpreadsheetColorName name) {
-                    checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
+                public Optional<Color> lookupColor(final Color c) {
+                    checkEquals(
+                        Color.named("RED"),
+                        c,
+                        "color"
+                    );
                     return color;
                 }
             },
@@ -172,9 +182,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
             "[COLOR 15]",
             text,
             new TestSpreadsheetFormatterContext() {
+
                 @Override
-                public Optional<Color> colorNumber(final int number) {
-                    checkEquals(15, number);
+                public Optional<Color> lookupColor(final Color c) {
+                    checkEquals(
+                        Color.indexed(15),
+                        c,
+                        "color"
+                    );
                     return color;
                 }
             },
@@ -207,8 +222,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
             text,
             new TestSpreadsheetFormatterContext() {
                 @Override
-                public Optional<Color> colorNumber(final int number) {
-                    checkEquals(2, number);
+                public Optional<Color> lookupColor(final Color c) {
+                    checkEquals(
+                        Color.indexed(2),
+                        c,
+                        "color"
+                    );
                     return color;
                 }
             },
@@ -225,9 +244,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
             "[COLOR 15]",
             text,
             new TestSpreadsheetFormatterContext() {
+
                 @Override
-                public Optional<Color> colorNumber(final int number) {
-                    checkEquals(15, number);
+                public Optional<Color> lookupColor(final Color c) {
+                    checkEquals(
+                        Color.indexed(15),
+                        c,
+                        "color"
+                    );
                     return color;
                 }
             },
@@ -301,8 +325,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         return new TestSpreadsheetFormatterContext() {
 
             @Override
-            public Optional<Color> colorNumber(final int number) {
-                checkEquals(COLOR_NUMBER, number, "color number");
+            public Optional<Color> lookupColor(final Color c) {
+                checkEquals(
+                    Color.indexed(COLOR_NUMBER),
+                    c,
+                    "color"
+                );
                 return Optional.of(COLOR);
             }
 

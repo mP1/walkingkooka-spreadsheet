@@ -23,6 +23,8 @@ import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
+import walkingkooka.color.WebColorName;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -87,7 +89,21 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     SpreadsheetFormatterTesting,
     ThrowableTesting {
 
-    private final static Color COLOR = Color.BLACK;
+    final static Color COLOR_INDEX_44 = Color.indexed(44);
+
+    final static Optional<Color> OPTIONAL_COLOR_INDEX_44 = Optional.of(COLOR_INDEX_44);
+
+    final static Color COLOR_44 = Color.parse("#444444");
+
+    final static Optional<Color> OPTIONAL_COLOR_44 = Optional.of(COLOR_44);
+
+    final static Color COLOR_NAME_RED = Color.named("RED");
+
+    final static Optional<Color> OPTIONAL_COLOR_NAME_RED = Optional.of(COLOR_NAME_RED);
+
+    final static Color COLOR_RED = WebColorName.RED.color();
+
+    final static Optional<Color> OPTIONAL_COLOR_RED = Optional.of(COLOR_RED);
 
     // static factory method Locale.....................................................................................
 
@@ -245,10 +261,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     return '0';
                 }
 
-                @Override
-                public Optional<Color> colorName(final SpreadsheetColorName name) {
-                    return formattedText.color();
-                }
+//                @Override
+//                public Optional<Color> colorName(final SpreadsheetColorName name) {
+//                    return formattedText.color();
+//                }
             },
             formattedText
         );
@@ -566,7 +582,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateFormatPatternColorNameFails() {
         this.parseFails(
-            "[Black]",
+            "[Red]",
             SpreadsheetPattern::parseDateFormatPattern
         );
     }
@@ -599,10 +615,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateFormatPatternColor() {
         this.formatPatternFormatAndCheck(
-            SpreadsheetPattern.parseDateFormatPattern("[BLACK]dd/mm/yyyy"),
+            SpreadsheetPattern.parseDateFormatPattern("[RED]dd/mm/yyyy"),
             LocalDate.of(1999, 12, 31),
             SpreadsheetText.with("31/12/1999")
-                .setColor(Optional.of(COLOR))
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -688,7 +704,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateParsePatternColorFails() {
         this.parseFails(
-            "[BLACK]dd/mm/yyyy",
+            "[RED]dd/mm/yyyy",
             SpreadsheetPattern::parseDateParsePattern
         );
     }
@@ -772,7 +788,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateTimeFormatPatternColorNameFails() {
         this.parseFails(
-            "[Black]",
+            "[Red]",
             SpreadsheetPattern::parseDateTimeFormatPattern
         );
     }
@@ -813,10 +829,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateTimeFormatPatternColor() {
         this.formatPatternFormatAndCheck(
-            SpreadsheetPattern.parseDateTimeFormatPattern("[BLACK]dd/mm/yyyy hh/mm/ss \"Hello\""),
+            SpreadsheetPattern.parseDateTimeFormatPattern("[RED]dd/mm/yyyy hh/mm/ss \"Hello\""),
             LocalDateTime.of(1999, 12, 31, 12, 58, 59),
             SpreadsheetText.with("31/12/1999 12/58/59 Hello")
-                .setColor(Optional.of(COLOR))
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -902,7 +918,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseDateTimeParsePatternColorFails() {
         this.parseFails(
-            "[BLACK]dd/mm/yyyy hh:mm:ss",
+            "[RED]dd/mm/yyyy hh:mm:ss",
             SpreadsheetPattern::parseDateTimeParsePattern
         );
     }
@@ -952,7 +968,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseNumberFormatPatternColorNameFails() {
         this.parseFails(
-            "[Black]",
+            "[Red]",
             SpreadsheetPattern::parseNumberFormatPattern
         );
     }
@@ -1089,7 +1105,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseNumberFormatPatternColor() {
         this.formatAndCheck(
-            SpreadsheetPattern.parseNumberFormatPattern("[BLACK]0.0 \"Hello\"").formatter(),
+            SpreadsheetPattern.parseNumberFormatPattern("[RED]0.0 \"Hello\"").formatter(),
             ExpressionNumberKind.DOUBLE.create(1.5),
             new FakeSpreadsheetFormatterContext() {
 
@@ -1113,17 +1129,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public Optional<Color> colorName(final SpreadsheetColorName name) {
-                    return Optional.of(COLOR);
-                }
-
-                @Override
                 public char zeroDigit() {
                     return '0';
                 }
             },
             SpreadsheetText.with("1.5 Hello")
-                .setColor(Optional.of(COLOR))
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -1179,10 +1190,9 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseNumberFormatPatternWithColorNameGeneral() {
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
-        final Color color = Color.parse("#123");
 
         this.formatAndCheck(
-            SpreadsheetPattern.parseNumberFormatPattern("[Black]GENERAL")
+            SpreadsheetPattern.parseNumberFormatPattern("[Red]GENERAL")
                 .formatter(),
             number,
             new FakeSpreadsheetFormatterContext() {
@@ -1219,13 +1229,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public Optional<Color> colorName(final SpreadsheetColorName name) {
+                public Optional<Color> lookupColor(final Color color) {
                     checkEquals(
-                        SpreadsheetColorName.BLACK,
-                        name,
+                        COLOR_NAME_RED,
+                        color,
                         "colorName"
                     );
-                    return Optional.of(color);
+                    return OPTIONAL_COLOR_RED;
                 }
 
                 @Override
@@ -1234,19 +1244,16 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
             },
             SpreadsheetText.with("1.5")
-                .setColor(
-                    Optional.of(color)
-                )
+                .setColor(OPTIONAL_COLOR_RED)
         );
     }
 
     @Test
     public void testParseNumberFormatPatternWithColorNumberGeneral() {
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(1.5);
-        final Color color = Color.parse("#123");
 
         this.formatAndCheck(
-            SpreadsheetPattern.parseNumberFormatPattern("[Color 45]GENERAL")
+            SpreadsheetPattern.parseNumberFormatPattern("[Color44]GENERAL")
                 .formatter(),
             number,
             new FakeSpreadsheetFormatterContext() {
@@ -1283,13 +1290,17 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public Optional<Color> colorNumber(final int number) {
-                    checkEquals(
-                        45,
-                        number,
-                        "colorNumber"
-                    );
-                    return Optional.of(color);
+                public Optional<Color> lookupColor(final Color color) {
+                    if (color.isIndexed()) {
+                        checkEquals(
+                            COLOR_INDEX_44,
+                            color,
+                            "namedColor"
+                        );
+                        return OPTIONAL_COLOR_44;
+                    }
+
+                    throw new UnsupportedOperationException();
                 }
 
                 @Override
@@ -1298,9 +1309,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
             },
             SpreadsheetText.with("1.5")
-                .setColor(
-                    Optional.of(color)
-                )
+                .setColor(OPTIONAL_COLOR_44)
         );
     }
 
@@ -1405,7 +1414,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseNumberParsePatternColorFails() {
         this.parseFails(
-            "[BLACK]#.#",
+            "[RED]#.#",
             SpreadsheetPattern::parseNumberParsePattern
         );
     }
@@ -1903,13 +1912,17 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public Optional<Color> colorName(final SpreadsheetColorName name) {
-                    return Optional.of(COLOR);
+                public NamedColor namedColor(final String name) {
+                    return Color.named(name);
+                }
+
+                @Override
+                public Optional<Color> lookupColor(final Color color) {
+                    return OPTIONAL_COLOR_NAME_RED;
                 }
             },
-            SpreadsheetText.with("BananaBanana Hello").setColor(
-                Optional.of(COLOR)
-            )
+            SpreadsheetText.with("BananaBanana Hello")
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -1966,7 +1979,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseTimeFormatPatternColorNameFails() {
         this.parseFails(
-            "[Black]",
+            "[Red]",
             SpreadsheetPattern::parseTimeFormatPattern
         );
     }
@@ -2007,12 +2020,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseTimeFormatPatternColor() {
         this.formatPatternFormatAndCheck(
-            SpreadsheetPattern.parseTimeFormatPattern("[BLACK]hh/mm/ss"),
+            SpreadsheetPattern.parseTimeFormatPattern("[RED]hh/mm/ss"),
             LocalTime.of(12, 58, 59),
             SpreadsheetText.with("12/58/59")
-                .setColor(
-                    Optional.of(COLOR)
-                )
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -2098,7 +2109,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testParseTimeParsePatternColorFails() {
         this.parseFails(
-            "[BLACK]hh:mm:ss",
+            "[RED]hh:mm:ss",
             SpreadsheetPattern::parseTimeParsePattern
         );
     }

@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.color.ColorContexts;
@@ -72,16 +71,6 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
 
     @Override
     public int cellCharacterWidth() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<Color> colorNumber(final int number) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<Color> colorName(final SpreadsheetColorName name) {
         throw new UnsupportedOperationException();
     }
 

@@ -18,12 +18,32 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringTesting;
+import walkingkooka.color.Color;
+import walkingkooka.color.WebColorName;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+
+import java.util.Optional;
 
 public abstract class SpreadsheetFormatterSharedTestCase<F extends SpreadsheetFormatterShared> implements SpreadsheetFormatterTesting2<F>,
     ToStringTesting<F>,
     ClassTesting2<F> {
+
+    final static Color COLOR_INDEX_44 = Color.indexed(44);
+
+    final static Optional<Color> OPTIONAL_COLOR_INDEX_44 = Optional.of(COLOR_INDEX_44);
+
+    final static Color COLOR_44 = Color.parse("#444444");
+
+    final static Optional<Color> OPTIONAL_COLOR_44 = Optional.of(COLOR_44);
+
+    final static Color COLOR_NAME_RED = Color.named("RED");
+
+    final static Optional<Color> OPTIONAL_COLOR_NAME_RED = Optional.of(COLOR_NAME_RED);
+
+    final static Color COLOR_RED = WebColorName.RED.color();
+
+    final static Optional<Color> OPTIONAL_COLOR_RED = Optional.of(COLOR_RED);
 
     SpreadsheetFormatterSharedTestCase() {
         super();
