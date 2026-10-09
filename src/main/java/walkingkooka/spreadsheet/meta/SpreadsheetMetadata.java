@@ -1031,6 +1031,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME);
     }
 
+    // colorName........................................................................................................
+
+    /**
+     * Returns the {@link SpreadsheetColorName} for the given color number.
+     */
+    public abstract Optional<SpreadsheetColorName> colorName(final int colorNumber);
+
     // sort.............................................................................................................
 
     /**

@@ -45,6 +45,7 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -445,6 +446,27 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             expected,
             metadata.getEffectiveStylePropertyOrFail(property),
             () -> metadata + " getEffectiveStyleOrFailProperty " + property
+        );
+    }
+
+    // NumberToColorName................................................................................................
+
+    @Test
+    public final void testColorNameWithInvalidIndex() {
+        this.colorNameAndCheck(
+            this.createObject(),
+            99,
+            null
+        );
+    }
+
+    final void colorNameAndCheck(final SpreadsheetMetadata metadata,
+                                 final int number,
+                                 final SpreadsheetColorName colorName) {
+        this.checkEquals(
+            Optional.ofNullable(colorName),
+            metadata.colorName(number),
+            () -> number + " to color " + metadata
         );
     }
 
