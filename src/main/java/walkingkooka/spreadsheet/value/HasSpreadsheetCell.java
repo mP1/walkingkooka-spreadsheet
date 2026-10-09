@@ -27,16 +27,16 @@ public interface HasSpreadsheetCell {
     /**
      * Constant holding a no cell response
      */
-    Optional<SpreadsheetCell> NO_CELL = Optional.empty();
+    Optional<SpreadsheetCell> NO_SPREADSHEET_CELL = Optional.empty();
 
     /**
-     * A {@link HasSpreadsheetCell} that always returns {@link #NO_CELL}.
+     * A {@link HasSpreadsheetCell} that always returns {@link #NO_SPREADSHEET_CELL}.
      */
     HasSpreadsheetCell EMPTY_HAS_SPREADSHEET_CELL = new HasSpreadsheetCell() {
 
         @Override
         public Optional<SpreadsheetCell> cell() {
-            return NO_CELL;
+            return NO_SPREADSHEET_CELL;
         }
 
         @Override

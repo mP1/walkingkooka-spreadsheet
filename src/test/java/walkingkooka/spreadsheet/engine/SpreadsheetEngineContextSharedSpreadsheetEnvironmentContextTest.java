@@ -570,7 +570,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                 this.expression(1),
                 this.expression(2)
             ),
-            SpreadsheetExpressionEvaluationContext.NO_CELL,
+            SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
             SpreadsheetExpressionReferenceLoaders.fake(),
             this.number(1 + 2)
         );
@@ -670,7 +670,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                 this.expression(1),
                 this.expression(2)
             ),
-            SpreadsheetExpressionEvaluationContext.NO_CELL,
+            SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
             SpreadsheetExpressionReferenceLoaders.fake(),
             this.number(1 + 2)
         );

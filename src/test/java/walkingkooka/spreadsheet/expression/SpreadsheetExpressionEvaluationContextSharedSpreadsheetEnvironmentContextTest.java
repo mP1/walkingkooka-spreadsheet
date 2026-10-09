@@ -638,7 +638,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             UnsupportedOperationException.class,
             () -> this.createContext()
-                .setCell(SpreadsheetExpressionEvaluationContext.NO_CELL)
+                .setCell(SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL)
         );
     }
 
@@ -1064,7 +1064,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             UnsupportedOperationException.class,
             () -> this.createContext()
                 .spreadsheetFormatterContext(
-                    SpreadsheetExpressionEvaluationContext.NO_CELL
+                    SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL
                 )
         );
     }

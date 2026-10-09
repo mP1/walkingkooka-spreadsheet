@@ -141,7 +141,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
             .orElse(null);
         if (null == spreadsheetIdOrNull) {
             value = context.spreadsheetExpressionEvaluationContext(
-                SpreadsheetExpressionEvaluationContext.NO_CELL,
+                SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.empty()
             ).evaluate(expression);
         } else {
@@ -155,7 +155,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
 
             try {
                 value = context.spreadsheetExpressionEvaluationContext(
-                    SpreadsheetExpressionEvaluationContext.NO_CELL,
+                    SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
                     changes
                 ).evaluate(expression);
 
