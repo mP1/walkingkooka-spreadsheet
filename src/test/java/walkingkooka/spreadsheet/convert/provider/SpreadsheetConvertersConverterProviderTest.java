@@ -1403,7 +1403,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Override
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
-            (final ProviderContext context) -> SpreadsheetMetadataTesting.METADATA_EN_AU.dateTimeConverter(
+            (final ProviderContext context) -> SpreadsheetMetadataTesting.SPREADSHEET_METADATA.dateTimeConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 context

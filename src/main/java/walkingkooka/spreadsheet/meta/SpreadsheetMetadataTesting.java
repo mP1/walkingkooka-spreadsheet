@@ -182,7 +182,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
      */
-    SpreadsheetMetadata METADATA_EN_AU = SpreadsheetMetadata.EMPTY
+    SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY
         .set(
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
@@ -404,7 +404,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         @Override
         public SpreadsheetMetadata createMetadata(final EmailAddress user,
                                                   final Optional<Locale> locale) {
-            SpreadsheetMetadata metadata = METADATA_EN_AU.set(
+            SpreadsheetMetadata metadata = SPREADSHEET_METADATA.set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.create(
                     user,
@@ -439,34 +439,34 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 LOCALE
             ).set(
                 SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
             ).set(
                 SpreadsheetMetadataPropertyName.DATE_PARSER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_PARSER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_PARSER)
             ).set(
                 SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
             ).set(
                 SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER)
             ).set(
                 SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
             ).set(
                 SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
             ).set(
                 SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_PARSER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_PARSER)
             ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
             ).set(
                 SpreadsheetMetadataPropertyName.TIME_FORMATTER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
             ).set(
                 SpreadsheetMetadataPropertyName.TIME_PARSER,
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
             ).spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.readOnly(
                     Predicates.always(), // everything is read only
@@ -532,7 +532,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.empty();
 
-    SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
+    SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = SPREADSHEET_METADATA.spreadsheetConverterContext(
         SpreadsheetMetadata.NO_CELL,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -553,7 +553,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 
-    SpreadsheetProvider SPREADSHEET_PROVIDER = METADATA_EN_AU.spreadsheetProvider(
+    SpreadsheetProvider SPREADSHEET_PROVIDER = SPREADSHEET_METADATA.spreadsheetProvider(
         SpreadsheetProviders.basic(
             SPREADSHEET_COMPARATOR_PROVIDER,
             CONVERTER_PROVIDER,
@@ -574,7 +574,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
             throw new UnsupportedOperationException();
         };
 
-    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
+    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = SPREADSHEET_METADATA.spreadsheetFormatterContext(
         HAS_SPREADSHEET_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -587,7 +587,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         PROVIDER_CONTEXT
     );
 
-    SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
+    SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SPREADSHEET_METADATA.spreadsheetFormatterProviderSamplesContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -600,7 +600,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
         PROVIDER_CONTEXT
     );
 
-    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(
+    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = SPREADSHEET_METADATA.spreadsheetParserContext(
         SpreadsheetMetadata.NO_CELL,
         LOCALE_CONTEXT,
         HAS_NOW
@@ -609,7 +609,7 @@ public interface SpreadsheetMetadataTesting extends BinaryTextContextTesting,
     static SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
             TextCursors.charSequence(text),
-            METADATA_EN_AU.spreadsheetParser(
+            SPREADSHEET_METADATA.spreadsheetParser(
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
             ),

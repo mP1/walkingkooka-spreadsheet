@@ -65,7 +65,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testEffectiveStyle() {
-        METADATA_EN_AU.effectiveStyle();
+        SPREADSHEET_METADATA.effectiveStyle();
     }
 
     @Test
@@ -94,13 +94,13 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testEnvironmentContextConvertAllValuesToString() {
-        final Converter<SpreadsheetConverterContext> converter = METADATA_EN_AU.converter(
+        final Converter<SpreadsheetConverterContext> converter = SPREADSHEET_METADATA.converter(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             CONVERTER_PROVIDER,
             PROVIDER_CONTEXT
         );
 
-        final SpreadsheetConverterContext converterContext = METADATA_EN_AU.spreadsheetConverterContext(
+        final SpreadsheetConverterContext converterContext = SPREADSHEET_METADATA.spreadsheetConverterContext(
             SpreadsheetMetadata.NO_CELL,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
@@ -136,7 +136,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testFormatter() {
-        METADATA_EN_AU.spreadsheetFormatter(
+        SPREADSHEET_METADATA.spreadsheetFormatter(
             SPREADSHEET_FORMATTER_PROVIDER,
             PROVIDER_CONTEXT
         );
@@ -144,12 +144,12 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testJsonNodeMarshallContext() {
-        METADATA_EN_AU.jsonNodeMarshallContext();
+        SPREADSHEET_METADATA.jsonNodeMarshallContext();
     }
 
     @Test
     public void testJsonNodeUnmarshallContext() {
-        METADATA_EN_AU.jsonNodeUnmarshallContext(
+        SPREADSHEET_METADATA.jsonNodeUnmarshallContext(
             SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME,
             CURRENCY_LOCALE_CONTEXT
         );
@@ -268,7 +268,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testSpreadsheetFormatterContext() {
-        METADATA_EN_AU.spreadsheetFormatterContext(
+        SPREADSHEET_METADATA.spreadsheetFormatterContext(
             HAS_SPREADSHEET_CELL,
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
@@ -286,7 +286,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testSpreadsheetParser() {
-        METADATA_EN_AU.spreadsheetParser(
+        SPREADSHEET_METADATA.spreadsheetParser(
             SPREADSHEET_PARSER_PROVIDER,
             PROVIDER_CONTEXT
         );
@@ -294,7 +294,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testSpreadsheetParserContext() {
-        METADATA_EN_AU
+        SPREADSHEET_METADATA
             .spreadsheetParserContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadataTesting.LOCALE_CONTEXT,
@@ -1500,13 +1500,13 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     private void treePrintAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> property,
                                    final String expected) {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-            (ProviderContext p) -> METADATA_EN_AU.dateTimeConverter(
+            (ProviderContext p) -> SPREADSHEET_METADATA.dateTimeConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
             )
         ).converter(
-            METADATA_EN_AU.getOrFail(property),
+            SPREADSHEET_METADATA.getOrFail(property),
             PROVIDER_CONTEXT
         );
 

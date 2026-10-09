@@ -262,7 +262,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                                 public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
                                     return Optional.ofNullable(
                                         id.equals(spreadsheetId) ?
-                                            METADATA_EN_AU.set(
+                                            SPREADSHEET_METADATA.set(
                                                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                                                 spreadsheetId
                                             ).set(
@@ -286,7 +286,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     SpreadsheetProviders.basic(
                         SpreadsheetComparatorProviders.empty(),
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                            (ProviderContext p) -> METADATA_EN_AU.dateTimeConverter(
+                            (ProviderContext p) -> SPREADSHEET_METADATA.dateTimeConverter(
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 SPREADSHEET_PARSER_PROVIDER,
                                 p

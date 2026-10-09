@@ -1691,7 +1691,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         this.parseAndCheck(
             text,
             SpreadsheetFormulaParsers.valueOrExpression(
-                SpreadsheetMetadataTesting.METADATA_EN_AU.spreadsheetParser(
+                SpreadsheetMetadataTesting.SPREADSHEET_METADATA.spreadsheetParser(
                     SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER,
                     SpreadsheetMetadataTesting.PROVIDER_CONTEXT
                 )

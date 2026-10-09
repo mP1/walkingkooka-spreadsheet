@@ -78,7 +78,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             context.setEnvironmentValue(
                 name,
                 Cast.to(
-                    METADATA_EN_AU.getOrFail(
+                    SPREADSHEET_METADATA.getOrFail(
                         SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
                     )
                 )
@@ -87,7 +87,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
-            METADATA_EN_AU.getOrFail(
+            SPREADSHEET_METADATA.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
         );
@@ -593,7 +593,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         return DECIMAL_NUMBER_CONTEXT;
     }
 
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA_EN_AU.decimalNumberContext(
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = SPREADSHEET_METADATA.decimalNumberContext(
         SpreadsheetExpressionEvaluationContext.NO_CELL,
         LOCALE_CONTEXT
     );

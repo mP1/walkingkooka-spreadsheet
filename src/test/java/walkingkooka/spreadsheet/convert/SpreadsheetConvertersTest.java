@@ -1230,7 +1230,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 @Override
                 public SpreadsheetMetadata spreadsheetMetadata() {
-                    return SpreadsheetMetadataTesting.METADATA_EN_AU
+                    return SpreadsheetMetadataTesting.SPREADSHEET_METADATA
                         .set(
                             SpreadsheetMetadataPropertyName.namedColor(
                                 SpreadsheetColorName.with(SPREADSHEET_COLOR_NAME)

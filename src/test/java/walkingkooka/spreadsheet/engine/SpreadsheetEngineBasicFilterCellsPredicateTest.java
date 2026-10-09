@@ -216,7 +216,7 @@ public final class SpreadsheetEngineBasicFilterCellsPredicateTest implements Pre
 
                 @Override
                 public SpreadsheetMetadata spreadsheetMetadata() {
-                    return METADATA_EN_AU;
+                    return SPREADSHEET_METADATA;
                 }
 
                 @Override

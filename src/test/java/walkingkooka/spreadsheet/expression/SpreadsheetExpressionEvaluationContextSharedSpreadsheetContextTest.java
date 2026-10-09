@@ -88,7 +88,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     private final static SpreadsheetMetadataMode MODE = SpreadsheetMetadataMode.FORMULA;
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     ).set(

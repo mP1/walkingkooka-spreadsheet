@@ -138,7 +138,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
 
             @Override
             public SpreadsheetMetadata spreadsheetMetadata() {
-                return SpreadsheetMetadataTesting.METADATA_EN_AU
+                return SpreadsheetMetadataTesting.SPREADSHEET_METADATA
                     .set(
                         SpreadsheetMetadataPropertyName.namedColor(
                             SpreadsheetColorName.with("HelloColor")

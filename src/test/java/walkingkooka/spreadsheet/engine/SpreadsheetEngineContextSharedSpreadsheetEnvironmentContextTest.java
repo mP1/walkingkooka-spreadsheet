@@ -96,7 +96,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             context.setEnvironmentValue(
                 name,
                 Cast.to(
-                    METADATA_EN_AU.getOrFail(
+                    SPREADSHEET_METADATA.getOrFail(
                         SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
                     )
                 )
@@ -110,7 +110,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
-            METADATA_EN_AU.getOrFail(
+            SPREADSHEET_METADATA.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
         );
@@ -345,7 +345,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     }
 
     private final static SpreadsheetMetadataCreator CREATE_METADATA = (e, l) -> {
-        SpreadsheetMetadata created = METADATA_EN_AU;
+        SpreadsheetMetadata created = SPREADSHEET_METADATA;
 
         created = created.set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,

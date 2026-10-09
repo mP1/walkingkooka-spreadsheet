@@ -74,7 +74,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     ClassTesting<MissingConverterVerifier>,
     SpreadsheetMetadataTesting {
 
-    private final static SpreadsheetMetadata SPREADSHEET_METADATA_TESTING = METADATA_EN_AU.set(
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA_TESTING = SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     );

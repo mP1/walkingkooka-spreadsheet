@@ -110,7 +110,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
 
         SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
-            METADATA_EN_AU.spreadsheetFormatterContext(
+            SPREADSHEET_METADATA.spreadsheetFormatterContext(
                 HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL,
                 (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
@@ -130,7 +130,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                                     public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
                                         return Optional.ofNullable(
                                             id.equals(SPREADSHEET_ID) ?
-                                                METADATA_EN_AU.set(
+                                                SPREADSHEET_METADATA.set(
                                                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                                                     SPREADSHEET_ID
                                                 ) :
@@ -407,16 +407,16 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "automatic",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.automatic(
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
                     .spreadsheetFormatPattern()
                     .get()
                     .formatter(),
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
                     .spreadsheetFormatPattern()
                     .get()
                     .formatter(),
                 SpreadsheetFormattersSpreadsheetFormatterProvider.INSTANCE.spreadsheetFormatter(
-                    METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER),
+                    SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER),
                     PROVIDER_CONTEXT
                 ),
 //
@@ -427,15 +427,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 //                SpreadsheetFormatters.badgeError(
 //                    SpreadsheetFormatters.p
 //                ),
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
                     .spreadsheetFormatPattern()
                     .get()
                     .formatter(),
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
                     .spreadsheetFormatPattern()
                     .get()
                     .formatter(),
-                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
+                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
                     .spreadsheetFormatPattern()
                     .get()
                     .formatter()
@@ -4745,7 +4745,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     private static SpreadsheetFormatterProviderSamplesContext context(final Optional<Object> value) {
-        return METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
+        return SPREADSHEET_METADATA.spreadsheetFormatterProviderSamplesContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(
                     SpreadsheetFormula.EMPTY.setValue(value)
