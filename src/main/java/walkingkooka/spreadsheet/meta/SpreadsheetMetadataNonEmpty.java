@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -160,47 +159,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), defaults);
     }
 
-    // getters..........................................................................................................
-
-    @Override
-    public Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
-        if (null == this.nameToColor) {
-            this.nameToColor = this.nameToColor0();
-        }
-        return this.nameToColor;
-    }
-
-    /**
-     * Cache expression
-     */
-    private Function<SpreadsheetColorName, Optional<Color>> nameToColor;
-
-    @Override
-    public Function<Integer, Optional<Color>> numberToColor() {
-        if (null == this.numberToColor) {
-            this.numberToColor = this.numberToColor0();
-        }
-        return this.numberToColor;
-    }
-
-    /**
-     * Cache expression
-     */
-    private Function<Integer, Optional<Color>> numberToColor;
-
-    @Override
-    public Function<Integer, Optional<SpreadsheetColorName>> numberToColorName() {
-        if (null == this.numberToColorName) {
-            this.numberToColorName = this.numberToColorName0();
-        }
-        return this.numberToColorName;
-    }
-
-    /**
-     * Cache {link Function}
-     */
-    private Function<Integer, Optional<SpreadsheetColorName>> numberToColorName;
-
     // ColorContext.....................................................................................................
 
     @Override
@@ -230,8 +188,9 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             }
 
             if (null != index) {
-                lookup = this.numberToColor()
-                    .apply(index);
+                lookup = this.get(
+                    SpreadsheetMetadataPropertyName.numberedColor(index)
+                );
             } else {
                 lookup = NO_LOOKUP_COLOR;
             }

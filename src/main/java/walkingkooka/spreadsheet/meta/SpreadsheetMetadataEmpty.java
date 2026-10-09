@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -28,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetMetadata} with no properties and values.
@@ -90,23 +88,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     SpreadsheetMetadata checkDefault() {
         return null; // null means empty when defaults
-    }
-
-    // getters..........................................................................................................
-
-    @Override
-    public Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
-        return this.nameToColor0(); // dont cache let factory fail.
-    }
-
-    @Override
-    public Function<Integer, Optional<Color>> numberToColor() {
-        return this.numberToColor0();
-    }
-
-    @Override
-    public Function<Integer, Optional<SpreadsheetColorName>> numberToColorName() {
-        return this.numberToColorName0();
     }
 
     @Override

@@ -23,7 +23,6 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorContextTesting2;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
@@ -46,7 +45,6 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -447,64 +445,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             expected,
             metadata.getEffectiveStylePropertyOrFail(property),
             () -> metadata + " getEffectiveStyleOrFailProperty " + property
-        );
-    }
-
-    // NameToColor......................................................................................................
-
-    @Test
-    public final void testNameToColor() {
-        this.nameToColorAndCheck(this.createObject(), SpreadsheetColorName.with("unknown"), null);
-    }
-
-    final void nameToColorAndCheck(final SpreadsheetMetadata metadata,
-                                   final SpreadsheetColorName name,
-                                   final Color color) {
-        final Function<SpreadsheetColorName, Optional<Color>> nameToColor = metadata.nameToColor();
-        this.checkEquals(
-            Optional.ofNullable(color),
-            nameToColor.apply(name),
-            () -> name + " to color " + metadata
-        );
-    }
-
-    // NumberToColor....................................................................................................
-
-    @Test
-    public final void testNumberToColor() {
-        this.numberToColorAndCheck(this.createObject(), 99, null);
-    }
-
-    final void numberToColorAndCheck(final SpreadsheetMetadata metadata,
-                                     final int number,
-                                     final Color color) {
-        final Function<Integer, Optional<Color>> numberToColor = metadata.numberToColor();
-        this.checkEquals(
-            Optional.ofNullable(color),
-            numberToColor.apply(number),
-            () -> number + " to color " + metadata
-        );
-    }
-
-    // NumberToColorName................................................................................................
-
-    @Test
-    public final void testNumberToColorName() {
-        this.numberToColorNameAndCheck(
-            this.createObject(),
-            99,
-            null
-        );
-    }
-
-    final void numberToColorNameAndCheck(final SpreadsheetMetadata metadata,
-                                         final int number,
-                                         final SpreadsheetColorName colorName) {
-        final Function<Integer, Optional<SpreadsheetColorName>> numberToColorName = metadata.numberToColorName();
-        this.checkEquals(
-            Optional.ofNullable(colorName),
-            numberToColorName.apply(number),
-            () -> number + " to color " + metadata
         );
     }
 
