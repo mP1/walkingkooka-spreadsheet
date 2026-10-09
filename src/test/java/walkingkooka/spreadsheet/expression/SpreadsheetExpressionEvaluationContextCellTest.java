@@ -17,7 +17,9 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -37,7 +39,8 @@ import java.math.RoundingMode;
 public final class SpreadsheetExpressionEvaluationContextCellTest implements SpreadsheetExpressionEvaluationContextTesting2<SpreadsheetExpressionEvaluationContextCell>,
     DecimalNumberContextDelegator,
     SpreadsheetMetadataTesting,
-    TerminalContextTesting {
+    TerminalContextTesting,
+    ToStringTesting<SpreadsheetExpressionEvaluationContextCell> {
 
     private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = (id) -> {
         throw new UnsupportedOperationException();
@@ -163,6 +166,16 @@ public final class SpreadsheetExpressionEvaluationContextCellTest implements Spr
         return new MathContext(
             7,
             RoundingMode.HALF_UP
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "Optional[A1 valueType=text/Text currency=\"AUD\" currencyExchangeRater=\"test-currency-exchange-rater-111\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'\" formatter=\"formatter-selector-111\" formattedValue=\"formatted-value\" locale=\"en_AU\" parser=\"parser-selector-111\" style={color=black} validator=\"absolute-url\"]"
         );
     }
 
