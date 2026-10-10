@@ -231,7 +231,7 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
 
     @Override
     public String toString() {
-        return this.cell.toString();
+        return ToStringBuilder.buildFrom(this);
     }
 
     // UsesToStringBuilder..............................................................................................
