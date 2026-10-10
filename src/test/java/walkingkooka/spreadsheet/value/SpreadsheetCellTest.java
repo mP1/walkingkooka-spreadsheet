@@ -2733,6 +2733,54 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testCurrencyExchangeRaterPatchNotEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.currencyExchangeRaterPatch(
+            JSON_NODE_MARSHALL_CONTEXT
+        );
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"currencyExchangeRater\": \"test-currency-exchange-rater-111\"\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setCurrencyExchangeRater(OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR),
+            patch,
+            cell
+        );
+    }
+
+    @Test
+    public void testCurrencyExchangeRaterPatchEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrencyExchangeRater(SpreadsheetCell.NO_CURRENCY_EXCHANGE_RATER)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.currencyExchangeRaterPatch(JSON_NODE_MARSHALL_CONTEXT);
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"currencyExchangeRater\": null\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setCurrencyExchangeRater(OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR),
+            patch,
+            cell
+        );
+    }
+
+    @Test
     public void testFormulaPatchNullContextFails() {
         assertThrows(
             NullPointerException.class,
