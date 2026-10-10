@@ -3038,25 +3038,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testValidatorPatchNotEmpty() {
-        final Optional<ValidatorSelector> validator = Optional.of(
-            ValidatorSelector.parse("hello-validator")
-        );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            .setValidator(validator);
+            .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
+            .setLocale(OPTIONAL_LOCALE);
 
         final JsonNode patch = cell.validatorPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
                 "  \"A1\": {\n" +
-                "    \"validator\": \"hello-validator\"\n" +
+                "    \"validator\": \"absolute-url\"\n" +
                 "  }\n" +
                 "}"
         );
 
         this.patchAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(validator),
+            cell.setValidator(OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR),
             patch,
             cell
         );
@@ -3064,9 +3061,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testValidatorPatchEmpty() {
-        final Optional<ValidatorSelector> validator = SpreadsheetCell.NO_VALIDATOR;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            .setValidator(validator);
+            .setValidator(SpreadsheetCell.NO_VALIDATOR)
+            .setLocale(OPTIONAL_LOCALE);
 
         final JsonNode patch = cell.validatorPatch(JSON_NODE_MARSHALL_CONTEXT);
 
@@ -3080,8 +3077,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
 
         this.patchAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(validator),
+            cell.setValidator(OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR),
             patch,
             cell
         );
