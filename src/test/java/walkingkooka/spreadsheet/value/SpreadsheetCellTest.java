@@ -2780,6 +2780,107 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+
+    @Test
+    public void testDateTimeSymbolsPatchNotEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.dateTimeSymbolsPatch(
+            JSON_NODE_MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"dateTimeSymbols\": {\n" +
+                "      \"ampms\": [\n" +
+                "        \"am\",\n" +
+                "        \"pm\"\n" +
+                "      ],\n" +
+                "      \"monthNames\": [\n" +
+                "        \"January\",\n" +
+                "        \"February\",\n" +
+                "        \"March\",\n" +
+                "        \"April\",\n" +
+                "        \"May\",\n" +
+                "        \"June\",\n" +
+                "        \"July\",\n" +
+                "        \"August\",\n" +
+                "        \"September\",\n" +
+                "        \"October\",\n" +
+                "        \"November\",\n" +
+                "        \"December\"\n" +
+                "      ],\n" +
+                "      \"monthNameAbbreviations\": [\n" +
+                "        \"Jan.\",\n" +
+                "        \"Feb.\",\n" +
+                "        \"Mar.\",\n" +
+                "        \"Apr.\",\n" +
+                "        \"May\",\n" +
+                "        \"Jun.\",\n" +
+                "        \"Jul.\",\n" +
+                "        \"Aug.\",\n" +
+                "        \"Sep.\",\n" +
+                "        \"Oct.\",\n" +
+                "        \"Nov.\",\n" +
+                "        \"Dec.\"\n" +
+                "      ],\n" +
+                "      \"weekDayNames\": [\n" +
+                "        \"Sunday\",\n" +
+                "        \"Monday\",\n" +
+                "        \"Tuesday\",\n" +
+                "        \"Wednesday\",\n" +
+                "        \"Thursday\",\n" +
+                "        \"Friday\",\n" +
+                "        \"Saturday\"\n" +
+                "      ],\n" +
+                "      \"weekDayNameAbbreviations\": [\n" +
+                "        \"Sun.\",\n" +
+                "        \"Mon.\",\n" +
+                "        \"Tue.\",\n" +
+                "        \"Wed.\",\n" +
+                "        \"Thu.\",\n" +
+                "        \"Fri.\",\n" +
+                "        \"Sat.\"\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setDateTimeSymbols(OPTIONAL_DIFFERENT_DATE_TIME_SYMBOLS),
+            patch,
+            cell
+        );
+    }
+
+    @Test
+    public void testDateTimeSymbolsPatchEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(SpreadsheetCell.NO_DATETIME_SYMBOLS)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.dateTimeSymbolsPatch(JSON_NODE_MARSHALL_CONTEXT);
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"dateTimeSymbols\": null\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS),
+            patch,
+            cell
+        );
+    }
+
     @Test
     public void testFormulaPatchNullContextFails() {
         assertThrows(
