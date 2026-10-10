@@ -551,6 +551,14 @@ public final class Sample {
             return this.cell;
         }
 
+        @Override
+        public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
+            return SpreadsheetExpressionEvaluationContexts.cell(
+                cell,
+                this
+            );
+        }
+
         private final Optional<SpreadsheetCell> cell;
 
         @Override
@@ -561,14 +569,6 @@ public final class Sample {
         @Override
         public boolean isText(final Object value) {
             return SpreadsheetStrings.isText(value);
-        }
-
-        @Override
-        public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-            return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
-            );
         }
 
         private final ExpressionEvaluationContext context;
