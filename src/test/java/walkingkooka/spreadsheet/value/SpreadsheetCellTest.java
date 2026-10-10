@@ -2685,6 +2685,54 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     // XXXPatch.........................................................................................................
 
     @Test
+    public void testCurrencyPatchNotEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrency(OPTIONAL_CURRENCY)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.currencyPatch(
+            JSON_NODE_MARSHALL_CONTEXT
+        );
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"currency\": \"AUD\"\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setCurrency(OPTIONAL_DIFFERENT_CURRENCY),
+            patch,
+            cell
+        );
+    }
+
+    @Test
+    public void testCurrencyPatchEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrency(SpreadsheetCell.NO_CURRENCY)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.currencyPatch(JSON_NODE_MARSHALL_CONTEXT);
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"currency\": null\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setCurrency(OPTIONAL_CURRENCY),
+            patch,
+            cell
+        );
+    }
+
+    @Test
     public void testFormulaPatchNullContextFails() {
         assertThrows(
             NullPointerException.class,
