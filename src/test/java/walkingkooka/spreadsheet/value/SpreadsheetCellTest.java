@@ -2835,6 +2835,55 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+
+    @Test
+    public void testLocalePatchNotEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setLocale(OPTIONAL_LOCALE)
+            .setCurrency(OPTIONAL_CURRENCY);
+
+        final JsonNode patch = cell.localePatch(
+            JSON_NODE_MARSHALL_CONTEXT
+        );
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"locale\": \"en-AU\"\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setLocale(OPTIONAL_DIFFERENT_LOCALE),
+            patch,
+            cell
+        );
+    }
+
+    @Test
+    public void testLocalePatchEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setLocale(SpreadsheetCell.NO_LOCALE)
+            .setCurrency(OPTIONAL_CURRENCY);
+
+        final JsonNode patch = cell.localePatch(JSON_NODE_MARSHALL_CONTEXT);
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"locale\": null\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setLocale(OPTIONAL_LOCALE),
+            patch,
+            cell
+        );
+    }
+
     @Test
     public void testParserPatchNullContextFails() {
         assertThrows(
