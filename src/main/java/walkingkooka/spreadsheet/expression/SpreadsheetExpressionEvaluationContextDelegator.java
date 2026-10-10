@@ -305,9 +305,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+    default SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetExpressionEvaluationContext()
-            .setCell(cell);
+            .setSpreadsheetCell(cell);
     }
 
     @Override

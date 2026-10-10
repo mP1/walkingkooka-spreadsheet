@@ -324,19 +324,6 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     // SpreadsheetExpressionEvaluationContext delegate..................................................................
 
     @Override
-    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
-        return SpreadsheetExpressionEvaluationContexts.cell(
-            cell,
-            this
-        );
-    }
-
-    @Override
-    public Optional<SpreadsheetCell> spreadsheetCell() {
-        return this.context.spreadsheetCell();
-    }
-
-    @Override
     public Converter<SpreadsheetConverterContext> converter() {
         return this.context.converter();
     }
@@ -379,6 +366,19 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.context.resolveLabel(labelName);
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
+        return SpreadsheetExpressionEvaluationContexts.cell(
+            cell,
+            this
+        );
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.context.spreadsheetCell();
     }
 
     @Override

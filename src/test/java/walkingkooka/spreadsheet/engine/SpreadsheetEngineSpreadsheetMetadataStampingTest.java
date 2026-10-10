@@ -584,7 +584,7 @@ public final class SpreadsheetEngineSpreadsheetMetadataStampingTest implements S
 
                 return new FakeSpreadsheetExpressionEvaluationContext() {
                     @Override
-                    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+                    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
                         return this;
                     }
                 };

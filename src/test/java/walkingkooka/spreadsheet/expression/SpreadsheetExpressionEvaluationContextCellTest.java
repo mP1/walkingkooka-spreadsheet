@@ -95,7 +95,7 @@ public final class SpreadsheetExpressionEvaluationContextCellTest implements Spr
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
 
     @Override
-    public void testSetCellWithSame() {
+    public void testSetSpreadsheetCellWithSame() {
         throw new UnsupportedOperationException();
     }
 
