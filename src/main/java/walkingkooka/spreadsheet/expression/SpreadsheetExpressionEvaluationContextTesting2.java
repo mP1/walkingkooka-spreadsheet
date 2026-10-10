@@ -235,24 +235,24 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
         );
     }
 
-    // setCell..........................................................................................................
+    // setSpreadsheetCell...............................................................................................
 
     @Test
-    default void testSetCellWithNullCellFails() {
+    default void testSetSpreadsheetCellWithNullCellFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext()
-                .setCell(null)
+                .setSpreadsheetCell(null)
         );
     }
 
     @Test
-    default void testSetCellWithSame() {
+    default void testSetSpreadsheetCellWithSame() {
         final C context = this.createContext();
 
         assertSame(
             context,
-            context.setCell(
+            context.setSpreadsheetCell(
                 context.spreadsheetCell()
             )
         );

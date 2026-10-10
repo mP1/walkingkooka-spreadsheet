@@ -564,7 +564,7 @@ public final class Sample {
         }
 
         @Override
-        public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+        public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
             return SpreadsheetExpressionEvaluationContexts.cell(
                 cell,
                 this

@@ -203,7 +203,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting extends FormHandl
                                  final SpreadsheetExpressionEvaluationContext expected) {
         this.checkEquals(
             expected,
-            context.setCell(cell)
+            context.setSpreadsheetCell(cell)
         );
     }
 

@@ -73,7 +73,7 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
         return with(
             cell,
             this.context

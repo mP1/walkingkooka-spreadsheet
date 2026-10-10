@@ -181,7 +181,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     // SpreadsheetExpressionEvaluationContext............................................................................
 
     @Override
-    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(cell, "cell");
         throw new UnsupportedOperationException();
     }

@@ -89,13 +89,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testSetCellWithNullCellFails() {
+    public void testSetSpreadsheetCellWithNullCellFails() {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testSetCellWithSame() {
+    public void testSetSpreadsheetCellWithSame() {
         throw new UnsupportedOperationException();
     }
 
@@ -219,7 +217,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     final static class TestSpreadsheetExpressionEvaluationContextDelegator implements SpreadsheetExpressionEvaluationContextDelegator {
 
         @Override
-        public SpreadsheetExpressionEvaluationContextDelegator setCell(final Optional<SpreadsheetCell> cell) {
+        public SpreadsheetExpressionEvaluationContextDelegator setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
             throw new UnsupportedOperationException();
         }
 

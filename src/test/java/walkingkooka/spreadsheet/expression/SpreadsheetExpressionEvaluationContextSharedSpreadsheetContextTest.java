@@ -237,7 +237,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     // setCell..........................................................................................................
 
     @Test
-    public void testSetCellDifferentCell() {
+    public void testSetCellWithDifferentSpreadsheetCell() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
 
         final Optional<SpreadsheetCell> differentCell = Optional.of(
@@ -247,7 +247,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                 )
         );
 
-        final SpreadsheetExpressionEvaluationContext different = context.setCell(differentCell);
+        final SpreadsheetExpressionEvaluationContext different = context.setSpreadsheetCell(differentCell);
         assertNotSame(
             context,
             different

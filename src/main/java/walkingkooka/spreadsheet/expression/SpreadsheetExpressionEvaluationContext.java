@@ -130,7 +130,7 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
     /**
      * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
      */
-    SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell);
+    SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell);
 
     /**
      * Saves or replaces the current {@link SpreadsheetMetadata} with a new copy.
