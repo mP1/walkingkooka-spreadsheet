@@ -1170,17 +1170,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             }
         }
 
-        // error-throwing...............................................................................................
-        if (formula) {
-            verifier.addIfConversionFail(
-                ERROR,
-                ExpressionNumber.class,
-                SpreadsheetConvertersConverterProvider.ERROR_THROWING,
-                context.expressionNumberKind()
-                    .zero()
-            );
-        }
-
         // expression...................................................................................................
         {
             if (formatting || formula || query || scripting || validation) {
