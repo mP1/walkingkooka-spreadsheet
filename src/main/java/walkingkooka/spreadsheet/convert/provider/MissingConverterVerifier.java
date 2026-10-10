@@ -245,10 +245,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
     // value constants..................................................................................................
 
+    private final static String BOOLEAN_LIST_STRING = "TRUE, FALSE, true";
+
     private final static BooleanList BOOLEAN_LIST = BooleanList.EMPTY.setElements(
         Lists.of(
             true,
-            false
+            false,
+            true
         )
     );
 
@@ -2120,10 +2123,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
             // text-to-boolean-list.................................................................................
             verifier.addIfConversionFail(
-                "TRUE, FALSE, true",
+                BOOLEAN_LIST_STRING,
                 BooleanList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_BOOLEAN_LIST,
-                IS_BOOLEAN_LIST
+                BOOLEAN_LIST
             );
 
             // text-to-csv-string-list..............................................................................
