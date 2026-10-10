@@ -2943,18 +2943,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testStylePatch() {
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.TEXT_ALIGN,
-            TextAlign.CENTER
-        );
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            FORMULA
-        ).setStyle(
-            TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
-            )
-        );
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(FORMULA)
+            .setStyle(TEXT_STYLE)
+            .setLocale(OPTIONAL_LOCALE);
 
         final JsonNode patch = cell.stylePatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
@@ -2962,7 +2953,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"style\": {\n" +
-                "      \"textAlign\": \"CENTER\"\n" +
+                "      \"color\": \"black\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "}"
@@ -2970,13 +2961,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.patchAndCheck(
             cell.setStyle(
-                TextStyle.EMPTY.set(
+                cell.style()
+                    .set(
+                        TextStylePropertyName.TEXT_ALIGN,
+                        TextAlign.CENTER
+                    )
+            ),
+            patch,
+            cell.setStyle(
+                TEXT_STYLE.set(
                     TextStylePropertyName.TEXT_ALIGN,
                     TextAlign.CENTER
                 )
-            ),
-            patch,
-            cell.setStyle(style)
+            )
         );
     }
 
