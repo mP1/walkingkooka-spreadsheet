@@ -2784,28 +2784,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testFormatterPatchNotEmpty() {
-        final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
-            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
-                .spreadsheetFormatterSelector()
-        );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            .setFormatter(formatter);
+            .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
+            .setLocale(OPTIONAL_LOCALE);
 
-        final JsonNode patch = cell.formatterPatch(
-            JSON_NODE_MARSHALL_CONTEXT
-        );
+        final JsonNode patch = cell.formatterPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
                 "  \"A1\": {\n" +
-                "    \"formatter\": \"date dd/mm/yyyy\"\n" +
+                "    \"formatter\": \"formatter-selector-111\"\n" +
                 "  }\n" +
                 "}"
         );
 
         this.patchAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(formatter),
+            cell.setFormatter(OPTIONAL_DIFFERENT_FORMATTER_SELECTOR),
             patch,
             cell
         );
@@ -2813,9 +2807,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testFormatterPatchEmpty() {
-        final Optional<SpreadsheetFormatterSelector> formatter = SpreadsheetCell.NO_FORMATTER;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            .setFormatter(formatter);
+            .setFormatter(SpreadsheetCell.NO_FORMATTER)
+            .setLocale(OPTIONAL_LOCALE);
 
         final JsonNode patch = cell.formatterPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
@@ -2828,8 +2822,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
 
         this.patchAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(formatter),
+            cell.setFormatter(OPTIONAL_FORMATTER_SELECTOR),
             patch,
             cell
         );
