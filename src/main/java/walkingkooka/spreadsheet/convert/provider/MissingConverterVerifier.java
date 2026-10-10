@@ -2365,9 +2365,25 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 );
             }
 
+            // number-to-number.........................................................................................
+
             if (formatting || formula || scripting) {
                 verifier.addIfConversionFail(
                     null, // dont want List overload
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
+                    IS_NUMBER
+                );
+
+                verifier.addIfConversionFail(
+                    1, // dont want List overload
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
+                    IS_NUMBER
+                );
+
+                verifier.addIfConversionFail(
+                    1.0, // dont want List overload
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
                     IS_NUMBER
