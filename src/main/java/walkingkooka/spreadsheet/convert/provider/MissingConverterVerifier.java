@@ -1305,7 +1305,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         // net..........................................................................................................
         {
             if (formatting | formula | query | scripting) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFail2(
                     Lists.of(
                         ABSOLUTE_URL.text(),
                         MAIL_TO_URL.text(),
@@ -1313,7 +1313,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ),
                     Url.class,
                     SpreadsheetConvertersConverterProvider.NET,
-                    IS_URL
+                    Url::parse
                 );
 
                 verifier.addIfConversionFail(
