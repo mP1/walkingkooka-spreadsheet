@@ -290,6 +290,8 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         )
     );
 
+    private final static String STRING_LIST_TEXT = "Apple 1, Banana 2";
+
     private final static StringList STRING_LIST = StringList.EMPTY.setElements(
         Lists.of(
             "Apple 1",
@@ -2181,10 +2183,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
             // text-to-string-list..................................................................................
             verifier.addIfConversionFail(
-                "apple, banana, 333",
+                STRING_LIST_TEXT,
                 StringList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST,
-                IS_STRING_LIST
+                STRING_LIST
             );
 
             // text-to-time-list....................................................................................
