@@ -2882,6 +2882,67 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testDecimalNumberSymbolsPatchNotEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.decimalNumberSymbolsPatch(
+            JSON_NODE_MARSHALL_CONTEXT
+        );
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"decimalNumberSymbols\": {\n" +
+                "       \"negativeSign\": \"-\",\n" +
+                "       \"positiveSign\": \"+\",\n" +
+                "       \"zeroDigit\": \"0\",\n" +
+                "       \"currencySymbol\": \"$\",\n" +
+                "       \"decimalSeparator\": \".\",\n" +
+                "       \"exponentSymbol\": \"e\",\n" +
+                "       \"groupSeparator\": \",\",\n" +
+                "       \"infinitySymbol\": \"∞\",\n" +
+                "       \"monetaryDecimalSeparator\": \".\",\n" +
+                "       \"nanSymbol\": \"NaN\",\n" +
+                "       \"percentSymbol\": \"%\",\n" +
+                "       \"permillSymbol\": \"‰\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setDecimalNumberSymbols(OPTIONAL_DIFFERENT_DECIMAL_NUMBER_SYMBOLS),
+            patch,
+            cell
+        );
+    }
+
+    @Test
+    public void testDecimalNumberSymbolsPatchEmpty() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            .setDecimalNumberSymbols(SpreadsheetCell.NO_DECIMAL_NUMBER_SYMBOLS)
+            .setLocale(OPTIONAL_LOCALE);
+
+        final JsonNode patch = cell.decimalNumberSymbolsPatch(JSON_NODE_MARSHALL_CONTEXT);
+        this.checkEquals(
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"decimalNumberSymbols\": null\n" +
+                "  }\n" +
+                "}"
+        );
+
+        this.patchAndCheck(
+            cell.setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS),
+            patch,
+            cell
+        );
+    }
+
+    @Test
     public void testFormulaPatchNullContextFails() {
         assertThrows(
             NullPointerException.class,
