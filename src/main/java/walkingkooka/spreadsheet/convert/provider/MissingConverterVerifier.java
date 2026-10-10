@@ -2151,7 +2151,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             );
 
             if (formatting) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFail2(
                     Lists.of(
                         "",
                         "\n",
@@ -2164,7 +2164,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                     ),
                     LineEnding.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_LINE_ENDING,
-                    IS_LINE_ENDING
+                    LineEnding::parse
                 );
             }
 
