@@ -146,7 +146,7 @@ public class J2clTest {
             Optional.empty(),
             new FakeSpreadsheetExpressionEvaluationContext() {
                 @Override
-                public Optional<SpreadsheetCell> cell() {
+                public Optional<SpreadsheetCell> spreadsheetCell() {
                     return Optional.empty();
                 }
             }
@@ -549,8 +549,16 @@ public class J2clTest {
         }
 
         @Override
-        public Optional<SpreadsheetCell> cell() {
+        public Optional<SpreadsheetCell> spreadsheetCell() {
             return this.cell;
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
+            return SpreadsheetExpressionEvaluationContexts.cell(
+                cell,
+                this
+            );
         }
 
         private final Optional<SpreadsheetCell> cell;
@@ -565,16 +573,7 @@ public class J2clTest {
             return SpreadsheetStrings.isText(value);
         }
 
-        @Override
-        public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
-            return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
-            );
-        }
-
         private final ExpressionEvaluationContext context;
     }
 }
-
 
