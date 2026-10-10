@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
-import walkingkooka.color.WebColorName;
+import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.Url;
@@ -36,8 +37,6 @@ import java.util.Optional;
 public final class SpreadsheetFormatterSharedHyperlinkingTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedHyperlinking>
     implements TreePrintableTesting {
 
-    private final static Color RED = WebColorName.RED.color();
-
     @Test
     public void testFormatValueWithText() {
         final String text = "HelloWorld";
@@ -45,9 +44,7 @@ public final class SpreadsheetFormatterSharedHyperlinkingTest extends Spreadshee
         this.formatAndCheck(
             text,
             SpreadsheetText.with(text + text)
-                .setColor(
-                    Optional.of(RED)
-                )
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -62,7 +59,7 @@ public final class SpreadsheetFormatterSharedHyperlinkingTest extends Spreadshee
             ).setTextStyle(
                 TextStyle.EMPTY.set(
                     TextStylePropertyName.COLOR,
-                    RED
+                    COLOR_NAME_RED
                 )
             ).appendChild(
                 TextNode.style(
@@ -120,9 +117,27 @@ public final class SpreadsheetFormatterSharedHyperlinkingTest extends Spreadshee
             private final Converter<SpreadsheetFormatterContext> converter = Converters.simple();
 
             @Override
-            public Optional<Color> colorName(final SpreadsheetColorName name) {
-                checkEquals(SpreadsheetColorName.RED, name);
-                return Optional.of(RED);
+            public IndexedColor indexedColor(final int index) {
+                return Color.indexed(index);
+            }
+
+            @Override
+            public NamedColor namedColor(final String name) {
+                return Color.named(name);
+            }
+
+            @Override
+            public Optional<Color> lookupColor(final Color color) {
+                if (color.isNamed()) {
+                    checkEquals(
+                        COLOR_NAME_RED,
+                        color,
+                        "namedColor"
+                    );
+                    return OPTIONAL_COLOR_RED;
+                }
+
+                throw new UnsupportedOperationException();
             }
         };
     }

@@ -66,8 +66,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
         this.token = token;
 
         final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(token);
-        this.source = visitor.source;
-        this.sourceValue = visitor.nameOrNumber;
+        this.color = visitor.color;
         this.formatter = formatter;
     }
 
@@ -77,7 +76,10 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
         return this.formatter.formatSpreadsheetText(
             value,
             context
-        ).map(t -> t.setColor(this.color(context)));
+        ).map(t -> t.setColor(
+                context.lookupColor(this.color)
+            )
+        );
     }
 
     @Override
@@ -93,21 +95,9 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     final SpreadsheetPatternSpreadsheetFormatter formatter;
 
     /**
-     * Fetches the color to be added. While the color reference is static, the actual resolved {@link Color} is not.
+     * The {@link Color}.
      */
-    private Optional<Color> color(final SpreadsheetFormatterContext context) {
-        return this.source.resolve(this.sourceValue, context);
-    }
-
-    /**
-     * Either the color index (int) or color name (String)
-     */
-    private final SpreadsheetPatternSpreadsheetFormatterColorColorSource source;
-
-    /**
-     * Either an int or name.
-     */
-    private final Object sourceValue;
+    private final Color color;
 
     // Object...........................................................................................................
 
@@ -123,7 +113,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterColor other) {
-        return this.sourceValue.equals(other.sourceValue) &&
+        return this.color.equals(other.color) &&
             this.formatter.equals(other.formatter);
     }
 

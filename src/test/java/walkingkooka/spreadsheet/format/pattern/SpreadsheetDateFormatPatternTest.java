@@ -396,7 +396,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             "[red]yyyymmdd",
             LocalDate.of(2000, 12, 31),
             SpreadsheetText.with("20001231")
-                .setColor(Optional.of(RED))
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -406,7 +406,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             "[color44]yyyymmdd",
             LocalDate.of(2000, 12, 31),
             SpreadsheetText.with("20001231")
-                .setColor(Optional.of(RED))
+                .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
 
@@ -425,7 +425,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
                     arabicDigit(2) +
                     arabicDigit(3) +
                     arabicDigit(1)
-            ).setColor(Optional.of(RED))
+            ).setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
 
@@ -565,27 +565,25 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             }
 
             @Override
-            public Optional<Color> colorName(final SpreadsheetColorName name) {
-                checkEquals(
-                    SpreadsheetColorName.with("red"),
-                    name,
-                    "colorName"
-                );
-                return Optional.of(
-                    RED
-                );
-            }
+            public Optional<Color> lookupColor(final Color color) {
+                if (color.isIndexed()) {
+                    checkEquals(
+                        COLOR_INDEX_44,
+                        color,
+                        "namedColor"
+                    );
+                    return OPTIONAL_COLOR_RED;
+                }
+                if (color.isNamed()) {
+                    checkEquals(
+                        COLOR_NAME_RED,
+                        color,
+                        "namedColor"
+                    );
+                    return OPTIONAL_COLOR_RED;
+                }
 
-            @Override
-            public Optional<Color> colorNumber(final int number) {
-                checkEquals(
-                    44,
-                    number,
-                    "colorNumber"
-                );
-                return Optional.of(
-                    RED
-                );
+                throw new UnsupportedOperationException();
             }
         };
     }

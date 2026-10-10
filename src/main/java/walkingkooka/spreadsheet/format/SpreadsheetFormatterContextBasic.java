@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.plugin.ProviderContext;
@@ -112,22 +111,6 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     }
 
     private final int cellCharacterWidth;
-
-    @Override
-    public Optional<Color> colorNumber(final int number) {
-        return this.lookupColor(
-            Color.indexed(number)
-        );
-    }
-
-    @Override
-    public Optional<Color> colorName(final SpreadsheetColorName name) {
-        return this.lookupColor(
-            Color.named(
-                name.value()
-            )
-        );
-    }
 
     @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {

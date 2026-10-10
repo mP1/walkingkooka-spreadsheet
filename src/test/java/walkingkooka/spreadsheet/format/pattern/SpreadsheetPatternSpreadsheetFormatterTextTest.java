@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -40,8 +42,6 @@ import java.util.stream.Stream;
 public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterText, TextSpreadsheetFormatParserToken> {
 
     private final static String TEXT = "Abc123";
-
-    private final static Color RED = Color.parse("#FF0000");
 
     @Override
     public void testTypeNaming() {
@@ -130,9 +130,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
 
             },
             SpreadsheetText.with(TEXT)
-                .setColor(
-                    Optional.of(RED)
-                )
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -145,7 +143,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
 
             },
             SpreadsheetText.with(TEXT)
-                .setColor(Optional.of(RED))
+                .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
 
@@ -230,27 +228,35 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         }
 
         @Override
-        public Optional<Color> colorName(final SpreadsheetColorName name) {
-            checkEquals(
-                SpreadsheetColorName.with("red"),
-                name,
-                "colorName"
-            );
-            return Optional.of(
-                RED
-            );
+        public IndexedColor indexedColor(final int index) {
+            return Color.indexed(index);
         }
 
         @Override
-        public Optional<Color> colorNumber(final int number) {
-            checkEquals(
-                44,
-                number,
-                "colorNumber"
-            );
-            return Optional.of(
-                RED
-            );
+        public NamedColor namedColor(final String name) {
+            return Color.named(name);
+        }
+
+        @Override
+        public Optional<Color> lookupColor(final Color color) {
+            if (color.isIndexed()) {
+                checkEquals(
+                    COLOR_INDEX_44,
+                    color,
+                    "namedColor"
+                );
+                return OPTIONAL_COLOR_44;
+            }
+            if (color.isNamed()) {
+                checkEquals(
+                    COLOR_NAME_RED,
+                    color,
+                    "namedColor"
+                );
+                return OPTIONAL_COLOR_RED;
+            }
+
+            throw new UnsupportedOperationException();
         }
     }
 

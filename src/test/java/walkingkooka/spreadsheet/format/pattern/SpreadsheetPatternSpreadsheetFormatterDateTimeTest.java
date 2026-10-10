@@ -50,8 +50,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     SpreadsheetPatternSpreadsheetFormatterDateTime,
     DateTimeSpreadsheetFormatParserToken> {
 
-    private final static Color RED = Color.parse("#FF0000");
-
     // with.............................................................................................................
 
     @Test
@@ -1016,9 +1014,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                 59
             ),
             SpreadsheetText.with("12/58/59")
-                .setColor(
-                    Optional.of(RED)
-                )
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -1348,27 +1344,25 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         }
 
         @Override
-        public Optional<Color> colorName(final SpreadsheetColorName name) {
-            checkEquals(
-                SpreadsheetColorName.with("red"),
-                name,
-                "colorName"
-            );
-            return Optional.of(
-                RED
-            );
-        }
+        public Optional<Color> lookupColor(final Color color) {
+            if (color.isIndexed()) {
+                checkEquals(
+                    COLOR_INDEX_44,
+                    color,
+                    "namedColor"
+                );
+                return OPTIONAL_COLOR_44;
+            }
+            if (color.isNamed()) {
+                checkEquals(
+                    COLOR_NAME_RED,
+                    color,
+                    "namedColor"
+                );
+                return OPTIONAL_COLOR_RED;
+            }
 
-        @Override
-        public Optional<Color> colorNumber(final int number) {
-            checkEquals(
-                44,
-                number,
-                "colorNumber"
-            );
-            return Optional.of(
-                RED
-            );
+            throw new UnsupportedOperationException();
         }
     }
 

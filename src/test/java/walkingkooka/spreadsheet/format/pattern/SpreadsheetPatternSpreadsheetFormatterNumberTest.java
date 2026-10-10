@@ -2327,11 +2327,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             "[RED]#",
             "3",
             SpreadsheetText.with("3")
-                .setColor(
-                    Optional.of(
-                        RED
-                    )
-                )
+                .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
 
@@ -2341,11 +2337,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             "[color44]#",
             "4",
             SpreadsheetText.with("4")
-                .setColor(
-                    Optional.of(
-                        RED
-                    )
-                )
+                .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
 
@@ -2599,28 +2591,50 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             }
 
             @Override
-            public Optional<Color> colorName(final SpreadsheetColorName name) {
-                checkEquals(
-                    SpreadsheetColorName.with("red"),
-                    name,
-                    "colorName"
-                );
-                return Optional.of(
-                    RED
-                );
+            public Optional<Color> lookupColor(final Color color) {
+                if (color.isIndexed()) {
+                    checkEquals(
+                        Color.indexed(44),
+                        color,
+                        "namedColor"
+                    );
+                    return Optional.of(RED);
+                }
+                if (color.isNamed()) {
+                    checkEquals(
+                        Color.named("red"),
+                        color,
+                        "namedColor"
+                    );
+                    return Optional.of(RED);
+                }
+
+                throw new UnsupportedOperationException();
             }
 
-            @Override
-            public Optional<Color> colorNumber(final int number) {
-                checkEquals(
-                    44,
-                    number,
-                    "colorNumber"
-                );
-                return Optional.of(
-                    RED
-                );
-            }
+//            @Override
+//            public Optional<Color> colorName(final SpreadsheetColorName name) {
+//                checkEquals(
+//                    SpreadsheetColorName.with("red"),
+//                    name,
+//                    "colorName"
+//                );
+//                return Optional.of(
+//                    RED
+//                );
+//            }
+//
+//            @Override
+//            public Optional<Color> colorNumber(final int number) {
+//                checkEquals(
+//                    44,
+//                    number,
+//                    "colorNumber"
+//                );
+//                return Optional.of(
+//                    RED
+//                );
+//            }
         };
     }
 

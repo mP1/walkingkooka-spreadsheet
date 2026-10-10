@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorContextTesting;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.text.CharSequences;
@@ -27,26 +26,6 @@ import java.util.Optional;
 
 public interface SpreadsheetFormatterContextTesting extends HasSpreadsheetCellTesting,
     ColorContextTesting {
-
-    default void colorNumberAndCheck(final SpreadsheetFormatterContext context,
-                                     final int number,
-                                     final Optional<Color> color) {
-        this.checkEquals(
-            color,
-            context.colorNumber(number),
-            () -> "colorNumber " + number + " " + context
-        );
-    }
-
-    default void colorNameAndCheck(final SpreadsheetFormatterContext context,
-                                   final SpreadsheetColorName name,
-                                   final Optional<Color> color) {
-        this.checkEquals(
-            color,
-            context.colorName(name),
-            () -> "colorName " + name + " " + context
-        );
-    }
 
     default void formatValueAndCheck(final SpreadsheetFormatterContext context,
                                      final Optional<Object> value,

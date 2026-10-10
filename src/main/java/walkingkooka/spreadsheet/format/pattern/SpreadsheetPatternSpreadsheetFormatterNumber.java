@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
@@ -103,7 +102,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
                         )
                     )
                 ).setColor(
-                    this.color(context)
+                    //this.color(context)
+                    this.color
                 ) :
                 null
         );
@@ -120,27 +120,28 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
      */
     final boolean currency;
 
-    private Optional<Color> color(final SpreadsheetFormatterContext context) {
-        Object colorNameOrNumber = this.color;
-        Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
+//    private Optional<Color> color(final SpreadsheetFormatterContext context) {
+////        Object colorNameOrNumber = this.color;
+////        Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
+////
+////        if (colorNameOrNumber instanceof Integer) {
+////            color = context.colorNumber(
+////                (Integer) colorNameOrNumber
+////            );
+////        } else {
+////            if (colorNameOrNumber instanceof SpreadsheetColorName) {
+////                color = context.colorName(
+////                    (SpreadsheetColorName) colorNameOrNumber
+////                );
+////            }
+////        }
+////
+////        return color;
+//        return this.color;
+//    }
 
-        if (colorNameOrNumber instanceof Integer) {
-            color = context.colorNumber(
-                (Integer) colorNameOrNumber
-            );
-        } else {
-            if (colorNameOrNumber instanceof SpreadsheetColorName) {
-                color = context.colorName(
-                    (SpreadsheetColorName) colorNameOrNumber
-                );
-            }
-        }
-
-        return color;
-    }
-
-    // the color name or number
-    private final Object color;
+    // IndexedColor or NamedColor
+    private final Optional<Color> color;
 
     /**
      * Executes each of the format tokens eventually resulting in a {@link String}.

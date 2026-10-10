@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -53,18 +52,6 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     default int cellCharacterWidth() {
         return this.spreadsheetFormatterContext()
             .cellCharacterWidth();
-    }
-
-    @Override
-    default Optional<Color> colorNumber(final int number) {
-        return this.spreadsheetFormatterContext()
-            .colorNumber(number);
-    }
-
-    @Override
-    default Optional<Color> colorName(final SpreadsheetColorName name) {
-        return this.spreadsheetFormatterContext()
-            .colorName(name);
     }
 
     @Override

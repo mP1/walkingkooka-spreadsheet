@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.ToStringBuilder;
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
@@ -40,29 +40,23 @@ final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTo
 
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
-        this.set(SpreadsheetPatternSpreadsheetFormatterColorColorSource.NAME, token.colorName());
+        this.color = Color.named(
+            token.colorName()
+                .value()
+        );
     }
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
-        this.set(SpreadsheetPatternSpreadsheetFormatterColorColorSource.NUMBER, token.value());
+        this.color = Color.indexed(
+            token.value()
+        );
     }
 
-    private void set(final SpreadsheetPatternSpreadsheetFormatterColorColorSource source,
-                     final Object nameOrNumber) {
-        this.source = source;
-        this.nameOrNumber = nameOrNumber;
-    }
-
-    SpreadsheetPatternSpreadsheetFormatterColorColorSource source;
-    Object nameOrNumber;
+    Color color;
 
     @Override
     public String toString() {
-        return ToStringBuilder.empty()
-            .valueSeparator(" ")
-            .value(this.source)
-            .value(this.nameOrNumber)
-            .build();
+        return String.valueOf(this.color);
     }
 }

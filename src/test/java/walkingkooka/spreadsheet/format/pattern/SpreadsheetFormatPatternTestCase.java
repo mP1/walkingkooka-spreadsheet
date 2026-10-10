@@ -21,12 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.color.WebColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,7 +36,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
     T extends ParentSpreadsheetFormatParserToken> extends SpreadsheetPatternTestCase<P> {
 
-    final static Color RED = Color.parse("#FF0000");
+    final static Color COLOR_INDEX_44 = Color.indexed(44);
+
+    final static Optional<Color> OPTIONAL_COLOR_INDEX_44 = Optional.of(COLOR_INDEX_44);
+
+    final static Color COLOR_44 = Color.parse("#444444");
+
+    final static Optional<Color> OPTIONAL_COLOR_44 = Optional.of(COLOR_44);
+
+    final static Color COLOR_NAME_RED = Color.named("RED");
+
+    final static Optional<Color> OPTIONAL_COLOR_NAME_RED = Optional.of(COLOR_NAME_RED);
+
+    final static Color COLOR_RED = WebColorName.RED.color();
+
+    final static Optional<Color> OPTIONAL_COLOR_RED = Optional.of(COLOR_RED);
 
     SpreadsheetFormatPatternTestCase() {
         super();
