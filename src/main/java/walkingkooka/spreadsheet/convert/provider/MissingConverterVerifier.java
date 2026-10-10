@@ -462,109 +462,37 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             VALIDATION_ERROR
         );
 
-    private final static Predicate<Object> IS_ABSOLUTE_URL = v -> v instanceof AbsoluteUrl;
-
     private final static Predicate<Object> IS_BINARY = v -> v instanceof Binary;
-
-    private final static Predicate<Object> IS_BOOLEAN_LIST = v -> v instanceof BooleanList;
-
-    private final static Predicate<Object> IS_CELL_REFERENCE = v -> v instanceof SpreadsheetCellReference;
-
-    private final static Predicate<Object> IS_CELL_RANGE_REFERENCE = v -> v instanceof SpreadsheetCellRangeReference;
-
-    private final static Predicate<Object> IS_COLOR = v -> v instanceof Color;
-
-    private final static Predicate<Object> IS_COLUMN_REFERENCE = v -> v instanceof SpreadsheetColumnReference;
-
-    private final static Predicate<Object> IS_COLUMN_RANGE_REFERENCE = v -> v instanceof SpreadsheetColumnRangeReference;
-
-    private final static Predicate<Object> IS_CSV_STRING_LIST = v -> v instanceof CsvStringList;
-
-    private final static Predicate<Object> IS_CSV_STRING_SET = v -> v instanceof CsvStringSet;
-
-    private final static Predicate<Object> IS_CURRENCY = v -> v instanceof Currency;
-
-    private final static Predicate<Object> IS_CURRENCY_CODE = v -> v instanceof CurrencyCode;
 
     private final static Predicate<Object> IS_CURRENCY_VALUE = v -> v instanceof CurrencyValue;
 
     private final static Predicate<Object> IS_DATE = v -> v instanceof LocalDate;
 
-    private final static Predicate<Object> IS_DATE_TIME = v -> v instanceof LocalDateTime;
-
-    private final static Predicate<Object> IS_DATE_TIME_SYMBOLS = v -> v instanceof DateTimeSymbols;
-
-    private final static Predicate<Object> IS_DECIMAL_NUMBER_SYMBOLS = v -> v instanceof DecimalNumberSymbols;
-
-    private final static Predicate<Object> IS_EMAIL_ADDRESS = v -> v instanceof EmailAddress;
-
     private final static Predicate<Object> IS_ERROR = v -> v instanceof SpreadsheetError;
 
     private final static Predicate<Object> IS_EXPRESSION = v -> v instanceof Expression;
 
-    private final static Predicate<Object> IS_FORM_NAME = v -> v instanceof FormName;
-
-    private final static Predicate<Object> IS_HYPERLINK = v -> v instanceof Hyperlink;
-
-    private final static Predicate<Object> IS_IMAGE = v -> v instanceof Image;
-
-    private final static Predicate<Object> IS_INDENTATION = v -> v instanceof Indentation;
-
     private final static Predicate<Object> IS_JSON = v -> v instanceof JsonNode;
-
-    private final static Predicate<Object> IS_LOCAL_DATE_LIST = v -> v instanceof LocalDateList;
 
     private final static Predicate<Object> IS_LOCAL_DATE_TIME_LIST = v -> v instanceof LocalDateTimeList;
 
-    private final static Predicate<Object> IS_LOCAL_TIME_LIST = v -> v instanceof LocalTimeList;
-
-    private final static Predicate<Object> IS_LINE_ENDING = v -> v instanceof LineEnding;
-
-    private final static Predicate<Object> IS_MAIL_TO_URL = v -> v instanceof MailToUrl;
-
-    private final static Predicate<Object> IS_MEDIA_TYPE = v -> v instanceof MediaType;
-
     private final static Predicate<Object> IS_NOT_NULL = v -> null != v;
-
-    private final static Predicate<Object> IS_NULL = v -> null == v;
 
     private final static Predicate<Object> IS_NUMBER = v -> v instanceof Number;
 
     private final static Predicate<Object> IS_NUMBER_LIST = v -> v instanceof NumberList;
 
-    private final static Predicate<Object> IS_ROW_RANGE_REFERENCE = v -> v instanceof SpreadsheetRowRangeReference;
-
-    private final static Predicate<Object> IS_SPREADSHEET_COLOR_NAME = v -> v instanceof SpreadsheetColorName;
-
     private final static Predicate<Object> IS_STORAGE_BINARY = v -> v instanceof StorageBinary;
-
-    private final static Predicate<Object> IS_STORAGE_PATH = v -> v instanceof StoragePath;
 
     private final static Predicate<Object> IS_STORAGE_VALUE = v -> v instanceof StorageValue;
 
     private final static Predicate<Object> IS_STRING = v -> v instanceof String;
 
-    private final static Predicate<Object> IS_STRING_LIST = v -> v instanceof StringList;
-
-    private final static Predicate<Object> IS_STYLE = v -> v instanceof TextStyle;
-
-    private final static Predicate<Object> IS_TEXT_NODE = v -> v instanceof TextNode;
-
     private final static Predicate<Object> IS_TIME = v -> v instanceof LocalTime;
-
-    private final static Predicate<Object> IS_TSV_STRING_LIST = v -> v instanceof TsvStringList;
-
-    private final static Predicate<Object> IS_TSV_STRING_SET = v -> v instanceof TsvStringSet;
-
-    private final static Predicate<Object> IS_URL = v -> v instanceof Url;
 
     private final static Predicate<Object> IS_VALIDATION_CHECKBOX = v -> v instanceof ValidationCheckbox;
 
     private final static Predicate<Object> IS_VALIDATION_CHOICE = v -> v instanceof ValidationChoice;
-
-    private final static Predicate<Object> IS_VALIDATION_CHOICE_LIST = v -> v instanceof ValidationChoiceList;
-
-    private final static Predicate<Object> IS_VALIDATION_ERROR = v -> v instanceof ValidationError;
 
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
