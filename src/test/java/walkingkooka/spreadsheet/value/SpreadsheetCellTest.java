@@ -2888,26 +2888,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testParserPatchNotEmpty() {
-        final Optional<SpreadsheetParserSelector> parser = Optional.of(
-            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                .spreadsheetParserSelector()
-        );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            .setParser(parser);
+            .setParser(OPTIONAL_PARSER_SELECTOR)
+            .setLocale(OPTIONAL_LOCALE);
 
         final JsonNode patch = cell.parserPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
             patch,
             "{\n" +
                 "  \"A1\": {\n" +
-                "    \"parser\": \"date yyyy/mm/dd\"\n" +
+                "    \"parser\": \"parser-selector-111\"\n" +
                 "  }\n" +
                 "}"
         );
 
         this.patchAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(parser),
+            cell.setParser(OPTIONAL_DIFFERENT_PARSER_SELECTOR),
             patch,
             cell
         );
@@ -2915,9 +2911,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testParserPatchEmpty() {
-        final Optional<SpreadsheetParserSelector> parser = SpreadsheetCell.NO_PARSER;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            .setParser(parser);
+            .setParser(SpreadsheetCell.NO_PARSER)
+            .setLocale(OPTIONAL_LOCALE);
 
         final JsonNode patch = cell.parserPatch(JSON_NODE_MARSHALL_CONTEXT);
         this.checkEquals(
@@ -2930,8 +2926,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
 
         this.patchAndCheck(
-            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(parser),
+            cell.setParser(OPTIONAL_DIFFERENT_PARSER_SELECTOR),
             patch,
             cell
         );
