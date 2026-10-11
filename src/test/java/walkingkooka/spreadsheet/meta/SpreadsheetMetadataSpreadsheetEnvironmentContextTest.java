@@ -609,7 +609,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    collection-to\n" +
                 "    collection-to-list\n" +
                 "    color\n" +
-                "    color-to-color\n" +
                 "    color-to-number\n" +
                 "    csv\n" +
                 "    currency\n" +
@@ -747,6 +746,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-zone-offset\n" +
                 "    to-binary\n" +
                 "    to-boolean\n" +
+                "    to-color\n" +
                 "    to-color-properties\n" +
                 "    to-csv-string-list\n" +
                 "    to-currency\n" +
