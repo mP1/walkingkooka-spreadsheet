@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.color.WebColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
@@ -44,7 +45,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     final static Optional<Color> OPTIONAL_COLOR_44 = Optional.of(COLOR_44);
 
-    final static Color COLOR_NAME_RED = Color.named("RED");
+    final static Color COLOR_NAME_RED = NamedColor.RED;
 
     final static Optional<Color> OPTIONAL_COLOR_NAME_RED = Optional.of(COLOR_NAME_RED);
 

@@ -411,7 +411,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
                 }
                 if (color.isNamed()) {
                     checkEquals(
-                        Color.named("red"),
+                        NamedColor.RED,
                         color,
                         "namedColor"
                     );

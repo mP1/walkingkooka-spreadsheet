@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.color.WebColorName;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -37,7 +38,7 @@ public abstract class SpreadsheetFormatterSharedTestCase<F extends SpreadsheetFo
 
     final static Optional<Color> OPTIONAL_COLOR_44 = Optional.of(COLOR_44);
 
-    final static Color COLOR_NAME_RED = Color.named("RED");
+    final static Color COLOR_NAME_RED = NamedColor.RED;
 
     final static Optional<Color> OPTIONAL_COLOR_NAME_RED = Optional.of(COLOR_NAME_RED);
 

@@ -97,7 +97,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
     final static Optional<Color> OPTIONAL_COLOR_44 = Optional.of(COLOR_44);
 
-    final static Color COLOR_NAME_RED = Color.named("RED");
+    final static Color COLOR_NAME_RED = NamedColor.RED;
 
     final static Optional<Color> OPTIONAL_COLOR_NAME_RED = Optional.of(COLOR_NAME_RED);
 

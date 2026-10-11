@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.FakeProviderContext;
@@ -1592,7 +1592,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 TextNode.text("$-123.50")
                     .set(
                         TextStylePropertyName.COLOR,
-                        Color.named("RED")
+                        NamedColor.RED
                     )
             ),
             SpreadsheetFormatterSample.with(

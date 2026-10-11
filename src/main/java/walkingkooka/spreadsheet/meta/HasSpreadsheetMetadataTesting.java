@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
@@ -373,12 +374,12 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             Color.WHITE
         ).set(
             SpreadsheetMetadataPropertyName.namedColor(
-                Color.named("Black")
+                NamedColor.BLACK
             ),
             1
         ).set(
             SpreadsheetMetadataPropertyName.namedColor(
-                Color.named("White")
+                NamedColor.WHITE
             ),
             2
         );
