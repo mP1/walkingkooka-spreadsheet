@@ -572,7 +572,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link SpreadsheetColorName named}.
      */
     public static SpreadsheetMetadataPropertyName<Integer> namedColor(final SpreadsheetColorName name) {
-        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(name);
+        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(name);
     }
 
     /**

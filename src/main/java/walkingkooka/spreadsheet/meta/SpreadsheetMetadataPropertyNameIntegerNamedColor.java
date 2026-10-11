@@ -28,7 +28,7 @@ final class SpreadsheetMetadataPropertyNameIntegerNamedColor extends Spreadsheet
     /**
      * Factory used to create a new {@link SpreadsheetMetadataPropertyNameIntegerNamedColor} constant.
      */
-    static SpreadsheetMetadataPropertyNameIntegerNamedColor withColorName(final SpreadsheetColorName name) {
+    static SpreadsheetMetadataPropertyNameIntegerNamedColor withNamedColor(final SpreadsheetColorName name) {
         return new SpreadsheetMetadataPropertyNameIntegerNamedColor(name);
     }
 
