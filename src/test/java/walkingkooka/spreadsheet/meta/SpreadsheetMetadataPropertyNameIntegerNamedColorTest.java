@@ -25,16 +25,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerNamedColor> {
 
+    private final static SpreadsheetColorName SPREADSHEET_COLOR_NAME = SpreadsheetColorName.with("dull");
+
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(null));
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(null)
+        );
     }
 
     @Test
     public void testWith() {
-        final SpreadsheetColorName colorName = this.colorName();
-        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(colorName);
-        assertSame(colorName, property.name, "colorName");
+        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(SPREADSHEET_COLOR_NAME);
+        assertSame(
+            SPREADSHEET_COLOR_NAME,
+            property.name,
+            "colorName"
+        );
     }
 
     @Test
@@ -48,15 +56,9 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(
-                this.colorName()
-            ),
+            SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(SPREADSHEET_COLOR_NAME),
             "colordull"
         );
-    }
-
-    private SpreadsheetColorName colorName() {
-        return SpreadsheetColorName.with("dull");
     }
 
     @Override
