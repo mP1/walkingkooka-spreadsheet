@@ -46,6 +46,9 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterInfo;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorTokenAlternative;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorTokenList;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterInfo;
@@ -178,6 +181,19 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                     SpreadsheetFormatterInfo.with(
                         url,
                         SpreadsheetFormatterName.GENERAL
+                    )
+                )
+            );
+
+            SpreadsheetFormatterSelectorTokenList.EMPTY.concat(
+                SpreadsheetFormatterSelectorToken.with(
+                    "Label123",
+                    "Text123",
+                    Lists.of(
+                        SpreadsheetFormatterSelectorTokenAlternative.with(
+                            "AlternativeLabel123",
+                            "AlternativeText123"
+                        )
                     )
                 )
             );
