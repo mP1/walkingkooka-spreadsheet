@@ -22,7 +22,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -33,7 +33,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextTesting;
 
 public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNodeUnmarshallContextTesting,
     HasSpreadsheetMetadataTesting,
-    PackagePrivateClassTesting<SpreadsheetMetadataDefaultTextResource> {
+    PublicClassTesting<SpreadsheetMetadataDefaultTextResource> {
 
     @Test
     public void testDateTimeOffsetExcelOffset() {

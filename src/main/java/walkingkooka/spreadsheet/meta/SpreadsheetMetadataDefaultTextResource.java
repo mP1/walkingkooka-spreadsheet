@@ -23,5 +23,5 @@ package walkingkooka.spreadsheet.meta;
  * <a href="https://www.excelsupersite.com/what-are-the-56-colorindex-colors-in-excel">What are the 56 color in Excel</a>
  */
 @walkingkooka.resource.TextResourceAware(fileExtension = "json")
-final class SpreadsheetMetadataDefaultTextResource {
+public final class SpreadsheetMetadataDefaultTextResource {
 }
