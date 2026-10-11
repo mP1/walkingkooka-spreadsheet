@@ -624,7 +624,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testSpreadsheetCellStoreActionNamedColor() {
         this.spreadsheetCellStoreActionAndCheck(
-            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK),
+            SpreadsheetMetadataPropertyName.namedColor(
+                Color.named("Hello")
+            ),
             SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
         );
     }

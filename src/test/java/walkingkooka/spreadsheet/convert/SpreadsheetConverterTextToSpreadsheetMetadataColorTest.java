@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -141,7 +140,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
                 return HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
                     .set(
                         SpreadsheetMetadataPropertyName.namedColor(
-                            SpreadsheetColorName.with("HelloColor")
+                            Color.named("HelloColor")
                         ),
                         10
                     ).set(

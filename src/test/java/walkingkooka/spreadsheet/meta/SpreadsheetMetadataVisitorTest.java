@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
@@ -36,7 +37,6 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
@@ -528,18 +528,18 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
 
     @Test
     public void testVisitNamedColor() {
-        final SpreadsheetColorName name = SpreadsheetColorName.with("shiny");
+        final NamedColor namedColor = Color.named("Shiny");
         final int colorNumber = 23;
 
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitNamedColor(final SpreadsheetColorName n,
+            protected void visitNamedColor(final NamedColor n,
                                            final int c) {
-                checkEquals(name, n, "name");
+                checkEquals(namedColor, n, "namedColor");
                 this.visited = c;
             }
         }.accept(
-            SpreadsheetMetadataPropertyName.namedColor(name),
+            SpreadsheetMetadataPropertyName.namedColor(namedColor),
             colorNumber
         );
     }

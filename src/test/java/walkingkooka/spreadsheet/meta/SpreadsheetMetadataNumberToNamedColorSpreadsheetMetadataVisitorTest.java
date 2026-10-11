@@ -22,12 +22,11 @@ import walkingkooka.color.Color;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 
 import java.time.LocalDateTime;
 
-public final class SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor>
-    implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor> {
+public final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor>
+    implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor> {
 
     @Override
     public void testAllConstructorsVisibility() {
@@ -47,29 +46,42 @@ public final class SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisito
                     EmailAddress.parse("modified@example.com"),
                     LocalDateTime.MAX
                 )
-            ).set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
-            .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
-            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), 3);
-        final SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor();
+            ).set(
+                SpreadsheetMetadataPropertyName.numberedColor(1),
+                Color.parse("#123456")
+            ).set(
+                SpreadsheetMetadataPropertyName.numberedColor(2),
+                Color.parse("#89abcd")
+            ).set(
+                SpreadsheetMetadataPropertyName.namedColor(
+                    Color.named("apple")
+                ),
+                1
+            ).set(
+                SpreadsheetMetadataPropertyName.namedColor(
+                    Color.named("banana")
+                ),
+                3
+            );
+        final SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor();
 
         visitor.accept(metadata);
         this.toStringAndCheck(
             visitor,
-            "{1=apple, 3=banana}"
+            "{1=\"apple\", 3=\"banana\"}"
         );
     }
 
     @Override
-    public SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor createVisitor() {
-        return new SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor();
+    public SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor createVisitor() {
+        return new SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor> type() {
-        return SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor.class;
+    public Class<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor> type() {
+        return SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor.class;
     }
 
     @Override

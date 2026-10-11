@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.color.Color;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.ConstantsTesting;
@@ -119,7 +120,11 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     public void testSpreadsheetMetadataPropertyName() {
         this.checkEquals(
             SpreadsheetColorName.BLACK.spreadsheetMetadataPropertyName(),
-            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK)
+            SpreadsheetMetadataPropertyName.namedColor(
+                Color.named(
+                    SpreadsheetColorName.BLACK.value()
+                )
+            )
         );
     }
 

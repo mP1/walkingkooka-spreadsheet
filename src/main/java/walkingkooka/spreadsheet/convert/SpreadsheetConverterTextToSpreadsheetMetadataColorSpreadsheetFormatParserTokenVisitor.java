@@ -51,7 +51,11 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
 
         final SpreadsheetColorName colorName = token.cast(ColorNameSpreadsheetFormatParserToken.class).colorName();
         final Integer colorIndex = metadata.get(
-            SpreadsheetMetadataPropertyName.namedColor(colorName)
+            SpreadsheetMetadataPropertyName.namedColor(
+                Color.named(
+                    colorName.value()
+                )
+            )
         ).orElseThrow(() -> new IllegalArgumentException("Invalid color name"));
 
         this.color = metadata.get(
