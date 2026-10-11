@@ -27,13 +27,13 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
 
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(null));
     }
 
     @Test
     public void testWith() {
         final SpreadsheetColorName colorName = this.colorName();
-        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(colorName);
+        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(colorName);
         assertSame(colorName, property.name, "colorName");
     }
 
@@ -48,7 +48,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(
+            SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(
                 this.colorName()
             ),
             "colordull"
@@ -61,7 +61,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
 
     @Override
     SpreadsheetMetadataPropertyNameIntegerNamedColor createName() {
-        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withColorName(SpreadsheetColorName.with("dull"));
+        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(SpreadsheetColorName.with("dull"));
     }
 
     // ClassTesting.....................................................................................................
