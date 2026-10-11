@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.MathTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
@@ -2602,7 +2603,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
                 }
                 if (color.isNamed()) {
                     checkEquals(
-                        Color.named("red"),
+                        NamedColor.RED,
                         color,
                         "namedColor"
                     );

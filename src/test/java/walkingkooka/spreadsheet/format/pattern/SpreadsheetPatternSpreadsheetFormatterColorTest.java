@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -115,7 +116,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                 @Override
                 public Optional<Color> lookupColor(final Color c) {
                     checkEquals(
-                        Color.named("BLACK"),
+                        NamedColor.BLACK,
                         c,
                         "color"
                     );
@@ -138,7 +139,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                 @Override
                 public Optional<Color> lookupColor(final Color c) {
                     checkEquals(
-                        Color.named("RED"),
+                        NamedColor.RED,
                         c,
                         "color"
                     );
@@ -162,7 +163,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                 @Override
                 public Optional<Color> lookupColor(final Color c) {
                     checkEquals(
-                        Color.named("RED"),
+                        NamedColor.RED,
                         c,
                         "color"
                     );

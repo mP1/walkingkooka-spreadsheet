@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -66,7 +67,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testLookupColorWithNamedColorBlack() {
         this.lookupColorAndCheck(
             this.createObject(),
-            Color.named("BLACK")
+            NamedColor.BLACK
         );
     }
 

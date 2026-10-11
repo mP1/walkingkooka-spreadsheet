@@ -157,9 +157,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         SPREADSHEET_FORMATTER_PROVIDER
     );
 
-    private final static NamedColor NAMED_COLOR1 = Color.named("CYAN");
+    private final static NamedColor NAMED_COLOR1 = NamedColor.CYAN;
 
-    private final static NamedColor NAMED_COLOR7 = Color.named("YELLOW");
+    private final static NamedColor NAMED_COLOR7 = NamedColor.YELLOW;
 
     @Test
     public void testId() {
@@ -1066,13 +1066,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.lookupColorAndCheck(
             metadata,
-            Color.named("CYAN"),
+            NamedColor.CYAN,
             color1
         );
 
         this.lookupColorAndCheck(
             metadata,
-            Color.named("YELLOW"),
+            NamedColor.YELLOW,
             color7
         );
     }
@@ -1104,7 +1104,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.lookupColorAndCheck(
             metadata,
-            Color.named("CYAN"),
+            NamedColor.CYAN,
             color1
         );
     }
@@ -3720,14 +3720,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     SpreadsheetMetadataPropertyName.numberedColor(2),
                     Color.WHITE
                 ).set(
-                    SpreadsheetMetadataPropertyName.namedColor(
-                        Color.named("Black")
-                    ),
+                    SpreadsheetMetadataPropertyName.namedColor(NamedColor.BLACK),
                     1
                 ).set(
-                    SpreadsheetMetadataPropertyName.namedColor(
-                        Color.named("White")
-                    ),
+                    SpreadsheetMetadataPropertyName.namedColor(NamedColor.WHITE),
                     2
                 ),
             expected
