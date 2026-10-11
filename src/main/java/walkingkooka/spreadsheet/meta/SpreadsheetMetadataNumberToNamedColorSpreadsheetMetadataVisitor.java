@@ -19,40 +19,40 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.color.NamedColor;
 
 import java.util.Map;
 
 /**
  * A {@link SpreadsheetMetadataVisitor} that fills a {@link Map} of with the key being the color number and the value the matching
- * {@link SpreadsheetColorName}.
+ * {@link NamedColor}.
  */
-final class SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
+final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
-    static Map<Integer, SpreadsheetColorName> numberToColorNameMap(final SpreadsheetMetadata metadata) {
-        final SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor();
+    static Map<Integer, NamedColor> numberToNamedColor(final SpreadsheetMetadata metadata) {
+        final SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor();
         visitor.accept(metadata.defaults()); // defaults get overridden
         visitor.accept(metadata);
-        return visitor.numberToColorName;
+        return visitor.numberToNamedColor;
     }
 
-    SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor() {
+    SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor() {
         super();
     }
 
     @Override
-    protected void visitNamedColor(final SpreadsheetColorName name,
+    protected void visitNamedColor(final NamedColor namedColor,
                                    final int colorNumber) {
-        this.numberToColorName.put(
+        this.numberToNamedColor.put(
             colorNumber,
-            name
+            namedColor
         );
     }
 
-    private final Map<Integer, SpreadsheetColorName> numberToColorName = Maps.ordered();
+    private final Map<Integer, NamedColor> numberToNamedColor = Maps.ordered();
 
     @Override
     public String toString() {
-        return this.numberToColorName.toString();
+        return this.numberToNamedColor.toString();
     }
 }

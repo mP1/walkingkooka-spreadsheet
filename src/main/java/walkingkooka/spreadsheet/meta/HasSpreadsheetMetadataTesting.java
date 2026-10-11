@@ -63,7 +63,6 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
@@ -373,10 +372,14 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.numberedColor(2),
             Color.WHITE
         ).set(
-            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK),
+            SpreadsheetMetadataPropertyName.namedColor(
+                Color.named("Black")
+            ),
             1
         ).set(
-            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE),
+            SpreadsheetMetadataPropertyName.namedColor(
+                Color.named("White")
+            ),
             2
         );
 

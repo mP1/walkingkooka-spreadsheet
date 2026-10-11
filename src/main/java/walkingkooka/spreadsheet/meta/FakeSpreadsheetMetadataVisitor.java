@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
@@ -30,7 +31,6 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
@@ -258,7 +258,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNamedColor(final SpreadsheetColorName name,
+    protected void visitNamedColor(final NamedColor name,
                                    final int colorNumber) {
         throw new UnsupportedOperationException();
     }

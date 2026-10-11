@@ -22,7 +22,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -159,22 +158,22 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), defaults);
     }
 
-    // colorName........................................................................................................
+    // colorNumberReverseLookup.........................................................................................
 
     @Override
-    public Optional<SpreadsheetColorName> colorName(final int colorNumber) {
-        if (null == this.numberToColorName) {
-            this.numberToColorName = SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor.numberToColorNameMap(this);
+    public Optional<NamedColor> colorNumberReverseLookup(final int colorNumber) {
+        if (null == this.numberToNamedColor) {
+            this.numberToNamedColor = SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor.numberToNamedColor(this);
         }
         return Optional.ofNullable(
-            this.numberToColorName.get(colorNumber)
+            this.numberToNamedColor.get(colorNumber)
         );
     }
 
     /**
-     * Cached color number to {@link SpreadsheetColorName} lookup.
+     * Cached color number to {@link NamedColor} lookup.
      */
-    private Map<Integer, SpreadsheetColorName> numberToColorName;
+    private Map<Integer, NamedColor> numberToNamedColor;
 
     // ColorContext.....................................................................................................
 
@@ -196,11 +195,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
                 index = this.get(
                     // ColorRED -> RED
-                    SpreadsheetMetadataPropertyName.namedColor(
-                        SpreadsheetColorName.with(
-                            namedColor.value()
-                        )
-                    )
+                    SpreadsheetMetadataPropertyName.namedColor(namedColor)
                 ).orElse(null);
             }
 

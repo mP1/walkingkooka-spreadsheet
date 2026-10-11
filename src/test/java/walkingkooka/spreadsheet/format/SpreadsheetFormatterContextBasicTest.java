@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -70,7 +71,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
 
     private final static int COLOR_NUMBER = 2;
 
-    private final static SpreadsheetColorName SPREADSHEET_COLOR_NAME = SpreadsheetColorName.with("Bingo");
+    private final static NamedColor NAMED_COLOR = Color.named("Bingo");
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = new FakeSpreadsheetLabelNameResolver() {
 
@@ -191,7 +192,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         SpreadsheetMetadataPropertyName.numberedColor(COLOR_NUMBER),
         COLOR
     ).set(
-        SpreadsheetMetadataPropertyName.namedColor(SPREADSHEET_COLOR_NAME),
+        SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR),
         COLOR_NUMBER
     );
 

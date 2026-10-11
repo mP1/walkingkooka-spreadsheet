@@ -23,6 +23,7 @@ import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
@@ -526,7 +527,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 // name dash color is a numbered color, named dash letter is a named color
                 try {
                     if (Character.isLetter(after.charAt(0))) {
-                        propertyName = namedColor(SpreadsheetColorName.with(after));
+                        propertyName = namedColor(
+                            Color.named(after)
+                        );
                     } else {
                         propertyName = numberedColor(Integer.parseInt(after));
                     }
@@ -555,7 +558,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             // name dash color is a numbered color, named dash letter is a named color
             try {
                 if (Character.isLetter(after.charAt(0))) {
-                    propertyName = namedColor(SpreadsheetColorName.with(after));
+                    propertyName = namedColor(
+                        Color.named(after)
+                    );
                 } else {
                     propertyName = numberedColor(Integer.parseInt(after));
                 }
@@ -569,10 +574,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     static final String COLOR_PREFIX = "color";
 
     /**
-     * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link SpreadsheetColorName named}.
+     * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link NamedColor color}.
      */
-    public static SpreadsheetMetadataPropertyName<Integer> namedColor(final SpreadsheetColorName name) {
-        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(name);
+    public static SpreadsheetMetadataPropertyName<Integer> namedColor(final NamedColor namedColor) {
+        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(namedColor);
     }
 
     /**

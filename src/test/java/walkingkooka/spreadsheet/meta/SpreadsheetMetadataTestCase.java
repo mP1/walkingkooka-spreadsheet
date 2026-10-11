@@ -24,6 +24,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.ColorContextTesting2;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProvider;
@@ -45,7 +46,6 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -449,24 +449,24 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // NumberToColorName................................................................................................
+    // colorNumberReverseLookup.........................................................................................
 
     @Test
-    public final void testColorNameWithInvalidIndex() {
-        this.colorNameAndCheck(
+    public final void testColorNumberReverseLookupWithInvalidIndex() {
+        this.colorNumberReverseLookupAndCheck(
             this.createObject(),
             99,
             null
         );
     }
 
-    final void colorNameAndCheck(final SpreadsheetMetadata metadata,
-                                 final int number,
-                                 final SpreadsheetColorName colorName) {
+    final void colorNumberReverseLookupAndCheck(final SpreadsheetMetadata metadata,
+                                                final int number,
+                                                final NamedColor namedColor) {
         this.checkEquals(
-            Optional.ofNullable(colorName),
-            metadata.colorName(number),
-            () -> number + " to color " + metadata
+            Optional.ofNullable(namedColor),
+            metadata.colorNumberReverseLookup(number),
+            () -> number + " to NamedColor " + metadata
         );
     }
 

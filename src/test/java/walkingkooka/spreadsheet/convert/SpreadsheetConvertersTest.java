@@ -1163,13 +1163,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    private final static String SPREADSHEET_COLOR_NAME = "HelloColor";
+    private final static String NAMED_COLOR = "HelloColor";
     private final static Color COLOR10 = Color.parse("#101010");
 
     @Test
     public void testColorConvertSpreadsheetMetadataColorToString() {
         this.colorConvertAndCheck(
-            "[" + SPREADSHEET_COLOR_NAME + "]",
+            "[" + NAMED_COLOR + "]",
             COLOR10
         );
     }
@@ -1177,8 +1177,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testColorConvertStringToSpreadsheetMetadataColorName() {
         this.colorConvertAndCheck(
-            SPREADSHEET_COLOR_NAME,
-            SpreadsheetColorName.with(SPREADSHEET_COLOR_NAME)
+            NAMED_COLOR,
+            SpreadsheetColorName.with(NAMED_COLOR)
         );
     }
 
@@ -1233,7 +1233,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     return HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
                         .set(
                             SpreadsheetMetadataPropertyName.namedColor(
-                                SpreadsheetColorName.with(SPREADSHEET_COLOR_NAME)
+                                Color.named(NAMED_COLOR)
                             ),
                             10
                         ).set(

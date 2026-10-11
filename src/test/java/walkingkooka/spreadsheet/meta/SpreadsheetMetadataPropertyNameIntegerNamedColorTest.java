@@ -18,14 +18,15 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerNamedColor> {
 
-    private final static SpreadsheetColorName SPREADSHEET_COLOR_NAME = SpreadsheetColorName.with("dull");
+    private final static NamedColor NAMED_COLOR = Color.named("dull");
 
     @Test
     public void testWithNullFails() {
@@ -37,9 +38,9 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
 
     @Test
     public void testWith() {
-        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(SPREADSHEET_COLOR_NAME);
+        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(NAMED_COLOR);
         assertSame(
-            SPREADSHEET_COLOR_NAME,
+            NAMED_COLOR,
             property.name,
             "colorName"
         );
@@ -56,14 +57,14 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(SPREADSHEET_COLOR_NAME),
+            SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(NAMED_COLOR),
             "colordull"
         );
     }
 
     @Override
     SpreadsheetMetadataPropertyNameIntegerNamedColor createName() {
-        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(SpreadsheetColorName.with("dull"));
+        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(NAMED_COLOR);
     }
 
     // ClassTesting.....................................................................................................

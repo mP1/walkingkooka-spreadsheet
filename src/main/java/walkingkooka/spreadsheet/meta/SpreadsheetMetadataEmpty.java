@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.color.NamedColor;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -91,10 +91,10 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
         return null; // null means empty when defaults
     }
 
-    // colorName........................................................................................................
+    // colorNumberReverseLookup.........................................................................................
 
     @Override
-    public Optional<SpreadsheetColorName> colorName(final int colorNumber) {
+    public Optional<NamedColor> colorNumberReverseLookup(final int colorNumber) {
         return Optional.empty();
     }
 
