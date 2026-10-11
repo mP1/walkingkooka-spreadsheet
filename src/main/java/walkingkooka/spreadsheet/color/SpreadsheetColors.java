@@ -17,10 +17,42 @@
 
 package walkingkooka.spreadsheet.color;
 
+import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
+import walkingkooka.color.NamedColor;
 import walkingkooka.reflect.PublicStaticHelper;
+
+import java.util.Set;
 
 public final class SpreadsheetColors implements PublicStaticHelper {
 
+    public final static NamedColor BLACK = Color.named("Black");
+
+    public final static NamedColor WHITE = Color.named("White");
+
+    public final static NamedColor RED = Color.named("Red");
+
+    public final static NamedColor GREEN = Color.named("Green");
+
+    public final static NamedColor BLUE = Color.named("Blue");
+
+    public final static NamedColor YELLOW = Color.named("Yellow");
+
+    public final static NamedColor MAGENTA = Color.named("Magenta");
+
+    public final static NamedColor CYAN = Color.named("Cyan");
+
+    public final static Set<NamedColor> DEFAULTS = Sets.of(
+        BLACK,
+        WHITE,
+        RED,
+        GREEN,
+        BLUE,
+        YELLOW,
+        MAGENTA,
+        CYAN
+    );
+    
     public static final int MIN = 1;
     public static final int MAX = 56;
 
