@@ -63,7 +63,6 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
@@ -294,9 +293,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
 
         this.checkNotEquals(
             Sets.empty(),
-            SpreadsheetColorName.DEFAULTS.stream()
+            SpreadsheetColors.DEFAULTS.stream()
                 .filter(n -> false == nonLocaleDefaults.defaults()
-                    .get(n.spreadsheetMetadataPropertyName()).isPresent())
+                    .get(SpreadsheetMetadataPropertyName.namedColor(n))
+                    .isPresent())
                 .collect(Collectors.toSet()),
             () -> "missing named color defaults"
         );
