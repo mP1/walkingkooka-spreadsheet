@@ -132,11 +132,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.color();
                 break;
-            case COLOR_TO_COLOR_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.colorToColor();
-                break;
             case COLOR_TO_NUMBER_STRING:
                 this.noParameterCheck(copy);
 
@@ -827,6 +822,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.toBoolean();
                 break;
+            case TO_COLOR_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toColor();
+                break;
             case TO_COLOR_PROPERTIES_STRING:
                 this.noParameterCheck(copy);
 
@@ -1059,10 +1059,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
     private final static String COLOR_STRING = "color";
 
     final static ConverterName COLOR = ConverterName.with(COLOR_STRING);
-
-    private final static String COLOR_TO_COLOR_STRING = "color-to-color";
-
-    final static ConverterName COLOR_TO_COLOR = ConverterName.with(COLOR_TO_COLOR_STRING);
 
     private final static String COLOR_TO_NUMBER_STRING = "color-to-number";
 
@@ -1612,6 +1608,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TO_BOOLEAN = ConverterName.with(TO_BOOLEAN_STRING);
 
+    private final static String TO_COLOR_STRING = "to-color";
+
+    final static ConverterName TO_COLOR = ConverterName.with(TO_COLOR_STRING);
+
     private final static String TO_COLOR_PROPERTIES_STRING = "to-color-properties";
 
     final static ConverterName TO_COLOR_PROPERTIES = ConverterName.with(TO_COLOR_PROPERTIES_STRING);
@@ -1768,7 +1768,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(COLLECTION_TO),
             converterInfo(COLLECTION_TO_LIST),
             converterInfo(COLOR),
-            converterInfo(COLOR_TO_COLOR),
             converterInfo(COLOR_TO_NUMBER),
             converterInfo(CSV),
             converterInfo(CURRENCY),
@@ -1907,6 +1906,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_ZONE_OFFSET),
             converterInfo(TO_BINARY),
             converterInfo(TO_BOOLEAN),
+            converterInfo(TO_COLOR),
             converterInfo(TO_COLOR_PROPERTIES),
             converterInfo(TO_CSV_STRING_LIST),
             converterInfo(TO_CURRENCY),

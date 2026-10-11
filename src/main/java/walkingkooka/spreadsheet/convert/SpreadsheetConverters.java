@@ -179,7 +179,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
             COLOR = namedCollection(
                 "COLOR",
                 text(),
-                colorToColor(),
+                toColor(),
                 textToColor(),
                 colorToNumber(),
                 numberToColor(),
@@ -193,13 +193,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     private static Converter<SpreadsheetConverterContext> COLOR;
-
-    /**
-     * {@see ColorConverters#colorToColor}
-     */
-    public static Converter<SpreadsheetConverterContext> colorToColor() {
-        return ColorConverters.colorToColor();
-    }
 
     /**
      * {@see ColorConverters#colorToNumber}
@@ -1494,6 +1487,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> toBoolean() {
         return SpreadsheetConverterToBoolean.INSTANCE;
+    }
+
+    /**
+     * {@see ColorConverters#toColor}
+     */
+    public static Converter<SpreadsheetConverterContext> toColor() {
+        return ColorConverters.toColor();
     }
 
     /**

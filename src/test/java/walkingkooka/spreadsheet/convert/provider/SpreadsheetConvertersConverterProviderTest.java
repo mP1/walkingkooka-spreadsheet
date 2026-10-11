@@ -1481,7 +1481,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/collection-to collection-to\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/collection-to-list collection-to-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/color color\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/color-to-color color-to-color\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/color-to-number color-to-number\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/csv csv\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/currency currency\n" +
@@ -1619,6 +1618,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-zone-offset text-to-zone-offset\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-binary to-binary\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-boolean to-boolean\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-color to-color\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-color-properties to-color-properties\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-csv-string-list to-csv-string-list\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-currency to-currency\n" +

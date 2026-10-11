@@ -55,7 +55,6 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR);
 
     public final static ConverterAliasSet FORMULA = ALL.aliasSet()
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
@@ -65,12 +64,12 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
     public final static ConverterAliasSet QUERY = ALL.aliasSet()
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
@@ -80,6 +79,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
@@ -87,7 +87,6 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
     public final static ConverterAliasSet SCRIPTING = ALL.aliasSet();
 
     public final static ConverterAliasSet SORT = ALL.aliasSet()
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
@@ -100,6 +99,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_TEXT_NODE)
@@ -107,7 +107,6 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
     public final static ConverterAliasSet VALIDATOR = ALL.aliasSet()
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
@@ -117,6 +116,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_TEXT_NODE)

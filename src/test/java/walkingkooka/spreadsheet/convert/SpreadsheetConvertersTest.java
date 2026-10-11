@@ -242,7 +242,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "              TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "              TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "        Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "        to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "        TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "        Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "        Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
@@ -275,7 +275,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
                 "  Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
                 "  Collection to List (walkingkooka.convert.ConverterCollectionToList)\n" +
-                "  Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
                 "  Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "  CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
                 "  CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
@@ -674,7 +673,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                    TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                    TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                    TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "              Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "              to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "              TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "              Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "              Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
@@ -813,6 +812,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
                 "  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
                 "  to Boolean (walkingkooka.spreadsheet.convert.SpreadsheetConverterToBoolean)\n" +
+                "  to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "  to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
                 "  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "  to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
@@ -1056,7 +1056,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // color.............................................................................................................
 
     @Test
-    public void testColorConvertColorToColor() {
+    public void testColorConvertToColor() {
         final Color rgb = RgbColor.BLACK;
 
         this.colorConvertAndCheck(
@@ -1262,7 +1262,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "      Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "      to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "      TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "      Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "      Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
@@ -4026,7 +4026,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +

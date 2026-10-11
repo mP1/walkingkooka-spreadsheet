@@ -160,7 +160,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
@@ -407,7 +407,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
@@ -646,7 +646,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
@@ -837,7 +837,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            Color to Color (walkingkooka.color.convert.ConverterColorToColor)\n" +
+                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +

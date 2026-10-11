@@ -131,7 +131,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
             private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                 Lists.of(
                     SpreadsheetConverters.textToText(),
-                    SpreadsheetConverters.colorToColor()
+                    SpreadsheetConverters.toColor()
                 )
             );
 
