@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataDefaultTextResourceProvider;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 
@@ -39,7 +41,8 @@ import java.util.stream.Collectors;
 /**
  * A {@link ColorContext} that validates {@link IndexedColor} and only contains the default {@link SpreadsheetColors}.
  */
-final class ColorContextSpreadsheetMetadataDefault implements ColorContext {
+final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
+    TreePrintable {
 
     /**
      * Singleton
@@ -204,7 +207,33 @@ final class ColorContextSpreadsheetMetadataDefault implements ColorContext {
         return this.colorIndexOrNameTo.entrySet()
             .stream()
             .map(
-                (Entry<String, Object> e) -> "color" + e.getKey() + ": " + e.getValue() + LineEnding.CRNL
+                (Entry<String, Object> e) -> fixColorName(e.getKey()) + ": " + e.getValue() + LineEnding.CRNL
             ).collect(Collectors.joining());
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            for (final Entry<String, Object> entry : this.colorIndexOrNameTo.entrySet()) {
+                printer.print(
+                    fixColorName(entry.getKey())
+                );
+                printer.print(": ");
+                printer.println(
+                    entry.getValue()
+                        .toString()
+                );
+            }
+        }
+        printer.outdent();
+    }
+
+    private static String fixColorName(final String name) {
+        return "color" + name;
     }
 }
