@@ -88,7 +88,6 @@ public final class SpreadsheetParserContextBasicTest implements ClassTesting2<Sp
             MATH_CONTEXT
         )
     );
-    private final static char VALUE_SEPARATOR = ',';
 
     @Test
     public void testWithNullCanIndexedNamedColorFails() {

@@ -35,8 +35,6 @@ public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTes
         super();
     }
 
-    final static char VALUE_SEPARATOR = ',';
-
     @Test
     public final void testMinCount() {
         this.minCountAndCheck(
