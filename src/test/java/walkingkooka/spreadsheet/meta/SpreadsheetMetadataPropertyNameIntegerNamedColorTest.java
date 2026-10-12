@@ -50,7 +50,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     public void testCheckValueWithColorNumberZeroFails() {
         this.checkValueFails(
             0,
-            "Metadata colordull=0, color number 0 < 1 or > 56"
+            "Metadata colordull=0, Invalid color number 0 < 1 or > 56"
         );
     }
 

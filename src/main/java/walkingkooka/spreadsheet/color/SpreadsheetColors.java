@@ -61,7 +61,7 @@ public final class SpreadsheetColors implements PublicStaticHelper {
      */
     public static int checkNumber(final int number) {
         if (number < MIN || number > MAX) {
-            throw new IllegalArgumentException("color number " + number + " < " + MIN + " or > " + MAX);
+            throw new IllegalArgumentException("Invalid color number " + number + " < " + MIN + " or > " + MAX);
         }
 
         return number;
