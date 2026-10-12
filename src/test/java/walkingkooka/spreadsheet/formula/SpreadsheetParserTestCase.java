@@ -17,8 +17,7 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -31,7 +30,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetParserContext>,
     T extends SpreadsheetFormulaParserToken>
-    implements ClassTesting2<P>,
+    implements PackagePrivateClassTesting<P>,
     ParserTesting2<P, SpreadsheetParserContext>,
     TypeNameTesting<P> {
 
@@ -65,12 +64,5 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
     @Override
     public final String typeNameSuffix() {
         return Parser.class.getSimpleName();
-    }
-
-    // ClassTestCase .........................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
