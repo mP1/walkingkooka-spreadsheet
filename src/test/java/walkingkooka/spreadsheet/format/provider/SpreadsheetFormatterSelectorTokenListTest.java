@@ -55,23 +55,6 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
     );
 
     @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetFormatterSelectorTokenList.with(null)
-        );
-    }
-
-    @Test
-    public void testDoesntDoubleWrap() {
-        final SpreadsheetFormatterSelectorTokenList list = this.createList();
-        assertSame(
-            list,
-            SpreadsheetFormatterSelectorTokenList.with(list)
-        );
-    }
-
-    @Test
     public void testGet() {
         this.getAndCheck(
             this.createList(),
@@ -136,9 +119,18 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         );
     }
 
+    @Test
+    public void testSetElementsDoesntDoubleWrap() {
+        final SpreadsheetFormatterSelectorTokenList list = this.createList();
+        assertSame(
+            list,
+            list.setElements(list)
+        );
+    }
+
     @Override
     public SpreadsheetFormatterSelectorTokenList createList() {
-        return SpreadsheetFormatterSelectorTokenList.with(
+        return new SpreadsheetFormatterSelectorTokenList(
             Lists.of(
                 COMPONENT1,
                 COMPONENT2
@@ -230,12 +222,7 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
     @Test
     public void testFirstOrEmptyWhenNotEmpty() {
         this.firstOrEmptyAndCheck(
-            SpreadsheetFormatterSelectorTokenList.with(
-                Lists.of(
-                    COMPONENT1,
-                    COMPONENT2
-                )
-            ),
+            this.createList(),
             COMPONENT1
         );
     }
