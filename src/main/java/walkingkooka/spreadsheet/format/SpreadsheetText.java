@@ -61,17 +61,6 @@ public final class SpreadsheetText implements HasText,
     );
 
     /**
-     * Creates a {@link SpreadsheetText}
-     */
-    public static SpreadsheetText with(final String text) {
-        Objects.requireNonNull(text, "text");
-
-        return text.isEmpty() ?
-            EMPTY :
-            new SpreadsheetText(WITHOUT_COLOR, text);
-    }
-
-    /**
      * Private ctor use factory.
      */
     private SpreadsheetText(final Optional<Color> color, final String text) {
@@ -181,7 +170,7 @@ public final class SpreadsheetText implements HasText,
             JsonNodeUnmarshallContext.missingProperty(TEXT_PROPERTY, node);
         }
 
-        return with(text)
+        return EMPTY.setText(text)
             .setColor(Optional.ofNullable(color));
     }
 

@@ -498,7 +498,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             BigDecimal.valueOf(-125.25),
             SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"")
                 .spreadsheetFormatterSelector(),
-            SpreadsheetText.with(
+            SpreadsheetText.EMPTY.setText(
                 MINUS + "125" + DECIMAL + "3Abc123"
             )
         );

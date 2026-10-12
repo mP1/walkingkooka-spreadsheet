@@ -50,7 +50,7 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
                                   final SpreadsheetFormatterContext context) {
         final SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(value, context);
         visitor.accept(token);
-        return SpreadsheetText.with(
+        return SpreadsheetText.EMPTY.setText(
             visitor.text.toString()
         ).setColor(visitor.color);
     }

@@ -167,7 +167,7 @@ public final class SpreadsheetFormatterSharedContextFormatTest extends Spreadshe
 
             private Optional<TextNode> formattedText(final String text) {
                 return Optional.of(
-                    SpreadsheetText.with(
+                    SpreadsheetText.EMPTY.setText(
                         null == text ?
                             "" :
                             text

@@ -46,7 +46,7 @@ final class SpreadsheetConverterTextToSpreadsheetText extends SpreadsheetConvert
     public SpreadsheetText parseText(final String value,
                                      final Class<?> type,
                                      final SpreadsheetConverterContext context) {
-        return SpreadsheetText.with(value);
+        return SpreadsheetText.EMPTY.setText(value);
     }
 
     @Override

@@ -93,7 +93,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
 
         return Optional.ofNullable(
             null != expressionNumber ?
-                SpreadsheetText.with(
+                SpreadsheetText.EMPTY.setText(
                     this.formatSpreadsheetTextExpressionNumber(
                         this.normalOrScientific.context(
                             expressionNumber.bigDecimal(),

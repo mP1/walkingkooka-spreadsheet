@@ -600,7 +600,7 @@ public final class SpreadsheetEngineSpreadsheetMetadataStampingTest implements S
                     "formatValue"
                 );
                 return Optional.of(
-                    SpreadsheetText.with(FORMULA_VALUE)
+                    SpreadsheetText.EMPTY.setText(FORMULA_VALUE)
                         .textNode()
                 );
             }

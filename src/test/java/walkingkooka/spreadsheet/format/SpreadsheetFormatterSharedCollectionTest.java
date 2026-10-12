@@ -113,7 +113,7 @@ public final class SpreadsheetFormatterSharedCollectionTest extends SpreadsheetF
 
                 return Optional.ofNullable(
                     value.equals(v.orElse(null)) ?
-                        SpreadsheetText.with(text)
+                        SpreadsheetText.EMPTY.setText(text)
                             .textNode()
                         :
                         null

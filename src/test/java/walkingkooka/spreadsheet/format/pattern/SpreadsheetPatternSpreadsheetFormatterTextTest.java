@@ -129,7 +129,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
             new TestSpreadsheetFormatterContext() {
 
             },
-            SpreadsheetText.with(TEXT)
+            SpreadsheetText.EMPTY.setText(TEXT)
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -142,7 +142,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
             new TestSpreadsheetFormatterContext() {
 
             },
-            SpreadsheetText.with(TEXT)
+            SpreadsheetText.EMPTY.setText(TEXT)
                 .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
@@ -161,7 +161,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
             pattern,
             value,
             context,
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 

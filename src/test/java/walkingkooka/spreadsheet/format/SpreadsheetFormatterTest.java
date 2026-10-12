@@ -31,7 +31,7 @@ public final class SpreadsheetFormatterTest implements SpreadsheetFormatterTesti
         final Color red = Color.parse("#123");
 
         this.checkEquals(
-            SpreadsheetText.with(
+            SpreadsheetText.EMPTY.setText(
                 text + text + text
             ).setColor(
                 Optional.of(red)

@@ -1013,7 +1013,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                 58,
                 59
             ),
-            SpreadsheetText.with("12/58/59")
+            SpreadsheetText.EMPTY.setText("12/58/59")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -1027,7 +1027,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                 12,
                 31
             ),
-            SpreadsheetText.with("1999/12/31 12/00/00")
+            SpreadsheetText.EMPTY.setText("1999/12/31 12/00/00")
         );
     }
 
@@ -1040,7 +1040,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                 58,
                 59
             ),
-            SpreadsheetText.with("1970/01/01 12/58/59")
+            SpreadsheetText.EMPTY.setText("1970/01/01 12/58/59")
         );
     }
 
@@ -1059,7 +1059,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
             this.createFormatter(pattern),
             value,
             this.createContext(),
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 
@@ -1071,7 +1071,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
             pattern,
             value,
             context,
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 

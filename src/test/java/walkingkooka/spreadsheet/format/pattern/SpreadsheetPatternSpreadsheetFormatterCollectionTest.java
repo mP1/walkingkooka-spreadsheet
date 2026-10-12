@@ -234,7 +234,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
 
                 return Optional.ofNullable(
                     value.equals(v.orElse(null)) ?
-                        spreadsheetText(text) :
+                        SpreadsheetText.EMPTY.setText(text) :
                         null
                 );
             }
@@ -244,10 +244,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
                 return String.valueOf(value);
             }
         };
-    }
-
-    private static SpreadsheetText spreadsheetText(final String text) {
-        return SpreadsheetText.with(text);
     }
 
     @Override

@@ -1945,7 +1945,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     return DECIMAL_NUMBER_CONTEXT.zeroDigit();
                 }
             },
-            SpreadsheetText.with(text));
+            SpreadsheetText.EMPTY.setText(text)
+        );
     }
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithFormatter() {

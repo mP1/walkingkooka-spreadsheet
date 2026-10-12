@@ -76,7 +76,7 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
             formatter,
             value,
             context,
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 

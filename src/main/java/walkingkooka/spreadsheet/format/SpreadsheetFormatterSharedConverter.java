@@ -62,7 +62,7 @@ final class SpreadsheetFormatterSharedConverter extends SpreadsheetFormatterShar
     private TextNode textNode(final String value) {
         return CharSequences.isNullOrEmpty(value) ?
             null :
-            SpreadsheetText.with(value)
+            SpreadsheetText.EMPTY.setText(value)
                 .textNode();
     }
 
