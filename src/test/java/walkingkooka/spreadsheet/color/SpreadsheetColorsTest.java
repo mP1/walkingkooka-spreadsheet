@@ -73,6 +73,40 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
         SpreadsheetColors.checkColorIndex(SpreadsheetColors.MAX);
     }
 
+    // checkNamedColor..................................................................................................
+
+    @Test
+    public void testCheckNamedColorWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetColors.checkNamedColor(null)
+        );
+    }
+
+    @Test
+    public void testCheckNamedColorWithEmptyFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetColors.checkNamedColor("")
+        );
+    }
+
+    @Test
+    public void testCheckNamedColorWithInvalidCharacterFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNamedColor("Hello1World")
+            ),
+            "Invalid character '1' at 5"
+        );
+    }
+
+    @Test
+    public void testCheckNamedColor() {
+        SpreadsheetColors.checkNamedColor("RED");
+    }
+
     // PublicStaticHelperTesting.......................................................................................
 
     @Override
