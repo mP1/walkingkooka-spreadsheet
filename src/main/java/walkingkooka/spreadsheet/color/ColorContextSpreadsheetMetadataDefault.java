@@ -24,7 +24,6 @@ import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataDefaultTextResourceProvider;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -167,7 +166,7 @@ final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
 
     @Override
     public NamedColor namedColor(final String name) {
-        CharSequences.failIfNullOrEmpty(name, "name");
+        SpreadsheetColors.checkNamedColor(name);
 
         return Color.named(name);
     }
