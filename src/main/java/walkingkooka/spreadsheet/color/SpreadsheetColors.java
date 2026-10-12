@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.color;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.NamedColor;
+import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 
 import java.util.Set;
@@ -65,6 +66,16 @@ public final class SpreadsheetColors implements PublicStaticHelper {
         }
 
         return number;
+    }
+
+    public static String checkNamedColor(final String namedColor) {
+        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(
+            namedColor,
+            "namedColor",
+            CharPredicates.letter(),
+            CharPredicates.letter()
+        );
+        return namedColor;
     }
 
     /**
