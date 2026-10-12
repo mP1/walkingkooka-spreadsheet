@@ -69,8 +69,7 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.color = Optional.of(
             this.context.namedColor(
-                token.colorName()
-                    .value()
+                token.value()
             )
         );
     }

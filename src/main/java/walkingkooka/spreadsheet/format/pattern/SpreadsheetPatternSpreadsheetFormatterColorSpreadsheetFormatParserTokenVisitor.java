@@ -41,8 +41,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTo
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.color = Color.named(
-            token.colorName()
-                .value()
+            token.value()
         );
     }
 
