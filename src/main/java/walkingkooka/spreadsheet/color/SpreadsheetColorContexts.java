@@ -25,7 +25,7 @@ public final class SpreadsheetColorContexts implements PublicStaticHelper {
     /**
      * {@link ColorContextSpreadsheetMetadataDefault}
      */
-    public static ColorContext spreadsheet() {
+    public static ColorContext spreadsheetMetadataDefaults() {
         return ColorContextSpreadsheetMetadataDefault.INSTANCE;
     }
 
