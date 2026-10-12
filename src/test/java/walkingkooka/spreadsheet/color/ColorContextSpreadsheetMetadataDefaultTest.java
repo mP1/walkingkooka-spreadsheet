@@ -25,8 +25,8 @@ import walkingkooka.color.WebColorName;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColorContextSpreadsheetTest implements ColorContextTesting2<ColorContextSpreadsheet>,
-    ToStringTesting<ColorContextSpreadsheet> {
+public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorContextTesting2<ColorContextSpreadsheetMetadataDefault>,
+    ToStringTesting<ColorContextSpreadsheetMetadataDefault> {
 
     // indexedColor.....................................................................................................
 
@@ -286,8 +286,8 @@ public final class ColorContextSpreadsheetTest implements ColorContextTesting2<C
     }
 
     @Override
-    public ColorContextSpreadsheet createContext() {
-        return ColorContextSpreadsheet.INSTANCE;
+    public ColorContextSpreadsheetMetadataDefault createContext() {
+        return ColorContextSpreadsheetMetadataDefault.INSTANCE;
     }
 
     // toString.........................................................................................................
@@ -366,8 +366,8 @@ public final class ColorContextSpreadsheetTest implements ColorContextTesting2<C
     // class............................................................................................................
 
     @Override
-    public Class<ColorContextSpreadsheet> type() {
-        return ColorContextSpreadsheet.class;
+    public Class<ColorContextSpreadsheetMetadataDefault> type() {
+        return ColorContextSpreadsheetMetadataDefault.class;
     }
 
     @Override

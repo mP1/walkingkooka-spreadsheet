@@ -23,10 +23,10 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetColorContexts implements PublicStaticHelper {
 
     /**
-     * {@link ColorContextSpreadsheet}
+     * {@link ColorContextSpreadsheetMetadataDefault}
      */
     public static ColorContext spreadsheet() {
-        return ColorContextSpreadsheet.INSTANCE;
+        return ColorContextSpreadsheetMetadataDefault.INSTANCE;
     }
 
     /**
