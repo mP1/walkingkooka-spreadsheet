@@ -27,7 +27,6 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
-import java.util.Locale;
 
 public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting2<TestSpreadsheetParserContextDelegator>,
     DecimalNumberContextDelegator,
@@ -64,8 +63,6 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
 
         @Override
         public SpreadsheetParserContext spreadsheetParserContext() {
-            final Locale locale = Locale.ENGLISH;
-
             return SpreadsheetParserContexts.basic(
                 InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
                 DATE_TIME_CONTEXT,
