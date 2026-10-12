@@ -60,7 +60,7 @@ import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
@@ -83,6 +83,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
+    ExpressionNumberContextTesting,
     ParserTesting,
     HasSpreadsheetPatternKindTesting,
     HasTextTesting,
@@ -1597,7 +1598,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
         final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.decimalFormat(decimalFormat)
             .parser();
-        final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
 
         final NumberSpreadsheetFormulaParserToken token = parser.andEmptyTextCursor()
             .parse(
@@ -1605,22 +1605,19 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 SpreadsheetParserContexts.basic(
                     InvalidCharacterExceptionFactory.POSITION,
                     DATE_TIME_CONTEXT,
-                    ExpressionNumberContexts.basic(
-                        kind,
-                        DECIMAL_NUMBER_CONTEXT
-                    ),
+                    EXPRESSION_NUMBER_CONTEXT,
                     ','
                 )
             ).get()
             .cast(NumberSpreadsheetFormulaParserToken.class);
 
         this.checkEquals(
-            kind.create(expected),
+            EXPRESSION_NUMBER_KIND.create(expected),
             token.toNumber(
                 new FakeExpressionEvaluationContext() {
                     @Override
                     public ExpressionNumberKind expressionNumberKind() {
-                        return kind;
+                        return EXPRESSION_NUMBER_KIND;
                     }
                 }
             )

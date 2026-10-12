@@ -22,25 +22,19 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
-import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
 import java.math.MathContext;
 
 public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting2<TestSpreadsheetParserContextDelegator>,
     DecimalNumberContextDelegator,
-    DateTimeContextTesting {
+    DateTimeContextTesting,
+    ExpressionNumberContextTesting {
 
     @Override
     public TestSpreadsheetParserContextDelegator createContext() {
         return new TestSpreadsheetParserContextDelegator();
     }
-
-    private final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(
-        ExpressionNumberKind.BIG_DECIMAL,
-        DECIMAL_NUMBER_CONTEXT
-    );
 
     // DecimalNumberContextDelegator....................................................................................
 

@@ -24,16 +24,17 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
-public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase<P extends SpreadsheetFormulaParserSpreadsheetColumnOrRowReference> implements SpreadsheetParserTesting2<P>, ClassTesting2<P> {
+public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase<P extends SpreadsheetFormulaParserSpreadsheetColumnOrRowReference>
+    implements SpreadsheetParserTesting2<P>,
+    ClassTesting2<P>,
+    ExpressionNumberContextTesting {
 
     SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase() {
         super();
     }
 
-    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     final static char VALUE_SEPARATOR = ',';
 
     @Test
@@ -55,10 +56,7 @@ public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTes
         return SpreadsheetParserContexts.basic(
             InvalidCharacterExceptionFactory.POSITION,
             this.dateTimeContext(),
-            ExpressionNumberContexts.basic(
-                EXPRESSION_NUMBER_KIND,
-                this.decimalNumberContext()
-            ),
+            EXPRESSION_NUMBER_CONTEXT,
             VALUE_SEPARATOR
         );
     }

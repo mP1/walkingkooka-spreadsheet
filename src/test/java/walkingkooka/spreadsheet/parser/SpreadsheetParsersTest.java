@@ -25,15 +25,15 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
 import java.lang.reflect.Method;
 import java.util.List;
 
 public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
     SpreadsheetParserTesting,
-    DecimalNumberContextTesting {
+    DecimalNumberContextTesting,
+    ExpressionNumberContextTesting {
 
     // general..........................................................................................................
 
@@ -286,10 +286,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserContexts.basic(
             InvalidCharacterExceptionFactory.POSITION_EXPECTED,
             DateTimeContexts.fake(), // DateTimeContext unnecessary
-            ExpressionNumberContexts.basic(
-                ExpressionNumberKind.BIG_DECIMAL,
-                DECIMAL_NUMBER_CONTEXT
-            ),
+            EXPRESSION_NUMBER_CONTEXT,
             ',' // valueSeparator
         );
     }
