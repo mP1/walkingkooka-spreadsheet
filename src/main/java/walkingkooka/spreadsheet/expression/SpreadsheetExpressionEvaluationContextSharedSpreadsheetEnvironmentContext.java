@@ -34,6 +34,7 @@ import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -111,6 +112,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
             mediaTypeDetector,
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
+                SpreadsheetColorContexts.environmentContext(spreadsheetEnvironmentContext), // CanIndexedNamedColor
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataContext, // SpreadsheetMetadataLoader

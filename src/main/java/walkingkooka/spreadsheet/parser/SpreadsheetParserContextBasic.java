@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.CanIndexedNamedColorDelegator;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
@@ -35,6 +37,7 @@ import java.util.function.BiFunction;
  * A {@link SpreadsheetParserContext} without any functionality.
  */
 final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
+    CanIndexedNamedColorDelegator,
     DateTimeContextDelegator,
     ExpressionNumberContextDelegator,
     UsesToStringBuilder {
@@ -42,11 +45,13 @@ final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
     /**
      * Creates a new {@link SpreadsheetParserContextBasic}.
      */
-    static SpreadsheetParserContextBasic with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    static SpreadsheetParserContextBasic with(final CanIndexedNamedColor canIndexedNamedColor,
+                                              final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                               final DateTimeContext dateTimeContext,
                                               final ExpressionNumberContext expressionNumberContext,
                                               final char valueSeparator) {
         return new SpreadsheetParserContextBasic(
+            Objects.requireNonNull(canIndexedNamedColor, "canIndexedNamedColor"),
             Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory"),
             Objects.requireNonNull(dateTimeContext, "dateTimeContext"),
             Objects.requireNonNull(expressionNumberContext, "expressionNumberContext"),
@@ -57,11 +62,13 @@ final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
     /**
      * Private ctor use factory
      */
-    private SpreadsheetParserContextBasic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    private SpreadsheetParserContextBasic(final CanIndexedNamedColor canIndexedNamedColor,
+                                          final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                           final DateTimeContext dateTimeContext,
                                           final ExpressionNumberContext expressionNumberContext,
                                           final char valueSeparator) {
         super();
+        this.canIndexedNamedColor = canIndexedNamedColor;
         this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
         this.dateTimeContext = dateTimeContext;
         this.expressionNumberContext = expressionNumberContext;
@@ -96,6 +103,15 @@ final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
         return this.expressionNumberContext.locale();
     }
 
+    // CanIndexedNamedColorDelegator....................................................................................
+
+    @Override
+    public CanIndexedNamedColor canIndexedNamedColor() {
+        return this.canIndexedNamedColor;
+    }
+
+    private final CanIndexedNamedColor canIndexedNamedColor;
+
     // DateTimeContextDelegator.........................................................................................
 
     @Override
@@ -123,7 +139,9 @@ final class SpreadsheetParserContextBasic implements SpreadsheetParserContext,
 
     @Override
     public void buildToString(final ToStringBuilder toStringBuilder) {
-        toStringBuilder.label("invalidCharacterExceptionFactory")
+        toStringBuilder.label("canIndexedNamedColor")
+            .value(this.canIndexedNamedColor)
+            .label("invalidCharacterExceptionFactory")
             .value(this.invalidCharacterExceptionFactory)
             .label("dateTimeContext")
             .value(this.dateTimeContext)

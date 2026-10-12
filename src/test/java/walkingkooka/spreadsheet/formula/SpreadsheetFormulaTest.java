@@ -37,6 +37,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
@@ -2294,6 +2295,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
                                                    final DecimalNumberContext decimalNumberContext,
                                                    final char valueSeparator) {
         return SpreadsheetParserContexts.basic(
+            SpreadsheetColorContexts.spreadsheetMetadataDefaults(), // CanIndexedNamedColor
             InvalidCharacterExceptionFactory.POSITION_EXPECTED,
             dateTimeContext,
             ExpressionNumberContexts.basic(

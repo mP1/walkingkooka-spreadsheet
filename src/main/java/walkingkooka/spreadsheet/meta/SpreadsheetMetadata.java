@@ -1419,6 +1419,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetParserContexts.basic(
+            this, // CanIndexedNamedColor
             InvalidCharacterExceptionFactory.POSITION_EXPECTED,
             dateTimeContext,
             expressionNumberContext,

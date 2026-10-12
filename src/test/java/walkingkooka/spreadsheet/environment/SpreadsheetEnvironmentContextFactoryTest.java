@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.currency.CurrencyLocaleContexts;
@@ -34,6 +36,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -64,6 +67,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     HasSpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetEnvironmentContextFactory>,
     ClassTesting2<SpreadsheetEnvironmentContextFactory> {
+
+    private final static CanIndexedNamedColor CAN_INDEXED_NAMED_COLOR = SpreadsheetColorContexts.spreadsheetMetadataDefaults();
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
@@ -205,10 +210,28 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // with.............................................................................................................
 
     @Test
+    public void testWithNullCanIndexedNamedColorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                null,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullMediaTypeDetectorFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 null,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -225,6 +248,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_METADATA_LOADER,
@@ -241,6 +265,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
@@ -257,6 +282,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -273,6 +299,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -290,6 +317,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -306,6 +334,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -517,6 +546,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     private SpreadsheetEnvironmentContextFactory createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                final ProviderContext providerContext) {
         return SpreadsheetEnvironmentContextFactory.with(
+            CAN_INDEXED_NAMED_COLOR,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
@@ -606,9 +636,26 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentCanIndexedNamedColor() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                new FakeCanIndexedNameColor(),
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                SPREADSHEET_METADATA_LOADER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentMediaTypeDetector() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MediaTypeDetectors.fake(),
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -624,6 +671,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentMultiplier() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.fake(),
                 SPREADSHEET_METADATA_LOADER,
@@ -639,6 +687,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentSpreadsheetMetadataLoader() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SpreadsheetMetadataLoaders.fake(),
@@ -654,6 +703,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -678,6 +728,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -693,6 +744,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentSpreadsheetProvider() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,
@@ -708,6 +760,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentProviderContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                CAN_INDEXED_NAMED_COLOR,
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_METADATA_LOADER,

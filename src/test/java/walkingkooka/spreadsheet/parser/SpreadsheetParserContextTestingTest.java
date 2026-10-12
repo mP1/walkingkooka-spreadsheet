@@ -27,7 +27,68 @@ public final class SpreadsheetParserContextTestingTest implements SpreadsheetPar
     public void testSpreadsheetParserContextConstantToString() {
         this.checkEquals(
             SPREADSHEET_PARSER_CONTEXT.toString(),
-            "invalidCharacterExceptionFactory=POSITION_EXPECTED dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\" locale=\"en-AU\" twoDigitYear=50 expressionNumberContext=expressionNumberKind=BIG_DECIMAL decimalNumberContext=decimalNumberDigitNumberCount=9 symbols=negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰' locale=en_AU mathContext=precision=7 roundingMode=HALF_EVEN valueSeparator=','"
+            "canIndexedNamedColor=color1: black\n" +
+                "color2: white\n" +
+                "color3: red\n" +
+                "color4: lime\n" +
+                "color5: blue\n" +
+                "color6: yellow\n" +
+                "color7: magenta\n" +
+                "color8: cyan\n" +
+                "color9: maroon\n" +
+                "color10: green\n" +
+                "color11: navy\n" +
+                "color12: olive\n" +
+                "color13: purple\n" +
+                "color14: teal\n" +
+                "color15: silver\n" +
+                "color16: grey\n" +
+                "color17: #99f\n" +
+                "color18: #936\n" +
+                "color19: #ffc\n" +
+                "color20: #cff\n" +
+                "color21: #606\n" +
+                "color22: #ff8080\n" +
+                "color23: #06c\n" +
+                "color24: #ccf\n" +
+                "color25: navy\n" +
+                "color26: magenta\n" +
+                "color27: yellow\n" +
+                "color28: cyan\n" +
+                "color29: purple\n" +
+                "color30: maroon\n" +
+                "color31: teal\n" +
+                "color32: blue\n" +
+                "color33: #0cf\n" +
+                "color34: #cff\n" +
+                "color35: #cfc\n" +
+                "color36: #ff9\n" +
+                "color37: #9cf\n" +
+                "color38: #f9c\n" +
+                "color39: #c9f\n" +
+                "color40: #fc9\n" +
+                "color41: #36f\n" +
+                "color42: #3cc\n" +
+                "color43: #9c0\n" +
+                "color44: #fc0\n" +
+                "color45: #f90\n" +
+                "color46: #f60\n" +
+                "color47: #669\n" +
+                "color48: #969696\n" +
+                "color49: #036\n" +
+                "color50: #396\n" +
+                "color51: #030\n" +
+                "color52: #330\n" +
+                "color53: #930\n" +
+                "color54: #936\n" +
+                "color55: #339\n" +
+                "color56: #333\n" +
+                "colorBlack: 1\n" +
+                "colorBlue: 5\n" +
+                "colorCyan: 8\n" +
+                "colorGreen: 4\n" +
+                "colorMagenta: 7\n" +
+                "color invalidCharacterExceptionFactory=POSITION_EXPECTED dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNa"
         );
     }
 

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.viewport;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.HasUrlFragment;
@@ -571,6 +572,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     );
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+        ColorContexts.fake(), // CanIndexedNamedColor
         InvalidCharacterExceptionFactory.POSITION,
         DateTimeContexts.fake(),
         ExpressionNumberContexts.basic(

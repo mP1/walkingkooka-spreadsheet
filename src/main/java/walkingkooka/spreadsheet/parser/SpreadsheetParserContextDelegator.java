@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.CanIndexedNamedColorDelegator;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
@@ -28,8 +30,16 @@ import walkingkooka.tree.expression.ExpressionNumberContextDelegator;
 import java.util.Locale;
 
 public interface SpreadsheetParserContextDelegator extends SpreadsheetParserContext,
+    CanIndexedNamedColorDelegator,
     DateTimeContextDelegator,
     ExpressionNumberContextDelegator {
+
+    // CanIndexedNamedColorDelegator....................................................................................
+
+    @Override
+    default CanIndexedNamedColor canIndexedNamedColor() {
+        return this.spreadsheetParserContext();
+    }
 
     @Override
     default DateTimeContext dateTimeContext() {

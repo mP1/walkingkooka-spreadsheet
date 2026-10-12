@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
@@ -167,7 +168,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
 
-    public static SpreadsheetEnvironmentContextFactory with(final MediaTypeDetector mediaTypeDetector,
+    public static SpreadsheetEnvironmentContextFactory with(final CanIndexedNamedColor canIndexedNamedColor,
+                                                            final MediaTypeDetector mediaTypeDetector,
                                                             final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                             final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                             final CurrencyLocaleContext currencyLocaleContext,
@@ -175,6 +177,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                             final SpreadsheetProvider spreadsheetProvider,
                                                             final ProviderContext providerContext) {
         return new SpreadsheetEnvironmentContextFactory(
+            Objects.requireNonNull(canIndexedNamedColor, "canIndexedNamedColor"),
             null, // Converter
             Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector"),
             Objects.requireNonNull(multiplier, "multiplier"),
@@ -195,7 +198,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         );
     }
 
-    private SpreadsheetEnvironmentContextFactory(final Converter<SpreadsheetConverterContext> converter,
+    private SpreadsheetEnvironmentContextFactory(final CanIndexedNamedColor canIndexedNamedColor,
+                                                 final Converter<SpreadsheetConverterContext> converter,
                                                  final MediaTypeDetector mediaTypeDetector,
                                                  final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
@@ -213,6 +217,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         super();
+
+        this.canIndexedNamedColor = canIndexedNamedColor;
 
         this.converter = converter;
 
@@ -374,6 +380,10 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
     private transient SpreadsheetConverterContext spreadsheetConverterContext;
+
+    // CanIndexedNamedColor.............................................................................................
+
+    private final CanIndexedNamedColor canIndexedNamedColor;
 
     // converter........................................................................................................
 
@@ -625,6 +635,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                                                 final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
                                                                                 final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new SpreadsheetEnvironmentContextFactory(
+            this.canIndexedNamedColor,
             this.converter,
             this.mediaTypeDetector,
             this.multiplier,
@@ -737,6 +748,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             missing.reportIfMissing();
 
             this.spreadsheetParserContext = SpreadsheetParserContexts.basic(
+                this.canIndexedNamedColor,
                 InvalidCharacterExceptionFactory.POSITION_EXPECTED,
                 dateTimeContext,
                 expressionNumberContext,
@@ -784,6 +796,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return before == after ?
             this :
             with(
+                this.canIndexedNamedColor,
                 this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetMetadataLoader,
@@ -806,6 +819,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     @Override
     public int hashCode() {
         return Objects.hash(
+            this.canIndexedNamedColor,
             this.mediaTypeDetector,
             this.multiplier,
             this.spreadsheetMetadataLoader,
@@ -824,7 +838,9 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
     private boolean equals0(final SpreadsheetEnvironmentContextFactory other) {
-        return Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
+        return
+            this.canIndexedNamedColor.equals(other.canIndexedNamedColor) &&
+            Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
             Objects.equals(this.jsonNodeUnmarshallContextPreProcessor, other.jsonNodeUnmarshallContextPreProcessor) &&
             this.mediaTypeDetector.equals(other.mediaTypeDetector) &&
             this.multiplier.equals(other.multiplier) &&

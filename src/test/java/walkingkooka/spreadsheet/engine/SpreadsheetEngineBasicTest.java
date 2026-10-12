@@ -63,6 +63,7 @@ import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
@@ -27585,6 +27586,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 parser.parseText(
                         text,
                         SpreadsheetParserContexts.basic(
+                            SpreadsheetColorContexts.spreadsheetMetadataDefaults(), // CanIndexedNamedColor
                             InvalidCharacterExceptionFactory.POSITION,
                             dateTimeContext,
                             ExpressionNumberContexts.basic(

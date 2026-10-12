@@ -23,6 +23,7 @@ import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegateTest.TestSpreadsheetEnvironmentContextFactoryDelegate;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
@@ -109,6 +110,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             );
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(
+                SpreadsheetColorContexts.spreadsheetMetadataDefaults(), // CanIndexedNamedColor
                 MediaTypeDetectors.fake(),
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetMetadataLoaders.fake(),

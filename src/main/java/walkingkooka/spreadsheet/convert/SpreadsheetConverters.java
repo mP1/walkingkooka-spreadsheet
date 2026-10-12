@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Binary;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.color.convert.ColorConverters;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -73,12 +74,12 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
 
     private static final Function<SpreadsheetConverterContext, SpreadsheetParserContext> SPREADSHEET_CONVERTER_CONTEXT_TO_SPREADSHEET_PARSER_CONTEXT = (final SpreadsheetConverterContext scc) ->
         SpreadsheetParserContexts.basic(
+            ColorContexts.fake(), // CanIndexedNamedColor
             InvalidCharacterExceptionFactory.POSITION,
             scc,
             scc,
             '*' // valueSeparator not required because not parsing multiple values.
         );
-
 
     private static final BiFunction<ParserToken, SpreadsheetConverterContext, LocalDate> TOKEN_N_CONTEXT_TO_DATE = (final ParserToken t,
                                                                                                                     final SpreadsheetConverterContext scc) ->
