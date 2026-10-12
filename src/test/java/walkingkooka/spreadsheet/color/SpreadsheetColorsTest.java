@@ -19,36 +19,47 @@ package walkingkooka.spreadsheet.color;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.reflect.ThrowableTesting;
 
 import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<SpreadsheetColors> {
+public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<SpreadsheetColors>,
+    ThrowableTesting {
 
     // checkNumber......................................................................................................
 
     @Test
     public void testCheckNumberZero() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetColors.checkNumber(0)
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNumber(0)
+            ),
+            "Invalid color number 0 < 1 or > 56"
         );
     }
 
     @Test
     public void testCheckNumberNegative() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetColors.checkNumber(-1)
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNumber(-1)
+            ),
+            "Invalid color number -1 < 1 or > 56"
         );
     }
 
     @Test
     public void testCheckNumberMaxPlus1() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetColors.checkNumber(SpreadsheetColors.MAX + 1)
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNumber(SpreadsheetColors.MAX + 1)
+            ),
+            "Invalid color number 57 < 1 or > 56"
         );
     }
 
