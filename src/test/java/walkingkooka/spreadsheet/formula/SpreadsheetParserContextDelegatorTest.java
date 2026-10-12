@@ -20,9 +20,10 @@ package walkingkooka.spreadsheet.formula;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.formula.SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting2;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -32,7 +33,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.util.Locale;
 
-public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting<SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator>,
+public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting2<TestSpreadsheetParserContextDelegator>,
     DecimalNumberContextDelegator,
     DateTimeContextTesting {
 
