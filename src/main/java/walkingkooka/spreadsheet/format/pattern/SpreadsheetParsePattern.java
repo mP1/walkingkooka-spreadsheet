@@ -143,7 +143,7 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
 
     @Override
     public final SpreadsheetPattern setColorNumber(final int number) {
-        SpreadsheetColors.checkNumber(number);
+        SpreadsheetColors.checkColorIndex(number);
         throw new IllegalStateException("Cannot set color number " + number + " for pattern=" + this);
     }
 }
