@@ -52,23 +52,6 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     );
 
     @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetFormatterSampleList.with(null)
-        );
-    }
-
-    @Test
-    public void testDoesntDoubleWrap() {
-        final SpreadsheetFormatterSampleList list = this.createList();
-        assertSame(
-            list,
-            SpreadsheetFormatterSampleList.with(list)
-        );
-    }
-
-    @Test
     public void testGet() {
         this.getAndCheck(
             this.createList(),
@@ -116,6 +99,15 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     }
 
     @Test
+    public void testSetElementsDoesntDoubleWrap() {
+        final SpreadsheetFormatterSampleList list = this.createList();
+        assertSame(
+            list,
+            SpreadsheetFormatterSampleList.EMPTY.setElements(list)
+        );
+    }
+
+    @Test
     public void testSetElementsIncludesNullFails() {
         final NullPointerException thrown = assertThrows(
             NullPointerException.class,
@@ -136,7 +128,7 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
 
     @Override
     public SpreadsheetFormatterSampleList createList() {
-        return SpreadsheetFormatterSampleList.with(
+        return new SpreadsheetFormatterSampleList(
             Lists.of(
                 SAMPLE1,
                 SAMPLE2
@@ -232,12 +224,7 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     @Test
     public void testFirstOrEmptyWhenNotEmpty() {
         this.firstOrEmptyAndCheck(
-            SpreadsheetFormatterSampleList.with(
-                Lists.of(
-                    SAMPLE1,
-                    SAMPLE2
-                )
-            ),
+            this.createList(),
             SAMPLE1
         );
     }

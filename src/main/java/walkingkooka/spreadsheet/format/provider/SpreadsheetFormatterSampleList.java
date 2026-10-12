@@ -59,35 +59,8 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
 
     public final static SpreadsheetFormatterSampleList EMPTY = new SpreadsheetFormatterSampleList(Lists.empty());
 
-    public static SpreadsheetFormatterSampleList with(final Collection<SpreadsheetFormatterSample> samples) {
-        Objects.requireNonNull(samples, "samples");
-
-        SpreadsheetFormatterSampleList spreadsheetFormatterSampleList;
-
-        if (samples instanceof SpreadsheetFormatterSampleList) {
-            spreadsheetFormatterSampleList = (SpreadsheetFormatterSampleList) samples;
-        } else {
-            final List<SpreadsheetFormatterSample> copy = Lists.array();
-            for (final SpreadsheetFormatterSample sample : samples) {
-                copy.add(
-                    Objects.requireNonNull(sample, "includes null sample")
-                );
-            }
-
-            switch (samples.size()) {
-                case 0:
-                    spreadsheetFormatterSampleList = EMPTY;
-                    break;
-                default:
-                    spreadsheetFormatterSampleList = new SpreadsheetFormatterSampleList(copy);
-                    break;
-            }
-        }
-
-        return spreadsheetFormatterSampleList;
-    }
-
-    private SpreadsheetFormatterSampleList(final List<SpreadsheetFormatterSample> samples) {
+    // @VisibleForTesting
+    SpreadsheetFormatterSampleList(final List<SpreadsheetFormatterSample> samples) {
         this.samples = samples;
     }
 
@@ -110,17 +83,40 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
 
     @Override
     public SpreadsheetFormatterSampleList setElements(final Collection<SpreadsheetFormatterSample> samples) {
-        final SpreadsheetFormatterSampleList copy = with(samples);
-        return this.equals(copy) ?
-            this :
-            copy;
+        Objects.requireNonNull(samples, "samples");
+
+        SpreadsheetFormatterSampleList spreadsheetFormatterSampleList;
+
+        if (samples instanceof SpreadsheetFormatterSampleList) {
+            spreadsheetFormatterSampleList = (SpreadsheetFormatterSampleList) samples;
+        } else {
+            final List<SpreadsheetFormatterSample> copy = Lists.array();
+            for (final SpreadsheetFormatterSample sample : samples) {
+                copy.add(
+                    Objects.requireNonNull(sample, "includes null sample")
+                );
+            }
+
+            switch (copy.size()) {
+                case 0:
+                    spreadsheetFormatterSampleList = EMPTY;
+                    break;
+                default:
+                    spreadsheetFormatterSampleList = this.equals(copy) ?
+                        this :
+                        new SpreadsheetFormatterSampleList(copy);
+                    break;
+            }
+        }
+
+        return spreadsheetFormatterSampleList;
     }
 
     // json.............................................................................................................
 
     static SpreadsheetFormatterSampleList unmarshall(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             Cast.to(
                 context.unmarshallList(
                     node,
