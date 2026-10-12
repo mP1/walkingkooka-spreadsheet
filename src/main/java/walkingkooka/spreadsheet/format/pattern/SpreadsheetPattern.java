@@ -900,7 +900,7 @@ abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
      */
     final <T extends SpreadsheetPattern> T setColorNumber0(final int colorNumber,
                                                            final Function<String, T> parser) {
-        SpreadsheetColors.checkNumber(colorNumber);
+        SpreadsheetColors.checkColorIndex(colorNumber);
         this.failIfMultiplePatterns("color number");
 
         return parser.apply(

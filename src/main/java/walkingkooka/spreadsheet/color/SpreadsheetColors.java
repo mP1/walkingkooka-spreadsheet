@@ -57,9 +57,9 @@ public final class SpreadsheetColors implements PublicStaticHelper {
     public static final int MAX = 56;
 
     /**
-     * Validates the given color number is valid.
+     * Validates the given color index is valid.
      */
-    public static int checkNumber(final int number) {
+    public static int checkColorIndex(final int number) {
         if (number < MIN || number > MAX) {
             throw new IllegalArgumentException("Invalid color number " + number + " < " + MIN + " or > " + MAX);
         }

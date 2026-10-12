@@ -31,46 +31,46 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
     // checkNumber......................................................................................................
 
     @Test
-    public void testCheckNumberZero() {
+    public void testCheckColorIndexZero() {
         this.getMessageAndCheck(
             assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetColors.checkNumber(0)
+                () -> SpreadsheetColors.checkColorIndex(0)
             ),
             "Invalid color number 0 < 1 or > 56"
         );
     }
 
     @Test
-    public void testCheckNumberNegative() {
+    public void testCheckColorIndexNegative() {
         this.getMessageAndCheck(
             assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetColors.checkNumber(-1)
+                () -> SpreadsheetColors.checkColorIndex(-1)
             ),
             "Invalid color number -1 < 1 or > 56"
         );
     }
 
     @Test
-    public void testCheckNumberMaxPlus1() {
+    public void testCheckColorIndexMaxPlus1() {
         this.getMessageAndCheck(
             assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetColors.checkNumber(SpreadsheetColors.MAX + 1)
+                () -> SpreadsheetColors.checkColorIndex(SpreadsheetColors.MAX + 1)
             ),
             "Invalid color number 57 < 1 or > 56"
         );
     }
 
     @Test
-    public void testCheckNumberMin() {
-        SpreadsheetColors.checkNumber(SpreadsheetColors.MIN);
+    public void testCheckColorIndexMin() {
+        SpreadsheetColors.checkColorIndex(SpreadsheetColors.MIN);
     }
 
     @Test
-    public void testCheckNumberMax() {
-        SpreadsheetColors.checkNumber(SpreadsheetColors.MAX);
+    public void testCheckColorIndexMax() {
+        SpreadsheetColors.checkColorIndex(SpreadsheetColors.MAX);
     }
 
     // PublicStaticHelperTesting.......................................................................................

@@ -37,7 +37,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
      */
     static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final int number) {
-        SpreadsheetColors.checkNumber(number);
+        SpreadsheetColors.checkColorIndex(number);
 
         return NUMBER_TO_COLOR[number - SpreadsheetColors.MIN];
     }
