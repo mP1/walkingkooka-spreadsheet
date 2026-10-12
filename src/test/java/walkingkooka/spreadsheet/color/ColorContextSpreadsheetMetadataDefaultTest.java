@@ -247,7 +247,7 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     // parseColor.......................................................................................................
 
     @Test
-    public void testParseIndexedColorWithMinLessOneFails() {
+    public void testParseColorWithIndexedColorWithMinLessOneFails() {
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createContext()
@@ -260,7 +260,7 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     }
 
     @Test
-    public void testParseIndexedColorWithMaxMoreOneFails() {
+    public void testParseColorWithIndexedColorWithMaxMoreOneFails() {
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createContext()
@@ -273,7 +273,7 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     }
 
     @Test
-    public void testParseIndexedColor() {
+    public void testParseColorWithIndexedColor() {
         this.parseColorAndCheck(
             this.createContext(),
             "1",
@@ -282,7 +282,7 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     }
 
     @Test
-    public void testParseNamedColor() {
+    public void testParseColorWithNamedColor() {
         this.parseColorAndCheck(
             this.createContext(),
             "RED",
@@ -291,7 +291,7 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     }
 
     @Test
-    public void testParseRgbColor() {
+    public void testParseColorWithRgbColor() {
         this.parseColorAndCheck(
             this.createContext(),
             "#123",
