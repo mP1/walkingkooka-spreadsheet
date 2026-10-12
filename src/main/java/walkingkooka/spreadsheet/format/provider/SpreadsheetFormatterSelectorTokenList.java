@@ -64,7 +64,7 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
 
     public final static SpreadsheetFormatterSelectorTokenList EMPTY = new SpreadsheetFormatterSelectorTokenList(Lists.empty());
 
-    public static SpreadsheetFormatterSelectorTokenList with(final Collection<SpreadsheetFormatterSelectorToken> tokens) {
+    private static SpreadsheetFormatterSelectorTokenList withCopy(final Collection<SpreadsheetFormatterSelectorToken> tokens) {
         Objects.requireNonNull(tokens, "tokens");
 
         SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokens;
@@ -88,7 +88,8 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
         return spreadsheetFormatterSelectorTokens;
     }
 
-    private SpreadsheetFormatterSelectorTokenList(final List<SpreadsheetFormatterSelectorToken> tokens) {
+    // @VisibleForTesting
+    SpreadsheetFormatterSelectorTokenList(final List<SpreadsheetFormatterSelectorToken> tokens) {
         this.tokens = tokens;
     }
 
@@ -111,17 +112,36 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
 
     @Override
     public SpreadsheetFormatterSelectorTokenList setElements(final Collection<SpreadsheetFormatterSelectorToken> tokens) {
-        final SpreadsheetFormatterSelectorTokenList copy = with(tokens);
-        return this.equals(copy) ?
-            this :
-            copy;
+        Objects.requireNonNull(tokens, "tokens");
+
+        SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokens;
+
+        if (tokens instanceof SpreadsheetFormatterSelectorTokenList) {
+            spreadsheetFormatterSelectorTokens = (SpreadsheetFormatterSelectorTokenList) tokens;
+        } else {
+            final List<SpreadsheetFormatterSelectorToken> copy = Lists.array();
+            for (final SpreadsheetFormatterSelectorToken token : tokens) {
+                copy.add(
+                    Objects.requireNonNull(token, "Includes null token")
+                );
+            }
+
+            spreadsheetFormatterSelectorTokens =
+                copy.isEmpty() ?
+                    EMPTY :
+                    copy.equals(this.tokens) ?
+                        this :
+                        new SpreadsheetFormatterSelectorTokenList(copy);
+        }
+
+        return spreadsheetFormatterSelectorTokens;
     }
 
     // json.............................................................................................................
 
     static SpreadsheetFormatterSelectorTokenList unmarshall(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             Cast.to(
                 context.unmarshallList(
                     node,
