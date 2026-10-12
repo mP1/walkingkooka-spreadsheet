@@ -63,7 +63,8 @@ public final class SpreadsheetText implements HasText,
     /**
      * Private ctor use factory.
      */
-    private SpreadsheetText(final Optional<Color> color, final String text) {
+    private SpreadsheetText(final Optional<Color> color,
+                            final String text) {
         this.color = color;
         this.text = text;
     }
@@ -75,10 +76,17 @@ public final class SpreadsheetText implements HasText,
     public SpreadsheetText setColor(final Optional<Color> color) {
         Objects.requireNonNull(color, "color");
 
-        return this.color.equals(color) ? this : new SpreadsheetText(color, this.text);
+        return this.color.equals(color) ?
+            this :
+            new SpreadsheetText(
+                color,
+                this.text
+            );
     }
 
     private final Optional<Color> color;
+
+    // HasText..........................................................................................................
 
     @Override
     public String text() {
@@ -88,7 +96,12 @@ public final class SpreadsheetText implements HasText,
     public SpreadsheetText setText(final String text) {
         Objects.requireNonNull(text, "text");
 
-        return this.text.equals(text) ? this : new SpreadsheetText(this.color, text);
+        return this.text.equals(text) ?
+            this :
+            new SpreadsheetText(
+                this.color,
+                text
+            );
     }
 
     private final String text;
@@ -103,14 +116,19 @@ public final class SpreadsheetText implements HasText,
                     c
                 )
             ).orElse(TextStyle.EMPTY)
-            .replace(TextNode.text(this.text));
+            .replace(
+                TextNode.text(this.text)
+            );
     }
 
     // Object ..........................................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.color, this.text);
+        return Objects.hash(
+            this.color,
+            this.text
+        );
     }
 
     @Override
@@ -129,6 +147,8 @@ public final class SpreadsheetText implements HasText,
     public String toString() {
         return ToStringBuilder.buildFrom(this);
     }
+
+    // UsesToStringBuilder..............................................................................................
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
