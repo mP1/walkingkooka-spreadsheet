@@ -22,10 +22,12 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorContextTesting2;
 import walkingkooka.color.WebColorName;
+import walkingkooka.reflect.ThrowableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorContextTesting2<ColorContextSpreadsheetMetadataDefault>,
+    ThrowableTesting,
     ToStringTesting<ColorContextSpreadsheetMetadataDefault> {
 
     // indexedColor.....................................................................................................
@@ -211,6 +213,18 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     }
 
     // namedColor.......................................................................................................
+
+    @Test
+    public void testNamedColorWithInvalidCharactersFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                    .namedColor("Hello!World")
+            ),
+            "Invalid character '!' at 5"
+        );
+    }
 
     @Test
     public void testNamedColorWithBlack() {
