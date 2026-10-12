@@ -17,12 +17,26 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserContextTesting;
+import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
 /**
  * Mixing testing interface for {@link SpreadsheetParserContext}
  */
 public interface SpreadsheetParserContextTesting extends ParserContextTesting,
-    SpreadsheetProviderContextTesting {
+    SpreadsheetProviderContextTesting,
+    DateTimeContextTesting,
+    ExpressionNumberContextTesting {
+
+    char VALUE_SEPARATOR = ',';
+
+    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+        InvalidCharacterExceptionFactory.POSITION_EXPECTED,
+        DATE_TIME_CONTEXT,
+        EXPRESSION_NUMBER_CONTEXT,
+        VALUE_SEPARATOR
+    );
 }

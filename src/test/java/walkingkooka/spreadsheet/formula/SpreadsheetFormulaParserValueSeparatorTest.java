@@ -25,8 +25,7 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.tree.expression.ExpressionNumberContextTesting;
@@ -37,10 +36,9 @@ public final class SpreadsheetFormulaParserValueSeparatorTest implements ParserT
     HasEnvironmentContextTesting,
     HasExpressionNumberKindTesting,
     PackagePrivateClassTesting<SpreadsheetFormulaParserValueSeparator>,
+    SpreadsheetParserContextTesting,
     TypeNameTesting<SpreadsheetFormulaParserValueSeparator>,
     ToStringTesting<SpreadsheetFormulaParserValueSeparator> {
-
-    final static char VALUE_SEPARATOR = ',';
 
     @Test
     public void testIncorrectCharacterFails() {
@@ -108,12 +106,7 @@ public final class SpreadsheetFormulaParserValueSeparatorTest implements ParserT
 
     @Override
     public SpreadsheetParserContext createContext() {
-        return SpreadsheetParserContexts.basic(
-            InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-            this.dateTimeContext(),
-            EXPRESSION_NUMBER_CONTEXT,
-            VALUE_SEPARATOR
-        );
+        return SPREADSHEET_PARSER_CONTEXT;
     }
 
     @Override
@@ -125,7 +118,7 @@ public final class SpreadsheetFormulaParserValueSeparatorTest implements ParserT
     public void testToString() {
         this.toStringAndCheck(
             this.createParser(),
-            ","
+            VALUE_SEPARATOR + ""
         );
     }
 

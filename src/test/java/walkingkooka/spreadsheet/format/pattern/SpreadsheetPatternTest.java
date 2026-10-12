@@ -49,12 +49,11 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -88,6 +87,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     HasSpreadsheetPatternKindTesting,
     HasTextTesting,
     SpreadsheetFormatterTesting,
+    SpreadsheetParserContextTesting,
     ThrowableTesting {
 
     final static Color COLOR_INDEX_44 = Color.indexed(44);
@@ -1602,12 +1602,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         final NumberSpreadsheetFormulaParserToken token = parser.andEmptyTextCursor()
             .parse(
                 TextCursors.charSequence(text),
-                SpreadsheetParserContexts.basic(
-                    InvalidCharacterExceptionFactory.POSITION,
-                    DATE_TIME_CONTEXT,
-                    EXPRESSION_NUMBER_CONTEXT,
-                    ','
-                )
+                SPREADSHEET_PARSER_CONTEXT
             ).get()
             .cast(NumberSpreadsheetFormulaParserToken.class);
 
