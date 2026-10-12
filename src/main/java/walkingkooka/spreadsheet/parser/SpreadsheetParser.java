@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorTokenAlternative;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorTokenList;
@@ -37,7 +36,7 @@ public interface SpreadsheetParser extends Parser<SpreadsheetParserContext>,
     /**
      * Useful constant for {@link SpreadsheetParser} with no text components.
      */
-    List<SpreadsheetParserSelectorToken> NO_TOKENS = SpreadsheetParserSelectorTokenList.with(Lists.empty());
+    List<SpreadsheetParserSelectorToken> NO_TOKENS = SpreadsheetParserSelectorTokenList.EMPTY;
 
     /**
      * Returns a list of {@link SpreadsheetParserSelectorToken} if this {@link SpreadsheetParser} supports
