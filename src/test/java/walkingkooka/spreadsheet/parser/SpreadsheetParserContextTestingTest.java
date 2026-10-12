@@ -17,9 +17,21 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PublicClassTesting;
 
-public final class SpreadsheetParserContextTestingTest implements PublicClassTesting<SpreadsheetParserContextTesting> {
+public final class SpreadsheetParserContextTestingTest implements SpreadsheetParserContextTesting,
+    PublicClassTesting<SpreadsheetParserContextTesting> {
+
+    @Test
+    public void testSpreadsheetParserContextConstantToString() {
+        this.checkEquals(
+            SPREADSHEET_PARSER_CONTEXT.toString(),
+            "invalidCharacterExceptionFactory=POSITION_EXPECTED dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\" locale=\"en-AU\" twoDigitYear=50 expressionNumberContext=expressionNumberKind=BIG_DECIMAL decimalNumberContext=decimalNumberDigitNumberCount=9 symbols=negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰' locale=en_AU mathContext=precision=7 roundingMode=HALF_EVEN valueSeparator=','"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetParserContextTesting> type() {
