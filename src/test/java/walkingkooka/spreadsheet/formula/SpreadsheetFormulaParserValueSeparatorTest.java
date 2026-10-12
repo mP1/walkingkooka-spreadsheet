@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.formula;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.environment.HasEnvironmentContextTesting;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -28,10 +29,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting2;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 
 public final class SpreadsheetFormulaParserValueSeparatorTest implements ParserTesting2<SpreadsheetFormulaParserValueSeparator, SpreadsheetParserContext>,
+    ExpressionNumberContextTesting,
+    HasEnvironmentContextTesting,
     HasExpressionNumberKindTesting,
     PackagePrivateClassTesting<SpreadsheetFormulaParserValueSeparator>,
     TypeNameTesting<SpreadsheetFormulaParserValueSeparator>,
@@ -108,10 +111,7 @@ public final class SpreadsheetFormulaParserValueSeparatorTest implements ParserT
         return SpreadsheetParserContexts.basic(
             InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
             this.dateTimeContext(),
-            ExpressionNumberContexts.basic(
-                EXPRESSION_NUMBER_KIND,
-                this.decimalNumberContext()
-            ),
+            EXPRESSION_NUMBER_CONTEXT,
             VALUE_SEPARATOR
         );
     }
