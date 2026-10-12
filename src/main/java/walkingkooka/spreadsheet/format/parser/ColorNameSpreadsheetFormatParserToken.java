@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-
 import java.util.Optional;
 
 /**
@@ -33,10 +31,6 @@ public final class ColorNameSpreadsheetFormatParserToken extends NonSymbolSpread
 
     private ColorNameSpreadsheetFormatParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    public SpreadsheetColorName colorName() {
-        return SpreadsheetColorName.with(this.value);
     }
 
     // visitor........................................................................................................

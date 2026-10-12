@@ -165,9 +165,8 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
 //        );
         this.color = Optional.of(
             Color.named(
-            token.colorName()
-                .value()
-        )
+                token.value()
+            )
         );
     }
 

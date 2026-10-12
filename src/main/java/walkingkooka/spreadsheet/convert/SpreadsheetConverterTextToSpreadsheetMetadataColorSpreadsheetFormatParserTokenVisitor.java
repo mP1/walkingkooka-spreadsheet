@@ -49,7 +49,10 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
 
-        final SpreadsheetColorName colorName = token.cast(ColorNameSpreadsheetFormatParserToken.class).colorName();
+        final SpreadsheetColorName colorName = SpreadsheetColorName.with(
+            token.cast(ColorNameSpreadsheetFormatParserToken.class)
+                .value()
+        );
         final Integer colorIndex = metadata.get(
             SpreadsheetMetadataPropertyName.namedColor(
                 Color.named(

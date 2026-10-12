@@ -841,7 +841,12 @@ abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
 
         return this.value()
             .findFirst(COLOR_NAME_PREDICATE)
-            .map(t -> t.cast(ColorNameSpreadsheetFormatParserToken.class).colorName());
+            .map(t -> SpreadsheetColorName.with(
+                    t.cast(
+                        ColorNameSpreadsheetFormatParserToken.class
+                    ).value()
+                )
+            );
     }
 
     private final static Predicate<ParserToken> COLOR_NAME_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorName);
