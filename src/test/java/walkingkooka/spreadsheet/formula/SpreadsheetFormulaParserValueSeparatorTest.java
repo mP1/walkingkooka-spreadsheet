@@ -19,13 +19,25 @@ package walkingkooka.spreadsheet.formula;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.parser.ValueSeparatorSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserTesting2;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 
-public final class SpreadsheetFormulaParserValueSeparatorTest extends SpreadsheetParserTestCase<SpreadsheetFormulaParserValueSeparator,
-    ValueSeparatorSymbolSpreadsheetFormulaParserToken>
-    implements ToStringTesting<SpreadsheetFormulaParserValueSeparator> {
+public final class SpreadsheetFormulaParserValueSeparatorTest implements ParserTesting2<SpreadsheetFormulaParserValueSeparator, SpreadsheetParserContext>,
+    HasExpressionNumberKindTesting,
+    PackagePrivateClassTesting<SpreadsheetFormulaParserValueSeparator>,
+    TypeNameTesting<SpreadsheetFormulaParserValueSeparator>,
+    ToStringTesting<SpreadsheetFormulaParserValueSeparator> {
+
+    final static char VALUE_SEPARATOR = ',';
 
     @Test
     public void testIncorrectCharacterFails() {
@@ -35,7 +47,7 @@ public final class SpreadsheetFormulaParserValueSeparatorTest extends Spreadshee
     }
 
     @Test
-    public void testMatch() {
+    public void testParseMatch() {
         final String text = VALUE_SEPARATOR + "";
 
         this.parseAndCheck(
@@ -46,7 +58,7 @@ public final class SpreadsheetFormulaParserValueSeparatorTest extends Spreadshee
     }
 
     @Test
-    public void testMatch2() {
+    public void testParseMatch2() {
         final String text = VALUE_SEPARATOR + "";
         final String after = "@";
 
@@ -60,7 +72,7 @@ public final class SpreadsheetFormulaParserValueSeparatorTest extends Spreadshee
 
     // ensure only consumes a single character
     @Test
-    public void testMatch3() {
+    public void testParseMatch3() {
         final String text = VALUE_SEPARATOR + "";
 
         this.parseAndCheck(
@@ -91,14 +103,30 @@ public final class SpreadsheetFormulaParserValueSeparatorTest extends Spreadshee
         );
     }
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser().toString(), ",");
+    @Override
+    public SpreadsheetParserContext createContext() {
+        return SpreadsheetParserContexts.basic(
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+            this.dateTimeContext(),
+            ExpressionNumberContexts.basic(
+                EXPRESSION_NUMBER_KIND,
+                this.decimalNumberContext()
+            ),
+            VALUE_SEPARATOR
+        );
     }
 
     @Override
     public SpreadsheetFormulaParserValueSeparator createParser() {
         return SpreadsheetFormulaParserValueSeparator.INSTANCE;
+    }
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createParser(),
+            ","
+        );
     }
 
     @Override
@@ -109,5 +137,15 @@ public final class SpreadsheetFormulaParserValueSeparatorTest extends Spreadshee
     @Override
     public void testTypeNaming() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String typeNamePrefix() {
+        return "Spreadsheet";
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return Parser.class.getSimpleName();
     }
 }
