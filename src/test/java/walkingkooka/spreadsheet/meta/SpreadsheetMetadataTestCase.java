@@ -43,6 +43,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -446,6 +447,36 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             expected,
             metadata.getEffectiveStylePropertyOrFail(property),
             () -> metadata + " getEffectiveStyleOrFailProperty " + property
+        );
+    }
+
+    // indexedColor.....................................................................................................
+
+    @Test
+    public final void testIndexedColorWithMinLessOneFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                    .indexedColor(
+                        SpreadsheetColors.MIN - 1
+                    )
+            ),
+            "Invalid color number 0 < 1 or > 56"
+        );
+    }
+
+    @Test
+    public final void testIndexedColorWithMaxMoreOneFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                    .indexedColor(
+                        SpreadsheetColors.MAX + 1
+                    )
+            ),
+            "Invalid color number 57 < 1 or > 56"
         );
     }
 
