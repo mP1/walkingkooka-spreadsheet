@@ -15,16 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.formula;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting2;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
