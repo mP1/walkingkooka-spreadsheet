@@ -40,15 +40,15 @@ import java.util.stream.Collectors;
 /**
  * A {@link ColorContext} that validates {@link IndexedColor} and only contains the default {@link SpreadsheetColors}.
  */
-final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
+final class SpreadsheetColorContextSpreadsheetMetadataDefault implements SpreadsheetColorContext,
     TreePrintable {
 
     /**
      * Singleton
      */
-    final static ColorContextSpreadsheetMetadataDefault INSTANCE = new ColorContextSpreadsheetMetadataDefault();
+    final static SpreadsheetColorContextSpreadsheetMetadataDefault INSTANCE = new SpreadsheetColorContextSpreadsheetMetadataDefault();
 
-    private ColorContextSpreadsheetMetadataDefault() {
+    private SpreadsheetColorContextSpreadsheetMetadataDefault() {
         super();
 
         final JsonObject metadataDefaults = JsonNode.parse(
@@ -117,13 +117,6 @@ final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
     }
 
     @Override
-    public IndexedColor indexedColor(final int index) {
-        SpreadsheetColors.checkColorIndex(index);
-
-        return Color.indexed(index);
-    }
-
-    @Override
     public Optional<Color> lookupColor(final Color color) {
         Objects.requireNonNull(color, "color");
 
@@ -163,27 +156,6 @@ final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
     }
 
     private final Map<String, Object> colorIndexOrNameTo;
-
-    @Override
-    public NamedColor namedColor(final String name) {
-        SpreadsheetColors.checkNamedColor(name);
-
-        return Color.named(name);
-    }
-
-    @Override
-    public Color parseColor(final String color) {
-        final Color colorColor = Color.parse(color);
-        return colorColor.isIndexed() ?
-            this.indexedColor(
-                ((IndexedColor) colorColor).index()
-            ) :
-            colorColor.isNamed() ?
-                this.namedColor(
-                    ((NamedColor) colorColor).value()
-                ) :
-                colorColor;
-    }
 
     // Object...........................................................................................................
 

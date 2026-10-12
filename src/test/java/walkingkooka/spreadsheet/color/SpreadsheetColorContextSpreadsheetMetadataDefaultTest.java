@@ -26,31 +26,11 @@ import walkingkooka.reflect.ThrowableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorContextTesting2<ColorContextSpreadsheetMetadataDefault>,
+public final class SpreadsheetColorContextSpreadsheetMetadataDefaultTest implements ColorContextTesting2<SpreadsheetColorContextSpreadsheetMetadataDefault>,
     ThrowableTesting,
-    ToStringTesting<ColorContextSpreadsheetMetadataDefault> {
+    ToStringTesting<SpreadsheetColorContextSpreadsheetMetadataDefault> {
 
     // indexedColor.....................................................................................................
-
-    @Test
-    public void testIndexedColorWithZeroFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .indexedColor(0)
-        );
-    }
-
-    @Test
-    public void testIndexedColorWithMaxPlus1Fails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .indexedColor(
-                    SpreadsheetColors.MAX + 1
-                )
-        );
-    }
 
     @Test
     public void testIndexedColorWithMin() {
@@ -215,18 +195,6 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     // namedColor.......................................................................................................
 
     @Test
-    public void testNamedColorWithInvalidCharactersFails() {
-        this.getMessageAndCheck(
-            assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createContext()
-                    .namedColor("Hello!World")
-            ),
-            "Invalid character '!' at 5"
-        );
-    }
-
-    @Test
     public void testNamedColorWithBlack() {
         this.namedColorAndCheck(
             this.createContext(),
@@ -245,32 +213,6 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     }
 
     // parseColor.......................................................................................................
-
-    @Test
-    public void testParseColorWithIndexedColorWithMinLessOneFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .parseColor(
-                    String.valueOf(
-                        SpreadsheetColors.MIN - 1
-                    )
-                )
-        );
-    }
-
-    @Test
-    public void testParseColorWithIndexedColorWithMaxMoreOneFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .parseColor(
-                    String.valueOf(
-                        SpreadsheetColors.MAX + 1
-                    )
-                )
-        );
-    }
 
     @Test
     public void testParseColorWithIndexedColor() {
@@ -300,8 +242,8 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     }
 
     @Override
-    public ColorContextSpreadsheetMetadataDefault createContext() {
-        return ColorContextSpreadsheetMetadataDefault.INSTANCE;
+    public SpreadsheetColorContextSpreadsheetMetadataDefault createContext() {
+        return SpreadsheetColorContextSpreadsheetMetadataDefault.INSTANCE;
     }
 
     // toString.........................................................................................................
@@ -383,7 +325,7 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     public void testPrintTree() {
         this.treePrintAndCheck(
             this.createContext(),
-            "ColorContextSpreadsheetMetadataDefault\n" +
+            "SpreadsheetColorContextSpreadsheetMetadataDefault\n" +
                 "  color1: black\n" +
                 "  color2: white\n" +
                 "  color3: red\n" +
@@ -454,8 +396,8 @@ public final class ColorContextSpreadsheetMetadataDefaultTest implements ColorCo
     // class............................................................................................................
 
     @Override
-    public Class<ColorContextSpreadsheetMetadataDefault> type() {
-        return ColorContextSpreadsheetMetadataDefault.class;
+    public Class<SpreadsheetColorContextSpreadsheetMetadataDefault> type() {
+        return SpreadsheetColorContextSpreadsheetMetadataDefault.class;
     }
 
     @Override
