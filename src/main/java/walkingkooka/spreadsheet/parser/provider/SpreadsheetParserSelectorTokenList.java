@@ -63,31 +63,8 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
 
     public final static SpreadsheetParserSelectorTokenList EMPTY = new SpreadsheetParserSelectorTokenList(Lists.empty());
 
-    public static SpreadsheetParserSelectorTokenList with(final Collection<SpreadsheetParserSelectorToken> tokens) {
-        Objects.requireNonNull(tokens, "tokens");
-
-        SpreadsheetParserSelectorTokenList spreadsheetParserSelectorTokens;
-
-        if (tokens instanceof SpreadsheetParserSelectorTokenList) {
-            spreadsheetParserSelectorTokens = (SpreadsheetParserSelectorTokenList) tokens;
-        } else {
-            final List<SpreadsheetParserSelectorToken> copy = Lists.array();
-            for (final SpreadsheetParserSelectorToken token : tokens) {
-                copy.add(
-                    Objects.requireNonNull(token, "Includes null token")
-                );
-            }
-
-            spreadsheetParserSelectorTokens =
-                copy.isEmpty() ?
-                    EMPTY :
-                    new SpreadsheetParserSelectorTokenList(copy);
-        }
-
-        return spreadsheetParserSelectorTokens;
-    }
-
-    private SpreadsheetParserSelectorTokenList(final List<SpreadsheetParserSelectorToken> tokens) {
+    // @VisibleForTesting
+    SpreadsheetParserSelectorTokenList(final List<SpreadsheetParserSelectorToken> tokens) {
         this.tokens = tokens;
     }
 
@@ -110,17 +87,36 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
 
     @Override
     public SpreadsheetParserSelectorTokenList setElements(final Collection<SpreadsheetParserSelectorToken> tokens) {
-        final SpreadsheetParserSelectorTokenList copy = with(tokens);
-        return this.equals(copy) ?
-            this :
-            copy;
+        Objects.requireNonNull(tokens, "tokens");
+
+        SpreadsheetParserSelectorTokenList spreadsheetParserSelectorTokens;
+
+        if (tokens instanceof SpreadsheetParserSelectorTokenList) {
+            spreadsheetParserSelectorTokens = (SpreadsheetParserSelectorTokenList) tokens;
+        } else {
+            final List<SpreadsheetParserSelectorToken> copy = Lists.array();
+            for (final SpreadsheetParserSelectorToken token : tokens) {
+                copy.add(
+                    Objects.requireNonNull(token, "Includes null token")
+                );
+            }
+
+            spreadsheetParserSelectorTokens =
+                copy.isEmpty() ?
+                    EMPTY :
+                    copy.equals(this) ?
+                        this :
+                        new SpreadsheetParserSelectorTokenList(copy);
+        }
+
+        return spreadsheetParserSelectorTokens;
     }
 
     // json.............................................................................................................
 
     static SpreadsheetParserSelectorTokenList unmarshall(final JsonNode node,
                                                          final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             context.unmarshallList(
                 node,
                 SpreadsheetParserSelectorToken.class

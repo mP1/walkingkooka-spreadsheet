@@ -55,23 +55,6 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     );
 
     @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetParserSelectorTokenList.with(null)
-        );
-    }
-
-    @Test
-    public void testDoesntDoubleWrap() {
-        final SpreadsheetParserSelectorTokenList list = this.createList();
-        assertSame(
-            list,
-            SpreadsheetParserSelectorTokenList.with(list)
-        );
-    }
-
-    @Test
     public void testGet() {
         this.getAndCheck(
             this.createList(),
@@ -119,6 +102,15 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     }
 
     @Test
+    public void testSetElementsDoesntDoubleWrap() {
+        final SpreadsheetParserSelectorTokenList list = this.createList();
+        assertSame(
+            list,
+            SpreadsheetParserSelectorTokenList.EMPTY.setElements(list)
+        );
+    }
+
+    @Test
     public void testSetElementsIncludesNullFails() {
         final NullPointerException thrown = assertThrows(
             NullPointerException.class,
@@ -138,7 +130,7 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
 
     @Override
     public SpreadsheetParserSelectorTokenList createList() {
-        return SpreadsheetParserSelectorTokenList.with(
+        return new SpreadsheetParserSelectorTokenList(
             Lists.of(
                 COMPONENT1,
                 COMPONENT2
@@ -230,12 +222,7 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     @Test
     public void testFirstOrEmptyWhenNotEmpty() {
         this.firstOrEmptyAndCheck(
-            SpreadsheetParserSelectorTokenList.with(
-                Lists.of(
-                    COMPONENT1,
-                    COMPONENT2
-                )
-            ),
+            this.createList(),
             COMPONENT1
         );
     }
