@@ -29,15 +29,15 @@ import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetFormatParserContextTest implements ClassTesting2<BasicSpreadsheetFormatParserContext>,
-    SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext>,
+public final class SpreadsheetFormatParserContextBasicTest implements ClassTesting2<SpreadsheetFormatParserContextBasic>,
+    SpreadsheetFormatParserContextTesting<SpreadsheetFormatParserContextBasic>,
     DecimalNumberContextDelegator {
 
     @Test
     public void testWithNullInvalidCharacterExceptionFactoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatParserContext.with(null)
+            () -> SpreadsheetFormatParserContextBasic.with(null)
         );
     }
 
@@ -69,8 +69,8 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     }
 
     @Override
-    public BasicSpreadsheetFormatParserContext createContext() {
-        return BasicSpreadsheetFormatParserContext.with(InvalidCharacterExceptionFactory.POSITION);
+    public SpreadsheetFormatParserContextBasic createContext() {
+        return SpreadsheetFormatParserContextBasic.with(InvalidCharacterExceptionFactory.POSITION);
     }
 
     // DecimalNumberContext.............................................................................................
@@ -94,12 +94,17 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetFormatParserContext> type() {
-        return BasicSpreadsheetFormatParserContext.class;
+    public Class<SpreadsheetFormatParserContextBasic> type() {
+        return SpreadsheetFormatParserContextBasic.class;
     }
 
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -35,16 +35,16 @@ import java.util.function.BiFunction;
 /**
  * A {@link SpreadsheetFormatParserContext} without any functionality.
  */
-final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatParserContext,
+final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatParserContext,
     DecimalNumberContextDelegator {
 
-    static BasicSpreadsheetFormatParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
-        return new BasicSpreadsheetFormatParserContext(
+    static SpreadsheetFormatParserContextBasic with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
+        return new SpreadsheetFormatParserContextBasic(
             Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory")
         );
     }
 
-    private BasicSpreadsheetFormatParserContext(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
+    private SpreadsheetFormatParserContextBasic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
         super();
         this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
         this.context = DecimalNumberContexts.american(MathContext.UNLIMITED);

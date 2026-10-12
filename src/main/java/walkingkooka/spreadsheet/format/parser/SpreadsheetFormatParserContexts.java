@@ -27,10 +27,10 @@ import java.util.function.BiFunction;
 public final class SpreadsheetFormatParserContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetFormatParserContext}
+     * {@see SpreadsheetFormatParserContextBasic}
      */
     public static SpreadsheetFormatParserContext basic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
-        return BasicSpreadsheetFormatParserContext.with(invalidCharacterExceptionFactory);
+        return SpreadsheetFormatParserContextBasic.with(invalidCharacterExceptionFactory);
     }
 
     /**
