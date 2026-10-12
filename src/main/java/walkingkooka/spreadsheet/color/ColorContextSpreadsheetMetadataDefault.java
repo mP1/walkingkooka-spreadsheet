@@ -207,7 +207,7 @@ final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
         return this.colorIndexOrNameTo.entrySet()
             .stream()
             .map(
-                (Entry<String, Object> e) -> fixColorName(e.getKey()) + ": " + e.getValue() + LineEnding.CRNL
+                (Entry<String, Object> e) -> fixColorName(e.getKey()) + ": " + e.getValue() + LineEnding.NL
             ).collect(Collectors.joining());
     }
 
