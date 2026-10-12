@@ -119,15 +119,9 @@ final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
 
     @Override
     public IndexedColor indexedColor(final int index) {
-        indexedColorCheck(index);
+        SpreadsheetColors.checkColorIndex(index);
 
         return Color.indexed(index);
-    }
-
-    private static void indexedColorCheck(final int index) {
-        if (index < SpreadsheetColors.MIN || index > SpreadsheetColors.MAX) {
-            throw new IllegalArgumentException("Invalid index " + index + " < " + SpreadsheetColors.MIN + " or > " + SpreadsheetColors.MAX);
-        }
     }
 
     @Override
@@ -162,7 +156,7 @@ final class ColorContextSpreadsheetMetadataDefault implements ColorContext,
     }
 
     private Color lookupIndexedColor(final int index) {
-        indexedColorCheck(index);
+        SpreadsheetColors.checkColorIndex(index);
 
         return (Color) this.colorIndexOrNameTo.get(
             String.valueOf(index)
