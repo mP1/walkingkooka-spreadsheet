@@ -192,7 +192,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.formatPatternFormatAndCheck(
             formatPattern,
             value,
-            SpreadsheetText.with(formattedText)
+            SpreadsheetText.EMPTY.setText(formattedText)
         );
     }
 
@@ -618,7 +618,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.formatPatternFormatAndCheck(
             SpreadsheetPattern.parseDateFormatPattern("[RED]dd/mm/yyyy"),
             LocalDate.of(1999, 12, 31),
-            SpreadsheetText.with("31/12/1999")
+            SpreadsheetText.EMPTY.setText("31/12/1999")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -832,7 +832,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.formatPatternFormatAndCheck(
             SpreadsheetPattern.parseDateTimeFormatPattern("[RED]dd/mm/yyyy hh/mm/ss \"Hello\""),
             LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-            SpreadsheetText.with("31/12/1999 12/58/59 Hello")
+            SpreadsheetText.EMPTY.setText("31/12/1999 12/58/59 Hello")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -1134,7 +1134,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     return '0';
                 }
             },
-            SpreadsheetText.with("1.5 Hello")
+            SpreadsheetText.EMPTY.setText("1.5 Hello")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -1244,7 +1244,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     return '0';
                 }
             },
-            SpreadsheetText.with("1.5")
+            SpreadsheetText.EMPTY.setText("1.5")
                 .setColor(OPTIONAL_COLOR_RED)
         );
     }
@@ -1309,7 +1309,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     return '0';
                 }
             },
-            SpreadsheetText.with("1.5")
+            SpreadsheetText.EMPTY.setText("1.5")
                 .setColor(OPTIONAL_COLOR_44)
         );
     }
@@ -1913,7 +1913,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     return OPTIONAL_COLOR_NAME_RED;
                 }
             },
-            SpreadsheetText.with("BananaBanana Hello")
+            SpreadsheetText.EMPTY.setText("BananaBanana Hello")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -2014,7 +2014,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.formatPatternFormatAndCheck(
             SpreadsheetPattern.parseTimeFormatPattern("[RED]hh/mm/ss"),
             LocalTime.of(12, 58, 59),
-            SpreadsheetText.with("12/58/59")
+            SpreadsheetText.EMPTY.setText("12/58/59")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }

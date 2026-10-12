@@ -87,7 +87,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final String text) {
         this.formatAndCheck(
             value,
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 
@@ -157,7 +157,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         this.formatAndCheck(
             formatter,
             value,
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 

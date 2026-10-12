@@ -86,7 +86,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
 
         return Optional.ofNullable(
             null != bigDecimal ?
-                SpreadsheetText.with(
+                SpreadsheetText.EMPTY.setText(
                     this.formatSpreadsheetTextBigDecimal(
                         bigDecimal,
                         context

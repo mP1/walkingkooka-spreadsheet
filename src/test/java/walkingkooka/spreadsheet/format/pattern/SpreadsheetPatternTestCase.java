@@ -437,7 +437,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         this.formatAndCheck2(
             pattern,
             value,
-            SpreadsheetText.with(expected)
+            SpreadsheetText.EMPTY.setText(expected)
         );
     }
 

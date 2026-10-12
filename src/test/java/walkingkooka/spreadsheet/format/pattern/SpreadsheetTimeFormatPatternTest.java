@@ -411,7 +411,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
             "[red]hhmmss",
             LocalTime.of(12, 58, 59),
-            SpreadsheetText.with("125859")
+            SpreadsheetText.EMPTY.setText("125859")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -421,7 +421,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
             "[color44]hhmmss",
             LocalTime.of(12, 58, 59),
-            SpreadsheetText.with("125859")
+            SpreadsheetText.EMPTY.setText("125859")
                 .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
@@ -432,7 +432,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             "[color44]hhmmss.000",
             LocalTime.of(12, 58, 59, 123456789),
             ARABIC_ZERO_DIGIT,
-            SpreadsheetText.with(
+            SpreadsheetText.EMPTY.setText(
                     arabicDigit(1) +
                         arabicDigit(2) +
                         arabicDigit(5) +

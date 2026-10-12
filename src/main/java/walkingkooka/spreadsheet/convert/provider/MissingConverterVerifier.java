@@ -388,7 +388,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         )
     ).padding(BoxEdge.ALL);
 
-    private final static  SpreadsheetText SPREADSHEET_TEXT = SpreadsheetText.with("Text123");
+    private final static  SpreadsheetText SPREADSHEET_TEXT = SpreadsheetText.EMPTY.setText("Text123");
 
     private final static Hyperlink HYPERLINK = Hyperlink.hyperlink(ABSOLUTE_URL);
     private final static Image IMAGE = Image.image(ABSOLUTE_URL);

@@ -4696,7 +4696,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testTextNodeConvertStringToSpreadsheetText() {
         this.textNodeConvertAndCheck(
             TEXT,
-            SpreadsheetText.with(TEXT)
+            SpreadsheetText.EMPTY.setText(TEXT)
         );
     }
 

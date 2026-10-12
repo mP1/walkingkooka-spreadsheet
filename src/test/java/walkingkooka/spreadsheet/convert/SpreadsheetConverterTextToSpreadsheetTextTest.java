@@ -27,7 +27,7 @@ public final class SpreadsheetConverterTextToSpreadsheetTextTest extends Spreads
 
     @Test
     public void testConvertStringToSpreadsheetText() {
-        final SpreadsheetText text = SpreadsheetText.with("Hello");
+        final SpreadsheetText text = SpreadsheetText.EMPTY.setText("Hello");
 
         this.convertAndCheck(
             text.text(),
@@ -37,7 +37,7 @@ public final class SpreadsheetConverterTextToSpreadsheetTextTest extends Spreads
 
     @Test
     public void testConvertCharSequenceToSpreadsheetText() {
-        final SpreadsheetText text = SpreadsheetText.with("Hello2");
+        final SpreadsheetText text = SpreadsheetText.EMPTY.setText("Hello2");
 
         this.convertAndCheck(
             new StringBuilder(text.text()),

@@ -590,7 +590,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         this.parseFormatAndCheck(
             pattern,
             value,
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 

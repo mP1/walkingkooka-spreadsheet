@@ -1272,7 +1272,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 )
             ).setFormattedValue(
                 Optional.of(
-                    SpreadsheetText.with("Formatted-value-text")
+                    SpreadsheetText.EMPTY.setText("Formatted-value-text")
                         .setColor(
                             Optional.of(
                                 Color.parse("#123456")
@@ -1304,7 +1304,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     Optional.of(ValidatorSelector.parse("hello-validator"))
                 ).setFormattedValue(
                     Optional.of(
-                        SpreadsheetText.with("Formatted-value-text")
+                        SpreadsheetText.EMPTY.setText("Formatted-value-text")
                             .setColor(
                                 Optional.of(
                                     Color.parse("#123456")
@@ -1400,7 +1400,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
                 .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS).setFormattedValue(
                     Optional.of(
-                        SpreadsheetText.with("Formatted-value-text")
+                        SpreadsheetText.EMPTY.setText("Formatted-value-text")
                             .setColor(
                                 Optional.of(
                                     Color.parse("#123456")

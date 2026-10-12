@@ -146,7 +146,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                     return color;
                 }
             },
-            SpreadsheetText.with(text + text)
+            SpreadsheetText.EMPTY.setText(text + text)
                 .setColor(color)
         );
     }
@@ -170,7 +170,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                     return color;
                 }
             },
-            SpreadsheetText.with(text + text)
+            SpreadsheetText.EMPTY.setText(text + text)
                 .setColor(color)
         );
     }
@@ -194,7 +194,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                     return color;
                 }
             },
-            SpreadsheetText.with(text + text)
+            SpreadsheetText.EMPTY.setText(text + text)
                 .setColor(color)
         );
     }
@@ -232,7 +232,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                     return color;
                 }
             },
-            SpreadsheetText.with(text + text)
+            SpreadsheetText.EMPTY.setText(text + text)
                 .setColor(color)
         );
     }
@@ -256,7 +256,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                     return color;
                 }
             },
-            SpreadsheetText.with(text + text)
+            SpreadsheetText.EMPTY.setText(text + text)
                 .setColor(color)
         );
     }

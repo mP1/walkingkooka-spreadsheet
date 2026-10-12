@@ -88,7 +88,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             return Optional.of(
-                SpreadsheetText.with(
+                SpreadsheetText.EMPTY.setText(
                     new DecimalFormat("000.000")
                         .format(
                             value.orElse(null)
@@ -439,7 +439,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     public void testFormatValue() {
         this.formatValueAndCheck(
             BigDecimal.valueOf(12.5),
-            SpreadsheetText.with("012.500")
+            SpreadsheetText.EMPTY.setText("012.500")
         );
     }
 

@@ -345,7 +345,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
             "[red]@@",
             "Hello",
-            SpreadsheetText.with("HelloHello")
+            SpreadsheetText.EMPTY.setText("HelloHello")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -355,7 +355,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
             "[color44]@@",
             "Hello",
-            SpreadsheetText.with("HelloHello")
+            SpreadsheetText.EMPTY.setText("HelloHello")
                 .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }

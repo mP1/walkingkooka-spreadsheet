@@ -2327,7 +2327,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         this.parseFormatNumberAndCheck(
             "[RED]#",
             "3",
-            SpreadsheetText.with("3")
+            SpreadsheetText.EMPTY.setText("3")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -2337,7 +2337,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         this.parseFormatNumberAndCheck(
             "[color44]#",
             "4",
-            SpreadsheetText.with("4")
+            SpreadsheetText.EMPTY.setText("4")
                 .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
@@ -2371,7 +2371,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             pattern,
             value,
             this.createContext(roundingMode),
-            SpreadsheetText.with(text)
+            SpreadsheetText.EMPTY.setText(text)
         );
     }
 

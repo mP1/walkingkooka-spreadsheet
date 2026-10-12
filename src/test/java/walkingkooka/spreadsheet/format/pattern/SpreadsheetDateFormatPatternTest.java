@@ -395,7 +395,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
             "[red]yyyymmdd",
             LocalDate.of(2000, 12, 31),
-            SpreadsheetText.with("20001231")
+            SpreadsheetText.EMPTY.setText("20001231")
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }
@@ -405,7 +405,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
             "[color44]yyyymmdd",
             LocalDate.of(2000, 12, 31),
-            SpreadsheetText.with("20001231")
+            SpreadsheetText.EMPTY.setText("20001231")
                 .setColor(OPTIONAL_COLOR_INDEX_44)
         );
     }
@@ -416,7 +416,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             "[color44]yyyymmdd",
             LocalDate.of(2000, 12, 31),
             ARABIC_ZERO_DIGIT,
-            SpreadsheetText.with(
+            SpreadsheetText.EMPTY.setText(
                 arabicDigit(2) +
                     arabicDigit(0) +
                     arabicDigit(0) +

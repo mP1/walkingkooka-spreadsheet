@@ -43,7 +43,7 @@ public final class SpreadsheetFormatterSharedHyperlinkingTest extends Spreadshee
 
         this.formatAndCheck(
             text,
-            SpreadsheetText.with(text + text)
+            SpreadsheetText.EMPTY.setText(text + text)
                 .setColor(OPTIONAL_COLOR_NAME_RED)
         );
     }

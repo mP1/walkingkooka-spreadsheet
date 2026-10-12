@@ -62,7 +62,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
             millisecondDecimals);
         visitor.accept(token);
 
-        return SpreadsheetText.with(
+        return SpreadsheetText.EMPTY.setText(
             visitor.text.toString()
         ).setColor(visitor.color);
     }
