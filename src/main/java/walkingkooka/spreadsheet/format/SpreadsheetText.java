@@ -64,19 +64,11 @@ public final class SpreadsheetText implements HasText,
      * Creates a {@link SpreadsheetText}
      */
     public static SpreadsheetText with(final String text) {
-        checkText(text);
+        Objects.requireNonNull(text, "text");
 
         return text.isEmpty() ?
             EMPTY :
             new SpreadsheetText(WITHOUT_COLOR, text);
-    }
-
-    private static void checkColor(final Optional<Color> color) {
-        Objects.requireNonNull(color, "color");
-    }
-
-    private static void checkText(final String text) {
-        Objects.requireNonNull(text, "text");
     }
 
     /**
@@ -92,11 +84,9 @@ public final class SpreadsheetText implements HasText,
     }
 
     public SpreadsheetText setColor(final Optional<Color> color) {
-        checkColor(color);
+        Objects.requireNonNull(color, "color");
 
-        return this.color.equals(color) ?
-            this :
-            this.replace(color, this.text);
+        return this.color.equals(color) ? this : new SpreadsheetText(color, this.text);
     }
 
     private final Optional<Color> color;
@@ -107,18 +97,12 @@ public final class SpreadsheetText implements HasText,
     }
 
     public SpreadsheetText setText(final String text) {
-        checkText(text);
+        Objects.requireNonNull(text, "text");
 
-        return this.text.equals(text) ?
-            this :
-            this.replace(this.color, text);
+        return this.text.equals(text) ? this : new SpreadsheetText(this.color, text);
     }
 
     private final String text;
-
-    private SpreadsheetText replace(final Optional<Color> color, final String text) {
-        return new SpreadsheetText(color, text);
-    }
 
     // HasTextNode......................................................................................................
 
