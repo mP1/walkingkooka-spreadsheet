@@ -537,9 +537,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     @Override
     public final IndexedColor indexedColor(final int index) {
-        if(index < SpreadsheetColors.MIN || index > SpreadsheetColors.MAX) {
-            throw new IllegalArgumentException("Invalid color number " + index + " < " + SpreadsheetColors.MIN + " > " + SpreadsheetColors.MAX);
-        }
+        SpreadsheetColors.checkColorIndex(index);
         return Color.indexed(index);
     }
 
