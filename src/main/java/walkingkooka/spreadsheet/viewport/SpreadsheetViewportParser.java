@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
@@ -279,6 +280,7 @@ final class SpreadsheetViewportParser {
     }
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+        ColorContexts.fake(), // CanIndexedNamedColor
         InvalidCharacterExceptionFactory.POSITION_EXPECTED,
         DateTimeContexts.fake(),
         ExpressionNumberContexts.basic(

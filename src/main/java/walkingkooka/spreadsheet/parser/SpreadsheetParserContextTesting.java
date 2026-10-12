@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.datetime.DateTimeContextTesting;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserContextTesting;
@@ -34,6 +35,7 @@ public interface SpreadsheetParserContextTesting extends ParserContextTesting,
     char VALUE_SEPARATOR = ',';
 
     SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+        SpreadsheetColorContexts.spreadsheetMetadataDefaults(),
         InvalidCharacterExceptionFactory.POSITION_EXPECTED,
         DATE_TIME_CONTEXT,
         EXPRESSION_NUMBER_CONTEXT,

@@ -27,6 +27,7 @@ import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -619,6 +620,7 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+        ColorContexts.fake(), // CanIndexedNamedColor
         InvalidCharacterExceptionFactory.POSITION,
         DateTimeContexts.fake(),
         ExpressionNumberContexts.fake(),

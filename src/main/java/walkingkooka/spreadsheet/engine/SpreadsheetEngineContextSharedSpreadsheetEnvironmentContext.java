@@ -37,6 +37,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
@@ -104,6 +105,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             spreadsheetContextSupplier,
             currencyLocaleContext, // CurrencyContext
             SpreadsheetEnvironmentContextFactory.with(
+                SpreadsheetColorContexts.environmentContext(spreadsheetEnvironmentContext), // CanIndexedNamedColor
                 mediaTypeDetector,
                 multiplier,
                 spreadsheetMetadataContext, // SpreadsheetMetadataLoader

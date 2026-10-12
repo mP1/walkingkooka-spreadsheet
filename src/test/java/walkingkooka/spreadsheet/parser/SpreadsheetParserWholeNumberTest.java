@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.CanIndexedNamedColorDelegator;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.DateTimeContexts;
@@ -160,12 +163,18 @@ public final class SpreadsheetParserWholeNumberTest implements SpreadsheetParser
     }
 
     static final class TestSpreadsheetParserContext implements SpreadsheetParserContext,
+        CanIndexedNamedColorDelegator,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator {
 
         @Override
         public boolean canNumbersHaveGroupSeparator() {
             return false;
+        }
+
+        @Override
+        public CanIndexedNamedColor canIndexedNamedColor() {
+            return ColorContexts.basic();
         }
 
         @Override

@@ -17,11 +17,14 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 
 /**
  * A {@link ParserContext} for all spreadsheet parsers.
  */
-public interface SpreadsheetParserContext extends ParserContext, ExpressionNumberContext {
+public interface SpreadsheetParserContext extends ParserContext,
+    ExpressionNumberContext,
+    CanIndexedNamedColor {
 }

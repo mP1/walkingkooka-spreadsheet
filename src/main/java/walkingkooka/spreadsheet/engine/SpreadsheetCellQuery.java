@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.color.ColorContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.HasUrlFragment;
@@ -85,6 +86,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+        ColorContexts.fake(), // CanIndexedNamedColor
         InvalidCharacterExceptionFactory.POSITION_EXPECTED,
         DateTimeContexts.fake(),
         ExpressionNumberContexts.basic(

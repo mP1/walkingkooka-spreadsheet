@@ -24,6 +24,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.formula.parser.CurrencySymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DecimalSeparatorSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DigitsSpreadsheetFormulaParserToken;
@@ -684,6 +685,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
 
     SpreadsheetParserContext createContext(final DecimalNumberContext decimalNumberContext) {
         return SpreadsheetParserContexts.basic(
+            SpreadsheetColorContexts.spreadsheetMetadataDefaults(), // CanIndexedNamedColor
             InvalidCharacterExceptionFactory.POSITION,
             DateTimeContexts.fake(),
             ExpressionNumberContexts.basic(

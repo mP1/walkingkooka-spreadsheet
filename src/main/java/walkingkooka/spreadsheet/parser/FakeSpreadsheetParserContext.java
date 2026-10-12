@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursor;
@@ -127,6 +129,18 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
 
     @Override
     public char valueSeparator() {
+        throw new UnsupportedOperationException();
+    }
+
+    // CanIndexedNamedColor.............................................................................................
+
+    @Override
+    public IndexedColor indexedColor(final int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public NamedColor namedColor(final String name) {
         throw new UnsupportedOperationException();
     }
 }

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.cursor.TextCursor;
@@ -31,11 +32,13 @@ public final class SpreadsheetParserContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetParserContextBasic}
      */
-    public static SpreadsheetParserContext basic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    public static SpreadsheetParserContext basic(final CanIndexedNamedColor canIndexedNamedColor,
+                                                 final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                                  final DateTimeContext dateTimeContext,
                                                  final ExpressionNumberContext expressionNumberContext,
                                                  final char valueSeparator) {
         return SpreadsheetParserContextBasic.with(
+            canIndexedNamedColor,
             invalidCharacterExceptionFactory,
             dateTimeContext,
             expressionNumberContext,

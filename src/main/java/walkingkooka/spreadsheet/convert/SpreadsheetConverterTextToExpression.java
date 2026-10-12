@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.color.ColorContexts;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -55,6 +56,7 @@ final class SpreadsheetConverterTextToExpression extends SpreadsheetConverterTex
             .parseText(
                 value,
                 SpreadsheetParserContexts.basic(
+                    ColorContexts.fake(), // CanIndexedNamedColor
                     InvalidCharacterExceptionFactory.POSITION,
                     context, // DateTimeContext
                     context, // DecimalNumberContext
