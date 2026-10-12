@@ -25,9 +25,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.color.Color;
-import walkingkooka.color.ColorContext;
-import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
@@ -70,7 +67,7 @@ import walkingkooka.props.HasProperties;
 import walkingkooka.props.Properties;
 import walkingkooka.props.PropertiesPath;
 import walkingkooka.spreadsheet.SpreadsheetStartup;
-import walkingkooka.spreadsheet.color.SpreadsheetColors;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
@@ -84,7 +81,6 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -117,7 +113,6 @@ import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -182,7 +177,6 @@ import java.util.function.Function;
  * Cell specific data such as individual format patterns are not stored here but on the {@link SpreadsheetCell}.
  */
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
-    ColorContext,
     HasContentType,
     HasExpressionNumberKind,
     HasOptionalLastModified,
@@ -194,6 +188,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     HasSpreadsheetMetadata,
     HateosResource<SpreadsheetId>,
     Patchable<SpreadsheetMetadata>,
+    SpreadsheetColorContext,
     TreePrintable,
     HasValue<Map<SpreadsheetMetadataPropertyName<?>, Object>>,
     HasMissingCellNumberValue {
@@ -533,13 +528,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return result;
     }
 
-    // ColorContext.....................................................................................................
-
-    @Override
-    public final IndexedColor indexedColor(final int index) {
-        SpreadsheetColors.checkColorIndex(index);
-        return Color.indexed(index);
-    }
+    // SpreadsheetColorContext..........................................................................................
 
     /**
      * Creates a {@link NamedColor} after validating it is a valid spreadsheet color name. This will not create
@@ -548,9 +537,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     @Override
     public final NamedColor namedColor(final String name) {
         try {
-            SpreadsheetColors.checkNamedColor(name);
-
-            return Color.named(name);
+            return SpreadsheetColorContext.super.namedColor(name);
         } catch (final InvalidCharacterException cause) {
             cause.setLabel(
                 Optional.of("NamedColor")
@@ -558,41 +545,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             throw cause;
         }
     }
-
-    /**
-     * Parses the well known excel colors. Note this does not handle other color text forms such as #123 or RGB etc.
-     * <pre>
-     * Red
-     * Color1
-     * </pre>
-     */
-    @Override
-    public Color parseColor(final String color) {
-        CharSequences.failIfNullOrEmpty(color, "color");
-
-        final Color indexedOrNamedColor;
-
-        // IndexedColor
-        if (SpreadsheetColorName.CASE_SENSITIVITY.startsWith(COLOR_INDEX_PREFIX, color)) {
-            final int index;
-            try {
-                index = Integer.parseInt(
-                    color.substring(COLOR_INDEX_PREFIX.length())
-                );
-            } catch (final NumberFormatException cause) {
-                throw new IllegalArgumentException("Invalid colorIndex \"" + color + "\"");
-            }
-            indexedOrNamedColor = this.indexedColor(index);
-
-        } else {
-            // NamedColor
-            indexedOrNamedColor = this.namedColor(color);
-        }
-
-        return indexedOrNamedColor;
-    }
-
-    private final static String COLOR_INDEX_PREFIX = "Color";
 
     // setDefaults......................................................................................................
 
