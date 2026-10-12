@@ -23,7 +23,6 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.ColorContextTesting2;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
@@ -43,6 +42,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContextTesting2;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
@@ -77,7 +77,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
     ClassTesting2<SpreadsheetMetadata>,
-    ColorContextTesting2<SpreadsheetMetadata>,
     ConverterTesting,
     CurrencyLocaleContextTesting,
     HasContentTypeTesting,
@@ -87,6 +86,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     LocaleContextTesting,
     MediaTypeDetectorTesting,
     HateosResourceTesting2<SpreadsheetMetadata, SpreadsheetId>,
+    SpreadsheetColorContextTesting2<SpreadsheetMetadata>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetMetadata>,
     TreePrintableTesting,
