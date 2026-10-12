@@ -449,6 +449,20 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
+    // namedColor.......................................................................................................
+
+    @Test
+    public final void testNamedColorWithInvalidCharactersFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                    .namedColor("Hello!World")
+            ),
+            "Invalid \"NamedColor\" character '!' at 5"
+        );
+    }
+
     // colorNumberReverseLookup.........................................................................................
 
     @Test
