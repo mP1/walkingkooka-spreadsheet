@@ -24,6 +24,8 @@ import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +34,8 @@ import java.util.Set;
 /**
  * A {@link SpreadsheetColorContext} that sources {@link IndexedColor} and {@link NamedColor} from the given {@link EnvironmentContext}.
  */
-final class SpreadsheetColorContextEnvironmentContext implements SpreadsheetColorContext {
+final class SpreadsheetColorContextEnvironmentContext implements SpreadsheetColorContext,
+    TreePrintable {
 
     static SpreadsheetColorContextEnvironmentContext with(final EnvironmentContext environmentContext) {
         return new SpreadsheetColorContextEnvironmentContext(
@@ -111,5 +114,21 @@ final class SpreadsheetColorContextEnvironmentContext implements SpreadsheetColo
     @Override
     public String toString() {
         return this.environmentContext.toString();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.environmentContext,
+                printer
+            );
+        }
+        printer.outdent();
     }
 }

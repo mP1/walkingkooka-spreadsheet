@@ -144,6 +144,43 @@ public final class SpreadsheetColorContextEnvironmentContextTest implements Spre
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createContext(),
+            "SpreadsheetColorContextEnvironmentContext\n" +
+                "  EnvironmentContextSharedMap\n" +
+                "    charset\n" +
+                "      UTF-8 (sun.nio.cs.UTF_8)\n" +
+                "    color12\n" +
+                "      beige\n" +
+                "    color13\n" +
+                "      14\n" +
+                "    color14\n" +
+                "      13\n" +
+                "    colordarkBlue\n" +
+                "      darkblue\n" +
+                "    currency\n" +
+                "      AUD (java.util.Currency)\n" +
+                "    indentation\n" +
+                "      \"  \" (walkingkooka.text.Indentation)\n" +
+                "    lineEnding\n" +
+                "      \"\\n\"\n" +
+                "    locale\n" +
+                "      en_AU (java.util.Locale)\n" +
+                "    loggingLevel\n" +
+                "      NONE\n" +
+                "    now\n" +
+                "      1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
+                "    timeOffset\n" +
+                "      Z (java.time.ZoneOffset)\n" +
+                "    user\n" +
+                "      user123@example.com (walkingkooka.net.email.EmailAddress)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
