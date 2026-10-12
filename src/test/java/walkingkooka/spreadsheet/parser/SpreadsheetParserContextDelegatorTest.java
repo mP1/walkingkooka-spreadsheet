@@ -21,7 +21,6 @@ import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
 import java.math.MathContext;
@@ -57,12 +56,7 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
 
         @Override
         public SpreadsheetParserContext spreadsheetParserContext() {
-            return SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-                DATE_TIME_CONTEXT,
-                EXPRESSION_NUMBER_CONTEXT,
-                ',' // valueSeparator
-            );
+            return SPREADSHEET_PARSER_CONTEXT;
         }
 
         @Override

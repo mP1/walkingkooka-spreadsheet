@@ -19,11 +19,9 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
@@ -33,7 +31,8 @@ import java.util.List;
 public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
     SpreadsheetParserTesting,
     DecimalNumberContextTesting,
-    ExpressionNumberContextTesting {
+    ExpressionNumberContextTesting,
+    SpreadsheetParserContextTesting {
 
     // general..........................................................................................................
 
@@ -41,7 +40,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testGeneralParseInvalidFails() {
         this.parseFailAndCheck(
             SpreadsheetParsers.general(),
-            this.generalParserContext(),
+            SPREADSHEET_PARSER_CONTEXT,
             "!"
         );
     }
@@ -275,22 +274,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                       final ParserToken token) {
         this.parseAndCheck(
             SpreadsheetParsers.general(),
-            this.generalParserContext(),
+            SPREADSHEET_PARSER_CONTEXT,
             text,
             token,
             text
         );
     }
-
-    private SpreadsheetParserContext generalParserContext() {
-        return SpreadsheetParserContexts.basic(
-            InvalidCharacterExceptionFactory.POSITION_EXPECTED,
-            DateTimeContexts.fake(), // DateTimeContext unnecessary
-            EXPRESSION_NUMBER_CONTEXT,
-            ',' // valueSeparator
-        );
-    }
-
 
     private SpreadsheetFormulaParserToken decimal() {
         return SpreadsheetFormulaParserToken.decimalSeparatorSymbol(

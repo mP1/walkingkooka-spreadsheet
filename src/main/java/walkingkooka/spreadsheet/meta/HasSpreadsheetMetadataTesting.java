@@ -73,7 +73,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -136,6 +136,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
     LocaleContextTesting,
     MediaTypeDetectorTesting,
     SpreadsheetEnvironmentContextTesting,
+    SpreadsheetParserContextTesting,
     TreePrintableTesting {
 
     SpreadsheetName SPREADSHEET_NAME = SpreadsheetName.with("SpreadsheetName456");
@@ -602,12 +603,6 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SPREADSHEET_ENVIRONMENT_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
-    );
-
-    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = SPREADSHEET_METADATA.spreadsheetParserContext(
-        SpreadsheetMetadata.NO_CELL,
-        LOCALE_CONTEXT,
-        HAS_NOW
     );
 
     static SpreadsheetFormula parseFormula(final String text) {

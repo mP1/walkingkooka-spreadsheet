@@ -21,15 +21,15 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
 public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase<P extends SpreadsheetFormulaParserSpreadsheetColumnOrRowReference>
     implements SpreadsheetParserTesting2<P>,
     ClassTesting2<P>,
-    ExpressionNumberContextTesting {
+    ExpressionNumberContextTesting,
+    SpreadsheetParserContextTesting {
 
     SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase() {
         super();
@@ -53,12 +53,7 @@ public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTes
 
     @Override
     public final SpreadsheetParserContext createContext() {
-        return SpreadsheetParserContexts.basic(
-            InvalidCharacterExceptionFactory.POSITION,
-            this.dateTimeContext(),
-            EXPRESSION_NUMBER_CONTEXT,
-            VALUE_SEPARATOR
-        );
+        return SPREADSHEET_PARSER_CONTEXT;
     }
 
     // tokens...........................................................................................................
