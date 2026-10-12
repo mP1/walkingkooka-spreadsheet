@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.HasValue;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -548,9 +549,16 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     @Override
     public final NamedColor namedColor(final String name) {
-        CharSequences.failIfNullOrEmpty(name, "name");
+        try {
+            SpreadsheetColors.checkNamedColor(name);
 
-        return Color.named(name);
+            return Color.named(name);
+        } catch (final InvalidCharacterException cause) {
+            cause.setLabel(
+                Optional.of("NamedColor")
+            );
+            throw cause;
+        }
     }
 
     /**
