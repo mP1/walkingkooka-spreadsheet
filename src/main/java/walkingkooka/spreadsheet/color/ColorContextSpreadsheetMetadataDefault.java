@@ -39,14 +39,14 @@ import java.util.stream.Collectors;
 /**
  * A {@link ColorContext} that validates {@link IndexedColor} and only contains the default {@link SpreadsheetColors}.
  */
-final class ColorContextSpreadsheet implements ColorContext {
+final class ColorContextSpreadsheetMetadataDefault implements ColorContext {
 
     /**
      * Singleton
      */
-    final static ColorContextSpreadsheet INSTANCE = new ColorContextSpreadsheet();
+    final static ColorContextSpreadsheetMetadataDefault INSTANCE = new ColorContextSpreadsheetMetadataDefault();
 
-    private ColorContextSpreadsheet() {
+    private ColorContextSpreadsheetMetadataDefault() {
         super();
 
         final JsonObject metadataDefaults = JsonNode.parse(
