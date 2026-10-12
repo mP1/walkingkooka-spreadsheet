@@ -18,9 +18,17 @@
 package walkingkooka.spreadsheet.color;
 
 import walkingkooka.color.ColorContext;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.reflect.PublicStaticHelper;
 
 public final class SpreadsheetColorContexts implements PublicStaticHelper {
+
+    /**
+     * {@link SpreadsheetColorContextEnvironmentContext}
+     */
+    public static ColorContext environmentContext(final EnvironmentContext environmentContext) {
+        return SpreadsheetColorContextEnvironmentContext.with(environmentContext);
+    }
 
     /**
      * {@link SpreadsheetColorContextSpreadsheetMetadataDefault}
