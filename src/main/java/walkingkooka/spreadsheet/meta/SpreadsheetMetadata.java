@@ -1155,6 +1155,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
+            this, // CanIndexedNamedColor
             spreadsheetEnvironmentContext, // HasUserDirectories,
             Optional.of(this),
             validationReference,

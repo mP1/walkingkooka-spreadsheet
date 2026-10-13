@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.CanIndexedNamedColorDelegator;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
@@ -105,6 +107,7 @@ import java.util.Set;
  * <br>
  */
 final class SpreadsheetExpressionEvaluationContextConverter implements SpreadsheetExpressionEvaluationContext,
+    CanIndexedNamedColorDelegator,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -141,6 +144,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
                                                             final SpreadsheetExpressionEvaluationContext context) {
         this.converter = converter;
         this.context = context;
+    }
+
+    // CanIndexedNamedColorDelegator....................................................................................
+
+    @Override
+    public CanIndexedNamedColor canIndexedNamedColor() {
+        return this.context;
     }
 
     // MediaTypeDetector................................................................................................

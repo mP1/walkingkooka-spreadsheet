@@ -35,6 +35,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -217,6 +218,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
+            SpreadsheetColorContexts.empty(),
             HasUserDirectorieses.empty(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

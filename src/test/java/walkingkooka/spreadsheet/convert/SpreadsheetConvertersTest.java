@@ -33,6 +33,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorProperties;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
@@ -4421,6 +4422,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext textToDateOrDateTimeOrTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
+            new FakeCanIndexedNameColor(),
             HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -5036,6 +5038,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
+            new FakeCanIndexedNameColor(),
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

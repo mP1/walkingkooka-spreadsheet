@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
@@ -1368,6 +1369,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             expected,
             converter,
             SpreadsheetConverterContexts.basic(
+                new FakeCanIndexedNameColor(),
                 HasUserDirectorieses.fake(),
                 Optional.of(metadata),
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,

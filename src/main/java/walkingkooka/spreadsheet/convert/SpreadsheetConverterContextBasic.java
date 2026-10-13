@@ -21,6 +21,8 @@ import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.CanIndexedNamedColorDelegator;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -48,12 +50,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 final class SpreadsheetConverterContextBasic implements SpreadsheetConverterContext,
+    CanIndexedNamedColorDelegator,
     CanParseEnvironmentValueNameDelegator,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
     UsesToStringBuilder {
 
-    static SpreadsheetConverterContextBasic with(final HasUserDirectories hasUserDirectories,
+    static SpreadsheetConverterContextBasic with(final CanIndexedNamedColor canIndexedNamedColor,
+                                                 final HasUserDirectories hasUserDirectories,
                                                  final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetValidationReference > validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
@@ -63,6 +67,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                                                  final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
                                                  final LocaleContext localeContext) {
+        Objects.requireNonNull(canIndexedNamedColor, "canIndexedNamedColor");
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
@@ -75,6 +80,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         Objects.requireNonNull(localeContext, "localeContext");
 
         return new SpreadsheetConverterContextBasic(
+            canIndexedNamedColor,
             hasUserDirectories,
             spreadsheetMetadata,
             validationReference,
@@ -88,7 +94,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         );
     }
 
-    private SpreadsheetConverterContextBasic(final HasUserDirectories hasUserDirectories,
+    private SpreadsheetConverterContextBasic(final CanIndexedNamedColor canIndexedNamedColor,
+                                             final HasUserDirectories hasUserDirectories,
                                              final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetValidationReference > validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
@@ -100,6 +107,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                                              final LocaleContext localeContext) {
         super();
 
+        this.canIndexedNamedColor = canIndexedNamedColor;
         this.hasUserDirectories = hasUserDirectories;
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
@@ -119,6 +127,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new SpreadsheetConverterContextBasic(
+                this.canIndexedNamedColor,
                 this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
@@ -139,6 +148,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new SpreadsheetConverterContextBasic(
+                this.canIndexedNamedColor,
                 this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
@@ -151,6 +161,15 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                 this.localeContext
             );
     }
+
+    // CanIndexedNamedColor.............................................................................................
+
+    @Override
+    public CanIndexedNamedColor canIndexedNamedColor() {
+        return this.canIndexedNamedColor;
+    }
+
+    private final CanIndexedNamedColor canIndexedNamedColor;
 
     // HasSpreadsheetName...............................................................................................
 

@@ -41,6 +41,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -336,6 +337,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
+                SpreadsheetColorContexts.environmentContext(spreadsheetEnvironmentContext), // CanIndexedNamedColor
                 spreadsheetEnvironmentContext, // HasUserDirectories
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

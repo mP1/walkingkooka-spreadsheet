@@ -197,6 +197,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     );
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+        CAN_INDEXED_NAMED_COLOR,
         HasUserDirectorieses.fake(),
         Optional.of(SPREADSHEET_METADATA),
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -92,6 +93,11 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     SpreadsheetFormatterContext spreadsheetFormatterContext();
 
     // ColorContextDelegator............................................................................................
+
+    @Override
+    default CanIndexedNamedColor canIndexedNamedColor() {
+        return this.colorContext();
+    }
 
     @Override
     default ColorContext colorContext() {

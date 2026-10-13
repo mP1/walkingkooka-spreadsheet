@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
@@ -139,6 +140,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     @Override
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
+            new FakeCanIndexedNameColor(),
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
