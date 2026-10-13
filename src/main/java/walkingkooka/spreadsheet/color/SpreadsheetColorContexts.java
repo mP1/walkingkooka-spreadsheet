@@ -24,6 +24,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetColorContexts implements PublicStaticHelper {
 
     /**
+     * {@link SpreadsheetColorContextEmpty}
+     */
+    public static ColorContext empty() {
+        return SpreadsheetColorContextEmpty.INSTANCE;
+    }
+
+    /**
      * {@link SpreadsheetColorContextEnvironmentContext}
      */
     public static ColorContext environmentContext(final EnvironmentContext environmentContext) {
