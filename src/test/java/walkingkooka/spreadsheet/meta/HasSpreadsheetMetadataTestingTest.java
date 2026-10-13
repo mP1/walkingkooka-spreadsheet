@@ -432,11 +432,11 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
-                "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
-                "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
-                "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
-                "            to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
+                "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
+                "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
+                "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
+                "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
+                "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
@@ -679,11 +679,11 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
-                "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
-                "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
-                "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
-                "            to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
+                "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
+                "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
+                "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
+                "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
+                "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
@@ -926,11 +926,11 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
-                "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
-                "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
-                "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
-                "            to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
+                "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
+                "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
+                "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
+                "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
+                "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
@@ -1109,11 +1109,11 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            to Color (walkingkooka.color.convert.ConverterToColor)\n" +
-                "            TEXT to Color (walkingkooka.color.convert.ConverterTextToColor)\n" +
-                "            Color to Number (walkingkooka.color.convert.ConverterColorToNumber)\n" +
-                "            Number to Color (walkingkooka.color.convert.ConverterNumberToColor)\n" +
-                "            to ColorProperties (walkingkooka.color.convert.ConverterToColorProperties)\n" +
+                "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
+                "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
+                "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
+                "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
+                "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
