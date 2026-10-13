@@ -17,7 +17,74 @@
 
 package walkingkooka.spreadsheet.color;
 
+import walkingkooka.color.Color;
 import walkingkooka.color.ColorContextTesting;
+import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
+
+import java.util.Optional;
 
 public interface SpreadsheetColorContextTesting extends ColorContextTesting {
+
+    // lookupIndexedColor...............................................................................................
+
+    default void lookupIndexedColorAndCheck(final SpreadsheetColorContext context,
+                                            final IndexedColor color) {
+        this.lookupIndexedColorAndCheck(
+            context,
+            color,
+            Optional.empty()
+        );
+    }
+
+    default void lookupIndexedColorAndCheck(final SpreadsheetColorContext context,
+                                            final IndexedColor color,
+                                            final Color expected) {
+        this.lookupIndexedColorAndCheck(
+            context,
+            color,
+            Optional.of(expected)
+        );
+    }
+
+    default void lookupIndexedColorAndCheck(final SpreadsheetColorContext context,
+                                            final IndexedColor color,
+                                            final Optional<Color> expected) {
+        this.checkEquals(
+            expected,
+            context.lookupIndexedColor(color),
+            color::toString
+        );
+    }
+
+    // lookupNamedColor...............................................................................................
+
+    default void lookupNamedColorAndCheck(final SpreadsheetColorContext context,
+                                          final NamedColor color) {
+        this.lookupNamedColorAndCheck(
+            context,
+            color,
+            Optional.empty()
+        );
+    }
+
+    default void lookupNamedColorAndCheck(final SpreadsheetColorContext context,
+                                          final NamedColor color,
+                                          final Color expected) {
+        this.lookupNamedColorAndCheck(
+            context,
+            color,
+            Optional.of(expected)
+        );
+    }
+
+    default void lookupNamedColorAndCheck(final SpreadsheetColorContext context,
+                                          final NamedColor color,
+                                          final Optional<Color> expected) {
+        this.checkEquals(
+            expected,
+            context.lookupNamedColor(color),
+            color::toString
+        );
+    }
 }

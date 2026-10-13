@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.color;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.color.ColorContextTesting2;
 import walkingkooka.reflect.ThrowableTesting;
 
@@ -48,6 +49,84 @@ public interface SpreadsheetColorContextTesting2<C extends SpreadsheetColorConte
                 .indexedColor(
                     SpreadsheetColors.MAX + 1
                 )
+        );
+    }
+
+    // lookupIndexedColor...............................................................................................
+
+    @Test
+    default void testLookupIndexedColorWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .lookupIndexedColor(null)
+        );
+    }
+
+    @Test
+    default void testLookupIndexedColorWithMinLessOneFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .lookupIndexedColor(
+                    Color.indexed(
+                        SpreadsheetColors.MIN - 1
+                    )
+                )
+        );
+    }
+
+    @Test
+    default void testLookupIndexedColorWithMaxPlus1Fails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .lookupIndexedColor(
+                    Color.indexed(
+                        SpreadsheetColors.MAX + 1
+                    )
+                )
+        );
+    }
+
+    @Test
+    default void testLookupIndexedColorWithMin() {
+        this.createContext()
+            .lookupIndexedColor(
+                Color.indexed(SpreadsheetColors.MIN)
+            );
+    }
+
+    @Test
+    default void testLookupIndexedColorWithMax() {
+        this.createContext()
+            .lookupIndexedColor(
+                Color.indexed(SpreadsheetColors.MAX)
+            );
+    }
+
+    // lookupNamedColor.................................................................................................
+
+    @Test
+    default void testLookupNamedColorWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .lookupNamedColor(null)
+        );
+    }
+
+    @Test
+    default void testLookupNamedColorWithInvalidCharactersFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                    .lookupNamedColor(
+                        Color.named("Hello!World")
+                    )
+            ),
+            "Invalid character '!' at 5"
         );
     }
 

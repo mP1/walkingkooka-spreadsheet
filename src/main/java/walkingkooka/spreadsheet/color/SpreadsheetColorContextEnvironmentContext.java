@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.color;
 
 import walkingkooka.Cast;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
@@ -29,7 +28,6 @@ import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A {@link SpreadsheetColorContext} that sources {@link IndexedColor} and {@link NamedColor} from the given {@link EnvironmentContext}.
@@ -50,45 +48,36 @@ final class SpreadsheetColorContextEnvironmentContext implements SpreadsheetColo
     }
 
     @Override
-    public Optional<Color> lookupColor(final Color color) {
+    public Optional<Color> lookupIndexedColor(final IndexedColor color) {
         Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkColorIndex(
+            color.index()
+        );
 
-        Color lookup = color;
-
-        final Set<Color> cycle = Sets.ordered();
-
-        while (null != lookup) {
-            if (false == cycle.add(lookup)) {
-                throw new IllegalStateException("Cycle detected looking up color " + color);
-            }
-
-            if (lookup.isIndexed()) {
-                lookup = this.environmentColorValue(
-                    "color" + ((IndexedColor) lookup)
-                        .index()
-                );
-                continue; // try again might be an indirect color
-            }
-            if (lookup.isNamed()) {
-                lookup = this.environmentColorValue(
-                    "color" + ((NamedColor) lookup)
-                        .value()
-                );
-                continue;
-            }
-            break;
-        }
-
-        return Optional.ofNullable(lookup);
+        return this.environmentColorValue(
+            "color" + color.index()
+        );
     }
 
-    private Color environmentColorValue(final String environmentValueName) {
+    @Override
+    public Optional<Color> lookupNamedColor(final NamedColor color) {
+        Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkNamedColor(
+            color.value()
+        );
+
+        return this.environmentColorValue(
+            "color" + color.value()
+        );
+    }
+
+    private Optional<Color> environmentColorValue(final String environmentValueName) {
         return this.environmentContext.environmentValue(
             EnvironmentValueName.with(
                 environmentValueName,
                 Color.class
             )
-        ).orElse(null);
+        );
     }
 
     private final EnvironmentContext environmentContext;

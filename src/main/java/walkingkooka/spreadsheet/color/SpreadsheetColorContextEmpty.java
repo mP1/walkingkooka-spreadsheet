@@ -44,26 +44,23 @@ final class SpreadsheetColorContextEmpty implements SpreadsheetColorContext,
     }
 
     @Override
-    public Optional<Color> lookupColor(final Color color) {
+    public Optional<Color> lookupIndexedColor(final IndexedColor color) {
         Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkColorIndex(
+            color.index()
+        );
 
-        Color lookup = color;
+        return NO_LOOKUP_COLOR;
+    }
 
-        if (color instanceof IndexedColor) {
-            SpreadsheetColors.checkColorIndex(
-                ((IndexedColor) color).index()
-            );
-            lookup = null;
-        } else {
-            if (color instanceof NamedColor) {
-                SpreadsheetColors.checkNamedColor(
-                    ((NamedColor) color).value()
-                );
-                lookup = null;
-            }
-        }
+    @Override
+    public Optional<Color> lookupNamedColor(final NamedColor color) {
+        Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkNamedColor(
+            color.value()
+        );
 
-        return Optional.ofNullable(lookup);
+        return NO_LOOKUP_COLOR;
     }
 
     // Object...........................................................................................................
