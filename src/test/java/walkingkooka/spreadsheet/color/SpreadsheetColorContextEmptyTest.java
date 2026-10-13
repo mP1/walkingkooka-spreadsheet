@@ -21,14 +21,13 @@ package walkingkooka.spreadsheet.color;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
-import walkingkooka.color.ColorContextTesting2;
 import walkingkooka.color.HslColor;
 import walkingkooka.color.HsvColor;
 import walkingkooka.reflect.ThrowableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetColorContextEmptyTest implements ColorContextTesting2<SpreadsheetColorContextEmpty>,
+public final class SpreadsheetColorContextEmptyTest implements SpreadsheetColorContextTesting2<SpreadsheetColorContextEmpty>,
     ThrowableTesting,
     ToStringTesting<SpreadsheetColorContextEmpty> {
 
