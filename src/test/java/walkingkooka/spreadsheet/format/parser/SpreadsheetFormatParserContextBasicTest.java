@@ -64,7 +64,7 @@ public final class SpreadsheetFormatParserContextBasicTest implements ClassTesti
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            InvalidCharacterExceptionFactory.POSITION + " " + DecimalNumberContexts.american(MathContext.UNLIMITED).toString()
+            "POSITION locale=en_US \"mathContext\" precision=0 roundingMode=HALF_UP \"decimalNumberSymbols\" negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"E\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'"
         );
     }
 

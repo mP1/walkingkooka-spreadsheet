@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -36,7 +38,8 @@ import java.util.function.BiFunction;
  * A {@link SpreadsheetFormatParserContext} without any functionality.
  */
 final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatParserContext,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    UsesToStringBuilder {
 
     static SpreadsheetFormatParserContextBasic with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
         return new SpreadsheetFormatParserContextBasic(
@@ -139,5 +142,15 @@ final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatPars
     @Override
     public String toString() {
         return this.invalidCharacterExceptionFactory + " " + DECIMAL_NUMBER_CONTEXT;
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder toStringBuilder) {
+        toStringBuilder.label("invalidCharacterExceptionFactory")
+            .value(this.invalidCharacterExceptionFactory)
+            .label("decimalNumberContext")
+            .value(DECIMAL_NUMBER_CONTEXT);
     }
 }
