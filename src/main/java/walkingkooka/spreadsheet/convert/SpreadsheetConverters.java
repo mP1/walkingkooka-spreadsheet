@@ -1470,6 +1470,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     }
 
     /**
+     * {@see ColorConverters#textToWebColorName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToWebColorName() {
+        return ColorConverters.textToWebColorName();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToZoneOffset}
      */
     public static Converter<SpreadsheetConverterContext> textToZoneOffset() {
