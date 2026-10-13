@@ -425,7 +425,6 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
     private final static int DEFAULT_YEAR = 1900;
     private final static int TWO_DIGIT_YEAR = 20;
-    private final static char VALUE_SEPARATOR = ',';
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.labelName("Label123");
     private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetSelection.parseCell("Z99");

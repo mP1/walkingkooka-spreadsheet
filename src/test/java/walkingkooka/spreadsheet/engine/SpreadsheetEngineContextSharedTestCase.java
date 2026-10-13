@@ -96,7 +96,6 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     final static char PLUS = '@';
     final static char ZERO_DIGIT = '0';
 
-    final static char VALUE_SEPARATOR = ',';
     final static int WIDTH = 1;
 
     final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";
