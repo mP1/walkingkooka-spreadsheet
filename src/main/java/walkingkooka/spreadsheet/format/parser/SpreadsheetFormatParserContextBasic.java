@@ -47,7 +47,6 @@ final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatPars
     private SpreadsheetFormatParserContextBasic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
         super();
         this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
-        this.context = DecimalNumberContexts.american(MathContext.UNLIMITED);
     }
 
     @Override
@@ -83,12 +82,12 @@ final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatPars
 
     @Override
     public Locale locale() {
-        return this.context.locale();
+        return DECIMAL_NUMBER_CONTEXT.locale();
     }
 
     @Override
     public MathContext mathContext() {
-        return this.context.mathContext();
+        return DECIMAL_NUMBER_CONTEXT.mathContext();
     }
 
     @Override
@@ -130,15 +129,15 @@ final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatPars
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
-        return this.context;
+        return DECIMAL_NUMBER_CONTEXT;
     }
 
-    private final DecimalNumberContext context;
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.UNLIMITED);
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return this.invalidCharacterExceptionFactory + " " + this.context;
+        return this.invalidCharacterExceptionFactory + " " + DECIMAL_NUMBER_CONTEXT;
     }
 }
