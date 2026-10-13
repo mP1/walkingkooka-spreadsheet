@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorContextTesting2;
+import walkingkooka.color.HslColor;
+import walkingkooka.color.HsvColor;
 import walkingkooka.reflect.ThrowableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -130,6 +132,37 @@ public final class SpreadsheetColorContextEmptyTest implements ColorContextTesti
         this.lookupColorAndCheck(
             this.createContext(),
             SpreadsheetColors.WHITE
+        );
+    }
+
+    @Test
+    public void testLookupColorWithHslColor() {
+        final HslColor hsl = Color.BLACK.toHsl();
+        
+        this.lookupColorAndCheck(
+            this.createContext(),
+            hsl,
+            hsl
+        );
+    }
+
+    @Test
+    public void testLookupColorWithHsvColor() {
+        final HsvColor hsv = Color.BLACK.toHsv();
+
+        this.lookupColorAndCheck(
+            this.createContext(),
+            hsv,
+            hsv
+        );
+    }
+    
+    @Test
+    public void testLookupColorWithRgbColor() {
+        this.lookupColorAndCheck(
+            this.createContext(),
+            Color.BLACK,
+            Color.BLACK
         );
     }
 
