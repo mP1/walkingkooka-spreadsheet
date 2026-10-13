@@ -19,7 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -108,8 +110,22 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // ColorContext.....................................................................................................
 
     @Override
-    public Optional<Color> lookupColor(final Color color) {
+    public Optional<Color> lookupIndexedColor(final IndexedColor color) {
         Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkColorIndex(
+            color.index()
+        );
+
+        return NO_LOOKUP_COLOR;
+    }
+
+    @Override
+    public Optional<Color> lookupNamedColor(final NamedColor color) {
+        Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkNamedColor(
+            color.value()
+        );
+
         return NO_LOOKUP_COLOR;
     }
 

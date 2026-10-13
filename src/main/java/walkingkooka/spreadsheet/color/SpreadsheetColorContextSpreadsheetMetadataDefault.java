@@ -117,41 +117,40 @@ final class SpreadsheetColorContextSpreadsheetMetadataDefault implements Spreads
     }
 
     @Override
-    public Optional<Color> lookupColor(final Color color) {
+    public Optional<Color> lookupIndexedColor(final IndexedColor color) {
         Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkColorIndex(
+            color.index()
+        );
 
-        Color lookup = null;
-
-        if (color.isIndexed()) {
-            lookup = this.lookupIndexedColor(
-                ((IndexedColor) color)
-                    .index()
-            );
-        } else {
-            if (color.isNamed()) {
-                final NamedColor namedColor = ((NamedColor) color);
-                final Integer index = (Integer) this.colorIndexOrNameTo.get(
-                    String.valueOf(
-                        namedColor.value()
-                    )
-                );
-                if (null != index) {
-                    lookup = this.lookupIndexedColor(index);
-                }
-                ;
-            } else {
-                lookup = color;
-            }
-        }
-
-        return Optional.ofNullable(lookup);
+        return this.lookupIndexedColor(
+            color.index()
+        );
     }
 
-    private Color lookupIndexedColor(final int index) {
+    @Override
+    public Optional<Color> lookupNamedColor(final NamedColor color) {
+        Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkNamedColor(
+            color.value()
+        );
+
+        final Integer index = (Integer) this.colorIndexOrNameTo.get(
+            color.value()
+        );
+
+        return null != index ?
+            this.lookupIndexedColor(index) :
+            NO_LOOKUP_COLOR;
+    }
+
+    private Optional<Color> lookupIndexedColor(final int index) {
         SpreadsheetColors.checkColorIndex(index);
 
-        return (Color) this.colorIndexOrNameTo.get(
-            String.valueOf(index)
+        return Optional.ofNullable(
+            (Color) this.colorIndexOrNameTo.get(
+                String.valueOf(index)
+            )
         );
     }
 

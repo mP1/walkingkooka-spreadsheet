@@ -178,39 +178,26 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     // ColorContext.....................................................................................................
 
     @Override
-    public Optional<Color> lookupColor(final Color color) {
+    public Optional<Color> lookupIndexedColor(final IndexedColor color) {
         Objects.requireNonNull(color, "color");
+        return this.get(
+            // Color12 -> 12
+            SpreadsheetMetadataPropertyName.numberedColor(color.index())
+        );
+    }
 
-        Optional<Color> lookup = null;
+    @Override
+    public Optional<Color> lookupNamedColor(final NamedColor color) {
+        final Integer colorNumber = this.get(
+            // ColorRED -> RED
+            SpreadsheetMetadataPropertyName.namedColor(color)
+        ).orElse(null);
 
-        final boolean isIndexed = color.isIndexed();
-        if (isIndexed || color.isNamed()) {
-            final Integer index;
-
-            if (isIndexed) {
-                final IndexedColor indexedColor = (IndexedColor) color;
-                index = indexedColor.index();
-            } else {
-                final NamedColor namedColor = (NamedColor) color;
-
-                index = this.get(
-                    // ColorRED -> RED
-                    SpreadsheetMetadataPropertyName.namedColor(namedColor)
-                ).orElse(null);
-            }
-
-            if (null != index) {
-                lookup = this.get(
-                    SpreadsheetMetadataPropertyName.numberedColor(index)
-                );
-            } else {
-                lookup = NO_LOOKUP_COLOR;
-            }
-        } else {
-            lookup = Optional.of(color);
-        }
-
-        return lookup;
+        return null != colorNumber ?
+            this.lookupIndexedColor(
+                IndexedColor.indexed(colorNumber)
+            ) :
+            NO_LOOKUP_COLOR;
     }
 
     // HasMathContext...................................................................................................

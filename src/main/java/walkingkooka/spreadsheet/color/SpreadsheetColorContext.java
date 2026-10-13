@@ -17,10 +17,15 @@
 
 package walkingkooka.spreadsheet.color;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * A {@link ColorContext} that implements {@link Color} factory methods adding guards for color index values and named
@@ -34,6 +39,42 @@ public interface SpreadsheetColorContext extends ColorContext {
 
         return Color.indexed(index);
     }
+
+    @Override
+    default Optional<Color> lookupColor(final Color color) {
+        Objects.requireNonNull(color, "color");
+
+        Color lookup = color;
+
+        final Set<Color> cycle = Sets.ordered();
+
+        while (null != lookup) {
+            if (false == cycle.add(lookup)) {
+                throw new IllegalStateException("Cycle detected looking up color " + color);
+            }
+
+            if (lookup.isIndexed()) {
+                lookup = this.lookupIndexedColor(
+                    (IndexedColor) lookup
+                ).orElse(null);
+                continue; // try again might be an indirect color
+            }
+
+            if (lookup.isNamed()) {
+                lookup = this.lookupNamedColor(
+                    (NamedColor) lookup
+                ).orElse(null);
+                continue;
+            }
+            break;
+        }
+
+        return Optional.ofNullable(lookup);
+    }
+
+    Optional<Color> lookupIndexedColor(final IndexedColor color);
+
+    Optional<Color> lookupNamedColor(final NamedColor color);
 
     @Override
     default NamedColor namedColor(final String name) {
