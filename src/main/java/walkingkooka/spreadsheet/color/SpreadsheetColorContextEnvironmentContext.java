@@ -49,10 +49,7 @@ final class SpreadsheetColorContextEnvironmentContext implements SpreadsheetColo
 
     @Override
     public Optional<Color> lookupIndexedColor(final IndexedColor color) {
-        Objects.requireNonNull(color, "color");
-        SpreadsheetColors.checkColorIndex(
-            color.index()
-        );
+        SpreadsheetColors.checkIndexedColor(color);
 
         return this.environmentColorValue(
             "color" + color.index()
@@ -61,10 +58,7 @@ final class SpreadsheetColorContextEnvironmentContext implements SpreadsheetColo
 
     @Override
     public Optional<Color> lookupNamedColor(final NamedColor color) {
-        Objects.requireNonNull(color, "color");
-        SpreadsheetColors.checkColorName(
-            color.value()
-        );
+        SpreadsheetColors.checkNamedColor(color);
 
         return this.environmentColorValue(
             "color" + color.value()

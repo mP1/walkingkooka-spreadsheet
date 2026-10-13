@@ -33,7 +33,6 @@ import walkingkooka.tree.json.JsonObject;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -118,10 +117,7 @@ final class SpreadsheetColorContextSpreadsheetMetadataDefault implements Spreads
 
     @Override
     public Optional<Color> lookupIndexedColor(final IndexedColor color) {
-        Objects.requireNonNull(color, "color");
-        SpreadsheetColors.checkColorIndex(
-            color.index()
-        );
+        SpreadsheetColors.checkIndexedColor(color);
 
         return this.lookupIndexedColor(
             color.index()
@@ -130,10 +126,7 @@ final class SpreadsheetColorContextSpreadsheetMetadataDefault implements Spreads
 
     @Override
     public Optional<Color> lookupNamedColor(final NamedColor color) {
-        Objects.requireNonNull(color, "color");
-        SpreadsheetColors.checkColorName(
-            color.value()
-        );
+        SpreadsheetColors.checkNamedColor(color);
 
         final Integer index = (Integer) this.colorIndexOrNameTo.get(
             color.value()

@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.color;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.Objects;
 import java.util.Set;
 
 public final class SpreadsheetColors implements PublicStaticHelper {
@@ -76,6 +78,18 @@ public final class SpreadsheetColors implements PublicStaticHelper {
             CharPredicates.letter()
         );
         return namedColor;
+    }
+
+    public static IndexedColor checkIndexedColor(final IndexedColor color) {
+        Objects.requireNonNull(color, "color");
+        checkColorIndex(color.index());
+        return color;
+    }
+
+    public static NamedColor checkNamedColor(final NamedColor color) {
+        Objects.requireNonNull(color, "color");
+        checkColorName(color.value());
+        return color;
     }
 
     /**
