@@ -122,7 +122,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public Optional<Color> lookupNamedColor(final NamedColor color) {
         Objects.requireNonNull(color, "color");
-        SpreadsheetColors.checkNamedColor(
+        SpreadsheetColors.checkColorName(
             color.value()
         );
 
