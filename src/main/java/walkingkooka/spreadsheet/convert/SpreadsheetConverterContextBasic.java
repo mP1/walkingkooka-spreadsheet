@@ -307,10 +307,23 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.value(this.converter);
-        builder.value(this.mediaTypeDetector);
-        builder.value(this.spreadsheetLabelNameResolver);
-        builder.value(this.jsonNodeConverterContext);
-        builder.value(this.localeContext);
+        builder.label("hasUserDirectories")
+            .value(this.hasUserDirectories)
+            .label("spreadsheetMetadata")
+            .value(this.spreadsheetMetadata)
+            .label("validationReference")
+            .value(this.validationReference)
+            .label("converter")
+            .value(this.converter)
+            .label("mediaTypeDetector")
+            .value(this.mediaTypeDetector)
+            .label("multiplier")
+            .value(this.multiplier)
+            .label("spreadsheetLabelNameResolver")
+            .value(this.spreadsheetLabelNameResolver)
+            .label("jsonNodeConverterContext")
+            .value(this.jsonNodeConverterContext)
+            .label("localeContext")
+            .value(this.localeContext);
     }
 }
