@@ -78,7 +78,7 @@ public interface SpreadsheetColorContext extends ColorContext {
 
     @Override
     default NamedColor namedColor(final String name) {
-        SpreadsheetColors.checkNamedColor(name);
+        SpreadsheetColors.checkColorName(name);
 
         return Color.named(name);
     }

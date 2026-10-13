@@ -76,35 +76,35 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
     // checkNamedColor..................................................................................................
 
     @Test
-    public void testCheckNamedColorWithNullFails() {
+    public void testCheckColorNameWithNullFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetColors.checkNamedColor(null)
+            () -> SpreadsheetColors.checkColorName(null)
         );
     }
 
     @Test
-    public void testCheckNamedColorWithEmptyFails() {
+    public void testCheckColorNameWithEmptyFails() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> SpreadsheetColors.checkNamedColor("")
+            () -> SpreadsheetColors.checkColorName("")
         );
     }
 
     @Test
-    public void testCheckNamedColorWithInvalidCharacterFails() {
+    public void testCheckColorNameWithInvalidCharacterFails() {
         this.getMessageAndCheck(
             assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetColors.checkNamedColor("Hello1World")
+                () -> SpreadsheetColors.checkColorName("Hello1World")
             ),
             "Invalid character '1' at 5"
         );
     }
 
     @Test
-    public void testCheckNamedColor() {
-        SpreadsheetColors.checkNamedColor("RED");
+    public void testCheckColorName() {
+        SpreadsheetColors.checkColorName("RED");
     }
 
     // PublicStaticHelperTesting.......................................................................................
