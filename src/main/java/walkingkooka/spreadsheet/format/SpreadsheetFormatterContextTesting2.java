@@ -33,6 +33,11 @@ public interface SpreadsheetFormatterContextTesting2<C extends SpreadsheetFormat
     ColorContextTesting2<C> {
 
     @Override
+    default C createIndexedNamedColor() {
+        return this.createContext();
+    }
+
+    @Override
     default C createConverterLike() {
         return this.createContext();
     }

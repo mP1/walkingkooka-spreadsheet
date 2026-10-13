@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
@@ -78,7 +78,7 @@ public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetC
     };
 
     private final static SpreadsheetConverterContext CONTEXT = SpreadsheetConverterContexts.basic(
-        new FakeCanIndexedNameColor(),
+        SpreadsheetColorContexts.empty(), // CanIndexedNamedContext
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
