@@ -85,7 +85,7 @@ public final class SpreadsheetFormatterProviderSamplesContextBasicTest implement
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "spreadsheetFormatterContext=cellCharacterWidth=1 hasSpreadsheetCell=HAS_SPREADSHEET_CELL spreadsheetConverterContext=hasUserDirectories={charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, timeOffset=Z, user=user123@example.com} spreadsheetMetadata={\n" +
+            "spreadsheetFormatterContext=cellCharacterWidth=1 hasSpreadsheetCell=HAS_SPREADSHEET_CELL formatter=yyyy/mm/dd | yyyy/mm/dd hh:mm | badge-error @ | >0 0.#;<0 0.#;=0 0;@ | @ | hh:mm:ss spreadsheetConverterContext=hasUserDirectories={charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, serverUrl=https://example.com, timeOffset=Z, user=user123@example.com} spreadsheetMetadata={\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"user123@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
@@ -98,7 +98,7 @@ public final class SpreadsheetFormatterProviderSamplesContextBasicTest implement
                 "  \"color2\": \"white\",\n" +
                 "  \"colorBlack\": 1,\n" +
                 "  \"colorWhite\": 2,\n" +
-                "  \"comparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, curren providerContext=ReadOnly mediaTypeDetector=application/octet-stream multiplier=walkingkooka.tree.ex"
+                "  \"comparators\": \"background-color, border-bott providerContext=ReadOnly mediaTypeDetector=application/octet-stream multiplier=walkingkooka.tree.ex"
         );
     }
 

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.color.NamedColor;
@@ -46,7 +47,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -65,7 +65,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterContextBasic>,
     SpreadsheetEnvironmentContextTesting,
-    SpreadsheetLabelNameResolverTesting {
+    SpreadsheetLabelNameResolverTesting,
+    ToStringTesting<SpreadsheetFormatterContextBasic> {
 
     private final static Color COLOR = Color.fromRgb(0x123456);
 
@@ -198,7 +199,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         CAN_INDEXED_NAMED_COLOR,
-        HasUserDirectorieses.fake(),
+        HAS_USER_DIRECTORIES,
         Optional.of(SPREADSHEET_METADATA),
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.collection(
@@ -544,6 +545,20 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     @Override
     public char zeroDigit() {
         return DECIMAL_NUMBER_CONTEXT.zeroDigit();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "cellCharacterWidth=1 hasSpreadsheetCell=HAS_SPREADSHEET_CELL formatter=SpreadsheetFormatterContextBasicTest.formatter() spreadsheetConverterContext=hasUserDirectories=HAS_USER_DIRECTORIES spreadsheetMetadata={\n" +
+                "  \"spreadsheetId\": \"123\",\n" +
+                "  \"color2\": \"#123456\",\n" +
+                "  \"colorBingo\": 2\n" +
+                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number mediaTypeDetector=application/octet-stream multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver jsonNodeConverterContext=binaryTextContext=charset=\"UTF-8\" indentation=\"  \" lineEnding=\"\\n\" dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\""
+        );
     }
 
     // ClassTesting.....................................................................................................
