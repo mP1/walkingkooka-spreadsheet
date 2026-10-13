@@ -807,6 +807,11 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.textToValueType();
                 break;
+            case TEXT_TO_WEB_COLOR_NAME_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToWebColorName();
+                break;
             case TEXT_TO_ZONE_OFFSET_STRING:
                 this.noParameterCheck(copy);
 
@@ -1596,6 +1601,10 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TEXT_TO_VALUE_TYPE = ConverterName.with(TEXT_TO_VALUE_TYPE_STRING);
 
+    private final static String TEXT_TO_WEB_COLOR_NAME_STRING = "text-to-web-color-name";
+
+    final static ConverterName TEXT_TO_WEB_COLOR_NAME = ConverterName.with(TEXT_TO_WEB_COLOR_NAME_STRING);
+
     private final static String TEXT_TO_ZONE_OFFSET_STRING = "text-to-zone-offset";
 
     final static ConverterName TEXT_TO_ZONE_OFFSET = ConverterName.with(TEXT_TO_ZONE_OFFSET_STRING);
@@ -1903,6 +1912,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_VALIDATION_ERROR),
             converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
             converterInfo(TEXT_TO_VALUE_TYPE),
+            converterInfo(TEXT_TO_WEB_COLOR_NAME),
             converterInfo(TEXT_TO_ZONE_OFFSET),
             converterInfo(TO_BINARY),
             converterInfo(TO_BOOLEAN),

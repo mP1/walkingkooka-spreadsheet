@@ -512,6 +512,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  TEXT to ValidationError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToValidationError)\n" +
                 "  TEXT to ValidatorSelector (walkingkooka.validation.convert.ValidationConverterTextToValidatorSelector)\n" +
                 "  TEXT to ValueType (walkingkooka.validation.convert.ValidationConverterTextToValueType)\n" +
+                "  TEXT to WebColorName (walkingkooka.color.convert.ColorConverterTextToWebColorName)\n" +
                 "  TEXT to ZoneOffset (walkingkooka.convert.ConverterTextToZoneOffset)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"TEXTNODE\"\n" +
