@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -77,6 +78,7 @@ public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetC
     };
 
     private final static SpreadsheetConverterContext CONTEXT = SpreadsheetConverterContexts.basic(
+        new FakeCanIndexedNameColor(),
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

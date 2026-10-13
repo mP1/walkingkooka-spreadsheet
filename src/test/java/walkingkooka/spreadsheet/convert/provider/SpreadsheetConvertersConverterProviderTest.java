@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -210,6 +211,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "2000/12/31",
             LocalDate.class,
             SpreadsheetConverterContexts.basic(
+                new FakeCanIndexedNameColor(),
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

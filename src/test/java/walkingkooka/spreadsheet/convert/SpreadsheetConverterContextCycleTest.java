@@ -104,6 +104,7 @@ public final class SpreadsheetConverterContextCycleTest implements SpreadsheetCo
             VALUE,
             TYPE,
             SpreadsheetConverterContextBasic.with(
+                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 Optional.empty(), // validationReference

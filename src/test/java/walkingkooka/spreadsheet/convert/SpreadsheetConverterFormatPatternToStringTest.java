@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -299,6 +300,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
         );
 
         return SpreadsheetConverterContexts.basic(
+            new FakeCanIndexedNameColor(),
             HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

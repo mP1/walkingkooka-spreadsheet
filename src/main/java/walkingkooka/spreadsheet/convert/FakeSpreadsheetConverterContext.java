@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Binary;
+import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.EnvironmentValueName;
@@ -225,6 +227,18 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
 
     @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    // CanIndexedNameColor..............................................................................................
+
+    @Override
+    public IndexedColor indexedColor(final int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public NamedColor namedColor(final String name) {
         throw new UnsupportedOperationException();
     }
 }

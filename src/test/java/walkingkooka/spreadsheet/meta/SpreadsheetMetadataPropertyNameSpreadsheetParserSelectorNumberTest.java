@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -84,6 +85,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
             text,
             ExpressionNumber.class,
             SpreadsheetConverterContexts.basic(
+                new FakeCanIndexedNameColor(),
                 HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

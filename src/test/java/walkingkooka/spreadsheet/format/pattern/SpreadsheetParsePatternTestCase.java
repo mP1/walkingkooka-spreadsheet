@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
@@ -869,6 +870,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
+            new FakeCanIndexedNameColor(),
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,

@@ -21,6 +21,8 @@ import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
@@ -98,6 +100,7 @@ import java.util.function.Function;
  * has a local value.
  */
 final class SpreadsheetExpressionEvaluationContextLocalReferences implements SpreadsheetExpressionEvaluationContext,
+    ColorContextDelegator,
     ConverterContextDelegator,
     FormHandlerContextDelegator<SpreadsheetValidationReference, SpreadsheetDelta>,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -620,6 +623,13 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public CanParseEnvironmentValueName canParseEnvironmentValueName() {
         return this.context;
+    }
+
+    // ColorContextDelegator............................................................................................
+
+    @Override
+    public ColorContext colorContext() {
+        return this.context.spreadsheetMetadata();
     }
 
     // SpreadsheetMetadataContextDelegator..............................................................................
