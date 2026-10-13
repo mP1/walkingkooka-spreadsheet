@@ -34,11 +34,11 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
  */
 public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext,
     HasConverter<SpreadsheetConverterContext>,
+    HasMissingCellNumberValue,
     HasSpreadsheetMetadata,
     SpreadsheetLabelNameResolver,
     SpreadsheetMetadataLoader,
-    StorageConverterContext,
-    HasMissingCellNumberValue {
+    StorageConverterContext {
 
     @Override
     default ExpressionNumber missingCellNumberValue() {
