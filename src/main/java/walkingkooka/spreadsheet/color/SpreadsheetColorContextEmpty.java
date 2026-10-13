@@ -24,7 +24,6 @@ import walkingkooka.color.NamedColor;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -45,20 +44,14 @@ final class SpreadsheetColorContextEmpty implements SpreadsheetColorContext,
 
     @Override
     public Optional<Color> lookupIndexedColor(final IndexedColor color) {
-        Objects.requireNonNull(color, "color");
-        SpreadsheetColors.checkColorIndex(
-            color.index()
-        );
+        SpreadsheetColors.checkIndexedColor(color);
 
         return NO_LOOKUP_COLOR;
     }
 
     @Override
     public Optional<Color> lookupNamedColor(final NamedColor color) {
-        Objects.requireNonNull(color, "color");
-        SpreadsheetColors.checkColorName(
-            color.value()
-        );
+        SpreadsheetColors.checkNamedColor(color);
 
         return NO_LOOKUP_COLOR;
     }

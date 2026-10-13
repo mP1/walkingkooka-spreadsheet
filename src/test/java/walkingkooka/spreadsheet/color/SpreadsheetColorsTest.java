@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.color;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.reflect.ThrowableTesting;
 
@@ -73,7 +74,7 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
         SpreadsheetColors.checkColorIndex(SpreadsheetColors.MAX);
     }
 
-    // checkNamedColor..................................................................................................
+    // checkColorName...................................................................................................
 
     @Test
     public void testCheckColorNameWithNullFails() {
@@ -105,6 +106,80 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
     @Test
     public void testCheckColorName() {
         SpreadsheetColors.checkColorName("RED");
+    }
+
+    // checkIndexedColor................................................................................................
+
+    @Test
+    public void testCheckIndexedColorMinLessOne() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkIndexedColor(
+                    Color.indexed(
+                        SpreadsheetColors.MIN - 1
+                    )
+                )
+            ),
+            "Invalid color number 0 < 1 or > 56"
+        );
+    }
+
+    @Test
+    public void testCheckIndexedColorMaxPlus1() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkIndexedColor(
+                    Color.indexed(SpreadsheetColors.MAX + 1)
+                )
+            ),
+            "Invalid color number 57 < 1 or > 56"
+        );
+    }
+
+    @Test
+    public void testCheckIndexedColorMin() {
+        SpreadsheetColors.checkIndexedColor(
+            Color.indexed(SpreadsheetColors.MIN)
+        );
+    }
+
+    @Test
+    public void testCheckIndexedColorMax() {
+        SpreadsheetColors.checkIndexedColor(
+            Color.indexed(SpreadsheetColors.MAX)
+        );
+    }
+
+    // checkNamedColor..................................................................................................
+
+    @Test
+    public void testCheckNamedColorWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetColors.checkNamedColor(null)
+        );
+    }
+
+    @Test
+    public void testCheckNamedColorWithInvalidCharacterFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColors.checkNamedColor(
+                    Color.named("Hello1World")
+                )
+            ),
+            "Invalid character '1' at 5"
+        );
+    }
+
+    @Test
+    public void testCheckNamedColor() {
+        SpreadsheetColors.checkNamedColor(
+            SpreadsheetColors.BLUE
+        );
     }
 
     // PublicStaticHelperTesting.......................................................................................

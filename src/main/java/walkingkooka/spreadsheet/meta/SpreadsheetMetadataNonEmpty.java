@@ -22,6 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -29,7 +30,6 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -179,7 +179,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     @Override
     public Optional<Color> lookupIndexedColor(final IndexedColor color) {
-        Objects.requireNonNull(color, "color");
+        SpreadsheetColors.checkIndexedColor(color);
+
         return this.get(
             // Color12 -> 12
             SpreadsheetMetadataPropertyName.numberedColor(color.index())
@@ -188,6 +189,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     @Override
     public Optional<Color> lookupNamedColor(final NamedColor color) {
+        SpreadsheetColors.checkNamedColor(color);
+
         final Integer colorNumber = this.get(
             // ColorRED -> RED
             SpreadsheetMetadataPropertyName.namedColor(color)
