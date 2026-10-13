@@ -35,7 +35,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
@@ -51,8 +50,6 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
     DecimalNumberContextDelegator,
     LocaleContextTesting,
     SpreadsheetEnvironmentContextTesting {
-
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
