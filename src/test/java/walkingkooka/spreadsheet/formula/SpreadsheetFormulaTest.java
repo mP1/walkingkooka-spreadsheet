@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting2;
@@ -111,6 +112,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
     HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
     JsonNodeMarshallerTesting<SpreadsheetFormula>,
     PatchableTesting<SpreadsheetFormula>,
+    SpreadsheetParserContextTesting,
     ToStringTesting<SpreadsheetFormula>,
     HasTextTesting,
     ThrowableTesting,
@@ -2279,8 +2281,6 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
             VALUE_SEPARATOR
         );
     }
-
-    private final static char VALUE_SEPARATOR = ',';
 
     private SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext,
                                                    final char valueSeparator) {

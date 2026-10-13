@@ -64,6 +64,7 @@ import walkingkooka.spreadsheet.formula.parser.WhitespaceSpreadsheetFormulaParse
 import walkingkooka.spreadsheet.formula.parser.YearSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
@@ -93,9 +94,8 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     implements BinaryTextContextTesting,
     ConverterTesting,
     DateTimeContextTesting,
-    SpreadsheetEnvironmentContextTesting {
-
-    final static char VALUE_SEPARATOR = ',';
+    SpreadsheetEnvironmentContextTesting,
+    SpreadsheetParserContextTesting {
 
     final static String CURRENCY = "NZ$";
     final static char DECIMAL = 'd';
