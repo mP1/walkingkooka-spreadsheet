@@ -234,12 +234,18 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-            .label("cellCharacterWidth").value(this.cellCharacterWidth)
-            .label("hasSpreadsheetCell").value(this.hasSpreadsheetCell)
-            .label("spreadsheetConverterContext").value(this.spreadsheetConverterContext)
-            .label("spreadsheetFormatterProvider").value(this.spreadsheetFormatterProvider)
-            .label("providerContext").value(this.providerContext)
-
+            .label("cellCharacterWidth")
+            .value(this.cellCharacterWidth)
+            .label("hasSpreadsheetCell")
+            .value(this.hasSpreadsheetCell)
+            .label("formatter")
+            .value(this.formatter)
+            .label("spreadsheetConverterContext")
+            .value(this.spreadsheetConverterContext)
+            .label("spreadsheetFormatterProvider")
+            .value(this.spreadsheetFormatterProvider)
+            .label("providerContext")
+            .value(this.providerContext)
             .build();
     }
 }
