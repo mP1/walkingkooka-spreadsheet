@@ -332,6 +332,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                     target,
                     ExpressionNumberConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        ExpressionNumberKind.DEFAULT,
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
@@ -343,8 +344,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.fake(),
                             this
-                        ),
-                        ExpressionNumberKind.DEFAULT
+                        )
                     )
                 );
             }

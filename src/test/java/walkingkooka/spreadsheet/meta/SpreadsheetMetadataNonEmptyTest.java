@@ -1381,6 +1381,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
+                        metadata.expressionNumberKind(),
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
@@ -1392,8 +1393,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             CurrencyLocaleContexts.fake(),
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
-                        ),
-                        metadata.expressionNumberKind()
+                        )
                     ),
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()

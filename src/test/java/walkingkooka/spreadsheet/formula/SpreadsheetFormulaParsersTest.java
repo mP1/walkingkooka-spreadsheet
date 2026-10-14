@@ -4260,6 +4260,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     target,
                     ExpressionNumberConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        this.expressionNumberKind(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
@@ -4271,8 +4272,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                             CurrencyLocaleContexts.fake(),
                             dateTimeContext(),
                             decimalNumberContext()
-                        ),
-                        this.expressionNumberKind()
+                        )
                     )
                 );
             }

@@ -4435,6 +4435,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
+                    EXPRESSION_NUMBER_KIND,
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -4446,8 +4447,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         CurrencyLocaleContexts.fake(),
                         DATE_TIME_CONTEXT,
                         DecimalNumberContexts.fake()
-                    ),
-                    EXPRESSION_NUMBER_KIND
+                    )
                 ),
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
@@ -5051,6 +5051,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
+                    kind,
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -5062,8 +5063,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers
                         DecimalNumberContexts.american(MathContext.DECIMAL32)
-                    ),
-                    kind
+                    )
                 ),
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()

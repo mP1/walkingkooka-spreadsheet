@@ -152,6 +152,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
+                    EXPRESSION_NUMBER_KIND,
                     ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -163,8 +164,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(),
                         DECIMAL_NUMBER_CONTEXT
-                    ),
-                    EXPRESSION_NUMBER_KIND
+                    )
                 ),
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()

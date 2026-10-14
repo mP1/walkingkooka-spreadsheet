@@ -882,6 +882,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
+                    EXPRESSION_NUMBER_KIND,
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -893,8 +894,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                         CurrencyLocaleContexts.fake(),
                         this.dateTimeContext(),
                         this.decimalNumberContext()
-                    ),
-                    EXPRESSION_NUMBER_KIND
+                    )
                 ),
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()

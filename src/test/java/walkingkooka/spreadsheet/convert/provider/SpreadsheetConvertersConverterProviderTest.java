@@ -223,6 +223,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
+                        ExpressionNumberKind.BIG_DECIMAL,
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
@@ -234,8 +235,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                             CurrencyLocaleContexts.fake(),
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
-                        ),
-                        ExpressionNumberKind.BIG_DECIMAL
+                        )
                     ),
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()

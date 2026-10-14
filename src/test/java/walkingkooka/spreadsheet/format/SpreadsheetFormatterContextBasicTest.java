@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.text.TextNode;
@@ -228,7 +229,10 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         },
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
-                Converters.fake(),
+                Converters.fake()
+                    .setToString("CONVERTER")
+                    .cast(ExpressionNumberConverterContext.class),
+                EXPRESSION_NUMBER_KIND,
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
@@ -240,8 +244,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                     CURRENCY_LOCALE_CONTEXT,
                     DATE_TIME_CONTEXT,
                     DECIMAL_NUMBER_CONTEXT
-                ),
-                EXPRESSION_NUMBER_KIND
+                )
             ),
             ENVIRONMENT_CONTEXT,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
@@ -557,7 +560,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 "  \"spreadsheetId\": \"123\",\n" +
                 "  \"color2\": \"#123456\",\n" +
                 "  \"colorBingo\": 2\n" +
-                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number mediaTypeDetector=application/octet-stream multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver jsonNodeConverterContext=binaryTextContext=charset=\"UTF-8\" indentation=\"  \" lineEnding=\"\\n\" dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\""
+                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number mediaTypeDetector=application/octet-stream multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver jsonNodeConverterContext=converter=CONVERTER multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction expressionNumberKind=BIG_DECIMAL context=binaryTextContext=charset=\"UTF-8\" indentation=\"  \" lineEnding=\"\\n\" dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"N"
         );
     }
 
