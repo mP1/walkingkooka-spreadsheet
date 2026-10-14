@@ -56,6 +56,7 @@ import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.expression.TreeTextExpressionEvaluationContext;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.Validator;
@@ -89,6 +90,7 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
     SpreadsheetMetadataContext,
     StorageExpressionEvaluationContext,
     TerminalExpressionEvaluationContext,
+    TreeTextExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetValidationReference> {
 
     @Override

@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -104,6 +105,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest implements SpreadsheetExpressionEvaluationContextTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
     HashCodeEqualsDefinedTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
     LocaleContextTesting,
+    HasSpreadsheetMetadataTesting,
     ToStringTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
     ThrowableTesting {
 
@@ -887,6 +889,13 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         @Override
         public void logExit() {
             this.spreadsheetEnvironmentContext.logExit();
+        }
+
+        // ColorContext.................................................................................................
+
+        @Override
+        public SpreadsheetMetadata spreadsheetMetadata() {
+            return SPREADSHEET_METADATA;
         }
 
         // SpreadsheetMetadataContext...................................................................................
