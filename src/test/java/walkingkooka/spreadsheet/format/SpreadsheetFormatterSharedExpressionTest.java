@@ -22,7 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.FakeCanIndexedNameColor;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -155,7 +155,6 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
     @Override
     public SpreadsheetFormatterContext createContext() {
         final SpreadsheetConverterContext converterContext = SpreadsheetConverterContexts.basic(
-            new FakeCanIndexedNameColor(),
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -188,6 +187,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),
+            ColorContexts.fake(),
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used

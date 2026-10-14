@@ -21,7 +21,8 @@ import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.color.CanIndexedNamedColor;
-import walkingkooka.color.CanIndexedNamedColorDelegator;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
@@ -107,7 +108,7 @@ import java.util.Set;
  * <br>
  */
 final class SpreadsheetExpressionEvaluationContextConverter implements SpreadsheetExpressionEvaluationContext,
-    CanIndexedNamedColorDelegator,
+    ColorContextDelegator,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -782,6 +783,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
 
     @Override
     public CanParseEnvironmentValueName canParseEnvironmentValueName() {
+        return this.context;
+    }
+
+    // ColorContextDelegator............................................................................................
+
+    @Override
+    public ColorContext colorContext() {
         return this.context;
     }
 

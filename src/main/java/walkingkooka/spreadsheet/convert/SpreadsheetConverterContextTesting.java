@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.color.CanIndexedNamedColor;
-import walkingkooka.color.CanIndexedNamedColorTesting;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
@@ -26,12 +26,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.storage.convert.StorageConverterContextTesting;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
-public interface SpreadsheetConverterContextTesting extends CanIndexedNamedColorTesting,
+public interface SpreadsheetConverterContextTesting extends ColorContextTesting,
     JsonNodeConverterContextTesting,
     SpreadsheetLabelNameResolverTesting,
     SpreadsheetMetadataLoaderTesting,
     StorageConverterContextTesting,
     SpreadsheetProviderContextTesting {
 
-    CanIndexedNamedColor CAN_INDEXED_NAMED_COLOR = SpreadsheetColorContexts.empty();
+    ColorContext COLOR_CONTEXT = SpreadsheetColorContexts.spreadsheetMetadataDefaults();
 }

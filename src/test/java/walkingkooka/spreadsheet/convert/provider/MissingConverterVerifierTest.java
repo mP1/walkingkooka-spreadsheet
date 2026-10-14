@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.CanIndexedNamedColor;
-import walkingkooka.color.CanIndexedNamedColorDelegator;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -257,7 +257,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     static class TestSpreadsheetConverterContext implements SpreadsheetConverterContext,
-        CanIndexedNamedColorDelegator,
+        ColorContextDelegator,
         CanParseEnvironmentValueNameDelegator,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
@@ -487,10 +487,10 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             return LOCALE_CONTEXT.localeForLanguageTag(languageTag);
         }
 
-        // CanIndexedNamedColor.........................................................................................
+        // ColorContextDelegator........................................................................................
 
         @Override
-        public CanIndexedNamedColor canIndexedNamedColor() {
+        public ColorContext colorContext() {
             return SpreadsheetColorContexts.spreadsheetMetadataDefaults();
         }
 

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Binary;
+import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converter;
@@ -230,7 +231,7 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
         throw new UnsupportedOperationException();
     }
 
-    // CanIndexedNameColor..............................................................................................
+    // ColorContext.....................................................................................................
 
     @Override
     public IndexedColor indexedColor(final int index) {
@@ -238,7 +239,17 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
     }
 
     @Override
+    public Optional<Color> lookupColor(final Color color) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public NamedColor namedColor(final String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Color parseColor(final String color) {
         throw new UnsupportedOperationException();
     }
 }

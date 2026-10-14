@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -59,7 +60,6 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
     );
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-        CAN_INDEXED_NAMED_COLOR,
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -79,6 +79,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                 );
             }
         },
+        ColorContexts.fake(),
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),

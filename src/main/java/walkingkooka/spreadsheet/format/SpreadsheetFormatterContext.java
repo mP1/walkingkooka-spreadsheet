@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Context;
-import walkingkooka.color.ColorContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -34,8 +33,7 @@ import java.util.Optional;
  * A {@link Context} that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
 public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext,
-    HasSpreadsheetCell,
-    ColorContext {
+    HasSpreadsheetCell {
 
     /**
      * The width of the "cell" in characters.

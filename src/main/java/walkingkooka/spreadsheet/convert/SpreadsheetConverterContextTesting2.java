@@ -17,14 +17,14 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.color.CanIndexedNamedColorTesting2;
+import walkingkooka.color.ColorContextTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting2;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.storage.convert.StorageConverterContextTesting2;
 
 public interface SpreadsheetConverterContextTesting2<C extends SpreadsheetConverterContext> extends SpreadsheetConverterContextTesting,
-    CanIndexedNamedColorTesting2<C>,
+    ColorContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting2<C>,
     SpreadsheetMetadataLoaderTesting2<C>,
     StorageConverterContextTesting2<C>,

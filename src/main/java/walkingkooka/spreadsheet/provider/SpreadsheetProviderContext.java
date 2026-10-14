@@ -218,7 +218,6 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
-            SpreadsheetColorContexts.empty(),
             HasUserDirectorieses.empty(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -227,6 +226,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             multiplier,
             SpreadsheetLabelNameResolvers.empty(),
             SpreadsheetMetadataLoaders.empty(), // dont support loading SpreadsheetMetadata from a ProviderContext
+            SpreadsheetColorContexts.environmentContext(storageEnvironmentContext), //
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.color.FakeCanIndexedNameColor;
+import walkingkooka.color.FakeColorContext;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -105,7 +105,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 throw new UnsupportedOperationException();
             },
             SpreadsheetConverterContexts.basic(
-                new FakeCanIndexedNameColor(),
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -132,6 +131,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 MULTIPLIER,
                 LABEL_NAME_RESOLVER,
                 SpreadsheetMetadataLoaders.empty(),
+                new FakeColorContext(),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),

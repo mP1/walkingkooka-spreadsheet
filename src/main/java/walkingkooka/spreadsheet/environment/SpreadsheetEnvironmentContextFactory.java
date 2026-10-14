@@ -337,7 +337,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
-                SpreadsheetColorContexts.environmentContext(spreadsheetEnvironmentContext), // CanIndexedNamedColor
                 spreadsheetEnvironmentContext, // HasUserDirectories
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -346,6 +345,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 this.multiplier,
                 SpreadsheetLabelNameResolvers.empty(),
                 this.spreadsheetMetadataLoader,
+                SpreadsheetColorContexts.environmentContext(spreadsheetEnvironmentContext),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
