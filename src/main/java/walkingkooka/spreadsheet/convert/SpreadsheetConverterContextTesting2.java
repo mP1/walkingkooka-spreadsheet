@@ -31,11 +31,6 @@ public interface SpreadsheetConverterContextTesting2<C extends SpreadsheetConver
     SpreadsheetProviderContextTesting2<C> {
 
     @Override
-    default C createIndexedNamedColor() {
-        return this.createContext();
-    }
-
-    @Override
     default C createSpreadsheetLabelNameResolver() {
         return this.createContext();
     }
