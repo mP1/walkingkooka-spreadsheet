@@ -1266,6 +1266,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                    kind,
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -1277,8 +1278,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // DateTimeContext unused
                         this.decimalNumberContext()
-                    ),
-                    kind
+                    )
                 ),
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()

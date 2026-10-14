@@ -1167,6 +1167,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
+                    expressionNumberKind,
                     BinaryNumberConverterFunctions.fake(),
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -1178,8 +1179,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         currencyLocaleContext,
                         dateTimeContext,
                         decimalNumberContext
-                    ),
-                    expressionNumberKind
+                    )
                 ),
                 spreadsheetEnvironmentContext, // EnvironmentContext
                 JsonNodeMarshallUnmarshallContexts.basic(

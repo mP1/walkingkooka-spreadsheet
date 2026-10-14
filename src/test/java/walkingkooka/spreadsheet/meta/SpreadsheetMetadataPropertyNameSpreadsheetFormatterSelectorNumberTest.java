@@ -135,6 +135,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
+                        ExpressionNumberKind.DEFAULT,
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
@@ -146,8 +147,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                             CURRENCY_LOCALE_CONTEXT,
                             DATE_TIME_CONTEXT,
                             DECIMAL_NUMBER_CONTEXT
-                        ),
-                        ExpressionNumberKind.DEFAULT
+                        )
                     ),
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()

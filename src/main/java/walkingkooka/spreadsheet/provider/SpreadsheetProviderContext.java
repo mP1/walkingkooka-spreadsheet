@@ -230,6 +230,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
+                    ExpressionNumberKind.DEFAULT,
                     Cast.to(multiplier), // ExpressionNumberConverterContext
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -254,8 +255,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                             locale,
                             MathContext.DECIMAL32
                         )
-                    ),
-                    ExpressionNumberKind.DEFAULT
+                    )
                 ),
                 storageEnvironmentContext, // EnvironmentContext
                 this.jsonNodeMarshallUnmarshallContext

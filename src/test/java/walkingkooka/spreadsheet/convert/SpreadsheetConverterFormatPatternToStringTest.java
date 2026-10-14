@@ -312,6 +312,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
+                    EXPRESSION_NUMBER_KIND,
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -323,8 +324,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                         CurrencyLocaleContexts.fake(),
                         DATE_TIME_CONTEXT,
                         DECIMAL_NUMBER_CONTEXT
-                    ),
-                    EXPRESSION_NUMBER_KIND
+                    )
                 ),
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()

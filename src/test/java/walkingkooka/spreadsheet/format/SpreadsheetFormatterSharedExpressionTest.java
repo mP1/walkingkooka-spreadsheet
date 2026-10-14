@@ -191,6 +191,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
+                    EXPRESSION_NUMBER_KIND,
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
@@ -202,8 +203,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                         CURRENCY_LOCALE_CONTEXT,
                         DateTimeContexts.fake(),
                         DECIMAL_NUMBER_CONTEXT
-                    ),
-                    EXPRESSION_NUMBER_KIND
+                    )
                 ),
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()

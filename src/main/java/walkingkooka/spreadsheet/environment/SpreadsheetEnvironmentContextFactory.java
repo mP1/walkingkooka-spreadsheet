@@ -349,6 +349,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
+                        expressionNumberKind,
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
@@ -360,8 +361,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                             currencyLocaleContext,
                             dateTimeContext,
                             decimalNumberContext
-                        ),
-                        expressionNumberKind
+                        )
                     ),
                     spreadsheetEnvironmentContext,
                     JsonNodeMarshallUnmarshallContexts.basic(
