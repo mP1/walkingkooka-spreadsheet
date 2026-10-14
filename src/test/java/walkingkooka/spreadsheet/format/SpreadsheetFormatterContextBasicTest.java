@@ -199,7 +199,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     );
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-        CAN_INDEXED_NAMED_COLOR,
         HAS_USER_DIRECTORIES,
         Optional.of(SPREADSHEET_METADATA),
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -227,6 +226,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 );
             }
         },
+        COLOR_CONTEXT,
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
                 Converters.fake()
@@ -560,7 +560,33 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 "  \"spreadsheetId\": \"123\",\n" +
                 "  \"color2\": \"#123456\",\n" +
                 "  \"colorBingo\": 2\n" +
-                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number mediaTypeDetector=application/octet-stream multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver jsonNodeConverterContext=converter=CONVERTER multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction expressionNumberKind=BIG_DECIMAL context=binaryTextContext=charset=\"UTF-8\" indentation=\"  \" lineEnding=\"\\n\" dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"N"
+                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number mediaTypeDetector=application/octet-stream multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver colorContext=color1: black\n" +
+                "color2: white\n" +
+                "color3: red\n" +
+                "color4: lime\n" +
+                "color5: blue\n" +
+                "color6: yellow\n" +
+                "color7: magenta\n" +
+                "color8: cyan\n" +
+                "color9: maroon\n" +
+                "color10: green\n" +
+                "color11: navy\n" +
+                "color12: olive\n" +
+                "color13: purple\n" +
+                "color14: teal\n" +
+                "color15: silver\n" +
+                "color16: grey\n" +
+                "color17: #99f\n" +
+                "color18: #936\n" +
+                "color19: #ffc\n" +
+                "color20: #cff\n" +
+                "color21: #606\n" +
+                "color22: #ff8080\n" +
+                "color23: #06c\n" +
+                "color24: #ccf\n" +
+                "color25: navy\n" +
+                "color26: magenta\n" +
+                "color27:"
         );
     }
 

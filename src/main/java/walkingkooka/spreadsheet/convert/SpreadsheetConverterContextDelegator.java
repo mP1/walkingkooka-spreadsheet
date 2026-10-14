@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Binary;
-import walkingkooka.color.CanIndexedNamedColor;
-import walkingkooka.color.CanIndexedNamedColorDelegator;
+import walkingkooka.color.ColorContext;
+import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.convert.Converter;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -36,7 +36,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
-    CanIndexedNamedColorDelegator,
+    ColorContextDelegator,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator {
 
@@ -98,10 +98,10 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
 
     SpreadsheetConverterContext spreadsheetConverterContext();
 
-    // CanIndexedNamedColorDelegator....................................................................................
+    // ColorContextDelegator............................................................................................
 
     @Override
-    default CanIndexedNamedColor canIndexedNamedColor() {
+    default ColorContext colorContext() {
         return this.spreadsheetConverterContext();
     }
 }

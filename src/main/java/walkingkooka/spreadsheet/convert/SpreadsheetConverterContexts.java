@@ -18,7 +18,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.ColorContext;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.locale.LocaleContext;
@@ -42,8 +42,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetConverterContextBasic}
      */
-    public static SpreadsheetConverterContext basic(final CanIndexedNamedColor canIndexedNamedColor,
-                                                    final HasUserDirectories hasUserDirectories,
+    public static SpreadsheetConverterContext basic(final HasUserDirectories hasUserDirectories,
                                                     final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                     final Optional<SpreadsheetValidationReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
@@ -51,10 +50,10 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                     final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                                    final ColorContext colorContext,
                                                     final JsonNodeConverterContext jsonNodeConverterContext,
                                                     final LocaleContext localeContext) {
         return SpreadsheetConverterContextBasic.with(
-            canIndexedNamedColor,
             hasUserDirectories,
             spreadsheetMetadata,
             validationReference,
@@ -63,6 +62,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
             multiplier,
             spreadsheetLabelNameResolver,
             spreadsheetMetadataLoader,
+            colorContext,
             jsonNodeConverterContext,
             localeContext
         );

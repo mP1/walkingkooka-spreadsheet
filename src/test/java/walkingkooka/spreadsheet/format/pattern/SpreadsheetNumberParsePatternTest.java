@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.color.FakeCanIndexedNameColor;
+import walkingkooka.color.ColorContexts;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -1254,7 +1254,6 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
 
     private SpreadsheetConverterContext createConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
-            new FakeCanIndexedNameColor(),
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -1263,6 +1262,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(),
             SpreadsheetMetadataLoaders.fake(),
+            ColorContexts.fake(),
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),

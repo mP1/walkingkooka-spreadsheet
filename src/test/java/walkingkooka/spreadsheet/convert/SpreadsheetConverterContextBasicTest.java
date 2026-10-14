@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.ColorContext;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
@@ -32,6 +33,7 @@ import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -60,6 +62,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     DecimalNumberContextDelegator,
     SpreadsheetEnvironmentContextTesting,
     LocaleContextTesting {
+
+    private final static ColorContext COLOR_CONTEXT = SpreadsheetColorContexts.empty();
 
     private final static Optional<SpreadsheetValidationReference> VALIDATION_REFERENCE = Optional.empty();
 
@@ -99,31 +103,10 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     // with.............................................................................................................
 
     @Test
-    public void testWithNullCanIndexedNamedColorFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetConverterContextBasic.with(
-                null,
-                HAS_USER_DIRECTORIES,
-                SpreadsheetConverterContexts.NO_METADATA,
-                VALIDATION_REFERENCE,
-                CONVERTER,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                LABEL_RESOLVER,
-                SPREADSHEET_METADATA_LOADER,
-                JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullHasUserDirectoriesFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 null,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -132,6 +115,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -143,7 +127,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 null,
                 VALIDATION_REFERENCE,
@@ -152,6 +135,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -163,7 +147,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -172,6 +155,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -183,7 +167,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -192,6 +175,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -203,7 +187,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -212,6 +195,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 null,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -223,7 +207,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -232,6 +215,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 null,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -243,7 +227,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -252,6 +235,27 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 null,
+                COLOR_CONTEXT,
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullColorColorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetConverterContextBasic.with(
+                HAS_USER_DIRECTORIES,
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
+                null, // ColorContext
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
             )
@@ -263,7 +267,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -272,6 +275,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 null,
                 LOCALE_CONTEXT
             )
@@ -283,7 +287,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                CAN_INDEXED_NAMED_COLOR,
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
@@ -292,6 +295,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
                 null
             )
@@ -386,7 +390,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     @Override
     public SpreadsheetConverterContextBasic createContext() {
         return SpreadsheetConverterContextBasic.with(
-            CAN_INDEXED_NAMED_COLOR,
             HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             VALIDATION_REFERENCE,
@@ -395,6 +398,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
             MULTIPLIER,
             LABEL_RESOLVER,
             SPREADSHEET_METADATA_LOADER,
+            COLOR_CONTEXT,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.<ExpressionNumberConverterContext>fake()

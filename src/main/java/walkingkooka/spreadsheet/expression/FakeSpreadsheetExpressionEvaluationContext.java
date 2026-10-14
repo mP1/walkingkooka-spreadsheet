@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converter;
@@ -440,7 +441,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
         throw new UnsupportedOperationException();
     }
 
-    // CanIndexedNamedColor.............................................................................................
+    // ColorContext.....................................................................................................
 
     @Override
     public IndexedColor indexedColor(final int index) {
@@ -448,7 +449,17 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
+    public Optional<Color> lookupColor(final Color color) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public NamedColor namedColor(final String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Color parseColor(final String color) {
         throw new UnsupportedOperationException();
     }
 }

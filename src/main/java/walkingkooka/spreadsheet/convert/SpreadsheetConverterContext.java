@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.ColorContext;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -34,7 +34,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
  */
 public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext,
-    CanIndexedNamedColor,
+    ColorContext,
     HasConverter<SpreadsheetConverterContext>,
     HasMissingCellNumberValue,
     HasSpreadsheetMetadata,
