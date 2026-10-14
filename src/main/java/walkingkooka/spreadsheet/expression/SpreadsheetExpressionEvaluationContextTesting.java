@@ -36,6 +36,7 @@ import walkingkooka.terminal.expression.TerminalExpressionEvaluationContextTesti
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContextTesting;
+import walkingkooka.tree.text.expression.TreeTextExpressionEvaluationContextTesting;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting;
 
@@ -52,6 +53,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting extends FormHandl
     SpreadsheetMetadataContextTesting,
     StorageExpressionEvaluationContextTesting,
     TerminalExpressionEvaluationContextTesting,
+    TreeTextExpressionEvaluationContextTesting,
     ValidatorExpressionEvaluationContextTesting,
     SpreadsheetProviderContextTesting {
 
