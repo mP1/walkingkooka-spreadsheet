@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.MultiValueStoreTesting;
 
-@SuppressWarnings("unchecked")
 public interface SpreadsheetExpressionReferencesStoreTesting<S extends SpreadsheetExpressionReferencesStore<T>,
     T extends SpreadsheetExpressionReference & Comparable<T>>
     extends MultiValueStoreTesting<S, T, SpreadsheetCellReference>,

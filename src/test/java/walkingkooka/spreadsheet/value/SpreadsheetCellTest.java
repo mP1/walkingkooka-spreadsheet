@@ -1656,7 +1656,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatter() {
         this.unmarshallAndCheck(
