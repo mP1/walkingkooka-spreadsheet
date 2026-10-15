@@ -354,7 +354,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         final SpreadsheetFormula formula = this.createObject();
 
         final String differentText = "different!";
-        final Optional<SpreadsheetFormulaParserToken> differentToken = this.token(differentText);
+        final Optional<SpreadsheetFormulaParserToken> differentToken = token(differentText);
         final SpreadsheetFormula different = formula.setToken(differentToken);
         assertNotSame(
             formula,
@@ -376,7 +376,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
             .setValueType(OPTIONAL_VALUE_TYPE);
 
         final String differentText = "different!";
-        final Optional<SpreadsheetFormulaParserToken> differentToken = this.token(differentText);
+        final Optional<SpreadsheetFormulaParserToken> differentToken = token(differentText);
         final SpreadsheetFormula different = formula.setToken(differentToken);
         assertNotSame(
             formula,
