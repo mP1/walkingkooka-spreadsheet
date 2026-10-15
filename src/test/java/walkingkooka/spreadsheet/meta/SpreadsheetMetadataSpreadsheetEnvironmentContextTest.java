@@ -315,19 +315,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     }
 
     @Test
-    public void testIndentation() {
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext context = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
-            METADATA,
-            CONTEXT.cloneEnvironment()
-        );
-
-        this.indentationAndCheck(
-            context,
-            INDENTATION
-        );
-    }
-    
-    @Test
     public void testLocale() {
         final SpreadsheetMetadataSpreadsheetEnvironmentContext context = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             METADATA.set(

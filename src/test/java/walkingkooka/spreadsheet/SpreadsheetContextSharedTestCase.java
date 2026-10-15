@@ -61,7 +61,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -349,32 +348,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         );
     }
 
-    // currency.........................................................................................................
-
-    @Test
-    public final void testCurrency() {
-        this.currencyAndCheck(
-            this.createContext(),
-            CURRENCY
-        );
-    }
-
-    // setCurrency.......................................................................................................
-
-    @Test
-    public final void testSetCurrency() {
-        final Currency different = Currency.getInstance("NZD");
-        this.checkNotEquals(
-            CURRENCY,
-            different
-        );
-
-        this.setCurrencyAndCheck(
-            this.createContext(),
-            different
-        );
-    }
-
     // currentWorkingDirectory..........................................................................................
 
     @Test
@@ -401,16 +374,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         );
     }
 
-    // indentation........................................................................................................
-
-    @Test
-    public final void testIndentation() {
-        this.indentationAndCheck(
-            this.createContext(),
-            INDENTATION
-        );
-    }
-    
     // serverUrl........................................................................................................
 
     @Test

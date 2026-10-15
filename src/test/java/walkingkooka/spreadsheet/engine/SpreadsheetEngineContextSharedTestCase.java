@@ -70,7 +70,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -456,32 +455,6 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
     }
 
-    // currency.........................................................................................................
-
-    @Test
-    public final void testCurrency() {
-        this.currencyAndCheck(
-            this.createContext(),
-            CURRENCY
-        );
-    }
-
-    // setCurrency.......................................................................................................
-
-    @Test
-    public final void testSetCurrency() {
-        final Currency different = Currency.getInstance("NZD");
-        this.checkNotEquals(
-            CURRENCY,
-            different
-        );
-
-        this.setCurrencyAndCheck(
-            this.createContext(),
-            different
-        );
-    }
-
     // currentWorkingDirectory......................................................................................................
 
     @Test
@@ -501,10 +474,11 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
             different
         );
     }
-    
+
     // indentation......................................................................................................
 
     @Test
+    @Override
     public final void testIndentation() {
         final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
@@ -515,6 +489,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     }
 
     @Test
+    @Override
     public final void testSetIndentation() {
         final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
@@ -533,11 +508,17 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
             context,
             indentation
         );
+
+        this.indentationAndCheck(
+            environmentContext,
+            indentation
+        );
     }
     
     // lineEnding.......................................................................................................
 
     @Test
+    @Override
     public final void testLineEnding() {
         final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
@@ -548,27 +529,21 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     }
 
     @Test
+    @Override
     public final void testSetLineEnding() {
         final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final C context = this.createContext(environmentContext);
 
-        final LineEnding lineEnding = LineEnding.CRNL;
-
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
         this.setLineEndingAndCheck(
             context,
-            lineEnding
+            DIFFERENT_LINE_ENDING
         );
 
         this.environmentValueAndCheck(
             context,
             EnvironmentValueName.LINE_ENDING,
-            lineEnding
+            DIFFERENT_LINE_ENDING
         );
     }
 

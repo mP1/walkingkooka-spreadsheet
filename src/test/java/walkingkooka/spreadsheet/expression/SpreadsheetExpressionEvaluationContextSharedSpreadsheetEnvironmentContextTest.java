@@ -62,6 +62,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -328,28 +329,23 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // HasLineEndings...................................................................................................
 
     @Test
+    @Override
     public void testLineEnding() {
-        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            storageEnvironmentContext
         );
 
         this.lineEndingAndCheck(
-            this.createContext(context),
-            context.lineEnding()
+            this.createContext(spreadsheetEnvironmentContext),
+            spreadsheetEnvironmentContext.lineEnding()
         );
-    }
 
-    @Test
-    public void testSetLineEnding() {
-        this.setLineEndingAndCheck(
-            this.createContext(
-                SpreadsheetEnvironmentContexts.basic(
-                    STORAGE,
-                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                )
-            ),
-            DIFFERENT_LINE_ENDING
+        this.lineEndingAndCheck(
+            storageEnvironmentContext,
+            spreadsheetEnvironmentContext.lineEnding()
         );
     }
 
