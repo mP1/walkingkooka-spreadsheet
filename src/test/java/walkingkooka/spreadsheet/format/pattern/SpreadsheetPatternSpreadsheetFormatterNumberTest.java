@@ -26,7 +26,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.math.MathTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
@@ -2664,8 +2663,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
                 "[RED]",
                 "[RED]",
                 Stream.concat(
-                    SpreadsheetColorName.DEFAULTS.stream()
-                        .map(n -> "[" + n.text() + "]")
+                    SpreadsheetColors.DEFAULTS.stream()
+                        .map(n -> "[" + n.value() + "]")
                         .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t)),
                     IntStream.rangeClosed(
                             SpreadsheetColors.MIN,

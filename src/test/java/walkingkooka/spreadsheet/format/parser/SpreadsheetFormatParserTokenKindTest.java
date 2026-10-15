@@ -24,7 +24,6 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.visit.Visiting;
@@ -1077,7 +1076,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         }.accept(pattern.value());
 
         this.checkEquals(
-            SpreadsheetColorName.DEFAULTS.stream()
+            SpreadsheetColors.DEFAULTS.stream()
                 .map(c -> "[" + c.value() + "]")
                 .collect(Collectors.toList()),
             new ArrayList<>(
