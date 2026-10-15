@@ -120,26 +120,6 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
      */
     final boolean currency;
 
-//    private Optional<Color> color(final SpreadsheetFormatterContext context) {
-////        Object colorNameOrNumber = this.color;
-////        Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
-////
-////        if (colorNameOrNumber instanceof Integer) {
-////            color = context.colorNumber(
-////                (Integer) colorNameOrNumber
-////            );
-////        } else {
-////            if (colorNameOrNumber instanceof SpreadsheetColorName) {
-////                color = context.colorName(
-////                    (SpreadsheetColorName) colorNameOrNumber
-////                );
-////            }
-////        }
-////
-////        return color;
-//        return this.color;
-//    }
-
     // IndexedColor or NamedColor
     private final Optional<Color> color;
 
