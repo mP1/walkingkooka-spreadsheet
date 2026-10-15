@@ -60,6 +60,7 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColor extends Spreadshe
                         .parseText(
                             text,
                             SpreadsheetFormatParserContexts.basic(
+                                context, // CanIndexedNameColor
                                 InvalidCharacterExceptionFactory.POSITION
                             )
                         ),

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -26,7 +27,8 @@ import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
 public final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitorTest extends
-    SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor> {
+    SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor>
+    implements SpreadsheetFormatParserContextTesting {
 
     @Test
     public void testHHMMSS() {
@@ -76,7 +78,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreads
         visitor.accept(SpreadsheetFormatParsers.timeFormat().orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence(pattern),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SpreadsheetFormatParserContexts.basic(
+                    CAN_INDEXED_NAMED_COLOR,
+                    InvalidCharacterExceptionFactory.POSITION
+                )
             ).get());
         this.checkEquals(ampm, visitor.twelveHour, "twelveHour");
         this.checkEquals(millisecondDecimals, visitor.millisecondDecimals, "millisecondDecimals");

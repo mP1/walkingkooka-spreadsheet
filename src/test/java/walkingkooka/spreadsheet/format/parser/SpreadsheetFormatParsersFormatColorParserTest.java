@@ -33,6 +33,7 @@ import walkingkooka.text.cursor.parser.Parsers;
 import java.util.Optional;
 
 public final class SpreadsheetFormatParsersFormatColorParserTest implements ParserTesting2<SpreadsheetFormatParsersFormatColorParser, SpreadsheetFormatParserContext>,
+    SpreadsheetFormatParserContextTesting,
     ToStringTesting<SpreadsheetFormatParsersFormatColorParser> {
 
     @Test
@@ -243,7 +244,10 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
 
     @Override
     public SpreadsheetFormatParserContext createContext() {
-        return SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION);
+        return SpreadsheetFormatParserContexts.basic(
+            CAN_INDEXED_NAMED_COLOR,
+            InvalidCharacterExceptionFactory.POSITION
+        );
     }
 
     // ToStringTesting..................................................................................................

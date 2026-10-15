@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserTok
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SeparatorSymbolSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -42,7 +43,9 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.function.Function;
 
-public final class SpreadsheetParsePatternTest implements ClassTesting2<SpreadsheetParsePattern>, TreePrintableTesting {
+public final class SpreadsheetParsePatternTest implements ClassTesting2<SpreadsheetParsePattern>,
+    SpreadsheetFormatParserContextTesting,
+    TreePrintableTesting {
 
     @Test
     public void testParseDate() {
@@ -183,7 +186,10 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence(text),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SpreadsheetFormatParserContexts.basic(
+                    CAN_INDEXED_NAMED_COLOR,
+                    InvalidCharacterExceptionFactory.POSITION
+                )
             ).get()
             .cast(SequenceParserToken.class)
             .value()
@@ -213,7 +219,10 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence(text),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SpreadsheetFormatParserContexts.basic(
+                    CAN_INDEXED_NAMED_COLOR,
+                    InvalidCharacterExceptionFactory.POSITION
+                )
             ).get()
             .cast(type);
     }

@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -682,6 +683,7 @@ abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
         return parser.parseText(
             text,
             SpreadsheetFormatParserContexts.basic(
+                SpreadsheetColorContexts.spreadsheetMetadataDefaults(),
                 InvalidCharacterExceptionFactory.POSITION_EXPECTED
             )
         );

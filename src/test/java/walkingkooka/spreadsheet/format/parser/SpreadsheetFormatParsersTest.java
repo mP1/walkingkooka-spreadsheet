@@ -33,6 +33,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserTestCase implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
+    SpreadsheetFormatParserContextTesting,
     ParserTesting2<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
 
     // color............................................................................................................
@@ -14196,7 +14197,10 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Override
     public SpreadsheetFormatParserContext createContext() {
-        return SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION_EXPECTED);
+        return SpreadsheetFormatParserContexts.basic(
+            CAN_INDEXED_NAMED_COLOR,
+            InvalidCharacterExceptionFactory.POSITION_EXPECTED
+        );
     }
 
     @Override

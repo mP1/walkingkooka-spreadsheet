@@ -25,6 +25,7 @@ import walkingkooka.color.NamedColor;
 import walkingkooka.color.WebColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -35,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
-    T extends ParentSpreadsheetFormatParserToken> extends SpreadsheetPatternTestCase<P> {
+    T extends ParentSpreadsheetFormatParserToken> extends SpreadsheetPatternTestCase<P>
+    implements SpreadsheetFormatParserContextTesting {
 
     final static Color COLOR_INDEX_44 = Color.indexed(44);
 

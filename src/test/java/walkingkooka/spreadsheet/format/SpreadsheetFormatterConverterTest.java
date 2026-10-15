@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
@@ -58,7 +59,8 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     DecimalNumberContextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormatterConverter>,
     HasExpressionNumberKindTesting,
-    SpreadsheetEnvironmentContextTesting {
+    SpreadsheetEnvironmentContextTesting,
+    SpreadsheetFormatParserContextTesting {
 
     @Test
     public void testFormatBigDecimal() {
@@ -128,7 +130,10 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence(pattern),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SpreadsheetFormatParserContexts.basic(
+                    CAN_INDEXED_NAMED_COLOR,
+                    InvalidCharacterExceptionFactory.POSITION
+                )
             ).map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(NumberSpreadsheetFormatParserToken.class))
             .map((t) -> SpreadsheetFormatters.number(
                 t,
