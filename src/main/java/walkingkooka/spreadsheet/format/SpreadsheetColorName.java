@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
@@ -147,7 +148,7 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
 
     private final String name;
 
-    public SpreadsheetMetadataPropertyName<Integer> spreadsheetMetadataPropertyName() {
+    public SpreadsheetMetadataPropertyName<IndexedColor> spreadsheetMetadataPropertyName() {
         return SpreadsheetMetadataPropertyName.namedColor(
             Color.named(this.name)
         );

@@ -381,12 +381,12 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.namedColor(
                 NamedColor.BLACK
             ),
-            1
+            Color.indexed(1)
         ).set(
             SpreadsheetMetadataPropertyName.namedColor(
                 NamedColor.WHITE
             ),
-            2
+            Color.indexed(2)
         );
 
     EnvironmentValueName<String> DUMMY_ENVIRONMENTAL_VALUE_NAME = EnvironmentValueName.with(

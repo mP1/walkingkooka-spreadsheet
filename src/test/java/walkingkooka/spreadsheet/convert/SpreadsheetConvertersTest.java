@@ -1238,7 +1238,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                             SpreadsheetMetadataPropertyName.namedColor(
                                 Color.named(NAMED_COLOR)
                             ),
-                            10
+                            Color.indexed(10)
                         ).set(
                             SpreadsheetMetadataPropertyName.numberedColor(
                                 Color.indexed(10)

@@ -818,21 +818,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), INDEXED_COLOR7.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), INDEXED_COLOR7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR7.index(),
+            INDEXED_COLOR7,
             NAMED_COLOR7
         );
     }
@@ -851,13 +851,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         color
                     ).set(
                         SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1),
-                        INDEXED_COLOR1.index()
+                        INDEXED_COLOR1
                     )
             );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
     }
@@ -870,7 +870,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .setDefaults(
                 SpreadsheetMetadata.EMPTY
                     .set(
@@ -881,7 +881,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
     }
@@ -967,13 +967,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
 
@@ -990,13 +990,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
 
@@ -1014,13 +1014,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
 
@@ -1039,21 +1039,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), INDEXED_COLOR7.index())
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), INDEXED_COLOR7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR7.index(),
+            INDEXED_COLOR7,
             NAMED_COLOR7
         );
 
@@ -1084,13 +1084,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     color1
                 ).set(
                     SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1),
-                    INDEXED_COLOR1.index()
+                    INDEXED_COLOR1
                 )
             );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            INDEXED_COLOR1.index(),
+            INDEXED_COLOR1,
             NAMED_COLOR1
         );
 
@@ -3721,10 +3721,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     Color.WHITE
                 ).set(
                     SpreadsheetMetadataPropertyName.namedColor(NamedColor.BLACK),
-                    1
+                    Color.indexed(1)
                 ).set(
                     SpreadsheetMetadataPropertyName.namedColor(NamedColor.WHITE),
-                    2
+                    Color.indexed(2)
                 ),
             expected
         );

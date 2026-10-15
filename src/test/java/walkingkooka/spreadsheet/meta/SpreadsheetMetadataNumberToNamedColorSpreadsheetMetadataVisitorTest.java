@@ -60,12 +60,12 @@ public final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisit
                 SpreadsheetMetadataPropertyName.namedColor(
                     Color.named("apple")
                 ),
-                1
+                Color.indexed(1)
             ).set(
                 SpreadsheetMetadataPropertyName.namedColor(
                     Color.named("banana")
                 ),
-                3
+                Color.indexed(3)
             );
         final SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor();
 

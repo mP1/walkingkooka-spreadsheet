@@ -19,7 +19,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
-import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 
@@ -44,9 +43,9 @@ final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor exte
 
     @Override
     protected void visitNamedColor(final NamedColor namedColor,
-                                   final int colorNumber) {
+                                   final IndexedColor colorNumber) {
         this.numberToNamedColor.put(
-            Color.indexed(colorNumber),
+            colorNumber,
             namedColor
         );
     }

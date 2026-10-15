@@ -530,12 +530,12 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     @Test
     public void testVisitNamedColor() {
         final NamedColor namedColor = Color.named("Shiny");
-        final int colorNumber = 23;
+        final IndexedColor colorNumber = Color.indexed(23);
 
         new TestSpreadsheetMetadataVisitor() {
             @Override
             protected void visitNamedColor(final NamedColor n,
-                                           final int c) {
+                                           final IndexedColor c) {
                 checkEquals(namedColor, n, "namedColor");
                 this.visited = c;
             }

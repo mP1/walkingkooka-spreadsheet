@@ -130,10 +130,12 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
             .forEach(i -> {
                     final String value = "color" + i;
                     final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
-                    this.checkEquals(SpreadsheetMetadataPropertyNameIntegerNamedColor.class, propertyName.getClass(), "class name");
+                    this.checkEquals(SpreadsheetMetadataPropertyNameNamedColor.class, propertyName.getClass(), "class name");
                     this.checkEquals(value, propertyName.value(), "value");
 
-                    propertyName.checkValue(colorNumber);
+                    propertyName.checkValue(
+                        Color.indexed(colorNumber)
+                    );
                 }
             );
     }

@@ -19,12 +19,13 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerNamedColor> {
+public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNamedColor, IndexedColor> {
 
     private final static NamedColor NAMED_COLOR = Color.named("dull");
 
@@ -32,7 +33,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     public void testWithNullFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(null)
+            () -> SpreadsheetMetadataPropertyNameNamedColor.withNamedColor(null)
         );
     }
 
@@ -43,7 +44,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
         this.getMessageAndCheck(
             assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(namedColor)
+                () -> SpreadsheetMetadataPropertyNameNamedColor.withNamedColor(namedColor)
             ),
             "Invalid character '1' at 7"
         );
@@ -51,7 +52,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
 
     @Test
     public void testWith() {
-        final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(NAMED_COLOR);
+        final SpreadsheetMetadataPropertyNameNamedColor property = SpreadsheetMetadataPropertyNameNamedColor.withNamedColor(NAMED_COLOR);
         assertSame(
             NAMED_COLOR,
             property.name,
@@ -62,7 +63,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     @Test
     public void testCheckValueWithColorNumberZeroFails() {
         this.checkValueFails(
-            0,
+            Color.indexed(0),
             "Metadata colordull=0, Invalid color number 0 < 1 or > 56"
         );
     }
@@ -70,20 +71,30 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(NAMED_COLOR),
+            SpreadsheetMetadataPropertyNameNamedColor.withNamedColor(NAMED_COLOR),
             "colordull"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameIntegerNamedColor createName() {
-        return SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(NAMED_COLOR);
+    SpreadsheetMetadataPropertyNameNamedColor createName() {
+        return SpreadsheetMetadataPropertyNameNamedColor.withNamedColor(NAMED_COLOR);
+    }
+
+    @Override
+    IndexedColor propertyValue() {
+        return Color.indexed(12);
+    }
+
+    @Override
+    String propertyValueType() {
+        return IndexedColor.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameIntegerNamedColor> type() {
-        return SpreadsheetMetadataPropertyNameIntegerNamedColor.class;
+    public Class<SpreadsheetMetadataPropertyNameNamedColor> type() {
+        return SpreadsheetMetadataPropertyNameNamedColor.class;
     }
 }
