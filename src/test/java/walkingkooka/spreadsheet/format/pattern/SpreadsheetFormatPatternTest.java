@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
@@ -30,7 +32,13 @@ import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 
-public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern> {
+public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern>,
+    SpreadsheetFormatParserContextTesting {
+
+    private final static SpreadsheetFormatParserContext SPREADSHEET_FORMAT_PARSER_CONTEXT = SpreadsheetFormatParserContexts.basic(
+        CAN_INDEXED_NAMED_COLOR,
+        InvalidCharacterExceptionFactory.POSITION
+    );
 
     @Test
     public void testWithDate() {
@@ -79,7 +87,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence("dmyy"),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SPREADSHEET_FORMAT_PARSER_CONTEXT
             ).get();
     }
 
@@ -88,7 +96,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence("hhmmyyyy"),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SPREADSHEET_FORMAT_PARSER_CONTEXT
             ).get();
     }
 
@@ -97,7 +105,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence("#0.0"),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SPREADSHEET_FORMAT_PARSER_CONTEXT
             ).get();
     }
 
@@ -106,7 +114,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence("hhmm"),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SPREADSHEET_FORMAT_PARSER_CONTEXT
             ).get();
     }
 

@@ -17,7 +17,19 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.text.cursor.parser.FakeParserContext;
 
 public class FakeSpreadsheetFormatParserContext extends FakeParserContext implements SpreadsheetFormatParserContext {
+
+    @Override
+    public IndexedColor indexedColor(final int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public NamedColor namedColor(final String name) {
+        throw new UnsupportedOperationException();
+    }
 }

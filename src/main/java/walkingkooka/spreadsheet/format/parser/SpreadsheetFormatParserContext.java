@@ -17,10 +17,12 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.text.cursor.parser.ParserContext;
 
 /**
  * A {@link ParserContext} for all spreadsheet parsers.
  */
-public interface SpreadsheetFormatParserContext extends ParserContext {
+public interface SpreadsheetFormatParserContext extends ParserContext,
+    CanIndexedNamedColor {
 }

@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format.parser;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.color.CanIndexedNamedColor;
+import walkingkooka.color.CanIndexedNamedColorDelegator;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -38,17 +40,22 @@ import java.util.function.BiFunction;
  * A {@link SpreadsheetFormatParserContext} without any functionality.
  */
 final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatParserContext,
+    CanIndexedNamedColorDelegator,
     DecimalNumberContextDelegator,
     UsesToStringBuilder {
 
-    static SpreadsheetFormatParserContextBasic with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
+    static SpreadsheetFormatParserContextBasic with(final CanIndexedNamedColor canIndexedNamedColor,
+                                                    final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
         return new SpreadsheetFormatParserContextBasic(
+            Objects.requireNonNull(canIndexedNamedColor, "canIndexedNamedColor"),
             Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory")
         );
     }
 
-    private SpreadsheetFormatParserContextBasic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
+    private SpreadsheetFormatParserContextBasic(final CanIndexedNamedColor canIndexedNamedColor,
+                                                final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
         super();
+        this.canIndexedNamedColor = canIndexedNamedColor;
         this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
     }
 
@@ -128,6 +135,15 @@ final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatPars
         throw new UnsupportedOperationException();
     }
 
+    // CanIndexedNamedColorDelegator....................................................................................
+
+    @Override
+    public CanIndexedNamedColor canIndexedNamedColor() {
+        return this.canIndexedNamedColor;
+    }
+
+    private final CanIndexedNamedColor canIndexedNamedColor;
+
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
@@ -141,14 +157,16 @@ final class SpreadsheetFormatParserContextBasic implements SpreadsheetFormatPars
 
     @Override
     public String toString() {
-        return this.invalidCharacterExceptionFactory + " " + DECIMAL_NUMBER_CONTEXT;
+        return ToStringBuilder.buildFrom(this);
     }
 
     // UsesToStringBuilder..............................................................................................
 
     @Override
     public void buildToString(final ToStringBuilder toStringBuilder) {
-        toStringBuilder.label("invalidCharacterExceptionFactory")
+        toStringBuilder.label("CanIndexedNamedColor")
+            .value(this.canIndexedNamedColor)
+            .label("invalidCharacterExceptionFactory")
             .value(this.invalidCharacterExceptionFactory)
             .label("decimalNumberContext")
             .value(DECIMAL_NUMBER_CONTEXT);

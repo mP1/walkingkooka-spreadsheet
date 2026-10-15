@@ -24,6 +24,7 @@ import walkingkooka.color.NamedColor;
 import walkingkooka.color.WebColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting2;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.TextCursors;
@@ -39,6 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends SpreadsheetPatternSpreadsheetFormatter,
     T extends SpreadsheetFormatParserToken>
     implements SpreadsheetFormatterTesting2<F>,
+    SpreadsheetFormatParserContextTesting,
     HashCodeEqualsDefinedTesting2<F> {
 
     final static Color COLOR_INDEX_44 = Color.indexed(44);
@@ -96,7 +98,10 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends S
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence(pattern),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SpreadsheetFormatParserContexts.basic(
+                    CAN_INDEXED_NAMED_COLOR,
+                    InvalidCharacterExceptionFactory.POSITION
+                )
             ).get();
     }
 

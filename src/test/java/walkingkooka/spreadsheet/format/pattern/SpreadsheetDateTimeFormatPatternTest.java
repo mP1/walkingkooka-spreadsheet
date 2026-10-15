@@ -136,7 +136,10 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 TextCursors.charSequence(text),
-                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                SpreadsheetFormatParserContexts.basic(
+                    CAN_INDEXED_NAMED_COLOR,
+                    InvalidCharacterExceptionFactory.POSITION
+                )
             ).get();
     }
 
