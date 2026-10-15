@@ -25,13 +25,15 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.storage.convert.StorageConverterContextTesting;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
+import walkingkooka.tree.text.convert.TreeTextConverterContextTesting;
 
 public interface SpreadsheetConverterContextTesting extends ColorContextTesting,
     JsonNodeConverterContextTesting,
     SpreadsheetLabelNameResolverTesting,
     SpreadsheetMetadataLoaderTesting,
     StorageConverterContextTesting,
-    SpreadsheetProviderContextTesting {
+    SpreadsheetProviderContextTesting,
+    TreeTextConverterContextTesting {
 
     ColorContext COLOR_CONTEXT = SpreadsheetColorContexts.spreadsheetMetadataDefaults();
 }

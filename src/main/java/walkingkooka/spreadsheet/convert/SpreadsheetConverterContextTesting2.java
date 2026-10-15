@@ -22,13 +22,15 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting2;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.storage.convert.StorageConverterContextTesting2;
+import walkingkooka.tree.text.convert.TreeTextConverterContextTesting2;
 
 public interface SpreadsheetConverterContextTesting2<C extends SpreadsheetConverterContext> extends SpreadsheetConverterContextTesting,
     ColorContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting2<C>,
     SpreadsheetMetadataLoaderTesting2<C>,
     StorageConverterContextTesting2<C>,
-    SpreadsheetProviderContextTesting2<C> {
+    SpreadsheetProviderContextTesting2<C>,
+    TreeTextConverterContextTesting2<C> {
 
     @Override
     default C createSpreadsheetLabelNameResolver() {
