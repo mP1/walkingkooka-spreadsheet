@@ -323,6 +323,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * A hint that is used by the UI to select an appropriate picker forcing the user to enter a matching {@link #value}.
      */
+    @Override
     public Optional<ValueType> valueType() {
         return this.valueType;
     }
