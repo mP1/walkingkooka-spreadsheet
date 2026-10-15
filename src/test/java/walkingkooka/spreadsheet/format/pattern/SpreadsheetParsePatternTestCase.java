@@ -41,7 +41,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.formula.parser.AmPmSpreadsheetFormulaParserToken;
@@ -97,7 +96,6 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     ConverterTesting,
     DateTimeContextTesting,
     SpreadsheetEnvironmentContextTesting,
-    SpreadsheetFormatParserContextTesting,
     SpreadsheetParserContextTesting {
 
     final static String CURRENCY = "NZ$";
