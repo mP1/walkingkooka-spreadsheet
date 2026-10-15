@@ -17,13 +17,10 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.color.Color;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -236,14 +233,6 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                     )
                 ).text()
         );
-    }
-
-    private Optional<Color> numberToColor(final Integer value) {
-        return SpreadsheetText.WITHOUT_COLOR; // ignore the colour number
-    }
-
-    private Optional<Color> nameToColor(final SpreadsheetColorName name) {
-        return SpreadsheetText.WITHOUT_COLOR; // ignore the colour name.
     }
 
     /**

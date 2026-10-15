@@ -484,7 +484,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<AnchoredSpreadsheetSelection> VIEWPORT_SELECTION = registerConstant(SpreadsheetMetadataPropertyNameViewportSelection.instance());
 
     /**
-     * A read only view of all names, except for the {@link SpreadsheetMetadataPropertyName#namedColor(SpreadsheetColorName)} and {@link SpreadsheetMetadataPropertyName#numberedColor(int)}.
+     * A read only view of all names, except for the {@link SpreadsheetMetadataPropertyName#namedColor(NamedColor)} and {@link SpreadsheetMetadataPropertyName#numberedColor(IndexedColor)}.
      */
     public final static Set<SpreadsheetMetadataPropertyName<?>> ALL = Sets.readOnly(
         new TreeSet<>(
