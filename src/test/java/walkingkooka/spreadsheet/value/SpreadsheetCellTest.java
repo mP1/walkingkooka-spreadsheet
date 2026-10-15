@@ -3569,8 +3569,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .setStyle(TEXT_STYLE)
                 .setParser(OPTIONAL_PARSER_SELECTOR)
                 .setFormula(
-                    this.FORMULA
-                        .setToken(this.TOKEN)
+                    FORMULA
+                        .setToken(TOKEN)
                         .setExpression(EXPRESSION)
                         .setValue(VALUE)
                 ),
@@ -3607,7 +3607,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .setParser(OPTIONAL_PARSER_SELECTOR)
                 .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
                 .setFormula(
-                    FORMULA.setToken(this.TOKEN)
+                    FORMULA.setToken(TOKEN)
                         .setExpression(EXPRESSION)
                         .setValue(VALUE)
                 ),
