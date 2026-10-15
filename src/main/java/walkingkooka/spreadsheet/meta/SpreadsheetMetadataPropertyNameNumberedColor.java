@@ -29,8 +29,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
- * The {@link Name} of metadata property for numbered colors. Note values not be a indirect color, {@link Color#isIndexed()}
- * or {@link Color#isNamed()} must both return false.
+ * The {@link Name} of metadata property for numbered colors.
  */
 final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMetadataPropertyName<Color> {
 
