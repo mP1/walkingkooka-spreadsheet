@@ -1430,6 +1430,36 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         }
     }
 
+    /**
+     * <pre>
+     * "[Black]"
+     * "[White]"
+     * "[Red]"
+     * "[Green]"
+     * "[Blue]"
+     * "[Yellow]"
+     * "[Magenta]"
+     * "[Cyan]"
+     * </pre>
+     */
+
+    @Test
+    public void testPatterns_ColorNames() {
+        this.checkEquals(
+            Sets.of(
+                "[Black]",
+                "[White]",
+                "[Red]",
+                "[Green]",
+                "[Blue]",
+                "[Yellow]",
+                "[Magenta]",
+                "[Cyan]"
+            ),
+            SpreadsheetFormatParserTokenKind.COLOR_NAME.patterns()
+        );
+    }
+
     @Test
     public void testPatterns_CONDITION() {
         this.checkEquals(

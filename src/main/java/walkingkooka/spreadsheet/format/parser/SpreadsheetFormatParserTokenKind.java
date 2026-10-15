@@ -21,7 +21,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
@@ -48,7 +47,7 @@ public enum SpreadsheetFormatParserTokenKind {
 
     COLOR_NAME(
         SpreadsheetFormatParserTokenKind::isColor,
-        SpreadsheetColorName.DEFAULTS.stream()
+        SpreadsheetColors.DEFAULTS.stream()
             .map(n -> "[" + n.value() + "]")
             .toArray(String[]::new)
     ),
