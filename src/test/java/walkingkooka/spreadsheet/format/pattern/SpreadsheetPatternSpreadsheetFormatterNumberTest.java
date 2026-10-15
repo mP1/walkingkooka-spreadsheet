@@ -2612,30 +2612,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
 
                 throw new UnsupportedOperationException();
             }
-
-//            @Override
-//            public Optional<Color> colorName(final SpreadsheetColorName name) {
-//                checkEquals(
-//                    SpreadsheetColorName.with("red"),
-//                    name,
-//                    "colorName"
-//                );
-//                return Optional.of(
-//                    RED
-//                );
-//            }
-//
-//            @Override
-//            public Optional<Color> colorNumber(final int number) {
-//                checkEquals(
-//                    44,
-//                    number,
-//                    "colorNumber"
-//                );
-//                return Optional.of(
-//                    RED
-//                );
-//            }
         };
     }
 
