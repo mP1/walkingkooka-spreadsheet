@@ -454,6 +454,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     // namedColor.......................................................................................................
 
     @Test
+    @Override
     public final void testNamedColorWithInvalidCharactersFails() {
         this.getMessageAndCheck(
             assertThrows(
