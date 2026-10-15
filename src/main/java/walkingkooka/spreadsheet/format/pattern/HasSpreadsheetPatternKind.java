@@ -27,5 +27,5 @@ public interface HasSpreadsheetPatternKind {
     /**
      * Gets the {@link SpreadsheetPatternKind}.
      */
-    Optional<SpreadsheetPatternKind> patternKind();
+    Optional<SpreadsheetPatternKind> spreadsheetPatternKind();
 }

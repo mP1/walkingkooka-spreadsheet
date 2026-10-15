@@ -804,7 +804,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     // time -> TIME_PARSER
     @Override
-    public final Optional<SpreadsheetPatternKind> patternKind() {
+    public final Optional<SpreadsheetPatternKind> spreadsheetPatternKind() {
         SpreadsheetPatternKind kind;
         if (this instanceof SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector) {
             final SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector formatter = (SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector) this;

@@ -704,21 +704,21 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     // HasSpreadsheetPatternKind........................................................................................
 
     @Test
-    public void testHasSpreadsheetPatternKindSpreadsheetId() {
+    public void testHasSpreadsheetWithSpreadsheetPatternKindSpreadsheetId() {
         this.hasSpreadsheetPatternKindAndCheck(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID
         );
     }
 
     @Test
-    public void testHasSpreadsheetPatternKindColor1() {
+    public void testHasSpreadsheetWithSpreadsheetPatternKindColor1() {
         this.hasSpreadsheetPatternKindAndCheck(
             SpreadsheetMetadataPropertyName.numberedColor(1)
         );
     }
 
     @Test
-    public void testHasSpreadsheetPatternKindDateFormatter() {
+    public void testHasSpreadsheetWithSpreadsheetPatternKindDateFormatter() {
         this.hasSpreadsheetPatternKindAndCheck(
             SpreadsheetMetadataPropertyName.DATE_FORMATTER,
             SpreadsheetPatternKind.DATE_FORMAT_PATTERN
@@ -726,7 +726,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testHasSpreadsheetPatternKindDateTimeFormatter() {
+    public void testHasSpreadsheetWithSpreadsheetPatternKindDateTimeFormatter() {
         this.hasSpreadsheetPatternKindAndCheck(
             SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
             SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
@@ -734,7 +734,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testHasSpreadsheetPatternKindTextFormatter() {
+    public void testHasSpreadsheetWithSpreadsheetPatternKindTextFormatter() {
         this.hasSpreadsheetPatternKindAndCheck(
             SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
             SpreadsheetPatternKind.TEXT_FORMAT_PATTERN

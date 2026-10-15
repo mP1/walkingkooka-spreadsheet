@@ -27,11 +27,11 @@ public abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelecto
     }
 
     @Test
-    public final void testPatternKindNonNull() {
+    public final void testSpreadsheetPatternKindNonNull() {
         this.checkNotEquals(
             null,
             this.createName()
-                .patternKind()
+                .spreadsheetPatternKind()
         );
     }
 

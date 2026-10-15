@@ -42,7 +42,7 @@ public interface HasSpreadsheetPatternKindTesting extends TreePrintableTesting {
                                                    final Optional<SpreadsheetPatternKind> expected) {
         this.checkEquals(
             expected,
-            has.patternKind(),
+            has.spreadsheetPatternKind(),
             has::toString
         );
     }
