@@ -193,16 +193,10 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     public Optional<Color> lookupNamedColor(final NamedColor color) {
         SpreadsheetColors.checkNamedColor(color);
 
-        final Integer colorNumber = this.get(
+        return this.get(
             // ColorRED -> RED
             SpreadsheetMetadataPropertyName.namedColor(color)
-        ).orElse(null);
-
-        return null != colorNumber ?
-            this.lookupIndexedColor(
-                IndexedColor.indexed(colorNumber)
-            ) :
-            NO_LOOKUP_COLOR;
+        ).flatMap(this::lookupIndexedColor);
     }
 
     // HasMathContext...................................................................................................

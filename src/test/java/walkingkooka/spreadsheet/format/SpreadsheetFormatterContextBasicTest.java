@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
@@ -71,7 +72,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
 
     private final static Color COLOR = Color.fromRgb(0x123456);
 
-    private final static int COLOR_NUMBER = 2;
+    private final static IndexedColor COLOR_NUMBER = Color.indexed(2);
 
     private final static NamedColor NAMED_COLOR = Color.named("Bingo");
 
@@ -192,7 +193,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         SPREADSHEET_ID
     ).set(
         SpreadsheetMetadataPropertyName.numberedColor(
-            Color.indexed(COLOR_NUMBER)
+            Color.indexed(COLOR_NUMBER.index())
         ),
         COLOR
     ).set(

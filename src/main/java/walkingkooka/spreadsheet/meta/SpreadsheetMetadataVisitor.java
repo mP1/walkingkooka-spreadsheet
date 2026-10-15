@@ -253,8 +253,8 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitNamedColor(final NamedColor color,
-                                   final int colorNumber) {
+    protected void visitNamedColor(final NamedColor namedColor,
+                                   final IndexedColor colorNumber) {
         // nop
     }
 

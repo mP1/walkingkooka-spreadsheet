@@ -142,7 +142,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
                         SpreadsheetMetadataPropertyName.namedColor(
                             Color.named("HelloColor")
                         ),
-                        10
+                        Color.indexed(10)
                     ).set(
                         SpreadsheetMetadataPropertyName.numberedColor(
                             Color.indexed(10)
