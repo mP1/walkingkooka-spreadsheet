@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
@@ -50,14 +49,11 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
 
-        final SpreadsheetColorName colorName = SpreadsheetColorName.with(
-            token.cast(ColorNameSpreadsheetFormatParserToken.class)
-                .value()
-        );
         final IndexedColor colorIndex = metadata.get(
             SpreadsheetMetadataPropertyName.namedColor(
                 Color.named(
-                    colorName.value()
+                    token.cast(ColorNameSpreadsheetFormatParserToken.class)
+                        .value()
                 )
             )
         ).orElseThrow(() -> new IllegalArgumentException("Invalid color name"));
