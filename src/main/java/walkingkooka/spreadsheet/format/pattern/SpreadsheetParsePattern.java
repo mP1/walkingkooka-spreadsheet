@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.color.IndexedColor;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
@@ -142,8 +143,8 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     }
 
     @Override
-    public final SpreadsheetPattern setColorNumber(final int number) {
-        SpreadsheetColors.checkColorIndex(number);
+    public final SpreadsheetPattern setColorNumber(final IndexedColor number) {
+        SpreadsheetColors.checkIndexedColor(number);
         throw new IllegalStateException("Cannot set color number " + number + " for pattern=" + this);
     }
 }

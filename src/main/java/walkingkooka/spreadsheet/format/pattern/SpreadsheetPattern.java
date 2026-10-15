@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
@@ -900,14 +901,14 @@ abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
      * Removes any existing color and then attempts to add the given color number to the pattern.
      * This will always fail for {@link SpreadsheetParsePattern} as colors are not allowed within parse patterns.
      */
-    public abstract SpreadsheetPattern setColorNumber(final int colorNumber);
+    public abstract SpreadsheetPattern setColorNumber(final IndexedColor colorNumber);
 
     /**
      * Helper intended to be called by {@link SpreadsheetFormatPattern} subclasses.
      */
-    final <T extends SpreadsheetPattern> T setColorNumber0(final int colorNumber,
+    final <T extends SpreadsheetPattern> T setColorNumber0(final IndexedColor colorNumber,
                                                            final Function<String, T> parser) {
-        SpreadsheetColors.checkColorIndex(colorNumber);
+        SpreadsheetColors.checkIndexedColor(colorNumber);
         this.failIfMultiplePatterns("color number");
 
         return parser.apply(
