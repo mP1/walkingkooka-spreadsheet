@@ -30,7 +30,7 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatParserContextBasicTest implements ClassTesting2<SpreadsheetFormatParserContextBasic>,
-    SpreadsheetFormatParserContextTesting<SpreadsheetFormatParserContextBasic>,
+    SpreadsheetFormatParserContextTesting2<SpreadsheetFormatParserContextBasic>,
     DecimalNumberContextDelegator {
 
     @Test
