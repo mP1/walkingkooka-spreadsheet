@@ -508,6 +508,5 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
             .value(this.expressionFunctionProvider)
             .label("spreadsheetMetadataContext")
             .value(this.spreadsheetMetadataContext);
-        ;
     }
 }
