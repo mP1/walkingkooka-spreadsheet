@@ -27,7 +27,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
@@ -396,7 +395,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             "[red]yyyymmdd",
             LocalDate.of(2000, 12, 31),
             SpreadsheetText.EMPTY.setText("20001231")
-                .setColor(OPTIONAL_COLOR_NAME_RED)
+                .setColor(OPTIONAL_NAMED_COLOR_RED)
         );
     }
 
@@ -576,7 +575,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
                 }
                 if (color.isNamed()) {
                     checkEquals(
-                        COLOR_NAME_RED,
+                        NAMED_COLOR_RED,
                         color,
                         "namedColor"
                     );
@@ -641,7 +640,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]dd/mm/yyyy"
         );
     }
@@ -652,7 +651,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]dd/mm/yyyy"
         );
     }

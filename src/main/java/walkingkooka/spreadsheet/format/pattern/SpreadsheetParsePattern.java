@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserName;
@@ -31,8 +31,6 @@ import walkingkooka.text.CaseKind;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
-
-import java.util.Objects;
 
 /**
  * Holds a {@link ParserToken} typically a date/dateime/time and possibly color or conditions.
@@ -137,8 +135,8 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     // color............................................................................................................
 
     @Override
-    public final SpreadsheetPattern setColorName(final SpreadsheetColorName name) {
-        Objects.requireNonNull(name, "name");
+    public final SpreadsheetPattern setColorName(final NamedColor name) {
+        SpreadsheetColors.checkNamedColor(name);
         throw new IllegalStateException("Cannot set color name " + name + " for pattern=" + this);
     }
 

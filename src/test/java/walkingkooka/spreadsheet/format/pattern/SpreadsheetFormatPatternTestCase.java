@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.color.NamedColor;
 import walkingkooka.color.WebColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -47,9 +46,9 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     final static Optional<Color> OPTIONAL_COLOR_44 = Optional.of(COLOR_44);
 
-    final static Color COLOR_NAME_RED = NamedColor.RED;
+    final static NamedColor NAMED_COLOR_RED = NamedColor.RED;
 
-    final static Optional<Color> OPTIONAL_COLOR_NAME_RED = Optional.of(COLOR_NAME_RED);
+    final static Optional<Color> OPTIONAL_NAMED_COLOR_RED = Optional.of(NAMED_COLOR_RED);
 
     final static Color COLOR_RED = WebColorName.RED.color();
 
@@ -218,7 +217,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     // setColor.........................................................................................................
 
     final void setColorNameAndCheck(final P pattern,
-                                    final SpreadsheetColorName name,
+                                    final NamedColor name,
                                     final String expected) {
         this.checkEquals(
             this.createPattern(expected),

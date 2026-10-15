@@ -24,7 +24,6 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -415,7 +414,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             "[red]hhmmss",
             LocalTime.of(12, 58, 59),
             SpreadsheetText.EMPTY.setText("125859")
-                .setColor(OPTIONAL_COLOR_NAME_RED)
+                .setColor(OPTIONAL_NAMED_COLOR_RED)
         );
     }
 
@@ -557,7 +556,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
                 }
                 if (color.isNamed()) {
                     checkEquals(
-                        COLOR_NAME_RED,
+                        NAMED_COLOR_RED,
                         color,
                         "namedColor"
                     );
@@ -622,7 +621,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]hh:mm:ss"
         );
     }
@@ -633,7 +632,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]hh:mm:ss"
         );
     }

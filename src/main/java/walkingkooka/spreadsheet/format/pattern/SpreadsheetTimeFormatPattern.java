@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.color.IndexedColor;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.color.NamedColor;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -80,7 +80,7 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
     // set color........................................................................................................
 
     @Override
-    public SpreadsheetTimeFormatPattern setColorName(final SpreadsheetColorName name) {
+    public SpreadsheetTimeFormatPattern setColorName(final NamedColor name) {
         return this.setColorName0(
             name,
             SpreadsheetPattern::parseTimeFormatPattern

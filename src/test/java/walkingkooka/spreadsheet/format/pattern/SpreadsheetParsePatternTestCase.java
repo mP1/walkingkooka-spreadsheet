@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -436,7 +435,10 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     public final void testSetColorNameFails() {
         assertThrows(
             IllegalStateException.class,
-            () -> this.createPattern().setColorName(SpreadsheetColorName.BLACK)
+            () -> this.createPattern()
+                .setColorName(
+                    Color.named("BLACK")
+                )
         );
     }
 

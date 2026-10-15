@@ -27,7 +27,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
@@ -748,7 +747,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             "[red]yyyymmddhhmmss",
             LocalDateTime.of(2000, 12, 31, 12, 58, 59),
             SpreadsheetText.EMPTY.setText("20001231125859")
-                .setColor(OPTIONAL_COLOR_NAME_RED)
+                .setColor(OPTIONAL_NAMED_COLOR_RED)
         );
     }
 
@@ -964,7 +963,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                 }
                 if (color.isNamed()) {
                     checkEquals(
-                        COLOR_NAME_RED,
+                        NAMED_COLOR_RED,
                         color,
                         "namedColor"
                     );
@@ -1029,7 +1028,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]dd/mm/yyyy hh:mm:ss"
         );
     }
@@ -1040,7 +1039,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]dd/mm/yyyy hh:mm:ss"
         );
     }
