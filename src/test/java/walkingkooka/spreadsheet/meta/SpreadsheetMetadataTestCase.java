@@ -23,6 +23,8 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
@@ -500,13 +502,23 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testColorNumberReverseLookupWithInvalidIndex() {
         this.colorNumberReverseLookupAndCheck(
             this.createObject(),
-            99,
+            44,
             null
         );
     }
 
     final void colorNumberReverseLookupAndCheck(final SpreadsheetMetadata metadata,
                                                 final int number,
+                                                final NamedColor namedColor) {
+        this.colorNumberReverseLookupAndCheck(
+            metadata,
+            Color.indexed(number),
+            namedColor
+        );
+    }
+
+    final void colorNumberReverseLookupAndCheck(final SpreadsheetMetadata metadata,
+                                                final IndexedColor number,
                                                 final NamedColor namedColor) {
         this.checkEquals(
             Optional.ofNullable(namedColor),

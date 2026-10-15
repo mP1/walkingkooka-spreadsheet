@@ -161,7 +161,9 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     // colorNumberReverseLookup.........................................................................................
 
     @Override
-    public Optional<NamedColor> colorNumberReverseLookup(final int colorNumber) {
+    public Optional<NamedColor> colorNumberReverseLookup(final IndexedColor colorNumber) {
+        SpreadsheetColors.checkIndexedColor(colorNumber);
+
         if (null == this.numberToNamedColor) {
             this.numberToNamedColor = SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor.numberToNamedColor(this);
         }
@@ -173,7 +175,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     /**
      * Cached color number to {@link NamedColor} lookup.
      */
-    private Map<Integer, NamedColor> numberToNamedColor;
+    private Map<IndexedColor, NamedColor> numberToNamedColor;
 
     // ColorContext.....................................................................................................
 

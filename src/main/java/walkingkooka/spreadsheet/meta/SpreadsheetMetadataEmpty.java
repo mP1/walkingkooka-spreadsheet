@@ -95,7 +95,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // colorNumberReverseLookup.........................................................................................
 
     @Override
-    public Optional<NamedColor> colorNumberReverseLookup(final int colorNumber) {
+    public Optional<NamedColor> colorNumberReverseLookup(final IndexedColor colorNumber) {
         return Optional.empty();
     }
 

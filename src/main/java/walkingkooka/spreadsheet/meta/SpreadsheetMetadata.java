@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
@@ -994,7 +995,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns the {@link NamedColor} for the given color number.
      */
-    public abstract Optional<NamedColor> colorNumberReverseLookup(final int colorNumber);
+    public abstract Optional<NamedColor> colorNumberReverseLookup(final IndexedColor colorNumber);
 
     // sort.............................................................................................................
 

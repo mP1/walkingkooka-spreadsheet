@@ -19,6 +19,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 
 import java.util.Map;
@@ -29,7 +31,7 @@ import java.util.Map;
  */
 final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
-    static Map<Integer, NamedColor> numberToNamedColor(final SpreadsheetMetadata metadata) {
+    static Map<IndexedColor, NamedColor> numberToNamedColor(final SpreadsheetMetadata metadata) {
         final SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor();
         visitor.accept(metadata.defaults()); // defaults get overridden
         visitor.accept(metadata);
@@ -44,12 +46,12 @@ final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor exte
     protected void visitNamedColor(final NamedColor namedColor,
                                    final int colorNumber) {
         this.numberToNamedColor.put(
-            colorNumber,
+            Color.indexed(colorNumber),
             namedColor
         );
     }
 
-    private final Map<Integer, NamedColor> numberToNamedColor = Maps.ordered();
+    private final Map<IndexedColor, NamedColor> numberToNamedColor = Maps.ordered();
 
     @Override
     public String toString() {
