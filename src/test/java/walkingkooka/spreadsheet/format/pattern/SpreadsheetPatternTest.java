@@ -261,11 +261,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 public char zeroDigit() {
                     return '0';
                 }
-
-//                @Override
-//                public Optional<Color> colorName(final SpreadsheetColorName name) {
-//                    return formattedText.color();
-//                }
             },
             formattedText
         );
