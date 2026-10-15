@@ -23,11 +23,14 @@ import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.CaseSensitivity;
 
 import java.util.Objects;
 import java.util.Set;
 
 public final class SpreadsheetColors implements PublicStaticHelper {
+
+    public final static CaseSensitivity CASE_SENSITIVITY = NamedColor.CASE_SENSITIVITY;
 
     public final static NamedColor BLACK = Color.named("Black");
 
