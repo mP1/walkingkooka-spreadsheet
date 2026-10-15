@@ -76,7 +76,7 @@ public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetC
         throw new UnsupportedOperationException();
     };
 
-    private final static SpreadsheetConverterContext CONTEXT = SpreadsheetConverterContexts.basic(
+    private final static SpreadsheetConverterContext SPREADSHEET_CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -115,7 +115,7 @@ public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetC
             NullPointerException.class,
             () -> SpreadsheetComparatorContextBasic.with(
                 null,
-                CONTEXT
+                SPREADSHEET_CONVERTER_CONTEXT
             )
         );
     }
@@ -155,9 +155,9 @@ public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetC
         this.toStringAndCheck(
             SpreadsheetComparatorContextBasic.with(
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
-                CONTEXT
+                SPREADSHEET_CONVERTER_CONTEXT
             ),
-            CONTEXT.toString()
+            SPREADSHEET_CONVERTER_CONTEXT.toString()
         );
     }
 
@@ -165,25 +165,25 @@ public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetC
     public SpreadsheetComparatorContextBasic createContext() {
         return SpreadsheetComparatorContextBasic.with(
             SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_FACTORY,
-            CONTEXT
+            SPREADSHEET_CONVERTER_CONTEXT
         );
     }
 
     @Override
     public int decimalNumberDigitCount() {
-        return CONTEXT.decimalNumberDigitCount();
+        return SPREADSHEET_CONVERTER_CONTEXT.decimalNumberDigitCount();
     }
 
     @Override
     public MathContext mathContext() {
-        return CONTEXT.mathContext();
+        return SPREADSHEET_CONVERTER_CONTEXT.mathContext();
     }
 
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
-        return CONTEXT;
+        return SPREADSHEET_CONVERTER_CONTEXT;
     }
 
     // class............................................................................................................
