@@ -81,7 +81,6 @@ import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterSelector;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -249,7 +248,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "        Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "        to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "        TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "        TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"PROPERTIES\"\n" +
@@ -488,7 +486,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  TEXT to Path (walkingkooka.convert.ConverterTextToPath)\n" +
                 "  TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "  TEXT to SELECTION (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetSelection)\n" +
-                "  TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "  TEXT to SpreadsheetComparatorSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetComparatorSelector)\n" +
                 "  TEXT to SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetError)\n" +
                 "  TEXT to SpreadsheetFormatterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetFormatterSelector)\n" +
@@ -681,7 +678,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "              Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "              to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "              TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "              TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "              ConverterCustomToString\n" +
                 "                \"PROPERTIES\"\n" +
@@ -1146,26 +1142,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    @Test
-    public void testColorConvertStringToSpreadsheetColorName() {
-        final SpreadsheetColorName name = SpreadsheetColorName.RED;
-
-        this.colorConvertAndCheck(
-            name.value(),
-            name
-        );
-    }
-
-    @Test
-    public void testColorConvertSpreadsheetColorNameToString() {
-        final SpreadsheetColorName name = SpreadsheetColorName.RED;
-
-        this.colorConvertAndCheck(
-            name,
-            name.value()
-        );
-    }
-
     private final static String NAMED_COLOR = "HelloColor";
     private final static Color COLOR10 = Color.parse("#101010");
 
@@ -1174,14 +1150,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.colorConvertAndCheck(
             "[" + NAMED_COLOR + "]",
             COLOR10
-        );
-    }
-
-    @Test
-    public void testColorConvertStringToSpreadsheetMetadataColorName() {
-        this.colorConvertAndCheck(
-            NAMED_COLOR,
-            SpreadsheetColorName.with(NAMED_COLOR)
         );
     }
 
@@ -1276,7 +1244,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "      Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "      to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "      TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "      TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"PROPERTIES\"\n" +
@@ -4046,7 +4013,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"PROPERTIES\"\n" +

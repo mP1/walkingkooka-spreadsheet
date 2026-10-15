@@ -185,7 +185,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 colorToNumber(),
                 numberToColor(),
                 toColorProperties(),
-                textToSpreadsheetColorName(),
                 textToSpreadsheetMetadataColor(),
                 properties()
             );
@@ -1266,13 +1265,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetComparatorSelector() {
         return SpreadsheetConverterTextToSpreadsheetComparatorSelector.INSTANCE;
-    }
-    
-    /**
-     * {@see SpreadsheetConverterTextToSpreadsheetColorName}
-     */
-    public static Converter<SpreadsheetConverterContext> textToSpreadsheetColorName() {
-        return SpreadsheetConverterTextToSpreadsheetColorName.INSTANCE;
     }
 
     /**
