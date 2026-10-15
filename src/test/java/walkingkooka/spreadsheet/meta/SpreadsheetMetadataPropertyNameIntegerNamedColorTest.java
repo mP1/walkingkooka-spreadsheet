@@ -37,6 +37,19 @@ public final class SpreadsheetMetadataPropertyNameIntegerNamedColorTest extends 
     }
 
     @Test
+    public void testWithInvalidNamedColorFails() {
+        final NamedColor namedColor = Color.named("Invalid1");
+
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(namedColor)
+            ),
+            "Invalid character '1' at 7"
+        );
+    }
+
+    @Test
     public void testWith() {
         final SpreadsheetMetadataPropertyNameIntegerNamedColor property = SpreadsheetMetadataPropertyNameIntegerNamedColor.withNamedColor(NAMED_COLOR);
         assertSame(

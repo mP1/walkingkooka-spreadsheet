@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.NamedColor;
 import walkingkooka.naming.Name;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 
 /**
  * The {@link Name} of metadata property, with a custom handler and visitor to handle dispatching to a {@link SpreadsheetMetadataVisitor} method.
@@ -29,7 +30,9 @@ final class SpreadsheetMetadataPropertyNameIntegerNamedColor extends Spreadsheet
      * Factory used to create a new {@link SpreadsheetMetadataPropertyNameIntegerNamedColor} constant.
      */
     static SpreadsheetMetadataPropertyNameIntegerNamedColor withNamedColor(final NamedColor name) {
-        return new SpreadsheetMetadataPropertyNameIntegerNamedColor(name);
+        return new SpreadsheetMetadataPropertyNameIntegerNamedColor(
+            SpreadsheetColors.checkNamedColor(name)
+        );
     }
 
     /**
