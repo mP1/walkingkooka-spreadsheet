@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.color.ColorContexts;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
@@ -444,7 +445,9 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         assertThrows(
             IllegalStateException.class,
             () -> this.createPattern()
-                .setColorNumber(SpreadsheetColors.MIN)
+                .setColorNumber(
+                    Color.indexed(SpreadsheetColors.MIN)
+                )
         );
     }
 

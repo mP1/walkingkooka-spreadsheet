@@ -232,7 +232,9 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
                                       final String expected) {
         this.checkEquals(
             this.createPattern(expected),
-            pattern.setColorNumber(number),
+            pattern.setColorNumber(
+                Color.indexed(number)
+            ),
             () -> pattern + " set color number " + number
         );
     }

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.math.MathTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
@@ -136,7 +137,9 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createPattern()
-                .setColorNumber(SpreadsheetColors.MIN - 1)
+                .setColorNumber(
+                    Color.indexed(SpreadsheetColors.MIN - 1)
+                )
         );
     }
 
@@ -145,7 +148,9 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createPattern()
-                .setColorNumber(SpreadsheetColors.MAX + 1)
+                .setColorNumber(
+                    Color.indexed(SpreadsheetColors.MAX + 1)
+                )
         );
     }
 

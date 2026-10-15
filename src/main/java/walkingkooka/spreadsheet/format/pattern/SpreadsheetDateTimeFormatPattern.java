@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.color.IndexedColor;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -87,7 +88,7 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
     }
 
     @Override
-    public SpreadsheetDateTimeFormatPattern setColorNumber(final int colorNumber) {
+    public SpreadsheetDateTimeFormatPattern setColorNumber(final IndexedColor colorNumber) {
         return this.setColorNumber0(
             colorNumber,
             SpreadsheetPattern::parseDateTimeFormatPattern
