@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
@@ -1188,8 +1187,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
                 "[RED]",
                 "[RED]",
                 Stream.concat(
-                    SpreadsheetColorName.DEFAULTS.stream()
-                        .map(n -> "[" + n.text() + "]")
+                    SpreadsheetColors.DEFAULTS.stream()
+                        .map(n -> "[" + n.value() + "]")
                         .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t)),
                     IntStream.rangeClosed(
                             SpreadsheetColors.MIN,
