@@ -23,23 +23,23 @@ import java.util.Optional;
 
 public interface HasSpreadsheetPatternKindTesting extends TreePrintableTesting {
 
-    default void hasSpreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has) {
-        this.hasSpreadsheetPatternKindAndCheck(
+    default void spreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has) {
+        this.spreadsheetPatternKindAndCheck(
             has,
             Optional.empty()
         );
     }
 
-    default void hasSpreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has,
-                                                   final SpreadsheetPatternKind expected) {
-        this.hasSpreadsheetPatternKindAndCheck(
+    default void spreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has,
+                                                final SpreadsheetPatternKind expected) {
+        this.spreadsheetPatternKindAndCheck(
             has,
             Optional.of(expected)
         );
     }
 
-    default void hasSpreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has,
-                                                   final Optional<SpreadsheetPatternKind> expected) {
+    default void spreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has,
+                                                final Optional<SpreadsheetPatternKind> expected) {
         this.checkEquals(
             expected,
             has.spreadsheetPatternKind(),
