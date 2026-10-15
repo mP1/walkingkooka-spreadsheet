@@ -89,10 +89,12 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void testSetSpreadsheetCellWithNullCellFails() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void testSetSpreadsheetCellWithSame() {
         throw new UnsupportedOperationException();
     }
