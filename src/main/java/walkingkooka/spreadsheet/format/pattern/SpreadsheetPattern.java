@@ -21,12 +21,15 @@ import walkingkooka.Cast;
 import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
+import walkingkooka.color.NamedColor;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
@@ -837,14 +840,14 @@ abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
     // color............................................................................................................
 
     /**
-     * Returns a {@link SpreadsheetColorName} if one is included in this pattern.
+     * Returns a {@link NamedColor} if one is included in this pattern.
      */
-    public final Optional<SpreadsheetColorName> colorName() {
+    public final Optional<NamedColor> colorName() {
         this.failIfMultiplePatterns("get color name");
 
         return this.value()
             .findFirst(COLOR_NAME_PREDICATE)
-            .map(t -> SpreadsheetColorName.with(
+            .map(t -> Color.named(
                     t.cast(
                         ColorNameSpreadsheetFormatParserToken.class
                     ).value()
@@ -879,21 +882,21 @@ abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
     final static Predicate<ParserToken> COLOR_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColor);
 
     /**
-     * Removes any existing color and then attempts to add the given {@link SpreadsheetColorName} to the pattern.
+     * Removes any existing color and then attempts to add the given {@link NamedColor} to the pattern.
      * This will always fail for {@link SpreadsheetParsePattern} as colors are not allowed within parse patterns.
      */
-    public abstract SpreadsheetPattern setColorName(final SpreadsheetColorName name);
+    public abstract SpreadsheetPattern setColorName(final NamedColor name);
 
     /**
      * Helper intended to be called by {@link SpreadsheetFormatPattern} subclasses.
      */
-    final <T extends SpreadsheetPattern> T setColorName0(final SpreadsheetColorName name,
+    final <T extends SpreadsheetPattern> T setColorName0(final NamedColor name,
                                                          final Function<String, T> parser) {
-        Objects.requireNonNull(name, "name");
+        SpreadsheetColors.checkNamedColor(name);
         this.failIfMultiplePatterns("color name");
 
         return parser.apply(
-            "[" + name + "]" + this.removeColor().text()
+            "[" + name.value() + "]" + this.removeColor().text()
         );
     }
 

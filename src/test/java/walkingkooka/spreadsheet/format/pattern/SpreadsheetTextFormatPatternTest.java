@@ -24,7 +24,6 @@ import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -349,7 +348,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
             "[red]@@",
             "Hello",
             SpreadsheetText.EMPTY.setText("HelloHello")
-                .setColor(OPTIONAL_COLOR_NAME_RED)
+                .setColor(OPTIONAL_NAMED_COLOR_RED)
         );
     }
 
@@ -410,7 +409,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
                         color,
                         "namedColor"
                     );
-                    return OPTIONAL_COLOR_NAME_RED;
+                    return OPTIONAL_NAMED_COLOR_RED;
                 }
                 if (color.isNamed()) {
                     checkEquals(
@@ -418,7 +417,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
                         color,
                         "namedColor"
                     );
-                    return OPTIONAL_COLOR_NAME_RED;
+                    return OPTIONAL_NAMED_COLOR_RED;
                 }
 
                 throw new UnsupportedOperationException();
@@ -446,7 +445,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]@@@"
         );
     }
@@ -457,7 +456,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]@@@"
         );
     }

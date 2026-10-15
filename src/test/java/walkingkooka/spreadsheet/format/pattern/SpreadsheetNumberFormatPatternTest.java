@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
@@ -441,7 +440,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             "[red]#",
             -123.0,
             SpreadsheetText.EMPTY.setText("n123")
-                .setColor(OPTIONAL_COLOR_NAME_RED)
+                .setColor(OPTIONAL_NAMED_COLOR_RED)
         );
     }
 
@@ -704,7 +703,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
                 }
                 if (color.isNamed()) {
                     checkEquals(
-                        COLOR_NAME_RED,
+                        NAMED_COLOR_RED,
                         color,
                         "namedColor"
                     );
@@ -922,7 +921,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]$0.00"
         );
     }
@@ -933,7 +932,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
 
         this.setColorNameAndCheck(
             pattern,
-            SpreadsheetColorName.RED,
+            NAMED_COLOR_RED,
             "[Red]$0.00"
         );
     }

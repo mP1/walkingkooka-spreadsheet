@@ -38,7 +38,6 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -2240,7 +2239,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testColorNameFormatPattern() {
         this.colorNameAndCheck(
             SpreadsheetPattern.parseTextFormatPattern("[Red]@"),
-            SpreadsheetColorName.with("Red")
+            Color.named("Red")
         );
     }
 
@@ -2252,7 +2251,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     private void colorNameAndCheck(final SpreadsheetPattern pattern,
-                                   final SpreadsheetColorName expected) {
+                                   final NamedColor expected) {
         this.colorNameAndCheck(
             pattern,
             Optional.of(expected)
@@ -2260,7 +2259,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     private void colorNameAndCheck(final SpreadsheetPattern pattern,
-                                   final Optional<SpreadsheetColorName> expected) {
+                                   final Optional<NamedColor> expected) {
         this.checkEquals(
             expected,
             pattern.colorName(),

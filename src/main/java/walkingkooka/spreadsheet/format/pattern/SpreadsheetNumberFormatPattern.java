@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.IndexedColor;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.color.NamedColor;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -248,7 +248,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     // set color........................................................................................................
 
     @Override
-    public SpreadsheetNumberFormatPattern setColorName(final SpreadsheetColorName name) {
+    public SpreadsheetNumberFormatPattern setColorName(final NamedColor name) {
         return this.setColorName0(
             name,
             SpreadsheetPattern::parseNumberFormatPattern
