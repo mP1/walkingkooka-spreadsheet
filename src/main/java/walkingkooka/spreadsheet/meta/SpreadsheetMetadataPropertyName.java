@@ -46,7 +46,6 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
@@ -97,7 +96,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * Case sensitivity must be insensitive because name equality should match {@link EnvironmentValueName#CASE_SENSITIVITY}.
      */
-    public static final CaseSensitivity CASE_SENSITIVITY = SpreadsheetColorName.CASE_SENSITIVITY;
+    public static final CaseSensitivity CASE_SENSITIVITY = EnvironmentValueName.CASE_SENSITIVITY;
 
     /**
      * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
