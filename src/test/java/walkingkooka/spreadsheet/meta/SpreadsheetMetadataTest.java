@@ -304,8 +304,11 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         this.checkNotEquals(
             Sets.empty(),
             IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX + 1)
-                .mapToObj(SpreadsheetMetadataPropertyName::numberedColor)
-                .filter(n -> false == nonLocaleDefaults.defaults().get(n).isPresent())
+                .mapToObj(
+                    (int i) -> SpreadsheetMetadataPropertyName.numberedColor(
+                        Color.indexed(i)
+                    )
+                ).filter(n -> false == nonLocaleDefaults.defaults().get(n).isPresent())
                 .collect(Collectors.toSet()),
             () -> "missing numbered color defaults"
         );

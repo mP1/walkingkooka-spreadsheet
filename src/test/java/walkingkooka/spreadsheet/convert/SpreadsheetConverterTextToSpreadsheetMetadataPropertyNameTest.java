@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.color.NamedColor;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -83,7 +84,9 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest
     @Test
     public void testConvertStringNumberedColor() {
         this.convertSpreadsheetMetadataPropertyNameAndCheck(
-            SpreadsheetMetadataPropertyName.numberedColor(1)
+            SpreadsheetMetadataPropertyName.numberedColor(
+                Color.indexed(1)
+            )
         );
     }
 

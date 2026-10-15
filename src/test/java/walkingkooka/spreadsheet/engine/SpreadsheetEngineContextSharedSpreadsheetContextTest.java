@@ -1771,7 +1771,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         SpreadsheetMetadata metadata = METADATA;
 
         for (int i = SpreadsheetColors.MIN; i <= SpreadsheetColors.MAX; i++) {
-            metadata = metadata.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
+            metadata = metadata.set(
+                SpreadsheetMetadataPropertyName.numberedColor(
+                    Color.indexed(i)
+                ), Color.fromRgb(i)
+            );
         }
 
         this.toStringAndCheck(

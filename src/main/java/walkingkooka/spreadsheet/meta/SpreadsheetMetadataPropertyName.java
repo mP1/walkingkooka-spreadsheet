@@ -23,6 +23,7 @@ import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -531,7 +532,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                             Color.named(after)
                         );
                     } else {
-                        propertyName = numberedColor(Integer.parseInt(after));
+                        propertyName = numberedColor(
+                            Color.parseIndexed(after)
+                        );
                     }
                 } catch (final RuntimeException cause) {
                     propertyName = null;
@@ -562,7 +565,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                         Color.named(after)
                     );
                 } else {
-                    propertyName = numberedColor(Integer.parseInt(after));
+                    propertyName = numberedColor(
+                        Color.parseIndexed(after)
+                    );
                 }
             } catch (final RuntimeException cause) {
                 throw new IllegalArgumentException("Invalid metadata property name " + CharSequences.quoteAndEscape(name), cause);
@@ -583,8 +588,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * Retrieves a {@link SpreadsheetMetadataPropertyName} for a numbered {@link Color}.
      */
-    public static SpreadsheetMetadataPropertyName<Color> numberedColor(final int number) {
-        return SpreadsheetMetadataPropertyNameNumberedColor.withNumber(number);
+    public static SpreadsheetMetadataPropertyName<Color> numberedColor(final IndexedColor indexedColor) {
+        return SpreadsheetMetadataPropertyNameNumberedColor.withNumber(indexedColor);
     }
 
     /**

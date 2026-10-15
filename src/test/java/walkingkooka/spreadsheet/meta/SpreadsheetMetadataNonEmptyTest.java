@@ -25,6 +25,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorContexts;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
@@ -157,6 +158,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
         SPREADSHEET_FORMATTER_PROVIDER
     );
+
+    private final static IndexedColor INDEXED_COLOR1 = Color.indexed(1);
+
+    private final static IndexedColor INDEXED_COLOR7 = Color.indexed(7);
 
     private final static NamedColor NAMED_COLOR1 = NamedColor.CYAN;
 
@@ -807,29 +812,27 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testColorNumberReverseLookup() {
         final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
 
         final Color color7 = Color.fromRgb(0x777);
-        final int number7 = 7;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), number1)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), number7)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), INDEXED_COLOR7.index())
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number1,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number7,
+            INDEXED_COLOR7.index(),
             NAMED_COLOR7
         );
     }
@@ -837,7 +840,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testColorNumberReverseLookupDefaults() {
         final Color color = Color.parse("#123456");
-        final int number = 4;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
@@ -845,17 +847,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .setDefaults(
                 SpreadsheetMetadata.EMPTY
                     .set(
-                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                        SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1),
                         color
                     ).set(
                         SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1),
-                        number
+                        INDEXED_COLOR1.index()
                     )
             );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
     }
@@ -863,24 +865,23 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testColorNumberReverseLookupIgnoresDefaults() {
         final Color color = Color.parse("#123456");
-        final int number = 4;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number), color)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), number)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
             .setDefaults(
                 SpreadsheetMetadata.EMPTY
                     .set(
-                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                        SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1),
                         Color.parse("#999")
                     )
             );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
     }
@@ -890,15 +891,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithIndexedColor() {
         final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
-
         final Color color7 = Color.fromRgb(0x777);
-        final int number7 = 7;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
@@ -907,8 +905,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 metadata,
                 Color.indexed(i),
                 Optional.ofNullable(
-                    number1 == i ? color1 :
-                        number7 == i ? color7 :
+                    INDEXED_COLOR1.index() == i ? color1 :
+                        INDEXED_COLOR7.index() == i ? color7 :
                             null
                 )
             );
@@ -918,7 +916,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithIndexedColorIncludesColorDefaults() {
         final Color color = Color.parse("#123456");
-        final int number = 23;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
@@ -926,14 +923,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .setDefaults(
                 SpreadsheetMetadata.EMPTY
                     .set(
-                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                        SpreadsheetMetadataPropertyName.numberedColor(
+                            INDEXED_COLOR1
+                        ),
                         color
                     )
             );
 
         this.lookupColorAndCheck(
             metadata,
-            Color.indexed(number),
+            INDEXED_COLOR1,
             color
         );
     }
@@ -941,23 +940,22 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithIndexedColorIgnoresDefaults() {
         final Color color = Color.parse("#123456");
-        final int number = 23;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number), color)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color)
             .setDefaults(
                 SpreadsheetMetadata.EMPTY
                     .set(
-                        SpreadsheetMetadataPropertyName.numberedColor(number),
+                        SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1),
                         Color.parse("#999")
                     )
             );
 
         this.lookupColorAndCheck(
             metadata,
-            Color.indexed(number),
+            INDEXED_COLOR1,
             color
         );
     }
@@ -965,18 +963,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithUnknownNamedColor() {
         final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), number1)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number1,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
 
@@ -989,18 +986,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithNamedColorLowerCase() {
         final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), number1)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number1,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
 
@@ -1014,18 +1010,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithNamedColorUpperCase() {
         final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), number1)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number1,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
 
@@ -1039,29 +1034,26 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithNamedColor2() {
         final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
-
         final Color color7 = Color.fromRgb(0x777);
-        final int number7 = 7;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), number1)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
-            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), number7)
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1.index())
+            .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
+            .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR7), INDEXED_COLOR7.index())
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number1,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number7,
+            INDEXED_COLOR7.index(),
             NAMED_COLOR7
         );
 
@@ -1081,7 +1073,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testLookupColorWithNamedColorDefaults() {
         final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
@@ -1089,17 +1080,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
             .setDefaults(
                 SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
-                    SpreadsheetMetadataPropertyName.numberedColor(number1),
+                    SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1),
                     color1
                 ).set(
                     SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1),
-                    number1
+                    INDEXED_COLOR1.index()
                 )
             );
 
         this.colorNumberReverseLookupAndCheck(
             metadata,
-            number1,
+            INDEXED_COLOR1.index(),
             NAMED_COLOR1
         );
 
@@ -2827,7 +2818,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 1; i++) {
             properties.put(
-                SpreadsheetMetadataPropertyName.numberedColor(i),
+                SpreadsheetMetadataPropertyName.numberedColor(
+                    Color.indexed(i)
+                ),
                 Color.fromRgb(i)
             );
         }
@@ -3717,10 +3710,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                     ValidatorAliasSet.parse("validator1, validator2, validator3")
                 ).set(
-                    SpreadsheetMetadataPropertyName.numberedColor(1),
+                    SpreadsheetMetadataPropertyName.numberedColor(
+                        Color.indexed(1)
+                    ),
                     Color.BLACK
                 ).set(
-                    SpreadsheetMetadataPropertyName.numberedColor(2),
+                    SpreadsheetMetadataPropertyName.numberedColor(
+                        Color.indexed(2)
+                    ),
                     Color.WHITE
                 ).set(
                     SpreadsheetMetadataPropertyName.namedColor(NamedColor.BLACK),
