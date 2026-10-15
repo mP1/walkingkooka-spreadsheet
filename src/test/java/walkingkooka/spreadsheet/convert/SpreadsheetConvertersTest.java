@@ -77,6 +77,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterSelector;
@@ -1244,6 +1245,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                             ),
                             COLOR10
                         );
+                }
+
+                @Override
+                public Color parseColor(final String text) {
+                    return SpreadsheetColorContexts.empty()
+                        .parseColor(text);
                 }
             },
             expected
@@ -3921,6 +3928,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 @Override
                 public Optional<JsonString> typeName(final Class<?> type) {
                     return JSON_NODE_UNMARSHALL_CONTEXT.typeName(type);
+                }
+
+                @Override
+                public Color parseColor(final String text) {
+                    return SpreadsheetColorContexts.empty()
+                        .parseColor(text);
                 }
             },
             Cast.to(expected)
