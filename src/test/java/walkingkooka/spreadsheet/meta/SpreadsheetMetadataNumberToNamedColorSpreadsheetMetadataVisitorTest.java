@@ -47,10 +47,14 @@ public final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisit
                     LocalDateTime.MAX
                 )
             ).set(
-                SpreadsheetMetadataPropertyName.numberedColor(1),
+                SpreadsheetMetadataPropertyName.numberedColor(
+                    Color.indexed(1)
+                ),
                 Color.parse("#123456")
             ).set(
-                SpreadsheetMetadataPropertyName.numberedColor(2),
+                SpreadsheetMetadataPropertyName.numberedColor(
+                    Color.indexed(2)
+                ),
                 Color.parse("#89abcd")
             ).set(
                 SpreadsheetMetadataPropertyName.namedColor(

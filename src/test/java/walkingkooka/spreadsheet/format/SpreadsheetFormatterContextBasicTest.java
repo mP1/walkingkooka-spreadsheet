@@ -191,7 +191,9 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     ).set(
-        SpreadsheetMetadataPropertyName.numberedColor(COLOR_NUMBER),
+        SpreadsheetMetadataPropertyName.numberedColor(
+            Color.indexed(COLOR_NUMBER)
+        ),
         COLOR
     ).set(
         SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR),

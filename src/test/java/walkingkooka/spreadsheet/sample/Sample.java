@@ -291,7 +291,12 @@ public final class Sample {
                 .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
 
             for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 1; i++) {
-                m = m.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
+                m = m.set(
+                    SpreadsheetMetadataPropertyName.numberedColor(
+                        Color.indexed(i)
+                    ),
+                    Color.fromRgb(i)
+                );
             }
 
             metadata = m;

@@ -183,7 +183,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
         return this.get(
             // Color12 -> 12
-            SpreadsheetMetadataPropertyName.numberedColor(color.index())
+            SpreadsheetMetadataPropertyName.numberedColor(color)
         );
     }
 

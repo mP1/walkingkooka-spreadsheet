@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.naming.Name;
@@ -36,10 +37,12 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     /**
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
      */
-    static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final int number) {
-        SpreadsheetColors.checkColorIndex(number);
+    static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final IndexedColor number) {
+        SpreadsheetColors.checkIndexedColor(number);
 
-        return NUMBER_TO_SPREADSHEET_METADATA_PROPERTY_NAME_NUMBERED_COLOR[number - SpreadsheetColors.MIN];
+        return NUMBER_TO_SPREADSHEET_METADATA_PROPERTY_NAME_NUMBERED_COLOR[
+            number.index() - SpreadsheetColors.MIN
+            ];
     }
 
     /**
@@ -52,7 +55,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
         ];
 
     /*
-     * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 0 to {@link #SpreadsheetColors.MAX}.
+     * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 1 to {@link #SpreadsheetColors.MAX}.
      */
     static {
         IntStream.range(
@@ -62,21 +65,33 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     }
 
     private static void registerColor(final int i) {
-        final SpreadsheetMetadataPropertyNameNumberedColor name = new SpreadsheetMetadataPropertyNameNumberedColor(i);
+        final SpreadsheetMetadataPropertyNameNumberedColor name = new SpreadsheetMetadataPropertyNameNumberedColor(
+            Color.indexed(i)
+        );
         NUMBER_TO_SPREADSHEET_METADATA_PROPERTY_NAME_NUMBERED_COLOR[i - SpreadsheetColors.MIN] = name;
-        CONSTANTS.put(name.value(), name);
+        CONSTANTS.put(
+            name.value(),
+            name
+        );
     }
 
     /**
      * Private constructor use factory.
      */
-    private SpreadsheetMetadataPropertyNameNumberedColor(final int number) {
-        super(COLOR_PREFIX + number);
-        this.number = number;
-        this.compareToValue = COLOR_PREFIX + CharSequences.padLeft(String.valueOf(number), 5, '0');
+    private SpreadsheetMetadataPropertyNameNumberedColor(final IndexedColor indexedColor) {
+        super(COLOR_PREFIX + indexedColor.index());
+        this.indexedColor = indexedColor;
+
+        // color01, color10
+        this.compareToValue = COLOR_PREFIX +
+            CharSequences.padLeft(
+                indexedColor.text(),
+                5,
+                '0'
+            );
     }
 
-    final int number;
+    final IndexedColor indexedColor;
 
     @Override
     Color checkValueNonNull(final Object value) {
@@ -122,7 +137,10 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     @Override
     void accept(final Color value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitNumberedColor(this.number, value);
+        visitor.visitNumberedColor(
+            this.indexedColor,
+            value
+        );
     }
 
     final String compareToValue;

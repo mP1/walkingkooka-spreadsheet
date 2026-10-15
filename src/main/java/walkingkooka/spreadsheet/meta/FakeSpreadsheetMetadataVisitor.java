@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -264,7 +265,8 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNumberedColor(final int number, final Color color) {
+    protected void visitNumberedColor(final IndexedColor indexedColor,
+                                      final Color color) {
         throw new UnsupportedOperationException();
     }
 

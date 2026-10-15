@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.color.Color;
 import walkingkooka.color.NamedColor;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
@@ -47,7 +48,9 @@ final class SpreadsheetMetadataPropertyNameIntegerNamedColor extends Spreadsheet
     Integer checkValueNonNull(final Object value) {
         final int colorNumber = this.checkValueTypeInteger(value);
         try {
-            SpreadsheetMetadataPropertyName.numberedColor(colorNumber);
+            SpreadsheetMetadataPropertyName.numberedColor(
+                Color.indexed(colorNumber)
+            );
         } catch (final Exception cause) {
             throw new SpreadsheetMetadataPropertyValueException(
                 cause.getMessage(),

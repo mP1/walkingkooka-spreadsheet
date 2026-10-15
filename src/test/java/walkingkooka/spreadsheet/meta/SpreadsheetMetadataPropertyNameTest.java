@@ -468,9 +468,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testSortNumberedColours() {
         final SpreadsheetMetadataPropertyName<?> audit = SpreadsheetMetadataPropertyName.AUDIT_INFO;
-        final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
-        final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
-        final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
+        final SpreadsheetMetadataPropertyName<?> color10 = numberedColor(10);
+        final SpreadsheetMetadataPropertyName<?> color2 = numberedColor(2);
+        final SpreadsheetMetadataPropertyName<?> color3 = numberedColor(3);
 
         //noinspection unchecked
         this.compareToArraySortAndCheck(
@@ -483,9 +483,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     public void testSortSpreadsheetIdNumberedColours() {
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
         final SpreadsheetMetadataPropertyName<?> audit = SpreadsheetMetadataPropertyName.AUDIT_INFO;
-        final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
-        final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
-        final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
+        final SpreadsheetMetadataPropertyName<?> color10 = numberedColor(10);
+        final SpreadsheetMetadataPropertyName<?> color2 = numberedColor(2);
+        final SpreadsheetMetadataPropertyName<?> color3 = numberedColor(3);
 
         //noinspection unchecked
         this.compareToArraySortAndCheck(
@@ -502,8 +502,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
         this.checkEquals(
             color,
-            SpreadsheetMetadataPropertyName.numberedColor(1)
-                .parseValueText(
+            SpreadsheetMetadataPropertyName.numberedColor(
+                Color.indexed(1)
+            ).parseValueText(
                     color.toString(),
                     CURRENCY_LOCALE_CONTEXT
                 )
@@ -634,7 +635,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testSpreadsheetCellStoreActionNumberedColor() {
         this.spreadsheetCellStoreActionAndCheck(
-            SpreadsheetMetadataPropertyName.numberedColor(1),
+            numberedColor(1),
             SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
         );
     }
@@ -713,7 +714,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testSpreadsheetPatternKindColor1() {
         this.spreadsheetPatternKindAndCheck(
-            SpreadsheetMetadataPropertyName.numberedColor(1)
+            numberedColor(1)
         );
     }
 
@@ -738,6 +739,12 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         this.spreadsheetPatternKindAndCheck(
             SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
             SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        );
+    }
+
+    private static SpreadsheetMetadataPropertyName<?> numberedColor(final int number) {
+        return SpreadsheetMetadataPropertyName.numberedColor(
+            Color.indexed(number)
         );
     }
 

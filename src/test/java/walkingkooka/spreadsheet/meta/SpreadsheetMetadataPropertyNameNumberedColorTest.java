@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 
 import java.util.stream.IntStream;
@@ -30,40 +31,44 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
 
     @Test
     public void testWithNumberLessThanMinFails() {
-        this.withFails(
-            SpreadsheetColors.MIN - 1,
+        this.getMessageAndCheck(
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetMetadataPropertyName.numberedColor(
+                    Color.indexed(
+                        SpreadsheetColors.MIN - 1
+                    )
+                )
+            ),
             "Invalid color number 0 < 1 or > 56"
         );
     }
 
     @Test
     public void testWithNumberGreaterThanMaxFails() {
-        this.withFails(
-            SpreadsheetColors.MAX + 1,
-            "Invalid color number 57 < 1 or > 56"
-        );
-    }
-
-    private void withFails(final int value,
-                           final String message) {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetMetadataPropertyName.numberedColor(value)
-        );
         this.getMessageAndCheck(
-            thrown,
-            message
+            assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetMetadataPropertyName.numberedColor(
+                    Color.indexed(SpreadsheetColors.MAX + 1)
+                )
+            ),
+            "Invalid color number 57 < 1 or > 56"
         );
     }
 
     @Test
     public void testWithNumberMin() {
-        SpreadsheetMetadataPropertyNameNumberedColor.withNumber(SpreadsheetColors.MIN);
+        SpreadsheetMetadataPropertyNameNumberedColor.withNumber(
+            Color.indexed(SpreadsheetColors.MIN)
+        );
     }
 
     @Test
     public void testWithNumberMax() {
-        SpreadsheetMetadataPropertyNameNumberedColor.withNumber(SpreadsheetColors.MIN);
+        SpreadsheetMetadataPropertyNameNumberedColor.withNumber(
+            Color.indexed(SpreadsheetColors.MIN)
+        );
     }
 
     @Test
@@ -72,7 +77,9 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
 
         IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
             .forEach(i -> {
-                final SpreadsheetMetadataPropertyNameNumberedColor propertyName = SpreadsheetMetadataPropertyNameNumberedColor.withNumber(i);
+                final SpreadsheetMetadataPropertyNameNumberedColor propertyName = SpreadsheetMetadataPropertyNameNumberedColor.withNumber(
+                    Color.indexed(i)
+                );
                 final String value = "color" + i;
                 assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
 
@@ -100,7 +107,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     public void testCheckValueWithIndexedColorFails() {
         this.checkValueFails(
             Color.indexed(1),
-            "Metadata color12=1, Invalid color type 1 must not be indexed or named"
+            "Metadata color2=1, Invalid color type 1 must not be indexed or named"
         );
     }
 
@@ -108,7 +115,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     public void testCheckValueWithNamedColor() {
         this.checkValueFails(
             Color.named("Named123"),
-            "Metadata color12=\"Named123\", Invalid color type \"Named123\" must not be indexed or named"
+            "Metadata color2=\"Named123\", Invalid color type \"Named123\" must not be indexed or named"
         );
     }
 
@@ -127,19 +134,21 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameNumberedColor.withNumber(12),
-            "color12"
+            this.createName(),
+            "color2"
         );
     }
 
     @Override
     SpreadsheetMetadataPropertyNameNumberedColor createName() {
-        return SpreadsheetMetadataPropertyNameNumberedColor.withNumber(12);
+        return SpreadsheetMetadataPropertyNameNumberedColor.withNumber(
+            IndexedColor.indexed(2)
+        );
     }
 
     @Override
     Color propertyValue() {
-        return Color.fromArgb(0xffddaa);
+        return Color.BLACK;
     }
 
     @Override

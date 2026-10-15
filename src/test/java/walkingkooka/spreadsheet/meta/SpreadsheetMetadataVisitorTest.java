@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
@@ -546,15 +547,18 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
 
     @Test
     public void testVisitNumberedColor() {
-        final int number = 7;
+        final IndexedColor colorIndex = Color.indexed(7);
 
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitNumberedColor(final int n, final Color c) {
-                checkEquals(number, n, "number");
+            protected void visitNumberedColor(final IndexedColor n, final Color c) {
+                checkEquals(colorIndex, n, "number");
                 this.visited = c;
             }
-        }.accept(SpreadsheetMetadataPropertyName.numberedColor(number), this.color());
+        }.accept(
+            SpreadsheetMetadataPropertyName.numberedColor(colorIndex),
+            this.color()
+        );
     }
 
     @Test

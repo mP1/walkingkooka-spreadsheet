@@ -368,10 +368,14 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
             ValidatorAliasSet.parse("absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask")
         ).set(
-            SpreadsheetMetadataPropertyName.numberedColor(1),
+            SpreadsheetMetadataPropertyName.numberedColor(
+                Color.indexed(1)
+            ),
             Color.BLACK
         ).set(
-            SpreadsheetMetadataPropertyName.numberedColor(2),
+            SpreadsheetMetadataPropertyName.numberedColor(
+                Color.indexed(2)
+            ),
             Color.WHITE
         ).set(
             SpreadsheetMetadataPropertyName.namedColor(

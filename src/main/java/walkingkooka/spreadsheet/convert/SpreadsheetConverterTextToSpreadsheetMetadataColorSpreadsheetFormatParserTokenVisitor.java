@@ -62,7 +62,9 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
         ).orElseThrow(() -> new IllegalArgumentException("Invalid color name"));
 
         this.color = metadata.get(
-            SpreadsheetMetadataPropertyName.numberedColor(colorIndex)
+            SpreadsheetMetadataPropertyName.numberedColor(
+                Color.indexed(colorIndex)
+            )
         ).orElseThrow(() -> new IllegalArgumentException("Invalid color index"));
     }
 
@@ -71,7 +73,9 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
         final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
         final int colorNumber = token.cast(ColorNumberSpreadsheetFormatParserToken.class).value();
         this.color = metadata.get(
-            SpreadsheetMetadataPropertyName.numberedColor(colorNumber)
+            SpreadsheetMetadataPropertyName.numberedColor(
+                Color.indexed(colorNumber)
+            )
         ).orElseThrow(() -> new IllegalArgumentException("Invalid color number"));
     }
 
