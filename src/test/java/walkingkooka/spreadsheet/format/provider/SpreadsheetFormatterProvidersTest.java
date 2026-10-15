@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.provider;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;

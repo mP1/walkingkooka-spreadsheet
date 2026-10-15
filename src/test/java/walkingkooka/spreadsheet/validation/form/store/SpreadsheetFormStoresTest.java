@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.validation.form.store;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
