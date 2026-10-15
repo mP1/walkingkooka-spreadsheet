@@ -29,6 +29,7 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.tree.text.convert.TreeTextConverterContext;
 
 /**
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
@@ -40,7 +41,8 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
     HasSpreadsheetMetadata,
     SpreadsheetLabelNameResolver,
     SpreadsheetMetadataLoader,
-    StorageConverterContext {
+    StorageConverterContext,
+    TreeTextConverterContext {
 
     @Override
     default ExpressionNumber missingCellNumberValue() {
