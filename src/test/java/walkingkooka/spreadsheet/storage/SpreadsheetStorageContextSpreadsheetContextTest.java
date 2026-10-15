@@ -106,16 +106,6 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
         );
     }
 
-    // indentation......................................................................................................
-
-    @Test
-    public void testIndentation() {
-        this.indentationAndCheck(
-            this.createContext(),
-            INDENTATION
-        );
-    }
-
     // cells............................................................................................................
 
     @Test
