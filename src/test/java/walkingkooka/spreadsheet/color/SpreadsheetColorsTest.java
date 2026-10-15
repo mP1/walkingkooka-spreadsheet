@@ -19,15 +19,25 @@ package walkingkooka.spreadsheet.color;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.reflect.ThrowableTesting;
 
 import java.lang.reflect.Method;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<SpreadsheetColors>,
     ThrowableTesting {
+
+    @Test
+    public void testCaseSensitivityEqualsEnvironmentValueNameCaseSensitivity() {
+        assertSame(
+            EnvironmentValueName.CASE_SENSITIVITY,
+            SpreadsheetColors.CASE_SENSITIVITY
+        );
+    }
 
     // checkNumber......................................................................................................
 
