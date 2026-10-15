@@ -39,13 +39,13 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final int number) {
         SpreadsheetColors.checkColorIndex(number);
 
-        return NUMBER_TO_COLOR[number - SpreadsheetColors.MIN];
+        return NUMBER_TO_SPREADSHEET_METADATA_PROPERTY_NAME_NUMBERED_COLOR[number - SpreadsheetColors.MIN];
     }
 
     /**
      * Cache of {@link SpreadsheetColors#MIN} to {@link SpreadsheetColors#MAX} values.
      */
-    private static final SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[
+    private static final SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_SPREADSHEET_METADATA_PROPERTY_NAME_NUMBERED_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[
         SpreadsheetColors.MAX -
             SpreadsheetColors.MIN
             + 1
@@ -63,7 +63,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
 
     private static void registerColor(final int i) {
         final SpreadsheetMetadataPropertyNameNumberedColor name = new SpreadsheetMetadataPropertyNameNumberedColor(i);
-        NUMBER_TO_COLOR[i - SpreadsheetColors.MIN] = name;
+        NUMBER_TO_SPREADSHEET_METADATA_PROPERTY_NAME_NUMBERED_COLOR[i - SpreadsheetColors.MIN] = name;
         CONSTANTS.put(name.value(), name);
     }
 
