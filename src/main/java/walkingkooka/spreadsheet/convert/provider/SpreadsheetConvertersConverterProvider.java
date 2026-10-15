@@ -672,11 +672,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
                 converter = SpreadsheetConverters.textToProperties();
                 break;
-            case TEXT_TO_SPREADSHEET_COLOR_NAME_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.textToSpreadsheetColorName();
-                break;
             case TEXT_TO_SPREADSHEET_COMPARATOR_SELECTOR_STRING:
                 this.noParameterCheck(copy);
 
@@ -1493,10 +1488,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
 
     final static ConverterName TEXT_TO_PROPERTIES = ConverterName.with(TEXT_TO_PROPERTIES_STRING);
 
-    private final static String TEXT_TO_SPREADSHEET_COLOR_NAME_STRING = "text-to-spreadsheet-color-name";
-
-    final static ConverterName TEXT_TO_SPREADSHEET_COLOR_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_COLOR_NAME_STRING);
-
     private final static String TEXT_TO_SPREADSHEET_COMPARATOR_SELECTOR_STRING = "text-to-spreadsheet-comparator-selector";
 
     final static ConverterName TEXT_TO_SPREADSHEET_COMPARATOR_SELECTOR = ConverterName.with(TEXT_TO_SPREADSHEET_COMPARATOR_SELECTOR_STRING);
@@ -1885,7 +1876,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             converterInfo(TEXT_TO_PADDING),
             converterInfo(TEXT_TO_PATH),
             converterInfo(TEXT_TO_PROPERTIES),
-            converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
             converterInfo(TEXT_TO_SPREADSHEET_COMPARATOR_SELECTOR),
             converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),
             converterInfo(TEXT_TO_SPREADSHEET_ID),

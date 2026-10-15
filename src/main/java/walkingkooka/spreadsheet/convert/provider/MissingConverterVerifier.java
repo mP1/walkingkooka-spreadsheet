@@ -65,7 +65,6 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -795,16 +794,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 Color.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR,
                 Color.parseRgb(color)
-            );
-
-            // text-to-spreadsheet-color-name...........................................................................
-            final SpreadsheetColorName spreadsheetColorName = SpreadsheetColorName.BLACK;
-
-            verifier.addIfConversionFail(
-                spreadsheetColorName.value(),
-                SpreadsheetColorName.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME,
-                spreadsheetColorName
             );
 
             // to-color-properties......................................................................................

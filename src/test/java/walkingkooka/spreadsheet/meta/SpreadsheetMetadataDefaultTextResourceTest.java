@@ -165,7 +165,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"PROPERTIES\"\n" +
@@ -412,7 +411,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"PROPERTIES\"\n" +
@@ -651,7 +649,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"PROPERTIES\"\n" +
@@ -842,7 +839,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
-                "            TEXT to SpreadsheetColorName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetColorName)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"PROPERTIES\"\n" +
