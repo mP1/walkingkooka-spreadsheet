@@ -114,6 +114,7 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
                 "      MissingConverterValue\n" +
                 "        value\n" +
                 "          \"Hello1\"\n" +
+                "            java.lang.String\n" +
                 "        type\n" +
                 "          java.lang.String\n" +
                 "  MissingConverter\n" +
@@ -121,6 +122,7 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
                 "      MissingConverterValue\n" +
                 "        value\n" +
                 "          \"Hello2\"\n" +
+                "            java.lang.String\n" +
                 "        type\n" +
                 "          java.lang.String\n" +
                 "  MissingConverter\n" +
@@ -128,6 +130,7 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
                 "      MissingConverterValue\n" +
                 "        value\n" +
                 "          \"Hello2\"\n" +
+                "            java.lang.String\n" +
                 "        type\n" +
                 "          java.lang.String\n"
         );
