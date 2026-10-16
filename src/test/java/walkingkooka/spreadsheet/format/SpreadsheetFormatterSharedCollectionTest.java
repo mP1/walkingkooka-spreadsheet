@@ -184,6 +184,20 @@ public final class SpreadsheetFormatterSharedCollectionTest extends SpreadsheetF
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetFormatterSharedCollection\n" +
+                "  0\n" +
+                "    11 (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedCollectionTest$1)\n" +
+                "  1\n" +
+                "    222.5 (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedCollectionTest$1)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

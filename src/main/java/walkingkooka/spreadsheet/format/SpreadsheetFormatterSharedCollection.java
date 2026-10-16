@@ -21,6 +21,8 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
@@ -31,7 +33,8 @@ import java.util.stream.Stream;
 /**
  * A {@link SpreadsheetFormatter} that forms a collection trying each {@link SpreadsheetFormatter formatter} until success.
  */
-final class SpreadsheetFormatterSharedCollection extends SpreadsheetFormatterShared {
+final class SpreadsheetFormatterSharedCollection extends SpreadsheetFormatterShared
+    implements TreePrintable {
 
     /**
      * Creates a new {@link SpreadsheetFormatterSharedCollection} as necessary.
@@ -118,5 +121,33 @@ final class SpreadsheetFormatterSharedCollection extends SpreadsheetFormatterSha
             this.formatters,
             SpreadsheetFormatter::toString
         );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            int i = 0;
+            for(final SpreadsheetFormatter formatter : this.formatters) {
+                printer.println(
+                    String.valueOf(i)
+                );
+                printer.indent();
+                {
+                    TreePrintable.printTreeOrToString(
+                        formatter,
+                        printer
+                    );
+                    printer.lineStart();
+                }
+                printer.outdent();
+
+                i++;
+            }
+        }
+        printer.outdent();
     }
 }
