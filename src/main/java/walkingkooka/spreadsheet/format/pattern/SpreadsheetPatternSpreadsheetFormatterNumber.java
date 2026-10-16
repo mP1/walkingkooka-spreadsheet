@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.util.List;
@@ -32,7 +34,8 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats value after converting them to a number using the provided number pattern.
  */
-final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetPatternSpreadsheetFormatter,
+    TreePrintable {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterNumber} parse a {@link NumberSpreadsheetFormatParserToken}.
@@ -184,4 +187,16 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     }
 
     private final NumberSpreadsheetFormatParserToken token;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.token.printTree(printer);
+        }
+        printer.outdent();
+    }
 }
