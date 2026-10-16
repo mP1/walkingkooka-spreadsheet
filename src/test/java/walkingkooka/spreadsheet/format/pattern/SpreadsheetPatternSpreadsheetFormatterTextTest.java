@@ -336,6 +336,18 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         this.toStringAndCheck(this.createFormatter(), this.pattern());
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "  TextSpreadsheetFormat \"@\"\n" +
+                "    TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

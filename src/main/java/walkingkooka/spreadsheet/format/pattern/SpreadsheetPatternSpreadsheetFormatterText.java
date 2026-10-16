@@ -21,6 +21,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +32,8 @@ import java.util.Optional;
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats values after converting them to a {@link String}.
  * Note that null {@link String} values are supported but any placeholders in the pattern will be skipped.
  */
-final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPatternSpreadsheetFormatter,
+    TreePrintable {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterText} parse a {@link TextSpreadsheetFormatParserToken}.
@@ -105,4 +108,16 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     }
 
     private final TextSpreadsheetFormatParserToken token;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.token.printTree(printer);
+        }
+        printer.outdent();
+    }
 }
