@@ -461,6 +461,28 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetPatternSpreadsheetFormatterColor\n" +
+                "  token\n" +
+                "    ColorSpreadsheetFormat \"[COLOR 13]\"\n" +
+                "      BracketOpenSymbolSpreadsheetFormat \"[\" \"[\"\n" +
+                "      ColorLiteralSymbolSpreadsheetFormat \"COLOR\" \"COLOR\"\n" +
+                "      WhitespaceSpreadsheetFormat \" \" \" \"\n" +
+                "      ColorNumberSpreadsheetFormat \"13\" 13\n" +
+                "      BracketCloseSymbolSpreadsheetFormat \"]\" \"]\"\n" +
+                "  formatter\n" +
+                "    SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "      TextSpreadsheetFormat \"@@\"\n" +
+                "        TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n" +
+                "        TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
     // Class...........................................................................................................
 
     @Override
