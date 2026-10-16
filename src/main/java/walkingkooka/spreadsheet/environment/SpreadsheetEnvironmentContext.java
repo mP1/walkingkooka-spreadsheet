@@ -25,11 +25,21 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.terminal.TerminalContext;
 
 import java.util.Optional;
 
 /**
  * A {@link EnvironmentContext} with a few extra spreadsheet standard {@link walkingkooka.environment.EnvironmentValueName}.
+ * <br>
+ * Note that {@link #parseEnvironmentValueName(String)} supports mapping additional {@link EnvironmentValueName} to
+ * spreadsheet types such as
+ * <ul>
+ *  <li>{@link #SERVER_URL}</li>
+ *  <li>{@link #SPREADSHEET_ID}</li>
+ *  <li>{@link TerminalContext#TERMINAL_ID}</li>
+ * </ul>
+ * {@link EnvironmentContext}, {@link StorageEnvironmentContext}.
  */
 public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext,
     HasSpreadsheetServerUrl {
