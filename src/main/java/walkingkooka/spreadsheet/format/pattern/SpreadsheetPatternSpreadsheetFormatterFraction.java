@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.FractionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -36,7 +38,8 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats any number as a fraction.
  */
-final class SpreadsheetPatternSpreadsheetFormatterFraction implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterFraction implements SpreadsheetPatternSpreadsheetFormatter,
+    TreePrintable {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterFraction} parse a {@link NumberSpreadsheetFormatParserToken}.
@@ -211,4 +214,24 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     }
 
     private final FractionSpreadsheetFormatParserToken token;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.fractioner,
+                printer
+            );
+            printer.indent();
+            {
+                this.token.printTree(printer);
+            }
+            printer.outdent();
+        }
+        printer.outdent();
+    }
 }
