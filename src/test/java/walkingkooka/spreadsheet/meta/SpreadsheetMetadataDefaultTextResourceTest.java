@@ -25,7 +25,10 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -1257,6 +1260,134 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             expected
         );
     }
+
+    // formatter........................................................................................................
+
+    @Test
+    public void testFormatterDatePrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterDateTime\n" +
+                "  LocalDate\n" +
+                "    DateTimeSpreadsheetFormat \"dddd, d mmmm yyyy\"\n" +
+                "      DaySpreadsheetFormat \"dddd\" \"dddd\"\n" +
+                "      TextLiteralSpreadsheetFormat \", \" \", \"\n" +
+                "      DaySpreadsheetFormat \"d\" \"d\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      MonthSpreadsheetFormat \"mmmm\" \"mmmm\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterDateTimePrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterDateTime\n" +
+                "  LocalDateTime\n" +
+                "    DateTimeSpreadsheetFormat \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
+                "      DaySpreadsheetFormat \"dddd\" \"dddd\"\n" +
+                "      TextLiteralSpreadsheetFormat \", \" \", \"\n" +
+                "      DaySpreadsheetFormat \"d\" \"d\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      MonthSpreadsheetFormat \"mmmm\" \"mmmm\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      EscapeSpreadsheetFormat \"\\\\a\" 'a'\n" +
+                "      EscapeSpreadsheetFormat \"\\\\t\" 't'\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      HourSpreadsheetFormat \"h\" \"h\"\n" +
+                "      TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "      MinuteSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "      TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "      SecondSpreadsheetFormat \"ss\" \"ss\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      AmPmSpreadsheetFormat \"AM/PM\" \"AM/PM\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterErrorPrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            "SpreadsheetFormatterSharedBadgeError\n" +
+                "  SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "    TextSpreadsheetFormat \"@\"\n" +
+                "      TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterNumberPrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterNumber\n" +
+                "  NumberSpreadsheetFormat \"#,##0.###\"\n" +
+                "    DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "    GroupSeparatorSpreadsheetFormat \",\" \",\"\n" +
+                "    DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "    DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "    DigitZeroSpreadsheetFormat \"0\" \"0\"\n" +
+                "    DecimalPointSpreadsheetFormat \".\" \".\"\n" +
+                "    DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "    DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "    DigitSpreadsheetFormat \"#\" \"#\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterTextPrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "  TextSpreadsheetFormat \"@\"\n" +
+                "    TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterTimePrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterDateTime\n" +
+                "  LocalTime\n" +
+                "    DateTimeSpreadsheetFormat \"h:mm:ss AM/PM\"\n" +
+                "      HourSpreadsheetFormat \"h\" \"h\"\n" +
+                "      TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "      MinuteSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "      TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "      SecondSpreadsheetFormat \"ss\" \"ss\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      AmPmSpreadsheetFormat \"AM/PM\" \"AM/PM\"\n"
+        );
+    }
+
+    private void formatterPrintTreeAndCheck(final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> propertyName,
+                                            final String expected) {
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+            .set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            ).loadFromLocale(CURRENCY_LOCALE_CONTEXT);
+
+        final SpreadsheetFormatterSelector selector = metadata.getOrFail(propertyName);
+
+        final SpreadsheetFormatter formatter = SpreadsheetFormatterProviders.spreadsheetFormatters()
+            .spreadsheetFormatter(
+                selector,
+                PROVIDER_CONTEXT
+            );
+
+        this.treePrintAndCheck(
+            (TreePrintable) formatter,
+            expected
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetMetadataDefaultTextResource> type() {
