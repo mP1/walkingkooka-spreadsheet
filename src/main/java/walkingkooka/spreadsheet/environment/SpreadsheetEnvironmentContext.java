@@ -35,6 +35,7 @@ import java.util.Optional;
  * Note that {@link #parseEnvironmentValueName(String)} supports mapping additional {@link EnvironmentValueName} to
  * spreadsheet types such as
  * <ul>
+ *  <li>Any {@link EnvironmentValueName} beginning with {@link #COLOR_PREFIX}</li>
  *  <li>{@link #SERVER_URL}</li>
  *  <li>{@link #SPREADSHEET_ID}</li>
  *  <li>{@link TerminalContext#TERMINAL_ID}</li>
@@ -43,6 +44,8 @@ import java.util.Optional;
  */
 public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext,
     HasSpreadsheetServerUrl {
+
+    String COLOR_PREFIX = "color";
 
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.registerConstant(
         "serverUrl",
