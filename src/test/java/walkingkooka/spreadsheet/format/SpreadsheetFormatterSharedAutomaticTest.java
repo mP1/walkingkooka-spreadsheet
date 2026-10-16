@@ -52,6 +52,11 @@ public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFo
             );
             return DATE_FORMATTED;
         }
+
+        @Override
+        public String toString() {
+            return "DATE_FORMATTER";
+        }
     };
 
     private final static LocalDateTime DATE_TIME = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
@@ -71,6 +76,11 @@ public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFo
             );
             return DATE_TIME_FORMATTED;
         }
+
+        @Override
+        public String toString() {
+            return "DATE_TIME_FORMATTER";
+        }
     };
 
     private final static SpreadsheetError ERROR = SpreadsheetErrorKind.ERROR.setMessage("*error message 123*");
@@ -85,6 +95,11 @@ public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFo
                                          final SpreadsheetFormatterContext converter) {
             return ERROR_FORMATTED;
         }
+
+        @Override
+        public String toString() {
+            return "ERROR_FORMATTER";
+        }
     };
 
     private final SpreadsheetFormatter NUMBER_FORMATTER = new FakeSpreadsheetFormatter() {
@@ -97,6 +112,11 @@ public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFo
                         value.orElse("")
                 )
             );
+        }
+
+        @Override
+        public String toString() {
+            return "NUMBER_FORMATTER";
         }
     };
 
@@ -111,6 +131,11 @@ public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFo
         public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             return TEXT_FORMATTED;
+        }
+
+        @Override
+        public String toString() {
+            return "TEXT_FORMATTER";
         }
     };
 
@@ -130,6 +155,11 @@ public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFo
                 "value"
             );
             return TIME_FORMATTED;
+        }
+
+        @Override
+        public String toString() {
+            return "TIME_FORMATTER";
         }
     };
 
@@ -431,6 +461,28 @@ public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFo
     @Test
     public void testTokens() {
         this.tokensAndCheck();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetFormatterSharedAutomatic\n" +
+                "  date\n" +
+                "    DATE_FORMATTER (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedAutomaticTest$1)\n" +
+                "  dateTime\n" +
+                "    DATE_TIME_FORMATTER (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedAutomaticTest$2)\n" +
+                "  error\n" +
+                "    ERROR_FORMATTER (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedAutomaticTest$3)\n" +
+                "  number\n" +
+                "    NUMBER_FORMATTER (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedAutomaticTest$4)\n" +
+                "  text\n" +
+                "    TEXT_FORMATTER (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedAutomaticTest$5)\n" +
+                "  time\n" +
+                "    TIME_FORMATTER (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedAutomaticTest$6)\n"
+        );
     }
 
     // class............................................................................................................
