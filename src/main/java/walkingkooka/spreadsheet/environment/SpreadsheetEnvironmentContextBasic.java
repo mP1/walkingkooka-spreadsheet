@@ -17,11 +17,15 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.color.IndexedColor;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
@@ -30,6 +34,7 @@ import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -108,30 +113,59 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     public EnvironmentValueName<?> parseEnvironmentValueName(final String name) {
         Objects.requireNonNull(name, "name");
 
-        // required because wrapped StorageEnvironmentContext may be missing terminalId
-        return EnvironmentValueName.CASE_SENSITIVITY.startsWith(
-            name,
-            COLOR_PREFIX
-        ) ? EnvironmentValueName.with(
-            name,
-            Color.class
-        ) : EnvironmentValueName.CASE_SENSITIVITY.equals(
-            SERVER_URL.value(),
-            name
-        ) ?
-            SERVER_URL :
-            EnvironmentValueName.CASE_SENSITIVITY.equals(
+        // lazy load ENVIRONMENT_VALUE_NAMES
+        if (null == STRING_TO_ENVIRONMENT_VALUE_NAMES) {
+            final Map<String, EnvironmentValueName<?>> stringEnvironmentValueNames = Maps.sorted(EnvironmentValueName.CASE_SENSITIVITY.comparator());
+
+            for (int i = SpreadsheetColors.MIN; i <= SpreadsheetColors.MAX; i++) {
+                // populate color999 constants
+                final SpreadsheetMetadataPropertyName<Color> color = SpreadsheetMetadataPropertyName.numberedColor(
+                    IndexedColor.indexed(i)
+                );
+                stringEnvironmentValueNames.put(
+                    color.value(),
+                    color.toEnvironmentValueName()
+                );
+            }
+
+            stringEnvironmentValueNames.put(
+                SERVER_URL.value(),
+                SERVER_URL
+            );
+
+            stringEnvironmentValueNames.put(
                 SPREADSHEET_ID.value(),
-                name
-            ) ?
-                SPREADSHEET_ID :
-                EnvironmentValueName.CASE_SENSITIVITY.equals(
-                    TerminalContext.TERMINAL_ID.value(),
-                    name
-                ) ?
-                    TerminalContext.TERMINAL_ID :
-                    this.context.parseEnvironmentValueName(name);
+                SPREADSHEET_ID
+            );
+
+            stringEnvironmentValueNames.put(
+                TerminalContext.TERMINAL_ID.value(),
+                TerminalContext.TERMINAL_ID
+            );
+
+            STRING_TO_ENVIRONMENT_VALUE_NAMES = stringEnvironmentValueNames;
+        }
+
+        // required because wrapped StorageEnvironmentContext may be missing terminalId
+        EnvironmentValueName<?> environmentValueName = STRING_TO_ENVIRONMENT_VALUE_NAMES.get(name);
+        if (null == environmentValueName) {
+            if (EnvironmentValueName.CASE_SENSITIVITY.startsWith(
+                name,
+                COLOR_PREFIX
+            )) {
+
+                environmentValueName = EnvironmentValueName.with(
+                    name,
+                    Color.class
+                );
+            } else {
+                environmentValueName = this.context.parseEnvironmentValueName(name);
+            }
+        }
+        return environmentValueName;
     }
+
+    private static Map<String, EnvironmentValueName<?>> STRING_TO_ENVIRONMENT_VALUE_NAMES;
 
     // EnvironmentContextDelegator......................................................................................
 
