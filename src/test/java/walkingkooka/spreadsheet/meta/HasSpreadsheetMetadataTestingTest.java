@@ -32,6 +32,9 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.printer.TreePrintable;
@@ -139,6 +142,140 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         SPREADSHEET_METADATA.spreadsheetFormatter(
             SPREADSHEET_FORMATTER_PROVIDER,
             PROVIDER_CONTEXT
+        );
+    }
+
+    // formatter........................................................................................................
+
+    @Test
+    public void testFormatterDatePrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterDateTime\n" +
+                "  LocalDate\n" +
+                "    DateTimeSpreadsheetFormat \"yyyy/mm/dd\"\n" +
+                "      YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n" +
+                "      TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "      MonthSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "      TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "      DaySpreadsheetFormat \"dd\" \"dd\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterDateTimePrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterDateTime\n" +
+                "  LocalDateTime\n" +
+                "    DateTimeSpreadsheetFormat \"yyyy/mm/dd hh:mm\"\n" +
+                "      YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n" +
+                "      TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "      MonthSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "      TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "      DaySpreadsheetFormat \"dd\" \"dd\"\n" +
+                "      TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "      HourSpreadsheetFormat \"hh\" \"hh\"\n" +
+                "      TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "      MinuteSpreadsheetFormat \"mm\" \"mm\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterErrorPrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            "SpreadsheetFormatterSharedBadgeError\n" +
+                "  SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "    TextSpreadsheetFormat \"@\"\n" +
+                "      TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterNumberPrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterCollection\n" +
+                "  0\n" +
+                "    SpreadsheetPatternSpreadsheetFormatterCondition\n" +
+                "      token\n" +
+                "        GreaterThanSpreadsheetFormat \">0\"\n" +
+                "          GreaterThanSymbolSpreadsheetFormat \">\" \">\"\n" +
+                "          ConditionNumberSpreadsheetFormat \"0\" 0 (java.math.BigDecimal)\n" +
+                "      formatter\n" +
+                "        SpreadsheetPatternSpreadsheetFormatterNumber\n" +
+                "          NumberSpreadsheetFormat \"0.#\"\n" +
+                "            DigitZeroSpreadsheetFormat \"0\" \"0\"\n" +
+                "            DecimalPointSpreadsheetFormat \".\" \".\"\n" +
+                "            DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "  1\n" +
+                "    SpreadsheetPatternSpreadsheetFormatterCondition\n" +
+                "      token\n" +
+                "        LessThanSpreadsheetFormat \"<0\"\n" +
+                "          LessThanSymbolSpreadsheetFormat \"<\" \"<\"\n" +
+                "          ConditionNumberSpreadsheetFormat \"0\" 0 (java.math.BigDecimal)\n" +
+                "      formatter\n" +
+                "        SpreadsheetPatternSpreadsheetFormatterNumber\n" +
+                "          NumberSpreadsheetFormat \"0.#\"\n" +
+                "            DigitZeroSpreadsheetFormat \"0\" \"0\"\n" +
+                "            DecimalPointSpreadsheetFormat \".\" \".\"\n" +
+                "            DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "  2\n" +
+                "    SpreadsheetPatternSpreadsheetFormatterCondition\n" +
+                "      token\n" +
+                "        EqualsSpreadsheetFormat \"=0\"\n" +
+                "          EqualsSymbolSpreadsheetFormat \"=\" \"=\"\n" +
+                "          ConditionNumberSpreadsheetFormat \"0\" 0 (java.math.BigDecimal)\n" +
+                "      formatter\n" +
+                "        SpreadsheetPatternSpreadsheetFormatterNumber\n" +
+                "          NumberSpreadsheetFormat \"0\"\n" +
+                "            DigitZeroSpreadsheetFormat \"0\" \"0\"\n" +
+                "  3\n" +
+                "    SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "      TextSpreadsheetFormat \"@\"\n" +
+                "        TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterTextPrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "  TextSpreadsheetFormat \"@\"\n" +
+                "    TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
+    @Test
+    public void testFormatterTimePrintTree() {
+        this.formatterPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+            "SpreadsheetPatternSpreadsheetFormatterDateTime\n" +
+                "  LocalTime\n" +
+                "    DateTimeSpreadsheetFormat \"hh:mm:ss\"\n" +
+                "      HourSpreadsheetFormat \"hh\" \"hh\"\n" +
+                "      TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "      MinuteSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "      TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "      SecondSpreadsheetFormat \"ss\" \"ss\"\n"
+        );
+    }
+
+    private void formatterPrintTreeAndCheck(final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> propertyName,
+                                            final String expected) {
+        final SpreadsheetFormatterSelector selector = SPREADSHEET_METADATA.getOrFail(propertyName);
+
+        final SpreadsheetFormatter formatter = SpreadsheetFormatterProviders.spreadsheetFormatters()
+            .spreadsheetFormatter(
+                selector,
+                PROVIDER_CONTEXT
+            );
+
+        this.treePrintAndCheck(
+            (TreePrintable) formatter,
+            expected
         );
     }
 
