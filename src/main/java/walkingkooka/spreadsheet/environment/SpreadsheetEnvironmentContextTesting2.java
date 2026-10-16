@@ -90,17 +90,17 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
 
     @Test
     default void testParseEnvironmentValueNameWithServerUrl() {
-        this.parseEnvironmentValueNameAndCheck(SpreadsheetEnvironmentContext.SERVER_URL);
+        this.parseEnvironmentValueNameAndCachedCheck(SpreadsheetEnvironmentContext.SERVER_URL);
     }
 
     @Test
     default void testParseEnvironmentValueNameWithSpreadsheetId() {
-        this.parseEnvironmentValueNameAndCheck(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
+        this.parseEnvironmentValueNameAndCachedCheck(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
     }
 
     @Test
     default void testParseEnvironmentValueNameWithTerminalId() {
-        this.parseEnvironmentValueNameAndCheck(TerminalContext.TERMINAL_ID);
+        this.parseEnvironmentValueNameAndCachedCheck(TerminalContext.TERMINAL_ID);
     }
 
     // serverUrl........................................................................................................
