@@ -21,6 +21,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,7 +33,8 @@ import java.util.function.Predicate;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that wraps another {@link SpreadsheetPatternSpreadsheetFormatter} which only formats if the condition is true.
  */
-final class SpreadsheetPatternSpreadsheetFormatterCondition implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterCondition implements SpreadsheetPatternSpreadsheetFormatter,
+    TreePrintable {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterCondition}
@@ -115,4 +118,36 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     }
 
     private final ConditionSpreadsheetFormatParserToken token;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            printer.println("token");
+            printer.indent();
+            {
+                this.token.printTree(printer);
+            }
+            printer.outdent();
+        }
+        printer.outdent();
+
+        printer.indent();
+        {
+            printer.println("formatter");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.formatter,
+                    printer
+                );
+                printer.lineStart();
+            }
+            printer.outdent();
+        }
+        printer.outdent();
+    }
 }
