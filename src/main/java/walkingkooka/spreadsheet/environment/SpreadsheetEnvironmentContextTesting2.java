@@ -18,7 +18,9 @@
 package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.environment.EnvironmentContextTesting2;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.storage.StorageEnvironmentContextTesting2;
@@ -31,6 +33,60 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends SpreadsheetEnvironmentContextTesting,
     EnvironmentContextTesting2<C>,
     StorageEnvironmentContextTesting2<C> {
+
+    // parseEnvironmentValueName........................................................................................
+
+    @Test
+    default void testParseEnvironmentValueNameWithColorPrefix() {
+        final String name = "color1";
+
+        this.parseEnvironmentValueNameAndCheck(
+            name,
+            EnvironmentValueName.with(
+                name,
+                Color.class
+            )
+        );
+    }
+
+    @Test
+    default void testParseEnvironmentValueNameWithColorPrefixMixedCase() {
+        final String name = "COLOR1";
+
+        this.parseEnvironmentValueNameAndCheck(
+            name,
+            EnvironmentValueName.with(
+                name,
+                Color.class
+            )
+        );
+    }
+
+    @Test
+    default void testParseEnvironmentValueNameWithColorPrefix2() {
+        final String name = "color2";
+
+        this.parseEnvironmentValueNameAndCheck(
+            name,
+            EnvironmentValueName.with(
+                name,
+                Color.class
+            )
+        );
+    }
+
+    @Test
+    default void testParseEnvironmentValueNameWithColorPrefix99() {
+        final String name = "color99";
+
+        this.parseEnvironmentValueNameAndCheck(
+            name,
+            EnvironmentValueName.with(
+                name,
+                Color.class
+            )
+        );
+    }
 
     @Test
     default void testParseEnvironmentValueNameWithServerUrl() {

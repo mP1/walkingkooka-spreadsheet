@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.color.Color;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
@@ -108,7 +109,13 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
         Objects.requireNonNull(name, "name");
 
         // required because wrapped StorageEnvironmentContext may be missing terminalId
-        return EnvironmentValueName.CASE_SENSITIVITY.equals(
+        return EnvironmentValueName.CASE_SENSITIVITY.startsWith(
+            name,
+            COLOR_PREFIX
+        ) ? EnvironmentValueName.with(
+            name,
+            Color.class
+        ) : EnvironmentValueName.CASE_SENSITIVITY.equals(
             SERVER_URL.value(),
             name
         ) ?
