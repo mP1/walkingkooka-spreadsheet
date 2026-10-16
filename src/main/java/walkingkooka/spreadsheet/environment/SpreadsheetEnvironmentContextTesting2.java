@@ -40,7 +40,7 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     default void testParseEnvironmentValueNameWithColorPrefix() {
         final String name = "color1";
 
-        this.parseEnvironmentValueNameAndCheck(
+        this.parseEnvironmentValueNameAndCachedCheck(
             name,
             EnvironmentValueName.with(
                 name,
@@ -53,7 +53,7 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     default void testParseEnvironmentValueNameWithColorPrefixMixedCase() {
         final String name = "COLOR1";
 
-        this.parseEnvironmentValueNameAndCheck(
+        this.parseEnvironmentValueNameAndCachedCheck(
             name,
             EnvironmentValueName.with(
                 name,
@@ -66,7 +66,7 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     default void testParseEnvironmentValueNameWithColorPrefix2() {
         final String name = "color2";
 
-        this.parseEnvironmentValueNameAndCheck(
+        this.parseEnvironmentValueNameAndCachedCheck(
             name,
             EnvironmentValueName.with(
                 name,
