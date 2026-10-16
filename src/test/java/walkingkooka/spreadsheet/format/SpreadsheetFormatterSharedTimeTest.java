@@ -144,6 +144,19 @@ public final class SpreadsheetFormatterSharedTimeTest extends SpreadsheetFormatt
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetFormatterSharedTime\n" +
+                "  MEDIUM\n"
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public Class<SpreadsheetFormatterSharedTime> type() {
         return SpreadsheetFormatterSharedTime.class;

@@ -22,6 +22,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.util.HasLocale;
 
@@ -35,7 +37,8 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that wraps a {@link DateFormat} using the provided {@link DateFormatKind#dateFormatStyle()}
  * and formats {@link java.time.LocalTime} values.
  */
-final class SpreadsheetFormatterSharedTime extends SpreadsheetFormatterShared {
+final class SpreadsheetFormatterSharedTime extends SpreadsheetFormatterShared
+    implements TreePrintable {
 
     static SpreadsheetFormatterSharedTime with(final DateFormatKind kind) {
         return new SpreadsheetFormatterSharedTime(
@@ -101,4 +104,16 @@ final class SpreadsheetFormatterSharedTime extends SpreadsheetFormatterShared {
     }
 
     private final DateFormatKind kind;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            printer.println(this.kind.toString());
+        }
+        printer.outdent();
+    }
 }
