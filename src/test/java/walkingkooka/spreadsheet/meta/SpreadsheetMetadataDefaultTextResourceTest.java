@@ -52,8 +52,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     }
 
     @Test
-    public void testFormattingConverterPrintTree() {
-        this.treePrintAndCheck(
+    public void testConverterFormattingPrintTree() {
+        this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             "ConverterCustomToString\n" +
                 "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
@@ -298,8 +298,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     }
 
     @Test
-    public void testFormulaConverterPrintTree() {
-        this.treePrintAndCheck(
+    public void testConverterFormulaPrintTree() {
+        this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             "ConverterCustomToString\n" +
                 "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
@@ -544,8 +544,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     }
 
     @Test
-    public void testQueryConverterPrintTree() {
-        this.treePrintAndCheck(
+    public void testConverterQueryPrintTree() {
+        this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
             "ConverterCustomToString\n" +
                 "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
@@ -726,8 +726,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     }
 
     @Test
-    public void testScriptingConverterPrintTree() {
-        this.treePrintAndCheck(
+    public void testConverterScriptingPrintTree() {
+        this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             "ConverterCustomToString\n" +
                 "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
@@ -972,8 +972,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     }
 
     @Test
-    public void testSortConverterPrintTree() {
-        this.treePrintAndCheck(
+    public void testConverterSortPrintTree() {
+        this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
             "ConverterCustomToString\n" +
                 "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, url, optional-to, collection-to)\"\n" +
@@ -1075,8 +1075,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     }
 
     @Test
-    public void testValidationConverterPrintTree() {
-        this.treePrintAndCheck(
+    public void testConverterValidationPrintTree() {
+        this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
             "ConverterCustomToString\n" +
                 "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\"\n" +
@@ -1227,8 +1227,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         );
     }
 
-    private void treePrintAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> property,
-                                   final String expected) {
+    private void converterTreePrintAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> property,
+                                            final String expected) {
         final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY").spreadsheetParserSelector())
