@@ -110,7 +110,4 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
     public SpreadsheetTimeParsePattern removeCondition() {
         return this;
     }
-
-    // Object...........................................................................................................
-
 }
