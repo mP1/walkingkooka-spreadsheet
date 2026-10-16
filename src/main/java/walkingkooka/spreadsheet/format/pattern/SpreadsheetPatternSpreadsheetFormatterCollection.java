@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,8 @@ import java.util.stream.Stream;
  * each one tried one by one until success.
  * This supports conditional formatters such as a number format with both a positive and negative pattern.
  */
-final class SpreadsheetPatternSpreadsheetFormatterCollection implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterCollection implements SpreadsheetPatternSpreadsheetFormatter,
+    TreePrintable {
 
     /**
      * Creates a new {@link SpreadsheetPatternSpreadsheetFormatterCollection} as necessary.
@@ -122,5 +125,33 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
             this.formatters,
             SpreadsheetFormatter::toString
         );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            int i = 0;
+            for(final SpreadsheetPatternSpreadsheetFormatter formatter : this.formatters) {
+                printer.println(
+                    String.valueOf(i)
+                );
+                printer.indent();
+                {
+                    TreePrintable.printTreeOrToString(
+                        formatter,
+                        printer
+                    );
+                    printer.lineStart();
+                }
+                printer.outdent();
+
+                i++;
+            }
+        }
+        printer.outdent();
     }
 }

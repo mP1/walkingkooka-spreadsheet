@@ -295,6 +295,20 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetPatternSpreadsheetFormatterCollection\n" +
+                "  0\n" +
+                "    11 (walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternSpreadsheetFormatterCollectionTest$3)\n" +
+                "  1\n" +
+                "    222.5 (walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternSpreadsheetFormatterCollectionTest$3)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
