@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -48,7 +49,8 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
     FractionSpreadsheetFormatParserToken>
-    implements HasMathContextTesting {
+    implements HasMathContextTesting,
+    TreePrintableTesting {
 
     // with.............................................................................................................
 
@@ -622,20 +624,35 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         );
     }
 
-    private final static Function<BigDecimal, Fraction> FRACTIONER = SpreadsheetPatternSpreadsheetFormatterFractionTest::makeIntoFraction;
+    private final static Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
+        @Override
+        public Fraction apply(final BigDecimal value) {
+            if (value.signum() == 0) {
+                return Fraction.with(BigInteger.ZERO, BigInteger.ONE);
+            }
 
-    private static Fraction makeIntoFraction(final BigDecimal value) {
-        if (value.signum() == 0) {
-            return Fraction.with(BigInteger.ZERO, BigInteger.ONE);
+            final int scale = value.scale();
+            final BigDecimal two = BigDecimal.valueOf(2);
+
+            return Fraction.with(
+                value.scaleByPowerOfTen(scale)
+                    .divide(
+                        two,
+                        MATH_CONTEXT
+                    ).toBigInteger(),
+                BigDecimal.ONE.scaleByPowerOfTen(scale)
+                    .divide(
+                        two,
+                        MATH_CONTEXT
+                    ).toBigInteger()
+            );
         }
 
-        final int scale = value.scale();
-        final BigDecimal two = BigDecimal.valueOf(2);
-
-        return Fraction.with(
-            value.scaleByPowerOfTen(scale).divide(two, MATH_CONTEXT).toBigInteger(),
-            BigDecimal.ONE.scaleByPowerOfTen(scale).divide(two, MATH_CONTEXT).toBigInteger());
-    }
+        @Override
+        public String toString() {
+            return "FRACTIONER";
+        }
+    };
 
     @Override
     public Optional<BigDecimal> value() {
@@ -744,6 +761,21 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createFormatter(), this.pattern());
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetPatternSpreadsheetFormatterFraction\n" +
+                "  FRACTIONER (walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternSpreadsheetFormatterFractionTest$1)\n" +
+                "    FractionSpreadsheetFormat \"#/#\"\n" +
+                "      DigitSpreadsheetFormat \"#\" \"#\"\n" +
+                "      FractionSymbolSpreadsheetFormat \"/\" \"/\"\n" +
+                "      DigitSpreadsheetFormat \"#\" \"#\"\n"
+        );
     }
 
     // class ...........................................................................................................
