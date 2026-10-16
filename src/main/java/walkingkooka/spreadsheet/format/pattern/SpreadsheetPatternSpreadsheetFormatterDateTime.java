@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
@@ -32,7 +34,8 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterDateTime implements SpreadsheetPatternSpreadsheetFormatter {
+final class SpreadsheetPatternSpreadsheetFormatterDateTime implements SpreadsheetPatternSpreadsheetFormatter,
+    TreePrintable {
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterDateTime} parse a {@link DateTimeSpreadsheetFormatParserToken}
@@ -136,4 +139,21 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
     }
 
     private final DateTimeSpreadsheetFormatParserToken token;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            printer.println(this.valueType.getSimpleName());
+            printer.indent();
+            {
+                this.token.printTree(printer);
+            }
+            printer.outdent();
+        }
+        printer.outdent();
+    }
 }

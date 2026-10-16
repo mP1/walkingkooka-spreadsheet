@@ -1410,6 +1410,24 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetPatternSpreadsheetFormatterDateTime\n" +
+                "  LocalDateTime\n" +
+                "    DateTimeSpreadsheetFormat \"YYYYMMDDHHMMSS\"\n" +
+                "      YearSpreadsheetFormat \"YYYY\" \"YYYY\"\n" +
+                "      MonthSpreadsheetFormat \"MM\" \"MM\"\n" +
+                "      DaySpreadsheetFormat \"DD\" \"DD\"\n" +
+                "      HourSpreadsheetFormat \"HH\" \"HH\"\n" +
+                "      MinuteSpreadsheetFormat \"MM\" \"MM\"\n" +
+                "      SecondSpreadsheetFormat \"SS\" \"SS\"\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
