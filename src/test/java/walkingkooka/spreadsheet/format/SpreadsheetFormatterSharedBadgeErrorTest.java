@@ -138,6 +138,20 @@ public final class SpreadsheetFormatterSharedBadgeErrorTest extends SpreadsheetF
         };
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetFormatterSharedBadgeError\n" +
+                "  SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "    TextSpreadsheetFormat \"@@\"\n" +
+                "      TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n" +
+                "      TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

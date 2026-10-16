@@ -22,6 +22,8 @@ import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.Badge;
 import walkingkooka.tree.text.TextNode;
 
@@ -33,7 +35,8 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that outputs a {@link Badge} with the error text, and uses the
  * given {@link SpreadsheetFormatter} to format the {@link SpreadsheetError}.
  */
-final class SpreadsheetFormatterSharedBadgeError extends SpreadsheetFormatterShared {
+final class SpreadsheetFormatterSharedBadgeError extends SpreadsheetFormatterShared
+    implements TreePrintable {
 
     /**
      * Creates a new {@link SpreadsheetFormatterSharedBadgeError}.
@@ -123,5 +126,20 @@ final class SpreadsheetFormatterSharedBadgeError extends SpreadsheetFormatterSha
     @Override
     public String toString() {
         return "badge-error " + this.formatter;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.formatter,
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
