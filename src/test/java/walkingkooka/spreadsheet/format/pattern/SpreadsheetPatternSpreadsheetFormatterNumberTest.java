@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToke
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorTokenAlternative;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.expression.convert.FakeExpressionNumberConverterContext;
@@ -56,8 +57,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * In expectations all symbols are changed parse defaults to characters to verify the context is supplying such symbols.
  */
-public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterNumber,
-    NumberSpreadsheetFormatParserToken> {
+public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterNumber, NumberSpreadsheetFormatParserToken>
+    implements TreePrintableTesting {
 
     @Test
     public void testFormatNull() {
@@ -2711,6 +2712,18 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createFormatter(), this.pattern());
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetPatternSpreadsheetFormatterNumber\n" +
+                "  NumberSpreadsheetFormat \"quoted text\"\n" +
+                "    QuotedTextSpreadsheetFormat \"quoted text\" \"quoted text\"\n"
+        );
     }
 
     // class............................................................................................................
