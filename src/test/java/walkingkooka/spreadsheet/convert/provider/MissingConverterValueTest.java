@@ -23,6 +23,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -143,12 +145,50 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     // treePrintable....................................................................................................
 
     @Test
-    public void testTreePrintable() {
+    public void testTreePrintableWithAbsoluteUrl() {
+        this.treePrintAndCheck(
+            MissingConverterValue.with(
+                Url.parseAbsolute("https://www.example.com/123"),
+                String.class.getName()
+            ),
+            "MissingConverterValue\n" +
+                "  value\n" +
+                "    https://www.example.com/123\n" +
+                "      walkingkooka.net.AbsoluteUrl\n" +
+                "  type\n" +
+                "    java.lang.String\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableWithString() {
         this.treePrintAndCheck(
             this.createObject(),
             "MissingConverterValue\n" +
                 "  value\n" +
                 "    \"Hello\"\n" +
+                "      java.lang.String\n" +
+                "  type\n" +
+                "    java.lang.String\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableWithTreePrintable() {
+        this.treePrintAndCheck(
+            MissingConverterValue.with(
+                new TreePrintable() {
+                    @Override
+                    public void printTree(final IndentingPrinter printer) {
+                        printer.print("Hello");
+                    }
+                },
+                String.class.getName()
+            ),
+            "MissingConverterValue\n" +
+                "  value\n" +
+                "    Hello\n" +
+                "      walkingkooka.spreadsheet.convert.provider.MissingConverterValueTest$1\n" +
                 "  type\n" +
                 "    java.lang.String\n"
         );

@@ -93,7 +93,17 @@ public final class MissingConverterValue implements HasValue<Object>, TreePrinta
     /**
      * <pre>
      * MissingConverterValue
-     *   "Hello"
+     *   value
+     *     https://www.example.com/123
+     *       walkingkooka.net.AbsoluteUrl
+     *   type
+     *     java.lang.String
+     *
+     * MissingConverterValue
+     *   value
+     *     "Hello"
+     *       java.lang.String
+     *   type
      *     java.lang.String
      * </pre>
      */
@@ -105,10 +115,27 @@ public final class MissingConverterValue implements HasValue<Object>, TreePrinta
             printer.println("value");
             printer.indent();
             {
-                TreePrintable.printTreeOrToString(
-                    this.value,
-                    printer
-                );
+                final Object value = this.value;
+
+                if (value instanceof TreePrintable) {
+                    ((TreePrintable) value).printTree(printer);
+                    printer.lineStart();
+                } else {
+                    printer.println(
+                        CharSequences.quoteIfChars(value)
+                    );
+                }
+
+                if (null != value) {
+                    printer.indent();
+                    {
+                        printer.println(
+                            value.getClass()
+                                .getName()
+                        );
+                    }
+                    printer.outdent();
+                }
             }
             printer.outdent();
 
