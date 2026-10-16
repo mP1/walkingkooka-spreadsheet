@@ -439,6 +439,27 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createFormatter(),
+            "SpreadsheetPatternSpreadsheetFormatterCondition\n" +
+                "  token\n" +
+                "    GreaterThanSpreadsheetFormat \"[>20]\"\n" +
+                "      BracketOpenSymbolSpreadsheetFormat \"[\" \"[\"\n" +
+                "      GreaterThanSymbolSpreadsheetFormat \">\" \">\"\n" +
+                "      ConditionNumberSpreadsheetFormat \"20\" 20 (java.math.BigDecimal)\n" +
+                "      BracketCloseSymbolSpreadsheetFormat \"]\" \"]\"\n" +
+                "  formatter\n" +
+                "    SpreadsheetPatternSpreadsheetFormatterText\n" +
+                "      TextSpreadsheetFormat \"@!condition-true\"\n" +
+                "        TextPlaceholderSpreadsheetFormat \"@\" \"@\"\n" +
+                "        TextLiteralSpreadsheetFormat \"!condition-true\" \"!condition-true\"\n"
+        );
+    }
+
     // Class............................................................................................................
 
     @Override
