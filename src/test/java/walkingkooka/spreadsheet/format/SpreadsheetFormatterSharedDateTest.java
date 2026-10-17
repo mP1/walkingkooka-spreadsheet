@@ -23,21 +23,21 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.util.HasLocaleTesting;
 
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 
-public final class SpreadsheetFormatterSharedDateTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedDate> {
+public final class SpreadsheetFormatterSharedDateTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedDate>
+    implements HasLocaleTesting {
 
     private final static LocalDate DATE = LocalDate.of(
         1999,
         12,
         31
     );
-
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
     @Test
     public void testFormatWithShort() {
