@@ -23,15 +23,18 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasDateTimeSymbolsTesting;
+import walkingkooka.util.HasLocaleTesting;
 
-import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
-public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedDateTime> {
+public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedDateTime>
+implements HasDateTimeSymbolsTesting,
+    HasLocaleTesting {
 
-    private final static LocalDateTime DATE = LocalDateTime.of(
+    private final static LocalDateTime DATE_TIME = LocalDateTime.of(
         1999,
         12,
         31,
@@ -40,13 +43,11 @@ public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFor
         59
     );
 
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
-
     @Test
     public void testFormatWithShort() {
         this.formatAndCheck(
             SpreadsheetFormatterSharedDateTime.with(DateFormatKind.SHORT),
-            DATE,
+            DATE_TIME,
             "31/12/99, 12:58 PM"
         );
     }
@@ -55,7 +56,7 @@ public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFor
     public void testFormatWithMedium() {
         this.formatAndCheck(
             SpreadsheetFormatterSharedDateTime.with(DateFormatKind.MEDIUM),
-            DATE,
+            DATE_TIME,
             "31 Dec. 1999, 12:58:59 PM"
         );
     }
@@ -64,7 +65,7 @@ public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFor
     public void testFormatWithLong() {
         this.formatAndCheck(
             SpreadsheetFormatterSharedDateTime.with(DateFormatKind.LONG),
-            DATE,
+            DATE_TIME,
             "31 December 1999 at 12:58:59 PM"
         );
     }
@@ -73,7 +74,7 @@ public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFor
     public void testFormatWithFull() {
         this.formatAndCheck(
             SpreadsheetFormatterSharedDateTime.with(DateFormatKind.FULL),
-            DATE,
+            DATE_TIME,
             "Friday, 31 December 1999 at 12:58:59 PM"
         );
     }
@@ -85,7 +86,7 @@ public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFor
 
     @Override
     public Object value() {
-        return DATE;
+        return DATE_TIME;
     }
     
     @Override
@@ -110,40 +111,33 @@ public final class SpreadsheetFormatterSharedDateTimeTest extends SpreadsheetFor
 
             @Override
             public List<String> ampms() {
-                return this.dateTimeSymbols()
-                    .ampms();
+                return DATE_TIME_SYMBOLS.ampms();
             }
 
             @Override
             public List<String> monthNames() {
-                return this.dateTimeSymbols.monthNames();
+                return DATE_TIME_SYMBOLS.monthNames();
             }
 
             @Override
             public List<String> monthNameAbbreviations() {
-                return this.dateTimeSymbols()
-                    .monthNameAbbreviations();
+                return DATE_TIME_SYMBOLS.monthNameAbbreviations();
             }
 
             @Override
             public List<String> weekDayNames() {
-                return this.dateTimeSymbols()
-                    .weekDayNames();
+                return DATE_TIME_SYMBOLS.weekDayNames();
             }
 
             @Override
             public List<String> weekDayNameAbbreviations() {
-                return this.dateTimeSymbols.weekDayNameAbbreviations();
+                return DATE_TIME_SYMBOLS.weekDayNameAbbreviations();
             }
 
             @Override
             public DateTimeSymbols dateTimeSymbols() {
-                return this.dateTimeSymbols;
+                return DATE_TIME_SYMBOLS;
             }
-
-            private final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(LOCALE)
-            );
 
             @Override
             public char zeroDigit() {
