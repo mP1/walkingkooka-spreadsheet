@@ -2486,7 +2486,1036 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             expected
         );
     }
-    
+
+    // SpreadsheetMetadata..............................................................................................
+
+    @Test
+    public void testSpreadsheetMetadataOnlyDefaultsPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetMetadata.NON_LOCALE_DEFAULTS,
+            "SpreadsheetMetadataNonEmpty\n" +
+                "  autoHideScrollbars: false\n" +
+                "  cellCharacterWidth: 1\n" +
+                "  clipboardExporter: \n" +
+                "    json\n" +
+                "  clipboardImporter: \n" +
+                "    json\n" +
+                "  color1: black\n" +
+                "  color2: white\n" +
+                "  color3: red\n" +
+                "  color4: lime\n" +
+                "  color5: blue\n" +
+                "  color6: yellow\n" +
+                "  color7: magenta\n" +
+                "  color8: cyan\n" +
+                "  color9: maroon\n" +
+                "  color10: green\n" +
+                "  color11: navy\n" +
+                "  color12: olive\n" +
+                "  color13: purple\n" +
+                "  color14: teal\n" +
+                "  color15: silver\n" +
+                "  color16: grey\n" +
+                "  color17: #99f\n" +
+                "  color18: #936\n" +
+                "  color19: #ffc\n" +
+                "  color20: #cff\n" +
+                "  color21: #606\n" +
+                "  color22: #ff8080\n" +
+                "  color23: #06c\n" +
+                "  color24: #ccf\n" +
+                "  color25: navy\n" +
+                "  color26: magenta\n" +
+                "  color27: yellow\n" +
+                "  color28: cyan\n" +
+                "  color29: purple\n" +
+                "  color30: maroon\n" +
+                "  color31: teal\n" +
+                "  color32: blue\n" +
+                "  color33: #0cf\n" +
+                "  color34: #cff\n" +
+                "  color35: #cfc\n" +
+                "  color36: #ff9\n" +
+                "  color37: #9cf\n" +
+                "  color38: #f9c\n" +
+                "  color39: #c9f\n" +
+                "  color40: #fc9\n" +
+                "  color41: #36f\n" +
+                "  color42: #3cc\n" +
+                "  color43: #9c0\n" +
+                "  color44: #fc0\n" +
+                "  color45: #f90\n" +
+                "  color46: #f60\n" +
+                "  color47: #669\n" +
+                "  color48: #969696\n" +
+                "  color49: #036\n" +
+                "  color50: #396\n" +
+                "  color51: #030\n" +
+                "  color52: #330\n" +
+                "  color53: #930\n" +
+                "  color54: #936\n" +
+                "  color55: #339\n" +
+                "  color56: #333\n" +
+                "  colorBlack: 1\n" +
+                "  colorBlue: 5\n" +
+                "  colorCyan: 8\n" +
+                "  colorGreen: 4\n" +
+                "  colorMagenta: 7\n" +
+                "  colorRed: 3\n" +
+                "  colorWhite: 2\n" +
+                "  colorYellow: 6\n" +
+                "  comparators: \n" +
+                "    background-color\n" +
+                "    border-bottom-color\n" +
+                "    border-color\n" +
+                "    border-left-color\n" +
+                "    border-right-color\n" +
+                "    border-top-color\n" +
+                "    color\n" +
+                "    currency\n" +
+                "    custom-list\n" +
+                "    custom-list-case-insensitive\n" +
+                "    date\n" +
+                "    date-time\n" +
+                "    day-of-month\n" +
+                "    day-of-week\n" +
+                "    error\n" +
+                "    formatter\n" +
+                "    hour-of-am-pm\n" +
+                "    hour-of-day\n" +
+                "    locale\n" +
+                "    minute-of-hour\n" +
+                "    month-of-year\n" +
+                "    nano-of-second\n" +
+                "    number\n" +
+                "    outline-color\n" +
+                "    parser\n" +
+                "    seconds-of-minute\n" +
+                "    text\n" +
+                "    text-case-insensitive\n" +
+                "    text-decoration-color\n" +
+                "    text-with-numbers\n" +
+                "    text-with-numbers-case-insensitive\n" +
+                "    time\n" +
+                "    validator\n" +
+                "    value-type\n" +
+                "    year\n" +
+                "  converters: \n" +
+                "    binary\n" +
+                "    binary-to-text\n" +
+                "    boolean\n" +
+                "    boolean-to-text\n" +
+                "    collection\n" +
+                "    collection-to\n" +
+                "    collection-to-list\n" +
+                "    color\n" +
+                "    color-to-number\n" +
+                "    csv\n" +
+                "    currency\n" +
+                "    currency-code-to-currency\n" +
+                "    currency-value-to\n" +
+                "    currency-value-to-number\n" +
+                "    date-time\n" +
+                "    date-time-symbols\n" +
+                "    decimal-number-symbols\n" +
+                "    environment\n" +
+                "    environment-to-binary\n" +
+                "    environment-to-text\n" +
+                "    error-throwing\n" +
+                "    error-to-error\n" +
+                "    error-to-number\n" +
+                "    expression\n" +
+                "    form-and-validation\n" +
+                "    format-pattern-to-string\n" +
+                "    json\n" +
+                "    json-to\n" +
+                "    locale\n" +
+                "    locale-to-text\n" +
+                "    logging\n" +
+                "    net\n" +
+                "    never\n" +
+                "    null-to-number\n" +
+                "    number\n" +
+                "    number-to-color\n" +
+                "    number-to-currency-value\n" +
+                "    number-to-number\n" +
+                "    number-to-text\n" +
+                "    optional-to\n" +
+                "    plugins\n" +
+                "    properties\n" +
+                "    properties-to-date-time-symbols\n" +
+                "    properties-to-decimal-number-symbols\n" +
+                "    properties-to-spreadsheet-metadata\n" +
+                "    properties-to-text-style\n" +
+                "    simple\n" +
+                "    spreadsheet-cell-set\n" +
+                "    spreadsheet-id-to-spreadsheet-metadata\n" +
+                "    spreadsheet-metadata\n" +
+                "    spreadsheet-selection\n" +
+                "    spreadsheet-selection-to-spreadsheet-selection\n" +
+                "    spreadsheet-selection-to-text\n" +
+                "    storage\n" +
+                "    storage-binary-to-storage-value-binary\n" +
+                "    storage-binary-to-storage-value-csv\n" +
+                "    storage-binary-to-storage-value-environment\n" +
+                "    storage-binary-to-storage-value-expression\n" +
+                "    storage-binary-to-storage-value-json\n" +
+                "    storage-binary-to-storage-value-properties\n" +
+                "    storage-binary-to-storage-value-tsv\n" +
+                "    storage-binary-to-storage-value-txt\n" +
+                "    storage-value-info-list-to-text\n" +
+                "    storage-value-to-storage-binary-binary\n" +
+                "    storage-value-to-storage-binary-csv\n" +
+                "    storage-value-to-storage-binary-environment\n" +
+                "    storage-value-to-storage-binary-expression\n" +
+                "    storage-value-to-storage-binary-json\n" +
+                "    storage-value-to-storage-binary-properties\n" +
+                "    storage-value-to-storage-binary-tsv\n" +
+                "    storage-value-to-storage-binary-txt\n" +
+                "    style\n" +
+                "    system\n" +
+                "    template\n" +
+                "    text\n" +
+                "    text-node\n" +
+                "    text-to-binary\n" +
+                "    text-to-boolean-list\n" +
+                "    text-to-border\n" +
+                "    text-to-charset\n" +
+                "    text-to-color\n" +
+                "    text-to-converter-selector\n" +
+                "    text-to-csv-string-list\n" +
+                "    text-to-csv-string-set\n" +
+                "    text-to-currency\n" +
+                "    text-to-currency-code\n" +
+                "    text-to-currency-exchange-rater-selector\n" +
+                "    text-to-currency-value\n" +
+                "    text-to-date-list\n" +
+                "    text-to-date-time-list\n" +
+                "    text-to-email-address\n" +
+                "    text-to-environment\n" +
+                "    text-to-environment-value-name\n" +
+                "    text-to-error\n" +
+                "    text-to-expression\n" +
+                "    text-to-expression-function-selector\n" +
+                "    text-to-flag\n" +
+                "    text-to-form-name\n" +
+                "    text-to-has-host-address\n" +
+                "    text-to-host-address\n" +
+                "    text-to-indentation\n" +
+                "    text-to-json\n" +
+                "    text-to-json-pointer\n" +
+                "    text-to-json-selector\n" +
+                "    text-to-line-ending\n" +
+                "    text-to-locale\n" +
+                "    text-to-locale-language-tag\n" +
+                "    text-to-logging-level\n" +
+                "    text-to-margin\n" +
+                "    text-to-media-type\n" +
+                "    text-to-number-list\n" +
+                "    text-to-object\n" +
+                "    text-to-padding\n" +
+                "    text-to-path\n" +
+                "    text-to-properties\n" +
+                "    text-to-spreadsheet-comparator-selector\n" +
+                "    text-to-spreadsheet-formatter-selector\n" +
+                "    text-to-spreadsheet-id\n" +
+                "    text-to-spreadsheet-metadata\n" +
+                "    text-to-spreadsheet-metadata-color\n" +
+                "    text-to-spreadsheet-metadata-property-name\n" +
+                "    text-to-spreadsheet-name\n" +
+                "    text-to-spreadsheet-parser-selector\n" +
+                "    text-to-spreadsheet-selection\n" +
+                "    text-to-spreadsheet-text\n" +
+                "    text-to-storage-path\n" +
+                "    text-to-string-list\n" +
+                "    text-to-template-value-name\n" +
+                "    text-to-text\n" +
+                "    text-to-text-node\n" +
+                "    text-to-text-style\n" +
+                "    text-to-text-style-property-name\n" +
+                "    text-to-time-list\n" +
+                "    text-to-tsv-string-list\n" +
+                "    text-to-tsv-string-set\n" +
+                "    text-to-url\n" +
+                "    text-to-url-fragment\n" +
+                "    text-to-url-query-string\n" +
+                "    text-to-validation-error\n" +
+                "    text-to-validator-selector\n" +
+                "    text-to-value-type\n" +
+                "    text-to-web-color-name\n" +
+                "    text-to-zone-offset\n" +
+                "    to-binary\n" +
+                "    to-boolean\n" +
+                "    to-color\n" +
+                "    to-color-properties\n" +
+                "    to-csv-string-list\n" +
+                "    to-currency\n" +
+                "    to-currency-code\n" +
+                "    to-date-time-symbols\n" +
+                "    to-decimal-number-symbols\n" +
+                "    to-environment\n" +
+                "    to-formatter-selector\n" +
+                "    to-has-host-address\n" +
+                "    to-host-address\n" +
+                "    to-json-node\n" +
+                "    to-locale\n" +
+                "    to-locale-language-tag\n" +
+                "    to-multi-line-text\n" +
+                "    to-number\n" +
+                "    to-parser-selector\n" +
+                "    to-properties\n" +
+                "    to-spreadsheet-selection\n" +
+                "    to-string\n" +
+                "    to-style\n" +
+                "    to-styleable\n" +
+                "    to-text-node\n" +
+                "    to-tsv-string-list\n" +
+                "    to-validation-checkbox\n" +
+                "    to-validation-choice\n" +
+                "    to-validation-choice-list\n" +
+                "    to-validation-error-list\n" +
+                "    to-validator-selector\n" +
+                "    to-value\n" +
+                "    to-value-type\n" +
+                "    tsv\n" +
+                "    url\n" +
+                "    url-to-hyperlink\n" +
+                "    url-to-image\n" +
+                "    value\n" +
+                "  currency: AUD (java.util.Currency)\n" +
+                "  currencyExchangeRaters: \n" +
+                "    empty\n" +
+                "    properties\n" +
+                "    storage-path-properties\n" +
+                "  dateTimeOffset: -25569L\n" +
+                "  decimalNumberDigitCount: 9\n" +
+                "  defaultFormHandler: \n" +
+                "    non-null\n" +
+                "  defaultYear: 1900\n" +
+                "  errorFormatter: \n" +
+                "    badge-error\n" +
+                "      \"default-text\"\n" +
+                "  exporters: \n" +
+                "    collection\n" +
+                "    empty\n" +
+                "    json\n" +
+                "  expressionNumberKind: BIG_DECIMAL\n" +
+                "  formatters: \n" +
+                "    accounting\n" +
+                "    automatic\n" +
+                "    badge-error\n" +
+                "    collection\n" +
+                "    currency\n" +
+                "    date\n" +
+                "    date-time\n" +
+                "    default-text\n" +
+                "    expression\n" +
+                "    full-date\n" +
+                "    full-date-time\n" +
+                "    full-time\n" +
+                "    general\n" +
+                "    hyperlinking\n" +
+                "    long-date\n" +
+                "    long-date-time\n" +
+                "    long-time\n" +
+                "    medium-date\n" +
+                "    medium-date-time\n" +
+                "    medium-time\n" +
+                "    number\n" +
+                "    percent\n" +
+                "    scientific\n" +
+                "    short-date\n" +
+                "    short-date-time\n" +
+                "    short-time\n" +
+                "    text\n" +
+                "    time\n" +
+                "  formattingConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  formattingCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  formHandlers: \n" +
+                "    basic\n" +
+                "  formulaConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  formulaCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  formulaFunctions: \n" +
+                "  functions: \n" +
+                "  hideZeroValues: false\n" +
+                "  importers: \n" +
+                "    collection\n" +
+                "    empty\n" +
+                "    json\n" +
+                "  parsers: \n" +
+                "    date\n" +
+                "    date-time\n" +
+                "    full-date\n" +
+                "    full-date-time\n" +
+                "    full-time\n" +
+                "    general\n" +
+                "    long-date\n" +
+                "    long-date-time\n" +
+                "    long-time\n" +
+                "    medium-date\n" +
+                "    medium-date-time\n" +
+                "    medium-time\n" +
+                "    number\n" +
+                "    short-date\n" +
+                "    short-date-time\n" +
+                "    short-time\n" +
+                "    time\n" +
+                "    whole-number\n" +
+                "  plugins: \n" +
+                "  precision: 10\n" +
+                "  queryConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  queryFunctions: \n" +
+                "  queryHighlighting: false\n" +
+                "  roundingMode: HALF_UP\n" +
+                "  scriptingConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  scriptingCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  showFormulaEditor: true\n" +
+                "  showFormulas: false\n" +
+                "  showGridLines: true\n" +
+                "  showHeadings: true\n" +
+                "  sortComparators: \n" +
+                "    [background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, text-decoration-color, text-with-numbers, text-with-numbers-case-insensitive, time, validator, value-type, year]\n" +
+                "  sortConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, url, optional-to, collection-to)\"\n" +
+                "  style: \n" +
+                "    TextStyle\n" +
+                "      background-color=white\n" +
+                "      color=black\n" +
+                "      font-family=MS Sans Serif\n" +
+                "      font-size=11\n" +
+                "      font-style=NORMAL\n" +
+                "      font-variant=NORMAL\n" +
+                "      height=30px\n" +
+                "      hyphens=NONE\n" +
+                "      margin-bottom=none\n" +
+                "      margin-left=none\n" +
+                "      margin-right=none\n" +
+                "      margin-top=none\n" +
+                "      padding-bottom=none\n" +
+                "      padding-left=none\n" +
+                "      padding-right=none\n" +
+                "      padding-top=none\n" +
+                "      text-align=LEFT\n" +
+                "      text-justify=NONE\n" +
+                "      vertical-align=TOP\n" +
+                "      width=100px\n" +
+                "      word-break=NORMAL\n" +
+                "      word-wrap=NORMAL\n" +
+                "  textFormatter: \n" +
+                "    text\n" +
+                "      \"@\"\n" +
+                "  twoDigitYear: 20\n" +
+                "  validationConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\"\n" +
+                "  validationCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  validationFunctions: \n" +
+                "  validationValidators: \n" +
+                "    absolute-url\n" +
+                "    checkbox\n" +
+                "    choice-list\n" +
+                "    collection\n" +
+                "    email-address\n" +
+                "    expression\n" +
+                "    non-null\n" +
+                "    text-length\n" +
+                "    text-mask\n" +
+                "  validators: \n" +
+                "    absolute-url\n" +
+                "    checkbox\n" +
+                "    choice-list\n" +
+                "    collection\n" +
+                "    email-address\n" +
+                "    expression\n" +
+                "    non-null\n" +
+                "    text-length\n" +
+                "    text-mask\n" +
+                "  viewportHome: cell A1\n"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataWithDefaultsPrintTree() {
+        this.treePrintAndCheck(
+            SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+                .set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    LOCALE
+                ).loadFromLocale(CURRENCY_LOCALE_CONTEXT),
+            "SpreadsheetMetadataNonEmpty\n" +
+                "  autoHideScrollbars: false\n" +
+                "  cellCharacterWidth: 1\n" +
+                "  clipboardExporter: \n" +
+                "    json\n" +
+                "  clipboardImporter: \n" +
+                "    json\n" +
+                "  color1: black\n" +
+                "  color2: white\n" +
+                "  color3: red\n" +
+                "  color4: lime\n" +
+                "  color5: blue\n" +
+                "  color6: yellow\n" +
+                "  color7: magenta\n" +
+                "  color8: cyan\n" +
+                "  color9: maroon\n" +
+                "  color10: green\n" +
+                "  color11: navy\n" +
+                "  color12: olive\n" +
+                "  color13: purple\n" +
+                "  color14: teal\n" +
+                "  color15: silver\n" +
+                "  color16: grey\n" +
+                "  color17: #99f\n" +
+                "  color18: #936\n" +
+                "  color19: #ffc\n" +
+                "  color20: #cff\n" +
+                "  color21: #606\n" +
+                "  color22: #ff8080\n" +
+                "  color23: #06c\n" +
+                "  color24: #ccf\n" +
+                "  color25: navy\n" +
+                "  color26: magenta\n" +
+                "  color27: yellow\n" +
+                "  color28: cyan\n" +
+                "  color29: purple\n" +
+                "  color30: maroon\n" +
+                "  color31: teal\n" +
+                "  color32: blue\n" +
+                "  color33: #0cf\n" +
+                "  color34: #cff\n" +
+                "  color35: #cfc\n" +
+                "  color36: #ff9\n" +
+                "  color37: #9cf\n" +
+                "  color38: #f9c\n" +
+                "  color39: #c9f\n" +
+                "  color40: #fc9\n" +
+                "  color41: #36f\n" +
+                "  color42: #3cc\n" +
+                "  color43: #9c0\n" +
+                "  color44: #fc0\n" +
+                "  color45: #f90\n" +
+                "  color46: #f60\n" +
+                "  color47: #669\n" +
+                "  color48: #969696\n" +
+                "  color49: #036\n" +
+                "  color50: #396\n" +
+                "  color51: #030\n" +
+                "  color52: #330\n" +
+                "  color53: #930\n" +
+                "  color54: #936\n" +
+                "  color55: #339\n" +
+                "  color56: #333\n" +
+                "  colorBlack: 1\n" +
+                "  colorBlue: 5\n" +
+                "  colorCyan: 8\n" +
+                "  colorGreen: 4\n" +
+                "  colorMagenta: 7\n" +
+                "  colorRed: 3\n" +
+                "  colorWhite: 2\n" +
+                "  colorYellow: 6\n" +
+                "  comparators: \n" +
+                "    background-color\n" +
+                "    border-bottom-color\n" +
+                "    border-color\n" +
+                "    border-left-color\n" +
+                "    border-right-color\n" +
+                "    border-top-color\n" +
+                "    color\n" +
+                "    currency\n" +
+                "    custom-list\n" +
+                "    custom-list-case-insensitive\n" +
+                "    date\n" +
+                "    date-time\n" +
+                "    day-of-month\n" +
+                "    day-of-week\n" +
+                "    error\n" +
+                "    formatter\n" +
+                "    hour-of-am-pm\n" +
+                "    hour-of-day\n" +
+                "    locale\n" +
+                "    minute-of-hour\n" +
+                "    month-of-year\n" +
+                "    nano-of-second\n" +
+                "    number\n" +
+                "    outline-color\n" +
+                "    parser\n" +
+                "    seconds-of-minute\n" +
+                "    text\n" +
+                "    text-case-insensitive\n" +
+                "    text-decoration-color\n" +
+                "    text-with-numbers\n" +
+                "    text-with-numbers-case-insensitive\n" +
+                "    time\n" +
+                "    validator\n" +
+                "    value-type\n" +
+                "    year\n" +
+                "  converters: \n" +
+                "    binary\n" +
+                "    binary-to-text\n" +
+                "    boolean\n" +
+                "    boolean-to-text\n" +
+                "    collection\n" +
+                "    collection-to\n" +
+                "    collection-to-list\n" +
+                "    color\n" +
+                "    color-to-number\n" +
+                "    csv\n" +
+                "    currency\n" +
+                "    currency-code-to-currency\n" +
+                "    currency-value-to\n" +
+                "    currency-value-to-number\n" +
+                "    date-time\n" +
+                "    date-time-symbols\n" +
+                "    decimal-number-symbols\n" +
+                "    environment\n" +
+                "    environment-to-binary\n" +
+                "    environment-to-text\n" +
+                "    error-throwing\n" +
+                "    error-to-error\n" +
+                "    error-to-number\n" +
+                "    expression\n" +
+                "    form-and-validation\n" +
+                "    format-pattern-to-string\n" +
+                "    json\n" +
+                "    json-to\n" +
+                "    locale\n" +
+                "    locale-to-text\n" +
+                "    logging\n" +
+                "    net\n" +
+                "    never\n" +
+                "    null-to-number\n" +
+                "    number\n" +
+                "    number-to-color\n" +
+                "    number-to-currency-value\n" +
+                "    number-to-number\n" +
+                "    number-to-text\n" +
+                "    optional-to\n" +
+                "    plugins\n" +
+                "    properties\n" +
+                "    properties-to-date-time-symbols\n" +
+                "    properties-to-decimal-number-symbols\n" +
+                "    properties-to-spreadsheet-metadata\n" +
+                "    properties-to-text-style\n" +
+                "    simple\n" +
+                "    spreadsheet-cell-set\n" +
+                "    spreadsheet-id-to-spreadsheet-metadata\n" +
+                "    spreadsheet-metadata\n" +
+                "    spreadsheet-selection\n" +
+                "    spreadsheet-selection-to-spreadsheet-selection\n" +
+                "    spreadsheet-selection-to-text\n" +
+                "    storage\n" +
+                "    storage-binary-to-storage-value-binary\n" +
+                "    storage-binary-to-storage-value-csv\n" +
+                "    storage-binary-to-storage-value-environment\n" +
+                "    storage-binary-to-storage-value-expression\n" +
+                "    storage-binary-to-storage-value-json\n" +
+                "    storage-binary-to-storage-value-properties\n" +
+                "    storage-binary-to-storage-value-tsv\n" +
+                "    storage-binary-to-storage-value-txt\n" +
+                "    storage-value-info-list-to-text\n" +
+                "    storage-value-to-storage-binary-binary\n" +
+                "    storage-value-to-storage-binary-csv\n" +
+                "    storage-value-to-storage-binary-environment\n" +
+                "    storage-value-to-storage-binary-expression\n" +
+                "    storage-value-to-storage-binary-json\n" +
+                "    storage-value-to-storage-binary-properties\n" +
+                "    storage-value-to-storage-binary-tsv\n" +
+                "    storage-value-to-storage-binary-txt\n" +
+                "    style\n" +
+                "    system\n" +
+                "    template\n" +
+                "    text\n" +
+                "    text-node\n" +
+                "    text-to-binary\n" +
+                "    text-to-boolean-list\n" +
+                "    text-to-border\n" +
+                "    text-to-charset\n" +
+                "    text-to-color\n" +
+                "    text-to-converter-selector\n" +
+                "    text-to-csv-string-list\n" +
+                "    text-to-csv-string-set\n" +
+                "    text-to-currency\n" +
+                "    text-to-currency-code\n" +
+                "    text-to-currency-exchange-rater-selector\n" +
+                "    text-to-currency-value\n" +
+                "    text-to-date-list\n" +
+                "    text-to-date-time-list\n" +
+                "    text-to-email-address\n" +
+                "    text-to-environment\n" +
+                "    text-to-environment-value-name\n" +
+                "    text-to-error\n" +
+                "    text-to-expression\n" +
+                "    text-to-expression-function-selector\n" +
+                "    text-to-flag\n" +
+                "    text-to-form-name\n" +
+                "    text-to-has-host-address\n" +
+                "    text-to-host-address\n" +
+                "    text-to-indentation\n" +
+                "    text-to-json\n" +
+                "    text-to-json-pointer\n" +
+                "    text-to-json-selector\n" +
+                "    text-to-line-ending\n" +
+                "    text-to-locale\n" +
+                "    text-to-locale-language-tag\n" +
+                "    text-to-logging-level\n" +
+                "    text-to-margin\n" +
+                "    text-to-media-type\n" +
+                "    text-to-number-list\n" +
+                "    text-to-object\n" +
+                "    text-to-padding\n" +
+                "    text-to-path\n" +
+                "    text-to-properties\n" +
+                "    text-to-spreadsheet-comparator-selector\n" +
+                "    text-to-spreadsheet-formatter-selector\n" +
+                "    text-to-spreadsheet-id\n" +
+                "    text-to-spreadsheet-metadata\n" +
+                "    text-to-spreadsheet-metadata-color\n" +
+                "    text-to-spreadsheet-metadata-property-name\n" +
+                "    text-to-spreadsheet-name\n" +
+                "    text-to-spreadsheet-parser-selector\n" +
+                "    text-to-spreadsheet-selection\n" +
+                "    text-to-spreadsheet-text\n" +
+                "    text-to-storage-path\n" +
+                "    text-to-string-list\n" +
+                "    text-to-template-value-name\n" +
+                "    text-to-text\n" +
+                "    text-to-text-node\n" +
+                "    text-to-text-style\n" +
+                "    text-to-text-style-property-name\n" +
+                "    text-to-time-list\n" +
+                "    text-to-tsv-string-list\n" +
+                "    text-to-tsv-string-set\n" +
+                "    text-to-url\n" +
+                "    text-to-url-fragment\n" +
+                "    text-to-url-query-string\n" +
+                "    text-to-validation-error\n" +
+                "    text-to-validator-selector\n" +
+                "    text-to-value-type\n" +
+                "    text-to-web-color-name\n" +
+                "    text-to-zone-offset\n" +
+                "    to-binary\n" +
+                "    to-boolean\n" +
+                "    to-color\n" +
+                "    to-color-properties\n" +
+                "    to-csv-string-list\n" +
+                "    to-currency\n" +
+                "    to-currency-code\n" +
+                "    to-date-time-symbols\n" +
+                "    to-decimal-number-symbols\n" +
+                "    to-environment\n" +
+                "    to-formatter-selector\n" +
+                "    to-has-host-address\n" +
+                "    to-host-address\n" +
+                "    to-json-node\n" +
+                "    to-locale\n" +
+                "    to-locale-language-tag\n" +
+                "    to-multi-line-text\n" +
+                "    to-number\n" +
+                "    to-parser-selector\n" +
+                "    to-properties\n" +
+                "    to-spreadsheet-selection\n" +
+                "    to-string\n" +
+                "    to-style\n" +
+                "    to-styleable\n" +
+                "    to-text-node\n" +
+                "    to-tsv-string-list\n" +
+                "    to-validation-checkbox\n" +
+                "    to-validation-choice\n" +
+                "    to-validation-choice-list\n" +
+                "    to-validation-error-list\n" +
+                "    to-validator-selector\n" +
+                "    to-value\n" +
+                "    to-value-type\n" +
+                "    tsv\n" +
+                "    url\n" +
+                "    url-to-hyperlink\n" +
+                "    url-to-image\n" +
+                "    value\n" +
+                "  currency: AUD (java.util.Currency)\n" +
+                "  currencyExchangeRaters: \n" +
+                "    empty\n" +
+                "    properties\n" +
+                "    storage-path-properties\n" +
+                "  dateFormatter: \n" +
+                "    date\n" +
+                "      \"dddd, d mmmm yyyy\"\n" +
+                "  dateParser: \n" +
+                "    date\n" +
+                "      \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\"\n" +
+                "  dateTimeFormatter: \n" +
+                "    date-time\n" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
+                "  dateTimeOffset: -25569L\n" +
+                "  dateTimeParser: \n" +
+                "    date-time\n" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +
+                "  dateTimeSymbols: \n" +
+                "    DateTimeSymbols\n" +
+                "      ampms\n" +
+                "        am\n" +
+                "        pm\n" +
+                "      monthNames\n" +
+                "        January\n" +
+                "        February\n" +
+                "        March\n" +
+                "        April\n" +
+                "        May\n" +
+                "        June\n" +
+                "        July\n" +
+                "        August\n" +
+                "        September\n" +
+                "        October\n" +
+                "        November\n" +
+                "        December\n" +
+                "      monthNameAbbreviations\n" +
+                "        Jan.\n" +
+                "        Feb.\n" +
+                "        Mar.\n" +
+                "        Apr.\n" +
+                "        May\n" +
+                "        Jun.\n" +
+                "        Jul.\n" +
+                "        Aug.\n" +
+                "        Sep.\n" +
+                "        Oct.\n" +
+                "        Nov.\n" +
+                "        Dec.\n" +
+                "      weekDayNames\n" +
+                "        Sunday\n" +
+                "        Monday\n" +
+                "        Tuesday\n" +
+                "        Wednesday\n" +
+                "        Thursday\n" +
+                "        Friday\n" +
+                "        Saturday\n" +
+                "      weekDayNameAbbreviations\n" +
+                "        Sun.\n" +
+                "        Mon.\n" +
+                "        Tue.\n" +
+                "        Wed.\n" +
+                "        Thu.\n" +
+                "        Fri.\n" +
+                "        Sat.\n" +
+                "  decimalNumberDigitCount: 9\n" +
+                "  decimalNumberSymbols: \n" +
+                "    DecimalNumberSymbols\n" +
+                "      negativeSign\n" +
+                "        '-'\n" +
+                "      positiveSign\n" +
+                "        '+'\n" +
+                "      zeroDigit\n" +
+                "        '0'\n" +
+                "      currencySymbol\n" +
+                "        \"$\"\n" +
+                "      decimalSeparator\n" +
+                "        '.'\n" +
+                "      exponentSymbol\n" +
+                "        \"e\"\n" +
+                "      groupSeparator\n" +
+                "        ','\n" +
+                "      infinitySymbol\n" +
+                "        \"∞\"\n" +
+                "      monetaryDecimalSeparator\n" +
+                "        '.'\n" +
+                "      nanSymbol\n" +
+                "        \"NaN\"\n" +
+                "      percentSymbol\n" +
+                "        '%'\n" +
+                "      permillSymbol\n" +
+                "        '‰'\n" +
+                "  defaultFormHandler: \n" +
+                "    non-null\n" +
+                "  defaultYear: 1900\n" +
+                "  errorFormatter: \n" +
+                "    badge-error\n" +
+                "      \"default-text\"\n" +
+                "  exporters: \n" +
+                "    collection\n" +
+                "    empty\n" +
+                "    json\n" +
+                "  expressionNumberKind: BIG_DECIMAL\n" +
+                "  formatters: \n" +
+                "    accounting\n" +
+                "    automatic\n" +
+                "    badge-error\n" +
+                "    collection\n" +
+                "    currency\n" +
+                "    date\n" +
+                "    date-time\n" +
+                "    default-text\n" +
+                "    expression\n" +
+                "    full-date\n" +
+                "    full-date-time\n" +
+                "    full-time\n" +
+                "    general\n" +
+                "    hyperlinking\n" +
+                "    long-date\n" +
+                "    long-date-time\n" +
+                "    long-time\n" +
+                "    medium-date\n" +
+                "    medium-date-time\n" +
+                "    medium-time\n" +
+                "    number\n" +
+                "    percent\n" +
+                "    scientific\n" +
+                "    short-date\n" +
+                "    short-date-time\n" +
+                "    short-time\n" +
+                "    text\n" +
+                "    time\n" +
+                "  formattingConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  formattingCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  formHandlers: \n" +
+                "    basic\n" +
+                "  formulaConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  formulaCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  formulaFunctions: \n" +
+                "  functions: \n" +
+                "  hideZeroValues: false\n" +
+                "  importers: \n" +
+                "    collection\n" +
+                "    empty\n" +
+                "    json\n" +
+                "  locale: en_AU (java.util.Locale)\n" +
+                "  numberFormatter: \n" +
+                "    number\n" +
+                "      \"#,##0.###\"\n" +
+                "  numberParser: \n" +
+                "    number\n" +
+                "      \"#,##0.###;#,##0\"\n" +
+                "  parsers: \n" +
+                "    date\n" +
+                "    date-time\n" +
+                "    full-date\n" +
+                "    full-date-time\n" +
+                "    full-time\n" +
+                "    general\n" +
+                "    long-date\n" +
+                "    long-date-time\n" +
+                "    long-time\n" +
+                "    medium-date\n" +
+                "    medium-date-time\n" +
+                "    medium-time\n" +
+                "    number\n" +
+                "    short-date\n" +
+                "    short-date-time\n" +
+                "    short-time\n" +
+                "    time\n" +
+                "    whole-number\n" +
+                "  plugins: \n" +
+                "  precision: 10\n" +
+                "  queryConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  queryFunctions: \n" +
+                "  queryHighlighting: false\n" +
+                "  roundingMode: HALF_UP\n" +
+                "  scriptingConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  scriptingCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  showFormulaEditor: true\n" +
+                "  showFormulas: false\n" +
+                "  showGridLines: true\n" +
+                "  showHeadings: true\n" +
+                "  sortComparators: \n" +
+                "    [background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, text-decoration-color, text-with-numbers, text-with-numbers-case-insensitive, time, validator, value-type, year]\n" +
+                "  sortConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, url, optional-to, collection-to)\"\n" +
+                "  style: \n" +
+                "    TextStyle\n" +
+                "      background-color=white\n" +
+                "      color=black\n" +
+                "      font-family=MS Sans Serif\n" +
+                "      font-size=11\n" +
+                "      font-style=NORMAL\n" +
+                "      font-variant=NORMAL\n" +
+                "      height=30px\n" +
+                "      hyphens=NONE\n" +
+                "      margin-bottom=none\n" +
+                "      margin-left=none\n" +
+                "      margin-right=none\n" +
+                "      margin-top=none\n" +
+                "      padding-bottom=none\n" +
+                "      padding-left=none\n" +
+                "      padding-right=none\n" +
+                "      padding-top=none\n" +
+                "      text-align=LEFT\n" +
+                "      text-justify=NONE\n" +
+                "      vertical-align=TOP\n" +
+                "      width=100px\n" +
+                "      word-break=NORMAL\n" +
+                "      word-wrap=NORMAL\n" +
+                "  textFormatter: \n" +
+                "    text\n" +
+                "      \"@\"\n" +
+                "  timeFormatter: \n" +
+                "    time\n" +
+                "      \"h:mm:ss AM/PM\"\n" +
+                "  timeParser: \n" +
+                "    time\n" +
+                "      \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\"\n" +
+                "  twoDigitYear: 20\n" +
+                "  validationConverter: \n" +
+                "    collection\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\"\n" +
+                "  validationCurrencyExchangeRater: \n" +
+                "    storage-path-properties\n" +
+                "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
+                "  validationFunctions: \n" +
+                "  validationValidators: \n" +
+                "    absolute-url\n" +
+                "    checkbox\n" +
+                "    choice-list\n" +
+                "    collection\n" +
+                "    email-address\n" +
+                "    expression\n" +
+                "    non-null\n" +
+                "    text-length\n" +
+                "    text-mask\n" +
+                "  validators: \n" +
+                "    absolute-url\n" +
+                "    checkbox\n" +
+                "    choice-list\n" +
+                "    collection\n" +
+                "    email-address\n" +
+                "    expression\n" +
+                "    non-null\n" +
+                "    text-length\n" +
+                "    text-mask\n" +
+                "  valueSeparator: ','\n" +
+                "  viewportHome: cell A1\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
