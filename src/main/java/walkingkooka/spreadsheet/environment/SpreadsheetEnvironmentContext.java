@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.color.Color;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
@@ -45,6 +46,9 @@ import java.util.Optional;
 public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext,
     HasSpreadsheetServerUrl {
 
+    /**
+     * Any {@link EnvironmentValueName} beginning with this prefix will be given a type of {@link Color}.
+     */
     String COLOR_PREFIX = "color";
 
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.registerConstant(
