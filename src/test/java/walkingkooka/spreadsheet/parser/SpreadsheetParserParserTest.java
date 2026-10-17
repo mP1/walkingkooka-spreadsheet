@@ -167,7 +167,8 @@ public final class SpreadsheetParserParserTest implements SpreadsheetParserTesti
                 ),
             "SpreadsheetParserParser\n" +
                 "  text/Text\n" +
-                "    \"Hello123\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "    StringParser\n" +
+                "      \"Hello123\"\n"
         );
     }
 
@@ -180,7 +181,8 @@ public final class SpreadsheetParserParserTest implements SpreadsheetParserTesti
                     SpreadsheetParser.NO_VALUE_TYPE
                 ),
             "SpreadsheetParserParser\n" +
-                "  \"Hello123\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "  StringParser\n" +
+                "    \"Hello123\"\n"
         );
     }
 
