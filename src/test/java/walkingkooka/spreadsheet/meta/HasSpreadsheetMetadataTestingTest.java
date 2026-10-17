@@ -37,6 +37,9 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -333,6 +336,102 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         this.localeAndCheck(
             SPREADSHEET_ENVIRONMENT_CONTEXT,
             LOCALE
+        );
+    }
+
+    // parser...........................................................................................................
+
+    @Test
+    public void testParserDatePrintTree() {
+        this.parserPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.DATE_PARSER,
+            "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
+                "  parser\n" +
+                "    \"yyyy/mm/dd\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "  valueType\n" +
+                "    date-time/Date\n" +
+                "  tokens\n" +
+                "    Sequence \"yyyy/mm/dd\"\n" +
+                "      DateSpreadsheetFormat \"yyyy/mm/dd\"\n" +
+                "        YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        MonthSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        DaySpreadsheetFormat \"dd\" \"dd\"\n"
+        );
+    }
+
+    @Test
+    public void testParserDateTimePrintTree() {
+        this.parserPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+            "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
+                "  parser\n" +
+                "    \"yyyy/mm/dd hh:mm\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "  valueType\n" +
+                "    date-time/DateTime\n" +
+                "  tokens\n" +
+                "    Sequence \"yyyy/mm/dd hh:mm\"\n" +
+                "      DateTimeSpreadsheetFormat \"yyyy/mm/dd hh:mm\"\n" +
+                "        YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        MonthSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        DaySpreadsheetFormat \"dd\" \"dd\"\n" +
+                "        TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "        HourSpreadsheetFormat \"hh\" \"hh\"\n" +
+                "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "        MinuteSpreadsheetFormat \"mm\" \"mm\"\n"
+        );
+    }
+
+    @Test
+    public void testParserNumberPrintTree() {
+        this.parserPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+            "SpreadsheetNumberParsePatternSpreadsheetParser\n" +
+                "  pattern\n" +
+                "    number-parse-pattern\n" +
+                "      \"0.#\" ;\n" +
+                "      \"0.#\" ;\n" +
+                "      \"0\"\n"
+        );
+    }
+
+    @Test
+    public void testParserTimePrintTree() {
+        this.parserPrintTreeAndCheck(
+            SpreadsheetMetadataPropertyName.TIME_PARSER,
+            "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
+                "  parser\n" +
+                "    \"hh:mm:ss\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "  valueType\n" +
+                "    date-time/Time\n" +
+                "  tokens\n" +
+                "    Sequence \"hh:mm:ss\"\n" +
+                "      TimeSpreadsheetFormat \"hh:mm:ss\"\n" +
+                "        HourSpreadsheetFormat \"hh\" \"hh\"\n" +
+                "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "        MinuteSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "        SecondSpreadsheetFormat \"ss\" \"ss\"\n"
+        );
+    }
+
+    private void parserPrintTreeAndCheck(final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> propertyName,
+                                         final String expected) {
+        final SpreadsheetParserSelector selector = SPREADSHEET_METADATA.getOrFail(propertyName);
+
+        final SpreadsheetParser parser = SpreadsheetParserProviders.spreadsheetParsePattern(
+            SpreadsheetFormatterProviders.spreadsheetFormatters()
+        ).spreadsheetParser(
+            selector,
+            PROVIDER_CONTEXT
+        );
+
+        this.treePrintAndCheck(
+            (TreePrintable) parser,
+            expected
         );
     }
 
