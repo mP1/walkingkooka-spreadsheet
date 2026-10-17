@@ -117,7 +117,8 @@ final class SpreadsheetFormulaParserDoubleQuotes implements Parser<SpreadsheetPa
             Lists.of(
                 DOUBLE_QUOTE_TOKEN,
                 SpreadsheetFormulaParserToken.textLiteral(
-                    contentString, text.substring(1, text.length() - 1)
+                    contentString,
+                    text.substring(1, text.length() - 1)
                 ),
                 DOUBLE_QUOTE_TOKEN
             ),
@@ -126,6 +127,8 @@ final class SpreadsheetFormulaParserDoubleQuotes implements Parser<SpreadsheetPa
     }
 
     final static DoubleQuoteSymbolSpreadsheetFormulaParserToken DOUBLE_QUOTE_TOKEN = SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"");
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {
