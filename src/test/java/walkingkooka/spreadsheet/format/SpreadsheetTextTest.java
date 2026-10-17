@@ -25,6 +25,7 @@ import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -41,6 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>,
     HashCodeEqualsDefinedTesting2<SpreadsheetText>,
+    HasTextTesting,
     HasTextNodeTesting,
     JsonNodeMarshallerTesting<SpreadsheetText>,
     ToStringTesting<SpreadsheetText>,
@@ -54,7 +56,11 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetColorNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createFormattedText().setColor(null));
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createFormattedText()
+                .setColor(null)
+        );
     }
 
     @Test
@@ -73,12 +79,11 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         final SpreadsheetText formatted = this.createFormattedText();
         final SpreadsheetText different = formatted.setColor(differentColor);
         assertNotSame(formatted, different);
-        this.check(different, differentColor, TEXT);
-    }
-
-    private void check(final SpreadsheetText formatted, final Optional<Color> color, final String text) {
-        this.checkEquals(color, formatted.color(), "color");
-        this.checkEquals(text, formatted.text(), "text");
+        this.checkEquals(differentColor, different.color(), "color");
+        this.textAndCheck(
+            different,
+            TEXT
+        );
     }
 
     // HasTextNode......................................................................................................
@@ -132,6 +137,12 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         this.checkNotEquals(
             SpreadsheetText.EMPTY.setText("different")
                 .setColor(COLOR));
+    }
+
+    @Override
+    public SpreadsheetText createObject() {
+        return SpreadsheetText.EMPTY.setText(TEXT)
+            .setColor(COLOR);
     }
 
     // toString ........................................................................................................
@@ -201,28 +212,6 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         );
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetText> type() {
-        return SpreadsheetText.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    // Object...........................................................................................................
-
-    @Override
-    public SpreadsheetText createObject() {
-        return SpreadsheetText.EMPTY.setText(TEXT)
-            .setColor(COLOR);
-    }
-
-    // json.............................................................................................................
-
     @Override
     public SpreadsheetText unmarshall(final JsonNode from,
                                       final JsonNodeUnmarshallContext context) {
@@ -256,10 +245,23 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testTreePrintColorAndText() {
         this.treePrintAndCheck(
-            SpreadsheetText.EMPTY.setText("hello123").setColor(Optional.of(Color.fromRgb(12345678))),
+            SpreadsheetText.EMPTY.setText("hello123")
+                .setColor(Optional.of(Color.fromRgb(12345678))),
             "SpreadsheetText\n" +
                 "  #bc614e\n" +
                 "    hello123\n"
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetText> type() {
+        return SpreadsheetText.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
