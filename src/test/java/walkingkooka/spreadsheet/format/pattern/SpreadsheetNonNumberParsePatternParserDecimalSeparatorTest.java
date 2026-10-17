@@ -93,6 +93,18 @@ public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest ex
         };
     }
 
+    // treePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "SpreadsheetNonNumberParsePatternParserDecimalSeparator\n"
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public Class<SpreadsheetNonNumberParsePatternParserDecimalSeparator> type() {
         return SpreadsheetNonNumberParsePatternParserDecimalSeparator.class;
