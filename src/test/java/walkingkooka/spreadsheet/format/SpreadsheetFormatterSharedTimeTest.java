@@ -24,21 +24,21 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.util.HasLocaleTesting;
 
 import java.text.DateFormatSymbols;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
-public final class SpreadsheetFormatterSharedTimeTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedTime> {
+public final class SpreadsheetFormatterSharedTimeTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedTime>
+    implements HasLocaleTesting {
 
     private final static LocalTime TIME = LocalTime.of(
         12,
         58,
         59
     );
-
-    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
     @Test
     public void testFormatWithShort() {
