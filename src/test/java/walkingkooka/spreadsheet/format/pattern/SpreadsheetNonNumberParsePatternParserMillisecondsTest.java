@@ -204,6 +204,17 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
         return SpreadsheetNonNumberParsePatternParserMilliseconds.with("sss");
     }
 
+    // treePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "SpreadsheetNonNumberParsePatternParserMilliseconds\n" +
+                "  \"abc-pattern-ignored-not-checked-or-used-in-anyway\"\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

@@ -20,9 +20,11 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -169,4 +171,18 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
     }
 
     private final String pattern;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            printer.println(
+                CharSequences.quoteIfChars(this.pattern)
+            );
+        }
+        printer.outdent();
+    }
 }

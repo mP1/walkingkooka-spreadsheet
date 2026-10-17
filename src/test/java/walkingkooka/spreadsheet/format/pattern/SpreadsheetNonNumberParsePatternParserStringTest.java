@@ -211,6 +211,17 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
         );
     }
 
+    // treePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "SpreadsheetNonNumberParsePatternParserString\n" +
+                "  \"Pattern-123\"\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

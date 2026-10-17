@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.printer.IndentingPrinter;
 
 /**
  * A {@link Parser} that matches the {@link SpreadsheetParserContext#decimalSeparator()} and returns a {@link DecimalSeparatorSymbolSpreadsheetFormulaParserToken}
@@ -58,5 +59,12 @@ final class SpreadsheetNonNumberParsePatternParserDecimalSeparator extends Sprea
     @Override
     public String toString() {
         return ".";
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
     }
 }
