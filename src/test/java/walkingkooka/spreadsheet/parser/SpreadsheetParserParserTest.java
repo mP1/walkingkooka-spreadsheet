@@ -24,6 +24,10 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.validation.ValueType;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -146,6 +150,37 @@ public final class SpreadsheetParserParserTest implements SpreadsheetParserTesti
                 SpreadsheetParser.NO_VALUE_TYPE
             ),
             PARSER.toString()
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintableWithValueType() {
+        this.treePrintAndCheck(
+            (TreePrintable)
+                SpreadsheetParserParser.with(
+                    PARSER,
+                    Optional.of(
+                        ValueType.TEXT
+                    )
+                ),
+            "SpreadsheetParserParser\n" +
+                "  text/Text\n" +
+                "    \"Hello123\" (walkingkooka.text.cursor.parser.StringParser)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableWithoutValueType() {
+        this.treePrintAndCheck(
+            (TreePrintable)
+                SpreadsheetParserParser.with(
+                    PARSER,
+                    SpreadsheetParser.NO_VALUE_TYPE
+                ),
+            "SpreadsheetParserParser\n" +
+                "  \"Hello123\" (walkingkooka.text.cursor.parser.StringParser)\n"
         );
     }
 
