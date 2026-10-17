@@ -347,7 +347,8 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
             SpreadsheetMetadataPropertyName.DATE_PARSER,
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
-                "    \"yyyy/mm/dd\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "    AndEmptyTextCursorParser\n" +
+                "      digit{4,4}, \"/\", digit{1,2}, \"/\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
                 "  valueType\n" +
                 "    date-time/Date\n" +
                 "  tokens\n" +
@@ -367,7 +368,8 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
             SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
-                "    \"yyyy/mm/dd hh:mm\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "    AndEmptyTextCursorParser\n" +
+                "      digit{4,4}, \"/\", digit{1,2}, \"/\", digit{1,2}, \" \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
                 "  valueType\n" +
                 "    date-time/DateTime\n" +
                 "  tokens\n" +
@@ -404,7 +406,8 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
             SpreadsheetMetadataPropertyName.TIME_PARSER,
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
-                "    \"hh:mm:ss\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "    AndEmptyTextCursorParser\n" +
+                "      digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
                 "  valueType\n" +
                 "    date-time/Time\n" +
                 "  tokens\n" +
