@@ -1399,7 +1399,43 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
                 "    AndEmptyTextCursorParser\n" +
-                "      dddd, d mmmm yyyy | dddd, d mmmm yy | dddd, d mmmm | d mmmm yyyy | d mmmm yy | d mmmm | d mmm yyyy | d mmm yy | d mmm | d/m/yy | d/m/yyyy | d/m (walkingkooka.text.cursor.parser.AlternativesParser)\n" +
+                "      AlternativesParser\n" +
+                "        0\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        1\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        2\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        3\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        4\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        5\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        6\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{4,4} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        7\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{2,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        8\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        9\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{2,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        10\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        11\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
                 "  valueType\n" +
                 "    date-time/Date\n" +
                 "  tokens\n" +
@@ -1495,7 +1531,184 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
                 "    AndEmptyTextCursorParser\n" +
-                "      dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM | dddd, d mmmm yy \\a\\t h:mm:ss AM/PM | dddd, d mmmm yy \\a\\t h:mm:ss | dddd, d mmmm yy \\a\\t h:mm AM/PM | dddd, d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM | dddd, d mmmm yyyy \\a\\t h:mm:ss.0 | dddd, d mmmm yyyy \\a\\t h:mm:ss | dddd, d mmmm yyyy \\a\\t h:mm AM/PM | dddd, d mmmm yyyy \\a\\t h:mm | dddd, d mmmm yyyy, h:mm:ss AM/PM | dddd, d mmmm yy, h:mm:ss AM/PM | dddd, d mmmm yy, h:mm:ss | dddd, d mmmm yy, h:mm AM/PM | dddd, d mmmm yyyy, h:mm:ss.0 AM/PM | dddd, d mmmm yyyy, h:mm:ss.0 | dddd, d mmmm yyyy, h:mm:ss | dddd, d mmmm yyyy, h:mm AM/PM | dddd, d mmmm yyyy, h:mm | dddd, d mmmm yy, h:mm | d mmmm yyyy \\a\\t h:mm:ss AM/PM | d mmmm yy \\a\\t h:mm:ss AM/PM | d mmmm yy \\a\\t h:mm:ss | d mmmm yy \\a\\t h:mm AM/PM | d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM | d mmmm yyyy \\a\\t h:mm:ss.0 | d mmmm yyyy \\a\\t h:mm:ss | d mmmm yyyy \\a\\t h:mm AM/PM | d mmmm yyyy \\a\\t h:mm | d mmmm yyyy, h:mm:ss AM/PM | d mmmm yy, h:mm:ss AM/PM | d mmmm yy, h:mm:ss | d mmmm yy, h:mm AM/PM | d mmmm yyyy, h:mm:ss.0 AM/PM | d mmmm yyyy, h:mm:ss.0 | d mmmm yyyy, h:mm:ss | d mmmm yyyy, h:mm AM/PM | d mmmm yyyy, h:mm | d mmmm yy, h:mm | d mmm yyyy, h:mm:ss AM/PM | d mmm yy, h:mm:ss AM/PM | d mmm yy, h:mm:ss | d mmm yy, h:mm AM/PM | d mmm yyyy, h:mm:ss.0 AM/PM | d mmm yyyy, h:mm:ss.0 | d mmm yyyy, h:mm:ss | d mmm yyyy, h:mm AM/PM | d mmm yyyy, h:mm | d mmm yy, h:mm | d/m/yy, h:mm:ss AM/PM | d/m/yy, h:mm:ss | d/m/yy, h:mm AM/PM | d/m/yyyy, h:mm:ss AM/PM | d/m/yyyy, h:mm:ss.0 AM/PM | d/m/yyyy, h:mm:ss.0 | d/m/yyyy, h:mm:ss | d/m/yyyy, h:mm AM/PM | d/m/yy, h:mm:ss.0 | d/m/yy, h:mm | d/m/yyyy, h:mm (walkingkooka.text.cursor.parser.AlternativesParser)\n" +
+                "      AlternativesParser\n" +
+                "        0\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        1\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        2\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        3\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        4\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]], \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        5\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        6\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        7\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        8\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        9\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        10\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        11\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        12\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        13\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]], \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        14\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        15\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        16\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        17\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        18\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \", \", digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        19\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        20\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        21\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        22\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        23\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]], \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        24\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        25\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        26\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        27\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \" \", \"a\", \"t\", \" \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        28\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        29\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        30\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        31\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        32\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]], \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        33\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        34\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        35\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        36\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        37\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        38\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        39\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        40\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        41\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        42\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]], \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        43\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        44\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        45\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        46\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        47\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \" \", mmm, \" \", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        48\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        49\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        50\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        51\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        52\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]], \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        53\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        54\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        55\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        56\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        57\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{2,2}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        58\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4}, \", \", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
                 "  valueType\n" +
                 "    date-time/DateTime\n" +
                 "  tokens\n" +
@@ -2422,7 +2635,22 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
                 "    AndEmptyTextCursorParser\n" +
-                "      h:mm:ss AM/PM | h:mm:ss | h:mm:ss.0 | h:mm AM/PM | h:mm (walkingkooka.text.cursor.parser.AlternativesParser)\n" +
+                "      AlternativesParser\n" +
+                "        0\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        1\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        2\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}, [., [0]] (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        3\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \":\", digit{1,2}, \" \", AM/PM (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "        4\n" +
+                "          AndEmptyTextCursorParser\n" +
+                "            digit{1,2}, \":\", digit{1,2} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
                 "  valueType\n" +
                 "    date-time/Time\n" +
                 "  tokens\n" +
