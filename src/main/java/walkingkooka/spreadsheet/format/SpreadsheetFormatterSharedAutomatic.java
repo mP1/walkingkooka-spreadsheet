@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
@@ -29,7 +31,8 @@ import java.util.function.Supplier;
 /**
  * This {@link SpreadsheetFormatter} selects one of its given {@link SpreadsheetFormatter} using the type of the value.
  */
-final class SpreadsheetFormatterSharedAutomatic extends SpreadsheetFormatterShared {
+final class SpreadsheetFormatterSharedAutomatic extends SpreadsheetFormatterShared
+    implements TreePrintable {
 
     static SpreadsheetFormatterSharedAutomatic with(final SpreadsheetFormatter date,
                                                     final SpreadsheetFormatter dateTime,
@@ -136,5 +139,61 @@ final class SpreadsheetFormatterSharedAutomatic extends SpreadsheetFormatterShar
     @Override
     public String toString() {
         return this.date + " | " + this.dateTime + " | " + this.error + " | " + this.number + " | " + this.text + " | " + this.time;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.printLabelAndFormatter(
+                "date",
+                this.date,
+                printer
+            );
+            this.printLabelAndFormatter(
+                "dateTime",
+                this.dateTime,
+                printer
+            );
+            this.printLabelAndFormatter(
+                "error",
+                this.error,
+                printer
+            );
+            this.printLabelAndFormatter(
+                "number",
+                this.number,
+                printer
+            );
+            this.printLabelAndFormatter(
+                "text",
+                this.text,
+                printer
+            );
+            this.printLabelAndFormatter(
+                "time",
+                this.time,
+                printer
+            );
+        }
+        printer.outdent();
+    }
+
+    private void printLabelAndFormatter(final String label,
+                                        final SpreadsheetFormatter formatter,
+                                        final IndentingPrinter printer) {
+        printer.println(label);
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                formatter,
+                printer
+            );
+            printer.lineStart();
+        }
+        printer.outdent();
     }
 }
