@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.validation.ValueType;
 
 import java.util.List;
@@ -32,7 +34,8 @@ import java.util.Optional;
  * A {@link SpreadsheetParser} that wraps a non {@link Parser} that is not a {@link SpreadsheetParser}.
  * It adds no additional functionality and delegates all methods to the wrapped parser.
  */
-final class SpreadsheetParserParser implements SpreadsheetParser {
+final class SpreadsheetParserParser implements SpreadsheetParser,
+    TreePrintable {
 
     public static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
                                          final Optional<ValueType> valueType) {
@@ -106,5 +109,36 @@ final class SpreadsheetParserParser implements SpreadsheetParser {
     @Override
     public String toString() {
         return this.parser.toString();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            final ValueType valueType = this.valueType
+                .orElse(null);
+            if (null != valueType) {
+                printer.println(
+                    valueType.value()
+                );
+                printer.indent();
+            }
+
+            TreePrintable.printTreeOrToString(
+                this.parser,
+                printer
+            );
+
+            printer.lineStart();
+
+            if (null != valueType) {
+                printer.outdent();
+            }
+        }
+        printer.outdent();
     }
 }
