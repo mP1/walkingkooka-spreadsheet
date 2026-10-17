@@ -130,7 +130,43 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest impleme
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
                 "    AndEmptyTextCursorParser\n" +
-                "      digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
+                "      TransformingParser\n" +
+                "        parser\n" +
+                "          SequenceParser\n" +
+                "            0\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
+                "            1\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  StringParser\n" +
+                "                    \"/\"\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
+                "            2\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
+                "            3\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  StringParser\n" +
+                "                    \"/\"\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
+                "            4\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  digit{4,4} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
+                "        transformer\n" +
+                "          Lambda\n" +
                 "  valueType\n" +
                 "    date-time/Date\n" +
                 "  tokens\n" +
