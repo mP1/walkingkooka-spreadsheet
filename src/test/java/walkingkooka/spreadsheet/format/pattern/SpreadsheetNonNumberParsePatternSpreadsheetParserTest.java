@@ -129,7 +129,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest impleme
             this.createParser(),
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
-                "    \"dd/mm/yyyy\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "    AndEmptyTextCursorParser\n" +
+                "      digit{1,2}, \"/\", digit{1,2}, \"/\", digit{4,4} (walkingkooka.text.cursor.parser.TransformingParser)\n" +
                 "  valueType\n" +
                 "    date-time/Date\n" +
                 "  tokens\n" +

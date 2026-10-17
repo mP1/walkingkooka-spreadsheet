@@ -1398,7 +1398,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             SpreadsheetMetadataPropertyName.DATE_PARSER,
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
-                "    \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "    AndEmptyTextCursorParser\n" +
+                "      dddd, d mmmm yyyy | dddd, d mmmm yy | dddd, d mmmm | d mmmm yyyy | d mmmm yy | d mmmm | d mmm yyyy | d mmm yy | d mmm | d/m/yy | d/m/yyyy | d/m (walkingkooka.text.cursor.parser.AlternativesParser)\n" +
                 "  valueType\n" +
                 "    date-time/Date\n" +
                 "  tokens\n" +
@@ -1493,7 +1494,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
-                "    \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "    AndEmptyTextCursorParser\n" +
+                "      dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM | dddd, d mmmm yy \\a\\t h:mm:ss AM/PM | dddd, d mmmm yy \\a\\t h:mm:ss | dddd, d mmmm yy \\a\\t h:mm AM/PM | dddd, d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM | dddd, d mmmm yyyy \\a\\t h:mm:ss.0 | dddd, d mmmm yyyy \\a\\t h:mm:ss | dddd, d mmmm yyyy \\a\\t h:mm AM/PM | dddd, d mmmm yyyy \\a\\t h:mm | dddd, d mmmm yyyy, h:mm:ss AM/PM | dddd, d mmmm yy, h:mm:ss AM/PM | dddd, d mmmm yy, h:mm:ss | dddd, d mmmm yy, h:mm AM/PM | dddd, d mmmm yyyy, h:mm:ss.0 AM/PM | dddd, d mmmm yyyy, h:mm:ss.0 | dddd, d mmmm yyyy, h:mm:ss | dddd, d mmmm yyyy, h:mm AM/PM | dddd, d mmmm yyyy, h:mm | dddd, d mmmm yy, h:mm | d mmmm yyyy \\a\\t h:mm:ss AM/PM | d mmmm yy \\a\\t h:mm:ss AM/PM | d mmmm yy \\a\\t h:mm:ss | d mmmm yy \\a\\t h:mm AM/PM | d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM | d mmmm yyyy \\a\\t h:mm:ss.0 | d mmmm yyyy \\a\\t h:mm:ss | d mmmm yyyy \\a\\t h:mm AM/PM | d mmmm yyyy \\a\\t h:mm | d mmmm yyyy, h:mm:ss AM/PM | d mmmm yy, h:mm:ss AM/PM | d mmmm yy, h:mm:ss | d mmmm yy, h:mm AM/PM | d mmmm yyyy, h:mm:ss.0 AM/PM | d mmmm yyyy, h:mm:ss.0 | d mmmm yyyy, h:mm:ss | d mmmm yyyy, h:mm AM/PM | d mmmm yyyy, h:mm | d mmmm yy, h:mm | d mmm yyyy, h:mm:ss AM/PM | d mmm yy, h:mm:ss AM/PM | d mmm yy, h:mm:ss | d mmm yy, h:mm AM/PM | d mmm yyyy, h:mm:ss.0 AM/PM | d mmm yyyy, h:mm:ss.0 | d mmm yyyy, h:mm:ss | d mmm yyyy, h:mm AM/PM | d mmm yyyy, h:mm | d mmm yy, h:mm | d/m/yy, h:mm:ss AM/PM | d/m/yy, h:mm:ss | d/m/yy, h:mm AM/PM | d/m/yyyy, h:mm:ss AM/PM | d/m/yyyy, h:mm:ss.0 AM/PM | d/m/yyyy, h:mm:ss.0 | d/m/yyyy, h:mm:ss | d/m/yyyy, h:mm AM/PM | d/m/yy, h:mm:ss.0 | d/m/yy, h:mm | d/m/yyyy, h:mm (walkingkooka.text.cursor.parser.AlternativesParser)\n" +
                 "  valueType\n" +
                 "    date-time/DateTime\n" +
                 "  tokens\n" +
@@ -2419,7 +2421,8 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
             SpreadsheetMetadataPropertyName.TIME_PARSER,
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
-                "    \"h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "    AndEmptyTextCursorParser\n" +
+                "      h:mm:ss AM/PM | h:mm:ss | h:mm:ss.0 | h:mm AM/PM | h:mm (walkingkooka.text.cursor.parser.AlternativesParser)\n" +
                 "  valueType\n" +
                 "    date-time/Time\n" +
                 "  tokens\n" +
