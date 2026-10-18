@@ -105,7 +105,10 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
 
     @Override
     public int hashCode() {
-        return this.token.hashCode();
+        return Objects.hash(
+            this.color,
+            this.formatter
+        );
     }
 
     @Override
