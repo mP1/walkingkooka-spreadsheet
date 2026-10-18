@@ -928,6 +928,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
             verifier.addIfConversionFail(
                 DATE,
+                ExpressionNumber.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                expressionNumberKind.create(dateNumberValue)
+            );
+
+            verifier.addIfConversionFail(
+                DATE,
                 String.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
                 IS_STRING
@@ -982,6 +989,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 Long.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
                 (long)dateNumberValue
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME_MIDNIGHT,
+                ExpressionNumber.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                expressionNumberKind.create(dateNumberValue)
             );
 
             verifier.addIfConversionFail(
@@ -1071,6 +1085,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 Short.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
                 (short)0
+            );
+
+            verifier.addIfConversionFail(
+                TIME,
+                ExpressionNumber.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                expressionNumberKind.create(timeNumberValue)
             );
 
             verifier.addIfConversionFail(
