@@ -381,7 +381,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public long dateOffset() {
-            return 0;
+            return this.spreadsheetMetadata.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
         }
 
         @Override
