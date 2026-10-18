@@ -2985,7 +2985,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         }
 
         if (failed) {
-            Thread.dumpStack();
             this.add(
                 value,
                 type,
