@@ -928,13 +928,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
             verifier.addIfConversionFail(
                 DATE,
-                Short.class,
-                SpreadsheetConvertersConverterProvider.DATE_TIME,
-                (short)dateNumberValue
-            );
-
-            verifier.addIfConversionFail(
-                DATE,
                 String.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
                 IS_STRING
@@ -989,13 +982,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 Long.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
                 (long)dateNumberValue
-            );
-
-            verifier.addIfConversionFail(
-                DATE_TIME_MIDNIGHT,
-                Short.class,
-                SpreadsheetConvertersConverterProvider.DATE_TIME,
-                (short)dateNumberValue
             );
 
             verifier.addIfConversionFail(
