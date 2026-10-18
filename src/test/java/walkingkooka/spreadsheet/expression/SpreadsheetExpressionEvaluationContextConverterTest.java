@@ -96,7 +96,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         .loadFromLocale(CURRENCY_LOCALE_CONTEXT)
         .set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
         .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
-        .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)
+        .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, 0L)
         .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
         .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)

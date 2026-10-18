@@ -182,6 +182,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateOffset</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Long> DATE_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateOffset.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateParser</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDate.instance());
@@ -190,11 +195,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateTimeFormatter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateTimeOffset</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Long> DATE_TIME_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateTimeOffset.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateTimeParser</code>

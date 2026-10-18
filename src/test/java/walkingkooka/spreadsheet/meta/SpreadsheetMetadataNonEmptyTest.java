@@ -816,7 +816,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color7 = Color.fromRgb(0x777);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
             .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
@@ -842,7 +842,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color = Color.parse("#123456");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .setDefaults(
                 SpreadsheetMetadata.EMPTY
@@ -867,7 +867,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color = Color.parse("#123456");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color)
             .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
@@ -894,7 +894,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color7 = Color.fromRgb(0x777);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -918,7 +918,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color = Color.parse("#123456");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .setDefaults(
                 SpreadsheetMetadata.EMPTY
@@ -942,7 +942,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color = Color.parse("#123456");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color)
             .setDefaults(
@@ -965,7 +965,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color1 = Color.fromRgb(0x111);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
             .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -988,7 +988,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color1 = Color.fromRgb(0x111);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
             .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -1012,7 +1012,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color1 = Color.fromRgb(0x111);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
             .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -1037,7 +1037,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color7 = Color.fromRgb(0x777);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR1), color1)
             .set(SpreadsheetMetadataPropertyName.namedColor(NAMED_COLOR1), INDEXED_COLOR1)
             .set(SpreadsheetMetadataPropertyName.numberedColor(INDEXED_COLOR7), color7)
@@ -1075,7 +1075,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Color color1 = Color.fromRgb(0x111);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
             .setDefaults(
@@ -1396,7 +1396,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithConverter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector) {
         return SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+            .set(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET)
             .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("\"Date\" yyyy mm dd").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh").spreadsheetFormatterSelector())
@@ -2324,7 +2324,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final SpreadsheetValidatorContext context = this.createSpreadsheetMetadata()
             .set(
-                SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
+                SpreadsheetMetadataPropertyName.DATE_OFFSET,
                 Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
             ).set(
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
@@ -2573,9 +2573,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"colormedium\": 2,\n" +
                 "  \"colorsmall\": 3,\n" +
                 "  \"dateFormatter\": \"date DD/MM/YYYY\",\n" +
+                "  \"dateOffset\": \"0\",\n" +
                 "  \"dateParser\": \"date DD/MM/YYYY;DDMMYYYY\",\n" +
                 "  \"dateTimeFormatter\": \"date-time DD/MM/YYYY hh:mm\",\n" +
-                "  \"dateTimeOffset\": \"0\",\n" +
                 "  \"dateTimeParser\": \"date-time-pattern DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
                 "  \"defaultYear\": 1901,\n" +
                 "  \"hideZeroValues\": true,\n" +
@@ -2644,7 +2644,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());
-        properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
+        properties.put(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.JAVA_EPOCH_OFFSET);
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS, DATE_TIME_SYMBOLS);
@@ -2885,13 +2885,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    dateFormatter: \n" +
                 "      date\n" +
                 "        \"yyyy/mm/dd\"\n" +
+                "    dateOffset: -25569L\n" +
                 "    dateParser: \n" +
                 "      date\n" +
                 "        \"yyyy/mm/dd\"\n" +
                 "    dateTimeFormatter: \n" +
                 "      date-time\n" +
                 "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
-                "    dateTimeOffset: -25569L\n" +
                 "    dateTimeParser: \n" +
                 "      date-time\n" +
                 "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +
@@ -3125,13 +3125,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    dateFormatter: \n" +
                 "      date\n" +
                 "        \"yyyy/mm/dd\"\n" +
+                "    dateOffset: -25569L\n" +
                 "    dateParser: \n" +
                 "      date\n" +
                 "        \"yyyy/mm/dd\"\n" +
                 "    dateTimeFormatter: \n" +
                 "      date-time\n" +
                 "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
-                "    dateTimeOffset: -25569L\n" +
                 "    dateTimeParser: \n" +
                 "      date-time\n" +
                 "        \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +
@@ -3363,13 +3363,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  dateFormatter: \n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
+                "  dateOffset: -25569L\n" +
                 "  dateParser: \n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
                 "  dateTimeFormatter: \n" +
                 "    date-time\n" +
                 "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
-                "  dateTimeOffset: -25569L\n" +
                 "  dateTimeParser: \n" +
                 "    date-time\n" +
                 "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +
@@ -3611,7 +3611,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     SpreadsheetMetadataPropertyName.DATE_PARSER,
                     SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector()
                 ).set(
-                    SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
+                    SpreadsheetMetadataPropertyName.DATE_OFFSET,
                     Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
                 ).set(
                     SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,

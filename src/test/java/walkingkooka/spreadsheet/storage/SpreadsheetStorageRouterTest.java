@@ -2695,7 +2695,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER)
         );
         spreadsheetEnvironmentContext.setEnvironmentValue(
-            SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName(),
+            SpreadsheetMetadataPropertyName.DATE_OFFSET.toEnvironmentValueName(),
             Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
         );
         spreadsheetEnvironmentContext.setEnvironmentValue(

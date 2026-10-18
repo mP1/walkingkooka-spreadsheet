@@ -234,7 +234,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                     Cast.to(multiplier), // ExpressionNumberConverterContext
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
+                        Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateOffset
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
                         Cast.to(multiplier),

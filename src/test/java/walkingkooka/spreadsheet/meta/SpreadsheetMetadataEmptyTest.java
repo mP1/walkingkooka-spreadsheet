@@ -277,7 +277,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         );
         this.getMessageAndCheck(
             thrown,
-            "Metadata missing: dateTimeOffset, decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validationConverter, valueSeparator"
+            "Metadata missing: dateOffset, decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validationConverter, valueSeparator"
         );
     }
 

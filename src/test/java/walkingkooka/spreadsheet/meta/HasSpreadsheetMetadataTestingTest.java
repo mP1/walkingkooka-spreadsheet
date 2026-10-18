@@ -70,10 +70,10 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
     }
 
     @Test
-    public void testDateTimeOffsetConstants() {
+    public void testDateOffsetConstants() {
         this.checkNotEquals(
-            DATE_TIME_OFFSET,
-            DIFFERENT_DATE_TIME_OFFSET
+            DATE_OFFSET,
+            DIFFERENT_DATE_OFFSET
         );
     }
 
@@ -2137,13 +2137,13 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "  dateFormatter: \n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
+                "  dateOffset: -25569L\n" +
                 "  dateParser: \n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
                 "  dateTimeFormatter: \n" +
                 "    date-time\n" +
                 "      \"yyyy/mm/dd hh:mm\"\n" +
-                "  dateTimeOffset: -25569L\n" +
                 "  dateTimeParser: \n" +
                 "    date-time\n" +
                 "      \"yyyy/mm/dd hh:mm\"\n" +
@@ -2614,13 +2614,13 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "  dateFormatter: \n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
+                "  dateOffset: -25569L\n" +
                 "  dateParser: \n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
                 "  dateTimeFormatter: \n" +
                 "    date-time\n" +
                 "      \"yyyy/mm/dd hh:mm\"\n" +
-                "  dateTimeOffset: -25569L\n" +
                 "  dateTimeParser: \n" +
                 "    date-time\n" +
                 "      \"yyyy/mm/dd hh:mm\"\n" +

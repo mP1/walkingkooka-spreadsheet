@@ -868,9 +868,9 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         // date-time....................................................................................................
         {
             // date -> dateTime & number & text & time
-            final long dateTimeOffset = context.spreadsheetMetadata()
-                .getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
-            final long dateNumberValue = 36525 - dateTimeOffset + Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
+            final long dateOffset = context.spreadsheetMetadata()
+                .getOrFail(SpreadsheetMetadataPropertyName.DATE_OFFSET);
+            final long dateNumberValue = 36525 - dateOffset + Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
             final double timeNumberValue = 1.0 * TIME.toSecondOfDay() / (24 * 60 * 60);
             final double dateTimeNumberValue = dateNumberValue + timeNumberValue;
 

@@ -89,9 +89,9 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         ConverterSelector.class
     );
 
-    public final static EnvironmentValueName<SpreadsheetParserSelector> DATE_PARSER = SpreadsheetMetadataPropertyName.DATE_PARSER.toEnvironmentValueName();
+    public final static EnvironmentValueName<Long> DATE_OFFSET = SpreadsheetMetadataPropertyName.DATE_OFFSET.toEnvironmentValueName();
 
-    public final static EnvironmentValueName<Long> DATE_TIME_OFFSET = SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName();
+    public final static EnvironmentValueName<SpreadsheetParserSelector> DATE_PARSER = SpreadsheetMetadataPropertyName.DATE_PARSER.toEnvironmentValueName();
 
     public final static EnvironmentValueName<SpreadsheetParserSelector> DATE_TIME_PARSER = SpreadsheetMetadataPropertyName.DATE_TIME_PARSER.toEnvironmentValueName();
 
@@ -127,7 +127,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     public final static Set<EnvironmentValueName<?>> ENVIRONMENT_VALUE_NAMES = Sets.of(
         CONVERTER,
         DATE_PARSER,
-        DATE_TIME_OFFSET,
+        DATE_OFFSET,
         DATE_TIME_PARSER,
         DATE_TIME_SYMBOLS,
         DECIMAL_NUMBER_DIGIT_COUNT,
@@ -150,7 +150,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     public static boolean isEnvironmentValueName(final EnvironmentValueName<?> name) {
         return CONVERTER.equals(name) ||
             DATE_PARSER.equals(name) ||
-            DATE_TIME_OFFSET.equals(name) ||
+            DATE_OFFSET.equals(name) ||
             DATE_TIME_PARSER.equals(name) ||
             DATE_TIME_SYMBOLS.equals(name) ||
             DECIMAL_NUMBER_DIGIT_COUNT.equals(name) ||
@@ -328,7 +328,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 missing.addMissing(cause);
             }
 
-            final Long dateOffset = missing.getOrNull(DATE_TIME_OFFSET);
+            final Long dateOffset = missing.getOrNull(DATE_OFFSET);
             final ExpressionNumberKind expressionNumberKind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
             final Character valueSeparator = missing.getOrNull(VALUE_SEPARATOR);
 

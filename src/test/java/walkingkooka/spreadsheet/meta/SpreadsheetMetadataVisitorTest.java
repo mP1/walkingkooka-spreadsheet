@@ -276,13 +276,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDateTimeOffset() {
+    public void testVisitDateOffset() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDateTimeOffset(final long offset) {
+            protected void visitDateOffset(final long offset) {
                 this.visited = offset;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET);
+        }.accept(SpreadsheetMetadataPropertyName.DATE_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET);
     }
 
     @Test
