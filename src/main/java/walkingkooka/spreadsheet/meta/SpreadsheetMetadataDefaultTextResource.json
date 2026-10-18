@@ -71,7 +71,7 @@
   "converters": "",
   "currency": "AUD",
   "currencyExchangeRaters": "empty, properties, storage-path-properties",
-  "dateTimeOffset": -25569,
+  "dateOffset": -25569,
   "decimalNumberDigitCount": 9,
   "defaultFormHandler": "non-null",
   "defaultYear": 1900,

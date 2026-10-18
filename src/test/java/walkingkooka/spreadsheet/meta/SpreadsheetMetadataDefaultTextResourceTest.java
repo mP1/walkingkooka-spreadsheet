@@ -45,7 +45,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
     PublicClassTesting<SpreadsheetMetadataDefaultTextResource> {
 
     @Test
-    public void testDateTimeOffsetExcelOffset() {
+    public void testDateOffsetExcelOffset() {
         SpreadsheetMetadata.EMPTY.id();
 
         final JsonObject resource = JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text())
@@ -54,7 +54,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.checkEquals(
             Converters.EXCEL_1900_DATE_SYSTEM_OFFSET,
             metadata.getOrFail(
-                SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET
+                SpreadsheetMetadataPropertyName.DATE_OFFSET
             ),
             resource::toString
         );
@@ -8904,7 +8904,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    empty\n" +
                 "    properties\n" +
                 "    storage-path-properties\n" +
-                "  dateTimeOffset: -25569L\n" +
+                "  dateOffset: -25569L\n" +
                 "  decimalNumberDigitCount: 9\n" +
                 "  defaultFormHandler: \n" +
                 "    non-null\n" +
@@ -9373,13 +9373,13 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "  dateFormatter: \n" +
                 "    date\n" +
                 "      \"dddd, d mmmm yyyy\"\n" +
+                "  dateOffset: -25569L\n" +
                 "  dateParser: \n" +
                 "    date\n" +
                 "      \"dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\"\n" +
                 "  dateTimeFormatter: \n" +
                 "    date-time\n" +
                 "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\n" +
-                "  dateTimeOffset: -25569L\n" +
                 "  dateTimeParser: \n" +
                 "    date-time\n" +
                 "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\n" +

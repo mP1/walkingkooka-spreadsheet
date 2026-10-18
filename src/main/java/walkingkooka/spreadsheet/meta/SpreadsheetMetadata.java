@@ -618,7 +618,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a general {@link Converter} using the required properties.
      * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_OFFSET}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_OFFSET}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
@@ -1149,7 +1149,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             missing.addMissing(cause);
         }
 
-        final Long dateOffset = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
+        final Long dateOffset = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_OFFSET);
         final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
         final Character valueSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR);
 

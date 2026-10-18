@@ -776,14 +776,14 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  dateFormatter\n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
+                "  dateOffset\n" +
+                "    -25569L\n" +
                 "  dateParser\n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +
                 "  dateTimeFormatter\n" +
                 "    date-time\n" +
                 "      \"yyyy/mm/dd hh:mm\"\n" +
-                "  dateTimeOffset\n" +
-                "    -25569L\n" +
                 "  dateTimeParser\n" +
                 "    date-time\n" +
                 "      \"yyyy/mm/dd hh:mm\"\n" +

@@ -149,11 +149,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateParser(final SpreadsheetParserSelector selector) {
+    protected void visitDateOffset(final long offset) {
         // nop
     }
 
-    protected void visitDateTimeOffset(final long offset) {
+    protected void visitDateParser(final SpreadsheetParserSelector selector) {
         // nop
     }
 

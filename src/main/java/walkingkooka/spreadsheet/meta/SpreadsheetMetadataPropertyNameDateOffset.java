@@ -22,19 +22,19 @@ import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMetadataPropertyName<Long> {
+final class SpreadsheetMetadataPropertyNameDateOffset extends SpreadsheetMetadataPropertyName<Long> {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameDateTimeOffset instance() {
-        return new SpreadsheetMetadataPropertyNameDateTimeOffset();
+    static SpreadsheetMetadataPropertyNameDateOffset instance() {
+        return new SpreadsheetMetadataPropertyNameDateOffset();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameDateTimeOffset() {
+    private SpreadsheetMetadataPropertyNameDateOffset() {
         super();
     }
 
@@ -46,13 +46,13 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
 
     @Override
     String expected() {
-        return "DateTime offset";
+        return "Date offset";
     }
 
     @Override
     void accept(final Long value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitDateTimeOffset(value);
+        visitor.visitDateOffset(value);
     }
 
     @Override //
