@@ -35,6 +35,7 @@ import walkingkooka.color.HslColor;
 import walkingkooka.color.HsvColor;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
@@ -178,6 +179,10 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
     }
 
     private static final List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
+
+    private final static Predicate<Object> IS_BIG_DECIMAL = (v) -> v instanceof BigDecimal;
+
+    private final static Predicate<Object> IS_DOUBLE = (v) -> v instanceof Double;
 
     private final static LocalDate DATE = LocalDate.of(
         1999,
@@ -863,6 +868,12 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         // date-time....................................................................................................
         {
             // date -> dateTime & number & text & time
+            final long dateTimeOffset = context.spreadsheetMetadata()
+                .getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
+            final long dateNumberValue = 10956 - dateTimeOffset + Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
+            final double timeNumberValue = 1.0 * TIME.toSecondOfDay() / (24 * 60 * 60);
+            final double dateTimeNumberValue = dateNumberValue + timeNumberValue;
+
             verifier.addIfConversionFail(
                 DATE,
                 Boolean.class,
@@ -884,42 +895,42 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 DATE,
                 BigDecimal.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                BigDecimal.valueOf(10956)
+                BigDecimal.valueOf(dateNumberValue)
             );
 
             verifier.addIfConversionFail(
                 DATE,
                 BigInteger.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                BigInteger.valueOf(10956)
+                BigInteger.valueOf(dateNumberValue)
             );
 
             verifier.addIfConversionFail(
                 DATE,
                 Double.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                10956.0
+                (double)dateNumberValue
             );
 
             verifier.addIfConversionFail(
                 DATE,
                 Float.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                10956f
+                (float)dateNumberValue
             );
 
             verifier.addIfConversionFail(
                 DATE,
                 Long.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                10956L
+                (long)dateNumberValue
             );
 
             verifier.addIfConversionFail(
                 DATE,
                 Short.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                (short)10956
+                (short)dateNumberValue
             );
 
             verifier.addIfConversionFail(
@@ -949,42 +960,42 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 DATE_TIME,
                 BigDecimal.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                BigDecimal.valueOf(10956.5400390625)
+                IS_BIG_DECIMAL
             );
 
             verifier.addIfConversionFail(
                 DATE_TIME_MIDNIGHT,
                 BigInteger.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                BigInteger.valueOf(10956)
+                BigInteger.valueOf((int)dateNumberValue)
             );
 
             verifier.addIfConversionFail(
                 DATE_TIME,
                 Double.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                10956.5400390625
+                IS_DOUBLE
             );
 
             verifier.addIfConversionFail(
                 DATE_TIME,
                 Float.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                10956.5400390625f
+                (float)dateTimeNumberValue
             );
 
             verifier.addIfConversionFail(
                 DATE_TIME_MIDNIGHT,
                 Long.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                10956L
+                (long)dateNumberValue
             );
 
             verifier.addIfConversionFail(
                 DATE_TIME_MIDNIGHT,
                 Short.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                (short)10956
+                (short)dateNumberValue
             );
 
             verifier.addIfConversionFail(
@@ -1038,7 +1049,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 TIME,
                 BigDecimal.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                BigDecimal.valueOf(0.5402777777777777)
+                BigDecimal.valueOf(timeNumberValue)
             );
 
             verifier.addIfConversionFail(
@@ -1052,14 +1063,14 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 TIME,
                 Double.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                0.5402777777777777
+                (double)timeNumberValue
             );
 
             verifier.addIfConversionFail(
                 TIME,
                 Float.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                0.5402777777777777f
+                (float)timeNumberValue
             );
 
             verifier.addIfConversionFail(
@@ -2951,7 +2962,7 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                                      final Predicate<Object> answerChecker) {
         boolean failed;
 
-        final Either<?, String> converted;
+        Either<?, String> converted = null;
         try {
             converted = this.converter.convert(
                 value,
@@ -2974,6 +2985,8 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         }
 
         if (failed) {
+            System.out.println(value + " " + type.getSimpleName() + " " + converted + "\t" + answerChecker);
+            Thread.dumpStack();
             this.add(
                 value,
                 type,
