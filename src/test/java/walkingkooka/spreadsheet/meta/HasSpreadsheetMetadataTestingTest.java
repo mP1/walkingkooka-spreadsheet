@@ -70,6 +70,14 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
     }
 
     @Test
+    public void testDateTimeOffsetConstants() {
+        this.checkNotEquals(
+            DATE_TIME_OFFSET,
+            DIFFERENT_DATE_TIME_OFFSET
+        );
+    }
+
+    @Test
     public void testEffectiveStyle() {
         SPREADSHEET_METADATA.effectiveStyle();
     }
