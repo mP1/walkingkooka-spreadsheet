@@ -185,62 +185,22 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         31
     );
 
-    static {
-        final List<Class<?>> types = Lists.array();
-        types.add(Boolean.class);
-        types.add(LocalDateTime.class);
-        types.addAll(NUMBER_TYPES);
-        types.remove(Byte.class);
-        types.remove(Short.class);
-        types.add(String.class);
-
-        DATE_TO_TYPES = types;
-    }
-
-    private static final List<Class<?>> DATE_TO_TYPES;
-
-    // time component must be zero otherwise DateTime -> integer types like BigInteger will fail
-    private final static LocalDateTime DATE_TIME = LocalDateTime.of(
-        1999,
-        12,
-        31,
+    private final static LocalTime TIME = LocalTime.of(
         12,
         58,
         0 // formatting patterns often dont include seconds.
     );
 
-    static {
-        final List<Class<?>> types = Lists.array();
-        types.add(Boolean.class);
-        types.add(LocalDate.class);
-        types.add(LocalTime.class);
-        types.addAll(NUMBER_TYPES);
-        types.remove(Byte.class);
-        types.remove(Short.class);
-        types.add(String.class);
+    // time component must be zero for non decimal number types
+    private final static LocalDateTime DATE_TIME = LocalDateTime.of(
+        DATE,
+        TIME
+    );
 
-        DATE_TIME_TO_TYPES = types;
-    }
-
-    private static final List<Class<?>> DATE_TIME_TO_TYPES;
-
-
-    private final static LocalTime TIME = DATE_TIME.toLocalTime();
-
-    static {
-        final List<Class<?>> types = Lists.array();
-        types.add(Boolean.class);
-        types.add(LocalDateTime.class);
-        types.addAll(NUMBER_TYPES);
-        types.remove(Byte.class);
-        types.remove(Short.class);
-        types.remove(BigInteger.class); // time -> BigInteger doesnt work
-        types.add(String.class);
-
-        TIME_TO_TYPES = types;
-    }
-
-    private static final List<Class<?>> TIME_TO_TYPES;
+    private final static LocalDateTime DATE_TIME_MIDNIGHT = LocalDateTime.of(
+        DATE,
+        LocalTime.MIDNIGHT
+    );
 
     // value constants..................................................................................................
 
@@ -904,29 +864,134 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         {
             // date -> dateTime & number & text & time
             verifier.addIfConversionFail(
-                DATE, // date
-                DATE_TO_TYPES,
+                DATE,
+                Boolean.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                IS_NOT_NULL
+                true
             );
 
-            // datetime ->
             verifier.addIfConversionFail(
+                DATE,
+                LocalDateTime.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
                 LocalDateTime.of(
                     DATE,
                     LocalTime.MIDNIGHT
-                ), // date
-                DATE_TIME_TO_TYPES,
-                SpreadsheetConvertersConverterProvider.DATE_TIME,
-                IS_NOT_NULL
+                )
             );
 
-            // time ->
             verifier.addIfConversionFail(
-                TIME,
-                TIME_TO_TYPES,
+                DATE,
+                BigDecimal.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                IS_NOT_NULL
+                BigDecimal.valueOf(10956)
+            );
+
+            verifier.addIfConversionFail(
+                DATE,
+                BigInteger.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                BigInteger.valueOf(10956)
+            );
+
+            verifier.addIfConversionFail(
+                DATE,
+                Double.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                10956.0
+            );
+
+            verifier.addIfConversionFail(
+                DATE,
+                Float.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                10956f
+            );
+
+            verifier.addIfConversionFail(
+                DATE,
+                Long.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                10956L
+            );
+
+            verifier.addIfConversionFail(
+                DATE,
+                Short.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                (short)10956
+            );
+
+            verifier.addIfConversionFail(
+                DATE,
+                String.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_STRING
+            );
+
+            // datetime ->
+
+            verifier.addIfConversionFail(
+                DATE_TIME,
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                true
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME_MIDNIGHT,
+                LocalDate.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                DATE
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME,
+                BigDecimal.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                BigDecimal.valueOf(10956.5400390625)
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME_MIDNIGHT,
+                BigInteger.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                BigInteger.valueOf(10956)
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME,
+                Double.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                10956.5400390625
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME,
+                Float.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                10956.5400390625f
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME_MIDNIGHT,
+                Long.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                10956L
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME_MIDNIGHT,
+                Short.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                (short)10956
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME,
+                String.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_STRING
             );
 
             // text -> number
@@ -959,6 +1024,63 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
                 IS_TIME
+            );
+
+            // time ->
+            verifier.addIfConversionFail(
+                TIME,
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                true
+            );
+            
+            verifier.addIfConversionFail(
+                TIME,
+                BigDecimal.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                BigDecimal.valueOf(0.5402777777777777)
+            );
+
+            verifier.addIfConversionFail(
+                LocalTime.MIDNIGHT,
+                BigInteger.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                BigInteger.ZERO
+            );
+
+            verifier.addIfConversionFail(
+                TIME,
+                Double.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                0.5402777777777777
+            );
+
+            verifier.addIfConversionFail(
+                TIME,
+                Float.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                0.5402777777777777f
+            );
+
+            verifier.addIfConversionFail(
+                LocalTime.MIDNIGHT,
+                Long.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                0L
+            );
+
+            verifier.addIfConversionFail(
+                LocalTime.MIDNIGHT,
+                Short.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                (short)0
+            );
+
+            verifier.addIfConversionFail(
+                DATE_TIME,
+                String.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                IS_STRING
             );
         }
 
