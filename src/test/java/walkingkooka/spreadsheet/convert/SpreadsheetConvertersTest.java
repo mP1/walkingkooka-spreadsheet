@@ -58,7 +58,6 @@ import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.environment.Environment;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
@@ -1428,7 +1427,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 @Override
                 public MathContext mathContext() {
-                    return MathContext.DECIMAL32;
+                    return MATH_CONTEXT;
                 }
 
                 @Override
@@ -1527,7 +1526,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         @Override
         public Locale locale() {
-            return Locale.forLanguageTag("en-AU");
+            return LOCALE;
         }
 
         @Override
@@ -1617,7 +1616,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         @Override
         public Locale locale() {
-            return Locale.forLanguageTag("en-AU");
+            return LOCALE;
         }
 
         @Override
@@ -2463,7 +2462,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             new HasOptionalLocale() {
                 @Override
                 public Optional<Locale> locale() {
-                    return Optional.of(LOCALE);
+                    return OPTIONAL_LOCALE;
                 }
             },
             LOCALE
@@ -2545,12 +2544,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         @Override
         public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
-            return this.localeContext.dateTimeSymbolsForLocale(locale);
+            return LOCALE_CONTEXT.dateTimeSymbolsForLocale(locale);
         }
 
         @Override
         public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
-            return this.localeContext.decimalNumberSymbolsForLocale(locale);
+            return LOCALE_CONTEXT.decimalNumberSymbolsForLocale(locale);
         }
 
         @Override
@@ -2561,8 +2560,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 )
             );
         }
-
-        private final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
     };
 
     @Test
