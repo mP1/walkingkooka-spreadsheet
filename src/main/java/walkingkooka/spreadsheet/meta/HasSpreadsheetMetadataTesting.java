@@ -180,6 +180,9 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
 
+    long DATE_TIME_OFFSET = Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
+    long DIFFERENT_DATE_TIME_OFFSET = Converters.EXCEL_1904_DATE_SYSTEM_OFFSET;
+
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
      */
@@ -217,7 +220,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector()
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
-            Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
+            DATE_TIME_OFFSET
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
             SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
