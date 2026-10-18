@@ -135,6 +135,17 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
+    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingFormulaConverterDifferentDateTimeOffset() {
+        this.verifyAndCheck(
+            SPREADSHEET_METADATA_TESTING.set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
+                DIFFERENT_DATE_TIME_OFFSET
+            ),
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
+        );
+    }
+
+    @Test
     public void testVerifyAndCheckWithWithMetadataDefaultFormulaConverter() {
         this.spreadsheetMetadataDefaultVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
@@ -210,6 +221,8 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
         );
     }
+
+
 
     private void spreadsheetMetadataTestingVerifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                                           final MissingConverter... expected) {
