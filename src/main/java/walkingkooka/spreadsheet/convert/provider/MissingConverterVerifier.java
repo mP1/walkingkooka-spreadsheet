@@ -2985,7 +2985,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         }
 
         if (failed) {
-            System.out.println(value + " " + type.getSimpleName() + " " + converted + "\t" + answerChecker);
             Thread.dumpStack();
             this.add(
                 value,
