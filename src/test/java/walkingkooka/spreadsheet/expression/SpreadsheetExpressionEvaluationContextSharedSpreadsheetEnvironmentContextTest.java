@@ -624,6 +624,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     // setCell..........................................................................................................
 
+    @Override
     public void testSetSpreadsheetCellWithSame() {
         throw new UnsupportedOperationException();
     }
