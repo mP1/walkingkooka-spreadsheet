@@ -2829,8 +2829,9 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
                                      final Predicate<Object> answerChecker) {
         boolean failed;
 
+        final Either<?, String> converted;
         try {
-            final Either<?, String> converted = this.converter.convert(
+            converted = this.converter.convert(
                 value,
                 type,
                 this.context
