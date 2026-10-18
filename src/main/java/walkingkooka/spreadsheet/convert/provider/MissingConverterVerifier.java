@@ -2982,6 +2982,9 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
         } catch (final RuntimeException cause) {
             cause.printStackTrace(); // KEEP!
             failed = true;
+        } catch (final Error cause) {
+            cause.printStackTrace(); // KEEP!
+            failed = true;
         }
 
         if (failed) {
