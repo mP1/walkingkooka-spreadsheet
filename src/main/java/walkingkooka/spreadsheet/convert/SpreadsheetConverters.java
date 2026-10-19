@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Binary;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.ColorContexts;
@@ -1248,7 +1247,6 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     /**
      * {@see ConverterTextToPath}
      */
-    @GwtIncompatible
     public static Converter<SpreadsheetConverterContext> textToPath() {
         return Converters.textToPath();
     }

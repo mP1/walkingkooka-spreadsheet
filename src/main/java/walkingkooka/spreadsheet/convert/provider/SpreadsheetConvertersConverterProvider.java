@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
-import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -46,8 +45,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link ConverterProvider} for {@link Converter} in {@link SpreadsheetConverters}.
  */
-final class SpreadsheetConvertersConverterProvider extends SpreadsheetConvertersConverterProviderGwt
-    implements ConverterProvider,
+final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
     TreePrintable {
 
     // This constant is here to avoid NullPointerExceptions by #converterInfo during a static initializer
@@ -665,7 +663,7 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
             case TEXT_TO_PATH_STRING:
                 this.noParameterCheck(copy);
 
-                converter = textToPathConverter();
+                converter = SpreadsheetConverters.textToPath();
                 break;
             case TEXT_TO_PROPERTIES_STRING:
                 this.noParameterCheck(copy);
@@ -1019,14 +1017,6 @@ final class SpreadsheetConvertersConverterProvider extends SpreadsheetConverters
      * The {@link Function} that supplies the {@link Converter} when a request comes through for {@link #DATE_TIME}.
      */
     private final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime;
-
-    /**
-     * The shadowed method in {@link SpreadsheetConvertersConverterProviderGwt#textToPathConverter()} throws an exception
-     */
-    @GwtIncompatible
-    static Converter<SpreadsheetConverterContext> textToPathConverter() {
-        return SpreadsheetConverters.textToPath();
-    }
 
     private final static String BINARY_STRING = "binary";
 
