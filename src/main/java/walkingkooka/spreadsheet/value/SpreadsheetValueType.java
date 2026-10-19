@@ -286,6 +286,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         SpreadsheetParserSelector.class
     );
 
+    public static final ValueType PATH = ValueType.register(
+        "storage/Path",
+        SpreadsheetValueTypePath.path()
+    );
+
     public final static ValueType RELATIVE_URL = ValueType.RELATIVE_URL;
 
     public static final ValueType SPREADSHEET_CELL = ValueType.register(
