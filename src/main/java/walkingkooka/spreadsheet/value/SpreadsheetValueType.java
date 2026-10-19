@@ -27,8 +27,13 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.ConditionRightEqualsSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -283,9 +288,39 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType RELATIVE_URL = ValueType.RELATIVE_URL;
 
+    public static final ValueType SPREADSHEET_CELL = ValueType.register(
+        "spreadsheet/SpreadsheetCell",
+        SpreadsheetCell.class
+    );
+
     public static final ValueType SPREADSHEET_ERROR = ValueType.register(
         "error/SpreadsheetError",
         SpreadsheetError.class
+    );
+
+    public static final ValueType SPREADSHEET_ID = ValueType.register(
+        "spreadsheet/SpreadsheetId",
+        SpreadsheetId.class
+    );
+
+    public static final ValueType SPREADSHEET_METADATA = ValueType.register(
+        "spreadsheet/SpreadsheetMetadata",
+        SpreadsheetMetadata.class
+    );
+
+    public static final ValueType SPREADSHEET_METADATA_PROPERTY_NAME = ValueType.register(
+        "spreadsheet/SpreadsheetMetadataPropertyName",
+        SpreadsheetMetadataPropertyName.class
+    );
+
+    public static final ValueType SPREADSHEET_NAME = ValueType.register(
+        "spreadsheet/SpreadsheetName",
+        SpreadsheetName.class
+    );
+
+    public static final ValueType SPREADSHEET_TEXT = ValueType.register(
+        "style/SpreadsheetText",
+        SpreadsheetText.class
     );
 
     public static final ValueType STYLEABLE = ValueType.register("style/Styleable", Styleable.class);
