@@ -23,8 +23,13 @@ import walkingkooka.color.ColorProperties;
 import walkingkooka.color.HslColor;
 import walkingkooka.color.HsvColor;
 import walkingkooka.color.RgbColor;
+import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.ConditionRightEqualsSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -47,6 +52,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValueType;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Set;
 
@@ -156,6 +162,8 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     // ValueType........................................................................................................
 
+    public static final ValueType PLUGIN_PARENT = ValueType.register("plugin", Object.class);
+
     public static final ValueType STYLE_PARENT = ValueType.register("style", Object.class);
 
     public static final ValueType ABSOLUTE_URL = ValueType.ABSOLUTE_URL;
@@ -173,9 +181,19 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         ColorProperties.class
     );
 
+    public static final ValueType COMPARATOR_SELECTOR = ValueType.register(
+        "plugin/SpreadsheetComparatorSelector",
+        SpreadsheetComparatorSelector.class
+    );
+
     public static final ValueType CONDITION = ValueType.register(
         "Condition",
         ConditionRightEqualsSpreadsheetFormulaParserToken.class
+    );
+
+    public static final ValueType CONVERTER_SELECTOR = ValueType.register(
+        "plugin/ConverterSelector",
+        ConverterSelector.class
     );
 
     public static final ValueType CSV = ValueType.CSV;
@@ -183,6 +201,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValueType CURRENCY = ValueType.CURRENCY;
 
     public static final ValueType CURRENCY_CODE = ValueType.CURRENCY_CODE;
+
+    public static final ValueType CURRENCY_EXCHANGE_RATER_SELECTOR = ValueType.register(
+        "plugin/CurrencyExchangeRaterSelector",
+        CurrencyExchangeRaterSelector.class
+    );
 
     public static final ValueType CURRENCY_VALUE = ValueType.CURRENCY_VALUE;
 
@@ -207,6 +230,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValueType ERROR = ValueType.fromClassOrFail(SpreadsheetError.class);
 
     public static final ValueType FLAG = ValueType.register("style/Flag", Flag.class);
+
+    public static final ValueType FORMATTER_SELECTOR = ValueType.register(
+        "plugin/SpreadsheetFormatterSelector",
+        SpreadsheetFormatterSelector.class
+    );
 
     public static final ValueType HYPERLINK = ValueType.register("style/Hyperlink", Hyperlink.class);
 
@@ -248,6 +276,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType PADDING = ValueType.register("style/Padding", Padding.class);
 
+    public static final ValueType PARSER_SELECTOR = ValueType.register(
+        "plugin/SpreadsheetParserSelector",
+        SpreadsheetParserSelector.class
+    );
+
     public final static ValueType RELATIVE_URL = ValueType.RELATIVE_URL;
 
     public static final ValueType SPREADSHEET_ERROR = ValueType.register(
@@ -283,6 +316,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValueType VALIDATION_ERROR = ValueType.fromClassOrFail(ValidationError.class);
 
     public static final ValueType VALIDATION_ERROR_LIST = ValueType.fromClassOrFail(ValidationErrorList.class);
+
+    public static final ValueType VALIDATOR_SELECTOR = ValueType.register(
+        "plugin/ValidatorSelector",
+        ValidatorSelector.class
+    );
 
     public static final ValueType WHOLE_NUMBER = ValueType.WHOLE_NUMBER_PARENT;
 
