@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
-import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.list.BooleanList;
@@ -155,7 +154,7 @@ import java.util.function.Predicate;
  * FAIL. This is useful particularly in tests which may be using a {@link FakeSpreadsheetConverterContext} with some
  * unimplemented methods.
  */
-final class MissingConverterVerifier extends MissingConverterVerifierGwt {
+final class MissingConverterVerifier {
 
     private final static List<Class<?>> NUMBER_TYPES = Lists.of(
         ExpressionNumber.class,
@@ -1714,8 +1713,13 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
             if (formatting || formula || scripting) {
                 final String text = "BinaryTextContent123";
 
-                textToPath(
-                    verifier
+                final String path = "/tmp/File1.txt";
+
+                verifier.addIfConversionFail(
+                    path,
+                    Path.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_PATH,
+                    Path.of(path)
                 );
 
                 verifier.addIfConversionFail(
@@ -2848,19 +2852,6 @@ final class MissingConverterVerifier extends MissingConverterVerifierGwt {
 
         return MissingConverterSet.EMPTY.setElements(
             verifier.missing.values()
-        );
-    }
-
-    // shadowed method will be a NOOP.
-    @GwtIncompatible
-    static void textToPath(final MissingConverterVerifier verifier) {
-        final String path = "/tmp/File1.txt";
-
-        verifier.addIfConversionFail(
-            path,
-            Path.class,
-            SpreadsheetConvertersConverterProvider.TEXT_TO_PATH,
-            Path.of(path)
         );
     }
 
