@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.color.Color;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.predicate.Predicates;
@@ -136,6 +137,22 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 spreadsheetMetadata2,
                 wrap
             )
+        );
+    }
+
+    // environmentContext...............................................................................................
+
+    @Test
+    public void testEnvironmentValueWithSpreadsheetMetadataPropertyName() {
+        final SpreadsheetMetadataPropertyName<Color> propertyName = SpreadsheetMetadataPropertyName.numberedColor(
+            Color.indexed(1)
+        );
+        final SpreadsheetMetadataSpreadsheetEnvironmentContext context = this.createContext();
+
+        this.environmentValueAndCheck(
+            context,
+            propertyName.toEnvironmentValueName(),
+            METADATA.getOrFail(propertyName)
         );
     }
 
