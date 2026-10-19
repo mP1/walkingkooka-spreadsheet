@@ -69,16 +69,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
-import walkingkooka.tree.text.Border;
-import walkingkooka.tree.text.Flag;
-import walkingkooka.tree.text.Hyperlink;
-import walkingkooka.tree.text.Image;
-import walkingkooka.tree.text.Margin;
-import walkingkooka.tree.text.Padding;
-import walkingkooka.tree.text.Styleable;
-import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextStyle;
-import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -306,17 +296,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                     SpreadsheetName.class,
                     SpreadsheetParserSelector.class,
                     SpreadsheetCell.class,
-                    ValidatorSelector.class,
-                    Border.class,
-                    Flag.class,
-                    Hyperlink.class,
-                    Image.class,
-                    Margin.class,
-                    Padding.class,
-                    Styleable.class,
-                    TextNode.class,
-                    TextStyle.class,
-                    TextStylePropertyName.class
+                    ValidatorSelector.class
                 ).stream()
                 .map(Class::getName)
                 .collect(Collectors.toCollection(SortedSets::tree)),
