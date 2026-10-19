@@ -29,7 +29,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
-import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.environment.CanParseEnvironmentValueName;
@@ -44,17 +43,14 @@ import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
-import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
-import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
@@ -70,7 +66,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.ValueType;
-import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.nio.charset.Charset;
@@ -284,19 +279,13 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         this.checkEquals(
             Arrays.asList(
                     Path.class,
-                    ConverterSelector.class,
-                    CurrencyExchangeRaterSelector.class,
-                    SpreadsheetComparatorSelector.class,
                     SpreadsheetText.class,
-                    SpreadsheetFormatterSelector.class,
                     SpreadsheetId.class,
                     SpreadsheetMetadata.class,
                     SpreadsheetMetadataPropertyName.class,
                     SpreadsheetMetadataPropertyName.class,
                     SpreadsheetName.class,
-                    SpreadsheetParserSelector.class,
-                    SpreadsheetCell.class,
-                    ValidatorSelector.class
+                    SpreadsheetCell.class
                 ).stream()
                 .map(Class::getName)
                 .collect(Collectors.toCollection(SortedSets::tree)),
