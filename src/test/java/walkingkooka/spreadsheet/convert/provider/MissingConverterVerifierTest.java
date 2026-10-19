@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.convert.Converter;
@@ -28,6 +29,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
+import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.environment.CanParseEnvironmentValueName;
@@ -42,15 +44,21 @@ import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -61,14 +69,29 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.tree.text.Border;
+import walkingkooka.tree.text.Flag;
+import walkingkooka.tree.text.Hyperlink;
+import walkingkooka.tree.text.Image;
+import walkingkooka.tree.text.Margin;
+import walkingkooka.tree.text.Padding;
+import walkingkooka.tree.text.Styleable;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValueType;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -236,6 +259,68 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             SPREADSHEET_METADATA_DEFAULT,
             propertyName,
             expected
+        );
+    }
+
+    @Test
+    public void testValueTypeAllValues() {
+        final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
+        final Converter<SpreadsheetConverterContext> converter = Converters.never();
+
+        final Set<MissingConverter> missingConverters = MissingConverterVerifier.verify(
+            converter,
+            propertyName,
+            new TestSpreadsheetConverterContext(
+                SPREADSHEET_METADATA_TESTING.set(
+                    propertyName,
+                    ConverterSelector.parse("never")
+                ),
+                converter
+            )
+        );
+
+        final Set<String> types = SortedSets.tree();
+
+        for (final MissingConverter missingConverter : missingConverters) {
+            for (final MissingConverterValue missingConverterValue : missingConverter.values()) {
+                final String type = missingConverterValue.type();
+                if (ValueType.parse(type).isEmpty()) {
+                    types.add(type);
+                }
+                ;
+            }
+        }
+
+        this.checkEquals(
+            Arrays.asList(
+                    Path.class,
+                    ConverterSelector.class,
+                    CurrencyExchangeRaterSelector.class,
+                    SpreadsheetComparatorSelector.class,
+                    SpreadsheetText.class,
+                    SpreadsheetFormatterSelector.class,
+                    SpreadsheetId.class,
+                    SpreadsheetMetadata.class,
+                    SpreadsheetMetadataPropertyName.class,
+                    SpreadsheetMetadataPropertyName.class,
+                    SpreadsheetName.class,
+                    SpreadsheetParserSelector.class,
+                    SpreadsheetCell.class,
+                    ValidatorSelector.class,
+                    Border.class,
+                    Flag.class,
+                    Hyperlink.class,
+                    Image.class,
+                    Margin.class,
+                    Padding.class,
+                    Styleable.class,
+                    TextNode.class,
+                    TextStyle.class,
+                    TextStylePropertyName.class
+                ).stream()
+                .map(Class::getName)
+                .collect(Collectors.toCollection(SortedSets::tree)),
+            types
         );
     }
 
