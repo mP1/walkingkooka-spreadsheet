@@ -45,16 +45,13 @@ import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
-import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -278,14 +275,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         this.checkEquals(
             Arrays.asList(
-                    Path.class,
-                    SpreadsheetText.class,
-                    SpreadsheetId.class,
-                    SpreadsheetMetadata.class,
-                    SpreadsheetMetadataPropertyName.class,
-                    SpreadsheetMetadataPropertyName.class,
-                    SpreadsheetName.class,
-                    SpreadsheetCell.class
+                    Path.class
                 ).stream()
                 .map(Class::getName)
                 .collect(Collectors.toCollection(SortedSets::tree)),
