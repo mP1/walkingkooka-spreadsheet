@@ -67,7 +67,7 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
 
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
-        this.color = Optional.of(
+        this.setColor(
             this.context.namedColor(
                 token.value()
             )
@@ -76,7 +76,7 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
-        this.color = Optional.of(
+        this.setColor(
             this.context.indexedColor(
                 token.value()
             )
@@ -147,6 +147,10 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
      * Aggregates the formatted output text.
      */
     private final StringBuilder text = new StringBuilder();
+
+    private void setColor(final Color color) {
+        this.color = this.context.lookupColor(color);
+    }
 
     private Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
 
