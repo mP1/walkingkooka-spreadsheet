@@ -66,14 +66,11 @@ import walkingkooka.validation.ValueType;
 
 import java.math.MathContext;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -274,11 +271,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         this.checkEquals(
-            Arrays.asList(
-                    Path.class
-                ).stream()
-                .map(Class::getName)
-                .collect(Collectors.toCollection(SortedSets::tree)),
+            Sets.empty(),
             types
         );
     }
