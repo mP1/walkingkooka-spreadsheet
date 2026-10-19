@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.value;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorProperties;
 import walkingkooka.color.HslColor;
 import walkingkooka.color.HsvColor;
 import walkingkooka.color.RgbColor;
@@ -152,6 +153,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValueType BOOLEAN_LIST = ValueType.BOOLEAN_LIST;
 
     public static final ValueType CHOICE_LIST = ValueType.CHOICE_LIST;
+
+    public static final ValueType COLOR_PROPERTIES = ValueType.register(
+        "text/ColorProperties",
+        ColorProperties.class
+    );
 
     public static final ValueType CONDITION = ValueType.register(
         "Condition",
