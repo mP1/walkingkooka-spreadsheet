@@ -222,8 +222,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
-
-
     private void spreadsheetMetadataTestingVerifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                                           final MissingConverter... expected) {
         this.verifyAndCheck(
@@ -269,7 +267,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
-    static class TestSpreadsheetConverterContext implements SpreadsheetConverterContext,
+    final static class TestSpreadsheetConverterContext implements SpreadsheetConverterContext,
         ColorContextDelegator,
         CanParseEnvironmentValueNameDelegator,
         DateTimeContextDelegator,
