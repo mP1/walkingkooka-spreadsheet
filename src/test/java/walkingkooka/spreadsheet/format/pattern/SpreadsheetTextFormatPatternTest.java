@@ -358,7 +358,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
             "[color44]@@",
             "Hello",
             SpreadsheetText.EMPTY.setText("HelloHello")
-                .setColor(OPTIONAL_COLOR_INDEX_44)
+                .setColor(OPTIONAL_COLOR_RED) // color44 = red
         );
     }
 
@@ -409,7 +409,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
                         color,
                         "namedColor"
                     );
-                    return OPTIONAL_NAMED_COLOR_RED;
+                    return OPTIONAL_COLOR_RED;
                 }
                 if (color.isNamed()) {
                     checkEquals(

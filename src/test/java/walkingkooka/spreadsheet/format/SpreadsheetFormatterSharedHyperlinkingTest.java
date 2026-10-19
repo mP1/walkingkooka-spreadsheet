@@ -44,7 +44,7 @@ public final class SpreadsheetFormatterSharedHyperlinkingTest extends Spreadshee
         this.formatAndCheck(
             text,
             SpreadsheetText.EMPTY.setText(text + text)
-                .setColor(OPTIONAL_COLOR_NAME_RED)
+                .setColor(OPTIONAL_COLOR_RED) // NamedColor lookup
         );
     }
 
@@ -59,7 +59,7 @@ public final class SpreadsheetFormatterSharedHyperlinkingTest extends Spreadshee
             ).setTextStyle(
                 TextStyle.EMPTY.set(
                     TextStylePropertyName.COLOR,
-                    COLOR_NAME_RED
+                    COLOR_RED // NamedColor lookup COLOR_NAME_RED -> COLOR_RED
                 )
             ).appendChild(
                 TextNode.style(

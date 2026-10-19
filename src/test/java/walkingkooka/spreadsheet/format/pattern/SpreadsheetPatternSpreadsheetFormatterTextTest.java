@@ -129,7 +129,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
 
             },
             SpreadsheetText.EMPTY.setText(TEXT)
-                .setColor(OPTIONAL_COLOR_NAME_RED)
+                .setColor(OPTIONAL_COLOR_RED)
         );
     }
 
@@ -142,7 +142,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
 
             },
             SpreadsheetText.EMPTY.setText(TEXT)
-                .setColor(OPTIONAL_COLOR_INDEX_44)
+                .setColor(OPTIONAL_COLOR_44)
         );
     }
 
