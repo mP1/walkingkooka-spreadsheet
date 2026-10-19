@@ -34,6 +34,16 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.tree.text.Border;
+import walkingkooka.tree.text.Flag;
+import walkingkooka.tree.text.Hyperlink;
+import walkingkooka.tree.text.Image;
+import walkingkooka.tree.text.Margin;
+import walkingkooka.tree.text.Padding;
+import walkingkooka.tree.text.Styleable;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValueType;
@@ -146,11 +156,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     // ValueType........................................................................................................
 
+    public static final ValueType STYLE_PARENT = ValueType.register("style", Object.class);
+
     public static final ValueType ABSOLUTE_URL = ValueType.ABSOLUTE_URL;
 
     public static final ValueType BOOLEAN = ValueType.BOOLEAN;
 
     public static final ValueType BOOLEAN_LIST = ValueType.BOOLEAN_LIST;
+
+    public static final ValueType BORDER = ValueType.register("style/Border", Border.class);
 
     public static final ValueType CHOICE_LIST = ValueType.CHOICE_LIST;
 
@@ -192,6 +206,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType ERROR = ValueType.fromClassOrFail(SpreadsheetError.class);
 
+    public static final ValueType FLAG = ValueType.register("style/Flag", Flag.class);
+
+    public static final ValueType HYPERLINK = ValueType.register("style/Hyperlink", Hyperlink.class);
+
+    public static final ValueType IMAGE = ValueType.register("style/Image", Image.class);
+
     public final static ValueType JSON = ValueType.JSON_PARENT;
 
     public final static ValueType JSON_ARRAY = ValueType.JSON_ARRAY;
@@ -218,11 +238,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType MAIL_TO_URL = ValueType.MAIL_TO_URL;
 
+    public static final ValueType MARGIN = ValueType.register("style/Margin", Margin.class);
+
     public static final ValueType NUMBER_PARENT = ValueType.NUMBER_PARENT;
 
     public static final ValueType NUMBER = ValueType.NUMBER;
 
     public static final ValueType NUMBER_LIST = ValueType.NUMBER_LIST;
+
+    public static final ValueType PADDING = ValueType.register("style/Padding", Padding.class);
 
     public final static ValueType RELATIVE_URL = ValueType.RELATIVE_URL;
 
@@ -230,6 +254,8 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         "error/SpreadsheetError",
         SpreadsheetError.class
     );
+
+    public static final ValueType STYLEABLE = ValueType.register("style/Styleable", Styleable.class);
 
     public static final ValueType TEMPLATE_VALUE_NAME = ValueType.register(
         "template/TemplateValueName",
@@ -239,6 +265,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValueType TEXT_PARENT = ValueType.TEXT_PARENT;
 
     public static final ValueType TEXT = ValueType.TEXT;
+
+    public static final ValueType TEXT_NODE = ValueType.register("style/TextNode", TextNode.class);
+
+    public static final ValueType TEXT_STYLE = ValueType.register("style/TextStyle", TextStyle.class);
+
+    public static final ValueType TEXT_STYLE_PROPERTY_NAME = ValueType.register("style/TextStylePropertyName", TextStylePropertyName.class);
 
     public static final ValueType STRING_LIST = ValueType.STRING_LIST;
 
