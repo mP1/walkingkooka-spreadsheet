@@ -40,8 +40,7 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -74,7 +73,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterVerifierTest implements TreePrintableTesting,
-    ClassTesting<MissingConverterVerifier>,
+    PackagePrivateClassTesting<MissingConverterVerifier>,
     HasSpreadsheetMetadataTesting {
 
     private final static SpreadsheetMetadata SPREADSHEET_METADATA_TESTING = SPREADSHEET_METADATA.set(
@@ -544,10 +543,5 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     @Override
     public Class<MissingConverterVerifier> type() {
         return MissingConverterVerifier.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
