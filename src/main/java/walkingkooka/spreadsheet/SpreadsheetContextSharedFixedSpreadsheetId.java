@@ -123,7 +123,8 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
             SpreadsheetMetadataContexts.basic(
                 new SpreadsheetMetadataCreator() {
                     @Override
-                    public SpreadsheetMetadata createMetadata(EmailAddress user, Optional<Locale> locale) {
+                    public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                              final Optional<Locale> locale) {
                         return this.createMetadata(
                             user,
                             locale
