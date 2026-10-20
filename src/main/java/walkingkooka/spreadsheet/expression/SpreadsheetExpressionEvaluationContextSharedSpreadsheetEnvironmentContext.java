@@ -203,7 +203,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
         throw new UnsupportedOperationException();
