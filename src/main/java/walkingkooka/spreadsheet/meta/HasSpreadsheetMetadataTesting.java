@@ -625,6 +625,8 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         );
     }
 
+    HasSpreadsheetMetadata HAS_SPREADSHEET_METADATA = SPREADSHEET_METADATA;
+
     default void spreadsheetMetadataAndCheck(final HasSpreadsheetMetadata has) {
         this.spreadsheetMetadataAndCheck(
             has,
