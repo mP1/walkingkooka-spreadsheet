@@ -54,6 +54,14 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
     TreePrintableTesting {
 
     @Test
+    public void testHasSpreadsheetMetadataConstant() {
+        this.checkEquals(
+            SPREADSHEET_METADATA.toString(),
+            HAS_SPREADSHEET_METADATA.toString()
+        );
+    }
+
+    @Test
     public void testSpreadsheetNameConstantsDifferent() {
         this.checkNotEquals(
             SPREADSHEET_NAME,
