@@ -25,6 +25,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class HasSpreadsheetMetadatas implements PublicStaticHelper {
 
     /**
+     * {@link FakeHasSpreadsheetMetadata}
+     */
+    public static FakeHasSpreadsheetMetadata fake() {
+        return new FakeHasSpreadsheetMetadata();
+    }
+
+    /**
      * Stop creation
      */
     private HasSpreadsheetMetadatas() {
