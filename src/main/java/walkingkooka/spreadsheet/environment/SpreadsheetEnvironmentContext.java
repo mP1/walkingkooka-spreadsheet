@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
@@ -59,6 +60,11 @@ public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext
     EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.registerConstant(
         "spreadsheetId",
         SpreadsheetId.class
+    );
+
+    EnvironmentValueName<SpreadsheetMetadata> SPREADSHEET_METADATA = EnvironmentValueName.registerConstant(
+        "spreadsheetMetadata",
+        SpreadsheetMetadata.class
     );
 
     /**

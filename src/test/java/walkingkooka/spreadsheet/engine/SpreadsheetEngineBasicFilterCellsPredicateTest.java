@@ -216,7 +216,7 @@ public final class SpreadsheetEngineBasicFilterCellsPredicateTest implements Pre
 
                 @Override
                 public SpreadsheetMetadata spreadsheetMetadata() {
-                    return SPREADSHEET_METADATA;
+                    return SpreadsheetEngineBasicFilterCellsPredicateTest.SPREADSHEET_METADATA;
                 }
 
                 @Override
