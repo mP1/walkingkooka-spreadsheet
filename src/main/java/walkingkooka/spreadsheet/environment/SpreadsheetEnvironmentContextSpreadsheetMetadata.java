@@ -50,26 +50,26 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = null;
+        SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetEnvironmentContextSpreadsheetMetadata = null;
 
         SpreadsheetEnvironmentContext wrap = context;
         if (context instanceof SpreadsheetEnvironmentContextSpreadsheetMetadata) {
-            spreadsheetMetadataSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextSpreadsheetMetadata) context;
-            wrap = spreadsheetMetadataSpreadsheetEnvironmentContext.context;
+            spreadsheetEnvironmentContextSpreadsheetMetadata = (SpreadsheetEnvironmentContextSpreadsheetMetadata) context;
+            wrap = spreadsheetEnvironmentContextSpreadsheetMetadata.context;
 
-            if (false == metadata.equals(spreadsheetMetadataSpreadsheetEnvironmentContext.metadata) || false == wrap.equals(spreadsheetMetadataSpreadsheetEnvironmentContext.context)) {
-                spreadsheetMetadataSpreadsheetEnvironmentContext = null;
+            if (false == metadata.equals(spreadsheetEnvironmentContextSpreadsheetMetadata.metadata) || false == wrap.equals(spreadsheetEnvironmentContextSpreadsheetMetadata.context)) {
+                spreadsheetEnvironmentContextSpreadsheetMetadata = null;
             }
         }
 
-        if (null == spreadsheetMetadataSpreadsheetEnvironmentContext) {
-            spreadsheetMetadataSpreadsheetEnvironmentContext = new SpreadsheetEnvironmentContextSpreadsheetMetadata(
+        if (null == spreadsheetEnvironmentContextSpreadsheetMetadata) {
+            spreadsheetEnvironmentContextSpreadsheetMetadata = new SpreadsheetEnvironmentContextSpreadsheetMetadata(
                 metadata,
                 wrap
             );
         }
 
-        return spreadsheetMetadataSpreadsheetEnvironmentContext;
+        return spreadsheetEnvironmentContextSpreadsheetMetadata;
     }
 
     private SpreadsheetEnvironmentContextSpreadsheetMetadata(final SpreadsheetMetadata metadata,
