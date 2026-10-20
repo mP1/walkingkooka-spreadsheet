@@ -23,6 +23,7 @@ import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
@@ -45,36 +46,31 @@ import java.util.SortedSet;
 final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements SpreadsheetEnvironmentContextDelegator,
     TreePrintable {
 
-    static SpreadsheetEnvironmentContextSpreadsheetMetadata with(final SpreadsheetMetadata metadata,
+    static SpreadsheetEnvironmentContextSpreadsheetMetadata with(final HasSpreadsheetMetadata hasSpreadsheetMetadata,
                                                                  final SpreadsheetEnvironmentContext context) {
-        Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(hasSpreadsheetMetadata, "hasSpreadsheetMetadata");
         Objects.requireNonNull(context, "context");
 
         SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetEnvironmentContextSpreadsheetMetadata = null;
 
-        SpreadsheetEnvironmentContext wrap = context;
         if (context instanceof SpreadsheetEnvironmentContextSpreadsheetMetadata) {
             spreadsheetEnvironmentContextSpreadsheetMetadata = (SpreadsheetEnvironmentContextSpreadsheetMetadata) context;
-            wrap = spreadsheetEnvironmentContextSpreadsheetMetadata.context;
-
-            if (false == metadata.equals(spreadsheetEnvironmentContextSpreadsheetMetadata.metadata) || false == wrap.equals(spreadsheetEnvironmentContextSpreadsheetMetadata.context)) {
+            if (false == hasSpreadsheetMetadata.equals(spreadsheetEnvironmentContextSpreadsheetMetadata.hasSpreadsheetMetadata)) {
                 spreadsheetEnvironmentContextSpreadsheetMetadata = null;
             }
         }
 
-        if (null == spreadsheetEnvironmentContextSpreadsheetMetadata) {
-            spreadsheetEnvironmentContextSpreadsheetMetadata = new SpreadsheetEnvironmentContextSpreadsheetMetadata(
-                metadata,
-                wrap
+        return null != spreadsheetEnvironmentContextSpreadsheetMetadata ?
+            spreadsheetEnvironmentContextSpreadsheetMetadata :
+            new SpreadsheetEnvironmentContextSpreadsheetMetadata(
+                hasSpreadsheetMetadata,
+                context
             );
-        }
-
-        return spreadsheetEnvironmentContextSpreadsheetMetadata;
     }
 
-    private SpreadsheetEnvironmentContextSpreadsheetMetadata(final SpreadsheetMetadata metadata,
+    private SpreadsheetEnvironmentContextSpreadsheetMetadata(final HasSpreadsheetMetadata hasSpreadsheetMetadata,
                                                              final SpreadsheetEnvironmentContext context) {
-        this.metadata = metadata;
+        this.hasSpreadsheetMetadata = hasSpreadsheetMetadata;
         this.context = context;
     }
 
@@ -95,7 +91,7 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
         return before == after ?
             this :
             with(
-                this.metadata,
+                this.hasSpreadsheetMetadata,
                 SpreadsheetEnvironmentContexts.basic(
                     this.storage(),
                     after
@@ -116,9 +112,13 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
                 .orElse(null);
 
             if (null != propertyName) {
-                value = Cast.to(
-                    this.metadata.get(propertyName)
-                );
+                final SpreadsheetMetadata spreadsheetMetadata = this.hasSpreadsheetMetadata.spreadsheetMetadata()
+                    .orElse(null);
+                if(null != spreadsheetMetadata) {
+                    value = Cast.to(
+                        spreadsheetMetadata.get(propertyName)
+                    );
+                }
             }
         }
 
@@ -128,25 +128,27 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
     @Override
     public Set<EnvironmentValueName<?>> environmentValueNames() {
         if (null == this.names) {
-            final SpreadsheetMetadata metadata = this.metadata;
-
             final SortedSet<EnvironmentValueName<?>> names = SortedSets.tree();
 
             names.addAll(this.context.environmentValueNames());
             names.remove(SPREADSHEET_ID);
 
-            metadata.value()
-                .keySet()
-                .stream()
-                .map(SpreadsheetMetadataPropertyName::toEnvironmentValueName)
-                .forEach(names::add);
+            final SpreadsheetMetadata metadata = this.hasSpreadsheetMetadata.spreadsheetMetadata()
+                .orElse(null);
+            if(null != metadata) {
+                metadata.value()
+                    .keySet()
+                    .stream()
+                    .map(SpreadsheetMetadataPropertyName::toEnvironmentValueName)
+                    .forEach(names::add);
 
-            metadata.defaults()
-                .value()
-                .keySet()
-                .stream()
-                .map(SpreadsheetMetadataPropertyName::toEnvironmentValueName)
-                .forEach(names::add);
+                metadata.defaults()
+                    .value()
+                    .keySet()
+                    .stream()
+                    .map(SpreadsheetMetadataPropertyName::toEnvironmentValueName)
+                    .forEach(names::add);
+            }
 
             this.names = SortedSets.immutable(names);
         }
@@ -155,7 +157,7 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
 
     private ImmutableSet<EnvironmentValueName<?>> names;
 
-    private final SpreadsheetMetadata metadata;
+    private final HasSpreadsheetMetadata hasSpreadsheetMetadata;
 
     // SpreadsheetEnvironmentContextDelegator...........................................................................
 
@@ -171,7 +173,7 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
     @Override
     public int hashCode() {
         return Objects.hash(
-            this.metadata,
+            this.hasSpreadsheetMetadata,
             this.context
         );
     }
@@ -184,7 +186,7 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
     }
 
     private boolean equals0(final SpreadsheetEnvironmentContextSpreadsheetMetadata other) {
-        return this.metadata.equals(other.metadata) &&
+        return this.hasSpreadsheetMetadata.equals(other.hasSpreadsheetMetadata) &&
             this.context.equals(other.context);
     }
 
@@ -192,11 +194,15 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
     public String toString() {
         final Map<EnvironmentValueName<?>, Object> nameToValue = Maps.sorted();
 
-        this.metadata.value()
-            .forEach((n, v) -> nameToValue.put(
-                n.toEnvironmentValueName(),
-                v
-            ));
+        this.hasSpreadsheetMetadata.spreadsheetMetadata()
+            .orElse(SpreadsheetMetadata.EMPTY)
+            .value()
+            .forEach(
+                (n, v) -> nameToValue.put(
+                    n.toEnvironmentValueName(),
+                    v
+                )
+            );
 
         final EnvironmentContext context = this.context;
         for (final EnvironmentValueName<?> name : context.environmentValueNames()) {

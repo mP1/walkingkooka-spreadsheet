@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
@@ -63,10 +63,10 @@ public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper 
     /**
      * {@see SpreadsheetEnvironmentContextSpreadsheetMetadata}
      */
-    public static SpreadsheetEnvironmentContext spreadsheetMetadata(final SpreadsheetMetadata metadata,
+    public static SpreadsheetEnvironmentContext spreadsheetMetadata(final HasSpreadsheetMetadata hasSpreadsheetMetadata,
                                                                     final SpreadsheetEnvironmentContext context) {
         return SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
-            metadata,
+            hasSpreadsheetMetadata,
             context
         );
     }

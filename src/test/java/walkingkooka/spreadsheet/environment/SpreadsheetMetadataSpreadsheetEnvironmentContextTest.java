@@ -23,6 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -35,8 +36,10 @@ import walkingkooka.storage.Storages;
 
 import java.math.RoundingMode;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextSpreadsheetMetadata>,
@@ -89,56 +92,38 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     }
 
     @Test
-    public void testWithUnwrapsSpreadsheetMetadataEnvironmentContext() {
-        final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            DIFFERENT_LOCALE
-        );
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
+    public void testWithSpreadsheetEnvironmentContextSpreadsheetMetadata() {
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetEnvironmentContextSpreadsheetMetadata = this.createContext();
 
-        final SpreadsheetEnvironmentContextSpreadsheetMetadata wrap = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
-            spreadsheetMetadata,
-            spreadsheetEnvironmentContext
-        );
-
-        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
-            spreadsheetMetadata,
-            wrap
-        );
-
-        this.checkEquals(
-            wrap,
-            spreadsheetMetadataSpreadsheetEnvironmentContext
+        assertSame(
+            spreadsheetEnvironmentContextSpreadsheetMetadata,
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
+                METADATA,
+                spreadsheetEnvironmentContextSpreadsheetMetadata
+            )
         );
     }
 
     @Test
-    public void testWithSpreadsheetMetadataEnvironmentContextDifferentSpreadsheetMetadata() {
-        final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            DIFFERENT_LOCALE
-        );
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
-
-        final SpreadsheetEnvironmentContextSpreadsheetMetadata wrap = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
-            spreadsheetMetadata,
-            spreadsheetEnvironmentContext
-        );
-
-        final SpreadsheetMetadata spreadsheetMetadata2 = SpreadsheetMetadata.EMPTY.set(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            Locale.GERMANY
+    public void testWithSpreadsheetEnvironmentContextSpreadsheetMetadataAndDifferentHasSpreadsheetMetadata() {
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetEnvironmentContextSpreadsheetMetadata = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
+            new HasSpreadsheetMetadata() {
+                @Override
+                public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                    return NO_METADATA;
+                }
+            },
+            CONTEXT.cloneEnvironment()
         );
 
-        this.checkEquals(
-            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
-                spreadsheetMetadata2,
-                spreadsheetEnvironmentContext
-            ),
-            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
-                spreadsheetMetadata2,
-                wrap
-            )
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetEnvironmentContextSpreadsheetMetadata2 = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
+            METADATA,
+            CONTEXT.cloneEnvironment()
+        );
+
+        assertNotSame(
+            spreadsheetEnvironmentContextSpreadsheetMetadata,
+            spreadsheetEnvironmentContextSpreadsheetMetadata2
         );
     }
 
