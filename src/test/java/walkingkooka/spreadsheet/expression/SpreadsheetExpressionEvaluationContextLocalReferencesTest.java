@@ -895,7 +895,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
-            return SPREADSHEET_METADATA;
+            return SpreadsheetExpressionEvaluationContextLocalReferencesTest.SPREADSHEET_METADATA;
         }
 
         // SpreadsheetMetadataContext...................................................................................
