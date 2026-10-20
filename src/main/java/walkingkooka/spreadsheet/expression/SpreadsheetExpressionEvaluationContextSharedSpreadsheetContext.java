@@ -161,9 +161,17 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     }
 
     @Override
-    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
+        this.setSpreadsheetMetadata(
+            metadata.orElseThrow(
+                () -> new IllegalArgumentException("Missing SpreadsheetMetadata")
+            )
+        );
+    }
+
+    private void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         final SpreadsheetMetadata old = this.spreadsheetMetadataOrFail();
         final SpreadsheetId oldId = old.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
         final SpreadsheetId newId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);

@@ -398,7 +398,7 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
-    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata) {
         this.context.setSpreadsheetMetadata(metadata);
     }
 

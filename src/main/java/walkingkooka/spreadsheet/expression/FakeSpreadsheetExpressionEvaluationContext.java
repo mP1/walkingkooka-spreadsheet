@@ -123,7 +123,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata) {
         throw new UnsupportedOperationException();
     }
 

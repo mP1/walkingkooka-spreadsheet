@@ -317,7 +317,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+    default void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata) {
         this.spreadsheetExpressionEvaluationContext()
             .setSpreadsheetMetadata(metadata);
     }

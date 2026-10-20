@@ -38,6 +38,8 @@ import walkingkooka.tree.text.expression.TreeTextExpressionEvaluationContextTest
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting2;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting2;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -286,7 +288,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
 
         assertThrows(
             IllegalArgumentException.class,
-            () -> context.setSpreadsheetMetadata(set)
+            () -> context.setSpreadsheetMetadata(
+                Optional.of(set)
+            )
         );
     }
 

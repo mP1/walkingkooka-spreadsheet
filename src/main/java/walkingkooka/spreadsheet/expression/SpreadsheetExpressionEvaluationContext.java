@@ -138,7 +138,7 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
      * Saves or replaces the current {@link SpreadsheetMetadata} with a new copy.
      * This is necessary to support a function that allows updating/replacing a {@link SpreadsheetMetadata}.
      */
-    void setSpreadsheetMetadata(final SpreadsheetMetadata metadata);
+    void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata);
 
     /**
      * If the {@link ExpressionReference} cannot be found an {@link SpreadsheetError} is created with {@link SpreadsheetError#referenceNotFound(ExpressionReference)}.
