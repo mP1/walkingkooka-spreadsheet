@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
@@ -23,9 +23,8 @@ import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -43,19 +42,19 @@ import java.util.SortedSet;
  * When getting a value if its absent from the {@link EnvironmentContext} and then tries {@link SpreadsheetMetadata#get(SpreadsheetMetadataPropertyName)}.
  * Note the wrapped {@link SpreadsheetMetadata} is never updated, {@link #setLocale(Locale)} always updates the {@link EnvironmentContext}.
  */
-final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContextDelegator,
+final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements SpreadsheetEnvironmentContextDelegator,
     TreePrintable {
 
-    static SpreadsheetMetadataSpreadsheetEnvironmentContext with(final SpreadsheetMetadata metadata,
+    static SpreadsheetEnvironmentContextSpreadsheetMetadata with(final SpreadsheetMetadata metadata,
                                                                  final SpreadsheetEnvironmentContext context) {
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = null;
+        SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = null;
 
         SpreadsheetEnvironmentContext wrap = context;
-        if (context instanceof SpreadsheetMetadataSpreadsheetEnvironmentContext) {
-            spreadsheetMetadataSpreadsheetEnvironmentContext = (SpreadsheetMetadataSpreadsheetEnvironmentContext) context;
+        if (context instanceof SpreadsheetEnvironmentContextSpreadsheetMetadata) {
+            spreadsheetMetadataSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextSpreadsheetMetadata) context;
             wrap = spreadsheetMetadataSpreadsheetEnvironmentContext.context;
 
             if (false == metadata.equals(spreadsheetMetadataSpreadsheetEnvironmentContext.metadata) || false == wrap.equals(spreadsheetMetadataSpreadsheetEnvironmentContext.context)) {
@@ -64,7 +63,7 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
         }
 
         if (null == spreadsheetMetadataSpreadsheetEnvironmentContext) {
-            spreadsheetMetadataSpreadsheetEnvironmentContext = new SpreadsheetMetadataSpreadsheetEnvironmentContext(
+            spreadsheetMetadataSpreadsheetEnvironmentContext = new SpreadsheetEnvironmentContextSpreadsheetMetadata(
                 metadata,
                 wrap
             );
@@ -73,7 +72,7 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
         return spreadsheetMetadataSpreadsheetEnvironmentContext;
     }
 
-    private SpreadsheetMetadataSpreadsheetEnvironmentContext(final SpreadsheetMetadata metadata,
+    private SpreadsheetEnvironmentContextSpreadsheetMetadata(final SpreadsheetMetadata metadata,
                                                              final SpreadsheetEnvironmentContext context) {
         this.metadata = metadata;
         this.context = context;
@@ -180,11 +179,11 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof SpreadsheetMetadataSpreadsheetEnvironmentContext &&
-                this.equals0((SpreadsheetMetadataSpreadsheetEnvironmentContext) other);
+            other instanceof SpreadsheetEnvironmentContextSpreadsheetMetadata &&
+                this.equals0((SpreadsheetEnvironmentContextSpreadsheetMetadata) other);
     }
 
-    private boolean equals0(final SpreadsheetMetadataSpreadsheetEnvironmentContext other) {
+    private boolean equals0(final SpreadsheetEnvironmentContextSpreadsheetMetadata other) {
         return this.metadata.equals(other.metadata) &&
             this.context.equals(other.context);
     }

@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
@@ -23,9 +23,11 @@ import walkingkooka.color.Color;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
@@ -37,8 +39,8 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
-    ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
+public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextSpreadsheetMetadata>,
+    ToStringTesting<SpreadsheetEnvironmentContextSpreadsheetMetadata> {
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
@@ -68,7 +70,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public void testWithNullMetadataFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            () -> SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 null,
                 CONTEXT
             )
@@ -79,7 +81,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public void testWithNullSpreadsheetEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            () -> SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 SpreadsheetMetadata.EMPTY,
                 null
             )
@@ -94,12 +96,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
 
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext wrap = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata wrap = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             spreadsheetMetadata,
             spreadsheetEnvironmentContext
         );
 
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             spreadsheetMetadata,
             wrap
         );
@@ -118,7 +120,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
 
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext wrap = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata wrap = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             spreadsheetMetadata,
             spreadsheetEnvironmentContext
         );
@@ -129,11 +131,11 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
 
         this.checkEquals(
-            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 spreadsheetMetadata2,
                 spreadsheetEnvironmentContext
             ),
-            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 spreadsheetMetadata2,
                 wrap
             )
@@ -147,7 +149,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         final SpreadsheetMetadataPropertyName<Color> propertyName = SpreadsheetMetadataPropertyName.numberedColor(
             Color.indexed(1)
         );
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext context = this.createContext();
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata context = this.createContext();
 
         this.environmentValueAndCheck(
             context,
@@ -163,7 +165,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT.cloneEnvironment();
         final SpreadsheetMetadata metadata = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA;
 
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             metadata,
             spreadsheetEnvironmentContext
         );
@@ -179,7 +181,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public void testSetEnvironmentContextWithDifferent() {
         final SpreadsheetMetadata metadata = METADATA;
 
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             metadata,
             CONTEXT
         );
@@ -191,7 +193,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
 
         this.checkEquals(
-            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 metadata,
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
@@ -207,7 +209,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     @Test
     public void testEnvironmentValueNamesWithEmptySpreadsheetMetadata() {
         this.environmentValueNamesAndCheck(
-            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 SpreadsheetMetadata.EMPTY,
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
@@ -231,7 +233,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     @Test
     public void testEnvironmentValueNames2() {
         this.environmentValueNamesAndCheck(
-            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SPREADSHEET_ID
@@ -333,7 +335,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testLocale() {
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext context = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata context = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             METADATA.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 DIFFERENT_LOCALE
@@ -356,7 +358,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetLocaleUpdatesContext() {
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext context = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata context = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             METADATA.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 DIFFERENT_LOCALE
@@ -406,7 +408,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName()
         );
 
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             METADATA.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 metadataSpreadsheetId
@@ -453,7 +455,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             environmentSpreadsheetId
         );
 
-        final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        final SpreadsheetEnvironmentContextSpreadsheetMetadata spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             METADATA.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 metadataSpreadsheetId
@@ -502,8 +504,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     }
 
     @Override
-    public SpreadsheetMetadataSpreadsheetEnvironmentContext createContext() {
-        return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+    public SpreadsheetEnvironmentContextSpreadsheetMetadata createContext() {
+        return SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
             METADATA,
             CONTEXT.cloneEnvironment()
         );
@@ -514,7 +516,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SPREADSHEET_ID
@@ -533,7 +535,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.fake();
 
         this.environmentContextAndCheck(
-            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 METADATA,
                 context
             ),
@@ -547,7 +549,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public void testTreePrint() {
         this.treePrintAndCheck(
             this.createContext(),
-            "SpreadsheetMetadataSpreadsheetEnvironmentContext\n" +
+            "SpreadsheetEnvironmentContextSpreadsheetMetadata\n" +
                 "  auditInfo\n" +
                 "    AuditInfo\n" +
                 "      created\n" +
@@ -1065,12 +1067,17 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     // TypeName.........................................................................................................
 
     @Override
-    public String typeNameSuffix() {
-        return EnvironmentContext.class.getSimpleName();
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public Class<SpreadsheetMetadataSpreadsheetEnvironmentContext> type() {
-        return SpreadsheetMetadataSpreadsheetEnvironmentContext.class;
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Class<SpreadsheetEnvironmentContextSpreadsheetMetadata> type() {
+        return SpreadsheetEnvironmentContextSpreadsheetMetadata.class;
     }
 }
