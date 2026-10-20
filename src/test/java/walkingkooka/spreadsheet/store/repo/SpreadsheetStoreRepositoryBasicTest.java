@@ -40,8 +40,8 @@ import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<BasicSpreadsheetStoreRepository>,
-    HashCodeEqualsDefinedTesting2<BasicSpreadsheetStoreRepository> {
+public final class SpreadsheetStoreRepositoryBasicTest implements SpreadsheetStoreRepositoryTesting<SpreadsheetStoreRepositoryBasic>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetStoreRepositoryBasic> {
 
     private final static SpreadsheetCellStore CELLS = SpreadsheetCellStores.fake();
 
@@ -65,7 +65,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullCellsFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 null,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -83,7 +83,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullCellReferencesFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 null,
                 COLUMNS,
@@ -101,7 +101,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullColumnsFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 null,
@@ -119,7 +119,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullFormsFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -137,7 +137,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullLabelsFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -155,7 +155,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullLabelReferencesFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -173,7 +173,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullMetadatasFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -191,7 +191,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullRangeToCellsFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -209,7 +209,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     public void testWithNullRowsFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
+            () -> SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -224,8 +224,8 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     }
 
     @Override
-    public BasicSpreadsheetStoreRepository createStoreRepository() {
-        return BasicSpreadsheetStoreRepository.with(
+    public SpreadsheetStoreRepositoryBasic createStoreRepository() {
+        return SpreadsheetStoreRepositoryBasic.with(
             CELLS,
             CELL_REFERENCES,
             COLUMNS,
@@ -243,7 +243,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentCells() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 SpreadsheetCellStores.fake(),
                 CELL_REFERENCES,
                 COLUMNS,
@@ -260,7 +260,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentCellReferences() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 SpreadsheetCellReferencesStores.fake(),
                 COLUMNS,
@@ -277,7 +277,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentColumns() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 SpreadsheetColumnStores.fake(),
@@ -294,7 +294,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentForms() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -311,7 +311,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentLabels() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -328,7 +328,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentLabelReferences() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -345,7 +345,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentMetadata() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -362,7 +362,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentRangeToCells() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -379,7 +379,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testEqualsDifferentRows() {
         this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
@@ -394,7 +394,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     }
 
     @Override
-    public BasicSpreadsheetStoreRepository createObject() {
+    public SpreadsheetStoreRepositoryBasic createObject() {
         return this.createStoreRepository();
     }
 
@@ -413,7 +413,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetRowStore rows = ROWS;
 
         this.toStringAndCheck(
-            BasicSpreadsheetStoreRepository.with(
+            SpreadsheetStoreRepositoryBasic.with(
                 cells,
                 cellReferences,
                 columns,
@@ -448,8 +448,13 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetStoreRepository> type() {
-        return BasicSpreadsheetStoreRepository.class;
+    public Class<SpreadsheetStoreRepositoryBasic> type() {
+        return SpreadsheetStoreRepositoryBasic.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -64,7 +64,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final SpreadsheetMetadataStore metadatas,
                                                    final SpreadsheetCellRangeStore rangeToCells,
                                                    final SpreadsheetRowStore rows) {
-        return BasicSpreadsheetStoreRepository.with(
+        return SpreadsheetStoreRepositoryBasic.with(
             cells,
             cellReferences,
             columns,

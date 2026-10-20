@@ -35,10 +35,10 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetStoreRepository} that exposes the {@link Store stores} given to it.
  */
-final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepository,
+final class SpreadsheetStoreRepositoryBasic implements SpreadsheetStoreRepository,
     UsesToStringBuilder {
 
-    static BasicSpreadsheetStoreRepository with(final SpreadsheetCellStore cells,
+    static SpreadsheetStoreRepositoryBasic with(final SpreadsheetCellStore cells,
                                                 final SpreadsheetCellReferencesStore cellReferences,
                                                 final SpreadsheetColumnStore columns,
                                                 final SpreadsheetFormStore forms,
@@ -57,7 +57,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(rangeToCells, "rangeToCells");
         Objects.requireNonNull(rows, "rows");
 
-        return new BasicSpreadsheetStoreRepository(
+        return new SpreadsheetStoreRepositoryBasic(
             cells,
             cellReferences,
             columns,
@@ -70,7 +70,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         );
     }
 
-    private BasicSpreadsheetStoreRepository(final SpreadsheetCellStore cells,
+    private SpreadsheetStoreRepositoryBasic(final SpreadsheetCellStore cells,
                                             final SpreadsheetCellReferencesStore cellReferences,
                                             final SpreadsheetColumnStore columns,
                                             final SpreadsheetFormStore forms,
@@ -173,11 +173,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof BasicSpreadsheetStoreRepository &&
-                this.equals0((BasicSpreadsheetStoreRepository) other));
+            (other instanceof SpreadsheetStoreRepositoryBasic &&
+                this.equals0((SpreadsheetStoreRepositoryBasic) other));
     }
 
-    private boolean equals0(final BasicSpreadsheetStoreRepository other) {
+    private boolean equals0(final SpreadsheetStoreRepositoryBasic other) {
         return this.cells.equals(other.cells) &&
             this.cellReferences.equals(other.cellReferences) &&
             this.columns.equals(other.columns) &&
