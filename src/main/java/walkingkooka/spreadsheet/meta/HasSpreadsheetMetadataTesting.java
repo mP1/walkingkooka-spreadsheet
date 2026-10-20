@@ -392,6 +392,8 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             Color.indexed(2)
         );
 
+    Optional<SpreadsheetMetadata> OPTIONAL_SPREADSHEET_METADATA = Optional.of(SPREADSHEET_METADATA);
+
     EnvironmentValueName<String> DUMMY_ENVIRONMENTAL_VALUE_NAME = EnvironmentValueName.with(
         "Dummy123",
         String.class
@@ -623,8 +625,23 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         );
     }
 
+    default void spreadsheetMetadataAndCheck(final HasSpreadsheetMetadata has) {
+        this.spreadsheetMetadataAndCheck(
+            has,
+            HasSpreadsheetMetadata.NO_METADATA
+        );
+    }
+
     default void spreadsheetMetadataAndCheck(final HasSpreadsheetMetadata has,
                                              final SpreadsheetMetadata expected) {
+        this.spreadsheetMetadataAndCheck(
+            has,
+            Optional.of(expected)
+        );
+    }
+
+    default void spreadsheetMetadataAndCheck(final HasSpreadsheetMetadata has,
+                                             final Optional<SpreadsheetMetadata> expected) {
         this.checkEquals(
             expected,
             has.spreadsheetMetadata(),

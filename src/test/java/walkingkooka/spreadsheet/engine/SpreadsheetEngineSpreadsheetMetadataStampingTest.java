@@ -489,8 +489,8 @@ public final class SpreadsheetEngineSpreadsheetMetadataStampingTest implements S
             }
 
             @Override
-            public SpreadsheetMetadata spreadsheetMetadata() {
-                return BEFORE;
+            public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                return Optional.of(BEFORE);
             }
 
             @Override

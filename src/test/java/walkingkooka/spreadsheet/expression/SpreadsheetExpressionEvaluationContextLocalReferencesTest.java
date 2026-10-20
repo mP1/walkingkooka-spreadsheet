@@ -894,8 +894,8 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         // ColorContext.................................................................................................
 
         @Override
-        public SpreadsheetMetadata spreadsheetMetadata() {
-            return SpreadsheetExpressionEvaluationContextLocalReferencesTest.SPREADSHEET_METADATA;
+        public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+            return OPTIONAL_SPREADSHEET_METADATA;
         }
 
         // SpreadsheetMetadataContext...................................................................................

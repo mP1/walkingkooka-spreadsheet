@@ -512,7 +512,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     // HasSpreadsheetMetadata...........................................................................................
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         throw new UnsupportedOperationException();
     }
 }

@@ -1148,8 +1148,8 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
                             }
 
                             @Override
-                            public SpreadsheetMetadata spreadsheetMetadata() {
-                                return metadataStore.loadOrFail(id);
+                            public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                                return metadataStore.load(id);
                             }
 
                             @Override

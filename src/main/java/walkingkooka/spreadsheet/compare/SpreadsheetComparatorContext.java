@@ -28,6 +28,8 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.util.Optional;
+
 /**
  * A {@link Context} that accompanies comparisons between two values. This might require converting values to a type
  * compatible with the actual {@link java.util.Comparator}.
@@ -55,8 +57,8 @@ public interface SpreadsheetComparatorContext extends SpreadsheetConverterContex
      * {@link SpreadsheetMetadata} is unavailable in a comparator context.
      */
     @Override
-    default SpreadsheetMetadata spreadsheetMetadata() {
-        throw new UnsupportedOperationException();
+    default Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        return NO_METADATA;
     }
 
     /**

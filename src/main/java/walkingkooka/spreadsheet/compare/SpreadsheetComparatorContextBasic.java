@@ -26,6 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 final class SpreadsheetComparatorContextBasic implements SpreadsheetComparatorContext,
@@ -87,7 +88,7 @@ final class SpreadsheetComparatorContextBasic implements SpreadsheetComparatorCo
     // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return SpreadsheetComparatorContext.super.spreadsheetMetadata();
     }
 

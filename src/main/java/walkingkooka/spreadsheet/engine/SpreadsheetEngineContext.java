@@ -123,7 +123,7 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     default ExpressionNumber missingCellNumberValue() {
-        return this.spreadsheetMetadata()
+        return this.spreadsheetMetadataOrFail()
             .missingCellNumberValue();
     }
 

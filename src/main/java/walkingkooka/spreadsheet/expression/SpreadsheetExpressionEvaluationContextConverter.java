@@ -393,7 +393,7 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.context.spreadsheetMetadata();
     }
 

@@ -172,7 +172,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.spreadsheetConverterContext.spreadsheetMetadata();
     }
 
@@ -220,7 +220,7 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
 
     @Override
     public ColorContext colorContext() {
-        return this.spreadsheetMetadata();
+        return this.spreadsheetMetadataOrFail();
     }
 
     // Object...........................................................................................................

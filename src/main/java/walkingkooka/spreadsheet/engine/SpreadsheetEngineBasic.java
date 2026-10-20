@@ -802,7 +802,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                             final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo,
                             final SpreadsheetEngineContext context) {
 
-        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
 
         final ProviderContext providerContext = context.providerContext();
 
@@ -1307,7 +1307,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
             final FormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
                 form.handler()
                     .orElseGet(
-                        () -> context.spreadsheetMetadata()
+                        () -> context.spreadsheetMetadataOrFail()
                             .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
                     ),
                 context.providerContext()
@@ -1416,7 +1416,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
             final FormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
                 form.handler()
                     .orElseGet(
-                        () -> context.spreadsheetMetadata()
+                        () -> context.spreadsheetMetadataOrFail()
                             .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
                     ),
                 context.providerContext()
@@ -1902,7 +1902,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                 SpreadsheetError.validationErrors(
                     validator.validate(
                         value.orElse(null), // unwrap Optionals
-                        context.spreadsheetMetadata()
+                        context.spreadsheetMetadataOrFail()
                             .spreadsheetValidatorContext(
                                 cell.reference(), // reference
                                 (final ValidatorSelector v) -> context.validator(
@@ -2132,7 +2132,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
      */
     private double columnWidthOrRowHeight(final TextStylePropertyName<Length<?>> propertyName,
                                           final SpreadsheetEngineContext context) {
-        return context.spreadsheetMetadata()
+        return context.spreadsheetMetadataOrFail()
             .getEffectiveStylePropertyOrFail(propertyName)
             .value();
     }
@@ -2202,7 +2202,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
 
         // frozen columns/rows ignore the viewport home
         if (includeFrozenColumnsRows) {
-            final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+            final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
             // compute actual frozenColumns, metadata.FROZEN_COLUMNS might be higher than requested width...............
 
             frozenColumns = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS)

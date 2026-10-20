@@ -156,7 +156,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     private final Optional<SpreadsheetCell> cell;
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.spreadsheetContext.spreadsheetMetadata();
     }
 
@@ -164,7 +164,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
-        final SpreadsheetMetadata old = this.spreadsheetMetadata();
+        final SpreadsheetMetadata old = this.spreadsheetMetadataOrFail();
         final SpreadsheetId oldId = old.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
         final SpreadsheetId newId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
         if (false == oldId.equals(newId)) {
@@ -260,7 +260,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         if (null == this.spreadsheetConverterContext) {
             final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-            this.spreadsheetConverterContext = this.spreadsheetMetadata()
+            this.spreadsheetConverterContext = this.spreadsheetMetadataOrFail()
                 .spreadsheetConverterContext(
                     this.cell,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
@@ -288,7 +288,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         if (null == this.spreadsheetParser) {
             final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-            this.spreadsheetParser = this.spreadsheetMetadata()
+            this.spreadsheetParser = this.spreadsheetMetadataOrFail()
                 .spreadsheetParser(
                     spreadsheetContext, // SpreadsheetParserProvider
                     spreadsheetContext.providerContext()
@@ -302,7 +302,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     @Override
     SpreadsheetParserContext spreadsheetParserContext() {
         if (null == this.spreadsheetParserContext) {
-            this.spreadsheetParserContext = this.spreadsheetMetadata()
+            this.spreadsheetParserContext = this.spreadsheetMetadataOrFail()
                 .spreadsheetParserContext(
                     this.cell,
                     this, // LocaleContext
@@ -320,7 +320,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     @Override
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
         if (null == this.expressionFunctionProvider) {
-            this.expressionFunctionProvider = this.spreadsheetMetadata()
+            this.expressionFunctionProvider = this.spreadsheetMetadataOrFail()
                 .expressionFunctionProvider(
                     this.mode.function(),
                     this.spreadsheetContext // SpreadsheetProvider
@@ -337,7 +337,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
         final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-        return this.spreadsheetMetadata()
+        return this.spreadsheetMetadataOrFail()
             .spreadsheetFormatterContext(
                 () -> cell,
                 (final Optional<Object> v) -> this.setMode(

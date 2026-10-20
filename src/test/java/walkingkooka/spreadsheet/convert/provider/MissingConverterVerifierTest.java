@@ -499,8 +499,8 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
-        public SpreadsheetMetadata spreadsheetMetadata() {
-            return spreadsheetMetadata;
+        public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+            return Optional.of(spreadsheetMetadata);
         }
 
         private final SpreadsheetMetadata spreadsheetMetadata;

@@ -23,6 +23,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 
 import java.util.Objects;
+import java.util.Optional;
 
 final class SpreadsheetExporterContextBasic implements SpreadsheetExporterContext,
     JsonNodeMarshallContextDelegator {
@@ -42,8 +43,8 @@ final class SpreadsheetExporterContextBasic implements SpreadsheetExporterContex
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
-        return this.spreadsheetMetadata;
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        return Optional.of(this.spreadsheetMetadata);
     }
 
     private final SpreadsheetMetadata spreadsheetMetadata;

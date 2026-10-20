@@ -17,13 +17,23 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.util.Optional;
+
 /**
  * Interface that provides a getter that returns a {@link SpreadsheetMetadata}
  */
 public interface HasSpreadsheetMetadata {
 
+    Optional<SpreadsheetMetadata> NO_METADATA = Optional.empty();
+
     /**
      * Gets the {@link SpreadsheetMetadata}
      */
-    SpreadsheetMetadata spreadsheetMetadata();
+    Optional<SpreadsheetMetadata> spreadsheetMetadata();
+
+
+    default SpreadsheetMetadata spreadsheetMetadataOrFail() {
+        return this.spreadsheetMetadata()
+            .orElseThrow(() -> new IllegalStateException("Missing spreadsheet metadata"));
+    }
 }

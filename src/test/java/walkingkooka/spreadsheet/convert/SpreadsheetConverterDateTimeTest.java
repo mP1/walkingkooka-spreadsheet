@@ -36,6 +36,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
+import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverterTestCase<SpreadsheetConverterDateTime> {
@@ -984,10 +985,12 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             );
 
             @Override
-            public SpreadsheetMetadata spreadsheetMetadata() {
-                return SpreadsheetMetadata.EMPTY.set(
+            public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                return Optional.of(
+                    SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
                     DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
+                )
                 );
             }
         };

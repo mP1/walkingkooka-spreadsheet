@@ -119,7 +119,7 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default SpreadsheetMetadata spreadsheetMetadata() {
+    default Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.spreadsheetEngineContext()
             .spreadsheetMetadata();
     }

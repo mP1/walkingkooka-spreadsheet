@@ -79,7 +79,7 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     }
 
     @Override
-    default SpreadsheetMetadata spreadsheetMetadata() {
+    default Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.spreadsheetConverterContext()
             .spreadsheetMetadata();
     }

@@ -660,8 +660,8 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         // HasSpreadsheetMetadata.......................................................................................
 
         @Override
-        public SpreadsheetMetadata spreadsheetMetadata() {
-            return this.loadMetadataOrFail(
+        public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+            return this.loadMetadata(
                 this.spreadsheetIdOrFail()
             );
         }
@@ -20023,8 +20023,8 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                         }
 
                         @Override
-                        public SpreadsheetMetadata spreadsheetMetadata() {
-                            return METADATA;
+                        public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                            return Optional.of(METADATA);
                         }
 
                         @Override

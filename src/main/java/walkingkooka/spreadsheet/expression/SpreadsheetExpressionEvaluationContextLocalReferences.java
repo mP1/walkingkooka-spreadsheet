@@ -200,7 +200,7 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.context.spreadsheetMetadata();
     }
 
@@ -629,7 +629,7 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
 
     @Override
     public ColorContext colorContext() {
-        return this.context.spreadsheetMetadata();
+        return this.context.spreadsheetMetadataOrFail();
     }
 
     // SpreadsheetMetadataContextDelegator..............................................................................

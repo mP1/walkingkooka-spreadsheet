@@ -867,7 +867,7 @@ final class MissingConverterVerifier {
         // date-time....................................................................................................
         {
             // date -> dateTime & number & text & time
-            final long dateOffset = context.spreadsheetMetadata()
+            final long dateOffset = context.spreadsheetMetadataOrFail()
                 .getOrFail(SpreadsheetMetadataPropertyName.DATE_OFFSET);
             final long dateNumberValue = 36525 - dateOffset + Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
             final double timeNumberValue = 1.0 * TIME.toSecondOfDay() / (24 * 60 * 60);
@@ -1625,7 +1625,7 @@ final class MissingConverterVerifier {
         {
             // spreadsheet-id-to-spreadsheet-metadata...................................................................
             if (formula || scripting) {
-                final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+                final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
 
                 verifier.addIfConversionFail(
                     metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)

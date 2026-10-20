@@ -355,8 +355,8 @@ public final class Sample {
             }
             
             @Override
-            public SpreadsheetMetadata spreadsheetMetadata() {
-                return metadata;
+            public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                return Optional.of(metadata);
             }
 
             @Override

@@ -21,9 +21,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.FakeJsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 
+import java.util.Optional;
+
 public class FakeSpreadsheetExporterContext extends FakeJsonNodeMarshallContext implements SpreadsheetExporterContext {
+
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         throw new UnsupportedOperationException();
     }
 

@@ -274,7 +274,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     @Test
     default void testSetSpreadsheetMetadataWithDifferentIdFails() {
         final C context = this.createContext();
-        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
         final SpreadsheetMetadata set = metadata.set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SpreadsheetId.with(

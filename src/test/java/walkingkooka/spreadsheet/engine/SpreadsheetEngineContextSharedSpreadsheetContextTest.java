@@ -1430,8 +1430,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
-        public SpreadsheetMetadata spreadsheetMetadata() {
-            return this.loadMetadataOrFail(this.spreadsheetIdOrFail());
+        public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+            return this.loadMetadata(this.spreadsheetIdOrFail());
         }
 
         @Override

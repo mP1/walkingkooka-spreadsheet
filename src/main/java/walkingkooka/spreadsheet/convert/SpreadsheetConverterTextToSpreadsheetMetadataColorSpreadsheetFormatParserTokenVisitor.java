@@ -47,7 +47,7 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
 
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
-        final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = this.context.spreadsheetMetadataOrFail();
 
         final IndexedColor colorIndex = metadata.get(
             SpreadsheetMetadataPropertyName.namedColor(
@@ -65,7 +65,7 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
-        final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = this.context.spreadsheetMetadataOrFail();
         final int colorNumber = token.cast(ColorNumberSpreadsheetFormatParserToken.class).value();
         this.color = metadata.get(
             SpreadsheetMetadataPropertyName.numberedColor(
