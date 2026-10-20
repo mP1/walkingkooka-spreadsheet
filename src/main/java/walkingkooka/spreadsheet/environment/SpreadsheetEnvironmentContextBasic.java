@@ -139,6 +139,11 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
             );
 
             stringEnvironmentValueNames.put(
+                SPREADSHEET_METADATA.value(),
+                SPREADSHEET_METADATA
+            );
+
+            stringEnvironmentValueNames.put(
                 TerminalContext.TERMINAL_ID.value(),
                 TerminalContext.TERMINAL_ID
             );
