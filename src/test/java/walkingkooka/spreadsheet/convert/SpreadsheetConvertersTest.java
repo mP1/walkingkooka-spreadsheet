@@ -1199,19 +1199,21 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 );
 
                 @Override
-                public SpreadsheetMetadata spreadsheetMetadata() {
-                    return HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
-                        .set(
-                            SpreadsheetMetadataPropertyName.namedColor(
-                                Color.named(NAMED_COLOR)
-                            ),
-                            Color.indexed(10)
-                        ).set(
-                            SpreadsheetMetadataPropertyName.numberedColor(
+                public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                    return Optional.of(
+                        HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
+                            .set(
+                                SpreadsheetMetadataPropertyName.namedColor(
+                                    Color.named(NAMED_COLOR)
+                                ),
                                 Color.indexed(10)
-                            ),
-                            COLOR10
-                        );
+                            ).set(
+                                SpreadsheetMetadataPropertyName.numberedColor(
+                                    Color.indexed(10)
+                                ),
+                                COLOR10
+                            )
+                    );
                 }
 
                 @Override
@@ -2971,10 +2973,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
 
         @Override
-        public SpreadsheetMetadata spreadsheetMetadata() {
-            return SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
-                DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
+        public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+            return Optional.of(
+                SpreadsheetMetadata.EMPTY.set(
+                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
+                )
             );
         }
     };
@@ -3871,12 +3875,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 public long dateOffset() {
                     return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
                 }
-                
+
                 @Override
-                public SpreadsheetMetadata spreadsheetMetadata() {
-                    return SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
-                        DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
+                public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                    return Optional.of(
+                        SpreadsheetMetadata.EMPTY.set(
+                            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
+                            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
+                        )
                     );
                 }
 

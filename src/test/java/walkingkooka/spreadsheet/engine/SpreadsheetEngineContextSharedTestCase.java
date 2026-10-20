@@ -286,7 +286,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {
-                                return context.spreadsheetMetadata();
+                                return context.spreadsheetMetadataOrFail();
                             }
 
                             @Override

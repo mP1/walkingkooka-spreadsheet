@@ -2016,8 +2016,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // HasSpreadsheetMetadata...........................................................................................
 
     @Override
-    public final SpreadsheetMetadata spreadsheetMetadata() {
-        return this;
+    public final Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        return Optional.of(this);
     }
 
     // HasOptionalAuditInfo.............................................................................................

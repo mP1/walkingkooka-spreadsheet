@@ -247,7 +247,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         Objects.requireNonNull(formula, "formula");
         Objects.requireNonNull(cell, "cell");
 
-        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = this.spreadsheetMetadataOrFail();
 
         final SpreadsheetParser parser = cell.flatMap(SpreadsheetCell::parserSelector)
             .map(s -> this.spreadsheetParser(
@@ -392,8 +392,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
-        return this.loadMetadataOrFail(
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        return this.loadMetadata(
             this.spreadsheetIdOrFail()
         );
     }

@@ -175,8 +175,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
     // HasSpreadsheetName...............................................................................................
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
-        return this.spreadsheetMetadata.orElseThrow(() -> new IllegalStateException("No SpreadsheetMetadata available"));
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        return this.spreadsheetMetadata;
     }
 
     private final Optional<SpreadsheetMetadata> spreadsheetMetadata;

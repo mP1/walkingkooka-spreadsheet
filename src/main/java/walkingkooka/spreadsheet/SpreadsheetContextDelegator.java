@@ -137,7 +137,7 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     // HasSpreadsheetMetadata...........................................................................................
 
     @Override
-    default SpreadsheetMetadata spreadsheetMetadata() {
+    default Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.spreadsheetContext()
             .spreadsheetMetadata();
     }

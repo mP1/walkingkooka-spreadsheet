@@ -118,8 +118,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     // HasSpreadsheetMetadata...........................................................................................
 
     @Override
-    public final SpreadsheetMetadata spreadsheetMetadata() {
-        return this.loadMetadataOrFail(
+    public final Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        return this.loadMetadata(
             this.spreadsheetIdOrFail()
         );
     }

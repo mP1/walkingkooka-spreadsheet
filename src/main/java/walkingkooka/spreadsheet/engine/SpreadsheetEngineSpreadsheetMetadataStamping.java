@@ -506,7 +506,7 @@ final class SpreadsheetEngineSpreadsheetMetadataStamping implements SpreadsheetE
                         repository.metadatas()
                             .save(
                                 this.stamper.apply(
-                                    context.spreadsheetMetadata()
+                                    context.spreadsheetMetadataOrFail()
                                 )
                             );
                     }

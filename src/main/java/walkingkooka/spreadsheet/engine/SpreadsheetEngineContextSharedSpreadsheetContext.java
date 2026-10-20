@@ -111,7 +111,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                                                              final TerminalContext terminalContext) {
         super();
 
-        final SpreadsheetMetadata metadata = spreadsheetContext.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = spreadsheetContext.spreadsheetMetadataOrFail();
         this.mode = mode;
 
         spreadsheetContext.setLocale(metadata.locale());
@@ -140,7 +140,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         if (null == this.converterLike) {
             final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-            this.converterLike = this.spreadsheetMetadata()
+            this.converterLike = this.spreadsheetMetadataOrFail()
                 .spreadsheetConverterContext(
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
@@ -178,7 +178,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         Objects.requireNonNull(formula, "formula");
         Objects.requireNonNull(cell, "cell");
 
-        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = this.spreadsheetMetadataOrFail();
 
         final SpreadsheetParser parser = cell.flatMap(SpreadsheetCell::parserSelector)
             .map(s -> this.spreadsheetParser(
@@ -230,7 +230,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                                           final Optional<SpreadsheetFormatterSelector> formatter) {
         Objects.requireNonNull(formatter, "formatter");
 
-        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = this.spreadsheetMetadataOrFail();
         final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
         final ProviderContext providerContext = spreadsheetContext.providerContext();
 
@@ -314,7 +314,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
         final SpreadsheetContext context = this.spreadsheetContext;
 
-        return this.spreadsheetMetadata()
+        return this.spreadsheetMetadataOrFail()
             .spreadsheetFormatterContext(
                 () -> cell,
                 (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
@@ -360,7 +360,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.spreadsheetContext.spreadsheetMetadata();
     }
 

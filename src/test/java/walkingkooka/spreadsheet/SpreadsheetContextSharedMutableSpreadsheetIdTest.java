@@ -356,7 +356,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             LOCALE
         );
 
-        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
         final SpreadsheetMetadata otherMetadata = context.loadMetadataOrFail(OTHER_SPREADSHEET_ID);
 
         this.loadMetadataAndCheck(

@@ -1241,9 +1241,11 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
             ),
             new FakeSpreadsheetEngineContext() {
                 @Override
-                public SpreadsheetMetadata spreadsheetMetadata() {
-                    return SpreadsheetMetadata.EMPTY.defaults()
-                        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind);
+                public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                    return Optional.of(
+                        SpreadsheetMetadata.EMPTY.defaults()
+                            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind)
+                    );
                 }
             },
             formula.setValue(

@@ -27,6 +27,8 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
+import java.util.Optional;
+
 public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadataColor> {
 
     private final static Color COLOR = Color.parse("#987654");
@@ -136,19 +138,21 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
             );
 
             @Override
-            public SpreadsheetMetadata spreadsheetMetadata() {
-                return HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
-                    .set(
-                        SpreadsheetMetadataPropertyName.namedColor(
-                            Color.named("HelloColor")
-                        ),
-                        Color.indexed(10)
-                    ).set(
-                        SpreadsheetMetadataPropertyName.numberedColor(
+            public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                return Optional.of(
+                    HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA
+                        .set(
+                            SpreadsheetMetadataPropertyName.namedColor(
+                                Color.named("HelloColor")
+                            ),
                             Color.indexed(10)
-                        ),
-                        COLOR
-                    );
+                        ).set(
+                            SpreadsheetMetadataPropertyName.numberedColor(
+                                Color.indexed(10)
+                            ),
+                            COLOR
+                        )
+                );
             }
         };
     }

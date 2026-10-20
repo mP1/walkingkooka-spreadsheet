@@ -194,7 +194,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         final SpreadsheetId spreadsheetId = this.spreadsheetEnvironmentContextFactory.spreadsheetIdOrFail();
 
         return this.spreadsheetContextSupplier.spreadsheetContext(spreadsheetId)

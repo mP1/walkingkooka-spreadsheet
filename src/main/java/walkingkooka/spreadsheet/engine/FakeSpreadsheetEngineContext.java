@@ -118,7 +118,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetContext impleme
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         throw new UnsupportedOperationException();
     }
 

@@ -875,8 +875,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             Optional.of(spreadsheetId)
         );
 
-        this.checkEquals(
-            metadata,
+        this.spreadsheetMetadataAndCheck(
             this.createContext(
                 new FakeSpreadsheetContextSupplier() {
                     @Override
@@ -886,8 +885,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                 new FakeSpreadsheetContext() {
 
                                     @Override
-                                    public SpreadsheetMetadata spreadsheetMetadata() {
-                                        return metadata;
+                                    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+                                        return Optional.of(metadata);
                                     }
                                 } :
                                 null
@@ -895,7 +894,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                     }
                 },
                 spreadsheetEnvironmentContext
-            ).spreadsheetMetadata()
+            ),
+            metadata
         );
     }
 
