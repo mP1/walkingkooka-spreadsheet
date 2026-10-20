@@ -78,6 +78,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -1197,11 +1198,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // SpreadsheetEnvironmentContext....................................................................................
 
     /**
-     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata} using the given {@link EnvironmentContext}
-     * for the time and user.
+     * Getter that returns a {@link EnvironmentContext} that merges in values from the provided {@link SpreadsheetMetadata}.
      */
     public final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext(final SpreadsheetEnvironmentContext context) {
-        return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+        return SpreadsheetEnvironmentContexts.spreadsheetMetadata(
             this,
             context
         );
