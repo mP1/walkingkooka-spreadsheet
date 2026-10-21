@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting2;
@@ -45,6 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting2<C extends SpreadsheetExpressionEvaluationContext> extends SpreadsheetExpressionEvaluationContextTesting,
     FormHandlerExpressionEvaluationContextTesting2<SpreadsheetValidationReference, SpreadsheetDelta, C>,
+    HasSpreadsheetMetadataTesting2<C>,
     JsonNodeExpressionEvaluationContextTesting2<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting2<C>,
@@ -315,6 +317,13 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
             () -> this.createContext()
                 .setLocale(null)
         );
+    }
+
+    // HasSpreadsheetMetadataTesting....................................................................................
+
+    @Override
+    default C createHasSpreadsheetMetadata() {
+        return this.createContext();
     }
 
     // SpreadsheetLabelNameResolverTesting..............................................................................
