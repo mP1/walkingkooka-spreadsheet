@@ -33,5 +33,11 @@ public interface HasSpreadsheetMetadataDelegator extends HasSpreadsheetMetadata 
             .spreadsheetMetadata();
     }
 
+    @Override
+    default void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        this.hasSpreadsheetMetadata()
+            .setSpreadsheetMetadata(spreadsheetMetadata);
+    }
+
     HasSpreadsheetMetadata hasSpreadsheetMetadata();
 }

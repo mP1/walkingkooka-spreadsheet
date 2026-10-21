@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting2Test.TestHasSpreadsheetMetadata;
 
+import java.util.Objects;
+import java.util.Optional;
+
 public final class HasSpreadsheetMetadataTesting2Test implements HasSpreadsheetMetadataTesting2<TestHasSpreadsheetMetadata> {
 
     @Override
@@ -37,6 +40,11 @@ public final class HasSpreadsheetMetadataTesting2Test implements HasSpreadsheetM
     }
 
     final static class TestHasSpreadsheetMetadata extends FakeHasSpreadsheetMetadata {
+        @Override
+        public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+            Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
 
+            throw new UnsupportedOperationException();
+        }
     }
 }

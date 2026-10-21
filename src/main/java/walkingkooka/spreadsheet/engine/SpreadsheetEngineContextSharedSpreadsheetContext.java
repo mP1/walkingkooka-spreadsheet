@@ -42,6 +42,8 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -75,7 +77,8 @@ import java.util.Optional;
  * A basic and simple {@link SpreadsheetEngineContext}. Its accepts a variety of dependencies and uses them to handle
  * public methods requests.
  */
-final class SpreadsheetEngineContextSharedSpreadsheetContext extends SpreadsheetEngineContextShared {
+final class SpreadsheetEngineContextSharedSpreadsheetContext extends SpreadsheetEngineContextShared
+    implements HasSpreadsheetMetadataDelegator {
 
     /**
      * Creates a new {@link SpreadsheetEngineContextSharedSpreadsheetContext}
@@ -360,11 +363,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     }
 
     @Override
-    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
-        return this.spreadsheetContext.spreadsheetMetadata();
-    }
-
-    @Override
     public SpreadsheetMetadata createMetadata(final EmailAddress user,
                                               final Optional<Locale> locale) {
         return this.spreadsheetContext.createMetadata(
@@ -416,6 +414,13 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public Runnable addMetadataWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
         return this.spreadsheetContext.addMetadataWatcherOnce(watcher);
+    }
+
+    // HasSpreadsheetMetadataDelegator..................................................................................
+
+    @Override
+    public HasSpreadsheetMetadata hasSpreadsheetMetadata() {
+        return this.spreadsheetContext;
     }
 
     // setSpreadsheetMetadataMode.......................................................................................

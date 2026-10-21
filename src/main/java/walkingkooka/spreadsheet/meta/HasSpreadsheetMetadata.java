@@ -36,4 +36,10 @@ public interface HasSpreadsheetMetadata {
         return this.spreadsheetMetadata()
             .orElseThrow(() -> new IllegalStateException("Missing spreadsheet metadata"));
     }
+
+    /**
+     * Saves or replaces the current {@link SpreadsheetMetadata} with a new value which may or may not have a different
+     * {@link SpreadsheetId}.
+     */
+    void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata);
 }

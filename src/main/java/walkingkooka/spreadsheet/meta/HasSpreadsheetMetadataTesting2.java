@@ -19,7 +19,10 @@
 package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PackagePrivateClassTesting;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
@@ -27,6 +30,15 @@ import walkingkooka.reflect.PackagePrivateClassTesting;
 @GwtIncompatible
 public interface HasSpreadsheetMetadataTesting2<T extends HasSpreadsheetMetadata> extends HasSpreadsheetMetadataTesting,
     PackagePrivateClassTesting<T> {
+
+    @Test
+    default void testSetSpreadsheetMetadataWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createHasSpreadsheetMetadata()
+                .setSpreadsheetMetadata(null)
+        );
+    }
 
     T createHasSpreadsheetMetadata();
 }

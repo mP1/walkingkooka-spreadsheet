@@ -42,6 +42,12 @@ final class HasSpreadsheetMetadataReadOnly implements HasSpreadsheetMetadata {
         return this.hasSpreadsheetMetadata.spreadsheetMetadata();
     }
 
+    @Override
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        throw new UnsupportedOperationException();
+    }
+
     private final HasSpreadsheetMetadata hasSpreadsheetMetadata;
 
     // Object...........................................................................................................

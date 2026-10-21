@@ -2020,6 +2020,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return Optional.of(this);
     }
 
+    @Override
+    public final void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        throw new UnsupportedOperationException();
+    }
+
     // HasOptionalAuditInfo.............................................................................................
 
     @Override

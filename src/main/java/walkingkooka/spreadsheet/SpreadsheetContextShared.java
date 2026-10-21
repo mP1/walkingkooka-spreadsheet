@@ -124,6 +124,12 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         );
     }
 
+    @Override
+    public final void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        throw new UnsupportedOperationException();
+    }
+
     // SpreadsheetMetadataContextDelegator..............................................................................
 
     @Override
