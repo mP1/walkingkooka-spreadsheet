@@ -243,9 +243,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     @Override
     public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                         final T value) {
-        if(SERVER_URL.equals(name) || SPREADSHEET_METADATA.equals(name)) {
-            throw name.readOnlyEnvironmentValueException();
-        }
+        modificationGuard(name);
 
         this.context.setEnvironmentValue(
             name,
@@ -255,11 +253,15 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
 
     @Override
     public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        if(SERVER_URL.equals(name) || SPREADSHEET_METADATA.equals(name)) {
-            throw name.readOnlyEnvironmentValueException();
-        }
+        modificationGuard(name);
 
         this.context.removeEnvironmentValue(name);
+    }
+
+    private static void modificationGuard(final EnvironmentValueName<?> name) {
+        if (SERVER_URL.equals(name) || SPREADSHEET_METADATA.equals(name)) {
+            throw name.readOnlyEnvironmentValueException();
+        }
     }
 
     @Override
