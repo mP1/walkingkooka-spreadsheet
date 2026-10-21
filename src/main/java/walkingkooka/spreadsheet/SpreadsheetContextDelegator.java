@@ -33,6 +33,8 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -50,6 +52,7 @@ import java.util.Optional;
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     SpreadsheetEnvironmentContextDelegator,
     CurrencyContextDelegator,
+    HasSpreadsheetMetadataDelegator,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetProviderDelegator {
@@ -148,6 +151,13 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default LineEnding lineEnding() {
         return this.environmentContext()
             .lineEnding();
+    }
+
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    default HasSpreadsheetMetadata hasSpreadsheetMetadata() {
+        return this.spreadsheetContext();
     }
 
     // LocaleContext....................................................................................................
