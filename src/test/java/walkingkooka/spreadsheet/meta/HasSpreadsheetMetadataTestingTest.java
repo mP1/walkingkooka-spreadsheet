@@ -677,6 +677,14 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
     }
 
     @Test
+    public void testSpreadsheetMetadataLoaderConstants() {
+        this.checkNotEquals(
+            SPREADSHEET_METADATA_LOADER,
+            DIFFERENT_SPREADSHEET_METADATA_LOADER
+        );
+    }
+
+    @Test
     public void testSpreadsheetParser() {
         SPREADSHEET_METADATA.spreadsheetParser(
             SPREADSHEET_PARSER_PROVIDER,
