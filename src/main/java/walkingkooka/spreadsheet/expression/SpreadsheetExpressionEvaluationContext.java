@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -133,12 +132,6 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
      * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
      */
     SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell);
-
-    /**
-     * Saves or replaces the current {@link SpreadsheetMetadata} with a new copy.
-     * This is necessary to support a function that allows updating/replacing a {@link SpreadsheetMetadata}.
-     */
-    void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata);
 
     /**
      * If the {@link ExpressionReference} cannot be found an {@link SpreadsheetError} is created with {@link SpreadsheetError#referenceNotFound(ExpressionReference)}.

@@ -36,6 +36,7 @@ import walkingkooka.storage.Storages;
 
 import java.math.RoundingMode;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -111,6 +112,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 @Override
                 public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
                     return NO_METADATA;
+                }
+
+                @Override
+                public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+                    Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+                    throw new UnsupportedOperationException();
                 }
             },
             CONTEXT.cloneEnvironment()

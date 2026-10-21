@@ -46,7 +46,14 @@ final class HasSpreadsheetMetadataMutable implements HasSpreadsheetMetadata,
         return this.spreadsheetMetadata;
     }
 
-    private final Optional<SpreadsheetMetadata> spreadsheetMetadata;
+    @Override
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+
+        this.spreadsheetMetadata = spreadsheetMetadata;
+    }
+
+    private Optional<SpreadsheetMetadata> spreadsheetMetadata;
 
     // Object...........................................................................................................
 

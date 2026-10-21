@@ -267,15 +267,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     // setSpreadsheetMetadata...........................................................................................
 
     @Test
-    default void testSetSpreadsheetMetadataWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .setSpreadsheetMetadata(null)
-        );
-    }
-
-    @Test
     default void testSetSpreadsheetMetadataWithDifferentIdFails() {
         final C context = this.createContext();
         final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();

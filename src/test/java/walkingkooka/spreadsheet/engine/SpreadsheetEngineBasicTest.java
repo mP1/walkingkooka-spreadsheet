@@ -665,6 +665,12 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 this.spreadsheetIdOrFail()
             );
         }
+
+        @Override
+        public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+            Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+            throw new UnsupportedOperationException();
+        }
         
         // SpreadsheetMetadataContext...................................................................................
 

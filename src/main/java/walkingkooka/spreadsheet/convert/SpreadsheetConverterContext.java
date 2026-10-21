@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.color.ColorContext;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
@@ -30,6 +31,9 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.convert.TreeTextConverterContext;
+
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
@@ -55,6 +59,14 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
      * validation.
      */
     SpreadsheetValidationReference validationReference();
+
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    default void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        throw new UnsupportedOperationException();
+    }
 
     // JsonNodeConverterContext.........................................................................................
 
