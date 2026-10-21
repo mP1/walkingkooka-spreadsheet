@@ -222,26 +222,45 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
 
     // TreePrintable....................................................................................................
 
+    /**
+     * Prints all the {@link EnvironmentValueName} and values and the {@link #hasSpreadsheetMetadata}.
+     */
     @Override
     public void printTree(final IndentingPrinter printer) {
         printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            for (final EnvironmentValueName<?> name : this.environmentValueNames()) {
-                final Object value = this.environmentValue(name)
-                    .orElse(null);
-                if (null != value) {
-                    printer.println(name.value());
-                    printer.indent();
-                    {
-                        TreePrintable.printTreeOrToString(
-                            value,
-                            printer
-                        );
+            printer.println("environment");
+            printer.indent();
+            {
+                for (final EnvironmentValueName<?> name : this.environmentValueNames()) {
+                    final Object value = this.environmentValue(name)
+                        .orElse(null);
+                    if (null != value) {
+                        printer.println(name.value());
+                        printer.indent();
+                        {
+                            TreePrintable.printTreeOrToString(
+                                value,
+                                printer
+                            );
+                        }
+                        printer.outdent();
                     }
-                    printer.outdent();
                 }
             }
+            printer.outdent();
+        }
+        {
+            printer.println("hasSpreadsheetMetadata");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.hasSpreadsheetMetadata,
+                    printer
+                );
+            }
+            printer.outdent();
         }
         printer.outdent();
     }
