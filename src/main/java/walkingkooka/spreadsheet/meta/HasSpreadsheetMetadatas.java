@@ -32,6 +32,13 @@ public final class HasSpreadsheetMetadatas implements PublicStaticHelper {
     }
 
     /**
+     * {@link HasSpreadsheetMetadataReadOnly}
+     */
+    public static HasSpreadsheetMetadata readOnly(final HasSpreadsheetMetadata hasSpreadsheetMetadata) {
+        return HasSpreadsheetMetadataReadOnly.with(hasSpreadsheetMetadata);
+    }
+
+    /**
      * Stop creation
      */
     private HasSpreadsheetMetadatas() {
