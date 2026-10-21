@@ -43,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextSpreadsheetMetadata>,
+public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextSpreadsheetMetadata>,
     ToStringTesting<SpreadsheetEnvironmentContextSpreadsheetMetadata> {
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
@@ -1529,12 +1529,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
     }
 
-    // TypeName.........................................................................................................
-
-    @Override
-    public void testTestNaming() {
-        throw new UnsupportedOperationException();
-    }
+    // class............................................................................................................
 
     @Override
     public void testTypeNaming() {
