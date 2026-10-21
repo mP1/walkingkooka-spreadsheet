@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.Optional;
+
 /**
  * A collection of {@link HasSpreadsheetMetadata} factory methods.
  */
@@ -29,6 +31,13 @@ public final class HasSpreadsheetMetadatas implements PublicStaticHelper {
      */
     public static FakeHasSpreadsheetMetadata fake() {
         return new FakeHasSpreadsheetMetadata();
+    }
+
+    /**
+     * {@link HasSpreadsheetMetadataMutable}
+     */
+    public static HasSpreadsheetMetadata mutable(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        return HasSpreadsheetMetadataMutable.with(spreadsheetMetadata);
     }
 
     /**
