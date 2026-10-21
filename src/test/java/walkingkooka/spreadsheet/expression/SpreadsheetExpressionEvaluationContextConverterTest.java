@@ -703,6 +703,11 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
     }
 
     @Override
+    public void testRemoveEnvironmentValueWithSpreadsheetMetadataFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetEnvironmentValueWithNullValueFails() {
         throw new UnsupportedOperationException();
     }

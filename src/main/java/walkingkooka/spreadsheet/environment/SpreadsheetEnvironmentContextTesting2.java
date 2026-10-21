@@ -193,6 +193,19 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
         );
     }
 
+    // RemoveEnvironmentValue...........................................................................................
+
+    @Test
+    default void testRemoveEnvironmentValueWithSpreadsheetMetadataFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .removeEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SPREADSHEET_METADATA
+                )
+        );
+    }
+
     // type.............................................................................................................
 
     @Override
