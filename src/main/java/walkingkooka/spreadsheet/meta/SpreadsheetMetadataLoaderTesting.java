@@ -23,6 +23,20 @@ import java.util.Optional;
 
 public interface SpreadsheetMetadataLoaderTesting extends TreePrintableTesting {
 
+    SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.empty();
+
+    SpreadsheetMetadataLoader DIFFERENT_SPREADSHEET_METADATA_LOADER = new SpreadsheetMetadataLoader() {
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+            return SPREADSHEET_METADATA_LOADER.loadMetadata(id);
+        }
+
+        @Override
+        public String toString() {
+            return "DIFFERENT_SPREADSHEET_METADATA_LOADER";
+        }
+    };
+
     default void loadMetadataAndCheck(final SpreadsheetMetadataLoader context,
                                       final SpreadsheetId id) {
         this.loadMetadataAndCheck(
