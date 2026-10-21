@@ -446,6 +446,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
             SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
             SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );

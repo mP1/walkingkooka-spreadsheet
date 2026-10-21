@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.environment.EnvironmentContext;
@@ -40,6 +41,8 @@ import walkingkooka.text.printer.TreePrintable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * A {@link SpreadsheetEnvironmentContext} that wraps a {@link StorageEnvironmentContext}, with guards to stop attempts to
@@ -262,6 +265,22 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
         if (SERVER_URL.equals(name) || SPREADSHEET_METADATA.equals(name)) {
             throw name.readOnlyEnvironmentValueException();
         }
+    }
+
+    /**
+     * Combines the names from the wrapped {@link StorageEnvironmentContext} and adds {@link #SPREADSHEET_ID} and
+     * {@link #SPREADSHEET_METADATA}. The names are not cached because the wrapped environment may change at any moment.
+     */
+    @Override
+    public Set<EnvironmentValueName<?>> environmentValueNames() {
+        final SortedSet<EnvironmentValueName<?>> names = SortedSets.tree();
+
+        names.addAll(this.storageEnvironmentContext()
+            .environmentValueNames());
+        names.add(SPREADSHEET_ID);
+        names.add(SPREADSHEET_METADATA);
+
+        return SortedSets.immutable(names);
     }
 
     @Override
