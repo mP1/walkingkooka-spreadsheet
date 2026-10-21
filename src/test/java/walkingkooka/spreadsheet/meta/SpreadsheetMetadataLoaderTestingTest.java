@@ -17,10 +17,37 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PublicClassTesting;
 
 public final class SpreadsheetMetadataLoaderTestingTest implements SpreadsheetMetadataLoaderTesting,
     PublicClassTesting<SpreadsheetMetadataLoaderTesting> {
+
+    @Test
+    public void testSpreadsheetMetadataLoaderConstants() {
+        this.checkNotEquals(
+            SPREADSHEET_METADATA_LOADER,
+            DIFFERENT_SPREADSHEET_METADATA_LOADER
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataLoaderToString() {
+        this.checkEquals(
+            "SpreadsheetMetadataLoaderEmpty",
+            SPREADSHEET_METADATA_LOADER.toString()
+        );
+    }
+
+    @Test
+    public void testDifferentSpreadsheetMetadataLoaderToString() {
+        this.checkEquals(
+            "DIFFERENT_SPREADSHEET_METADATA_LOADER",
+            DIFFERENT_SPREADSHEET_METADATA_LOADER.toString()
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetMetadataLoaderTesting> type() {
