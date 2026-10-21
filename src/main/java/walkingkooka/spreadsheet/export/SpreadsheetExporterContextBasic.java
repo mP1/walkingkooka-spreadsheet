@@ -17,15 +17,17 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 
 import java.util.Objects;
-import java.util.Optional;
 
 final class SpreadsheetExporterContextBasic implements SpreadsheetExporterContext,
+    HasSpreadsheetMetadataDelegator,
     JsonNodeMarshallContextDelegator {
 
     static SpreadsheetExporterContextBasic with(final SpreadsheetMetadata spreadsheetMetadata,
@@ -42,9 +44,11 @@ final class SpreadsheetExporterContextBasic implements SpreadsheetExporterContex
         this.context = context;
     }
 
+    // HasSpreadsheetMetadataDelegator..................................................................................
+
     @Override
-    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
-        return Optional.of(this.spreadsheetMetadata);
+    public HasSpreadsheetMetadata hasSpreadsheetMetadata() {
+        return this.spreadsheetMetadata;
     }
 
     private final SpreadsheetMetadata spreadsheetMetadata;
