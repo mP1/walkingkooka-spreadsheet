@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
@@ -24,7 +25,9 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
@@ -48,8 +51,10 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     StorageEnvironmentContextDelegator,
     TreePrintable {
 
-    static SpreadsheetEnvironmentContext with(final Storage<SpreadsheetStorageContext> storage,
+    static SpreadsheetEnvironmentContext with(final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                              final Storage<SpreadsheetStorageContext> storage,
                                               final StorageEnvironmentContext storageEnvironmentContext) {
+        Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(storageEnvironmentContext, "storageEnvironmentContext");
 
@@ -64,6 +69,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
 
         if (null == spreadsheetEnvironmentContext) {
             spreadsheetEnvironmentContext = new SpreadsheetEnvironmentContextBasic(
+                spreadsheetMetadataLoader,
                 storage,
                 storageEnvironmentContext
             );
@@ -72,10 +78,12 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
         return spreadsheetEnvironmentContext;
     }
 
-    private SpreadsheetEnvironmentContextBasic(final Storage<SpreadsheetStorageContext> storage,
+    private SpreadsheetEnvironmentContextBasic(final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                               final Storage<SpreadsheetStorageContext> storage,
                                                final StorageEnvironmentContext context) {
         super();
 
+        this.spreadsheetMetadataLoader = spreadsheetMetadataLoader;
         this.storage = storage;
         this.context = context;
     }
@@ -194,6 +202,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
             spreadsheetEnvironmentContext = before == after ?
                 this :
                 SpreadsheetEnvironmentContextBasic.with(
+                    this.spreadsheetMetadataLoader,
                     this.storage,
                     after
                 );
@@ -201,6 +210,35 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
 
         return spreadsheetEnvironmentContext;
     }
+
+    /**
+     * If given a {@link #SPREADSHEET_METADATA}, the {@link SpreadsheetMetadataLoader} will be given the current {@link #SPREADSHEET_ID},
+     * other {@link EnvironmentValueName} will be forwarded to the {@link #context}.
+     */
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        Objects.requireNonNull(name, "name");
+
+        final Optional<T> environmentValue;
+        if (SPREADSHEET_METADATA.equals(name)) {
+            final SpreadsheetId spreadsheetId = this.spreadsheetId()
+                .orElse(null);
+            environmentValue = Cast.to(
+                null != spreadsheetId ?
+                    this.spreadsheetMetadataLoader.loadMetadata(spreadsheetId) :
+                    HasSpreadsheetMetadata.NO_METADATA
+            );
+        } else {
+            environmentValue = this.context.environmentValue(name);
+        }
+
+        return environmentValue;
+    }
+
+    /**
+     * Used to load the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} using the current {@link SpreadsheetId}.
+     */
+    private final SpreadsheetMetadataLoader spreadsheetMetadataLoader;
 
     @Override
     public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
@@ -236,6 +274,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     @Override
     public int hashCode() {
         return Objects.hash(
+            this.spreadsheetMetadataLoader,
             this.storage,
             this.context
         );
@@ -249,7 +288,9 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     }
 
     private boolean equals0(final SpreadsheetEnvironmentContextBasic other) {
-        return this.storage.equals(other.storage) &&
+        return
+            this.spreadsheetMetadataLoader.equals(other.spreadsheetMetadataLoader) &&
+            this.storage.equals(other.storage) &&
             this.context.equals(other.context);
     }
 
@@ -270,6 +311,16 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
             {
                 TreePrintable.printTreeOrToString(
                     this.context,
+                    printer
+                );
+            }
+            printer.outdent();
+
+            printer.println("spreadsheetMetadataLoader");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.spreadsheetMetadataLoader,
                     printer
                 );
             }

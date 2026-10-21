@@ -25,8 +25,12 @@ import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.logging.CanLog;
 import walkingkooka.logging.CanLogs;
 import walkingkooka.logging.LoggingLevel;
+import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
@@ -38,6 +42,8 @@ import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintableTesting;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -45,6 +51,27 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     HasSpreadsheetMetadataTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetEnvironmentContextBasic> {
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SPREADSHEET_ID
+    );
+
+    private final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = new FakeSpreadsheetMetadataLoader() {
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+            return Optional.ofNullable(
+                SPREADSHEET_ID.equals(id) ?
+                    SPREADSHEET_METADATA :
+                    null
+            );
+        }
+
+        @Override
+        public String toString() {
+            return "SPREADSHEET_METADATA_LOADER";
+        }
+    };
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
 
@@ -57,10 +84,23 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     // with.............................................................................................................
 
     @Test
+    public void testWithNullSpreadsheetMetadataLoaderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextBasic.with(
+                null,
+                STORAGE,
+                SpreadsheetEnvironmentContexts.fake()
+            )
+        );
+    }
+
+    @Test
     public void testWithNullStorageFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 null,
                 SpreadsheetEnvironmentContexts.fake()
             )
@@ -72,6 +112,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 null
             )
@@ -90,6 +131,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         assertSame(
             wrap,
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 wrap
             )
@@ -106,6 +148,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         };
 
         final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextBasic) SpreadsheetEnvironmentContextBasic.with(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             wrap
         );
@@ -126,6 +169,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
 
         final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextBasic) SpreadsheetEnvironmentContextBasic.with(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             storageEnvironmentContext
         );
@@ -147,6 +191,37 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             environmentContext,
             basicSpreadsheetEnvironmentContext.environmentContext(),
             "environmentContext"
+        );
+    }
+
+    // environmentValueName.............................................................................................
+
+    @Test
+    public void testEnvironmentValueWithSpreadsheetMetadataMissingSpreadsheetId() {
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+        context.setSpreadsheetId(Optional.empty());
+
+        this.spreadsheetIdAndCheck(context);
+
+        this.environmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SPREADSHEET_METADATA
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueWithSpreadsheetMetadataWithSpreadsheetId() {
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+
+        this.spreadsheetIdAndCheck(
+            context,
+            SPREADSHEET_ID
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
+            SPREADSHEET_METADATA
         );
     }
 
@@ -186,6 +261,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         this.currentWorkingDirectoryAndCheck(
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 StorageEnvironmentContexts.basic(environmentContext)
             )
@@ -223,6 +299,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         assertThrows(
             MissingEnvironmentValueException.class,
             () -> SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
             ).serverUrl()
@@ -240,6 +317,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         this.serverUrlAndCheck(
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             ),
@@ -253,6 +331,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testSpreadsheetIdMissing() {
         this.spreadsheetIdAndCheck(
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
@@ -274,6 +353,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         this.setSpreadsheetIdAndCheck(
             (SpreadsheetEnvironmentContextBasic)
                 SpreadsheetEnvironmentContextBasic.with(
+                    SPREADSHEET_METADATA_LOADER,
                     STORAGE,
                     STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 ),
@@ -285,6 +365,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testSetSpreadsheetId2() {
         final SpreadsheetEnvironmentContextBasic context = (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
             );
@@ -335,6 +416,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             );
@@ -361,6 +443,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             );
@@ -387,6 +470,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             );
@@ -500,6 +584,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         return (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             );
@@ -532,6 +617,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
 
         return (SpreadsheetEnvironmentContextBasic)
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             );
@@ -540,15 +626,35 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentSpreadsheetMetadataLoader() {
+        final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
+
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
+                STORAGE,
+                storageEnvironmentContext
+            ),
+            SpreadsheetEnvironmentContextBasic.with(
+                DIFFERENT_SPREADSHEET_METADATA_LOADER,
+                STORAGE,
+                storageEnvironmentContext
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentStorage() {
         final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
 
         this.checkNotEquals(
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             ),
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 Storages.fake(),
                 storageEnvironmentContext
             )
@@ -559,10 +665,12 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testEqualsDifferentEnvironmentContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 StorageEnvironmentContexts.fake()
             ),
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 StorageEnvironmentContexts.fake()
             )
@@ -615,8 +723,10 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
                 "          Z (java.time.ZoneOffset)\n" +
                 "        user\n" +
                 "          user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "  spreadsheetMetadataLoader\n" +
+                "    SPREADSHEET_METADATA_LOADER (walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextBasicTest$1)\n" +
                 "  storage\n" +
-                "    FakeStorage (walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextBasicTest$1)\n"
+                "    FakeStorage (walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextBasicTest$2)\n"
         );
     }
 
@@ -627,6 +737,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testEnvironmentContext() {
         this.environmentContextAndCheck(
             SpreadsheetEnvironmentContextBasic.with(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 STORAGE_ENVIRONMENT_CONTEXT
             ),

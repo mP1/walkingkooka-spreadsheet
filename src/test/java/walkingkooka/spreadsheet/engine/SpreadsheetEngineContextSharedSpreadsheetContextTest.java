@@ -1288,6 +1288,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     @Override
     public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             SpreadsheetStorages.treeMapStore(),
             HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -1328,6 +1329,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
         );
         return SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE_SPREADSHEET_STORAGE_CONTEXT,
             storageEnvironmentContext
         );
@@ -1414,6 +1416,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 this.currencyContext()
                     .setLocaleContext(this.localeContext()),
                 SpreadsheetEnvironmentContexts.basic(
+                    SPREADSHEET_METADATA_LOADER,
                     this.storage(),
                     this.spreadsheetEnvironmentContext
                 ),
@@ -1719,6 +1722,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     @Test
     public void testEqualsDifferentSpreadsheetContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             Storages.fake(),
             DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );

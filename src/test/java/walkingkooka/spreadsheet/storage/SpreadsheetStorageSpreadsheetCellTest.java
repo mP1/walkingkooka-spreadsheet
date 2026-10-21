@@ -725,6 +725,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             }, // HttpRouter
             CURRENCY_LOCALE_CONTEXT,
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 SpreadsheetStorages.treeMapStore(),
                 storageEnvironmentContext
             ),

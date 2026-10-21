@@ -483,6 +483,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             storageEnvironmentContext
         );

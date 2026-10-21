@@ -418,6 +418,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             )

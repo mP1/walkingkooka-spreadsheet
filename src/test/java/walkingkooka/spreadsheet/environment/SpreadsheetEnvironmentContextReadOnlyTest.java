@@ -139,6 +139,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
     @Test
     public void testSetSpreadsheetEnvironmentContextWithSame() {
         final SpreadsheetEnvironmentContext notReadOnly = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             Storages.fake(),
             STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -158,6 +159,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         final Storage<SpreadsheetStorageContext> storage = Storages.fake();
 
         final SpreadsheetEnvironmentContext notReadOnly = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             storage,
             STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -167,6 +169,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
 
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             storage,
             DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT
         );
@@ -415,6 +418,7 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE_SPREADSHEET_STORAGE_CONTEXT,
             storageEnvironmentContext
         );
@@ -512,6 +516,8 @@ public final class SpreadsheetEnvironmentContextReadOnlyTest implements Spreadsh
                 "            Z (java.time.ZoneOffset)\n" +
                 "          user\n" +
                 "            user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "    spreadsheetMetadataLoader\n" +
+                "      SpreadsheetMetadataLoaderEmpty (walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderEmpty)\n" +
                 "    storage\n" +
                 "      {} (walkingkooka.storage.StorageShared2Empty)\n"
         );

@@ -1367,7 +1367,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_NAME_RESOLVER,
-                SPREADSHEET_METADATA_LOADER,
+                SpreadsheetMetadataTestCase.SPREADSHEET_METADATA_LOADER,
                 ColorContexts.fake(),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
@@ -1829,6 +1829,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .spreadsheetEnvironmentContext(
                     SpreadsheetEnvironmentContexts.basic(
+                        SPREADSHEET_METADATA_LOADER,
                         Storages.fake(),
                         STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                     )

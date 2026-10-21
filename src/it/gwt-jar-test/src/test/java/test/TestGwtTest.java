@@ -331,6 +331,7 @@ public class TestGwtTest extends GWTTestCase {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.readOnly(
             Predicates.always(),
             SpreadsheetEnvironmentContexts.basic(
+                SpreadsheetMetadataLoaders.fake(),
                 Storages.fake(),
                 StorageEnvironmentContexts.basic(
                     EnvironmentContexts.map(

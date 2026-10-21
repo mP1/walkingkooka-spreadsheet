@@ -22,6 +22,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
@@ -34,7 +35,8 @@ import walkingkooka.storage.Storages;
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
-    HasSpreadsheetServerUrlTesting {
+    HasSpreadsheetServerUrlTesting,
+    SpreadsheetMetadataLoaderTesting {
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -53,6 +55,7 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
     SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         Predicates.always(), // all values are readonly
         SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE_SPREADSHEET_STORAGE_CONTEXT,
             storageEnvironmentContext()
         )
@@ -69,6 +72,7 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
     }
 
     SpreadsheetEnvironmentContext DIFFERENT_SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
+        SPREADSHEET_METADATA_LOADER,
         STORAGE_SPREADSHEET_STORAGE_CONTEXT,
         differentStorageEnvironmentContext()
     );

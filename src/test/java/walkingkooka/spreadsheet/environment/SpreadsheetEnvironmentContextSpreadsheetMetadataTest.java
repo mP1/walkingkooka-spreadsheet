@@ -57,6 +57,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
         CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
             Predicates.always(), // all values are readonly
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 context
             )
@@ -188,6 +189,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
             SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 metadata,
                 SpreadsheetEnvironmentContexts.basic(
+                    SPREADSHEET_METADATA_LOADER,
                     STORAGE,
                     DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT
                 )
@@ -204,6 +206,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
             SpreadsheetEnvironmentContextSpreadsheetMetadata.with(
                 SpreadsheetMetadata.EMPTY,
                 SpreadsheetEnvironmentContexts.basic(
+                    SPREADSHEET_METADATA_LOADER,
                     STORAGE,
                     STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
@@ -231,6 +234,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                     SPREADSHEET_ID
                 ),
                 SpreadsheetEnvironmentContexts.basic(
+                    SPREADSHEET_METADATA_LOADER,
                     STORAGE,
                     STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )

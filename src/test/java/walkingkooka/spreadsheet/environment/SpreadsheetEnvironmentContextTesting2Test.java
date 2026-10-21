@@ -183,6 +183,7 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
             );
 
             this.spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 Storages.fake(),
                 storageEnvironmentContext
             );

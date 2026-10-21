@@ -386,6 +386,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             Storages.fake(),
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -411,6 +412,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testSetEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             Storages.fake(),
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -437,6 +439,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testRemoveEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             Storages.fake(),
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -464,6 +467,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testUser() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             Storages.fake(),
             STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );

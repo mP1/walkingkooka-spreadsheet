@@ -606,6 +606,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             CurrencyContexts.fake()
                 .setLocaleContext(localeContext),
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 storage,
                 storageEnvironmentContext
             ),
