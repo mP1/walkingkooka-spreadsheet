@@ -1101,6 +1101,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
 
         final Storage<SpreadsheetStorageContext> storage = SpreadsheetStorages.treeMapStore();
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             storage,
             storageEnvironmentContext
         );

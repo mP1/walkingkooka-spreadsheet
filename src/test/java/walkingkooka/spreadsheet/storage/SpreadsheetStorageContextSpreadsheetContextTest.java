@@ -1137,6 +1137,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
                 }, // HttpRouter
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetEnvironmentContexts.basic(
+                    SPREADSHEET_METADATA_LOADER,
                     storage,
                     storageEnvironmentContext
                 ),

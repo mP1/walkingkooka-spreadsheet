@@ -145,6 +145,7 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
                     }, // HttpRouter
                     CURRENCY_LOCALE_CONTEXT,
                     SpreadsheetEnvironmentContexts.basic(
+                        SPREADSHEET_METADATA_LOADER,
                         SpreadsheetStorages.treeMapStore(),
                         spreadsheetEnvironmentContext
                     ),

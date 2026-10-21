@@ -142,6 +142,7 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
             );
 
             this.context = SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 Storages.fake(),
                 storageEnvironmentContext
             );

@@ -761,6 +761,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                     null
             ),
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 SpreadsheetStorages.treeMapStore(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )

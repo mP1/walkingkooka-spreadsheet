@@ -24,6 +24,7 @@ import walkingkooka.logging.LoggingLevel;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
@@ -100,6 +101,7 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
         return before == after ?
             this :
             SpreadsheetEnvironmentContexts.basic(
+                SpreadsheetMetadataLoaders.empty(),
                 before.storage(),
                 after
             );

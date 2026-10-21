@@ -108,8 +108,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
-    final static SpreadsheetMetadataLoader SPREADSHEET_METADATA_LOADER = SpreadsheetMetadataLoaders.fake();
-
     final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     SpreadsheetMetadataTestCase() {

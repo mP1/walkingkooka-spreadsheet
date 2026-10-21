@@ -611,6 +611,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             }, // HttpRouter
             CURRENCY_LOCALE_CONTEXT,
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 storage,
                 storageEnvironmentContext
             ),

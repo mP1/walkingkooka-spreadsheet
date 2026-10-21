@@ -481,6 +481,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
 
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             )

@@ -170,6 +170,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.environmentValueAndCheck(
             SpreadsheetMetadata.EMPTY.spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.basic(
+                    SPREADSHEET_METADATA_LOADER,
                     Storages.fake(),
                     STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )

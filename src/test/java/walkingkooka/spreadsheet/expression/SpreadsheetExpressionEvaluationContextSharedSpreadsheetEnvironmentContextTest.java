@@ -334,6 +334,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             storageEnvironmentContext
         );
@@ -352,6 +353,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -368,6 +370,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             (SpreadsheetEnvironmentContext)
                 this.createContext(
                     SpreadsheetEnvironmentContexts.basic(
+                        SPREADSHEET_METADATA_LOADER,
                         STORAGE,
                         STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
                     )
@@ -379,6 +382,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             SPREADSHEET_ENVIRONMENT_CONTEXT
         );
@@ -404,6 +408,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testSetEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -430,6 +435,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testRemoveEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -457,6 +463,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testUser() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
@@ -1221,6 +1228,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext() {
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 SpreadsheetStorages.treeMapStore(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )

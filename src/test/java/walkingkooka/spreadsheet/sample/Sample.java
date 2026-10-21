@@ -328,6 +328,7 @@ public final class Sample {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.readOnly(
             Predicates.always(),
             SpreadsheetEnvironmentContexts.basic(
+                SpreadsheetMetadataLoaders.fake(),
                 Storages.fake(),
                 StorageEnvironmentContexts.basic(
                     EnvironmentContexts.map(

@@ -100,6 +100,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             );
 
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 Storages.fake(),
                 storageEnvironmentContext
             );

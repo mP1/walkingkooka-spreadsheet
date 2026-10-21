@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
@@ -93,6 +94,7 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
             with(
                 this.hasSpreadsheetMetadata,
                 SpreadsheetEnvironmentContexts.basic(
+                    SpreadsheetMetadataLoaders.fake(),
                     this.storage(),
                     after
                 )

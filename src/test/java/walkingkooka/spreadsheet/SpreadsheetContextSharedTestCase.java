@@ -134,6 +134,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         Predicates.always(), // all values are readonly
         SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             storageEnvironmentContext()
         )
@@ -262,6 +263,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             SPREADSHEET_ID
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             storageEnvironmentContext
         );
@@ -282,6 +284,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             SPREADSHEET_ID
         );
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
             STORAGE,
             storageEnvironmentContext
         );
@@ -512,6 +515,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
                 STORAGE,
                 storageEnvironmentContext
             )
