@@ -383,6 +383,28 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         );
     }
 
+    // environmentValueNames............................................................................................
+
+    @Test
+    public void testEnvironmentValueNames() {
+        this.environmentValueNamesAndCheck(
+            SpreadsheetEnvironmentContext.CHARSET,
+            SpreadsheetEnvironmentContext.CURRENCY,
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            SpreadsheetEnvironmentContext.HOME_DIRECTORY,
+            SpreadsheetEnvironmentContext.INDENTATION,
+            SpreadsheetEnvironmentContext.LINE_ENDING,
+            SpreadsheetEnvironmentContext.LOCALE,
+            SpreadsheetEnvironmentContext.LOGGING_LEVEL,
+            SpreadsheetEnvironmentContext.NOW,
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
+            SpreadsheetEnvironmentContext.TIME_OFFSET,
+            SpreadsheetEnvironmentContext.USER
+        );
+    }
+
     // parseEnvironmentValueName........................................................................................
 
     @Test

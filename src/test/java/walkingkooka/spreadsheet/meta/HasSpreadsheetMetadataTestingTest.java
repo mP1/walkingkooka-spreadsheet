@@ -139,8 +139,15 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         final Set<EnvironmentValueName<?>> names = SortedSets.tree();
 
         for (final EnvironmentValueName<?> name : SPREADSHEET_ENVIRONMENT_CONTEXT.environmentValueNames()) {
+            final Object value = SPREADSHEET_ENVIRONMENT_CONTEXT.environmentValue(name)
+                .orElse(null);
+            if (null == value) {
+                names.add(name);
+                continue;
+            }
+
             final Either<?, String> result = converter.convert(
-                SPREADSHEET_ENVIRONMENT_CONTEXT.environmentValueOrFail(name),
+                value,
                 String.class,
                 converterContext
             );
@@ -150,7 +157,10 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         }
 
         this.checkEquals(
-            Sets.empty(),
+            Sets.of(
+                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+                SpreadsheetEnvironmentContext.SPREADSHEET_METADATA
+            ),
             names,
             SPREADSHEET_ENVIRONMENT_CONTEXT::toString
         );

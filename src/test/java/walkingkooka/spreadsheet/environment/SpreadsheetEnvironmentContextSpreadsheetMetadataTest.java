@@ -220,6 +220,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.LOGGING_LEVEL,
             SpreadsheetEnvironmentContext.NOW,
+            SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
             SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );
@@ -249,6 +250,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
             SpreadsheetEnvironmentContext.LOGGING_LEVEL,
             SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
             SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );
@@ -292,6 +294,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.toEnvironmentValueName(),
+            SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
             SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );
@@ -519,7 +522,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 ),
                 CONTEXT
             ),
-            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=  , lineEnding=\\n, locale=en_AU, loggingLevel=NONE, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=123, timeOffset=Z, user=user123@example.com}"
+            "{charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, homeDirectory=/users/user123@example.com, indentation=  , lineEnding=\\n, locale=en_AU, loggingLevel=NONE, now=1999-12-31T12:58:59, serverUrl=https://example.com, spreadsheetId=null, spreadsheetMetadata=null, timeOffset=Z, user=user123@example.com}"
         );
     }
 
