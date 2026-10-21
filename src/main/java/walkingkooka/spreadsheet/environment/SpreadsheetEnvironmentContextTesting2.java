@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.storage.StorageEnvironmentContextTesting2;
 import walkingkooka.terminal.TerminalContext;
 
@@ -176,6 +177,20 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
         } catch (final ReadOnlyEnvironmentValueException ignore) {
             // nop
         }
+    }
+
+    // setSpreadsheetMetadata...........................................................................................
+
+    @Test
+    default void testSetSpreadsheetMetadataFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .setEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
+                    SpreadsheetMetadata.EMPTY
+                )
+        );
     }
 
     // type.............................................................................................................

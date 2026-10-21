@@ -243,7 +243,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     @Override
     public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                         final T value) {
-        if(SERVER_URL.equals(name)) {
+        if(SERVER_URL.equals(name) || SPREADSHEET_METADATA.equals(name)) {
             throw name.readOnlyEnvironmentValueException();
         }
 
