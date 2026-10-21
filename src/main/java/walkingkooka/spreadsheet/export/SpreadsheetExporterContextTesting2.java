@@ -18,15 +18,22 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.ContextTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting2;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting2;
 
 public interface SpreadsheetExporterContextTesting2<C extends SpreadsheetExporterContext> extends SpreadsheetExporterContextTesting,
     ContextTesting<C>,
+    HasSpreadsheetMetadataTesting2<C>,
     JsonNodeMarshallContextTesting2<C>,
     SpreadsheetProviderContextTesting2<C>,
     TreePrintableTesting {
+
+    @Override
+    default C createHasSpreadsheetMetadata() {
+        return this.createContext();
+    }
 
     @Override
     default String typeNameSuffix() {
