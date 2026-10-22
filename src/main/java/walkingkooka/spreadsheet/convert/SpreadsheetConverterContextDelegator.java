@@ -22,8 +22,9 @@ import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.convert.Converter;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
@@ -38,7 +39,8 @@ import java.util.Optional;
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
     ColorContextDelegator,
     HasUserDirectoriesDelegator,
-    JsonNodeConverterContextDelegator {
+    JsonNodeConverterContextDelegator,
+    SpreadsheetMetadataLoaderDelegator {
 
     @Override
     default JsonNodeConverterContext jsonNodeConverterContext() {
@@ -73,12 +75,6 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     }
 
     @Override
-    default Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-        return this.spreadsheetConverterContext()
-            .loadMetadata(id);
-    }
-
-    @Override
     default Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.spreadsheetConverterContext()
             .spreadsheetMetadata();
@@ -102,6 +98,13 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
 
     @Override
     default ColorContext colorContext() {
+        return this.spreadsheetConverterContext();
+    }
+
+    // SpreadsheetMetadataLoader........................................................................................
+
+    @Override
+    default SpreadsheetMetadataLoader spreadsheetMetadataLoader() {
         return this.spreadsheetConverterContext();
     }
 }
