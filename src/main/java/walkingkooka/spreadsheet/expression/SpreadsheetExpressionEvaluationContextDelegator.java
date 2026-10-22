@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -244,8 +245,8 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetMetadataContextDelegator..............................................................................
 
     @Override
-    default Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-        return SpreadsheetMetadataContextDelegator.super.loadMetadata(id);
+    default SpreadsheetMetadataLoader spreadsheetMetadataLoader() {
+        return this.spreadsheetMetadataContext();
     }
 
     @Override
