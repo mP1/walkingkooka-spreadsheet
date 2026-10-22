@@ -24,6 +24,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.storage.StorageEnvironmentContextTesting2;
 import walkingkooka.terminal.TerminalContext;
 
@@ -193,6 +194,21 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
         );
     }
 
+    @Test
+    default void testSetEnvironmentValueWithSpreadsheetMetadataAndSpreadsheetMetadataPropertyNameFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .setEnvironmentValue(
+                    EnvironmentValueName.with(
+                        SpreadsheetEnvironmentContext.SPREADSHEET_METADATA_PREFIX + SpreadsheetMetadataPropertyName.AUDIT_INFO.value(),
+                        Object.class
+                    ),
+                    SpreadsheetMetadata.EMPTY
+                )
+        );
+    }
+
     // RemoveEnvironmentValue...........................................................................................
 
     @Test
@@ -202,6 +218,20 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
             () -> this.createContext()
                 .removeEnvironmentValue(
                     SpreadsheetEnvironmentContext.SPREADSHEET_METADATA
+                )
+        );
+    }
+
+    @Test
+    default void testRemoveEnvironmentValueWithSpreadsheetMetadataAndSpreadsheetMetadataPropertyNameFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .removeEnvironmentValue(
+                    EnvironmentValueName.with(
+                        SpreadsheetEnvironmentContext.SPREADSHEET_METADATA_PREFIX + SpreadsheetMetadataPropertyName.AUDIT_INFO.value(),
+                        Object.class
+                    )
                 )
         );
     }
