@@ -242,7 +242,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
             );
         } else {
             final String environmentValueName = name.value();
-            if (EnvironmentValueName.CASE_SENSITIVITY.startsWith(environmentValueName, SPREADSHEET_METADATA_PREFIX)) {
+            if (environmentValueName.startsWith(SPREADSHEET_METADATA_PREFIX)) {
                 final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.tryWith(
                     environmentValueName.substring(
                         SPREADSHEET_METADATA_PREFIX.length()
