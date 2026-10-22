@@ -152,6 +152,20 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
                 SPREADSHEET_METADATA
             );
 
+            for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.ALL) {
+                final String propertyNameString = SPREADSHEET_METADATA_PREFIX.concat(
+                    propertyName.value()
+                );
+
+                stringEnvironmentValueNames.put(
+                    propertyNameString,
+                    EnvironmentValueName.with(
+                        propertyNameString,
+                        propertyName.type()
+                    )
+                );
+            }
+
             stringEnvironmentValueNames.put(
                 TerminalContext.TERMINAL_ID.value(),
                 TerminalContext.TERMINAL_ID

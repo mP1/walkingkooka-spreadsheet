@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
@@ -42,6 +43,7 @@ import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintableTesting;
 
+import java.util.Currency;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -479,6 +481,44 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             spreadsheetEnvironmentContextBasic,
             TerminalContext.TERMINAL_ID
         );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameWithSpreadsheetMetadataSpreadsheetId() {
+
+        this.parseEnvironmentValueNameAndCachedCheck(
+            "spreadsheetMetadata.spreadsheetId",
+            SpreadsheetId.class
+        );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameWithSpreadsheetMetadataCurrency() {
+        this.parseEnvironmentValueNameAndCachedCheck(
+            "spreadsheetMetadata.currency",
+            Currency.class
+        );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameWithSpreadsheetMetadataDateTimeSymbols() {
+        this.parseEnvironmentValueNameAndCachedCheck(
+            "spreadsheetMetadata.dateTimeSymbols",
+            DateTimeSymbols.class
+        );
+    }
+
+    @Test
+    public void testParseEnvironmentValueNameWithAllSpreadsheetMetadata() {
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+
+        for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.ALL) {
+            this.parseEnvironmentValueNameAndCachedCheck(
+                context,
+                "spreadsheetMetadata." + propertyName.name(),
+                propertyName.type()
+            );
+        }
     }
 
     // logXXX...........................................................................................................

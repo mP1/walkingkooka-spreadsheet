@@ -52,6 +52,11 @@ public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext
      */
     String COLOR_PREFIX = "color";
 
+    /**
+     * Any {@link EnvironmentValueName} beginning with this prefix any value belonging to the current {@link SpreadsheetMetadata}.
+     */
+    String SPREADSHEET_METADATA_PREFIX = "spreadsheetMetadata.";
+
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.registerConstant(
         "serverUrl",
         AbsoluteUrl.class
