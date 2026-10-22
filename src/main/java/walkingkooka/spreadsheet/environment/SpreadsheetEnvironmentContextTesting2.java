@@ -183,7 +183,7 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     // setSpreadsheetMetadata...........................................................................................
 
     @Test
-    default void testSetSpreadsheetMetadataFails() {
+    default void testSetEnvironmentValueWithSpreadsheetMetadataFails() {
         assertThrows(
             ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
