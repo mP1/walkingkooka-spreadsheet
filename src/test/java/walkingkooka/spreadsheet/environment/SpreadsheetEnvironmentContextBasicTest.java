@@ -120,47 +120,20 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     }
 
     @Test
-    public void testWithSpreadsheetEnvironmentContextAndSameStorage() {
-        final SpreadsheetEnvironmentContext wrap = new FakeSpreadsheetEnvironmentContext() {
-            @Override
-            public Storage<SpreadsheetStorageContext> storage() {
-                return STORAGE;
-            }
-        };
-
+    public void testWithSpreadsheetEnvironmentContextAndSameStorageAndSameStorageEnvironmentContext() {
+        final SpreadsheetEnvironmentContextBasic context = SpreadsheetEnvironmentContextBasic.with(
+            SPREADSHEET_METADATA_LOADER,
+            STORAGE,
+            STORAGE_ENVIRONMENT_CONTEXT
+        );
+        
         assertSame(
-            wrap,
+            context,
             SpreadsheetEnvironmentContextBasic.with(
                 SPREADSHEET_METADATA_LOADER,
                 STORAGE,
-                wrap
+                context
             )
-        );
-    }
-
-    @Test
-    public void testWithSpreadsheetEnvironmentContextAndDifferentStorage() {
-        final SpreadsheetEnvironmentContext wrap = new FakeSpreadsheetEnvironmentContext() {
-            @Override
-            public Storage<SpreadsheetStorageContext> storage() {
-                return Storages.fake();
-            }
-        };
-
-        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextBasic) SpreadsheetEnvironmentContextBasic.with(
-            SPREADSHEET_METADATA_LOADER,
-            STORAGE,
-            wrap
-        );
-
-        this.storageAndCheck(
-            basicSpreadsheetEnvironmentContext,
-            STORAGE
-        );
-
-        this.environmentContextAndCheck(
-            basicSpreadsheetEnvironmentContext,
-            wrap
         );
     }
 
@@ -168,7 +141,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testWithEnvironmentContext() {
         final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
 
-        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = (SpreadsheetEnvironmentContextBasic) SpreadsheetEnvironmentContextBasic.with(
+        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextBasic.with(
             SPREADSHEET_METADATA_LOADER,
             STORAGE,
             storageEnvironmentContext
@@ -637,12 +610,11 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             SPREADSHEET_ID
         );
 
-        return (SpreadsheetEnvironmentContextBasic)
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
-                storageEnvironmentContext
-            );
+        return SpreadsheetEnvironmentContextBasic.with(
+            SPREADSHEET_METADATA_LOADER,
+            STORAGE,
+            storageEnvironmentContext
+        );
     }
 
     // hashCode/equals..................................................................................................
