@@ -26,8 +26,8 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
-import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
@@ -222,18 +222,19 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
 
         final Optional<T> environmentValue;
         if (SPREADSHEET_METADATA.equals(name)) {
-            final SpreadsheetId spreadsheetId = this.spreadsheetId()
-                .orElse(null);
             environmentValue = Cast.to(
-                null != spreadsheetId ?
-                    this.spreadsheetMetadataLoader.loadMetadata(spreadsheetId) :
-                    HasSpreadsheetMetadata.NO_METADATA
+                this.loadSpreadsheetMetadata()
             );
         } else {
             environmentValue = this.context.environmentValue(name);
         }
 
         return environmentValue;
+    }
+
+    private Optional<SpreadsheetMetadata> loadSpreadsheetMetadata() {
+        return this.spreadsheetId()
+            .flatMap(this.spreadsheetMetadataLoader::loadMetadata);
     }
 
     /**
