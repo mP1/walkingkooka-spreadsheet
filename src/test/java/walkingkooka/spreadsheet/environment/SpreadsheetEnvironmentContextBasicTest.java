@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
@@ -197,6 +198,76 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             context,
             SpreadsheetEnvironmentContext.SPREADSHEET_METADATA,
             SPREADSHEET_METADATA
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueWithSpreadsheetMetadataPropertyNameMissingSpreadsheetId() {
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+        context.setSpreadsheetId(Optional.empty());
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.with(
+                SpreadsheetEnvironmentContext.SPREADSHEET_METADATA_PREFIX + SpreadsheetMetadataPropertyName.AUDIT_INFO.value(),
+                AuditInfo.class
+            )
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueWithUnknownSpreadsheetMetadataProperty() {
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+
+        this.spreadsheetIdAndCheck(
+            context,
+            SPREADSHEET_ID
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.with(
+                SpreadsheetEnvironmentContext.SPREADSHEET_METADATA_PREFIX + "unknown404",
+                AuditInfo.class
+            )
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueWithSpreadsheetMetadataAuditInfo() {
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+
+        this.spreadsheetIdAndCheck(
+            context,
+            SPREADSHEET_ID
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.with(
+                SpreadsheetEnvironmentContext.SPREADSHEET_METADATA_PREFIX + SpreadsheetMetadataPropertyName.AUDIT_INFO.value(),
+                AuditInfo.class
+            ),
+            SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueWithSpreadsheetMetadataCurrency() {
+        final SpreadsheetEnvironmentContextBasic context = this.createContext();
+
+        this.spreadsheetIdAndCheck(
+            context,
+            SPREADSHEET_ID
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.with(
+                SpreadsheetEnvironmentContext.SPREADSHEET_METADATA_PREFIX + SpreadsheetMetadataPropertyName.CURRENCY.value(),
+                Currency.class
+            ),
+            SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.CURRENCY)
         );
     }
 

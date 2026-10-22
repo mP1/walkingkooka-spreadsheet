@@ -234,13 +234,35 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
         Objects.requireNonNull(name, "name");
 
-        final Optional<T> environmentValue;
+        Optional<T> environmentValue;
+
         if (SPREADSHEET_METADATA.equals(name)) {
             environmentValue = Cast.to(
                 this.loadSpreadsheetMetadata()
             );
         } else {
-            environmentValue = this.context.environmentValue(name);
+            final String environmentValueName = name.value();
+            if (EnvironmentValueName.CASE_SENSITIVITY.startsWith(environmentValueName, SPREADSHEET_METADATA_PREFIX)) {
+                final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.tryWith(
+                    environmentValueName.substring(
+                        SPREADSHEET_METADATA_PREFIX.length()
+                    )
+                ).orElse(null);
+
+                if (null != propertyName) {
+                    // TODO what should happen if SpreadsheetMetadataPropertyName does not match EnvironmentValueName ?
+                    environmentValue = Cast.to(
+                        this.loadSpreadsheetMetadata()
+                            .flatMap(
+                                (SpreadsheetMetadata spreadsheetMetadata) -> spreadsheetMetadata.get(propertyName)
+                            )
+                    );
+                } else {
+                    environmentValue = Optional.empty();
+                }
+            } else {
+                environmentValue = this.context.environmentValue(name);
+            }
         }
 
         return environmentValue;
