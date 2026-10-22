@@ -297,7 +297,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     }
 
     private static void modificationGuard(final EnvironmentValueName<?> name) {
-        if (SERVER_URL.equals(name) || SPREADSHEET_METADATA.equals(name)) {
+        if (SERVER_URL.equals(name) || SPREADSHEET_METADATA.equals(name) || name.startsWith(SPREADSHEET_METADATA_PREFIX)) {
             throw name.readOnlyEnvironmentValueException();
         }
     }
