@@ -54,31 +54,29 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     StorageEnvironmentContextDelegator,
     TreePrintable {
 
-    static SpreadsheetEnvironmentContext with(final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
-                                              final Storage<SpreadsheetStorageContext> storage,
-                                              final StorageEnvironmentContext storageEnvironmentContext) {
+    static SpreadsheetEnvironmentContextBasic with(final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
+                                                   final Storage<SpreadsheetStorageContext> storage,
+                                                   final StorageEnvironmentContext storageEnvironmentContext) {
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(storageEnvironmentContext, "storageEnvironmentContext");
 
-        SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = null;
+        SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = null;
 
-        if (storageEnvironmentContext instanceof SpreadsheetEnvironmentContext) {
-            spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) storageEnvironmentContext;
-            if (false == spreadsheetEnvironmentContext.storage().equals(storage)) {
-                spreadsheetEnvironmentContext = null;
+        if (storageEnvironmentContext instanceof SpreadsheetEnvironmentContextBasic) {
+            spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic) storageEnvironmentContext;
+            if (false == (spreadsheetEnvironmentContextBasic.spreadsheetMetadataLoader == spreadsheetMetadataLoader && spreadsheetEnvironmentContextBasic.storage == storage)) {
+                spreadsheetEnvironmentContextBasic = null;
             }
         }
 
-        if (null == spreadsheetEnvironmentContext) {
-            spreadsheetEnvironmentContext = new SpreadsheetEnvironmentContextBasic(
+        return null != spreadsheetEnvironmentContextBasic ?
+            spreadsheetEnvironmentContextBasic :
+            new SpreadsheetEnvironmentContextBasic(
                 spreadsheetMetadataLoader,
                 storage,
                 storageEnvironmentContext
             );
-        }
-
-        return spreadsheetEnvironmentContext;
     }
 
     private SpreadsheetEnvironmentContextBasic(final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
