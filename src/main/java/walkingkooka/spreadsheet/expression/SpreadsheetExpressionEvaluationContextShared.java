@@ -38,9 +38,8 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -374,12 +373,11 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     @Override
     public abstract SpreadsheetEnvironmentContext spreadsheetEnvironmentContext();
 
-    // SpreadsheetMetadataLoader........................................................................................
+    // SpreadsheetMetadataLoaderDelegator...............................................................................
 
     @Override
-    public final Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-        return this.spreadsheetStorageContext()
-            .loadMetadata(id);
+    public final SpreadsheetMetadataLoader spreadsheetMetadataLoader() {
+        return this.spreadsheetMetadataContext();
     }
 
     // StorageExpressionEvaluationContext...............................................................................

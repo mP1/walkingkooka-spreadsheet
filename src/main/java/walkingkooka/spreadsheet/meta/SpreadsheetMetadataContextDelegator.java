@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-public interface SpreadsheetMetadataContextDelegator extends SpreadsheetMetadataContext {
+public interface SpreadsheetMetadataContextDelegator extends SpreadsheetMetadataContext,
+    SpreadsheetMetadataLoaderDelegator {
 
     @Override
     default SpreadsheetMetadata createMetadata(final EmailAddress user,
@@ -34,12 +35,6 @@ public interface SpreadsheetMetadataContextDelegator extends SpreadsheetMetadata
                 user,
                 locale
             );
-    }
-
-    @Override
-    default Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-        return this.spreadsheetMetadataContext()
-            .loadMetadata(id);
     }
 
     @Override
@@ -79,4 +74,11 @@ public interface SpreadsheetMetadataContextDelegator extends SpreadsheetMetadata
     }
 
     SpreadsheetMetadataContext spreadsheetMetadataContext();
+
+    // SpreadsheetMetadataLoaderDelegator...............................................................................
+
+    @Override
+    default SpreadsheetMetadataLoader spreadsheetMetadataLoader() {
+        return this.spreadsheetMetadataContext();
+    }
 }
