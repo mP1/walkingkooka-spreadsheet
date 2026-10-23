@@ -375,6 +375,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        Properties to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterPropertiesToSpreadsheetMetadata)\n" +
                 "        TEXT to SpreadsheetId (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetId)\n" +
                 "        SpreadsheetId to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata)\n" +
+                "        SpreadsheetMetadata to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetMetadataToText)\n" +
                 "        TEXT to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadata)\n" +
                 "        TEXT to SpreadsheetMetadataPropertyName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataPropertyName)\n" +
                 "        TEXT to SpreadsheetName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetName)\n" +
@@ -738,6 +739,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              Properties to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterPropertiesToSpreadsheetMetadata)\n" +
                 "              TEXT to SpreadsheetId (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetId)\n" +
                 "              SpreadsheetId to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata)\n" +
+                "              SpreadsheetMetadata to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetMetadataToText)\n" +
                 "              TEXT to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadata)\n" +
                 "              TEXT to SpreadsheetMetadataPropertyName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataPropertyName)\n" +
                 "              TEXT to SpreadsheetName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetName)\n" +
@@ -3005,7 +3007,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverters.spreadsheetMetadata(),
             SpreadsheetSelection.A1.text(),
             SpreadsheetCellReference.class,
-            SPREADSHEET_METADATA_CONVERTER_CONTEXT
+            createSpreadsheetMetadataConverterContext(LINE_ENDING)
         );
     }
 
@@ -3013,6 +3015,18 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SpreadsheetId.with(1)
     );
+
+    @Test
+    public void testSpreadsheetMetadataConvertSpreadsheetMetadataToString() {
+        this.spreadsheetMetadataConvertAndCheck(
+            SPREADSHEET_METADATA,
+            String.class,
+            LINE_ENDING,
+            "{\n" +
+                "  \"spreadsheetId\": \"1\"\n" +
+                "}"
+        );
+    }
 
     @Test
     public void testSpreadsheetMetadataConvertStringToSpreadsheetId() {
@@ -3082,74 +3096,99 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private <T> void spreadsheetMetadataConvertAndCheck(final Object value,
                                                         final Class<T> type,
                                                         final T expected) {
-        this.convertAndCheck(
-            SpreadsheetConverters.spreadsheetMetadata(),
+        this.spreadsheetMetadataConvertAndCheck(
             value,
             type,
-            SPREADSHEET_METADATA_CONVERTER_CONTEXT,
+            LINE_ENDING,
             expected
         );
     }
 
-    private final static SpreadsheetConverterContext SPREADSHEET_METADATA_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
-        @Override
-        public boolean canConvert(final Object value,
-                                  final Class<?> type) {
-            return this.converter.canConvert(
-                value,
-                type,
-                this
-            );
-        }
-
-        @Override
-        public <T> Either<T, String> convert(final Object value,
-                                             final Class<T> target) {
-            return this.converter.convert(
-                value,
-                target,
-                this
-            );
-        }
-
-        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
-            Lists.of(
-                SpreadsheetConverters.simple(),
-                SpreadsheetConverters.text(),
-                SpreadsheetConverters.json(),
-                SpreadsheetConverters.textToSpreadsheetId()
-            )
+    private <T> void spreadsheetMetadataConvertAndCheck(final Object value,
+                                                        final Class<T> type,
+                                                        final LineEnding lineEnding,
+                                                        final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.spreadsheetMetadata(),
+            value,
+            type,
+            createSpreadsheetMetadataConverterContext(lineEnding),
+            expected
         );
+    }
 
-        @Override
-        public Optional<JsonString> typeName(final Class<?> type) {
-            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.typeName(type);
-        }
+    private static SpreadsheetConverterContext createSpreadsheetMetadataConverterContext(final LineEnding lineEnding) {
+        return new FakeSpreadsheetConverterContext() {
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return this.converter.canConvert(
+                    value,
+                    type,
+                    this
+                );
+            }
 
-        @Override
-        public JsonNode marshall(final Object object) {
-            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(object);
-        }
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                    value,
+                    target,
+                    this
+                );
+            }
 
-        @Override
-        public <T> T unmarshall(final JsonNode json,
-                                final Class<T> type) {
-            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.unmarshall(
-                json,
-                type
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+                Lists.of(
+                    SpreadsheetConverters.simple(),
+                    SpreadsheetConverters.text(),
+                    SpreadsheetConverters.json(),
+                    SpreadsheetConverters.textToSpreadsheetId(),
+                    SpreadsheetConverters.toMultiLineText()
+                )
             );
-        }
 
-        @Override
-        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-            return Optional.ofNullable(
-                SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
-                    .equals(id) ?
-                    SPREADSHEET_METADATA :
-                    null
-            );
-        }
-    };
+            @Override
+            public Optional<JsonString> typeName(final Class<?> type) {
+                return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.typeName(type);
+            }
+
+            @Override
+            public JsonNode marshall(final Object object) {
+                return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(object);
+            }
+
+            @Override
+            public <T> T unmarshall(final JsonNode json,
+                                    final Class<T> type) {
+                return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.unmarshall(
+                    json,
+                    type
+                );
+            }
+
+            @Override
+            public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+                return Optional.ofNullable(
+                    SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                        .equals(id) ?
+                        SPREADSHEET_METADATA :
+                        null
+                );
+            }
+
+            @Override
+            public Indentation indentation() {
+                return INDENTATION;
+            }
+
+            @Override
+            public LineEnding lineEnding() {
+                return lineEnding;
+            }
+        };
+    }
 
     @Test
     public void testSpreadsheetMetadataPrintTree() {
@@ -3161,6 +3200,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      Properties to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterPropertiesToSpreadsheetMetadata)\n" +
                 "      TEXT to SpreadsheetId (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetId)\n" +
                 "      SpreadsheetId to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata)\n" +
+                "      SpreadsheetMetadata to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetMetadataToText)\n" +
                 "      TEXT to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadata)\n" +
                 "      TEXT to SpreadsheetMetadataPropertyName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataPropertyName)\n" +
                 "      TEXT to SpreadsheetName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetName)\n"
@@ -4077,6 +4117,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            Properties to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterPropertiesToSpreadsheetMetadata)\n" +
                 "            TEXT to SpreadsheetId (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetId)\n" +
                 "            SpreadsheetId to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata)\n" +
+                "            SpreadsheetMetadata to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetMetadataToText)\n" +
                 "            TEXT to SpreadsheetMetadata (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadata)\n" +
                 "            TEXT to SpreadsheetMetadataPropertyName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataPropertyName)\n" +
                 "            TEXT to SpreadsheetName (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetName)\n" +
