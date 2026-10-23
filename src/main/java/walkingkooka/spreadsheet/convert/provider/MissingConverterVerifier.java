@@ -1643,6 +1643,18 @@ final class MissingConverterVerifier {
                 );
             }
 
+            // spreadsheet-spreadsheet-to-spreadsheet-text..............................................................
+            if (formula || scripting) {
+                final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
+
+                verifier.addIfConversionFail(
+                    metadata,
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, //
+                    IS_STRING
+                );
+            }
+
             // text-to-spreadsheet-id...................................................................................
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
 

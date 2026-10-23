@@ -662,6 +662,7 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
                 propertiesToSpreadsheetMetadata(),
                 textToSpreadsheetId(),
                 spreadsheetIdToSpreadsheetMetadata(), // must appear after textToSpreadsheetId to avoid StackOverflowError
+                spreadsheetMetadataToText(),
                 textToSpreadsheetMetadata(),
                 textToSpreadsheetMetadataPropertyName(),
                 textToSpreadsheetName()
