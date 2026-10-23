@@ -89,6 +89,7 @@ import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -3572,8 +3573,498 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
+    @Test
+    public void testTreePrintWithDifferentLineEnding() {
+        this.treePrintAndCheck2(
+            null,
+            null, // SpreadsheetName
+            DIFFERENT_LINE_ENDING,
+            "SpreadsheetMetadataNonEmpty\r\n" +
+                "  auditInfo: \r\n" +
+                "    AuditInfo\r\n" +
+                "      created\r\n" +
+                "        user123@example.com -999999999-01-01T00:00\r\n" +
+                "      modified\r\n" +
+                "        user123@example.com -999999999-01-01T00:00\r\n" +
+                "  autoHideScrollbars: false\r\n" +
+                "  cellCharacterWidth: 1\r\n" +
+                "  color1: black\r\n" +
+                "  color2: white\r\n" +
+                "  colorBlack: 1\r\n" +
+                "  colorWhite: 2\r\n" +
+                "  comparators: \r\n" +
+                "    comparator1\r\n" +
+                "    comparator2\r\n" +
+                "    comparator3\r\n" +
+                "  converters: \r\n" +
+                "    converter1\r\n" +
+                "    converter2\r\n" +
+                "    converter3\r\n" +
+                "  currency: AUD (java.util.Currency)\r\n" +
+                "  dateFormatter: \r\n" +
+                "    date\r\n" +
+                "      \"yyyy/mm/dd\"\r\n" +
+                "  dateOffset: -25569L\r\n" +
+                "  dateParser: \r\n" +
+                "    date\r\n" +
+                "      \"yyyy/mm/dd\"\r\n" +
+                "  dateTimeFormatter: \r\n" +
+                "    date-time\r\n" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\r\n" +
+                "  dateTimeParser: \r\n" +
+                "    date-time\r\n" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\r\n" +
+                "  dateTimeSymbols: \r\n" +
+                "    DateTimeSymbols\r\n" +
+                "      ampms\r\n" +
+                "        am\r\n" +
+                "        pm\r\n" +
+                "      monthNames\r\n" +
+                "        January\r\n" +
+                "        February\r\n" +
+                "        March\r\n" +
+                "        April\r\n" +
+                "        May\r\n" +
+                "        June\r\n" +
+                "        July\r\n" +
+                "        August\r\n" +
+                "        September\r\n" +
+                "        October\r\n" +
+                "        November\r\n" +
+                "        December\r\n" +
+                "      monthNameAbbreviations\r\n" +
+                "        Jan.\r\n" +
+                "        Feb.\r\n" +
+                "        Mar.\r\n" +
+                "        Apr.\r\n" +
+                "        May\r\n" +
+                "        Jun.\r\n" +
+                "        Jul.\r\n" +
+                "        Aug.\r\n" +
+                "        Sep.\r\n" +
+                "        Oct.\r\n" +
+                "        Nov.\r\n" +
+                "        Dec.\r\n" +
+                "      weekDayNames\r\n" +
+                "        Sunday\r\n" +
+                "        Monday\r\n" +
+                "        Tuesday\r\n" +
+                "        Wednesday\r\n" +
+                "        Thursday\r\n" +
+                "        Friday\r\n" +
+                "        Saturday\r\n" +
+                "      weekDayNameAbbreviations\r\n" +
+                "        Sun.\r\n" +
+                "        Mon.\r\n" +
+                "        Tue.\r\n" +
+                "        Wed.\r\n" +
+                "        Thu.\r\n" +
+                "        Fri.\r\n" +
+                "        Sat.\r\n" +
+                "  decimalNumberDigitCount: 8\r\n" +
+                "  decimalNumberSymbols: \r\n" +
+                "    DecimalNumberSymbols\r\n" +
+                "      negativeSign\r\n" +
+                "        '-'\r\n" +
+                "      positiveSign\r\n" +
+                "        '+'\r\n" +
+                "      zeroDigit\r\n" +
+                "        '0'\r\n" +
+                "      currencySymbol\r\n" +
+                "        \"$AUD\"\r\n" +
+                "      decimalSeparator\r\n" +
+                "        '.'\r\n" +
+                "      exponentSymbol\r\n" +
+                "        \"e\"\r\n" +
+                "      groupSeparator\r\n" +
+                "        ','\r\n" +
+                "      infinitySymbol\r\n" +
+                "        \"∞\"\r\n" +
+                "      monetaryDecimalSeparator\r\n" +
+                "        '.'\r\n" +
+                "      nanSymbol\r\n" +
+                "        \"NaN\"\r\n" +
+                "      percentSymbol\r\n" +
+                "        '%'\r\n" +
+                "      permillSymbol\r\n" +
+                "        '‰'\r\n" +
+                "  defaultFormHandler: \r\n" +
+                "    basic\r\n" +
+                "  defaultYear: 2000\r\n" +
+                "  exporters: \r\n" +
+                "    exporter1\r\n" +
+                "    exporter2\r\n" +
+                "    exporter3\r\n" +
+                "  expressionNumberKind: BIG_DECIMAL\r\n" +
+                "  formatters: \r\n" +
+                "    accounting\r\n" +
+                "    automatic\r\n" +
+                "    badge-error\r\n" +
+                "    collection\r\n" +
+                "    currency\r\n" +
+                "    date\r\n" +
+                "    date-time\r\n" +
+                "    default-text\r\n" +
+                "    expression\r\n" +
+                "    full-date\r\n" +
+                "    full-date-time\r\n" +
+                "    full-time\r\n" +
+                "    general\r\n" +
+                "    hyperlinking\r\n" +
+                "    long-date\r\n" +
+                "    long-date-time\r\n" +
+                "    long-time\r\n" +
+                "    medium-date\r\n" +
+                "    medium-date-time\r\n" +
+                "    medium-time\r\n" +
+                "    number\r\n" +
+                "    percent\r\n" +
+                "    scientific\r\n" +
+                "    short-date\r\n" +
+                "    short-date-time\r\n" +
+                "    short-time\r\n" +
+                "    text\r\n" +
+                "    time\r\n" +
+                "  formHandlers: \r\n" +
+                "    handler1\r\n" +
+                "    handler2\r\n" +
+                "    handler3\r\n" +
+                "  formulaConverter: \r\n" +
+                "    collection\r\n" +
+                "      \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\r\n" +
+                "  formulaFunctions: \r\n" +
+                "    function1\r\n" +
+                "    function2\r\n" +
+                "    function3\r\n" +
+                "  functions: \r\n" +
+                "    function1\r\n" +
+                "    function2\r\n" +
+                "    function3\r\n" +
+                "  importers: \r\n" +
+                "    importer1\r\n" +
+                "    importer2\r\n" +
+                "    importer3\r\n" +
+                "  locale: en_AU (java.util.Locale)\r\n" +
+                "  numberFormatter: \r\n" +
+                "    number\r\n" +
+                "      \"0.#;0.#;0\"\r\n" +
+                "  numberParser: \r\n" +
+                "    number\r\n" +
+                "      \"0.#;0.#;0\"\r\n" +
+                "  parsers: \r\n" +
+                "    date\r\n" +
+                "    date-time\r\n" +
+                "    full-date\r\n" +
+                "    full-date-time\r\n" +
+                "    full-time\r\n" +
+                "    general\r\n" +
+                "    long-date\r\n" +
+                "    long-date-time\r\n" +
+                "    long-time\r\n" +
+                "    medium-date\r\n" +
+                "    medium-date-time\r\n" +
+                "    medium-time\r\n" +
+                "    number\r\n" +
+                "    short-date\r\n" +
+                "    short-date-time\r\n" +
+                "    short-time\r\n" +
+                "    time\r\n" +
+                "    whole-number\r\n" +
+                "  plugins: \r\n" +
+                "    plugin1\r\n" +
+                "    plugin2\r\n" +
+                "    plugin3\r\n" +
+                "  precision: 7\r\n" +
+                "  roundingMode: HALF_UP\r\n" +
+                "  showFormulaEditor: true\r\n" +
+                "  showFormulas: false\r\n" +
+                "  showGridLines: true\r\n" +
+                "  showHeadings: true\r\n" +
+                "  style: \r\n" +
+                "    TextStyle\r\n" +
+                "      height=50px\r\n" +
+                "      width=100px\r\n" +
+                "  textFormatter: \r\n" +
+                "    text\r\n" +
+                "      \"@\"\r\n" +
+                "  timeFormatter: \r\n" +
+                "    time\r\n" +
+                "      \"hh:mm:ss\"\r\n" +
+                "  timeParser: \r\n" +
+                "    time\r\n" +
+                "      \"hh:mm:ss\"\r\n" +
+                "  twoDigitYear: 50\r\n" +
+                "  validationValidators: \r\n" +
+                "    validator1\r\n" +
+                "    validator2\r\n" +
+                "    validator3\r\n" +
+                "  validators: \r\n" +
+                "    absolute-url\r\n" +
+                "    checkbox\r\n" +
+                "    choice-list\r\n" +
+                "    collection\r\n" +
+                "    email-address\r\n" +
+                "    expression\r\n" +
+                "    non-null\r\n" +
+                "    text-length\r\n" +
+                "    text-mask\r\n" +
+                "  valueSeparator: ','\r\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintWithCarriageReturnLineEnding() {
+        this.treePrintAndCheck2(
+            null,
+            null, // SpreadsheetName
+            LineEnding.CR,
+            "SpreadsheetMetadataNonEmpty\r" +
+                "  auditInfo: \r" +
+                "    AuditInfo\r" +
+                "      created\r" +
+                "        user123@example.com -999999999-01-01T00:00\r" +
+                "      modified\r" +
+                "        user123@example.com -999999999-01-01T00:00\r" +
+                "  autoHideScrollbars: false\r" +
+                "  cellCharacterWidth: 1\r" +
+                "  color1: black\r" +
+                "  color2: white\r" +
+                "  colorBlack: 1\r" +
+                "  colorWhite: 2\r" +
+                "  comparators: \r" +
+                "    comparator1\r" +
+                "    comparator2\r" +
+                "    comparator3\r" +
+                "  converters: \r" +
+                "    converter1\r" +
+                "    converter2\r" +
+                "    converter3\r" +
+                "  currency: AUD (java.util.Currency)\r" +
+                "  dateFormatter: \r" +
+                "    date\r" +
+                "      \"yyyy/mm/dd\"\r" +
+                "  dateOffset: -25569L\r" +
+                "  dateParser: \r" +
+                "    date\r" +
+                "      \"yyyy/mm/dd\"\r" +
+                "  dateTimeFormatter: \r" +
+                "    date-time\r" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\"\r" +
+                "  dateTimeParser: \r" +
+                "    date-time\r" +
+                "      \"dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;d mmmm yy \\\\a\\\\t h:mm:ss;d mmmm yy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\\\a\\\\t h:mm:ss.0;d mmmm yyyy \\\\a\\\\t h:mm:ss;d mmmm yyyy \\\\a\\\\t h:mm AM/PM;d mmmm yyyy \\\\a\\\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm\"\r" +
+                "  dateTimeSymbols: \r" +
+                "    DateTimeSymbols\r" +
+                "      ampms\r" +
+                "        am\r" +
+                "        pm\r" +
+                "      monthNames\r" +
+                "        January\r" +
+                "        February\r" +
+                "        March\r" +
+                "        April\r" +
+                "        May\r" +
+                "        June\r" +
+                "        July\r" +
+                "        August\r" +
+                "        September\r" +
+                "        October\r" +
+                "        November\r" +
+                "        December\r" +
+                "      monthNameAbbreviations\r" +
+                "        Jan.\r" +
+                "        Feb.\r" +
+                "        Mar.\r" +
+                "        Apr.\r" +
+                "        May\r" +
+                "        Jun.\r" +
+                "        Jul.\r" +
+                "        Aug.\r" +
+                "        Sep.\r" +
+                "        Oct.\r" +
+                "        Nov.\r" +
+                "        Dec.\r" +
+                "      weekDayNames\r" +
+                "        Sunday\r" +
+                "        Monday\r" +
+                "        Tuesday\r" +
+                "        Wednesday\r" +
+                "        Thursday\r" +
+                "        Friday\r" +
+                "        Saturday\r" +
+                "      weekDayNameAbbreviations\r" +
+                "        Sun.\r" +
+                "        Mon.\r" +
+                "        Tue.\r" +
+                "        Wed.\r" +
+                "        Thu.\r" +
+                "        Fri.\r" +
+                "        Sat.\r" +
+                "  decimalNumberDigitCount: 8\r" +
+                "  decimalNumberSymbols: \r" +
+                "    DecimalNumberSymbols\r" +
+                "      negativeSign\r" +
+                "        '-'\r" +
+                "      positiveSign\r" +
+                "        '+'\r" +
+                "      zeroDigit\r" +
+                "        '0'\r" +
+                "      currencySymbol\r" +
+                "        \"$AUD\"\r" +
+                "      decimalSeparator\r" +
+                "        '.'\r" +
+                "      exponentSymbol\r" +
+                "        \"e\"\r" +
+                "      groupSeparator\r" +
+                "        ','\r" +
+                "      infinitySymbol\r" +
+                "        \"∞\"\r" +
+                "      monetaryDecimalSeparator\r" +
+                "        '.'\r" +
+                "      nanSymbol\r" +
+                "        \"NaN\"\r" +
+                "      percentSymbol\r" +
+                "        '%'\r" +
+                "      permillSymbol\r" +
+                "        '‰'\r" +
+                "  defaultFormHandler: \r" +
+                "    basic\r" +
+                "  defaultYear: 2000\r" +
+                "  exporters: \r" +
+                "    exporter1\r" +
+                "    exporter2\r" +
+                "    exporter3\r" +
+                "  expressionNumberKind: BIG_DECIMAL\r" +
+                "  formatters: \r" +
+                "    accounting\r" +
+                "    automatic\r" +
+                "    badge-error\r" +
+                "    collection\r" +
+                "    currency\r" +
+                "    date\r" +
+                "    date-time\r" +
+                "    default-text\r" +
+                "    expression\r" +
+                "    full-date\r" +
+                "    full-date-time\r" +
+                "    full-time\r" +
+                "    general\r" +
+                "    hyperlinking\r" +
+                "    long-date\r" +
+                "    long-date-time\r" +
+                "    long-time\r" +
+                "    medium-date\r" +
+                "    medium-date-time\r" +
+                "    medium-time\r" +
+                "    number\r" +
+                "    percent\r" +
+                "    scientific\r" +
+                "    short-date\r" +
+                "    short-date-time\r" +
+                "    short-time\r" +
+                "    text\r" +
+                "    time\r" +
+                "  formHandlers: \r" +
+                "    handler1\r" +
+                "    handler2\r" +
+                "    handler3\r" +
+                "  formulaConverter: \r" +
+                "    collection\r" +
+                "      \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\r" +
+                "  formulaFunctions: \r" +
+                "    function1\r" +
+                "    function2\r" +
+                "    function3\r" +
+                "  functions: \r" +
+                "    function1\r" +
+                "    function2\r" +
+                "    function3\r" +
+                "  importers: \r" +
+                "    importer1\r" +
+                "    importer2\r" +
+                "    importer3\r" +
+                "  locale: en_AU (java.util.Locale)\r" +
+                "  numberFormatter: \r" +
+                "    number\r" +
+                "      \"0.#;0.#;0\"\r" +
+                "  numberParser: \r" +
+                "    number\r" +
+                "      \"0.#;0.#;0\"\r" +
+                "  parsers: \r" +
+                "    date\r" +
+                "    date-time\r" +
+                "    full-date\r" +
+                "    full-date-time\r" +
+                "    full-time\r" +
+                "    general\r" +
+                "    long-date\r" +
+                "    long-date-time\r" +
+                "    long-time\r" +
+                "    medium-date\r" +
+                "    medium-date-time\r" +
+                "    medium-time\r" +
+                "    number\r" +
+                "    short-date\r" +
+                "    short-date-time\r" +
+                "    short-time\r" +
+                "    time\r" +
+                "    whole-number\r" +
+                "  plugins: \r" +
+                "    plugin1\r" +
+                "    plugin2\r" +
+                "    plugin3\r" +
+                "  precision: 7\r" +
+                "  roundingMode: HALF_UP\r" +
+                "  showFormulaEditor: true\r" +
+                "  showFormulas: false\r" +
+                "  showGridLines: true\r" +
+                "  showHeadings: true\r" +
+                "  style: \r" +
+                "    TextStyle\r" +
+                "      height=50px\r" +
+                "      width=100px\r" +
+                "  textFormatter: \r" +
+                "    text\r" +
+                "      \"@\"\r" +
+                "  timeFormatter: \r" +
+                "    time\r" +
+                "      \"hh:mm:ss\"\r" +
+                "  timeParser: \r" +
+                "    time\r" +
+                "      \"hh:mm:ss\"\r" +
+                "  twoDigitYear: 50\r" +
+                "  validationValidators: \r" +
+                "    validator1\r" +
+                "    validator2\r" +
+                "    validator3\r" +
+                "  validators: \r" +
+                "    absolute-url\r" +
+                "    checkbox\r" +
+                "    choice-list\r" +
+                "    collection\r" +
+                "    email-address\r" +
+                "    expression\r" +
+                "    non-null\r" +
+                "    text-length\r" +
+                "    text-mask\r" +
+                "  valueSeparator: ','\r"
+        );
+    }
+    
     private void treePrintAndCheck2(final SpreadsheetId spreadsheetId,
                                     final SpreadsheetName spreadsheetName,
+                                    final String expected) {
+        this.treePrintAndCheck2(
+            spreadsheetId,
+            spreadsheetName,
+            LINE_ENDING,
+            expected
+        );
+    }
+
+    private void treePrintAndCheck2(final SpreadsheetId spreadsheetId,
+                                    final SpreadsheetName spreadsheetName,
+                                    final LineEnding lineEnding,
                                     final String expected) {
         this.treePrintAndCheck(
             SpreadsheetMetadata.EMPTY
@@ -3727,6 +4218,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     SpreadsheetMetadataPropertyName.namedColor(NamedColor.WHITE),
                     Color.indexed(2)
                 ),
+            lineEnding,
             expected
         );
     }
