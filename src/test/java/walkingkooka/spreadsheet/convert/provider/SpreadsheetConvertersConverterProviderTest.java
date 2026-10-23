@@ -467,6 +467,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithSpreadsheetMetadataToText() {
+        this.converterAndCheck(
+            "spreadsheet-metadata-to-text",
+            SpreadsheetConverters.spreadsheetMetadataToText()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithSpreadsheetSelection() {
         this.converterAndCheck(
             "spreadsheet-selection",
@@ -1533,6 +1541,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-set spreadsheet-cell-set\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-id-to-spreadsheet-metadata spreadsheet-id-to-spreadsheet-metadata\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-metadata spreadsheet-metadata\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-metadata-to-text spreadsheet-metadata-to-text\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection spreadsheet-selection\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection-to-spreadsheet-selection spreadsheet-selection-to-spreadsheet-selection\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-selection-to-text spreadsheet-selection-to-text\n" +

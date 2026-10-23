@@ -657,6 +657,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "      spreadsheet-cell-set\n" +
                 "      spreadsheet-id-to-spreadsheet-metadata\n" +
                 "      spreadsheet-metadata\n" +
+                "      spreadsheet-metadata-to-text\n" +
                 "      spreadsheet-selection\n" +
                 "      spreadsheet-selection-to-spreadsheet-selection\n" +
                 "      spreadsheet-selection-to-text\n" +
@@ -1163,6 +1164,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "          spreadsheet-cell-set\n" +
                 "          spreadsheet-id-to-spreadsheet-metadata\n" +
                 "          spreadsheet-metadata\n" +
+                "          spreadsheet-metadata-to-text\n" +
                 "          spreadsheet-selection\n" +
                 "          spreadsheet-selection-to-spreadsheet-selection\n" +
                 "          spreadsheet-selection-to-text\n" +
