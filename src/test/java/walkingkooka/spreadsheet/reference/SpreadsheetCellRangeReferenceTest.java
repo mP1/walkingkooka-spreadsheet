@@ -3211,7 +3211,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseCellRange("A1:B2"),
-            "cell-range A1:B2" + EOL
+            "cell-range A1:B2" + LINE_ENDING
         );
     }
 

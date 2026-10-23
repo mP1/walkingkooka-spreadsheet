@@ -2052,7 +2052,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseCell("A12"),
-            "cell A12" + EOL
+            "cell A12" + LINE_ENDING
         );
     }
 

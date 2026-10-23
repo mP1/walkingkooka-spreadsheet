@@ -1411,7 +1411,7 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseColumnRange("A:B"),
-            "column-range A:B" + EOL
+            "column-range A:B" + LINE_ENDING
         );
     }
 

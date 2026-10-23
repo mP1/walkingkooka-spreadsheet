@@ -189,7 +189,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
         this.treePrintAndCheck(
             SpreadsheetSelection.A1
                 .setAnchor(SpreadsheetViewportAnchor.NONE),
-            "cell A1" + EOL
+            "cell A1" + LINE_ENDING
         );
     }
 
@@ -198,7 +198,7 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
         this.treePrintAndCheck(
             SpreadsheetSelection.parseCellRange("B2:C3")
                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
-            "cell-range B2:C3 TOP_LEFT" + EOL
+            "cell-range B2:C3 TOP_LEFT" + LINE_ENDING
         );
     }
 

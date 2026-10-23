@@ -740,7 +740,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
     public void testTreePrintEmpty() {
         this.treePrintAndCheck(
             SpreadsheetViewportWindows.EMPTY,
-            "" + EOL
+            "" + LINE_ENDING
         );
     }
 
@@ -748,7 +748,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
     public void testTreePrintNotEmpty() {
         this.treePrintAndCheck(
             this.createObject(),
-            "A1:B2" + EOL
+            "A1:B2" + LINE_ENDING
         );
     }
 

@@ -190,8 +190,8 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
         this.treePrintAndCheck(
             row,
-            "" + REFERENCE + EOL +
-                "  hidden" + EOL
+            "" + REFERENCE + LINE_ENDING +
+                "  hidden" + LINE_ENDING
         );
     }
 
