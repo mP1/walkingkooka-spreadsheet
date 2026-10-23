@@ -243,7 +243,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     public void testTreePrint() {
         this.treePrintAndCheck(
             this.createComparable(),
-            "label123: $A2" + EOL
+            "label123: $A2" + LINE_ENDING
         );
     }
 

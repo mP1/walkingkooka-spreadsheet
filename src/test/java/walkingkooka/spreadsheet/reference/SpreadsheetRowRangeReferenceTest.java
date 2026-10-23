@@ -1474,7 +1474,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseRowRange("12:34"),
-            "row-range 12:34" + EOL
+            "row-range 12:34" + LINE_ENDING
         );
     }
 

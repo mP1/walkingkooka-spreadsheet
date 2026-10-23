@@ -600,7 +600,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetSelection.labelName("Label123"),
-            "label Label123" + EOL
+            "label Label123" + LINE_ENDING
         );
     }
 

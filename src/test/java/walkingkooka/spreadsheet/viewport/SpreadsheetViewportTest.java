@@ -334,7 +334,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
             SpreadsheetSelection.A1
                 .setDefaultAnchor(),
-            "cell A1" + EOL
+            "cell A1" + LINE_ENDING
         );
     }
 
@@ -343,7 +343,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
             SpreadsheetSelection.parseRow("12")
                 .setDefaultAnchor(),
-            "row 12" + EOL
+            "row 12" + LINE_ENDING
         );
     }
 
@@ -352,7 +352,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
             SpreadsheetSelection.parseRowRange("12:34")
                 .setAnchor(SpreadsheetViewportAnchor.TOP),
-            "row-range 12:34 TOP" + EOL
+            "row-range 12:34 TOP" + LINE_ENDING
         );
     }
 

@@ -193,8 +193,8 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
 
         this.treePrintAndCheck(
             column,
-            "" + REFERENCE + EOL +
-                "  hidden" + EOL
+            "" + REFERENCE + LINE_ENDING +
+                "  hidden" + LINE_ENDING
         );
     }
 

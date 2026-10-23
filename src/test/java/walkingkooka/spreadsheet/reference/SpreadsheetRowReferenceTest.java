@@ -1056,7 +1056,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseRow("12"),
-            "row 12" + EOL
+            "row 12" + LINE_ENDING
         );
     }
 

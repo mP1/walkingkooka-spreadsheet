@@ -71,7 +71,7 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
 
         this.treePrintAndCheck(
             columnOrRow,
-            columnOrRow.reference().toString() + EOL
+            columnOrRow.reference().toString() + LINE_ENDING
         );
     }
 

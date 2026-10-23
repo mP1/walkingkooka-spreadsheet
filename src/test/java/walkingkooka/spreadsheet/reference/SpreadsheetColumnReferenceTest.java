@@ -798,7 +798,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseColumn("AB"),
-            "column AB" + EOL
+            "column AB" + LINE_ENDING
         );
     }
 
