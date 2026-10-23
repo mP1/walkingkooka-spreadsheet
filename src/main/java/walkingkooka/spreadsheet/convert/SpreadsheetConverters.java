@@ -673,6 +673,13 @@ public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
     private static Converter<SpreadsheetConverterContext> SPREADSHEET_METADATA;
 
     /**
+     * {@link SpreadsheetConverterSpreadsheetMetadataToText}
+     */
+    public static Converter<SpreadsheetConverterContext> spreadsheetMetadataToText() {
+        return SpreadsheetConverterSpreadsheetMetadataToText.INSTANCE;
+    }
+
+    /**
      * A converter that involves converting from or to a {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}.
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetSelection() {
