@@ -21,14 +21,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginAliasLikeTesting;
-import walkingkooka.reflect.PublicClassTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTesting<SpreadsheetComparatorName, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias>,
-    PublicClassTesting<SpreadsheetComparatorAlias> {
+public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTesting<SpreadsheetComparatorName, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias> {
 
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("hello");
 
