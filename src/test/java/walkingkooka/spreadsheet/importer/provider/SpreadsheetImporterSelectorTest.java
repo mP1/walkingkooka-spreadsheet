@@ -19,14 +19,11 @@ package walkingkooka.spreadsheet.importer.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
-import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetImporterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetImporterSelector, SpreadsheetImporterName>,
-    PublicClassTesting<SpreadsheetImporterSelector> {
+public final class SpreadsheetImporterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetImporterSelector, SpreadsheetImporterName> {
 
     @Override
     public SpreadsheetImporterSelector createPluginSelectorLike(final SpreadsheetImporterName name,

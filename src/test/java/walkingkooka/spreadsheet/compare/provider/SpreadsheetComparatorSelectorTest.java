@@ -20,14 +20,11 @@ package walkingkooka.spreadsheet.compare.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
-import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetComparatorSelectorTest implements PluginSelectorLikeTesting<SpreadsheetComparatorSelector, SpreadsheetComparatorName>,
-    PublicClassTesting<SpreadsheetComparatorSelector> {
+public final class SpreadsheetComparatorSelectorTest implements PluginSelectorLikeTesting<SpreadsheetComparatorSelector, SpreadsheetComparatorName> {
 
     @Test
     public void testParse() {
