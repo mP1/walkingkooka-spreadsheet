@@ -22,14 +22,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoSetLikeTesting;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet>,
-    PublicClassTesting<SpreadsheetParserInfoSet> {
+public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet> {
 
     // immutable set....................................................................................................
 
