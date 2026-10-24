@@ -21,15 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoSetLikeTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet>,
-    ClassTesting<SpreadsheetComparatorInfoSet> {
+    PublicClassTesting<SpreadsheetComparatorInfoSet> {
 
     @Test
     public void testImmutableSet() {
@@ -130,10 +129,5 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
     @Override
     public Class<SpreadsheetComparatorInfoSet> type() {
         return SpreadsheetComparatorInfoSet.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

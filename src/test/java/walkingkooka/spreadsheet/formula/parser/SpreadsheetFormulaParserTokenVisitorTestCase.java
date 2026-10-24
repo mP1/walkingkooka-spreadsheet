@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.formula.parser;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public abstract class SpreadsheetFormulaParserTokenVisitorTestCase<V extends SpreadsheetFormulaParserTokenVisitor> implements SpreadsheetFormulaParserTokenVisitorTesting<V> {
+public abstract class SpreadsheetFormulaParserTokenVisitorTestCase<V extends SpreadsheetFormulaParserTokenVisitor> implements SpreadsheetFormulaParserTokenVisitorTesting<V>,
+    PackagePrivateClassTesting<V> {
 
     SpreadsheetFormulaParserTokenVisitorTestCase() {
         super();
@@ -33,10 +34,5 @@ public abstract class SpreadsheetFormulaParserTokenVisitorTestCase<V extends Spr
     @Override
     public final String typeNameSuffix() {
         return "";
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

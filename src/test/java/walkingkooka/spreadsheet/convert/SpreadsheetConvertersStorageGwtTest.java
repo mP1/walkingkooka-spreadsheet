@@ -19,16 +19,12 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetConvertersStorageGwtTest implements ClassTesting<SpreadsheetConvertersStorageGwt> {
+public final class SpreadsheetConvertersStorageGwtTest implements PackagePrivateClassTesting<SpreadsheetConvertersStorageGwt> {
     
     @Override
     public Class<SpreadsheetConvertersStorageGwt> type() {
         return SpreadsheetConvertersStorageGwt.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

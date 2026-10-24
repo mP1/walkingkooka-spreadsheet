@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverterTest implements ClassTesting<SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter> {
+public final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverterTest implements PackagePrivateClassTesting<SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter> {
 
     @Override
     public Class<SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter> type() {
         return SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -26,6 +26,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
@@ -42,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetViewportNavigationListTest implements ImmutableListTesting<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
     ParseStringTesting<SpreadsheetViewportNavigationList>,
     TreePrintableTesting,
-    ClassTesting<SpreadsheetViewportNavigationList>,
+    PublicClassTesting<SpreadsheetViewportNavigationList>,
     HasTextTesting,
     HasUrlFragmentTesting,
     JsonNodeMarshallerTesting<SpreadsheetViewportNavigationList> {
@@ -811,15 +812,10 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetViewportNavigationList> type() {
         return SpreadsheetViewportNavigationList.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

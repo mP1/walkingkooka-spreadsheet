@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -40,6 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
     implements ComparableTesting2<SpreadsheetLabelName>,
     NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName>,
+    PublicClassTesting<SpreadsheetLabelName>,
     ThrowableTesting {
 
     @Test
@@ -708,13 +711,6 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
             CONTROL + "!@#$%^&*()";
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetLabelName> type() {
-        return SpreadsheetLabelName.class;
-    }
-
     // JsonNodeMarshallerTesting........................................................................................
 
     @Override
@@ -728,5 +724,17 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Override
     public SpreadsheetLabelName parseString(final String text) {
         return SpreadsheetSelection.labelName(text);
+    }
+
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetLabelName> type() {
+        return SpreadsheetLabelName.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }

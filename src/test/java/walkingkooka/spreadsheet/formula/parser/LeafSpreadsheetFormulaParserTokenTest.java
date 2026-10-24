@@ -18,17 +18,11 @@
 package walkingkooka.spreadsheet.formula.parser;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class LeafSpreadsheetFormulaParserTokenTest implements ClassTesting2<LeafSpreadsheetFormulaParserToken<?>> {
+public final class LeafSpreadsheetFormulaParserTokenTest implements PublicClassTesting<LeafSpreadsheetFormulaParserToken<?>> {
     @Override
     public Class<LeafSpreadsheetFormulaParserToken<?>> type() {
         return Cast.to(LeafSpreadsheetFormulaParserToken.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.storage;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetStorageTest implements ClassTesting<SpreadsheetStorage> {
+public final class SpreadsheetStorageTest implements PackagePrivateClassTesting<SpreadsheetStorage> {
 
     @Override
     public Class<SpreadsheetStorage> type() {
         return SpreadsheetStorage.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

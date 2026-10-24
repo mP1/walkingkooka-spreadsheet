@@ -29,6 +29,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.OptionalDecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterContexts;
 import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
@@ -61,7 +62,7 @@ import java.util.Optional;
 public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTesting<SpreadsheetImporterJson>,
     HasSpreadsheetMetadataTesting,
     ToStringTesting<SpreadsheetImporterJson>,
-    ClassTesting2<SpreadsheetImporterJson> {
+    PackagePrivateClassTesting<SpreadsheetImporterJson> {
 
     private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
         DateTimeSymbols.fromDateFormatSymbols(
@@ -373,10 +374,5 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
     @Override
     public Class<SpreadsheetImporterJson> type() {
         return SpreadsheetImporterJson.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

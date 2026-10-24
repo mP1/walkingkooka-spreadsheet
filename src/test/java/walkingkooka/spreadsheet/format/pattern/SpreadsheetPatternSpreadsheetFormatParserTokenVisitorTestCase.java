@@ -17,18 +17,14 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor>
-    implements SpreadsheetFormatParserTokenVisitorTesting<V> {
+    implements SpreadsheetFormatParserTokenVisitorTesting<V>,
+    PackagePrivateClassTesting<V> {
 
     SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase() {
         super();
-    }
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

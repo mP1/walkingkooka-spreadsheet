@@ -17,12 +17,13 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.StandardThrowableTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionReference;
 
-public final class SpreadsheetExpressionEvaluationReferenceExceptionTest implements StandardThrowableTesting<SpreadsheetExpressionEvaluationReferenceException> {
+public final class SpreadsheetExpressionEvaluationReferenceExceptionTest implements StandardThrowableTesting<SpreadsheetExpressionEvaluationReferenceException>,
+    PublicClassTesting<SpreadsheetExpressionEvaluationReferenceException> {
 
     private final static ExpressionReference EXPRESSION_REFERENCE = new FakeExpressionReference() {
     };
@@ -45,10 +46,5 @@ public final class SpreadsheetExpressionEvaluationReferenceExceptionTest impleme
     @Override
     public Class<SpreadsheetExpressionEvaluationReferenceException> type() {
         return SpreadsheetExpressionEvaluationReferenceException.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

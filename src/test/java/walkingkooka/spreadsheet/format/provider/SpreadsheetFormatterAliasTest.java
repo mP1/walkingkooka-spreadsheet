@@ -22,12 +22,14 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginAliasLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesting<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias> {
+public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesting<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias>,
+    PublicClassTesting<SpreadsheetFormatterAlias> {
 
     private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("hello");
 
@@ -116,10 +118,5 @@ public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesti
     @Override
     public Class<SpreadsheetFormatterAlias> type() {
         return SpreadsheetFormatterAlias.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

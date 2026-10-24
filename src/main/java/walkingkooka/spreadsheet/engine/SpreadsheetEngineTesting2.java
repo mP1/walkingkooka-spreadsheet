@@ -23,8 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.currency.CurrencyLocaleContextTesting;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContextTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -50,7 +49,7 @@ import walkingkooka.validation.form.FormName;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends SpreadsheetEngineTesting,
-    ClassTesting2<E>,
+    PackagePrivateClassTesting<E>,
     BinaryTextContextTesting,
     CurrencyLocaleContextTesting,
     DateTimeContextTesting,
@@ -1776,11 +1775,4 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
     E createSpreadsheetEngine();
 
     SpreadsheetEngineContext createContext();
-
-    // class............................................................................................................
-
-    @Override
-    default JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }

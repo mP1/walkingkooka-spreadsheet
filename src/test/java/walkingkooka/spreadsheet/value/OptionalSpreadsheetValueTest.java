@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -35,7 +34,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class OptionalSpreadsheetValueTest implements ClassTesting<OptionalSpreadsheetValue<?>>,
+public final class OptionalSpreadsheetValueTest implements PublicClassTesting<OptionalSpreadsheetValue<?>>,
     HashCodeEqualsDefinedTesting2<OptionalSpreadsheetValue<?>>,
     ToStringTesting<OptionalSpreadsheetValue<?>>,
     JsonNodeMarshallerTesting<OptionalSpreadsheetValue<?>> {
@@ -195,10 +194,5 @@ public final class OptionalSpreadsheetValueTest implements ClassTesting<Optional
     @Override
     public Class<OptionalSpreadsheetValue<?>> type() {
         return Cast.to(OptionalSpreadsheetValue.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

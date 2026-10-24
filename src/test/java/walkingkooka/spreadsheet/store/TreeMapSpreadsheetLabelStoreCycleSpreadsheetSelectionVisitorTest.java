@@ -17,10 +17,12 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor> {
+public final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor>,
+    PackagePrivateClassTesting<TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor> {
+
     @Override
     public TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor createVisitor() {
         return new TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor(null);
@@ -31,11 +33,6 @@ public final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitorT
     @Override
     public Class<TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor> type() {
         return TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

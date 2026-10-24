@@ -18,12 +18,11 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<SpreadsheetColumnOrRowReference> {
+public final class SpreadsheetColumnOrRowReferenceTest implements PublicClassTesting<SpreadsheetColumnOrRowReference> {
 
     @Test
     public void testToColumnWithSpreadsheetColumnReference() {
@@ -50,10 +49,5 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
     @Override
     public Class<SpreadsheetColumnOrRowReference> type() {
         return SpreadsheetColumnOrRowReference.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -41,7 +40,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<SpreadsheetFormatParserTokenKind>,
+public final class SpreadsheetFormatParserTokenKindTest implements PublicClassTesting<SpreadsheetFormatParserTokenKind>,
     TreePrintableTesting {
 
     // isDuplicate......................................................................................................
@@ -1472,10 +1471,5 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
     @Override
     public Class<SpreadsheetFormatParserTokenKind> type() {
         return SpreadsheetFormatParserTokenKind.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

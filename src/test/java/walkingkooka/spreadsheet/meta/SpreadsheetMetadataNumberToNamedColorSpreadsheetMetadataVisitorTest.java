@@ -22,11 +22,13 @@ import walkingkooka.color.Color;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 import java.time.LocalDateTime;
 
 public final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor>
-    implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor> {
+    implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor>,
+    PackagePrivateClassTesting<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor> {
 
     @Override
     public void testAllConstructorsVisibility() {
@@ -86,10 +88,5 @@ public final class SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisit
     @Override
     public Class<SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor> type() {
         return SpreadsheetMetadataNumberToNamedColorSpreadsheetMetadataVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

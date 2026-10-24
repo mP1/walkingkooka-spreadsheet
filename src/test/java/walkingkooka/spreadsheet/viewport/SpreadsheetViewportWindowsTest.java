@@ -24,8 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.PredicateTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -47,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
-    ClassTesting<SpreadsheetViewportWindows>,
+    PublicClassTesting<SpreadsheetViewportWindows>,
     HashCodeEqualsDefinedTesting2<SpreadsheetViewportWindows>,
     JsonNodeMarshallerTesting<SpreadsheetViewportWindows>,
     ParseStringTesting<SpreadsheetViewportWindows>,
@@ -1119,10 +1118,5 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
     @Override
     public Class<SpreadsheetViewportWindows> type() {
         return SpreadsheetViewportWindows.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

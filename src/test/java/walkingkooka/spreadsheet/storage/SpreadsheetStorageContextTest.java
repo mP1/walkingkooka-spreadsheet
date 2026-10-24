@@ -23,6 +23,7 @@ import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageMountPoint;
 import walkingkooka.storage.StoragePath;
@@ -35,7 +36,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public final class SpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting, ClassTesting<SpreadsheetStorageContext>,
+public final class SpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting,
+    PublicClassTesting<SpreadsheetStorageContext>,
     StorageTesting,
     HasAuditInfoTesting {
 
@@ -295,10 +297,5 @@ public final class SpreadsheetStorageContextTest implements SpreadsheetStorageCo
     @Override
     public Class<SpreadsheetStorageContext> type() {
         return SpreadsheetStorageContext.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

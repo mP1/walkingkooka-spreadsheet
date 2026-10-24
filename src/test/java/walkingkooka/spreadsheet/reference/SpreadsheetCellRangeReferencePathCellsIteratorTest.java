@@ -20,11 +20,10 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.iterator.IteratorTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements IteratorTesting,
-    ClassTesting<SpreadsheetCellRangeReferencePathCellsIterator>,
+    PackagePrivateClassTesting<SpreadsheetCellRangeReferencePathCellsIterator>,
     ToStringTesting<SpreadsheetCellRangeReferencePathCellsIterator> {
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
@@ -218,15 +217,10 @@ public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetCellRangeReferencePathCellsIterator> type() {
         return SpreadsheetCellRangeReferencePathCellsIterator.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

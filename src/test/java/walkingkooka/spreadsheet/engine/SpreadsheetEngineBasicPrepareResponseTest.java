@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetEngineBasicPrepareResponseTest implements ClassTesting<SpreadsheetEngineBasicPrepareResponse> {
+public final class SpreadsheetEngineBasicPrepareResponseTest implements PackagePrivateClassTesting<SpreadsheetEngineBasicPrepareResponse> {
 
     @Override
     public Class<SpreadsheetEngineBasicPrepareResponse> type() {
         return SpreadsheetEngineBasicPrepareResponse.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

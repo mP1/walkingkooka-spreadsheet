@@ -24,6 +24,7 @@ import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
@@ -40,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToCurrencyMapTest implements MapTesting2<SpreadsheetCellReferenceToCurrencyMap, SpreadsheetCellReference, Optional<Currency>>,
-    ClassTesting2<SpreadsheetCellReferenceToCurrencyMap>,
+    PublicClassTesting<SpreadsheetCellReferenceToCurrencyMap>,
     HasCurrencyTesting,
     JsonNodeMarshallerTesting<SpreadsheetCellReferenceToCurrencyMap>,
     HasUrlFragmentTesting {
@@ -250,10 +251,5 @@ public final class SpreadsheetCellReferenceToCurrencyMapTest implements MapTesti
     @Override
     public Class<SpreadsheetCellReferenceToCurrencyMap> type() {
         return SpreadsheetCellReferenceToCurrencyMap.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

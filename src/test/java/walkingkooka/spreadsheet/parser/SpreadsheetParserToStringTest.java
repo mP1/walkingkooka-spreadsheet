@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 
 import java.util.List;
@@ -34,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetParserToStringTest implements SpreadsheetParserTesting2<SpreadsheetParserToString>,
     HashCodeEqualsDefinedTesting2<SpreadsheetParserToString>,
     ToStringTesting<SpreadsheetParserToString>,
-    ClassTesting2<SpreadsheetParserToString> {
+    PackagePrivateClassTesting<SpreadsheetParserToString> {
 
     private final static List<SpreadsheetParserSelectorToken> TOKENS = Lists.of(
         SpreadsheetParserSelectorToken.with(
@@ -205,10 +206,5 @@ public final class SpreadsheetParserToStringTest implements SpreadsheetParserTes
     @Override
     public Class<SpreadsheetParserToString> type() {
         return SpreadsheetParserToString.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

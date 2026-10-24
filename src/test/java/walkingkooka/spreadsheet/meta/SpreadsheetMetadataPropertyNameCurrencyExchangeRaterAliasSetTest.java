@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetMetadataPropertyNameCurrencyExchangeRaterAliasSetTest implements ClassTesting<SpreadsheetMetadataPropertyNameCurrencyExchangeRaterAliasSet> {
+public final class SpreadsheetMetadataPropertyNameCurrencyExchangeRaterAliasSetTest implements PackagePrivateClassTesting<SpreadsheetMetadataPropertyNameCurrencyExchangeRaterAliasSet> {
 
     @Override
     public Class<SpreadsheetMetadataPropertyNameCurrencyExchangeRaterAliasSet> type() {
         return SpreadsheetMetadataPropertyNameCurrencyExchangeRaterAliasSet.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

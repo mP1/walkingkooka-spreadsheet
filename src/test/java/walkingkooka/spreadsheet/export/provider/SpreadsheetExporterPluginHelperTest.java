@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.export.provider;
 
 import walkingkooka.plugin.PluginHelperTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetExporterPluginHelperTest implements PluginHelperTesting<SpreadsheetExporterPluginHelper,
     SpreadsheetExporterName,
@@ -26,7 +26,7 @@ public final class SpreadsheetExporterPluginHelperTest implements PluginHelperTe
     SpreadsheetExporterInfoSet,
     SpreadsheetExporterSelector,
     SpreadsheetExporterAlias,
-    SpreadsheetExporterAliasSet> {
+    SpreadsheetExporterAliasSet>, PackagePrivateClassTesting<SpreadsheetExporterPluginHelper> {
 
     @Override
     public SpreadsheetExporterPluginHelper createPluginHelper() {
@@ -43,10 +43,5 @@ public final class SpreadsheetExporterPluginHelperTest implements PluginHelperTe
     @Override
     public Class<SpreadsheetExporterPluginHelper> type() {
         return SpreadsheetExporterPluginHelper.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -25,8 +25,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.convert.provider.ConverterName;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -37,7 +36,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MissingConverterTest implements ClassTesting2<MissingConverter>,
+public final class MissingConverterTest implements PublicClassTesting<MissingConverter>,
     HashCodeEqualsDefinedTesting2<MissingConverter>,
     ComparableTesting2<MissingConverter>,
     IteratorTesting,
@@ -278,10 +277,5 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     @Override
     public Class<MissingConverter> type() {
         return MissingConverter.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

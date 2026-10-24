@@ -20,9 +20,10 @@ package walkingkooka.spreadsheet.format.provider;
 import walkingkooka.plugin.PluginSelectorTokenAlternativeLikeTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
 public final class SpreadsheetFormatterSelectorTokenAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetFormatterSelectorTokenAlternative>,
-    ClassTesting2<SpreadsheetFormatterSelectorTokenAlternative> {
+    PublicClassTesting<SpreadsheetFormatterSelectorTokenAlternative> {
 
     @Override
     public SpreadsheetFormatterSelectorTokenAlternative createPluginSelectorTokenAlternativeLike(final String label,
@@ -38,10 +39,5 @@ public final class SpreadsheetFormatterSelectorTokenAlternativeTest implements P
     @Override
     public Class<SpreadsheetFormatterSelectorTokenAlternative> type() {
         return SpreadsheetFormatterSelectorTokenAlternative.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

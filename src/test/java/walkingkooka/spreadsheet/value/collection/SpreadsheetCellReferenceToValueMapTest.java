@@ -22,8 +22,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.HasUrlFragmentTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
@@ -40,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToValueMapTest implements MapTesting2<SpreadsheetCellReferenceToValueMap, SpreadsheetCellReference, Optional<Object>>,
-    ClassTesting2<SpreadsheetCellReferenceToValueMap>,
+    PublicClassTesting<SpreadsheetCellReferenceToValueMap>,
     JsonNodeMarshallerTesting<SpreadsheetCellReferenceToValueMap>,
     HasUrlFragmentTesting {
 
@@ -286,10 +285,5 @@ public final class SpreadsheetCellReferenceToValueMapTest implements MapTesting2
     @Override
     public Class<SpreadsheetCellReferenceToValueMap> type() {
         return SpreadsheetCellReferenceToValueMap.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

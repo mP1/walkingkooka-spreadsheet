@@ -22,9 +22,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.TextUrlVisitorTesting;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.tree.text.TextNode;
 
-public final class SpreadsheetFormatterSharedHyperlinkingTextUrlVisitorTest implements TextUrlVisitorTesting<SpreadsheetFormatterSharedHyperlinkingTextUrlVisitor> {
+public final class SpreadsheetFormatterSharedHyperlinkingTextUrlVisitorTest implements TextUrlVisitorTesting<SpreadsheetFormatterSharedHyperlinkingTextUrlVisitor>,
+    PackagePrivateClassTesting<SpreadsheetFormatterSharedHyperlinkingTextUrlVisitor> {
 
     @Test
     public void testToTextWithPlainText() {
@@ -104,10 +106,5 @@ public final class SpreadsheetFormatterSharedHyperlinkingTextUrlVisitorTest impl
     @Override
     public Class<SpreadsheetFormatterSharedHyperlinkingTextUrlVisitor> type() {
         return SpreadsheetFormatterSharedHyperlinkingTextUrlVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -19,8 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -29,7 +28,7 @@ import walkingkooka.text.LineEnding;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting<SpreadsheetEngineContextDelegator> {
+public final class SpreadsheetEngineContextDelegatorTest implements PublicClassTesting<SpreadsheetEngineContextDelegator> {
 
     final static class TestSpreadsheetEngineContextDelegator implements SpreadsheetEngineContextDelegator {
 
@@ -78,10 +77,5 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
     @Override
     public Class<SpreadsheetEngineContextDelegator> type() {
         return SpreadsheetEngineContextDelegator.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

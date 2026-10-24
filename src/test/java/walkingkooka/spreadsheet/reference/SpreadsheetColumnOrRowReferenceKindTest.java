@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
@@ -29,7 +30,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesting2<SpreadsheetColumnOrRowReferenceKind>,
+public final class SpreadsheetColumnOrRowReferenceKindTest implements PublicClassTesting<SpreadsheetColumnOrRowReferenceKind>,
     ParseStringTesting<SpreadsheetSelection>,
     ThrowableTesting {
 
@@ -663,18 +664,6 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         );
     }
 
-    // ClassTesting2....................................................................................................
-
-    @Override
-    public Class<SpreadsheetColumnOrRowReferenceKind> type() {
-        return SpreadsheetColumnOrRowReferenceKind.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // parseColumnOrRow.................................................................................................
 
     @Override
@@ -690,5 +679,12 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
+    }
+
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetColumnOrRowReferenceKind> type() {
+        return SpreadsheetColumnOrRowReferenceKind.class;
     }
 }

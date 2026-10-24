@@ -26,8 +26,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.compare.Comparators;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.compare.FakeSpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -46,7 +45,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparators>,
+public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements PublicClassTesting<SpreadsheetColumnOrRowSpreadsheetComparators>,
     ComparatorTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetColumnOrRowSpreadsheetComparators>,
     ToStringTesting<SpreadsheetColumnOrRowSpreadsheetComparators>,
@@ -1029,10 +1028,5 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     @Override
     public Class<SpreadsheetColumnOrRowSpreadsheetComparators> type() {
         return SpreadsheetColumnOrRowSpreadsheetComparators.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

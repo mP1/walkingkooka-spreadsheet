@@ -17,22 +17,14 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 
-public abstract class SpreadsheetPatternSpreadsheetFormatterFractionTestCase<T> implements ClassTesting2<T>,
+public abstract class SpreadsheetPatternSpreadsheetFormatterFractionTestCase<T> implements PackagePrivateClassTesting<T>,
     TypeNameTesting<T> {
-
-    // ClassTesting.....................................................................................................
 
     SpreadsheetPatternSpreadsheetFormatterFractionTestCase() {
         super();
-    }
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     // TypeNameTesting..................................................................................................

@@ -19,16 +19,12 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class SpreadsheetColumnOrRowReferenceOrRangeTest implements ClassTesting<SpreadsheetColumnOrRowReferenceOrRange> {
+public final class SpreadsheetColumnOrRowReferenceOrRangeTest implements PublicClassTesting<SpreadsheetColumnOrRowReferenceOrRange> {
 
     @Override
     public Class<SpreadsheetColumnOrRowReferenceOrRange> type() {
         return SpreadsheetColumnOrRowReferenceOrRange.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

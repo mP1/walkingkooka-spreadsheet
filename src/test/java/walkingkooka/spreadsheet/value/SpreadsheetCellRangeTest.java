@@ -23,8 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
@@ -52,7 +51,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetCellRange>,
+public final class SpreadsheetCellRangeTest implements PublicClassTesting<SpreadsheetCellRange>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
     HasSpreadsheetMetadataTesting,
     ThrowableTesting,
@@ -1156,16 +1155,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
     }
 
-    // ClassTesting....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetCellRange> type() {
         return SpreadsheetCellRange.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // HashCodeEqualsDefinedTesting2...................................................................................

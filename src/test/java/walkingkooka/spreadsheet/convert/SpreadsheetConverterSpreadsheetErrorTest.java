@@ -18,18 +18,12 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetConverterSpreadsheetErrorTest implements ClassTesting<SpreadsheetConverterSpreadsheetError> {
+public final class SpreadsheetConverterSpreadsheetErrorTest implements PackagePrivateClassTesting<SpreadsheetConverterSpreadsheetError> {
 
     @Override
     public Class<SpreadsheetConverterSpreadsheetError> type() {
         return SpreadsheetConverterSpreadsheetError.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

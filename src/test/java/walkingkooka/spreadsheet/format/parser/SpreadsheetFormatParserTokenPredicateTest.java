@@ -21,15 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 
 import java.util.function.Predicate;
 
 public final class SpreadsheetFormatParserTokenPredicateTest implements PredicateTesting2<SpreadsheetFormatParserTokenPredicate, ParserToken>,
-    ClassTesting<SpreadsheetFormatParserTokenPredicate>,
+    PackagePrivateClassTesting<SpreadsheetFormatParserTokenPredicate>,
     ToStringTesting<SpreadsheetFormatParserTokenPredicate> {
 
     @Test
@@ -85,10 +84,5 @@ public final class SpreadsheetFormatParserTokenPredicateTest implements Predicat
     @Override
     public Class<SpreadsheetFormatParserTokenPredicate> type() {
         return SpreadsheetFormatParserTokenPredicate.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

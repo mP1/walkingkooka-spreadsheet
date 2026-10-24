@@ -21,15 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 
 import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatParserContextBasicTest implements ClassTesting2<SpreadsheetFormatParserContextBasic>,
+public final class SpreadsheetFormatParserContextBasicTest implements PackagePrivateClassTesting<SpreadsheetFormatParserContextBasic>,
     SpreadsheetFormatParserContextTesting2<SpreadsheetFormatParserContextBasic>,
     DecimalNumberContextDelegator {
 
@@ -176,11 +175,6 @@ public final class SpreadsheetFormatParserContextBasicTest implements ClassTesti
     @Override
     public Class<SpreadsheetFormatParserContextBasic> type() {
         return SpreadsheetFormatParserContextBasic.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

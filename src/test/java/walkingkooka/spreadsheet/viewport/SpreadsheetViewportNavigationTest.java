@@ -17,22 +17,12 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class SpreadsheetViewportNavigationTest implements TreePrintableTesting,
-    ClassTesting<SpreadsheetViewportNavigation> {
-
-    // ClassTesting.....................................................................................................
+public final class SpreadsheetViewportNavigationTest implements PublicClassTesting<SpreadsheetViewportNavigation> {
 
     @Override
     public Class<SpreadsheetViewportNavigation> type() {
         return SpreadsheetViewportNavigation.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

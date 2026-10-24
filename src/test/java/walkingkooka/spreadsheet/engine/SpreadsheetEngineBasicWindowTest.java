@@ -19,16 +19,12 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetEngineBasicWindowTest implements ClassTesting<SpreadsheetEngineBasicWindow> {
+public final class SpreadsheetEngineBasicWindowTest implements PackagePrivateClassTesting<SpreadsheetEngineBasicWindow> {
 
     @Override
     public Class<SpreadsheetEngineBasicWindow> type() {
         return SpreadsheetEngineBasicWindow.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

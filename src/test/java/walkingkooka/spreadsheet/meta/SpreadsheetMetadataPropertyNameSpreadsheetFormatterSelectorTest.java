@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTest implements ClassTesting<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTest implements PackagePrivateClassTesting<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector> {
 
     @Override
     public Class<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector> type() {
         return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

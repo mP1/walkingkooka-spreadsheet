@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.value;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -41,7 +42,8 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetValueVisitor> {
+public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetValueVisitor>,
+    PublicClassTesting<SpreadsheetValueVisitor> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -977,11 +979,6 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Override
     public Class<SpreadsheetValueVisitor> type() {
         return SpreadsheetValueVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // TypeNameTesting..................................................................................................

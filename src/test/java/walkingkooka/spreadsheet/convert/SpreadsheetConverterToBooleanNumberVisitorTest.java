@@ -19,8 +19,11 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.math.NumberVisitorTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetConverterToBooleanNumberVisitorTest implements NumberVisitorTesting<SpreadsheetConverterToBooleanNumberVisitor> {
+public final class SpreadsheetConverterToBooleanNumberVisitorTest implements NumberVisitorTesting<SpreadsheetConverterToBooleanNumberVisitor>,
+    PackagePrivateClassTesting<SpreadsheetConverterToBooleanNumberVisitor> {
+
     @Override
     public SpreadsheetConverterToBooleanNumberVisitor createVisitor() {
         return new SpreadsheetConverterToBooleanNumberVisitor();
@@ -29,11 +32,6 @@ public final class SpreadsheetConverterToBooleanNumberVisitorTest implements Num
     @Override
     public Class<SpreadsheetConverterToBooleanNumberVisitor> type() {
         return SpreadsheetConverterToBooleanNumberVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

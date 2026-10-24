@@ -18,18 +18,12 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetComparatorSharedTest implements ClassTesting<SpreadsheetComparatorShared<?>> {
+public final class SpreadsheetComparatorSharedTest implements PackagePrivateClassTesting<SpreadsheetComparatorShared<?>> {
 
     @Override
     public Class<SpreadsheetComparatorShared<?>> type() {
         return Cast.to(SpreadsheetComparatorShared.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

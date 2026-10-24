@@ -19,12 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetMetadataLoaderEmptyTest implements SpreadsheetMetadataLoaderTesting2<SpreadsheetMetadataLoaderEmpty>,
     ToStringTesting<SpreadsheetMetadataLoaderEmpty>,
-    ClassTesting<SpreadsheetMetadataLoaderEmpty> {
+    PackagePrivateClassTesting<SpreadsheetMetadataLoaderEmpty> {
 
     @Test
     public void testLoadSpreadsheetMetadata() {
@@ -54,10 +53,5 @@ public final class SpreadsheetMetadataLoaderEmptyTest implements SpreadsheetMeta
     @Override
     public Class<SpreadsheetMetadataLoaderEmpty> type() {
         return SpreadsheetMetadataLoaderEmpty.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

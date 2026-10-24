@@ -27,9 +27,8 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -63,7 +62,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements ClassTesting2<S>,
+public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements PublicClassTesting<S>,
     HashCodeEqualsDefinedTesting2<S>,
     HasUrlFragmentTesting,
     HasTextTesting,
@@ -2069,13 +2068,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             left.equalsIgnoreReferenceKind(right),
             () -> left + " equalsIgnoreReferenceKind " + right
         );
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // Json..............................................................................................................

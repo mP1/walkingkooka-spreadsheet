@@ -19,8 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContextTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -32,7 +31,7 @@ import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 
-public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern>,
+public final class SpreadsheetFormatPatternTest implements PublicClassTesting<SpreadsheetFormatPattern>,
     SpreadsheetFormatParserContextTesting {
 
     private final static SpreadsheetFormatParserContext SPREADSHEET_FORMAT_PARSER_CONTEXT = SpreadsheetFormatParserContexts.basic(
@@ -161,15 +160,10 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetFormatPattern> type() {
         return Cast.to(SpreadsheetFormatPattern.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

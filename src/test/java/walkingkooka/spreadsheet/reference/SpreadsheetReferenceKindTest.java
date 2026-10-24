@@ -21,10 +21,11 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetReferenceKindTest implements ClassTesting2<SpreadsheetReferenceKind>,
+public final class SpreadsheetReferenceKindTest implements PublicClassTesting<SpreadsheetReferenceKind>,
     ToStringTesting<SpreadsheetReferenceKind> {
 
     @Test
@@ -213,10 +214,5 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     @Override
     public Class<SpreadsheetReferenceKind> type() {
         return SpreadsheetReferenceKind.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

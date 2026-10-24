@@ -17,27 +17,11 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public abstract class SpreadsheetNonNumberParsePatternTestCase<T> implements ClassTesting2<T> {
+public abstract class SpreadsheetNonNumberParsePatternTestCase<T> implements PackagePrivateClassTesting<T> {
 
     SpreadsheetNonNumberParsePatternTestCase() {
         super();
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    @Test
-    @Override
-    public void testAllConstructorsVisibility() {
-        ClassTesting2.super.testAllConstructorsVisibility();
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

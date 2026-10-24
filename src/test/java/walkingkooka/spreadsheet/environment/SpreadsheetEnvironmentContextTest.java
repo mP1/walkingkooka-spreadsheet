@@ -20,13 +20,12 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetEnvironmentContextTest implements ClassTesting2<SpreadsheetEnvironmentContext> {
+public final class SpreadsheetEnvironmentContextTest implements PublicClassTesting<SpreadsheetEnvironmentContext> {
     
     @Test
     public void testServerUrlConstant() {
@@ -59,10 +58,5 @@ public final class SpreadsheetEnvironmentContextTest implements ClassTesting2<Sp
     @Override
     public Class<SpreadsheetEnvironmentContext> type() {
         return SpreadsheetEnvironmentContext.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

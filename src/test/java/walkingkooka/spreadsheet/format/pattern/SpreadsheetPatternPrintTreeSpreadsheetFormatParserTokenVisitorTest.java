@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
-public final class SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor>,
+    PackagePrivateClassTesting<SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor> {
+
     @Override
     public SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor createVisitor() {
         return new SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor(null);
@@ -29,11 +32,6 @@ public final class SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisito
     @Override
     public Class<SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor> type() {
         return SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

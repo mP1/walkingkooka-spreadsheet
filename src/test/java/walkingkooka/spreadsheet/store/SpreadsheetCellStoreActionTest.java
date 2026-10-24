@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class SpreadsheetCellStoreActionTest implements ClassTesting<SpreadsheetCellStoreAction> {
+public final class SpreadsheetCellStoreActionTest implements PublicClassTesting<SpreadsheetCellStoreAction> {
 
     // max..............................................................................................................
 
@@ -91,10 +93,5 @@ public final class SpreadsheetCellStoreActionTest implements ClassTesting<Spread
     @Override
     public Class<SpreadsheetCellStoreAction> type() {
         return SpreadsheetCellStoreAction.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

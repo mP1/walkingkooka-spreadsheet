@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -35,7 +35,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor>,
-    ThrowableTesting {
+    ThrowableTesting,
+    PackagePrivateClassTesting<SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor> {
 
     // resolveLabel.............................................................................................
 
@@ -204,11 +205,6 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
     @Override
     public Class<SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor> type() {
         return SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

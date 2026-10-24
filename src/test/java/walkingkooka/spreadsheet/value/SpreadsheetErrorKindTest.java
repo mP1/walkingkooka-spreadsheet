@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HasValueTesting;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.ConverterException;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -47,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
     HasSpreadsheetErrorKindTesting,
     HasValueTesting,
-    ClassTesting<SpreadsheetErrorKind>,
+    PublicClassTesting<SpreadsheetErrorKind>,
     ThrowableTesting {
 
     // translate.......................................................................................................
@@ -569,15 +568,10 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         return thrown;
     }
 
-    // ClassTesting......................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetErrorKind> type() {
         return SpreadsheetErrorKind.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

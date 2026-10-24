@@ -18,18 +18,12 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public abstract class SpreadsheetPatternSpreadsheetFormatterNumberTestCase<T> implements ClassTesting2<T>,
+public abstract class SpreadsheetPatternSpreadsheetFormatterNumberTestCase<T> implements PackagePrivateClassTesting<T>,
     ToStringTesting<T> {
 
     SpreadsheetPatternSpreadsheetFormatterNumberTestCase() {
         super();
-    }
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -17,10 +17,11 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetValueTypeVisitorTesting;
 
-public final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor> {
+public final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor>,
+    PackagePrivateClassTesting<SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor> {
 
     @Override
     public SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor createVisitor() {
@@ -30,14 +31,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValu
         );
     }
 
-    // TypeNameTesting..................................................................................................
-
-    @Override
-    public String typeNamePrefix() {
-        return SpreadsheetConverterTextToSpreadsheetSelection.class.getSimpleName();
-    }
-
-    // ClassTesting.....................................................................................................
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor> type() {
@@ -45,7 +39,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValu
     }
 
     @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    public String typeNamePrefix() {
+        return SpreadsheetConverterTextToSpreadsheetSelection.class.getSimpleName();
     }
 }

@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetValueVisitorTestingTest.TestSpreadsheetValueVisitor;
 import walkingkooka.visit.Visiting;
 
@@ -30,7 +32,8 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValueVisitorTesting<TestSpreadsheetValueVisitor> {
+public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValueVisitorTesting<TestSpreadsheetValueVisitor>,
+    PackagePrivateClassTesting<TestSpreadsheetValueVisitor> {
 
     @Test
     public void testVisitBigDecimal() {
@@ -354,11 +357,6 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Override
     public Class<TestSpreadsheetValueVisitor> type() {
         return TestSpreadsheetValueVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

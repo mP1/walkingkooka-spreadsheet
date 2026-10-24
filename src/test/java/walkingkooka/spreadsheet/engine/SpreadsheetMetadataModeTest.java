@@ -17,20 +17,14 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class SpreadsheetMetadataModeTest implements ClassTesting<SpreadsheetMetadataMode> {
+public final class SpreadsheetMetadataModeTest implements PublicClassTesting<SpreadsheetMetadataMode> {
 
     // class............................................................................................................
 
     @Override
     public Class<SpreadsheetMetadataMode> type() {
         return SpreadsheetMetadataMode.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

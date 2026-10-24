@@ -23,8 +23,7 @@ import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
@@ -42,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest implements MapTesting2<SpreadsheetCellReferenceToDecimalNumberSymbolsMap, SpreadsheetCellReference, Optional<DecimalNumberSymbols>>,
-    ClassTesting2<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
+    PublicClassTesting<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
     JsonNodeMarshallerTesting<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
     HasUrlFragmentTesting {
 
@@ -282,10 +281,5 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
     @Override
     public Class<SpreadsheetCellReferenceToDecimalNumberSymbolsMap> type() {
         return SpreadsheetCellReferenceToDecimalNumberSymbolsMap.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

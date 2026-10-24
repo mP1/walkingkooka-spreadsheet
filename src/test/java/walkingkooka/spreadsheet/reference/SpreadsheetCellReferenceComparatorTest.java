@@ -22,13 +22,14 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparatorTesting2;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Comparator;
 
 public final class SpreadsheetCellReferenceComparatorTest implements ComparatorTesting2<SpreadsheetCellReferenceComparator, SpreadsheetCell>,
-    ClassTesting<SpreadsheetCellReferenceComparator>,
+    PackagePrivateClassTesting<SpreadsheetCellReferenceComparator>,
     ToStringTesting<SpreadsheetCellReferenceComparator> {
 
     private final static Comparator<SpreadsheetCellReference> COMPARATOR = SpreadsheetCellRangeReferencePath.RLTD.comparator();
@@ -107,10 +108,5 @@ public final class SpreadsheetCellReferenceComparatorTest implements ComparatorT
     @Override
     public Class<SpreadsheetCellReferenceComparator> type() {
         return SpreadsheetCellReferenceComparator.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

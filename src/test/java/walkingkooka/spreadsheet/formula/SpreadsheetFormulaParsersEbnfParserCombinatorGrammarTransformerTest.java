@@ -17,14 +17,13 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformer;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformerTesting;
 
-public final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerTest implements ClassTesting2<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer>,
+public final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerTest implements PackagePrivateClassTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer>,
     EbnfParserCombinatorGrammarTransformerTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer, SpreadsheetParserContext>,
     TypeNameTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer> {
 
@@ -34,13 +33,6 @@ public final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransform
     public Class<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer> type() {
         return SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    // TypeNaming.......................................................................................................
 
     @Override
     public String typeNamePrefix() {

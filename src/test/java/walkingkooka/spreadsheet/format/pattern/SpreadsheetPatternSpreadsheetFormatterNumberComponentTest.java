@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentTest implements ClassTesting2<SpreadsheetPatternSpreadsheetFormatterNumberComponent> {
+public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentTest implements PackagePrivateClassTesting<SpreadsheetPatternSpreadsheetFormatterNumberComponent> {
 
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterNumberComponent> type() {
         return SpreadsheetPatternSpreadsheetFormatterNumberComponent.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

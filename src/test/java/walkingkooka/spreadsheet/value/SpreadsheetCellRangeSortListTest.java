@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.ListTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -31,7 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeSortListTest implements ListTesting,
-    ClassTesting<SpreadsheetCellRangeSortList>,
+    PackagePrivateClassTesting<SpreadsheetCellRangeSortList>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCellRangeSortList> {
 
     @Test
@@ -412,10 +411,4 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     public Class<SpreadsheetCellRangeSortList> type() {
         return SpreadsheetCellRangeSortList.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
 }

@@ -20,13 +20,12 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.function.Consumer;
 
-public final class SpreadsheetCellRangeReferenceCellsConsumerTest implements ClassTesting2<SpreadsheetCellRangeReferenceCellsConsumer>, ToStringTesting<SpreadsheetCellRangeReferenceCellsConsumer> {
+public final class SpreadsheetCellRangeReferenceCellsConsumerTest implements PackagePrivateClassTesting<SpreadsheetCellRangeReferenceCellsConsumer>, ToStringTesting<SpreadsheetCellRangeReferenceCellsConsumer> {
 
     @Test
     public void testToString() {
@@ -47,10 +46,5 @@ public final class SpreadsheetCellRangeReferenceCellsConsumerTest implements Cla
     @Override
     public Class<SpreadsheetCellRangeReferenceCellsConsumer> type() {
         return SpreadsheetCellRangeReferenceCellsConsumer.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -20,8 +20,7 @@ package walkingkooka.spreadsheet.parser.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -31,10 +30,11 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting<OptionalSpreadsheetParserSelector>,
+public final class OptionalSpreadsheetParserSelectorTest implements PublicClassTesting<OptionalSpreadsheetParserSelector>,
     HashCodeEqualsDefinedTesting2<OptionalSpreadsheetParserSelector>,
     ToStringTesting<OptionalSpreadsheetParserSelector>,
     JsonNodeMarshallerTesting<OptionalSpreadsheetParserSelector> {
+
     // with.............................................................................................................
 
     @Test
@@ -167,10 +167,5 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     @Override
     public Class<OptionalSpreadsheetParserSelector> type() {
         return OptionalSpreadsheetParserSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

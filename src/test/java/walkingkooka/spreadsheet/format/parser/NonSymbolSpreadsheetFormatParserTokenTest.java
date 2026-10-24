@@ -18,17 +18,12 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class NonSymbolSpreadsheetFormatParserTokenTest implements ClassTesting2<NonSymbolSpreadsheetFormatParserToken<?>> {
+public final class NonSymbolSpreadsheetFormatParserTokenTest implements PackagePrivateClassTesting<NonSymbolSpreadsheetFormatParserToken<?>> {
+
     @Override
     public Class<NonSymbolSpreadsheetFormatParserToken<?>> type() {
         return Cast.to(NonSymbolSpreadsheetFormatParserToken.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
