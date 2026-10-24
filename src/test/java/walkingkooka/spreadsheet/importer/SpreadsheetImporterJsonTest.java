@@ -21,24 +21,17 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.Color;
 import walkingkooka.currency.OptionalCurrency;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
-import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.OptionalDecimalNumberSymbols;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterContexts;
 import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
-import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.OptionalSpreadsheetValue;
@@ -47,15 +40,10 @@ import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.OptionalValueType;
-import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.OptionalValidatorSelector;
-import walkingkooka.validation.provider.ValidatorSelector;
 
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,42 +52,8 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
     ToStringTesting<SpreadsheetImporterJson>,
     PackagePrivateClassTesting<SpreadsheetImporterJson> {
 
-    private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
-        DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(LOCALE)
-        )
-    );
-
-    private final static Optional<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = Optional.of(
-        DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(LOCALE)
-        )
-    );
-
-    private final static Optional<SpreadsheetFormatterSelector> FORMATTER = Optional.of(
-        SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
-    );
-
-    private final static Optional<SpreadsheetParserSelector> PARSER = Optional.of(
-        SpreadsheetParserSelector.parse("test-parser-123")
-    );
-
-    private final static TextStyle STYLE = TextStyle.EMPTY.set(
-        TextStylePropertyName.COLOR,
-        Color.BLACK
-    );
-
-    private final static Optional<ValidatorSelector> VALIDATOR = Optional.of(
-        ValidatorSelector.parse("test-validator-123")
-    );
-
     private final static Optional<Object> VALUE = Optional.of(
         EXPRESSION_NUMBER_KIND.create(123)
-    );
-
-    private final static Optional<ValueType> VALUE_TYPE = Optional.of(
-        ValueType.TEXT
     );
 
     private final static Optional<TextNode> FORMATTED_VALUE = Optional.of(
@@ -109,18 +63,18 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
     private final static SpreadsheetFormula FORMULA_A1 = SpreadsheetFormula.EMPTY.setText("=1")
-        .setValueType(VALUE_TYPE)
+        .setValueType(OPTIONAL_VALUE_TYPE)
         .setValue(VALUE); // setValue AFTER setValueType otherwise value gets cleared
 
-    private final static SpreadsheetCell CELL_A1 = A1.setFormula(FORMULA_A1)
+    private final static SpreadsheetCell SPREADSHEET_CELL = A1.setFormula(FORMULA_A1)
         .setCurrency(OPTIONAL_CURRENCY)
-        .setDateTimeSymbols(DATE_TIME_SYMBOLS)
-        .setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS)
-        .setFormatter(FORMATTER)
+        .setDateTimeSymbols(OPTIONAL_DATE_TIME_SYMBOLS)
+        .setDecimalNumberSymbols(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
+        .setFormatter(OPTIONAL_FORMATTER_SELECTOR)
         .setLocale(OPTIONAL_LOCALE)
-        .setParser(PARSER)
-        .setStyle(STYLE)
-        .setValidator(VALIDATOR)
+        .setParser(OPTIONAL_PARSER_SELECTOR)
+        .setStyle(TEXT_STYLE)
+        .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
         .setFormattedValue(FORMATTED_VALUE);
 
     private final static SpreadsheetCellReference A2 = SpreadsheetSelection.parseCell("A2");
@@ -133,7 +87,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
     public void testDoImportWithCells() {
         this.doImportAndCheck(
             SpreadsheetCellValueKind.CELL,
-            SpreadsheetImporterCellValue.cell(CELL_A1),
+            SpreadsheetImporterCellValue.cell(SPREADSHEET_CELL),
             SpreadsheetImporterCellValue.cell(CELL_A2)
         );
     }
@@ -174,7 +128,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
             SpreadsheetImporterCellValue.dateTimeSymbols(
                 A1,
-                OptionalDateTimeSymbols.with(DATE_TIME_SYMBOLS)
+                OptionalDateTimeSymbols.with(OPTIONAL_DATE_TIME_SYMBOLS)
             ),
             SpreadsheetImporterCellValue.dateTimeSymbols(
                 A2,
@@ -189,7 +143,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
             SpreadsheetImporterCellValue.decimalNumberSymbols(
                 A1,
-                OptionalDecimalNumberSymbols.with(DECIMAL_NUMBER_SYMBOLS)
+                OptionalDecimalNumberSymbols.with(OPTIONAL_DECIMAL_NUMBER_SYMBOLS)
             ),
             SpreadsheetImporterCellValue.decimalNumberSymbols(
                 A2,
@@ -204,7 +158,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.FORMATTER,
             SpreadsheetImporterCellValue.formatter(
                 A1,
-                OptionalSpreadsheetFormatterSelector.with(FORMATTER)
+                OptionalSpreadsheetFormatterSelector.with(OPTIONAL_FORMATTER_SELECTOR)
             ),
             SpreadsheetImporterCellValue.formatter(
                 A2,
@@ -236,7 +190,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.PARSER,
             SpreadsheetImporterCellValue.parser(
                 A1,
-                OptionalSpreadsheetParserSelector.with(PARSER)
+                OptionalSpreadsheetParserSelector.with(OPTIONAL_PARSER_SELECTOR)
             ),
             SpreadsheetImporterCellValue.parser(
                 A2,
@@ -251,7 +205,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.STYLE,
             SpreadsheetImporterCellValue.style(
                 A1,
-                STYLE
+                TEXT_STYLE
             ),
             SpreadsheetImporterCellValue.style(
                 A2,
@@ -266,7 +220,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.VALIDATOR,
             SpreadsheetImporterCellValue.validator(
                 A1,
-                OptionalValidatorSelector.with(VALIDATOR)
+                OptionalValidatorSelector.with(OPTIONAL_VALIDATOR_SELECTOR)
             ),
             SpreadsheetImporterCellValue.validator(
                 A2,
@@ -296,7 +250,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.VALUE_TYPE,
             SpreadsheetImporterCellValue.valueType(
                 A1,
-                OptionalValueType.with(VALUE_TYPE)
+                OptionalValueType.with(OPTIONAL_VALUE_TYPE)
             ),
             SpreadsheetImporterCellValue.valueType(
                 A2,
@@ -311,7 +265,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
             SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
                 .setValue(
                     Sets.of(
-                        CELL_A1,
+                        SPREADSHEET_CELL,
                         CELL_A2
                     )
                 ),
