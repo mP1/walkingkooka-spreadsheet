@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.export.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.export.SpreadsheetExporter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -57,18 +56,6 @@ public final class SpreadsheetExporterSelectorTest implements PluginSelectorLike
     @Override
     public SpreadsheetExporterSelector parseString(final String text) {
         return SpreadsheetExporterSelector.parse(text);
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetExporterSelector> type() {
-        return SpreadsheetExporterSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // Json.............................................................................................................
@@ -116,7 +103,12 @@ public final class SpreadsheetExporterSelectorTest implements PluginSelectorLike
         );
     }
 
-    // type name........................................................................................................
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetExporterSelector> type() {
+        return SpreadsheetExporterSelector.class;
+    }
 
     @Override
     public String typeNamePrefix() {
