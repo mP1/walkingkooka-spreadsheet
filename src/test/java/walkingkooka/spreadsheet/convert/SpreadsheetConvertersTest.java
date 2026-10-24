@@ -407,12 +407,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "        *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
                 "        StorageValue(Binary) to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinaryBinary)\n" +
-                "        ConverterCustomToString\n" +
-                "          \"BINARY\"\n" +
-                "            ConverterCollection\n" +
-                "              to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "              TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"STYLE\"\n" +
                 "      ConverterCollection\n" +
