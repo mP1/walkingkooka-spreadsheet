@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.json.JsonNode;
@@ -112,6 +113,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     SpreadsheetMetadataTestCase() {
         super();
+    }
+
+    @Test
+    public final void testSpreadsheetMetadataDoesntImplementHasText() {
+        // if SpreadsheetMetadata did implement HasText then converting a SpreadsheetMetadata would be broken
+        this.checkEquals(
+            false,
+            this.createContext() instanceof HasText
+        );
     }
 
     // isEmpty..........................................................................................................
