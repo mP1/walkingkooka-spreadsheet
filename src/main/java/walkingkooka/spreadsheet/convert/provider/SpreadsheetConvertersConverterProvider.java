@@ -920,11 +920,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
                 converter = SpreadsheetConverters.toSpreadsheetSelection();
                 break;
-            case TO_STRING_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.toText();
-                break;
             case TO_STYLE_STRING:
                 this.noParameterCheck(copy);
 
@@ -934,6 +929,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
                 this.noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toStyleable();
+                break;
+            case TO_TEXT_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toText();
                 break;
             case TO_TEXT_NODE_STRING:
                 this.noParameterCheck(copy);
@@ -1683,10 +1683,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
     final static ConverterName TO_SPREADSHEET_SELECTION = ConverterName.with(TO_SPREADSHEET_SELECTION_STRING);
 
-    private final static String TO_STRING_STRING = "to-string";
-
-    final static ConverterName TO_STRING = ConverterName.with(TO_STRING_STRING);
-
     private final static String TO_STYLE_STRING = "to-style";
 
     final static ConverterName TO_STYLE = ConverterName.with(TO_STYLE_STRING);
@@ -1694,6 +1690,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
     private final static String TO_STYLEABLE_STRING = "to-styleable";
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
+
+    private final static String TO_TEXT_STRING = "to-text";
+
+    final static ConverterName TO_TEXT = ConverterName.with(TO_TEXT_STRING);
 
     private final static String TO_TEXT_NODE_STRING = "to-text-node";
 
@@ -1924,9 +1924,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             converterInfo(TO_NUMBER),
             converterInfo(TO_PARSER_SELECTOR),
             converterInfo(TO_PROPERTIES),
-            converterInfo(TO_STRING),
             converterInfo(TO_STYLE),
             converterInfo(TO_STYLEABLE),
+            converterInfo(TO_TEXT),
             converterInfo(TO_TEXT_NODE),
             converterInfo(TO_TSV_STRING_LIST),
             converterInfo(TO_VALIDATION_CHECKBOX),

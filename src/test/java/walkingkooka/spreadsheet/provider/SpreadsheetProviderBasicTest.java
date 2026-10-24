@@ -659,9 +659,9 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-parser-selector to-parser-selector\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-properties to-properties\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-spreadsheet-selection to-spreadsheet-selection\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-string to-string\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-style to-style\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-styleable to-styleable\n" +
+                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-text to-text\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-text-node to-text-node\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-tsv-string-list to-tsv-string-list\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/to-validation-checkbox to-validation-checkbox\n" +
