@@ -1294,7 +1294,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public void testConverterSelectorWithToString() {
         this.converterAndCheck(
             "to-string",
-            SpreadsheetConverters.objectToString()
+            SpreadsheetConverters.toText()
         );
     }
 

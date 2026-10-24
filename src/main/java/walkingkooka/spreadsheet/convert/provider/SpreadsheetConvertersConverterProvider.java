@@ -923,7 +923,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             case TO_STRING_STRING:
                 this.noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.objectToString();
+                converter = SpreadsheetConverters.toText();
                 break;
             case TO_STYLE_STRING:
                 this.noParameterCheck(copy);

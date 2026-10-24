@@ -535,13 +535,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see Converters#objectToString()}
-     */
-    public static Converter<SpreadsheetConverterContext> objectToString() {
-        return Converters.objectToString();
-    }
-
-    /**
      * {@see ConverterOptionalTo}
      */
     public static Converter<SpreadsheetConverterContext> optionalTo() {
@@ -1639,6 +1632,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> toStyleable() {
         return TreeTextConverters.toStyleable();
+    }
+
+    /**
+     * {@see Converters#objectToString()}
+     */
+    public static Converter<SpreadsheetConverterContext> toText() {
+        return Converters.objectToString();
     }
 
     /**
