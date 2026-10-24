@@ -68,8 +68,7 @@ import java.util.function.Function;
 /**
  * A collection of factory methods for creating {@link Converter} converters.
  */
-public final class SpreadsheetConverters extends SpreadsheetConvertersGwt
-    implements PublicStaticHelper {
+public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private static final Function<SpreadsheetConverterContext, SpreadsheetParserContext> SPREADSHEET_CONVERTER_CONTEXT_TO_SPREADSHEET_PARSER_CONTEXT = (final SpreadsheetConverterContext scc) ->
         SpreadsheetParserContexts.basic(
