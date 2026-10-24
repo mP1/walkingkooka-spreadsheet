@@ -21,14 +21,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginAliasLikeTesting;
-import walkingkooka.reflect.PublicClassTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserAlias>,
-    PublicClassTesting<SpreadsheetParserAlias> {
+public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserAlias> {
 
     private final static SpreadsheetParserName NAME = SpreadsheetParserName.with("hello");
 
