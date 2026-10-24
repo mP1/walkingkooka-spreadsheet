@@ -162,24 +162,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TEXT\"\n" +
-                "                ConverterCollection\n" +
-                "                  Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
-                "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
-                "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"PROPERTIES\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Properties (walkingkooka.convert.ConverterToProperties)\n" +
-                "                  TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"expression\"\n" +
                 "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
@@ -409,24 +397,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TEXT\"\n" +
-                "                ConverterCollection\n" +
-                "                  Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
-                "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
-                "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"PROPERTIES\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Properties (walkingkooka.convert.ConverterToProperties)\n" +
-                "                  TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"expression\"\n" +
                 "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
@@ -648,24 +624,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TEXT\"\n" +
-                "                ConverterCollection\n" +
-                "                  Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
-                "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
-                "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"PROPERTIES\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Properties (walkingkooka.convert.ConverterToProperties)\n" +
-                "                  TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"expression\"\n" +
                 "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
@@ -845,24 +809,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TEXT\"\n" +
-                "                ConverterCollection\n" +
-                "                  Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
-                "                  TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
-                "                  TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "                  TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "            to Color (walkingkooka.color.convert.ColorConverterToColor)\n" +
                 "            TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
                 "            Color to Number (walkingkooka.color.convert.ColorConverterColorToNumber)\n" +
                 "            Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "            to ColorProperties (walkingkooka.color.convert.ColorConverterToColorProperties)\n" +
                 "            TEXT to SpreadsheetMetadata Color (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToSpreadsheetMetadataColor)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"PROPERTIES\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Properties (walkingkooka.convert.ConverterToProperties)\n" +
-                "                  TEXT to Properties (walkingkooka.convert.ConverterTextToProperties)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"expression\"\n" +
                 "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
