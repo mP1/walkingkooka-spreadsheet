@@ -177,14 +177,12 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         if (null == COLOR) {
             COLOR = namedCollection(
                 "COLOR",
-                text(),
                 toColor(),
                 textToColor(),
                 colorToNumber(),
                 numberToColor(),
                 toColorProperties(),
-                textToSpreadsheetMetadataColor(),
-                properties()
+                textToSpreadsheetMetadataColor()
             );
         }
         return COLOR;
