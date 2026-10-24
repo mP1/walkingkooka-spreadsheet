@@ -19,16 +19,12 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetPatternSimpleDateFormatPatternVisitorYearTest implements ClassTesting<SpreadsheetPatternSimpleDateFormatPatternVisitorYear> {
+public final class SpreadsheetPatternSimpleDateFormatPatternVisitorYearTest implements PackagePrivateClassTesting<SpreadsheetPatternSimpleDateFormatPatternVisitorYear> {
 
     @Override
     public Class<SpreadsheetPatternSimpleDateFormatPatternVisitorYear> type() {
         return SpreadsheetPatternSimpleDateFormatPatternVisitorYear.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

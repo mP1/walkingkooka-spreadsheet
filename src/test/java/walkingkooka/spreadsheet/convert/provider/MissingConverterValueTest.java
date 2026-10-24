@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -32,7 +33,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MissingConverterValueTest implements ClassTesting2<MissingConverterValue>,
+public final class MissingConverterValueTest implements PublicClassTesting<MissingConverterValue>,
     HashCodeEqualsDefinedTesting2<MissingConverterValue>,
     ToStringTesting<MissingConverterValue>,
     TreePrintableTesting,
@@ -274,10 +275,5 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     @Override
     public Class<MissingConverterValue> type() {
         return MissingConverterValue.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

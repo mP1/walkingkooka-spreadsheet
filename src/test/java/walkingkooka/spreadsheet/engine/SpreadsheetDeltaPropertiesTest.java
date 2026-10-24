@@ -22,8 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.test.ParseStringTesting;
 
 import java.util.EnumSet;
@@ -33,7 +32,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<Set<SpreadsheetDeltaProperties>>,
-    ClassTesting<SpreadsheetDeltaProperties> {
+    PublicClassTesting<SpreadsheetDeltaProperties> {
 
     // with...................................................................................................
 
@@ -231,10 +230,5 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
     @Override
     public Class<SpreadsheetDeltaProperties> type() {
         return SpreadsheetDeltaProperties.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

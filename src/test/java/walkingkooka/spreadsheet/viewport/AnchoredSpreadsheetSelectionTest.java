@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -32,7 +31,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<AnchoredSpreadsheetSelection>,
+public final class AnchoredSpreadsheetSelectionTest implements PublicClassTesting<AnchoredSpreadsheetSelection>,
     HashCodeEqualsDefinedTesting2<AnchoredSpreadsheetSelection>,
     ToStringTesting<AnchoredSpreadsheetSelection>,
     JsonNodeMarshallerTesting<AnchoredSpreadsheetSelection>,
@@ -420,10 +419,5 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     @Override
     public Class<AnchoredSpreadsheetSelection> type() {
         return AnchoredSpreadsheetSelection.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

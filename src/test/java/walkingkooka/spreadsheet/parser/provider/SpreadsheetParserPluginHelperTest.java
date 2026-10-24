@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser.provider;
 
 import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetParserPluginHelperTest implements PluginHelperTesting<SpreadsheetParserPluginHelper,
     SpreadsheetParserName,
@@ -26,7 +27,8 @@ public final class SpreadsheetParserPluginHelperTest implements PluginHelperTest
     SpreadsheetParserInfoSet,
     SpreadsheetParserSelector,
     SpreadsheetParserAlias,
-    SpreadsheetParserAliasSet> {
+    SpreadsheetParserAliasSet>,
+    PackagePrivateClassTesting<SpreadsheetParserPluginHelper> {
 
     @Override
     public SpreadsheetParserPluginHelper createPluginHelper() {
@@ -43,10 +45,5 @@ public final class SpreadsheetParserPluginHelperTest implements PluginHelperTest
     @Override
     public Class<SpreadsheetParserPluginHelper> type() {
         return SpreadsheetParserPluginHelper.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

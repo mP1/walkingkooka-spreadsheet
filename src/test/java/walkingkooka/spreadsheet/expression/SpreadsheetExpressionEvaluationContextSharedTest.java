@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public class SpreadsheetExpressionEvaluationContextSharedTest implements ClassTesting2<SpreadsheetExpressionEvaluationContextShared> {
+public class SpreadsheetExpressionEvaluationContextSharedTest implements PackagePrivateClassTesting<SpreadsheetExpressionEvaluationContextShared> {
 
     @Override
     public Class<SpreadsheetExpressionEvaluationContextShared> type() {
         return SpreadsheetExpressionEvaluationContextShared.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

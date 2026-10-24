@@ -24,8 +24,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
@@ -47,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implements ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
+public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implements PublicClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     ComparatorTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     HasTextTesting,
@@ -1155,15 +1154,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         return this.createObject();
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetColumnOrRowSpreadsheetComparatorNames> type() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

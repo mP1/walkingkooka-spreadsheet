@@ -19,8 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -31,7 +30,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetEngineBasicChangesCacheTest implements ClassTesting<SpreadsheetEngineBasicChangesCache<?, ?>> {
+public final class SpreadsheetEngineBasicChangesCacheTest implements PackagePrivateClassTesting<SpreadsheetEngineBasicChangesCache<?, ?>> {
 
     // cell............................................................................................................
 
@@ -483,10 +482,5 @@ public final class SpreadsheetEngineBasicChangesCacheTest implements ClassTestin
     @Override
     public Class<SpreadsheetEngineBasicChangesCache<?, ?>> type() {
         return Cast.to(SpreadsheetEngineBasicChangesCache.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

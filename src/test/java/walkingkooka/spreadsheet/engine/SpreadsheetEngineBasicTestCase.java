@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 
-public abstract class SpreadsheetEngineBasicTestCase<T> implements TypeNameTesting<T>, ClassTesting<T> {
+public abstract class SpreadsheetEngineBasicTestCase<T> implements TypeNameTesting<T>,
+    PackagePrivateClassTesting<T> {
 
     SpreadsheetEngineBasicTestCase() {
         super();
@@ -32,12 +32,5 @@ public abstract class SpreadsheetEngineBasicTestCase<T> implements TypeNameTesti
     @Override
     public final String typeNamePrefix() {
         return SpreadsheetEngineBasic.class.getSimpleName();
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

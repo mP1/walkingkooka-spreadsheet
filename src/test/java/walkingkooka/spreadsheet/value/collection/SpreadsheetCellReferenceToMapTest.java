@@ -18,18 +18,12 @@
 package walkingkooka.spreadsheet.value.collection;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetCellReferenceToMapTest implements ClassTesting2<SpreadsheetCellReferenceToMap<Void>> {
+public final class SpreadsheetCellReferenceToMapTest implements PackagePrivateClassTesting<SpreadsheetCellReferenceToMap<Void>> {
 
     @Override
     public Class<SpreadsheetCellReferenceToMap<Void>> type() {
         return Cast.to(SpreadsheetCellReferenceToMap.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

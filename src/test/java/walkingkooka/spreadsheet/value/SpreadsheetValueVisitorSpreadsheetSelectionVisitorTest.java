@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.value;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetValueVisitorSpreadsheetSelectionVisitorTest implements ClassTesting<SpreadsheetValueVisitorSpreadsheetSelectionVisitor> {
+public final class SpreadsheetValueVisitorSpreadsheetSelectionVisitorTest implements PackagePrivateClassTesting<SpreadsheetValueVisitorSpreadsheetSelectionVisitor> {
 
     @Override
     public Class<SpreadsheetValueVisitorSpreadsheetSelectionVisitor> type() {
         return SpreadsheetValueVisitorSpreadsheetSelectionVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -19,16 +19,12 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetEngineContextSharedTest implements ClassTesting2<SpreadsheetEngineContextShared> {
+public final class SpreadsheetEngineContextSharedTest implements PackagePrivateClassTesting<SpreadsheetEngineContextShared> {
 
     @Override
     public Class<SpreadsheetEngineContextShared> type() {
         return SpreadsheetEngineContextShared.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

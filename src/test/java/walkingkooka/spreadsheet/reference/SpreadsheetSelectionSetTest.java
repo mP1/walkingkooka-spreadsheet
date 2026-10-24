@@ -18,18 +18,12 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetSelectionSetTest implements ClassTesting<SpreadsheetSelectionSet<?, ?>> {
+public final class SpreadsheetSelectionSetTest implements PackagePrivateClassTesting<SpreadsheetSelectionSet<?, ?>> {
 
     @Override
     public Class<SpreadsheetSelectionSet<?, ?>> type() {
         return Cast.to(SpreadsheetSelectionSet.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

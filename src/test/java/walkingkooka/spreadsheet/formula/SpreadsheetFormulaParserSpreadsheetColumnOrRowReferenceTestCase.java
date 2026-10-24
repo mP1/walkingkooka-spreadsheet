@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.formula;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
@@ -27,7 +28,7 @@ import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 
 public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTestCase<P extends SpreadsheetFormulaParserSpreadsheetColumnOrRowReference>
     implements SpreadsheetParserTesting2<P>,
-    ClassTesting2<P>,
+    PackagePrivateClassTesting<P>,
     ExpressionNumberContextTesting,
     SpreadsheetParserContextTesting {
 
@@ -61,12 +62,5 @@ public abstract class SpreadsheetFormulaParserSpreadsheetColumnOrRowReferenceTes
         this.tokensAndCheck(
             this.createContext()
         );
-    }
-
-    // class............................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

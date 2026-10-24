@@ -19,10 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting2;
 
-public final class MissingMetadataPropertiesExceptionTest implements ThrowableTesting2<MissingMetadataPropertiesException> {
+public final class MissingMetadataPropertiesExceptionTest implements ThrowableTesting2<MissingMetadataPropertiesException>,
+    PackagePrivateClassTesting<MissingMetadataPropertiesException> {
 
     @Override
     public void testIfClassIsFinalIfAllConstructorsArePrivate() {
@@ -48,10 +49,5 @@ public final class MissingMetadataPropertiesExceptionTest implements ThrowableTe
     @Override
     public Class<MissingMetadataPropertiesException> type() {
         return MissingMetadataPropertiesException.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -20,12 +20,13 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HasValueTesting;
 import walkingkooka.naming.HasNameTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.StandardThrowableTesting;
 
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException>,
     HasNameTesting,
-    HasValueTesting {
+    HasValueTesting,
+    PublicClassTesting<SpreadsheetMetadataPropertyValueException> {
 
     @Override
     public void testWithMessage() {
@@ -97,10 +98,5 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     @Override
     public Class<SpreadsheetMetadataPropertyValueException> type() {
         return SpreadsheetMetadataPropertyValueException.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

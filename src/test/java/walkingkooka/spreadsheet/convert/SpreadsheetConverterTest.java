@@ -17,20 +17,12 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetConverterTest implements ClassTesting2<SpreadsheetConverter> {
-
-    // ClassTesting.....................................................................................................
+public final class SpreadsheetConverterTest implements PackagePrivateClassTesting<SpreadsheetConverter> {
 
     @Override
     public Class<SpreadsheetConverter> type() {
         return SpreadsheetConverter.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

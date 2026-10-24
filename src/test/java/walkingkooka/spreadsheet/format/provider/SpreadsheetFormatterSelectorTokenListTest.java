@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -32,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken>,
-    ClassTesting<SpreadsheetFormatterSelectorTokenList>,
+    PublicClassTesting<SpreadsheetFormatterSelectorTokenList>,
     ImmutableListTesting<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken>,
     JsonNodeMarshallerTesting<SpreadsheetFormatterSelectorTokenList>,
     ThrowableTesting {
@@ -138,16 +137,6 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         );
     }
 
-    @Override
-    public Class<SpreadsheetFormatterSelectorTokenList> type() {
-        return SpreadsheetFormatterSelectorTokenList.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // Json...........................................................................................................
 
     @Test
@@ -225,5 +214,12 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
             this.createList(),
             COMPONENT1
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetFormatterSelectorTokenList> type() {
+        return SpreadsheetFormatterSelectorTokenList.class;
     }
 }

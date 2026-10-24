@@ -21,11 +21,13 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetComparatorSelectorTest implements PluginSelectorLikeTesting<SpreadsheetComparatorSelector, SpreadsheetComparatorName> {
+public final class SpreadsheetComparatorSelectorTest implements PluginSelectorLikeTesting<SpreadsheetComparatorSelector, SpreadsheetComparatorName>,
+    PublicClassTesting<SpreadsheetComparatorSelector> {
 
     @Test
     public void testParse() {
@@ -90,11 +92,6 @@ public final class SpreadsheetComparatorSelectorTest implements PluginSelectorLi
     @Override
     public Class<SpreadsheetComparatorSelector> type() {
         return SpreadsheetComparatorSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

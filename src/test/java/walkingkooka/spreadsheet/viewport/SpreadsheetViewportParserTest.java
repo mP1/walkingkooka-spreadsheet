@@ -17,20 +17,12 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetViewportParserTest implements ClassTesting<SpreadsheetViewportParser> {
-
-    // class............................................................................................................
+public final class SpreadsheetViewportParserTest implements PackagePrivateClassTesting<SpreadsheetViewportParser> {
 
     @Override
     public Class<SpreadsheetViewportParser> type() {
         return SpreadsheetViewportParser.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

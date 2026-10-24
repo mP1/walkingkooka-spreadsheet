@@ -19,13 +19,14 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTestCase implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTestCase implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatParserTokenVisitor>,
+    PublicClassTesting<SpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testColor() {
@@ -2103,11 +2104,6 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Override
     public Class<SpreadsheetFormatParserTokenVisitor> type() {
         return SpreadsheetFormatParserTokenVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     @Override

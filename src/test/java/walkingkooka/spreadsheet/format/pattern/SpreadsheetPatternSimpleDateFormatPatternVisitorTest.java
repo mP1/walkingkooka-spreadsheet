@@ -20,14 +20,15 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitor;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitorTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.function.Function;
 
-public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implements SimpleDateFormatPatternVisitorTesting<SpreadsheetPatternSimpleDateFormatPatternVisitor> {
+public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implements SimpleDateFormatPatternVisitorTesting<SpreadsheetPatternSimpleDateFormatPatternVisitor>,
+    PackagePrivateClassTesting<SpreadsheetPatternSimpleDateFormatPatternVisitor> {
 
     @Test
     public void testDateFormatFull() {
@@ -134,11 +135,6 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
     @Override
     public Class<SpreadsheetPatternSimpleDateFormatPatternVisitor> type() {
         return SpreadsheetPatternSimpleDateFormatPatternVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

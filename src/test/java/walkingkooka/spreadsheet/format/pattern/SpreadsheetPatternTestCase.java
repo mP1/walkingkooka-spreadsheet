@@ -27,6 +27,8 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -47,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
-    implements ClassTesting2<P>,
+    implements PublicClassTesting<P>,
     SpreadsheetPatternSpreadsheetFormatterTesting,
     HashCodeEqualsDefinedTesting2<P>,
     JsonNodeMarshallerTesting<P>,
@@ -547,12 +549,5 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
             this.createPattern(),
             CharSequences.quoteIfChars(this.patternText()).toString()
         );
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

@@ -33,9 +33,9 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -66,7 +66,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     ConverterTesting,
     HasSpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetEnvironmentContextFactory>,
-    ClassTesting2<SpreadsheetEnvironmentContextFactory> {
+    PublicClassTesting<SpreadsheetEnvironmentContextFactory> {
 
     private final static CanIndexedNamedColor CAN_INDEXED_NAMED_COLOR = SpreadsheetColorContexts.spreadsheetMetadataDefaults();
 
@@ -795,13 +795,13 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // class............................................................................................................
 
     @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
+    public Class<SpreadsheetEnvironmentContextFactory> type() {
+        return SpreadsheetEnvironmentContextFactory.class;
     }
 
     @Override
-    public Class<SpreadsheetEnvironmentContextFactory> type() {
-        return SpreadsheetEnvironmentContextFactory.class;
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

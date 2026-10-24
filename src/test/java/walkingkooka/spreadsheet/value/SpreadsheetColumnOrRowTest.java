@@ -20,16 +20,12 @@ package walkingkooka.spreadsheet.value;
 import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class SpreadsheetColumnOrRowTest implements ClassTesting<SpreadsheetColumnOrRow<?>> {
+public final class SpreadsheetColumnOrRowTest implements PublicClassTesting<SpreadsheetColumnOrRow<?>> {
 
     @Override
     public Class<SpreadsheetColumnOrRow<?>> type() {
         return Cast.to(SpreadsheetColumnOrRow.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

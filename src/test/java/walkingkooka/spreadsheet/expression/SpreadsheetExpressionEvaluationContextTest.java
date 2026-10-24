@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -33,7 +34,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetExpressionEvaluationContext>,
+public final class SpreadsheetExpressionEvaluationContextTest implements PublicClassTesting<SpreadsheetExpressionEvaluationContext>,
     ThrowableTesting {
 
     @Test
@@ -166,10 +167,5 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     @Override
     public Class<SpreadsheetExpressionEvaluationContext> type() {
         return SpreadsheetExpressionEvaluationContext.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

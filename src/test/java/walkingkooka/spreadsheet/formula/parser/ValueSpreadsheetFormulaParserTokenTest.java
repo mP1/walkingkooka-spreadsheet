@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.formula.parser;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class ValueSpreadsheetFormulaParserTokenTest implements ClassTesting<ValueSpreadsheetFormulaParserToken> {
+public final class ValueSpreadsheetFormulaParserTokenTest implements PublicClassTesting<ValueSpreadsheetFormulaParserToken> {
 
     @Override
     public Class<ValueSpreadsheetFormulaParserToken> type() {
         return ValueSpreadsheetFormulaParserToken.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

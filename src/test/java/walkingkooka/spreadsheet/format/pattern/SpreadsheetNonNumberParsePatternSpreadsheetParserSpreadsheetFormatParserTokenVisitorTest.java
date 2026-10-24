@@ -26,14 +26,6 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetF
     extends SpreadsheetNonNumberParsePatternTestCase<SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor>
     implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor> {
 
-    @Override
-    public void testIfClassIsFinalIfAllConstructorsArePrivate() {
-    }
-
-    @Override
-    public void testAllConstructorsVisibility() {
-    }
-
     // ToString.........................................................................................................
 
     @Test

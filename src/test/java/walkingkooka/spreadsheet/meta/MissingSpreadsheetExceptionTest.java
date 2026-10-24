@@ -18,14 +18,15 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting2;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MissingSpreadsheetExceptionTest implements ThrowableTesting2<MissingSpreadsheetException> {
+public final class MissingSpreadsheetExceptionTest implements ThrowableTesting2<MissingSpreadsheetException>,
+    PublicClassTesting<MissingSpreadsheetException> {
 
     @Test
     public void testNewWithNullSpreadsheetIdFails() {
@@ -56,10 +57,5 @@ public final class MissingSpreadsheetExceptionTest implements ThrowableTesting2<
     @Override
     public Class<MissingSpreadsheetException> type() {
         return MissingSpreadsheetException.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

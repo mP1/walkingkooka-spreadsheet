@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.currency;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class SpreadsheetCurrencyExchangeRaterContextTest implements ClassTesting<SpreadsheetCurrencyExchangeRaterContext> {
+public final class SpreadsheetCurrencyExchangeRaterContextTest implements PublicClassTesting<SpreadsheetCurrencyExchangeRaterContext> {
 
     @Override
     public Class<SpreadsheetCurrencyExchangeRaterContext> type() {
         return SpreadsheetCurrencyExchangeRaterContext.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

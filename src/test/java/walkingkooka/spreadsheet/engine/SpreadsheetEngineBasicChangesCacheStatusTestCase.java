@@ -18,8 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Arrays;
@@ -27,7 +26,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetEngineBasicChangesCacheStatusTestCase<STATUS extends Enum<STATUS> & SpreadsheetEngineBasicChangesCacheStatus<S>,
-    S extends SpreadsheetSelection> implements ClassTesting<STATUS> {
+    S extends SpreadsheetSelection> implements PackagePrivateClassTesting<STATUS> {
 
     SpreadsheetEngineBasicChangesCacheStatusTestCase() {
         super();
@@ -227,11 +226,4 @@ public abstract class SpreadsheetEngineBasicChangesCacheStatusTestCase<STATUS ex
     // Status...........................................................................................................
 
     abstract STATUS[] values();
-
-    // class............................................................................................................
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }

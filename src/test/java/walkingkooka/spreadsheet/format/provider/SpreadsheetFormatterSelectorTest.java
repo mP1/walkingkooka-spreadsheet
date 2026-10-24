@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -34,6 +34,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetFormatterSelector, SpreadsheetFormatterName>,
+    PublicClassTesting<SpreadsheetFormatterSelector>,
     ThrowableTesting {
 
     @Override
@@ -143,18 +144,6 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         );
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetFormatterSelector> type() {
-        return SpreadsheetFormatterSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // Json.............................................................................................................
 
     @Test
@@ -200,10 +189,15 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         );
     }
 
-    // type name........................................................................................................
+    // Class............................................................................................................
 
     @Override
     public String typeNamePrefix() {
         return SpreadsheetFormatter.class.getSimpleName();
+    }
+
+    @Override
+    public Class<SpreadsheetFormatterSelector> type() {
+        return SpreadsheetFormatterSelector.class;
     }
 }

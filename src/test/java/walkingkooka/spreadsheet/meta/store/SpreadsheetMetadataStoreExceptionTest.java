@@ -17,10 +17,11 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.StandardThrowableTesting;
 
-public final class SpreadsheetMetadataStoreExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataStoreException> {
+public final class SpreadsheetMetadataStoreExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataStoreException>,
+    PublicClassTesting<SpreadsheetMetadataStoreException> {
 
     @Override
     public SpreadsheetMetadataStoreException createThrowable(final String message) {
@@ -35,10 +36,5 @@ public final class SpreadsheetMetadataStoreExceptionTest implements StandardThro
     @Override
     public Class<SpreadsheetMetadataStoreException> type() {
         return SpreadsheetMetadataStoreException.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

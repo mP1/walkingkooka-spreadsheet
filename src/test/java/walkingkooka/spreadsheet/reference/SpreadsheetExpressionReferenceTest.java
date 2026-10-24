@@ -18,14 +18,13 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference>,
+public final class SpreadsheetExpressionReferenceTest implements PublicClassTesting<SpreadsheetExpressionReference>,
     JsonNodeMarshallerTesting<SpreadsheetExpressionReference> {
 
     // testParameterName...............................................................................................
@@ -130,20 +129,6 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
         this.marshallRoundTripTwiceAndCheck(SpreadsheetSelection.parseCellRange("B2:C3"));
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetExpressionReference> type() {
-        return SpreadsheetExpressionReference.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    // JsonNodeTesting...................................................................................................
-
     @Override
     public SpreadsheetExpressionReference unmarshall(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
@@ -153,5 +138,12 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Override
     public SpreadsheetExpressionReference createJsonNodeMarshallingValue() {
         return SpreadsheetSelection.parseExpressionReference("A1");
+    }
+
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetExpressionReference> type() {
+        return SpreadsheetExpressionReference.class;
     }
 }

@@ -22,8 +22,7 @@ import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
@@ -41,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToDateTimeSymbolsMapTest implements MapTesting2<SpreadsheetCellReferenceToDateTimeSymbolsMap, SpreadsheetCellReference, Optional<DateTimeSymbols>>,
-    ClassTesting2<SpreadsheetCellReferenceToDateTimeSymbolsMap>,
+    PublicClassTesting<SpreadsheetCellReferenceToDateTimeSymbolsMap>,
     JsonNodeMarshallerTesting<SpreadsheetCellReferenceToDateTimeSymbolsMap>,
     HasUrlFragmentTesting {
 
@@ -356,10 +355,5 @@ public final class SpreadsheetCellReferenceToDateTimeSymbolsMapTest implements M
     @Override
     public Class<SpreadsheetCellReferenceToDateTimeSymbolsMap> type() {
         return SpreadsheetCellReferenceToDateTimeSymbolsMap.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

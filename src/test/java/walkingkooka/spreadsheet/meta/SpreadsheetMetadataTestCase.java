@@ -41,8 +41,8 @@ import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContextTesting2;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -78,7 +78,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
-    ClassTesting2<SpreadsheetMetadata>,
+    PackagePrivateClassTesting<SpreadsheetMetadata>,
     ConverterTesting,
     CurrencyLocaleContextTesting,
     HasContentTypeTesting,

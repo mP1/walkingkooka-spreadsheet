@@ -17,10 +17,10 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
@@ -33,7 +33,7 @@ import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetFormatParserTokenTestCase<T extends SpreadsheetFormatParserToken> implements ClassTesting2<T>,
+public abstract class SpreadsheetFormatParserTokenTestCase<T extends SpreadsheetFormatParserToken> implements PublicClassTesting<T>,
     IsMethodTesting<T>,
     JsonNodeMarshallerTesting<T>,
     ParserTokenTesting<T> {
@@ -207,13 +207,6 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
             "",  // drop-prefix
             SpreadsheetFormatParserToken.class.getSimpleName() // drop-suffix
         );
-    }
-
-    // class...........................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // JsonNodeMarshallTesting..........................................................................................

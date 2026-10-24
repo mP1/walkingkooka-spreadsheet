@@ -18,12 +18,11 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.text.CharSequences;
 
 public abstract class SpreadsheetComparatorTestCase<C extends SpreadsheetComparator<T>, T> implements SpreadsheetComparatorTesting2<C, T>,
-    ClassTesting<C>,
+    PackagePrivateClassTesting<C>,
     ToStringTesting<C>  {
 
     SpreadsheetComparatorTestCase() {
@@ -31,11 +30,6 @@ public abstract class SpreadsheetComparatorTestCase<C extends SpreadsheetCompara
     }
 
     // class............................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 
     @Override
     public final String typeNamePrefix() {

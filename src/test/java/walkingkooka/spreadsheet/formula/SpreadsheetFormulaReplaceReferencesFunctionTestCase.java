@@ -17,17 +17,11 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public abstract class SpreadsheetFormulaReplaceReferencesFunctionTestCase<T> implements ClassTesting<T> {
+public abstract class SpreadsheetFormulaReplaceReferencesFunctionTestCase<T> implements PackagePrivateClassTesting<T> {
 
     SpreadsheetFormulaReplaceReferencesFunctionTestCase() {
         super();
-    }
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

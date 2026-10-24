@@ -23,8 +23,7 @@ import walkingkooka.HasNotFoundTextTesting;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.test.ParseStringTesting;
@@ -39,7 +38,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetSelectionTest implements ClassTesting2<SpreadsheetSelection>,
+public final class SpreadsheetSelectionTest implements PublicClassTesting<SpreadsheetSelection>,
     HasTextTesting,
     HasNotFoundTextTesting,
     ParseStringTesting<SpreadsheetExpressionReference>,
@@ -1906,15 +1905,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetSelection> type() {
         return SpreadsheetSelection.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

@@ -18,21 +18,15 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetEngineBasicChangesCacheStatusTest implements ClassTesting<SpreadsheetEngineBasicChangesCacheStatus<?>> {
+public final class SpreadsheetEngineBasicChangesCacheStatusTest implements PackagePrivateClassTesting<SpreadsheetEngineBasicChangesCacheStatus<?>> {
 
     // class............................................................................................................
 
     @Override
     public Class<SpreadsheetEngineBasicChangesCacheStatus<?>> type() {
         return Cast.to(SpreadsheetEngineBasicChangesCacheStatus.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

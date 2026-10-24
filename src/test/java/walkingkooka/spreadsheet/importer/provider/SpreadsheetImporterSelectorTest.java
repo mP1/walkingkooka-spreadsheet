@@ -20,11 +20,13 @@ package walkingkooka.spreadsheet.importer.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetImporterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetImporterSelector, SpreadsheetImporterName> {
+public final class SpreadsheetImporterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetImporterSelector, SpreadsheetImporterName>,
+    PublicClassTesting<SpreadsheetImporterSelector> {
 
     @Override
     public SpreadsheetImporterSelector createPluginSelectorLike(final SpreadsheetImporterName name,
@@ -57,18 +59,6 @@ public final class SpreadsheetImporterSelectorTest implements PluginSelectorLike
     @Override
     public SpreadsheetImporterSelector parseString(final String text) {
         return SpreadsheetImporterSelector.parse(text);
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetImporterSelector> type() {
-        return SpreadsheetImporterSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // Json.............................................................................................................
@@ -116,7 +106,12 @@ public final class SpreadsheetImporterSelectorTest implements PluginSelectorLike
         );
     }
 
-    // type name........................................................................................................
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetImporterSelector> type() {
+        return SpreadsheetImporterSelector.class;
+    }
 
     @Override
     public String typeNamePrefix() {

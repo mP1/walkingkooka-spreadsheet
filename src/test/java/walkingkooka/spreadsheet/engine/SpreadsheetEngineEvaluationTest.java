@@ -19,14 +19,13 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.header.LinkRelation;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
+public final class SpreadsheetEngineEvaluationTest implements PublicClassTesting<SpreadsheetEngineEvaluation>,
     JsonNodeMarshallerTesting<SpreadsheetEngineEvaluation>,
     ParseStringTesting<SpreadsheetEngineEvaluation> {
 
@@ -109,11 +108,6 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
     @Override
     public Class<SpreadsheetEngineEvaluation> type() {
         return SpreadsheetEngineEvaluation.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // JsonNodeMarshallerTesting........................................................................................

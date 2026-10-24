@@ -18,11 +18,10 @@
 package walkingkooka.spreadsheet.parser.provider;
 
 import walkingkooka.plugin.PluginSelectorTokenAlternativeLikeTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
 public final class SpreadsheetParserSelectorTokenAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetParserSelectorTokenAlternative>,
-    ClassTesting2<SpreadsheetParserSelectorTokenAlternative> {
+    PublicClassTesting<SpreadsheetParserSelectorTokenAlternative> {
 
     @Override
     public SpreadsheetParserSelectorTokenAlternative createPluginSelectorTokenAlternativeLike(final String label,
@@ -38,10 +37,5 @@ public final class SpreadsheetParserSelectorTokenAlternativeTest implements Plug
     @Override
     public Class<SpreadsheetParserSelectorTokenAlternative> type() {
         return SpreadsheetParserSelectorTokenAlternative.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

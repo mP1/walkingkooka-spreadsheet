@@ -23,8 +23,7 @@ import walkingkooka.HasValueTesting;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.HasUrlFragmentTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -32,7 +31,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
+public final class SpreadsheetIdTest implements PublicClassTesting<SpreadsheetId>,
     ComparableTesting2<SpreadsheetId>,
     HasNotFoundTextTesting,
     HasTextTesting,
@@ -208,11 +207,6 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     }
 
     // Class............................................................................................................
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
 
     @Override
     public Class<SpreadsheetId> type() {

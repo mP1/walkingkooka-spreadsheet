@@ -25,6 +25,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
 
@@ -34,7 +35,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataMissingComponentsTest implements ClassTesting2<SpreadsheetMetadataMissingComponents>,
+public final class SpreadsheetMetadataMissingComponentsTest implements PackagePrivateClassTesting<SpreadsheetMetadataMissingComponents>,
     ToStringTesting<SpreadsheetMetadataMissingComponents>,
     TypeNameTesting<SpreadsheetMetadataMissingComponents>,
     ThrowableTesting {
@@ -181,11 +182,6 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
     @Override
     public Class<SpreadsheetMetadataMissingComponents> type() {
         return SpreadsheetMetadataMissingComponents.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     // TypeNameTesting..................................................................................................

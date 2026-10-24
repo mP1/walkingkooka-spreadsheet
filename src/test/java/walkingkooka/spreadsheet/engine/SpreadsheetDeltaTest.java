@@ -28,8 +28,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasDateTimeSymbolsTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasDecimalNumberSymbolsTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -78,7 +77,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
+public final class SpreadsheetDeltaTest implements PublicClassTesting<SpreadsheetDelta>,
     HasDateTimeSymbolsTesting,
     HasDecimalNumberSymbolsTesting,
     JsonNodeMarshallContextTesting,
@@ -6016,15 +6015,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetDelta> type() {
         return SpreadsheetDelta.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

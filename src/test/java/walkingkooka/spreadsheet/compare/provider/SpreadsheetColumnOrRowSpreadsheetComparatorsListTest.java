@@ -25,6 +25,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -34,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
-    ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList>,
+    PackagePrivateClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList>,
     HasTextTesting,
     ThrowableTesting {
 
@@ -222,10 +224,5 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
     @Override
     public Class<SpreadsheetColumnOrRowSpreadsheetComparatorsList> type() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorsList.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

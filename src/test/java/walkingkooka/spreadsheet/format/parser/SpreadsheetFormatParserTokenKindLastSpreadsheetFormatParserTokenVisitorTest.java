@@ -18,13 +18,14 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Optional;
 
-public final class SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor>,
+    PackagePrivateClassTesting<SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testLastWithDateFormatPattern() {
@@ -78,11 +79,6 @@ public final class SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTo
     @Override
     public SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor createVisitor() {
         return new SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor();
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

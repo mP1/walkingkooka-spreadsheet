@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.formula.parser;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
-public final class BinarySpreadsheetFormulaParserTokenTest implements ClassTesting<BinarySpreadsheetFormulaParserToken> {
+public final class BinarySpreadsheetFormulaParserTokenTest implements PublicClassTesting<BinarySpreadsheetFormulaParserToken> {
 
     @Override
     public Class<BinarySpreadsheetFormulaParserToken> type() {
         return BinarySpreadsheetFormulaParserToken.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

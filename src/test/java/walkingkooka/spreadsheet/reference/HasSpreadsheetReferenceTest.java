@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
@@ -30,7 +29,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import java.util.ArrayList;
 import java.util.SortedSet;
 
-public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpreadsheetReference<?>> {
+public final class HasSpreadsheetReferenceTest implements PublicClassTesting<HasSpreadsheetReference<?>> {
 
     @Test
     public void testComparatorSpreadsheetCell() {
@@ -81,15 +80,10 @@ public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpread
         );
     }
 
-    // ClassTesting....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<HasSpreadsheetReference<?>> type() {
         return Cast.to(HasSpreadsheetReference.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

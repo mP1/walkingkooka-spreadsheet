@@ -19,8 +19,7 @@ package walkingkooka.spreadsheet.formula;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -28,7 +27,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetFormulaParserSpreadsheetLabelNameTest implements SpreadsheetParserTesting2<SpreadsheetFormulaParserSpreadsheetLabelName>,
-    ClassTesting2<SpreadsheetFormulaParserSpreadsheetLabelName>,
+    PackagePrivateClassTesting<SpreadsheetFormulaParserSpreadsheetLabelName>,
     ToStringTesting<SpreadsheetFormulaParserSpreadsheetLabelName> {
 
     @Test
@@ -170,10 +169,5 @@ public final class SpreadsheetFormulaParserSpreadsheetLabelNameTest implements S
     @Override
     public Class<SpreadsheetFormulaParserSpreadsheetLabelName> type() {
         return SpreadsheetFormulaParserSpreadsheetLabelName.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

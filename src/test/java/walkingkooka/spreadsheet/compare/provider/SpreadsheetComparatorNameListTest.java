@@ -22,8 +22,7 @@ import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -34,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetComparatorNameListTest implements ListTesting2<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
-    ClassTesting<SpreadsheetComparatorNameList>,
+    PublicClassTesting<SpreadsheetComparatorNameList>,
     ImmutableListTesting<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
     HasUrlFragmentTesting,
     ParseStringTesting<SpreadsheetComparatorNameList>,
@@ -227,18 +226,6 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         return thrown;
     }
 
-    // class............................................................................................................
-
-    @Override
-    public Class<SpreadsheetComparatorNameList> type() {
-        return SpreadsheetComparatorNameList.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // Json.............................................................................................................
 
     @Test
@@ -295,5 +282,12 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
             ),
             first
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetComparatorNameList> type() {
+        return SpreadsheetComparatorNameList.class;
     }
 }

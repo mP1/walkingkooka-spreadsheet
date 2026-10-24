@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
@@ -28,6 +29,7 @@ public abstract class SpreadsheetStorageTestCase<T extends SpreadsheetStorage> i
     TypeNameTesting<T>,
     ToStringTesting<T>,
     HasSpreadsheetMetadataTesting,
+    PackagePrivateClassTesting<T>,
     ThrowableTesting {
 
     SpreadsheetStorageTestCase() {
@@ -35,11 +37,6 @@ public abstract class SpreadsheetStorageTestCase<T extends SpreadsheetStorage> i
     }
 
     // class............................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 
     @Override
     public final String typeNamePrefix() {

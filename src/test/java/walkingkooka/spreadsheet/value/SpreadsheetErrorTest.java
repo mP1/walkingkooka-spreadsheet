@@ -26,6 +26,7 @@ import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.currency.provider.CurrencyExchangeRaterName;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
@@ -59,7 +60,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorTest implements ParseStringTesting<SpreadsheetError>,
-    ClassTesting2<SpreadsheetError>,
+    PublicClassTesting<SpreadsheetError>,
     ComparableTesting2<SpreadsheetError>,
     JsonNodeMarshallerTesting<SpreadsheetError>,
     HasSpreadsheetErrorTesting,
@@ -1636,10 +1637,5 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Override
     public Class<SpreadsheetError> type() {
         return SpreadsheetError.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

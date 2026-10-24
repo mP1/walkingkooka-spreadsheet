@@ -22,8 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -37,7 +36,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportRectangleTest implements ClassTesting2<SpreadsheetViewportRectangle>,
+public final class SpreadsheetViewportRectangleTest implements PublicClassTesting<SpreadsheetViewportRectangle>,
     HashCodeEqualsDefinedTesting2<SpreadsheetViewportRectangle>,
     JsonNodeMarshallerTesting<SpreadsheetViewportRectangle>,
     ParseStringTesting<SpreadsheetViewportRectangle>,
@@ -781,15 +780,10 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetViewportRectangle> type() {
         return SpreadsheetViewportRectangle.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

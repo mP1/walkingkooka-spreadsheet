@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -34,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSample>,
-    ClassTesting<SpreadsheetFormatterSample>,
+    PublicClassTesting<SpreadsheetFormatterSample>,
     ToStringTesting<SpreadsheetFormatterSample>,
     TreePrintableTesting,
     JsonNodeMarshallerTesting<SpreadsheetFormatterSample> {
@@ -331,11 +330,5 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     @Override
     public Class<SpreadsheetFormatterSample> type() {
         return SpreadsheetFormatterSample.class;
-    }
-
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

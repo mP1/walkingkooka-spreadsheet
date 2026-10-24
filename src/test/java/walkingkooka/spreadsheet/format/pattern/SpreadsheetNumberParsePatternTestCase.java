@@ -20,14 +20,13 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.cursor.parser.ParserTesting;
 
 import java.math.MathContext;
 
-public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassTesting2<T>,
+public abstract class SpreadsheetNumberParsePatternTestCase<T> implements PackagePrivateClassTesting<T>,
     ParserTesting,
     TypeNameTesting<T> {
 
@@ -112,12 +111,5 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
                     .build();
             }
         };
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

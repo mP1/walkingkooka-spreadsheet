@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetMetadataPropertyNameConverterAliasSetTest implements ClassTesting<SpreadsheetMetadataPropertyNameConverterAliasSet> {
+public final class SpreadsheetMetadataPropertyNameConverterAliasSetTest implements PackagePrivateClassTesting<SpreadsheetMetadataPropertyNameConverterAliasSet> {
 
     @Override
     public Class<SpreadsheetMetadataPropertyNameConverterAliasSet> type() {
         return SpreadsheetMetadataPropertyNameConverterAliasSet.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

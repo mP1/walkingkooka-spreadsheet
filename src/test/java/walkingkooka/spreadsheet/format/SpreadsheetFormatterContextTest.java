@@ -22,12 +22,13 @@ import walkingkooka.color.Color;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
-public final class SpreadsheetFormatterContextTest implements ClassTesting<SpreadsheetFormatterContext> {
+public final class SpreadsheetFormatterContextTest implements PublicClassTesting<SpreadsheetFormatterContext> {
 
     @Test
     public void testClassDoesntImplementProviderContext() {
@@ -73,10 +74,5 @@ public final class SpreadsheetFormatterContextTest implements ClassTesting<Sprea
     @Override
     public Class<SpreadsheetFormatterContext> type() {
         return SpreadsheetFormatterContext.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

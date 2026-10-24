@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetSelectionTestSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetSelectionTestSpreadsheetSelectionVisitor> {
+public final class SpreadsheetSelectionTestSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetSelectionTestSpreadsheetSelectionVisitor>,
+    PackagePrivateClassTesting<SpreadsheetSelectionTestSpreadsheetSelectionVisitor> {
+
     @Override
     public SpreadsheetSelectionTestSpreadsheetSelectionVisitor createVisitor() {
         return new SpreadsheetSelectionTestSpreadsheetSelectionVisitor(null);
@@ -28,11 +30,6 @@ public final class SpreadsheetSelectionTestSpreadsheetSelectionVisitorTest imple
     @Override
     public Class<SpreadsheetSelectionTestSpreadsheetSelectionVisitor> type() {
         return SpreadsheetSelectionTestSpreadsheetSelectionVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

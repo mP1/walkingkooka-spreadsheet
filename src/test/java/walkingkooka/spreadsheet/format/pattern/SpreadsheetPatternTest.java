@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -78,7 +79,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern>,
+public final class SpreadsheetPatternTest implements PublicClassTesting<SpreadsheetPattern>,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     ExpressionNumberContextTesting,
@@ -2343,10 +2344,5 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Override
     public Class<SpreadsheetPattern> type() {
         return Cast.to(SpreadsheetPattern.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetFormatterSharedTest implements ClassTesting<SpreadsheetFormatterShared> {
+public final class SpreadsheetFormatterSharedTest implements PackagePrivateClassTesting<SpreadsheetFormatterShared> {
 
     @Override
     public Class<SpreadsheetFormatterShared> type() {
         return SpreadsheetFormatterShared.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

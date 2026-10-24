@@ -22,8 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -40,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>,
+public final class SpreadsheetTextTest implements PublicClassTesting<SpreadsheetText>,
     HashCodeEqualsDefinedTesting2<SpreadsheetText>,
     HasTextTesting,
     HasTextNodeTesting,
@@ -258,10 +257,5 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Override
     public Class<SpreadsheetText> type() {
         return SpreadsheetText.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

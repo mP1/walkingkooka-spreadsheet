@@ -22,7 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.util.FunctionTesting2;
 
 import java.util.Map;
@@ -31,7 +31,8 @@ import java.util.function.Function;
 
 public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataColorFunction<Integer, Color>>
     implements FunctionTesting2<SpreadsheetMetadataColorFunction<Integer, Color>, Integer, Optional<Color>>,
-    ToStringTesting<SpreadsheetMetadataColorFunction<Integer, Color>> {
+    ToStringTesting<SpreadsheetMetadataColorFunction<Integer, Color>>,
+    PackagePrivateClassTesting<SpreadsheetMetadataColorFunction<Integer, Color>> {
 
     @Test
     public void testKeyPresent() {
@@ -63,19 +64,12 @@ public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetad
         return Color.fromRgb(0x112233);
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetMetadataColorFunction<Integer, Color>> type() {
         return Cast.to(SpreadsheetMetadataColorFunction.class);
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNameSuffix() {

@@ -18,10 +18,12 @@
 package walkingkooka.spreadsheet.formula.parser;
 
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 import java.time.temporal.Temporal;
 
-public final class TemporalSpreadsheetFormulaParserTokenVisitorTest implements SpreadsheetFormulaParserTokenVisitorTesting<TemporalSpreadsheetFormulaParserTokenVisitor> {
+public final class TemporalSpreadsheetFormulaParserTokenVisitorTest implements SpreadsheetFormulaParserTokenVisitorTesting<TemporalSpreadsheetFormulaParserTokenVisitor>,
+    PackagePrivateClassTesting<TemporalSpreadsheetFormulaParserTokenVisitor> {
 
     @Override
     public TemporalSpreadsheetFormulaParserTokenVisitor createVisitor() {
@@ -33,11 +35,6 @@ public final class TemporalSpreadsheetFormulaParserTokenVisitorTest implements S
     @Override
     public Class<TemporalSpreadsheetFormulaParserTokenVisitor> type() {
         return TemporalSpreadsheetFormulaParserTokenVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

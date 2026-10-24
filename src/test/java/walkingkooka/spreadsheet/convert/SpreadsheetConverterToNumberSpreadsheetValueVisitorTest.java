@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetValueVisitorTesting;
 
-public final class SpreadsheetConverterToNumberSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetConverterToNumberSpreadsheetValueVisitor> {
+public final class SpreadsheetConverterToNumberSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetConverterToNumberSpreadsheetValueVisitor>,
+    PackagePrivateClassTesting<SpreadsheetConverterToNumberSpreadsheetValueVisitor> {
+
     @Override
     public SpreadsheetConverterToNumberSpreadsheetValueVisitor createVisitor() {
         return new SpreadsheetConverterToNumberSpreadsheetValueVisitor();
@@ -36,10 +39,5 @@ public final class SpreadsheetConverterToNumberSpreadsheetValueVisitorTest imple
     @Override
     public Class<SpreadsheetConverterToNumberSpreadsheetValueVisitor> type() {
         return SpreadsheetConverterToNumberSpreadsheetValueVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

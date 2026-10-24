@@ -17,18 +17,12 @@
 
 package walkingkooka.spreadsheet.value;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetErrorKindClassCastExceptionMessageTest implements ClassTesting<SpreadsheetErrorKindClassCastExceptionMessage> {
+public final class SpreadsheetErrorKindClassCastExceptionMessageTest implements PackagePrivateClassTesting<SpreadsheetErrorKindClassCastExceptionMessage> {
 
     @Override
     public Class<SpreadsheetErrorKindClassCastExceptionMessage> type() {
         return SpreadsheetErrorKindClassCastExceptionMessage.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

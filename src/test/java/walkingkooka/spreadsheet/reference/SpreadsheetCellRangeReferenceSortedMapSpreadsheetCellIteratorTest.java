@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
@@ -33,7 +32,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIteratorTest implements IteratorTesting,
-    ClassTesting<SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator> {
+    PackagePrivateClassTesting<SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator> {
 
     @Test
     public void testWithNullMapFails() {
@@ -290,15 +289,10 @@ public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator> type() {
         return SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -19,19 +19,15 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 
-public final class SpreadsheetEngineBasicChangesModeTest implements ClassTesting<SpreadsheetEngineBasicChangesMode>,
+public final class SpreadsheetEngineBasicChangesModeTest implements PackagePrivateClassTesting<SpreadsheetEngineBasicChangesMode>,
     TypeNameTesting<SpreadsheetEngineBasicChangesMode> {
 
     @Override
     public Class<SpreadsheetEngineBasicChangesMode> type() {
         return SpreadsheetEngineBasicChangesMode.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

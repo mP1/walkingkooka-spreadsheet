@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.currency.CurrencyValue;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -42,7 +42,8 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetValueTypeVisitor> {
+public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetValueTypeVisitor>,
+    PublicClassTesting<SpreadsheetValueTypeVisitor> {
 
     @Test
     public void testStartVisitSkip() {
@@ -1045,11 +1046,6 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Override
     public Class<SpreadsheetValueTypeVisitor> type() {
         return SpreadsheetValueTypeVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // TypeNameTesting..................................................................................................

@@ -18,13 +18,12 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.util.FunctionTesting2;
 
 import java.util.Optional;
 
-public final class SpreadsheetSelectionReplaceReferencesMapperFunctionTest implements ClassTesting<SpreadsheetSelectionReplaceReferencesMapperFunction>,
+public final class SpreadsheetSelectionReplaceReferencesMapperFunctionTest implements PackagePrivateClassTesting<SpreadsheetSelectionReplaceReferencesMapperFunction>,
     FunctionTesting2<SpreadsheetSelectionReplaceReferencesMapperFunction, SpreadsheetCellReference, Optional<SpreadsheetCellReference>> {
 
     @Test
@@ -116,15 +115,10 @@ public final class SpreadsheetSelectionReplaceReferencesMapperFunctionTest imple
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetSelectionReplaceReferencesMapperFunction> type() {
         return SpreadsheetSelectionReplaceReferencesMapperFunction.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

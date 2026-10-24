@@ -19,16 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetMetadataPropertyNameFormHandlerSelectorTest implements ClassTesting<SpreadsheetMetadataPropertyNameFormHandlerSelector> {
+public final class SpreadsheetMetadataPropertyNameFormHandlerSelectorTest implements PackagePrivateClassTesting<SpreadsheetMetadataPropertyNameFormHandlerSelector> {
 
     @Override
     public Class<SpreadsheetMetadataPropertyNameFormHandlerSelector> type() {
         return SpreadsheetMetadataPropertyNameFormHandlerSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

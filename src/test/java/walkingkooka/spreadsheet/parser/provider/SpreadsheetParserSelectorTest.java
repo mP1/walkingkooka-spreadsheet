@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -34,6 +34,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTesting<SpreadsheetParserSelector, SpreadsheetParserName>,
+    PublicClassTesting<SpreadsheetParserSelector>,
     ThrowableTesting {
 
     @Override
@@ -132,18 +133,6 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         );
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<SpreadsheetParserSelector> type() {
-        return SpreadsheetParserSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // Json.............................................................................................................
 
     @Test
@@ -189,11 +178,15 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         );
     }
 
-    // type name........................................................................................................
+    // Class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetParserSelector> type() {
+        return SpreadsheetParserSelector.class;
+    }
 
     @Override
     public String typeNamePrefix() {
         return SpreadsheetParser.class.getSimpleName();
     }
-
 }

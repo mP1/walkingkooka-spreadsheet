@@ -19,13 +19,12 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEnvironmentContextTestingTest implements SpreadsheetEnvironmentContextTesting,
-    ClassTesting2<SpreadsheetEnvironmentContextTesting> {
+    PublicClassTesting<SpreadsheetEnvironmentContextTesting> {
 
     @Test
     public void testSpreadsheetEnvironmentContextReadOnly() {
@@ -54,10 +53,5 @@ public final class SpreadsheetEnvironmentContextTestingTest implements Spreadshe
     @Override
     public Class<SpreadsheetEnvironmentContextTesting> type() {
         return SpreadsheetEnvironmentContextTesting.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

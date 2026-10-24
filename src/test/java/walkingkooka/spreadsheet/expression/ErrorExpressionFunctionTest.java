@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
@@ -32,7 +33,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionTesting2;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ErrorExpressionFunctionTest implements ExpressionFunctionTesting2<ErrorExpressionFunction, SpreadsheetError, ExpressionEvaluationContext>,
-    ClassTesting2<ErrorExpressionFunction>,
+    PackagePrivateClassTesting<ErrorExpressionFunction>,
     TypeNameTesting<ErrorExpressionFunction> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
@@ -69,11 +70,6 @@ public final class ErrorExpressionFunctionTest implements ExpressionFunctionTest
     @Override
     public Class<ErrorExpressionFunction> type() {
         return ErrorExpressionFunction.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

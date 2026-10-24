@@ -25,6 +25,8 @@ import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
@@ -40,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMapTest implements MapTesting2<SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMap, SpreadsheetCellReference, Optional<CurrencyExchangeRaterSelector>>,
-    ClassTesting2<SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMap>,
+    PublicClassTesting<SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMap>,
     JsonNodeMarshallerTesting<SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMap>,
     HasUrlFragmentTesting {
 
@@ -251,10 +253,5 @@ public final class SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMapTes
     @Override
     public Class<SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMap> type() {
         return SpreadsheetCellReferenceToCurrencyExchangeRaterSelectorMap.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

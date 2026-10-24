@@ -18,17 +18,11 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetFormatLeafParserTokenTest implements ClassTesting2<SpreadsheetFormatLeafParserToken<?>> {
+public final class SpreadsheetFormatLeafParserTokenTest implements PackagePrivateClassTesting<SpreadsheetFormatLeafParserToken<?>> {
     @Override
     public Class<SpreadsheetFormatLeafParserToken<?>> type() {
         return Cast.to(SpreadsheetFormatLeafParserToken.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

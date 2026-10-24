@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.formula.parser;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitorTest implements SpreadsheetFormulaParserTokenVisitorTesting<NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor> {
+public final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitorTest implements SpreadsheetFormulaParserTokenVisitorTesting<NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor>,
+    PackagePrivateClassTesting<NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor> {
 
     @Override
     public NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor createVisitor() {
@@ -31,11 +32,6 @@ public final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormula
     @Override
     public Class<NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor> type() {
         return NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

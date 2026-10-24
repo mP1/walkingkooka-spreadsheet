@@ -19,9 +19,10 @@ package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.math.NumberVisitorTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetValueVisitorNumberVisitorTest implements NumberVisitorTesting<SpreadsheetValueVisitorNumberVisitor> {
+public final class SpreadsheetValueVisitorNumberVisitorTest implements NumberVisitorTesting<SpreadsheetValueVisitorNumberVisitor>,
+    PackagePrivateClassTesting<SpreadsheetValueVisitorNumberVisitor> {
 
     @Test
     public void testToString() {
@@ -38,11 +39,6 @@ public final class SpreadsheetValueVisitorNumberVisitorTest implements NumberVis
     @Override
     public String typeNamePrefix() {
         return SpreadsheetValueVisitor.class.getSimpleName();
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

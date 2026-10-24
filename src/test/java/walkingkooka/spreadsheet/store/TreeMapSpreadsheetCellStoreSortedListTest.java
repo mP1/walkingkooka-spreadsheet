@@ -20,8 +20,7 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -30,7 +29,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Optional;
 
-public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTesting<TreeMapSpreadsheetCellStoreSortedList>,
+public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackagePrivateClassTesting<TreeMapSpreadsheetCellStoreSortedList>,
     ToStringTesting<TreeMapSpreadsheetCellStoreSortedList> {
 
     private final static SpreadsheetCell A1 = SpreadsheetSelection.A1
@@ -828,10 +827,5 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
     @Override
     public Class<TreeMapSpreadsheetCellStoreSortedList> type() {
         return TreeMapSpreadsheetCellStoreSortedList.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

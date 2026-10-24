@@ -26,6 +26,7 @@ import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -57,7 +58,7 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasUrlFragmentTesting,
-    ClassTesting<SpreadsheetPatternKind> {
+    PublicClassTesting<SpreadsheetPatternKind> {
 
     @Test
     public void testDateTimeFormat() {
@@ -1021,15 +1022,10 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         );
     }
 
-    // ClassTesting......................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetPatternKind> type() {
         return SpreadsheetPatternKind.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

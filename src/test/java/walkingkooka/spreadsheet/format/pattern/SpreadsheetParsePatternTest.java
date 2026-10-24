@@ -20,8 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
@@ -43,7 +42,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.function.Function;
 
-public final class SpreadsheetParsePatternTest implements ClassTesting2<SpreadsheetParsePattern>,
+public final class SpreadsheetParsePatternTest implements PublicClassTesting<SpreadsheetParsePattern>,
     SpreadsheetFormatParserContextTesting,
     TreePrintableTesting {
 
@@ -239,10 +238,5 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     @Override
     public Class<SpreadsheetParsePattern> type() {
         return Cast.to(SpreadsheetParsePattern.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

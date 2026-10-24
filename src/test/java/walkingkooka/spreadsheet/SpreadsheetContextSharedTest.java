@@ -17,20 +17,14 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetContextSharedTest implements ClassTesting<SpreadsheetContextShared> {
+public final class SpreadsheetContextSharedTest implements PackagePrivateClassTesting<SpreadsheetContextShared> {
 
     // class............................................................................................................
 
     @Override
     public Class<SpreadsheetContextShared> type() {
         return SpreadsheetContextShared.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

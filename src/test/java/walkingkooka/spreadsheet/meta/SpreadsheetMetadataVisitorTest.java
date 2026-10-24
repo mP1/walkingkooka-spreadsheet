@@ -32,7 +32,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
@@ -67,7 +67,8 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataVisitor>,
-    HasCurrencyTesting {
+    HasCurrencyTesting,
+    PackagePrivateClassTesting<SpreadsheetMetadataVisitor> {
 
     @Override
     public void testCheckToStringOverridden() {
@@ -1076,11 +1077,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     @Override
     public Class<SpreadsheetMetadataVisitor> type() {
         return SpreadsheetMetadataVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

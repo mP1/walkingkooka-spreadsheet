@@ -17,20 +17,14 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class SpreadsheetMetadataPropertyNameFormHandlerAliasSetTest implements ClassTesting<SpreadsheetMetadataPropertyNameFormHandlerAliasSet> {
+public final class SpreadsheetMetadataPropertyNameFormHandlerAliasSetTest implements PackagePrivateClassTesting<SpreadsheetMetadataPropertyNameFormHandlerAliasSet> {
 
     // class............................................................................................................
 
     @Override
     public Class<SpreadsheetMetadataPropertyNameFormHandlerAliasSet> type() {
         return SpreadsheetMetadataPropertyNameFormHandlerAliasSet.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

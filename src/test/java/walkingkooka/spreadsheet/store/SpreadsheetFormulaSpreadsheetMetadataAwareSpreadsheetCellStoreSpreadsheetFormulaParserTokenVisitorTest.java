@@ -19,11 +19,12 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserTokenVisitor;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.VisitorTesting;
 
-public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitorTest implements ClassTesting<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor>,
+public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitorTest implements PackagePrivateClassTesting<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor>,
     VisitorTesting<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor, ParserToken> {
 
     @Override
@@ -39,11 +40,6 @@ public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStor
     @Override
     public Class<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor> type() {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

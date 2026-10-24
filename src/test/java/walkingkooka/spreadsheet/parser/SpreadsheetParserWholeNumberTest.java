@@ -29,8 +29,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContextTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -44,7 +43,7 @@ import java.util.Locale;
 public final class SpreadsheetParserWholeNumberTest implements SpreadsheetParserTesting2<SpreadsheetParserWholeNumber>,
     DecimalNumberContextTesting,
     TreePrintableTesting,
-    ClassTesting<SpreadsheetParserWholeNumber> {
+    PackagePrivateClassTesting<SpreadsheetParserWholeNumber> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -236,10 +235,5 @@ public final class SpreadsheetParserWholeNumberTest implements SpreadsheetParser
     @Override
     public Class<SpreadsheetParserWholeNumber> type() {
         return SpreadsheetParserWholeNumber.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

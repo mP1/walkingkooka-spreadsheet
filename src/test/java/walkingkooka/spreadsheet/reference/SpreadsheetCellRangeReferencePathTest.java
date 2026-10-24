@@ -19,8 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.test.ParseStringTesting;
 
@@ -30,7 +29,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeReferencePathTest implements ParseStringTesting<SpreadsheetCellRangeReferencePath>,
-    ClassTesting<SpreadsheetCellRangeReferencePath>,
+    PublicClassTesting<SpreadsheetCellRangeReferencePath>,
     ThrowableTesting {
 
     @Test
@@ -910,15 +909,10 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
         );
     }
 
-    // ClassTesting....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetCellRangeReferencePath> type() {
         return SpreadsheetCellRangeReferencePath.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

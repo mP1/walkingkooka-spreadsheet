@@ -17,10 +17,11 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.StandardThrowableTesting;
 
-public final class SpreadsheetExceptionTest implements StandardThrowableTesting<SpreadsheetException> {
+public final class SpreadsheetExceptionTest implements StandardThrowableTesting<SpreadsheetException>,
+    PublicClassTesting<SpreadsheetException> {
 
     @Override
     public SpreadsheetException createThrowable(final String message) {
@@ -35,10 +36,5 @@ public final class SpreadsheetExceptionTest implements StandardThrowableTesting<
     @Override
     public Class<SpreadsheetException> type() {
         return SpreadsheetException.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

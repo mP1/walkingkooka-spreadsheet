@@ -21,8 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
@@ -34,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetFormatterSampleListTest implements ListTesting2<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
-    ClassTesting<SpreadsheetFormatterSampleList>,
+    PublicClassTesting<SpreadsheetFormatterSampleList>,
     ImmutableListTesting<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
     JsonNodeMarshallerTesting<SpreadsheetFormatterSampleList>,
     ThrowableTesting {
@@ -136,16 +135,6 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
         );
     }
 
-    @Override
-    public Class<SpreadsheetFormatterSampleList> type() {
-        return SpreadsheetFormatterSampleList.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // Json...........................................................................................................
 
     @Test
@@ -227,5 +216,12 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
             this.createList(),
             SAMPLE1
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetFormatterSampleList> type() {
+        return SpreadsheetFormatterSampleList.class;
     }
 }

@@ -20,8 +20,7 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -35,7 +34,7 @@ import walkingkooka.test.ParseStringTesting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportAnchorTest implements ClassTesting<SpreadsheetViewportAnchor>,
+public final class SpreadsheetViewportAnchorTest implements PublicClassTesting<SpreadsheetViewportAnchor>,
     ParseStringTesting<SpreadsheetViewportAnchor>,
     HasUrlFragmentTesting,
     ThrowableTesting {
@@ -946,15 +945,10 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // ClassTesting....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetViewportAnchor> type() {
         return SpreadsheetViewportAnchor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

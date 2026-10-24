@@ -19,14 +19,14 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting2;
-import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-final public class SpreadsheetFunctionNameTest implements ClassTesting2<SpreadsheetFunctionName>,
+final public class SpreadsheetFunctionNameTest implements PublicClassTesting<SpreadsheetFunctionName>,
     NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName>,
     JsonNodeMarshallerTesting<SpreadsheetFunctionName> {
 
@@ -105,16 +105,6 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
         return CONTROL + BYTE_NON_ASCII;
     }
 
-    @Override
-    public Class<SpreadsheetFunctionName> type() {
-        return SpreadsheetFunctionName.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // Json.............................................................................................................
 
     @Override
@@ -126,5 +116,17 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
     @Override
     public SpreadsheetFunctionName createJsonNodeMarshallingValue() {
         return this.createObject();
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetFunctionName> type() {
+        return SpreadsheetFunctionName.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }

@@ -17,20 +17,14 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
-public final class HasSpreadsheetMetadataTestingPrivateTest implements ClassTesting<HasSpreadsheetMetadataTestingPrivate> {
+public final class HasSpreadsheetMetadataTestingPrivateTest implements PackagePrivateClassTesting<HasSpreadsheetMetadataTestingPrivate> {
 
     // class............................................................................................................
 
     @Override
     public Class<HasSpreadsheetMetadataTestingPrivate> type() {
         return HasSpreadsheetMetadataTestingPrivate.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

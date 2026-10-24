@@ -21,15 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoSetLikeTesting;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, SpreadsheetImporterAlias, SpreadsheetImporterAliasSet>,
-    ClassTesting<SpreadsheetImporterInfoSet> {
+    PublicClassTesting<SpreadsheetImporterInfoSet> {
 
     // immutable set....................................................................................................
 
@@ -145,10 +144,5 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
     @Override
     public Class<SpreadsheetImporterInfoSet> type() {
         return SpreadsheetImporterInfoSet.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }

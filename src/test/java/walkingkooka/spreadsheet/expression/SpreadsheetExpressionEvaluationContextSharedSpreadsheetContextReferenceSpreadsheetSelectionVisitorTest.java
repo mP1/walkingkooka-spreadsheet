@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -37,7 +37,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitorTest
-    implements SpreadsheetSelectionVisitorTesting<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor> {
+    implements SpreadsheetSelectionVisitorTesting<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor>,
+    PackagePrivateClassTesting<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor> {
 
     @Test
     public void testValuesWithCellNonNullValue() {
@@ -314,10 +315,5 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     @Override
     public Class<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor> type() {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

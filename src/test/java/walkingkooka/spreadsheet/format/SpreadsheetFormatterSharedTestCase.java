@@ -21,14 +21,13 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
 import walkingkooka.color.NamedColor;
 import walkingkooka.color.WebColorName;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 import java.util.Optional;
 
 public abstract class SpreadsheetFormatterSharedTestCase<F extends SpreadsheetFormatterShared> implements SpreadsheetFormatterTesting2<F>,
     ToStringTesting<F>,
-    ClassTesting2<F> {
+    PackagePrivateClassTesting<F> {
 
     final static Color COLOR_INDEX_44 = Color.indexed(44);
 
@@ -60,10 +59,5 @@ public abstract class SpreadsheetFormatterSharedTestCase<F extends SpreadsheetFo
     @Override
     public final String typeNameSuffix() {
         return "";
-    }
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
