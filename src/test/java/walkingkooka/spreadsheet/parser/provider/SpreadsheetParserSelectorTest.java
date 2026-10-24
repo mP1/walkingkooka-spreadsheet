@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.parser.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -34,7 +33,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTesting<SpreadsheetParserSelector, SpreadsheetParserName>,
-    PublicClassTesting<SpreadsheetParserSelector>,
     ThrowableTesting {
 
     @Override
