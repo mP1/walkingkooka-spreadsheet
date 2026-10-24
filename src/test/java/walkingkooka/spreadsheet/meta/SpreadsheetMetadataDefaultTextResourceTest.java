@@ -65,7 +65,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -256,12 +256,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "            *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
                 "            StorageValue(Binary) to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinaryBinary)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"BINARY\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "                  Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "                  TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
@@ -298,6 +292,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
@@ -312,7 +312,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -503,12 +503,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "            *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
                 "            StorageValue(Binary) to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinaryBinary)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"BINARY\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "                  Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "                  TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
@@ -545,6 +539,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
@@ -559,7 +559,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -729,6 +729,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
                 "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
+                "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
                 "      ConverterCustomToString\n" +
@@ -742,7 +748,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -933,12 +939,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "            *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
                 "            StorageValue(Binary) to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinaryBinary)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"BINARY\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "                  Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "                  TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
@@ -975,6 +975,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
@@ -8953,7 +8959,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    time\n" +
                 "  formattingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formattingCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -8961,7 +8967,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    basic\n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formulaCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -8995,13 +9001,13 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "  precision: 10\n" +
                 "  queryConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  queryFunctions: \n" +
                 "  queryHighlighting: false\n" +
                 "  roundingMode: HALF_UP\n" +
                 "  scriptingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  scriptingCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -9505,7 +9511,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    time\n" +
                 "  formattingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formattingCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -9513,7 +9519,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    basic\n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formulaCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -9554,13 +9560,13 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "  precision: 10\n" +
                 "  queryConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  queryFunctions: \n" +
                 "  queryHighlighting: false\n" +
                 "  roundingMode: HALF_UP\n" +
                 "  scriptingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  scriptingCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +

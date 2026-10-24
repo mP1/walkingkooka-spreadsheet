@@ -730,7 +730,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -921,12 +921,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "            *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
                 "            StorageValue(Binary) to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinaryBinary)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"BINARY\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "                  Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "                  TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
@@ -963,6 +957,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
@@ -977,7 +977,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -1168,12 +1168,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "            *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
                 "            StorageValue(Binary) to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinaryBinary)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"BINARY\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "                  Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "                  TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
@@ -1210,6 +1204,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
@@ -1224,7 +1224,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -1394,6 +1394,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
                 "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
+                "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
                 "      ConverterCustomToString\n" +
@@ -1407,7 +1413,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         this.treePrintAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -1598,12 +1604,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            *.tsv to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTsv)\n" +
                 "            *.txt to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinarySharedTxt)\n" +
                 "            StorageValue(Binary) to StorageBinary (walkingkooka.storage.convert.StorageConverterStorageValueToStorageBinaryBinary)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"BINARY\"\n" +
-                "                ConverterCollection\n" +
-                "                  to Binary (walkingkooka.convert.ConverterToBinary)\n" +
-                "                  Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "                  TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"style\"\n" +
                 "          ConverterCollection\n" +
@@ -1640,6 +1640,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "            TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "            TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"binary\"\n" +
+                "          ConverterCollection\n" +
+                "            to Binary (walkingkooka.convert.ConverterToBinary)\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
+                "            TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
@@ -2286,7 +2292,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    time\n" +
                 "  formattingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formattingCurrencyExchangeRater: \n" +
                 "    storage-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -2294,7 +2300,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "  formHandlers: \n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formulaCurrencyExchangeRater: \n" +
                 "    storage-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -2334,12 +2340,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "  precision: 7\n" +
                 "  queryConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  queryFunctions: \n" +
                 "  roundingMode: HALF_UP\n" +
                 "  scriptingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  scriptingCurrencyExchangeRater: \n" +
                 "    storage-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -2764,7 +2770,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    time\n" +
                 "  formattingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formattingCurrencyExchangeRater: \n" +
                 "    storage-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -2772,7 +2778,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "  formHandlers: \n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  formulaCurrencyExchangeRater: \n" +
                 "    storage-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -2812,12 +2818,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "  precision: 7\n" +
                 "  queryConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  queryFunctions: \n" +
                 "  roundingMode: HALF_UP\n" +
                 "  scriptingConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, optional-to, collection-to)\"\n" +
+                "      \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
                 "  scriptingCurrencyExchangeRater: \n" +
                 "    storage-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
