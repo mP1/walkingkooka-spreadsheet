@@ -261,7 +261,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link SpreadsheetConverterDateTime()}
+     * {@link SpreadsheetConverterDateTime}
      */
     public static Converter<SpreadsheetConverterContext> dateTime(final Converter<SpreadsheetConverterContext> dateToString,
                                                                   final Converter<SpreadsheetConverterContext> dateTimeToString,
