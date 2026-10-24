@@ -2139,9 +2139,9 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    to-parser-selector\n" +
                 "    to-properties\n" +
                 "    to-spreadsheet-selection\n" +
-                "    to-string\n" +
                 "    to-style\n" +
                 "    to-styleable\n" +
+                "    to-text\n" +
                 "    to-text-node\n" +
                 "    to-tsv-string-list\n" +
                 "    to-validation-checkbox\n" +
@@ -2617,9 +2617,9 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    to-parser-selector\n" +
                 "    to-properties\n" +
                 "    to-spreadsheet-selection\n" +
-                "    to-string\n" +
                 "    to-style\n" +
                 "    to-styleable\n" +
+                "    to-text\n" +
                 "    to-text-node\n" +
                 "    to-tsv-string-list\n" +
                 "    to-validation-checkbox\n" +
