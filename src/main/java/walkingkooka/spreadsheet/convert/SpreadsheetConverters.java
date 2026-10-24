@@ -708,8 +708,34 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * A converter for storage
      */
     public static Converter<SpreadsheetConverterContext> storage() {
-        return SpreadsheetConvertersStorage.STORAGE;
+        if (null == STORAGE) {
+            STORAGE = namedCollection(
+                "STORAGE",
+                SpreadsheetConverters.textToStoragePath(),
+                SpreadsheetConverters.textToPath(),
+                SpreadsheetConverters.storageBinaryToStorageValueCsv(),
+                SpreadsheetConverters.storageBinaryToStorageValueEnvironment(),
+                SpreadsheetConverters.storageBinaryToStorageValueExpression(),
+                SpreadsheetConverters.storageBinaryToStorageValueJson(),
+                SpreadsheetConverters.storageBinaryToStorageValueProperties(),
+                SpreadsheetConverters.storageBinaryToStorageValueTsv(),
+                SpreadsheetConverters.storageBinaryToStorageValueTxt(),
+                SpreadsheetConverters.storageBinaryToStorageValueBinary(),
+                SpreadsheetConverters.storageValueToStorageBinaryCsv(),
+                SpreadsheetConverters.storageValueToStorageBinaryEnvironment(),
+                SpreadsheetConverters.storageValueToStorageBinaryExpression(),
+                SpreadsheetConverters.storageValueToStorageBinaryJson(),
+                SpreadsheetConverters.storageValueToStorageBinaryProperties(),
+                SpreadsheetConverters.storageValueToStorageBinaryTsv(),
+                SpreadsheetConverters.storageValueToStorageBinaryTxt(),
+                SpreadsheetConverters.storageValueToStorageBinaryBinary(),
+                SpreadsheetConverters.binary()
+            );
+        }
+        return STORAGE;
     }
+
+    private static Converter<SpreadsheetConverterContext> STORAGE;
 
     /**
      * {see StorageConverterStorageBinaryToStorageValueBinary}
