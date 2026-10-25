@@ -40,11 +40,9 @@ import walkingkooka.currency.provider.CurrencyExchangeRaterAliasSet;
 import walkingkooka.currency.provider.CurrencyExchangeRaterProviders;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -126,7 +124,6 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -1354,8 +1351,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             PROVIDER_CONTEXT
         );
 
-        final Locale locale = LOCALE;
-
         this.convertAndCheck3(
             value,
             expected,
@@ -1390,7 +1385,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
-                LocaleContexts.jre(locale),
+                LOCALE_CONTEXT,
                 LOGGING_CONTEXT
             )
         );
@@ -1467,16 +1462,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDateTimeContextWithDateTimeSymbols() {
-        final Locale locale = Locale.forLanguageTag("FR");
-
-        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(locale)
-        );
-
         final int twoDigitYear = 49;
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-            .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
+            .set(SpreadsheetMetadataPropertyName.LOCALE, DIFFERENT_LOCALE)
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
         final DateTimeContext context = metadata.dateTimeContext(
@@ -1486,7 +1475,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
 
         this.checkEquals(
-            dateTimeSymbols,
+            DIFFERENT_DATE_TIME_SYMBOLS,
             context.dateTimeSymbols(),
             "dateTimeSymbols"
         );
@@ -1494,17 +1483,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDateTimeContextWithSpreadsheetCellWithDateTimeSymbols() {
-        final Locale locale = Locale.FRANCE;
-
-        this.checkNotEquals(
-            locale,
-            LOCALE
-        );
-
-        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(locale)
-        );
-
         final int twoDigitYear = 49;
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
@@ -1514,16 +1492,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final DateTimeContext context = metadata.dateTimeContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                    .setDateTimeSymbols(
-                        Optional.of(dateTimeSymbols)
-                    )
+                    .setDateTimeSymbols(OPTIONAL_DIFFERENT_DATE_TIME_SYMBOLS)
             ),
             HAS_NOW,
             LOCALE_CONTEXT
         );
 
         this.checkEquals(
-            dateTimeSymbols,
+            DIFFERENT_DATE_TIME_SYMBOLS,
             context.dateTimeSymbols(),
             "dateTimeSymbols"
         );
@@ -1531,17 +1507,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDateTimeContextWithSpreadsheetCellWithDateTimeSymbolsAndLocale() {
-        final Locale locale = Locale.FRANCE;
-
-        this.checkNotEquals(
-            locale,
-            LOCALE
-        );
-
-        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(locale)
-        );
-
         final int twoDigitYear = 49;
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
@@ -1551,9 +1516,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final DateTimeContext context = metadata.dateTimeContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                    .setDateTimeSymbols(
-                        Optional.of(dateTimeSymbols)
-                    ).setLocale(
+                    .setDateTimeSymbols(OPTIONAL_DIFFERENT_DATE_TIME_SYMBOLS)
+                    .setLocale(
                         Optional.of(
                             Locale.GERMANY
                         )
@@ -1564,7 +1528,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
 
         this.checkEquals(
-            dateTimeSymbols,
+            DIFFERENT_DATE_TIME_SYMBOLS,
             context.dateTimeSymbols(),
             "dateTimeSymbols"
         );
@@ -1572,36 +1536,23 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDateTimeContextWithSpreadsheetCellWithLocale() {
-        final Locale locale = Locale.FRANCE;
-
-        this.checkNotEquals(
-            locale,
-            LOCALE
-        );
-
-        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(locale)
-        );
-
         final int twoDigitYear = 49;
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+            .set(SpreadsheetMetadataPropertyName.LOCALE, DIFFERENT_LOCALE)
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
         final DateTimeContext context = metadata.dateTimeContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                    .setLocale(
-                        Optional.of(locale)
-                    )
+                    .setLocale(OPTIONAL_DIFFERENT_LOCALE)
             ),
             HAS_NOW,
             LOCALE_CONTEXT
         );
 
         this.checkEquals(
-            dateTimeSymbols,
+            DIFFERENT_DATE_TIME_SYMBOLS,
             context.dateTimeSymbols(),
             "dateTimeSymbols"
         );
@@ -1626,8 +1577,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDecimalNumberContextPropertiesPresent() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
         Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
             .forEach(mc -> {
                     final int precision = mc.getPrecision();
@@ -1637,7 +1586,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         DECIMAL_NUMBER_SYMBOLS,
                         SpreadsheetMetadata.EMPTY
                             .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
-                            .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
+                            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                             .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
                             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode)
                             .getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS)
@@ -1648,18 +1597,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDecimalNumberContextWithSpreadsheetCellWithDecimalNumberSymbols() {
-        final Locale locale = Locale.FRANCE;
-
-        this.checkNotEquals(
-            locale,
-            LOCALE
-        );
-
-        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(locale)
-        );
-
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
@@ -1669,15 +1606,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final DecimalNumberContext context = metadata.decimalNumberContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                    .setDecimalNumberSymbols(
-                        Optional.of(decimalNumberSymbols)
-                    )
+                    .setDecimalNumberSymbols(OPTIONAL_DIFFERENT_DECIMAL_NUMBER_SYMBOLS)
             ),
             LOCALE_CONTEXT
         );
 
         this.checkEquals(
-            decimalNumberSymbols,
+            DIFFERENT_DECIMAL_NUMBER_SYMBOLS,
             context.decimalNumberSymbols(),
             "decimalNumberSymbols"
         );
@@ -1685,18 +1620,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDecimalNumberContextWithSpreadsheetCellWithDecimalNumberSymbolsAndLocale() {
-        final Locale locale = Locale.FRANCE;
-
-        this.checkNotEquals(
-            locale,
-            LOCALE
-        );
-
-        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(locale)
-        );
-
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
@@ -1706,9 +1629,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final DecimalNumberContext context = metadata.decimalNumberContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                    .setDecimalNumberSymbols(
-                        Optional.of(decimalNumberSymbols)
-                    ).setLocale(
+                    .setDecimalNumberSymbols(OPTIONAL_DIFFERENT_DECIMAL_NUMBER_SYMBOLS)
+                    .setLocale(
                         Optional.of(
                             Locale.GERMANY
                         )
@@ -1718,7 +1640,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
 
         this.checkEquals(
-            decimalNumberSymbols,
+            DIFFERENT_DECIMAL_NUMBER_SYMBOLS,
             context.decimalNumberSymbols(),
             "decimalNumberSymbols"
         );
@@ -1726,18 +1648,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDecimalNumberContextWithSpreadsheetCellWithLocale() {
-        final Locale locale = Locale.FRANCE;
-
-        this.checkNotEquals(
-            locale,
-            LOCALE
-        );
-
-        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(locale)
-        );
-
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
@@ -1747,15 +1657,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final DecimalNumberContext context = metadata.decimalNumberContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                    .setLocale(
-                        Optional.of(locale)
-                    )
+                    .setLocale(OPTIONAL_DIFFERENT_LOCALE)
             ),
             LOCALE_CONTEXT
         );
 
         this.checkEquals(
-            decimalNumberSymbols,
+            DIFFERENT_DECIMAL_NUMBER_SYMBOLS,
             context.decimalNumberSymbols(),
             "decimalNumberSymbols"
         );
@@ -2323,18 +2231,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     private void spreadsheetValidatorContextAndCheck(final SpreadsheetValidationReference cellOrLabel) {
-        final Locale locale = LOCALE;
-
         final SpreadsheetValidatorContext context = this.createSpreadsheetMetadata()
             .set(
                 SpreadsheetMetadataPropertyName.DATE_OFFSET,
                 Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
             ).set(
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                    '+',
-                    new DecimalFormatSymbols(locale)
-                )
+                DECIMAL_NUMBER_SYMBOLS
             ).set(
                 SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
                 1950
@@ -2346,7 +2249,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 DECIMAL_NUMBER_DIGIT_COUNT
             ).set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                locale
+                LOCALE
             ).set(
                 SpreadsheetMetadataPropertyName.PRECISION,
                 10
