@@ -22,7 +22,6 @@ import walkingkooka.color.Color;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
-import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataDefaultTextResourceProvider;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -55,7 +54,7 @@ final class SpreadsheetColorContextSpreadsheetMetadataDefault implements Spreads
                 .text()
         ).objectOrFail();
 
-        final Comparator<String> comparator = SpreadsheetStrings.CASE_SENSITIVITY.comparator();
+        final Comparator<String> comparator = SpreadsheetColors.CASE_SENSITIVITY.comparator();
 
         final Map<String, Object> colorIndexOrNameTo = Maps.sorted(
             (final String left, final String right) -> {
