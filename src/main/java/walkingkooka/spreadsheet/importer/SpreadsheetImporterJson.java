@@ -94,8 +94,7 @@ final class SpreadsheetImporterJson implements SpreadsheetImporter {
 
         final Function<JsonNode, SpreadsheetImporterCellValue> value;
 
-        final MediaType contentType = cells.contentType()
-            .orElseThrow(() -> new IllegalArgumentException("Missing content-type"));
+        final MediaType contentType = cells.contentTypeOrFail();
 
         if (SpreadsheetMediaTypes.JSON_CELL.equals(contentType)) {
             value = (j) -> SpreadsheetImporterCellValue.cell(
