@@ -451,6 +451,9 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
             ).set(
+                SpreadsheetMetadataPropertyName.DATE_OFFSET,
+                DATE_OFFSET
+            ).set(
                 SpreadsheetMetadataPropertyName.DATE_FORMATTER,
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
             ).set(
@@ -463,14 +466,29 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER)
             ).set(
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
+                DECIMAL_NUMBER_DIGIT_COUNT
+            ).set(
+                SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+                DEFAULT_YEAR
+            ).set(
                 SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
+                EXPRESSION_NUMBER_KIND
             ).set(
                 SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
             ).set(
                 SpreadsheetMetadataPropertyName.NUMBER_PARSER,
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.PRECISION,
+                MATH_CONTEXT.getPrecision()
+            ).set(
+                SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+                MATH_CONTEXT.getRoundingMode()
             ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
@@ -480,6 +498,12 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             ).set(
                 SpreadsheetMetadataPropertyName.TIME_PARSER,
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
+                TWO_DIGIT_YEAR
+            ).set(
+                SpreadsheetMetadataPropertyName.VALUE_SEPARATOR,
+                VALUE_SEPARATOR
             ).spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.readOnly(
                     Predicates.always(), // everything is read only

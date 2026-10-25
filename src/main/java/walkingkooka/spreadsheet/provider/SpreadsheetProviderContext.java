@@ -25,12 +25,11 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.environment.EnvironmentContextMissingValues;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetector;
@@ -40,6 +39,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
@@ -58,6 +58,7 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -216,6 +217,35 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
         final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
 
+        final EnvironmentContextMissingValues missing = storageEnvironmentContext.environmentContextMissingValues();
+
+        final Long dateOffset = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.DATE_OFFSET.toEnvironmentValueName()
+        );
+        final Integer decimalNumberDigitCount = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT.toEnvironmentValueName()
+        );
+        final Integer defaultYear = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.DEFAULT_YEAR.toEnvironmentValueName()
+        );
+        final ExpressionNumberKind expressionNumberKind = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND.toEnvironmentValueName()
+        );
+        final Integer precision = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName()
+        );
+        final RoundingMode roundingMode = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName()
+        );
+        final Integer twoDigitYear = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName()
+        );
+        final Character valueSeparator = missing.getOrNull(
+            SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName()
+        );
+
+        missing.reportIfMissing();
+
         this.converterContext = SpreadsheetConverterContexts.basic(
             storageEnvironmentContext, // HasUserDirectories
             SpreadsheetConverterContexts.NO_METADATA,
@@ -229,12 +259,12 @@ final class SpreadsheetProviderContext implements ProviderContext,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
-                    ExpressionNumberKind.DEFAULT,
+                    expressionNumberKind,
                     Cast.to(multiplier), // ExpressionNumberConverterContext
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateOffset
-                        ',', // valueSeparator
+                        dateOffset,
+                        valueSeparator,
                         converter.cast(ConverterContext.class),
                         Cast.to(multiplier),
                         storageEnvironmentContext, // BinaryTextContext
@@ -242,15 +272,18 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         DateTimeContexts.basic(
                             currencyLocaleContext.dateTimeSymbolsForLocaleOrFail(locale),
                             locale,
-                            1950, // defaultYear
-                            50, // twoDigitYear
+                            defaultYear,
+                            twoDigitYear,
                             storageEnvironmentContext
                         ),
                         DecimalNumberContexts.basic(
-                            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
+                            decimalNumberDigitCount,
                             currencyLocaleContext.decimalNumberSymbolsForLocaleOrFail(locale),
                             locale,
-                            MathContext.DECIMAL32
+                            new MathContext(
+                                precision,
+                                roundingMode
+                            )
                         )
                     )
                 ),
