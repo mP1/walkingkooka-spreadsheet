@@ -83,9 +83,8 @@ public final class SpreadsheetEngineSpreadsheetMetadataStampingTest implements S
 
     private final static SpreadsheetMetadata BEFORE = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-        .loadFromLocale(
-            CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
-        ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
+        .loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+        .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
         .set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.with(

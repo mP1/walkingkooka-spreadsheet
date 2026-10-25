@@ -176,39 +176,34 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     public void testSaveMetadataWithSameId() {
         final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
 
-        final Locale locale = Locale.forLanguageTag("FR");
-
         final SpreadsheetMetadata saved = context.saveMetadata(
             SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    DIFFERENT_LOCALE
+                ).loadFromLocale(DIFFERENT_CURRENCY_LOCALE_CONTEXT)
+                .set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    SPREADSHEET_ID
+                ).set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    AUDIT_INFO
                 )
-            ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SPREADSHEET_ID
-            ).set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AUDIT_INFO
-            )
         );
 
-        this.checkEquals(
-            locale,
-            saved.locale()
+        this.localeAndCheck(
+            saved,
+            DIFFERENT_LOCALE
         );
 
         this.localeAndCheck(
             context,
-            locale
+            DIFFERENT_LOCALE
         );
 
         this.environmentValueAndCheck(
             context,
             EnvironmentValueName.LOCALE,
-            locale
+            DIFFERENT_LOCALE
         );
     }
 
@@ -222,28 +217,23 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             id
         );
 
-        final Locale locale = Locale.forLanguageTag("FR");
-
         final SpreadsheetMetadata saved = context.saveMetadata(
             SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    DIFFERENT_LOCALE
+                ).loadFromLocale(DIFFERENT_CURRENCY_LOCALE_CONTEXT)
+                .set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    id
+                ).set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    AUDIT_INFO
                 )
-            ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                id
-            ).set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AUDIT_INFO
-            )
         );
 
-        this.checkEquals(
-            locale,
-            saved.locale()
+        this.localeAndCheck(
+            saved,
+            DIFFERENT_LOCALE
         );
 
         this.localeAndCheck(
