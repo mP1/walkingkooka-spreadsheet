@@ -21,10 +21,7 @@ package walkingkooka.spreadsheet.storage;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -560,17 +557,14 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
     private SpreadsheetContext createSpreadsheetContext() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
-        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
-
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
 
         metadataStore.save(
             SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.LOCALE,
                     LOCALE
-                ).loadFromLocale(
-                    CURRENCY_CONTEXT.setLocaleContext(localeContext)
-                ).set(
+                ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
+                .set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.create(
                         USER,
@@ -603,8 +597,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
-            CurrencyContexts.fake()
-                .setLocaleContext(localeContext),
+            CURRENCY_LOCALE_CONTEXT,
             SpreadsheetEnvironmentContexts.basic(
                 SPREADSHEET_METADATA_LOADER,
                 storage,
