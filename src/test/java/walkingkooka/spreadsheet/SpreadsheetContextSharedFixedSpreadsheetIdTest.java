@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.logging.CanLog;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpHandlerContext;
@@ -50,7 +49,6 @@ import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -213,39 +211,34 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     public void testSaveMetadataWithSameId() {
         final SpreadsheetContextSharedFixedSpreadsheetId context = this.createContext();
 
-        final Locale locale = Locale.forLanguageTag("FR");
-
         final SpreadsheetMetadata saved = context.saveMetadata(
             SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    DIFFERENT_LOCALE
+                ).loadFromLocale(DIFFERENT_CURRENCY_LOCALE_CONTEXT)
+                .set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    SPREADSHEET_ID
+                ).set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    AUDIT_INFO
                 )
-            ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SPREADSHEET_ID
-            ).set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AUDIT_INFO
-            )
         );
 
-        this.checkEquals(
-            locale,
-            saved.locale()
+        this.localeAndCheck(
+            saved,
+            DIFFERENT_LOCALE
         );
 
         this.localeAndCheck(
             context,
-            locale
+            DIFFERENT_LOCALE
         );
 
         this.environmentValueAndCheck(
             context,
             EnvironmentValueName.LOCALE,
-            locale
+            DIFFERENT_LOCALE
         );
     }
 
@@ -259,16 +252,12 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             id
         );
 
-        final Locale locale = Locale.forLanguageTag("FR");
-
         final SpreadsheetMetadata saved = context.saveMetadata(
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                locale
+                DIFFERENT_LOCALE
             ).loadFromLocale(
-                CURRENCY_CONTEXT.setLocaleContext(
-                    LocaleContexts.jre(locale)
-                )
+                DIFFERENT_CURRENCY_LOCALE_CONTEXT
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 id
@@ -278,9 +267,9 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             )
         );
 
-        this.checkEquals(
-            locale,
-            saved.locale()
+        this.localeAndCheck(
+            saved,
+            DIFFERENT_LOCALE
         );
 
         this.localeAndCheck(
