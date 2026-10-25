@@ -24,6 +24,7 @@ import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggingContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.MediaType;
@@ -225,6 +226,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
 
     @Override
     default SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    @Override
+    default LoggingContext loggingContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }
 

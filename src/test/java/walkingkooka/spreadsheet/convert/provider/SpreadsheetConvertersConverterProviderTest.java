@@ -240,7 +240,8 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             ),
             LocalDate.of(2000, 12, 31)
         );

@@ -36,6 +36,8 @@ import walkingkooka.environment.CanParseEnvironmentValueNameDelegator;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggingContext;
+import walkingkooka.logging.LoggingContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.email.EmailAddress;
@@ -309,6 +311,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
         JsonNodeMarshallUnmarshallContextDelegator,
+        LoggingContextDelegator,
         LocaleContextDelegator {
 
         TestSpreadsheetConverterContext(final SpreadsheetMetadata spreadsheetMetadata,
@@ -548,6 +551,12 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             return SPREADSHEET_CAN_PARSE_ENVIRONMENT_VALUE_NAME;
         }
 
+        // LoggingContextDelegator......................................................................................
+
+        @Override
+        public LoggingContext loggingContext() {
+            return LOGGING_CONTEXT;
+        }
     }
 
     @Test

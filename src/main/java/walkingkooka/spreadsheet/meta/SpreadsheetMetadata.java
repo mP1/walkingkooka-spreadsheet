@@ -1189,7 +1189,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     jsonNodeUnmarshallContext
                 )
             ),
-            currencyLocaleContext // LocaleContext
+            currencyLocaleContext, // LocaleContext
+            spreadsheetEnvironmentContext // LoggingContext
         );
     }
 

@@ -21,6 +21,8 @@ import walkingkooka.Binary;
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextDelegator;
 import walkingkooka.convert.Converter;
+import walkingkooka.logging.LoggingContext;
+import walkingkooka.logging.LoggingContextDelegator;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -40,6 +42,7 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     ColorContextDelegator,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
+    LoggingContextDelegator,
     SpreadsheetMetadataLoaderDelegator {
 
     @Override
@@ -98,6 +101,13 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
 
     @Override
     default ColorContext colorContext() {
+        return this.spreadsheetConverterContext();
+    }
+
+    // LoggingContextDelegator..........................................................................................
+
+    @Override
+    default LoggingContext loggingContext() {
         return this.spreadsheetConverterContext();
     }
 

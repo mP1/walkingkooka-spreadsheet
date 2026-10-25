@@ -174,7 +174,8 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
-            LocaleContexts.fake()
+            LocaleContexts.fake(),
+            LOGGING_CONTEXT
         );
     }
 

@@ -4423,7 +4423,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
-            LOCALE_CONTEXT
+            LOCALE_CONTEXT,
+            LOGGING_CONTEXT
         );
     }
 
@@ -5039,7 +5040,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
-            LocaleContexts.fake()
+            LocaleContexts.fake(),
+            LOGGING_CONTEXT
         );
     }
 

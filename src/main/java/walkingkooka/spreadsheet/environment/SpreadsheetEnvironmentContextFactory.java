@@ -369,7 +369,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         jsonNodeUnmarshallContext
                     )
                 ),
-                currencyLocaleContext
+                currencyLocaleContext,
+                this.spreadsheetEnvironmentContext // LoggingContext
             );
         }
         return this.spreadsheetConverterContext;

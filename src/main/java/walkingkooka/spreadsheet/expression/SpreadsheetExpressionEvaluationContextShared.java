@@ -29,6 +29,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggingContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -367,6 +368,11 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
 
     @Override
     public final HasUserDirectories hasUserDirectories() {
+        return this.spreadsheetEnvironmentContext();
+    }
+
+    @Override
+    public final LoggingContext loggingContext() {
         return this.spreadsheetEnvironmentContext();
     }
 

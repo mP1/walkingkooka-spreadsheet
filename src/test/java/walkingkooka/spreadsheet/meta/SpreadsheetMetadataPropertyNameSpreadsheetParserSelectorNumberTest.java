@@ -114,7 +114,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
 

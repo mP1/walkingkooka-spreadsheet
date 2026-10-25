@@ -1390,7 +1390,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
-                LocaleContexts.jre(locale)
+                LocaleContexts.jre(locale),
+                LOGGING_CONTEXT
             )
         );
     }

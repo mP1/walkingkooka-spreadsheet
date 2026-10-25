@@ -1283,7 +1283,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 ENVIRONMENT_CONTEXT,
                 JsonNodeMarshallUnmarshallContexts.fake()
             ),
-            LocaleContexts.fake()
+            LocaleContexts.fake(),
+            LOGGING_CONTEXT
         );
     }
 

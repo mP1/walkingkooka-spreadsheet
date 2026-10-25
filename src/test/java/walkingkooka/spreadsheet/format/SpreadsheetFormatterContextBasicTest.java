@@ -252,7 +252,8 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             ENVIRONMENT_CONTEXT,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         ),
-        LOCALE_CONTEXT
+        LOCALE_CONTEXT,
+        LOGGING_CONTEXT
     );
 
     private final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =
