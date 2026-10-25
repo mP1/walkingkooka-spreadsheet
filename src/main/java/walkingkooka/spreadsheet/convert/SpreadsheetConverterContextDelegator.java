@@ -24,6 +24,8 @@ import walkingkooka.convert.Converter;
 import walkingkooka.logging.LoggingContext;
 import walkingkooka.logging.LoggingContextDelegator;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderDelegator;
@@ -40,6 +42,7 @@ import java.util.Optional;
 
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
     ColorContextDelegator,
+    HasSpreadsheetMetadataDelegator,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
     LoggingContextDelegator,
@@ -78,12 +81,6 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     }
 
     @Override
-    default Optional<SpreadsheetMetadata> spreadsheetMetadata() {
-        return this.spreadsheetConverterContext()
-            .spreadsheetMetadata();
-    }
-
-    @Override
     default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetConverterContext()
             .resolveLabel(labelName);
@@ -102,6 +99,18 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     @Override
     default ColorContext colorContext() {
         return this.spreadsheetConverterContext();
+    }
+
+    // HasSpreadsheetMetadataDelegator..................................................................................
+
+    @Override
+    default HasSpreadsheetMetadata hasSpreadsheetMetadata() {
+        return this.spreadsheetConverterContext();
+    }
+
+    @Override
+    default void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        SpreadsheetConverterContext.super.setSpreadsheetMetadata(spreadsheetMetadata);
     }
 
     // LoggingContextDelegator..........................................................................................
