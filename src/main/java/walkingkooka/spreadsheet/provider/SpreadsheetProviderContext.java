@@ -356,7 +356,9 @@ final class SpreadsheetProviderContext implements ProviderContext,
             this.mediaTypeDetector,
             this.multiplier,
             this.storage,
-            this.storageEnvironmentContext
+            this.currencyLocaleContext,
+            this.storageEnvironmentContext,
+            this.jsonNodeMarshallUnmarshallContext
         );
     }
 
@@ -371,7 +373,9 @@ final class SpreadsheetProviderContext implements ProviderContext,
         return this.mediaTypeDetector.equals(other.mediaTypeDetector) &&
             this.multiplier.equals(other.multiplier) &&
             this.storage.equals(other.storage) &&
-            this.storageEnvironmentContext.equals(other.storageEnvironmentContext);
+            this.currencyLocaleContext.equals(other.currencyLocaleContext) &&
+            this.storageEnvironmentContext.equals(other.storageEnvironmentContext) &&
+            this.jsonNodeMarshallUnmarshallContext.equals(other.jsonNodeMarshallUnmarshallContext);
     }
 
     @Override
