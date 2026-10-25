@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
+import walkingkooka.spreadsheet.color.SpreadsheetColorTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserContextTesting;
@@ -31,9 +31,8 @@ import walkingkooka.tree.expression.ExpressionNumberContextTesting;
 public interface SpreadsheetParserContextTesting extends ParserContextTesting,
     SpreadsheetProviderContextTesting,
     DateTimeContextTesting,
-    ExpressionNumberContextTesting {
-
-    CanIndexedNamedColor CAN_INDEXED_NAMED_COLOR = SpreadsheetColorContexts.empty();
+    ExpressionNumberContextTesting,
+    SpreadsheetColorTesting {
 
     char VALUE_SEPARATOR = ',';
 

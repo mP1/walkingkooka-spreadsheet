@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.color.FakeCanIndexedNameColor;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterTesting;
@@ -36,7 +35,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicClassTesting;
-import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
+import walkingkooka.spreadsheet.color.SpreadsheetColorTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -66,9 +65,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     ConverterTesting,
     HasSpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetEnvironmentContextFactory>,
+    SpreadsheetColorTesting,
     PublicClassTesting<SpreadsheetEnvironmentContextFactory> {
-
-    private final static CanIndexedNamedColor CAN_INDEXED_NAMED_COLOR = SpreadsheetColorContexts.spreadsheetMetadataDefaults();
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
