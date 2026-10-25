@@ -421,6 +421,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
             .value(this.multiplier)
             .label("storage")
             .value(this.storage)
+            .label("currencyLocaleContext")
+            .value(this.currencyLocaleContext)
             .label("storageEnvironmentContext")
             .value(this.storageEnvironmentContext)
             .build();
