@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.template;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -44,7 +46,8 @@ import java.util.function.Function;
  * A {@link TemplateContext} that uses {@link SpreadsheetFormulaParsers#expression()} to parse expressions within a template.
  * Expression {@link SpreadsheetLabelName} are then converted into {@link TemplateValueName} for value lookups.
  */
-final class SpreadsheetTemplateContext implements TemplateContext {
+final class SpreadsheetTemplateContext implements TemplateContext,
+    UsesToStringBuilder {
 
     static SpreadsheetTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
                                            final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
@@ -215,10 +218,19 @@ final class SpreadsheetTemplateContext implements TemplateContext {
 
     @Override
     public String toString() {
-        return "spreadsheetParserContext: " + this.spreadsheetParserContext +
-            ", spreadsheetExpressionEvaluationContext: " + this.spreadsheetExpressionEvaluationContext;
+        return ToStringBuilder.buildFrom(this);
     }
 
     private final SpreadsheetParserContext spreadsheetParserContext;
     private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder builder) {
+        builder.label("spreadsheetParserContext")
+            .value(this.spreadsheetParserContext)
+            .label("spreadsheetExpressionEvaluationContext")
+            .value(this.spreadsheetExpressionEvaluationContext);
+    }
 }
