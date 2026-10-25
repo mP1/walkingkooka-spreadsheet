@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.ColorContext;
 import walkingkooka.color.ColorContextTesting;
+import walkingkooka.logging.LoggingContextTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
@@ -29,6 +30,7 @@ import walkingkooka.tree.text.convert.TreeTextConverterContextTesting;
 
 public interface SpreadsheetConverterContextTesting extends ColorContextTesting,
     JsonNodeConverterContextTesting,
+    LoggingContextTesting,
     SpreadsheetLabelNameResolverTesting,
     SpreadsheetMetadataLoaderTesting,
     StorageConverterContextTesting,

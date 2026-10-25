@@ -260,7 +260,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
                 storageEnvironmentContext, // EnvironmentContext
                 this.jsonNodeMarshallUnmarshallContext
             ),
-            currencyLocaleContext
+            currencyLocaleContext,
+            storageEnvironmentContext // LoggingContext
         );
     }
 

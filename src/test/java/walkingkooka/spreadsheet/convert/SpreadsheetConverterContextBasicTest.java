@@ -117,7 +117,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -137,7 +138,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -157,7 +159,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -177,7 +180,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -197,7 +201,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -217,7 +222,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -237,7 +243,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 null,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -257,7 +264,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 null, // ColorContext
                 JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -277,7 +285,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 null,
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }
@@ -297,6 +306,28 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
                 JSON_NODE_CONVERTER_CONTEXT,
+                null,
+                LOGGING_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullLoggingContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetConverterContextBasic.with(
+                HAS_USER_DIRECTORIES,
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                MEDIA_TYPE_DETECTOR,
+                MULTIPLIER,
+                LABEL_RESOLVER,
+                SPREADSHEET_METADATA_LOADER,
+                COLOR_CONTEXT,
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT,
                 null
             )
         );
@@ -454,7 +485,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                 ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             ),
-            LOCALE_CONTEXT
+            LOCALE_CONTEXT,
+            LOGGING_CONTEXT
         );
     }
 

@@ -22,6 +22,7 @@ import walkingkooka.color.ColorContext;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.logging.LoggingContext;
 import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -52,7 +53,8 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                     final ColorContext colorContext,
                                                     final JsonNodeConverterContext jsonNodeConverterContext,
-                                                    final LocaleContext localeContext) {
+                                                    final LocaleContext localeContext,
+                                                    final LoggingContext loggingContext) {
         return SpreadsheetConverterContextBasic.with(
             hasUserDirectories,
             spreadsheetMetadata,
@@ -64,7 +66,8 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
             spreadsheetMetadataLoader,
             colorContext,
             jsonNodeConverterContext,
-            localeContext
+            localeContext,
+            loggingContext
         );
     }
 

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.ColorContext;
 import walkingkooka.convert.HasConverter;
+import walkingkooka.logging.LoggingContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -43,6 +44,7 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
     HasConverter<SpreadsheetConverterContext>,
     HasMissingCellNumberValue,
     HasSpreadsheetMetadata,
+    LoggingContext,
     SpreadsheetLabelNameResolver,
     SpreadsheetMetadataLoader,
     StorageConverterContext,

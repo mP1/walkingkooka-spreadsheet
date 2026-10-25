@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.logging.LoggingContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -180,6 +181,11 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
 
     @Override
     public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        return this.context;
+    }
+
+    @Override
+    public LoggingContext loggingContext() {
         return this.context;
     }
 

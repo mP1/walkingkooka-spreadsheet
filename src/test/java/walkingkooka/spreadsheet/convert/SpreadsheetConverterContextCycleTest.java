@@ -133,7 +133,8 @@ public final class SpreadsheetConverterContextCycleTest implements SpreadsheetCo
                     ENVIRONMENT_CONTEXT,
                     JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 ),
-                LOCALE_CONTEXT
+                LOCALE_CONTEXT,
+                LOGGING_CONTEXT
             )
         );
     }

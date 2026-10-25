@@ -28,6 +28,8 @@ import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.CanParseEnvironmentValueNameDelegator;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.logging.LoggingContext;
+import walkingkooka.logging.LoggingContextDelegator;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetector;
@@ -54,6 +56,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
     CanParseEnvironmentValueNameDelegator,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
+    LoggingContextDelegator,
     UsesToStringBuilder {
 
     static SpreadsheetConverterContextBasic with(final HasUserDirectories hasUserDirectories,
@@ -66,7 +69,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                                                  final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                  final ColorContext colorContext,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
-                                                 final LocaleContext localeContext) {
+                                                 final LocaleContext localeContext,
+                                                 final LoggingContext loggingContext) {
         Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
@@ -78,6 +82,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         Objects.requireNonNull(colorContext, "colorContext");
         Objects.requireNonNull(jsonNodeConverterContext, "jsonNodeConverterContext");
         Objects.requireNonNull(localeContext, "localeContext");
+        Objects.requireNonNull(loggingContext, "loggingContext");
 
         return new SpreadsheetConverterContextBasic(
             hasUserDirectories,
@@ -90,7 +95,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
             spreadsheetMetadataLoader,
             colorContext,
             jsonNodeConverterContext,
-            localeContext
+            localeContext,
+            loggingContext
         );
     }
 
@@ -104,7 +110,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                                              final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                              final ColorContext colorContext,
                                              final JsonNodeConverterContext jsonNodeConverterContext,
-                                             final LocaleContext localeContext) {
+                                             final LocaleContext localeContext,
+                                             final LoggingContext loggingContext) {
         super();
 
         this.hasUserDirectories = hasUserDirectories;
@@ -119,6 +126,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         this.colorContext = colorContext;
         this.jsonNodeConverterContext = jsonNodeConverterContext;
         this.localeContext = localeContext;
+        this.loggingContext = loggingContext;
     }
 
     @Override
@@ -138,7 +146,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                 this.spreadsheetMetadataLoader,
                 this.colorContext,
                 after,
-                this.localeContext
+                this.localeContext,
+                this.loggingContext
             );
     }
 
@@ -159,7 +168,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                 this.spreadsheetMetadataLoader,
                 this.colorContext,
                 after,
-                this.localeContext
+                this.localeContext,
+                this.loggingContext
             );
     }
 
@@ -171,6 +181,15 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
     }
 
     private final ColorContext colorContext;
+
+    // LoggingContextDelegator..........................................................................................
+
+    @Override
+    public LoggingContext loggingContext() {
+        return this.loggingContext;
+    }
+
+    private final LoggingContext loggingContext;
 
     // HasSpreadsheetName...............................................................................................
 
@@ -346,6 +365,8 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
             .label("jsonNodeConverterContext")
             .value(this.jsonNodeConverterContext)
             .label("localeContext")
-            .value(this.localeContext);
+            .value(this.localeContext)
+            .label("loggingContext")
+            .value(this.loggingContext);
     }
 }

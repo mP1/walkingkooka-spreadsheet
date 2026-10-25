@@ -152,7 +152,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                     ENVIRONMENT_CONTEXT,
                     JsonNodeMarshallUnmarshallContexts.fake()
                 ),
-                LocaleContexts.fake()
+                LocaleContexts.fake(),
+                LOGGING_CONTEXT
             ),
             SpreadsheetFormatterProviders.fake(),
             ProviderContexts.fake()
