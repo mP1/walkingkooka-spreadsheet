@@ -855,7 +855,7 @@ final class MissingConverterVerifier {
                     Lists.of(
                         1,
                         1.5,
-                        ExpressionNumberKind.DEFAULT.create(2.75)
+                        expressionNumberKind.create(2.75)
                     ),
                     CurrencyValue.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY, // number-to-currency-value
