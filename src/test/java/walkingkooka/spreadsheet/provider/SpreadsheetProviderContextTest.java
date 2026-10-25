@@ -32,6 +32,8 @@ import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -47,6 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext>,
     CurrencyLocaleContextTesting,
+    HasSpreadsheetMetadataTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     MediaTypeDetectorTesting,
     ToStringTesting<SpreadsheetProviderContext> {
@@ -59,6 +62,98 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     );
 
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
+
+    static {
+        final StorageEnvironmentContext storageEnvironmentContext = HasSpreadsheetMetadataTesting.STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            ENVIRONMENT_VALUE
+        );
+
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DATE_OFFSET.toEnvironmentValueName(),
+            DATE_OFFSET
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT.toEnvironmentValueName(),
+            DECIMAL_NUMBER_DIGIT_COUNT
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DEFAULT_YEAR.toEnvironmentValueName(),
+            DEFAULT_YEAR
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND.toEnvironmentValueName(),
+            EXPRESSION_NUMBER_KIND
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName(),
+            MATH_CONTEXT.getPrecision()
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName(),
+            MATH_CONTEXT.getRoundingMode()
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName(),
+            TWO_DIGIT_YEAR
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName(),
+            VALUE_SEPARATOR
+        );
+
+        STORAGE_ENVIRONMENT_CONTEXT = storageEnvironmentContext;
+    }
+
+    private final static StorageEnvironmentContext STORAGE_ENVIRONMENT_CONTEXT;
+
+    static {
+        final StorageEnvironmentContext storageEnvironmentContext = HasSpreadsheetMetadataTesting.DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        storageEnvironmentContext.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            ENVIRONMENT_VALUE
+        );
+
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DATE_OFFSET.toEnvironmentValueName(),
+            DATE_OFFSET
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT.toEnvironmentValueName(),
+            DECIMAL_NUMBER_DIGIT_COUNT
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DEFAULT_YEAR.toEnvironmentValueName(),
+            DEFAULT_YEAR
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND.toEnvironmentValueName(),
+            EXPRESSION_NUMBER_KIND
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName(),
+            MATH_CONTEXT.getPrecision()
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName(),
+            MATH_CONTEXT.getRoundingMode()
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName(),
+            TWO_DIGIT_YEAR
+        );
+        storageEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName(),
+            VALUE_SEPARATOR
+        );
+
+        DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT = storageEnvironmentContext;
+    }
+
+    private final static StorageEnvironmentContext DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT;
 
     // with.............................................................................................................
 
@@ -257,13 +352,9 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Override
     public SpreadsheetProviderContext createContext() {
-        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        storageEnvironmentContext.setEnvironmentValue(
-            ENVIRONMENT_VALUE_NAME,
-            ENVIRONMENT_VALUE
+        return this.createContext(
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
-        return this.createContext(storageEnvironmentContext);
     }
 
     private SpreadsheetProviderContext createContext(final StorageEnvironmentContext storageEnvironmentContext) {
@@ -275,6 +366,11 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             storageEnvironmentContext,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         );
+    }
+
+    @Override
+    public void testSetEnvironmentContextWithEqualEnvironmentContext() {
+        throw new UnsupportedOperationException();
     }
 
     // convert..........................................................................................................
@@ -295,7 +391,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         this.convertAndCheck(
             text,
             ExpressionNumber.class,
-            ExpressionNumber.with(123)
+            EXPRESSION_NUMBER_KIND.create(123)
         );
     }
 
@@ -397,13 +493,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Test
     public void testToString() {
-        final StorageEnvironmentContext storageEnvironmentContext = STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        storageEnvironmentContext.setEnvironmentValue(
-            ENVIRONMENT_VALUE_NAME,
-            ENVIRONMENT_VALUE
-        );
-
         this.toStringAndCheck(
             this.createObject(),
             "mediaTypeDetector=" +
@@ -411,7 +500,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
                 " multiplier=" +
                 MULTIPLIER +
                 " storageEnvironmentContext=" +
-                storageEnvironmentContext
+                STORAGE_ENVIRONMENT_CONTEXT
         );
     }
 
@@ -421,14 +510,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     @Override
     public void testEnvironmentContext() {
         this.environmentContextAndCheck(
-            SpreadsheetProviderContext.with(
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                STORAGE,
-                CURRENCY_LOCALE_CONTEXT,
-                STORAGE_ENVIRONMENT_CONTEXT,
-                JsonNodeMarshallUnmarshallContexts.fake()
-            ),
+            this.createContext(),
             STORAGE_ENVIRONMENT_CONTEXT
         );
     }
