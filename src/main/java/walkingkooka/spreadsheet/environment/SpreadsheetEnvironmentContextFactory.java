@@ -438,9 +438,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             DateTimeSymbols dateTimeSymbols = missing.getOrNull(DATE_TIME_SYMBOLS);
 
             if (null == dateTimeSymbols) {
-                dateTimeSymbols = this.currencyLocaleContext.dateTimeSymbolsForLocale(locale)
-                    // Missing DateTimeSymbols for locale EN-AU
-                    .orElseThrow(() -> new IllegalArgumentException("Missing " + DateTimeSymbols.class.getSimpleName() + " for locale " + locale));
+                dateTimeSymbols = this.currencyLocaleContext.dateTimeSymbolsForLocaleOrFail(locale);
             }
 
             this.dateTimeContext = DateTimeContexts.basic(
