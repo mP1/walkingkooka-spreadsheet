@@ -54,7 +54,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     MediaTypeDetectorTesting,
     ToStringTesting<SpreadsheetProviderContext> {
 
-    private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
+    private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.multiply();
 
     private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with(
         "Hello",
@@ -495,12 +495,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testToString() {
         this.toStringAndCheck(
             this.createObject(),
-            "mediaTypeDetector=" +
-                MEDIA_TYPE_DETECTOR +
-                " multiplier=" +
-                MULTIPLIER +
-                " storageEnvironmentContext=" +
-                STORAGE_ENVIRONMENT_CONTEXT
+            "mediaTypeDetector=application/octet-stream multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply currencyLocaleContext=JRE ReadOnly JRE en-AU storageEnvironmentContext={charset=UTF-8, currency=AUD, currentWorkingDirectory=/current1/working2/directory3, dateOffset=-25569, decimalNumberDigitCount=8, defaultYear=1900, expressionNumberKind=BIG_DECIMAL, Hello=\"EnvironmentValue123\", homeDirectory=/users/user123@example.com, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, loggingLevel=NONE, precision=7, roundingMode=HALF_EVEN, timeOffset=Z, twoDigitYear=50, user=user123@example.com, valueSeparator=','}"
         );
     }
 
