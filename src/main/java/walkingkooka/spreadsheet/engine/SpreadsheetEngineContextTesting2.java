@@ -379,6 +379,13 @@ public interface SpreadsheetEngineContextTesting2<C extends SpreadsheetEngineCon
         return this.createContext();
     }
 
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    default C createHasSpreadsheetMetadata() {
+        return this.createContext();
+    }
+
     // SpreadsheetParserProvider........................................................................................
 
     @Override

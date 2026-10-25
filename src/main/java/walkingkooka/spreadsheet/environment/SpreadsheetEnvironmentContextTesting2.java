@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.storage.StorageEnvironmentContextTesting2;
@@ -34,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends SpreadsheetEnvironmentContextTesting,
     EnvironmentContextTesting2<C>,
+    HasSpreadsheetMetadataTesting2<C>,
     StorageEnvironmentContextTesting2<C> {
 
     // parseEnvironmentValueName........................................................................................
@@ -234,6 +236,13 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
                     )
                 )
         );
+    }
+
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    default C createHasSpreadsheetMetadata() {
+        return this.createContext();
     }
 
     // type.............................................................................................................

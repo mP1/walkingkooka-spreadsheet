@@ -26,7 +26,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.IndexedColor;
 import walkingkooka.color.NamedColor;
-import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
@@ -39,13 +38,10 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting2;
-import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColorContextTesting2;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
@@ -57,7 +53,6 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.printer.TreePrintableTesting;
-import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -106,10 +101,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
-
-    final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
-
-    final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     SpreadsheetMetadataTestCase() {
         super();

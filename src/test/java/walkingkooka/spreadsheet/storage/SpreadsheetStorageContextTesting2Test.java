@@ -230,6 +230,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
+        public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+            return this.spreadsheetEnvironmentContext.spreadsheetMetadata();
+        }
+
+        @Override
+        public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+            this.spreadsheetEnvironmentContext.setSpreadsheetMetadata(spreadsheetMetadata);
+        }
+
+        @Override
         public ZoneOffset timeOffset() {
             return this.spreadsheetEnvironmentContext.timeOffset();
         }

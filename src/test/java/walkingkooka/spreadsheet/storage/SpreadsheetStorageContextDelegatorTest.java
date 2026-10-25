@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterP
 import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -119,7 +120,7 @@ public final class SpreadsheetStorageContextDelegatorTest implements Spreadsheet
         {
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
             spreadsheetEnvironmentContext.setSpreadsheetId(
                 Optional.of(spreadsheetId)
             );

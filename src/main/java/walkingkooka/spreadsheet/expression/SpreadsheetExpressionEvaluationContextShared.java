@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -363,6 +364,11 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
 
     @Override
     public final SpreadsheetEnvironmentContext environmentContext() {
+        return this.spreadsheetEnvironmentContext();
+    }
+
+    @Override
+    public final HasSpreadsheetMetadata hasSpreadsheetMetadata() {
         return this.spreadsheetEnvironmentContext();
     }
 

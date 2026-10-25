@@ -21,6 +21,7 @@ import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
@@ -35,6 +36,7 @@ import walkingkooka.storage.Storages;
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
+    HasSpreadsheetMetadataTesting,
     HasSpreadsheetServerUrlTesting,
     SpreadsheetMetadataLoaderTesting {
 

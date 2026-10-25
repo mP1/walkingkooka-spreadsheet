@@ -18,10 +18,10 @@
 package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.storage.StorageTesting2;
 
@@ -30,6 +30,7 @@ public abstract class SpreadsheetStorageTestCase<T extends SpreadsheetStorage> i
     ToStringTesting<T>,
     HasSpreadsheetMetadataTesting,
     PackagePrivateClassTesting<T>,
+    SpreadsheetEnvironmentContextTesting,
     ThrowableTesting {
 
     SpreadsheetStorageTestCase() {

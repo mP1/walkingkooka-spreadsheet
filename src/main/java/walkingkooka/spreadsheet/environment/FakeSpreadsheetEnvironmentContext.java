@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorageEnvironmentContext;
 import walkingkooka.storage.Storage;
@@ -44,6 +45,16 @@ public class FakeSpreadsheetEnvironmentContext extends FakeStorageEnvironmentCon
 
     @Override
     public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
         throw new UnsupportedOperationException();
     }
 
