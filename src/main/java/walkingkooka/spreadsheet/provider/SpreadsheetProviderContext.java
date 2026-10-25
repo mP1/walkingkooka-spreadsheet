@@ -248,8 +248,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         ),
                         DecimalNumberContexts.basic(
                             DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
-                            currencyLocaleContext.decimalNumberSymbolsForLocale(locale)
-                                .orElseThrow(() -> new IllegalArgumentException("DecimalNumberSymbols missing for " + locale)),
+                            currencyLocaleContext.decimalNumberSymbolsForLocaleOrFail(locale),
                             locale,
                             MathContext.DECIMAL32
                         )

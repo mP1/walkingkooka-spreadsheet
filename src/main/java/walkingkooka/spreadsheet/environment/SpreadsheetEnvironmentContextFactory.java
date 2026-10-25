@@ -477,11 +477,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(DECIMAL_NUMBER_SYMBOLS);
 
             if (null == decimalNumberSymbols) {
-                decimalNumberSymbols = this.currencyLocaleContext.decimalNumberSymbolsForLocale(locale)
-                    .orElseThrow(
-                        // Missing DecimalNumberSymbols for locale EN-AU
-                        () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
-                    );
+                decimalNumberSymbols = this.currencyLocaleContext.decimalNumberSymbolsForLocaleOrFail(locale);
             }
 
             this.decimalNumberContext = DecimalNumberContexts.basic(
