@@ -787,11 +787,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         if (null == decimalNumberSymbols) {
-            decimalNumberSymbols = context.decimalNumberSymbolsForLocale(locale)
-                .orElseThrow(
-                    // Missing DecimalNumberSymbols for locale EN-AU
-                    () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
-                );
+            decimalNumberSymbols = context.decimalNumberSymbolsForLocaleOrFail(locale);
         }
 
         return DecimalNumberContexts.basic(

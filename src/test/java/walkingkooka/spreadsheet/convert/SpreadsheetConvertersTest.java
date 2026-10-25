@@ -1545,8 +1545,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 .toLanguageTag(),
             DecimalNumberSymbols.class,
             DECIMAL_NUMBER_SYMBOLS_CONTEXT,
-            DECIMAL_NUMBER_SYMBOLS_CONTEXT.decimalNumberSymbolsForLocale(DECIMAL_NUMBER_SYMBOLS_CONTEXT.locale())
-                .get()
+            DECIMAL_NUMBER_SYMBOLS_CONTEXT.decimalNumberSymbolsForLocaleOrFail(
+                DECIMAL_NUMBER_SYMBOLS_CONTEXT.locale()
+            )
         );
     }
 
