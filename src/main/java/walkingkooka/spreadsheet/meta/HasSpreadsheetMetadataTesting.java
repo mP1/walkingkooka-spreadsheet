@@ -405,12 +405,12 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
     private static SpreadsheetEnvironmentContext providerContextSpreadsheetEnvironmentContext() {
-        final SpreadsheetEnvironmentContext spreadsheeEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheeEnvironmentContext.setEnvironmentValue(
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             DUMMY_ENVIRONMENTAL_VALUE_NAME,
             DUMMY_ENVIRONMENTAL_VALUE
         );
-        return spreadsheeEnvironmentContext;
+        return spreadsheetEnvironmentContext;
     }
 
     SpreadsheetMetadataCreator SPREADSHEET_METADATA_CREATOR = new SpreadsheetMetadataCreator() {
