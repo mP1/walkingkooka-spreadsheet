@@ -41,7 +41,6 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StorageEnvironmentContext;
@@ -218,7 +217,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
-            HasUserDirectorieses.empty(),
+            storageEnvironmentContext, // HasUserDirectories
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             converter,
