@@ -38,7 +38,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDateT
     @Test
     public void testExtractLocaleAwareValueAu() {
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.forLanguageTag("EN-AU")),
+            LOCALE_CONTEXT,
             SpreadsheetDateParsePattern.parseDateParsePattern("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m")
                 .spreadsheetParserSelector()
         );

@@ -18,18 +18,15 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
-
-import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTime> {
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
+            LOCALE_CONTEXT,
             SpreadsheetTimeParsePattern.parseTimeParsePattern("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm")
                 .spreadsheetParserSelector()
         );
