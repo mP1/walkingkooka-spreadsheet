@@ -20,14 +20,12 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
-import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -46,8 +44,6 @@ public final class SpreadsheetParserContextBasicTest implements ClassTesting2<Sp
     DateTimeContextTesting,
     DecimalNumberContextDelegator,
     ToStringTesting<SpreadsheetParserContextBasic> {
-
-    private final static CanIndexedNamedColor CAN_INDEXED_NAMED_COLOR = SpreadsheetColorContexts.spreadsheetMetadataDefaults();
 
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY = InvalidCharacterExceptionFactory.POSITION;
 

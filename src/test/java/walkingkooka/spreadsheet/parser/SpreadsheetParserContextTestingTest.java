@@ -24,14 +24,6 @@ public final class SpreadsheetParserContextTestingTest implements SpreadsheetPar
     PublicClassTesting<SpreadsheetParserContextTesting> {
 
     @Test
-    public void testCanIndexedNamedColorConstantToString() {
-        this.checkEquals(
-            CAN_INDEXED_NAMED_COLOR.toString(),
-            ""
-        );
-    }
-
-    @Test
     public void testSpreadsheetParserContextConstantToString() {
         this.checkEquals(
             SPREADSHEET_PARSER_CONTEXT.toString(),

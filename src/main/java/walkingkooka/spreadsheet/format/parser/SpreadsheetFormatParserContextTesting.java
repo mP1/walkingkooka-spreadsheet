@@ -17,16 +17,14 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.color.CanIndexedNamedColor;
 import walkingkooka.color.CanIndexedNamedColorTesting;
-import walkingkooka.spreadsheet.color.SpreadsheetColorContexts;
+import walkingkooka.spreadsheet.color.SpreadsheetColorTesting;
 import walkingkooka.text.cursor.parser.ParserContextTesting;
 
 /**
  * Mixing testing interface for {@link SpreadsheetFormatParserContext}
  */
 public interface SpreadsheetFormatParserContextTesting extends ParserContextTesting,
-    CanIndexedNamedColorTesting {
-
-    CanIndexedNamedColor CAN_INDEXED_NAMED_COLOR = SpreadsheetColorContexts.spreadsheetMetadataDefaults();
+    CanIndexedNamedColorTesting,
+    SpreadsheetColorTesting {
 }
