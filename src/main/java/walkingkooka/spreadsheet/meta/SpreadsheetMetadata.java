@@ -722,9 +722,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         if (null == dateTimeSymbols) {
-            dateTimeSymbols = context.dateTimeSymbolsForLocale(locale)
-                // Missing DateTimeSymbols for locale EN-AU
-                .orElseThrow(() -> new IllegalArgumentException("Missing " + DateTimeSymbols.class.getSimpleName() + " for locale " + locale));
+            dateTimeSymbols = context.dateTimeSymbolsForLocaleOrFail(locale);
         }
 
         return DateTimeContexts.basic(

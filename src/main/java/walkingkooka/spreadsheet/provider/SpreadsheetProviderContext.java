@@ -240,8 +240,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         storageEnvironmentContext, // BinaryTextContext
                         this.currencyLocaleContext,
                         DateTimeContexts.basic(
-                            currencyLocaleContext.dateTimeSymbolsForLocale(locale)
-                                .orElseThrow(() -> new IllegalArgumentException("DateTimeSymbols missing for " + locale)),
+                            currencyLocaleContext.dateTimeSymbolsForLocaleOrFail(locale),
                             locale,
                             1950, // defaultYear
                             50, // twoDigitYear
