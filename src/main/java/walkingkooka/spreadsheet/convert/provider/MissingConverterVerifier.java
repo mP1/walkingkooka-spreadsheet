@@ -48,6 +48,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.Environment;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.logging.LoggerPath;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
@@ -468,6 +469,31 @@ final class MissingConverterVerifier {
         Objects.requireNonNull(propertyName, "propertyName");
         Objects.requireNonNull(context, "context");
 
+        return context.logEnterAndExit(
+            CONVERTER_VERIFIER_LOGGER,
+            () -> {
+                if (context.isInfoEnabled()) {
+                    context.info(propertyName + ": " + converter);
+                }
+                final Set<MissingConverter> missingConverters = verify0(
+                    converter,
+                    propertyName,
+                    context
+                );
+                if (context.isInfoEnabled()) {
+                    context.info(propertyName + ": " + converter + " " + missingConverters.size() + "=" + missingConverters);
+                }
+
+                return missingConverters;
+            }
+        );
+    }
+
+    private final static LoggerPath CONVERTER_VERIFIER_LOGGER = LoggerPath.parse("converter.verify");
+
+    private static Set<MissingConverter> verify0(final Converter<SpreadsheetConverterContext> converter,
+                                                 final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
+                                                 final SpreadsheetConverterContext context) {
         final boolean formatting = SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER.equals(propertyName);
         final boolean formula = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER.equals(propertyName);
         final boolean query = SpreadsheetMetadataPropertyName.QUERY_CONVERTER.equals(propertyName);
@@ -2973,6 +2999,8 @@ final class MissingConverterVerifier {
         boolean failed;
 
         Either<?, String> converted = null;
+        Throwable logCause = null;
+
         try {
             converted = this.converter.convert(
                 value,
@@ -2991,9 +3019,11 @@ final class MissingConverterVerifier {
             throw rethrow;
         } catch (final RuntimeException cause) {
             cause.printStackTrace(); // KEEP!
+            logCause = cause;
             failed = true;
         } catch (final Error cause) {
             cause.printStackTrace(); // KEEP!
+            logCause = cause;
             failed = true;
         }
 
@@ -3001,14 +3031,16 @@ final class MissingConverterVerifier {
             this.add(
                 value,
                 type,
-                name
+                name,
+                logCause
             );
         }
     }
 
     private void add(final Object value,
                      final Class<?> type,
-                     final ConverterName name) {
+                     final ConverterName name,
+                     final Throwable cause) {
         final MissingConverterValue missingConverterValue = MissingConverterValue.with(
             value,
             type.getName()
@@ -3025,6 +3057,23 @@ final class MissingConverterVerifier {
                 ) :
                 missingConverter.add(missingConverterValue)
         );
+
+        final SpreadsheetConverterContext context = this.context;
+        if (context.isDebugEnabled()) {
+            context.debug(
+                "from " +
+                    (null != value ?
+                        value.getClass()
+                            .getName() +
+                            ": " :
+                        ""
+                    ) +
+                    CharSequences.quoteIfChars(value) +
+                    " to " +
+                    type.getName(),
+                cause
+            );
+        }
     }
 
     private final Converter<SpreadsheetConverterContext> converter;
