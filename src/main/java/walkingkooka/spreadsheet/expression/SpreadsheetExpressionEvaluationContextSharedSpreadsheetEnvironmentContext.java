@@ -26,7 +26,7 @@ import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextMissingValues;
+import walkingkooka.environment.EnvironmentLikeMissingValues;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -154,7 +154,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     @Override
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
         if (null == this.expressionFunctionProvider) {
-            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContextFactory.environmentContextMissingValues();
+            final EnvironmentLikeMissingValues missing = this.spreadsheetEnvironmentContextFactory.environmentLikeMissingValues();
 
             final ExpressionFunctionAliasSet functions = missing.getOrNull(SpreadsheetEnvironmentContextFactory.FUNCTIONS);
 
