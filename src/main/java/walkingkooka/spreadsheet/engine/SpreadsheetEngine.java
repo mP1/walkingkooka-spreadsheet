@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.logging.LoggerPath;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -49,6 +50,8 @@ import java.util.Set;
  * The engine or host for the active spreadsheet.
  */
 public interface SpreadsheetEngine {
+
+    LoggerPath SPREADSHEET_ENGINE_LOGGER = LoggerPath.parse("spreadsheet.engine");
 
     static void checkOffsetAndCount(final int offset,
                                     final int count) {
