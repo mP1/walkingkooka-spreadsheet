@@ -29,7 +29,7 @@ import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextMissingValues;
+import walkingkooka.environment.EnvironmentLikeMissingValues;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeDetector;
@@ -217,7 +217,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
         final StorageEnvironmentContext storageEnvironmentContext = this.storageEnvironmentContext;
 
-        final EnvironmentContextMissingValues missing = storageEnvironmentContext.environmentContextMissingValues();
+        final EnvironmentLikeMissingValues missing = storageEnvironmentContext.environmentLikeMissingValues();
 
         final Long dateOffset = missing.getOrNull(
             SpreadsheetMetadataPropertyName.DATE_OFFSET.toEnvironmentValueName()
