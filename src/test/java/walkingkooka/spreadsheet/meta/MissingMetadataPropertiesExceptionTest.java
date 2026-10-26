@@ -19,15 +19,25 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class MissingMetadataPropertiesExceptionTest implements ThrowableTesting2<MissingMetadataPropertiesException>,
-    PackagePrivateClassTesting<MissingMetadataPropertiesException> {
+    PublicClassTesting<MissingMetadataPropertiesException> {
 
     @Override
     public void testIfClassIsFinalIfAllConstructorsArePrivate() {
         throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testNewWithNullMissingFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> new MissingMetadataPropertiesException(null)
+        );
     }
 
     @Test

@@ -1800,6 +1800,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
+    // spreadsheetMetadataMissingComponents.............................................................................
+
+    /**
+     * Creates an empty {@link SpreadsheetMetadataMissingComponents}.
+     */
+    public SpreadsheetMetadataMissingComponents spreadsheetMetadataMissingComponents() {
+        return SpreadsheetMetadataMissingComponents.with(this);
+    }
+
     // TreePrintable...................................................................................................
 
     @Override
