@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.validation.Validator;
@@ -38,7 +39,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 
-public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext>,
+public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting2<TestSpreadsheetValidatorContext>,
     HasSpreadsheetMetadataTesting {
 
     @Override

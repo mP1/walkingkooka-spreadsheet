@@ -17,54 +17,7 @@
 
 package walkingkooka.spreadsheet.validation;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.value.SpreadsheetError;
-import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.validation.ValidatorContextTesting2;
+import walkingkooka.validation.ValidatorContextTesting;
 
-public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting2<C, SpreadsheetValidationReference>,
-    SpreadsheetProviderContextTesting2<C>,
-    SpreadsheetEnvironmentContextTesting {
-
-    @Test
-    default void testValidationErrorWithCell() {
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final String message = "Hello";
-
-        final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessage(message);
-
-        this.checkEquals(
-            error.toValidationError(cell),
-            this.createContext()
-                .setValidationReference(cell)
-                .validationError()
-                .setMessage(message)
-        );
-    }
-
-    @Test
-    default void testValidationErrorWithLabel() {
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
-        final String message = "Hello";
-
-        final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessage(message);
-
-        this.checkEquals(
-            error.toValidationError(label),
-            this.createContext()
-                .setValidationReference(label)
-                .validationError()
-                .setMessage(message)
-        );
-    }
-
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetValidatorContext.class.getSimpleName();
-    }
+public interface SpreadsheetValidatorContextTesting extends ValidatorContextTesting {
 }
