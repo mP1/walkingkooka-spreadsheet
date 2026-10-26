@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetValidatorContextBasicTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextBasic>,
+public final class SpreadsheetValidatorContextBasicTest implements SpreadsheetValidatorContextTesting2<SpreadsheetValidatorContextBasic>,
     HasSpreadsheetMetadataTesting {
 
     @Test
