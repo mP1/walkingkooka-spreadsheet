@@ -51,7 +51,7 @@ import java.util.Set;
  */
 public interface SpreadsheetEngine {
 
-    LoggerPath SPREADSHEET_ENGINE_LOGGER = LoggerPath.parse("spreadsheet.engine");
+    LoggerPath ENGINE_LOGGER = LoggerPath.parse("engine");
 
     static void checkOffsetAndCount(final int offset,
                                     final int count) {
