@@ -276,7 +276,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 if (ValueType.parse(type).isEmpty()) {
                     types.add(type);
                 }
-                ;
             }
         }
 
