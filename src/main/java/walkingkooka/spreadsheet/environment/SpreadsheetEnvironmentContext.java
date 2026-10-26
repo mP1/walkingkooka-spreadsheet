@@ -21,6 +21,7 @@ import walkingkooka.color.Color;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
@@ -45,6 +46,7 @@ import java.util.Optional;
  * {@link EnvironmentContext}, {@link StorageEnvironmentContext}.
  */
 public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext,
+    HasSpreadsheetMetadata,
     HasSpreadsheetServerUrl {
 
     /**

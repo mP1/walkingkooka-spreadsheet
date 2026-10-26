@@ -23,14 +23,12 @@ import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
-import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 
 import java.util.Currency;
 
 public interface SpreadsheetContextTesting extends SpreadsheetEnvironmentContextTesting,
     HasProviderContextTesting,
-    HasSpreadsheetMetadataTesting,
     CurrencyLocaleContextTesting,
     MediaTypeDetectorTesting,
     SpreadsheetMetadataContextTesting {

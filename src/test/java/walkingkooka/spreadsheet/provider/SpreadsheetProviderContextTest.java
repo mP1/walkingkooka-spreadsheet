@@ -32,9 +32,11 @@ import walkingkooka.net.header.MediaTypeDetectorTesting;
 import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.storage.StorageEnvironmentContext;
+import walkingkooka.storage.StorageEnvironmentContextTesting;
 import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextTesting;
@@ -64,7 +66,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
     static {
-        final StorageEnvironmentContext storageEnvironmentContext = HasSpreadsheetMetadataTesting.STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = SpreadsheetEnvironmentContextTesting.STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         storageEnvironmentContext.setEnvironmentValue(
             ENVIRONMENT_VALUE_NAME,
@@ -110,7 +112,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     private final static StorageEnvironmentContext STORAGE_ENVIRONMENT_CONTEXT;
 
     static {
-        final StorageEnvironmentContext storageEnvironmentContext = HasSpreadsheetMetadataTesting.DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContextTesting.DIFFERENT_STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         storageEnvironmentContext.setEnvironmentValue(
             ENVIRONMENT_VALUE_NAME,

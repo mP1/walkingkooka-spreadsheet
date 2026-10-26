@@ -100,7 +100,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     );
 
     static {
-        final SpreadsheetEnvironmentContext c = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext c = SpreadsheetExpressionEvaluationContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         c.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
         c.setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY);
         SPREADSHEET_ENVIRONMENT_CONTEXT = c;

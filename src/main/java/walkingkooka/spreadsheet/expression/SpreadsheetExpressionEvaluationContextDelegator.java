@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -211,6 +212,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default void setSpreadsheetId(final Optional<SpreadsheetId> id) {
         this.spreadsheetExpressionEvaluationContext()
             .setSpreadsheetId(id);
+    }
+
+    @Override
+    default HasSpreadsheetMetadata hasSpreadsheetMetadata() {
+        return this.spreadsheetEnvironmentContext();
     }
 
     @Override

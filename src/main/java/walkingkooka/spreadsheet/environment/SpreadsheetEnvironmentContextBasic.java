@@ -110,6 +110,19 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
     }
 
     @Override
+    public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
+        return this.spreadsheetId()
+            .flatMap(this.spreadsheetMetadataLoader::loadMetadata);
+    }
+
+    @Override
+    public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> spreadsheetMetadata) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+
+        throw SPREADSHEET_METADATA.readOnlyEnvironmentValueException();
+    }
+
+    @Override
     public Storage<SpreadsheetStorageContext> storage() {
         return this.storage;
     }

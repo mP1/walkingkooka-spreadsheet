@@ -329,6 +329,13 @@ public interface SpreadsheetStorageContextTesting2<C extends SpreadsheetStorageC
         return this.createContext();
     }
 
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    default C createHasSpreadsheetMetadata() {
+        return this.createContext();
+    }
+
     // class............................................................................................................
 
     @Override

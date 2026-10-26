@@ -42,10 +42,10 @@ import walkingkooka.spreadsheet.SpreadsheetContextSuppliers;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
-import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -86,7 +86,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
     static {
-        SpreadsheetEnvironmentContext context = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
             if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {

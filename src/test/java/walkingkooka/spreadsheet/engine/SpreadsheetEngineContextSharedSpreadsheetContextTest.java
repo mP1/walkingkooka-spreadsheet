@@ -51,6 +51,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -63,7 +64,6 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -125,7 +125,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
     static {
-        final SpreadsheetEnvironmentContext context = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         context.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 
         SPREADSHEET_ENVIRONMENT_CONTEXT = context;
@@ -1290,7 +1290,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             SPREADSHEET_METADATA_LOADER,
             SpreadsheetStorages.treeMapStore(),
-            HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
 

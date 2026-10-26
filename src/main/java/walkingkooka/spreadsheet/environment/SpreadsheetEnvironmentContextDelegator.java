@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.HasUserDirectories;
@@ -31,6 +33,7 @@ import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator,
+    HasSpreadsheetMetadataDelegator,
     HasUserDirectoriesDelegator {
 
     @Override
@@ -72,7 +75,14 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
         return this.spreadsheetEnvironmentContext()
             .storage();
     }
-    
+
+    // HasSpreadsheetMetadataDelegator..................................................................................
+
+    @Override
+    default HasSpreadsheetMetadata hasSpreadsheetMetadata() {
+        return this.spreadsheetEnvironmentContext();
+    }
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override

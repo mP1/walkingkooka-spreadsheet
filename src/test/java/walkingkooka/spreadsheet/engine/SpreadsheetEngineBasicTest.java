@@ -72,6 +72,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -517,7 +518,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     static {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
             .cloneEnvironment();
         spreadsheetEnvironmentContext.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)

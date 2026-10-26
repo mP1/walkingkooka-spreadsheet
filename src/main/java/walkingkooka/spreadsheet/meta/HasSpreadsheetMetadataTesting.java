@@ -135,7 +135,6 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     LocaleContextTesting,
     MediaTypeDetectorTesting,
-    SpreadsheetEnvironmentContextTesting,
     SpreadsheetMetadataLoaderTesting,
     SpreadsheetParserContextTesting,
     TreePrintableTesting {
@@ -405,7 +404,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
     private static SpreadsheetEnvironmentContext providerContextSpreadsheetEnvironmentContext() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         spreadsheetEnvironmentContext.setEnvironmentValue(
             DUMMY_ENVIRONMENTAL_VALUE_NAME,
             DUMMY_ENVIRONMENTAL_VALUE
@@ -445,7 +444,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SpreadsheetProviderContexts.spreadsheet(
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
-            Cast.to(STORAGE_SPREADSHEET_STORAGE_CONTEXT),
+            Cast.to(SpreadsheetEnvironmentContextTesting.STORAGE_SPREADSHEET_STORAGE_CONTEXT),
             CURRENCY_LOCALE_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
@@ -515,7 +514,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
     );
 
     private static SpreadsheetEnvironmentContext terminalContextSpreadsheetEnvironmentContext() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         spreadsheetEnvironmentContext.setEnvironmentValue(
             TerminalContext.TERMINAL_ID,
             TerminalId.with(1)
@@ -532,8 +531,8 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 return FakeTextReader.class.getSimpleName();
             }
         },
-        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
-        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
+        Printers.sink(SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT), // output
+        Printers.sink(SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT), // error
         (final String expression,
          final TerminalContext terminalContext) -> {
             throw new UnsupportedOperationException();
@@ -579,7 +578,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         SPREADSHEET_METADATA_LOADER,
         CONVERTER_PROVIDER,
         CURRENCY_LOCALE_CONTEXT,
-        SPREADSHEET_ENVIRONMENT_CONTEXT,
+        SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT,
         PROVIDER_CONTEXT
     );
 
@@ -619,7 +618,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
         CURRENCY_LOCALE_CONTEXT,
-        SPREADSHEET_ENVIRONMENT_CONTEXT,
+        SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
     );
@@ -632,7 +631,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         MULTIPLIER,
         SPREADSHEET_METADATA_LOADER,
         CURRENCY_LOCALE_CONTEXT,
-        SPREADSHEET_ENVIRONMENT_CONTEXT,
+        SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
     );

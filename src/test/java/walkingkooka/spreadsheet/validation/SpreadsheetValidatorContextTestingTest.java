@@ -132,7 +132,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
             return this.environmentContext;
         }
 
-        private final EnvironmentContext environmentContext = HasSpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        private final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         @Override
         public SpreadsheetValidatorContext setValidationReference(final SpreadsheetValidationReference cellOrLabel) {
