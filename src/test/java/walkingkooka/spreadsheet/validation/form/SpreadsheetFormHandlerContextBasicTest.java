@@ -80,7 +80,7 @@ public final class SpreadsheetFormHandlerContextBasicTest implements Spreadsheet
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
-    private static final Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = new Function<Set<SpreadsheetCell>, SpreadsheetDelta>() {
+    private static final Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = new Function<>() {
 
         @Override
         public SpreadsheetDelta apply(final Set<SpreadsheetCell> cells) {
