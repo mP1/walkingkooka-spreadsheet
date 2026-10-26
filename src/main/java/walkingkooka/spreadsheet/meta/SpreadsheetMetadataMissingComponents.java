@@ -19,13 +19,14 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.SortedSets;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * Used to aggregate that all the required properties are present, tracking those that are missing.
  * This is used only by {@link SpreadsheetMetadata} methods such as getting a {@link walkingkooka.convert.Converter}.
  */
-final class SpreadsheetMetadataMissingComponents {
+public final class SpreadsheetMetadataMissingComponents {
 
     static SpreadsheetMetadataMissingComponents with(final SpreadsheetMetadata metadata) {
         return new SpreadsheetMetadataMissingComponents(metadata);
@@ -36,7 +37,7 @@ final class SpreadsheetMetadataMissingComponents {
         this.metadata = metadata;
     }
 
-    <T> T getOrNull(final SpreadsheetMetadataPropertyName<T> propertyName) {
+    public <T> T getOrNull(final SpreadsheetMetadataPropertyName<T> propertyName) {
         return this.metadata.getOrGetDefaults(propertyName)
             .orElseGet(() -> this.addMissing(propertyName));
     }
@@ -48,14 +49,15 @@ final class SpreadsheetMetadataMissingComponents {
         return null;
     }
 
-    void reportIfMissing() {
+    public void reportIfMissing() {
         final Set<SpreadsheetMetadataPropertyName<?>> missing = this.missing;
         if (false == missing.isEmpty()) {
             throw new MissingMetadataPropertiesException(missing);
         }
     }
 
-    void addMissing(final MissingMetadataPropertiesException missing) {
+    public void addMissing(final MissingMetadataPropertiesException missing) {
+        Objects.requireNonNull(missing, "missing");
         this.missing.addAll(missing.missing);
     }
 

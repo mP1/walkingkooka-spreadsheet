@@ -2128,6 +2128,15 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         );
     }
 
+    // spreadsheetMetadataMissingComponents.............................................................................
+
+    @Test
+    public void testSpreadsheetMetadataMissingComponents() {
+        this.metadata()
+            .spreadsheetMetadataMissingComponents()
+            .reportIfMissing();
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

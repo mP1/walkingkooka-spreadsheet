@@ -23,7 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.reflect.PackagePrivateClassTesting;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
 
@@ -33,7 +33,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataMissingComponentsTest implements PackagePrivateClassTesting<SpreadsheetMetadataMissingComponents>,
+public final class SpreadsheetMetadataMissingComponentsTest implements PublicClassTesting<SpreadsheetMetadataMissingComponents>,
     ToStringTesting<SpreadsheetMetadataMissingComponents>,
     TypeNameTesting<SpreadsheetMetadataMissingComponents>,
     ThrowableTesting {

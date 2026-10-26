@@ -17,17 +17,18 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-final class MissingMetadataPropertiesException extends IllegalStateException {
+public final class MissingMetadataPropertiesException extends IllegalStateException {
 
     private static final long serialVersionUID = 1L;
 
-    MissingMetadataPropertiesException(final Set<SpreadsheetMetadataPropertyName<?>> missing) {
+    public MissingMetadataPropertiesException(final Set<SpreadsheetMetadataPropertyName<?>> missing) {
         super();
 
-        this.missing = missing;
+        this.missing = Objects.requireNonNull(missing, "missing");
     }
 
     @Override
