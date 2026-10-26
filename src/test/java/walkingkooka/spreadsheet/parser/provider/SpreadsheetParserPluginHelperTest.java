@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.parser.provider;
 
 import walkingkooka.plugin.PluginHelperTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetParserPluginHelperTest implements PluginHelperTesting<SpreadsheetParserPluginHelper,

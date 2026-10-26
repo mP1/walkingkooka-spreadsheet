@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest implements PackagePrivateClassTesting<SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {

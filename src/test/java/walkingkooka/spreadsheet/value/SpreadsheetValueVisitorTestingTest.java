@@ -18,9 +18,7 @@
 package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetValueVisitorTestingTest.TestSpreadsheetValueVisitor;
 import walkingkooka.visit.Visiting;
 

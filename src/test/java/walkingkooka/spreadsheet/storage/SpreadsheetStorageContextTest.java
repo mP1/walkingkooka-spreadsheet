@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.environment.HasAuditInfoTesting;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageMountPoint;

@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetConverterTextToTest implements PackagePrivateClassTesting<SpreadsheetConverterTextTo> {

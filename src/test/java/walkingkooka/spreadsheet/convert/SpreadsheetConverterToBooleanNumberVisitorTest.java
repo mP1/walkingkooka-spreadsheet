@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.math.NumberVisitorTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetConverterToBooleanNumberVisitorTest implements NumberVisitorTesting<SpreadsheetConverterToBooleanNumberVisitor>,
