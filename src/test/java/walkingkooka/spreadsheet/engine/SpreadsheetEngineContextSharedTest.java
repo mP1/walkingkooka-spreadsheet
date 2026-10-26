@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetEngineContextSharedTest implements PackagePrivateClassTesting<SpreadsheetEngineContextShared> {

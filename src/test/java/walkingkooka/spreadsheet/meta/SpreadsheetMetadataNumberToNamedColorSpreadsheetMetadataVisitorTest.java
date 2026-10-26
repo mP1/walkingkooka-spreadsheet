@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 import java.time.LocalDateTime;

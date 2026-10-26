@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetEngineBasicWindowTest implements PackagePrivateClassTesting<SpreadsheetEngineBasicWindow> {

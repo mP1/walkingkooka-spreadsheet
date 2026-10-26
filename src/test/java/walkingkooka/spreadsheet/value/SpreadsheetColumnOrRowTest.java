@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.value;
 
 import walkingkooka.Cast;
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicClassTesting;
 
 public final class SpreadsheetColumnOrRowTest implements PublicClassTesting<SpreadsheetColumnOrRow<?>> {

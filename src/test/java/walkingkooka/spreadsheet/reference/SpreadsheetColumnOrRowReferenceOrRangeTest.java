@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicClassTesting;
 
 public final class SpreadsheetColumnOrRowReferenceOrRangeTest implements PublicClassTesting<SpreadsheetColumnOrRowReferenceOrRange> {

@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import walkingkooka.plugin.PluginSelectorTokenAlternativeLikeTesting;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicClassTesting;
 
 public final class SpreadsheetFormatterSelectorTokenAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetFormatterSelectorTokenAlternative>,

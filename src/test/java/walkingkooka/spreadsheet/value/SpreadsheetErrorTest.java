@@ -24,8 +24,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.currency.provider.CurrencyExchangeRaterName;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;

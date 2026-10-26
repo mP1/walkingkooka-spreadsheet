@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.formula.parser;
 
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SymbolSpreadsheetFormulaParserTokenTest implements PackagePrivateClassTesting<SymbolSpreadsheetFormulaParserToken> {

@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetPatternSimpleDateFormatPatternVisitorYearTest implements PackagePrivateClassTesting<SpreadsheetPatternSimpleDateFormatPatternVisitorYear> {
