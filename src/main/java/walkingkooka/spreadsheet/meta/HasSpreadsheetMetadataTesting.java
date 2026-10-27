@@ -113,6 +113,8 @@ import java.math.RoundingMode;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -533,12 +535,29 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         },
         Printers.sink(SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT), // output
         Printers.sink(SpreadsheetEnvironmentContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT), // error
-        (final String expression,
-         final TerminalContext terminalContext) -> {
-            throw new UnsupportedOperationException();
+        new BiFunction<>() {
+
+            @Override
+            public Object apply(final String evaluate,
+                                final TerminalContext terminalContext) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public String toString() {
+                return "EVALUATOR";
+            }
         },
-        (final Object exitValue) -> {
-            throw new UnsupportedOperationException();
+        new Consumer<>() {
+            @Override
+            public void accept(final Object exitValue) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public String toString() {
+                return "EXIT VALUE";
+            }
         },
         StorageEnvironmentContexts.readOnly(
             Predicates.always(), // all values are read-only
