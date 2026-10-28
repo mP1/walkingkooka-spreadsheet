@@ -135,7 +135,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     abstract SpreadsheetParserContext spreadsheetParserContext();
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+    public final ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
         return Cast.to(
             this.expressionFunctionProvider()
                 .expressionFunction(
@@ -151,7 +151,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     abstract ProviderContext providerContext();
 
     @Override
-    public boolean isPure(final ExpressionFunctionName name) {
+    public final boolean isPure(final ExpressionFunctionName name) {
         return this.expressionFunction(name)
             .isPure(this);
     }
@@ -230,7 +230,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     // CanParseEnvironmentValueNameDelegator............................................................................
 
     @Override
-    public CanParseEnvironmentValueName canParseEnvironmentValueName() {
+    public final CanParseEnvironmentValueName canParseEnvironmentValueName() {
         return this.spreadsheetEnvironmentContext();
     }
 
@@ -244,7 +244,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     // HasJsonSelectorContext...........................................................................................
 
     @Override
-    public JsonSelectorContext jsonSelectorContext() {
+    public final JsonSelectorContext jsonSelectorContext() {
         return JsonSelectorContexts.basic(
             NodeSelectorContexts.basic(
                 () -> false, // isFinished
@@ -274,7 +274,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
+    public final Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
         return this.localeContext()
             .localeForLanguageTag(languageTag);
     }
@@ -453,7 +453,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public void setAuditInfoStorage(final StorageValueInfo info) {
+    public final void setAuditInfoStorage(final StorageValueInfo info) {
         this.storage()
             .setAuditInfo(
                 info,
@@ -462,7 +462,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public void mountStorage(final StorageMountPoint<?> mountPoint) {
+    public final void mountStorage(final StorageMountPoint<?> mountPoint) {
         this.storage()
             .mount(
                 Cast.to(mountPoint),
@@ -471,7 +471,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public void unmountStorage(final StoragePath path) {
+    public final void unmountStorage(final StoragePath path) {
         this.storage()
             .unmount(
                 path,
@@ -480,7 +480,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public List<StorageMountPoint<?>> storageMountPoints() {
+    public final List<StorageMountPoint<?>> storageMountPoints() {
         return Cast.to(
             this.storage()
                 .mountPoints()
@@ -488,7 +488,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public Runnable addStorageWatcher(final StorageWatcher watcher) {
+    public final Runnable addStorageWatcher(final StorageWatcher watcher) {
         return this.storage()
             .addWatcher(
                 watcher,
@@ -497,7 +497,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
+    public final Runnable addStorageWatcherOnce(final StorageWatcher watcher) {
         return this.storage()
             .addWatcherOnce(
                 watcher,
