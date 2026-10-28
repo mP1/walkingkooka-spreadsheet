@@ -430,7 +430,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                                       final SpreadsheetCellRangeReference to,
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
-        Objects.requireNonNull(from, "parse");
+        Objects.requireNonNull(from, "from");
         Objects.requireNonNull(to, "to");
         Objects.requireNonNull(context, "context");
 
