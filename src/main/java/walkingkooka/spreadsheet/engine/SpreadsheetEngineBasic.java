@@ -2012,13 +2012,12 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                                   final SpreadsheetEngineContext context) {
 
         return Optional.ofNullable(
-            expressionRequired(cell)
-                .toValue(
-                    context.spreadsheetExpressionEvaluationContext(
-                        Optional.of(cell),
-                        loader
-                    )
-                )
+            context.spreadsheetExpressionEvaluationContext(
+                Optional.of(cell),
+                loader
+            ).evaluateExpression(
+                expressionRequired(cell)
+            )
         );
     }
 
