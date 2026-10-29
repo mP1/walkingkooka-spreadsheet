@@ -635,13 +635,6 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         this.errorAndCheck(different);
     }
 
-    private void valueTypeAndCheck(final SpreadsheetFormula formula) {
-        this.valueTypeAndCheck(
-            formula,
-            SpreadsheetFormula.NO_VALUE_TYPE
-        );
-    }
-
     // SetValue.........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -748,7 +741,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         );
         this.errorAndCheck(different);
     }
-    
+
     private void valueAndCheck(final SpreadsheetFormula formula) {
         this.valueAndCheck(
             formula,
