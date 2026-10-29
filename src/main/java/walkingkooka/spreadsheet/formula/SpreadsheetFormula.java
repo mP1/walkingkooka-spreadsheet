@@ -53,6 +53,7 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionNumberSign;
 import walkingkooka.tree.expression.ExpressionPurityContext;
+import walkingkooka.tree.expression.HasExpression;
 import walkingkooka.tree.expression.ReferenceExpression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -81,6 +82,7 @@ import java.util.function.Function;
 public final class SpreadsheetFormula implements CanBeEmpty,
     CanReplaceReferences<SpreadsheetFormula>,
     HasContentType,
+    HasExpression,
     HasText,
     HasValue<Optional<Object>>,
     HasOptionalValueType,
@@ -99,11 +101,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * No {@link SpreadsheetFormulaParserToken} constant.
      */
     public final static Optional<SpreadsheetFormulaParserToken> NO_TOKEN = Optional.empty();
-
-    /**
-     * No expression constant.
-     */
-    public final static Optional<Expression> NO_EXPRESSION = Optional.empty();
 
     /**
      * No error constant.
@@ -290,8 +287,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     private final Optional<SpreadsheetFormulaParserToken> token;
 
-    // expression ......................................................................................................
+    // HasExpression ...................................................................................................
 
+    @Override
     public Optional<Expression> expression() {
         return this.expression;
     }

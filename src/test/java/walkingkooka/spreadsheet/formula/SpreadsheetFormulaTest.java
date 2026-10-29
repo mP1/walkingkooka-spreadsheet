@@ -77,6 +77,7 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.HasExpressionTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -105,6 +106,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     HasContentTypeTesting,
+    HasExpressionTesting,
     HasOptionalValueTypeTesting,
     HasShortMessageTesting,
     HasValueTesting,
@@ -542,22 +544,6 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         );
         this.valueAndCheck(different);
         this.errorAndCheck(different);
-    }
-
-    private void expressionAndCheck(final SpreadsheetFormula formula,
-                                    final Optional<Expression> expression) {
-        this.checkEquals(
-            expression,
-            formula.expression(),
-            "expression"
-        );
-    }
-
-    private void expressionAndCheck(final SpreadsheetFormula formula) {
-        this.expressionAndCheck(
-            formula,
-            SpreadsheetFormula.NO_EXPRESSION
-        );
     }
 
     // SetValueType................................................................................................
