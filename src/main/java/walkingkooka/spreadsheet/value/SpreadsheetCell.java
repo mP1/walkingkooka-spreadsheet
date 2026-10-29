@@ -53,7 +53,9 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.HasExpression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -95,6 +97,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasOptionalCurrencyExchangeRaterSelector,
     HasOptionalDateTimeSymbols,
     HasOptionalDecimalNumberSymbols,
+    HasExpression,
     HasOptionalLocale,
     HasOptionalSpreadsheetFormatterSelector,
     HasOptionalSpreadsheetParserSelector,
@@ -1690,6 +1693,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetCell.class);
+
+    // HasExpression....................................................................................................
+
+    @Override
+    public Optional<Expression> expression() {
+        return this.formula.expression();
+    }
 
     // HasSpreadsheetCell...............................................................................................
 

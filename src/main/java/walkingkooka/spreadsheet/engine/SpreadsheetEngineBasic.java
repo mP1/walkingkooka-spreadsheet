@@ -1993,7 +1993,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
     Optional<Object> evaluateCellIfNecessary(final SpreadsheetCell cell,
                                              final SpreadsheetExpressionReferenceLoader loader,
                                              final SpreadsheetEngineContext context) {
-        return cell.formattedValue().isPresent() && expressionRequired(cell).isPure(context) ?
+        return cell.formattedValue().isPresent() && cell.expressionOrFail().isPure(context) ?
             cell.formula()
                 .value() :
             this.evaluateCell(
@@ -2016,20 +2016,9 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                 Optional.of(cell),
                 loader
             ).evaluateExpression(
-                expressionRequired(cell)
+                cell.expressionOrFail()
             )
         );
-    }
-
-    private static Expression expressionRequired(final SpreadsheetCell cell) {
-        return cell.formula()
-            .expression()
-            .orElseThrow(() -> new IllegalStateException(
-                    "Formula of " +
-                        CharSequences.quoteAndEscape(cell.reference().toString()) +
-                        " missing expected expression"
-                )
-            );
     }
 
     // prepareResponse..................................................................................................
