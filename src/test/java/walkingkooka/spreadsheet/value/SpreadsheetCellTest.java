@@ -52,6 +52,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.HasExpressionTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -85,6 +86,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     CanReplaceReferencesTesting2<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
     HasContentTypeTesting,
+    HasExpressionTesting,
     HasOptionalCurrencyTesting,
     HasOptionalCurrencyExchangeRaterSelectorTesting,
     HasOptionalDateTimeSymbolsTesting,
@@ -4079,6 +4081,25 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.contentTypeAndCheck(
             this.createObject(),
             "application/json+walkingkooka.spreadsheet.value.SpreadsheetCell"
+        );
+    }
+
+    // HasExpression....................................................................................................
+
+    @Test
+    public void testExpressionWhenFormulaHasExpression() {
+        this.expressionAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setExpression(EXPRESSION)
+            ),
+            EXPRESSION
+        );
+    }
+
+    @Test
+    public void testExpressionWhenFormulaMissingExpression() {
+        this.expressionAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
         );
     }
 
