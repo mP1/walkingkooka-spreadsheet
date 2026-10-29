@@ -128,12 +128,11 @@ public interface SpreadsheetEngineContextTesting extends SpreadsheetContextTesti
                                   final Object expected) {
         this.checkEquals(
             expected,
-            expression.toValue(
-                context.spreadsheetExpressionEvaluationContext(
-                    cell,
-                    spreadsheetExpressionReferenceLoader
-                )
-            ),
+
+            context.spreadsheetExpressionEvaluationContext(
+                cell,
+                spreadsheetExpressionReferenceLoader
+            ).evaluateExpression(expression),
             () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
         );
     }
