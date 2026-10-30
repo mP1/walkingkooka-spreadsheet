@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.storage.StoragePath;
 
 import java.math.MathContext;
 
@@ -51,11 +50,9 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
 
     @Test
     public final void testSetCurrentWorkingDirectory() {
-        final StoragePath different = StoragePath.parse("/different");
-
         this.setCurrentWorkingDirectoryAndCheck(
             this.createContext(),
-            different
+            DIFFERENT_CURRENT_WORKING_DIRECTORY
         );
     }
 
