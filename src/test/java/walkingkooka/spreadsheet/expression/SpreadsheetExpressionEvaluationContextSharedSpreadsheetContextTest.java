@@ -71,7 +71,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -594,12 +593,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testSetLocale() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
 
-        final Locale locale = Locale.GERMAN;
-        context.setLocale(locale);
+        context.setLocale(DIFFERENT_LOCALE);
 
         this.localeAndCheck(
             context,
-            locale
+            DIFFERENT_LOCALE
         );
     }
 
