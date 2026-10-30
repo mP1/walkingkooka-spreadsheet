@@ -88,7 +88,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     private final static SpreadsheetMetadataMode MODE = SpreadsheetMetadataMode.FORMULA;
 
-    private final static SpreadsheetMetadata METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     ).set(
@@ -816,7 +816,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     @Test
     public void testSaveMetadataAndLoadMetadata() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
-        final SpreadsheetMetadata metadata = METADATA.remove(
+        final SpreadsheetMetadata metadata = SPREADSHEET_METADATA.remove(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID
         );
 
@@ -832,7 +832,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     @Test
     public void testDeleteMetadata() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
-        final SpreadsheetMetadata metadata = METADATA.remove(
+        final SpreadsheetMetadata metadata = SPREADSHEET_METADATA.remove(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID
         );
 
@@ -854,7 +854,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
         final String name = "SpreadsheetName111";
 
-        final SpreadsheetMetadata metadata = METADATA.remove(
+        final SpreadsheetMetadata metadata = SPREADSHEET_METADATA.remove(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID
         ).set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
@@ -948,7 +948,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     private static SpreadsheetContext spreadsheetContext(final SpreadsheetCellStore cellStore) {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-        store.save(METADATA);
+        store.save(SPREADSHEET_METADATA);
 
         return spreadsheetContext(
             new FakeSpreadsheetStoreRepository() {
@@ -973,7 +973,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                          final ProviderContext providerContext) {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-        store.save(METADATA);
+        store.save(SPREADSHEET_METADATA);
 
         return spreadsheetContext(
             SpreadsheetStoreRepositories.treeMap(store),
@@ -1048,7 +1048,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     @Override
     public int decimalNumberDigitCount() {
-        return METADATA.getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
+        return SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
     }
 
     // TerminalContext..................................................................................................
