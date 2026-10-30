@@ -712,7 +712,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
 
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final String value = "Hello World123";
 
         this.referenceFails(
             this.createContext(
