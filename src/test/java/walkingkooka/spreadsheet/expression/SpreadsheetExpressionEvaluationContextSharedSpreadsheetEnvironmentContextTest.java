@@ -367,15 +367,20 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testSetLocale() {
+        final SpreadsheetEnvironmentContext wrapped = SpreadsheetEnvironmentContexts.basic(
+            SPREADSHEET_METADATA_LOADER,
+            STORAGE,
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
+
         this.setLocaleAndCheck(
             (SpreadsheetEnvironmentContext)
-                this.createContext(
-                    SpreadsheetEnvironmentContexts.basic(
-                        SPREADSHEET_METADATA_LOADER,
-                        STORAGE,
-                        STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    )
-                ),
+                this.createContext(wrapped),
+            DIFFERENT_LOCALE
+        );
+
+        this.localeAndCheck(
+            wrapped,
             DIFFERENT_LOCALE
         );
     }
