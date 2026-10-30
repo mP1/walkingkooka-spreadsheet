@@ -564,10 +564,17 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     @Test
     @Override
     public void testSetLineEnding() {
-        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
 
         this.setLineEndingAndCheck(
             context,
+            DIFFERENT_LINE_ENDING
+        );
+
+        this.lineEndingAndCheck(
+            spreadsheetEnvironmentContext,
             DIFFERENT_LINE_ENDING
         );
     }
