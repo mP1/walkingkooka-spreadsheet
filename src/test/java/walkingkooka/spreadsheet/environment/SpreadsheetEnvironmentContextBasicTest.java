@@ -144,11 +144,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testWithEnvironmentContext() {
         final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
 
-        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = SpreadsheetEnvironmentContextBasic.with(
-            SPREADSHEET_METADATA_LOADER,
-            STORAGE,
-            storageEnvironmentContext
-        );
+        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = this.createContext(storageEnvironmentContext);
 
         this.storageAndCheck(
             basicSpreadsheetEnvironmentContext,
@@ -306,9 +302,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         this.currentWorkingDirectoryAndCheck(
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
+            this.createContext(
                 StorageEnvironmentContexts.basic(environmentContext)
             )
         );
@@ -362,11 +356,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
         );
 
         this.serverUrlAndCheck(
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
-                storageEnvironmentContext
-            ),
+            this.createContext(storageEnvironmentContext),
             SERVER_URL
         );
     }
@@ -376,9 +366,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     @Test
     public void testSpreadsheetIdMissing() {
         this.spreadsheetIdAndCheck(
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
+            this.createContext(
                 STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );
@@ -397,24 +385,18 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     @Test
     public void testSetSpreadsheetId() {
         this.setSpreadsheetIdAndCheck(
-            (SpreadsheetEnvironmentContextBasic)
-                SpreadsheetEnvironmentContextBasic.with(
-                    SPREADSHEET_METADATA_LOADER,
-                    STORAGE,
-                    STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                ),
+            this.createContext(
+                STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            ),
             SPREADSHEET_ID
         );
     }
 
     @Test
     public void testSetSpreadsheetId2() {
-        final SpreadsheetEnvironmentContextBasic context = (SpreadsheetEnvironmentContextBasic)
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
-                STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            );
+        final SpreadsheetEnvironmentContextBasic context = this.createContext(
+            STORAGE_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
 
         this.setSpreadsheetIdAndCheck(
             context,
@@ -482,12 +464,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             SPREADSHEET_ID
         );
 
-        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
-                storageEnvironmentContext
-            );
+        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = this.createContext(storageEnvironmentContext);
 
         this.environmentValueAndCheck(
             spreadsheetEnvironmentContextBasic,
@@ -509,12 +486,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             SERVER_URL
         );
 
-        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
-                storageEnvironmentContext
-            );
+        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = this.createContext(storageEnvironmentContext);
 
         this.environmentValueAndCheck(
             spreadsheetEnvironmentContextBasic,
@@ -536,12 +508,7 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             SERVER_URL
         );
 
-        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = (SpreadsheetEnvironmentContextBasic)
-            SpreadsheetEnvironmentContextBasic.with(
-                SPREADSHEET_METADATA_LOADER,
-                STORAGE,
-                storageEnvironmentContext
-            );
+        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = this.createContext(storageEnvironmentContext);
 
         this.environmentValueAndCheck(
             spreadsheetEnvironmentContextBasic,
@@ -721,6 +688,10 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
             SPREADSHEET_ID
         );
 
+        return this.createContext(storageEnvironmentContext);
+    }
+
+    private SpreadsheetEnvironmentContextBasic createContext(final StorageEnvironmentContext storageEnvironmentContext) {
         return SpreadsheetEnvironmentContextBasic.with(
             SPREADSHEET_METADATA_LOADER,
             STORAGE,
