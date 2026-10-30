@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.currency.SpreadsheetCurrencyExchangeRaterContextTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
@@ -48,6 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetExpressionEvaluationContextTesting extends FormHandlerExpressionEvaluationContextTesting,
     HasSpreadsheetCellTesting,
     JsonNodeExpressionEvaluationContextTesting,
+    SpreadsheetCurrencyExchangeRaterContextTesting,
     SpreadsheetEnvironmentContextTesting,
     SpreadsheetLabelNameResolverTesting,
     SpreadsheetMetadataContextTesting,

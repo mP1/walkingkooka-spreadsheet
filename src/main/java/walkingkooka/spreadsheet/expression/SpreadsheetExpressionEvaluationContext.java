@@ -21,6 +21,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.currency.SpreadsheetCurrencyExchangeRaterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -85,6 +86,7 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
     HasSpreadsheetMetadata,
     JsonNodeExpressionEvaluationContext,
     SpreadsheetConverterContext,
+    SpreadsheetCurrencyExchangeRaterContext,
     SpreadsheetEnvironmentContext,
     SpreadsheetMetadataContext,
     StorageExpressionEvaluationContext,
