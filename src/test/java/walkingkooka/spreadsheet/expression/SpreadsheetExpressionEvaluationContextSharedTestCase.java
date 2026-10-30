@@ -39,7 +39,7 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
         super();
     }
 
-    // currentWorkingDirectory......................................................................................................
+    // currentWorkingDirectory..........................................................................................
 
     @Test
     public final void testCurrentWorkingDirectory() {
