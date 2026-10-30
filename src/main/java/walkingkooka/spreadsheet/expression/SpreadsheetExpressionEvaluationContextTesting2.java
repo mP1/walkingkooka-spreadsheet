@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.currency.SpreadsheetCurrencyExchangeRaterContextTesting2;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -48,6 +49,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
     FormHandlerExpressionEvaluationContextTesting2<SpreadsheetValidationReference, SpreadsheetDelta, C>,
     HasSpreadsheetMetadataTesting2<C>,
     JsonNodeExpressionEvaluationContextTesting2<C>,
+    SpreadsheetCurrencyExchangeRaterContextTesting2<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting2<C>,
     SpreadsheetMetadataContextTesting2<C>,
