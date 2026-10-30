@@ -566,16 +566,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testSetLineEnding() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
 
-        final LineEnding lineEnding = LineEnding.CRNL;
-
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
         this.setLineEndingAndCheck(
             context,
-            lineEnding
+            DIFFERENT_LINE_ENDING
         );
     }
 
