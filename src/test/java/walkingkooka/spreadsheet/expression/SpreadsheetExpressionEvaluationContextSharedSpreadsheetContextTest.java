@@ -591,12 +591,19 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     @Test
     public void testSetLocale() {
-        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
 
         context.setLocale(DIFFERENT_LOCALE);
 
         this.localeAndCheck(
             context,
+            DIFFERENT_LOCALE
+        );
+
+        this.localeAndCheck(
+            spreadsheetEnvironmentContext,
             DIFFERENT_LOCALE
         );
     }
