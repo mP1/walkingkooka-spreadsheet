@@ -38,6 +38,7 @@ import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContexts;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
@@ -246,7 +247,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
             token,
             SpreadsheetPatternSpreadsheetFormatters.text(
                 SpreadsheetFormatParserToken.text(
-                    Lists.of(
+                    Lists.<ParserToken>of(
                         SpreadsheetFormatParserToken.textPlaceholder(
                             "@",
                             "@"

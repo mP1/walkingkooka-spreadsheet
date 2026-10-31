@@ -1489,7 +1489,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             SpreadsheetFormulaParserToken.cellRange(
                 Lists.of(
                     SpreadsheetFormulaParserToken.cell(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.column(
                                 SpreadsheetSelection.parseColumn("A"),
                                 "A"
@@ -1503,7 +1503,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     ),
                     betweenSymbol(),
                     SpreadsheetFormulaParserToken.cell(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.column(
                                 SpreadsheetSelection.parseColumn("B"),
                                 "B"
@@ -1531,7 +1531,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             SpreadsheetFormulaParserToken.cellRange(
                 Lists.of(
                     SpreadsheetFormulaParserToken.cell(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.column(
                                 SpreadsheetSelection.parseColumn("$A"),
                                 "$A"
@@ -1545,7 +1545,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     ),
                     betweenSymbol(),
                     SpreadsheetFormulaParserToken.cell(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             columnReference("$B"),
                             rowReference("$2")
                         ),

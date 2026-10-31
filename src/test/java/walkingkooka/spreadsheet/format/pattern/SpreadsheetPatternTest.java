@@ -550,7 +550,7 @@ public final class SpreadsheetPatternTest implements PublicClassTesting<Spreadsh
             new FakeSpreadsheetParserContext(),
             "1999/12/31",
             SpreadsheetFormulaParserToken.date(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.year(1999, "1999"),
                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                     SpreadsheetFormulaParserToken.monthNumber(12, "12"),
@@ -718,7 +718,7 @@ public final class SpreadsheetPatternTest implements PublicClassTesting<Spreadsh
             new FakeSpreadsheetParserContext(),
             "1999/12/31",
             SpreadsheetFormulaParserToken.date(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.year(1999, "1999"),
                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                     SpreadsheetFormulaParserToken.monthNumber(12, "12"),
@@ -1932,7 +1932,7 @@ public final class SpreadsheetPatternTest implements PublicClassTesting<Spreadsh
             new FakeSpreadsheetParserContext(),
             "12/58/59",
             SpreadsheetFormulaParserToken.time(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.hour(12, "12"),
                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                     SpreadsheetFormulaParserToken.minute(58, "58"),
@@ -2114,7 +2114,7 @@ public final class SpreadsheetPatternTest implements PublicClassTesting<Spreadsh
             new FakeSpreadsheetParserContext(),
             "12:58",
             SpreadsheetFormulaParserToken.time(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.hour(12, "12"),
                     SpreadsheetFormulaParserToken.textLiteral(":", ":"),
                     SpreadsheetFormulaParserToken.minute(58, "58")

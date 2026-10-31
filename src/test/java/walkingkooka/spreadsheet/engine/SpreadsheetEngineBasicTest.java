@@ -157,6 +157,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -7328,7 +7329,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             a1Formula.setToken(
                 Optional.of(
                     SpreadsheetFormulaParserToken.date(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.dayNumber(1, "01"),
                             SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                             SpreadsheetFormulaParserToken.monthNumber(2, "02"),
@@ -7385,7 +7386,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             a1Formula.setToken(
                 Optional.of(
                     SpreadsheetFormulaParserToken.date(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.year(1, "01"),
                             SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                             SpreadsheetFormulaParserToken.monthNumber(2, "02"),

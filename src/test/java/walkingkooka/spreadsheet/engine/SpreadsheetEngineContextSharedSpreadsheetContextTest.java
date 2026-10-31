@@ -99,6 +99,7 @@ import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.text.TextNode;
@@ -270,7 +271,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         this.parseFormulaAndCheck(
             text,
             SpreadsheetFormulaParserToken.date(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.dayNumber(31, "31"),
                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                     SpreadsheetFormulaParserToken.monthNumber(12, "12"),
@@ -288,7 +289,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         this.parseFormulaAndCheck(
             text,
             SpreadsheetFormulaParserToken.dateTime(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.dayNumber(31, "31"),
                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                     SpreadsheetFormulaParserToken.monthNumber(12, "12"),
@@ -340,7 +341,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         this.parseFormulaAndCheck(
             text,
             SpreadsheetFormulaParserToken.time(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.hour(12, "12"),
                     SpreadsheetFormulaParserToken.textLiteral(":", ":"),
                     SpreadsheetFormulaParserToken.minute(58, "58")
@@ -393,7 +394,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             ),
             SpreadsheetFormulaParserToken.time(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.hour(12, "12"),
                     SpreadsheetFormulaParserToken.textLiteral(":", ":"),
                     SpreadsheetFormulaParserToken.minute(58, "58"),
@@ -422,7 +423,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                     )
             ),
             SpreadsheetFormulaParserToken.time(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.hour(12, "12"),
                     SpreadsheetFormulaParserToken.textLiteral("::", "::"),
                     SpreadsheetFormulaParserToken.minute(58, "58"),
