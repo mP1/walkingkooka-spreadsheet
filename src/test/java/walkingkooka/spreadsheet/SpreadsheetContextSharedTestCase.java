@@ -297,17 +297,17 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             differentEnvironmentContext
         );
 
-        final C basicSpreadsheetContext = this.createContext(spreadsheetEnvironmentContext);
-        final SpreadsheetContext afterSet = basicSpreadsheetContext.setEnvironmentContext(differentEnvironmentContext);
+        final C before = this.createContext(spreadsheetEnvironmentContext);
+        final SpreadsheetContext after = before.setEnvironmentContext(differentEnvironmentContext);
 
         assertNotSame(
-            basicSpreadsheetContext,
-            afterSet
+            before,
+            after
         );
 
         this.checkNotEquals(
-            basicSpreadsheetContext,
-            afterSet
+            before,
+            after
         );
     }
 
