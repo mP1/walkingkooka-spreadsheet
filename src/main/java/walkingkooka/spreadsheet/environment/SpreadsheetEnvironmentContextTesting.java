@@ -27,6 +27,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderTesting;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageEnvironmentContextTesting;
@@ -36,6 +39,7 @@ import walkingkooka.storage.Storages;
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
+    HasSpreadsheetCellTesting,
     HasSpreadsheetMetadataTesting,
     HasSpreadsheetServerUrlTesting,
     SpreadsheetMetadataLoaderTesting {
@@ -114,6 +118,52 @@ public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironment
                 expected
             );
         }
+    }
+
+    // spreadsheetCell..................................................................................................
+
+    @Override
+    default void spreadsheetCellAndCheck(final HasSpreadsheetCell has,
+                                         final Optional<SpreadsheetCell> expected) {
+        HasSpreadsheetMetadataTesting.super.spreadsheetCellAndCheck(
+            has,
+            expected
+        );
+
+        if (has instanceof SpreadsheetEnvironmentContext) {
+            this.environmentValueAndCheck(
+                (SpreadsheetEnvironmentContext) has,
+                SpreadsheetEnvironmentContext.SPREADSHEET_CELL,
+                expected
+            );
+        }
+    }
+
+    // setSpreadsheetCell...............................................................................................
+
+    default void setSpreadsheetCellAndCheck(final SpreadsheetEnvironmentContext context) {
+        this.setSpreadsheetCellAndCheck(
+            context,
+            Optional.empty()
+        );
+    }
+
+    default void setSpreadsheetCellAndCheck(final SpreadsheetEnvironmentContext context, 
+                                            final SpreadsheetCell expected) {
+        this.setSpreadsheetCellAndCheck(
+            context,
+            Optional.of(expected)
+        );
+    }
+
+    default void setSpreadsheetCellAndCheck(final SpreadsheetEnvironmentContext context, 
+                                            final Optional<SpreadsheetCell> spreadsheetCell) {
+        context.setSpreadsheetCell(spreadsheetCell);
+
+        this.spreadsheetCellAndCheck(
+            context,
+            spreadsheetCell
+        );
     }
     
     // spreadsheetId....................................................................................................

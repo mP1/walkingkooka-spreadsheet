@@ -26,6 +26,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.logging.StorageLoggingContext;
@@ -256,6 +257,19 @@ final class SpreadsheetEnvironmentContextReadOnly implements SpreadsheetEnvironm
         return SERVER_URL.getEnvironmentValueOrFail(this);
     }
 
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return SPREADSHEET_CELL.getEnvironmentValue(this);
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        SPREADSHEET_CELL.setOrRemoveEnvironmentValue(
+            spreadsheetCell,
+            this
+        );
+    }
+    
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
         return SPREADSHEET_ID.getEnvironmentValue(this);

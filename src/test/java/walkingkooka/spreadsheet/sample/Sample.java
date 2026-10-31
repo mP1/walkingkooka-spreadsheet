@@ -137,20 +137,6 @@ public final class Sample {
         sample.testFormula();
     }
 
-    // see CellSpreadsheetExpressionEvaluationContext#validatorContext
-    @Test
-    public void testCellSpreadsheetExpressionEvaluationContext() {
-        SpreadsheetExpressionEvaluationContexts.cell(
-            Optional.empty(),
-            new FakeSpreadsheetExpressionEvaluationContext() {
-                @Override
-                public Optional<SpreadsheetCell> spreadsheetCell() {
-                    return Optional.empty();
-                }
-            }
-        );
-    }
-
     @Test
     public void testFormula() {
         final SpreadsheetEngine engine = engine();
@@ -469,7 +455,6 @@ public final class Sample {
                 ).format(
                     value,
                     metadata.spreadsheetFormatterContext(
-                        () -> Optional.of(cell),
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
@@ -555,14 +540,6 @@ public final class Sample {
         @Override
         public Optional<SpreadsheetCell> spreadsheetCell() {
             return this.cell;
-        }
-
-        @Override
-        public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-            return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
-            );
         }
 
         private final Optional<SpreadsheetCell> cell;

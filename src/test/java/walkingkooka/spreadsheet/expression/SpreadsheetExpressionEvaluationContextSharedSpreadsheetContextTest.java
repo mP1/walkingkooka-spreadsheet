@@ -73,7 +73,6 @@ import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProv
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextTest extends SpreadsheetExpressionEvaluationContextSharedTestCase<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext> {
@@ -128,22 +127,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 null,
-                OPTIONAL_SPREADSHEET_CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_LABEL_NAME_RESOLVER,
-                SPREADSHEET_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullCellFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
-                MODE,
-                null,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -158,7 +141,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_SPREADSHEET_CELL,
                 null,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -173,7 +155,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
                 SPREADSHEET_CONTEXT,
@@ -188,7 +169,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 null,
@@ -203,7 +183,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -230,31 +209,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.parseEnvironmentValueNameAndCheck(
             spreadsheetExpressionEvaluationContextSharedSpreadsheetContext,
             TerminalContext.TERMINAL_ID
-        );
-    }
-
-    // setCell..........................................................................................................
-
-    @Test
-    public void testSetCellWithDifferentSpreadsheetCell() {
-        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
-
-        final Optional<SpreadsheetCell> differentCell = Optional.of(
-            SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                    SpreadsheetFormula.EMPTY.setText("Different")
-                )
-        );
-
-        final SpreadsheetExpressionEvaluationContext different = context.setSpreadsheetCell(differentCell);
-        assertNotSame(
-            context,
-            different
-        );
-        this.checkEquals(
-            differentCell,
-            different.spreadsheetCell(),
-            "serverUrl"
         );
     }
 
@@ -300,7 +254,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyColumnAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -326,7 +279,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyRowAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
-                OPTIONAL_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -938,7 +890,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                                                          final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             MODE,
-            OPTIONAL_SPREADSHEET_CELL,
             spreadsheetExpressionReferenceLoader,
             labelNameResolver,
             spreadsheetContext(
@@ -1085,7 +1036,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "mode=FORMULA cell=A1 valueType=text/Text currency=\"AUD\" currencyExchangeRater=\"test-currency-exchange-rater-111\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'\" formatter=\"formatter-selector-111\" formattedValue=\"formatted-value\" locale=\"en_AU\" parser=\"parse spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader"
+            "mode=FORMULA spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader spreadsheetLabelNameResolver=SpreadsheetLabelNameResolverEmpty terminalContext=FakeTerminalContext"
         );
     }
 

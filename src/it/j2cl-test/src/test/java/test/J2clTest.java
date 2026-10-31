@@ -136,20 +136,6 @@ public class J2clTest {
         Assert.assertNotEquals(null, SpreadsheetMetadata.NON_LOCALE_DEFAULTS);
     }
 
-    // see CellSpreadsheetExpressionEvaluationContext#validatorContext
-    @Test
-    public void testCellSpreadsheetExpressionEvaluationContext() {
-        SpreadsheetExpressionEvaluationContexts.cell(
-            Optional.empty(),
-            new FakeSpreadsheetExpressionEvaluationContext() {
-                @Override
-                public Optional<SpreadsheetCell> spreadsheetCell() {
-                    return Optional.empty();
-                }
-            }
-        );
-    }
-
     @Test
     public void testFormula() {
         final SpreadsheetEngine engine = engine();
@@ -468,7 +454,6 @@ public class J2clTest {
                 ).format(
                     value,
                     metadata.spreadsheetFormatterContext(
-                        () -> Optional.of(cell),
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
@@ -554,14 +539,6 @@ public class J2clTest {
         @Override
         public Optional<SpreadsheetCell> spreadsheetCell() {
             return this.cell;
-        }
-
-        @Override
-        public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-            return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
-            );
         }
 
         private final Optional<SpreadsheetCell> cell;

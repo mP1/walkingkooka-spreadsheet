@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.HasUserDirectories;
@@ -367,6 +368,11 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
         return this.spreadsheetEnvironmentContext();
     }
 
+    @Override
+    public final HasSpreadsheetCell hasSpreadsheetCell() {
+        return this.spreadsheetEnvironmentContext();
+    }
+    
     @Override
     public final HasSpreadsheetMetadata hasSpreadsheetMetadata() {
         return this.spreadsheetEnvironmentContext();

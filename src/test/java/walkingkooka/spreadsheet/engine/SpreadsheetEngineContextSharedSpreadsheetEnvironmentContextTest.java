@@ -656,6 +656,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                                     }
 
                                     @Override
+                                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                                        return Optional.empty();
+                                    }
+
+                                    @Override
                                     public BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
                                         return MULTIPLIER;
                                     }

@@ -215,12 +215,14 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(loader, "loader");
 
+        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext.cloneEnvironment();
+        spreadsheetContext.setSpreadsheetCell(cell);
+
         return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
             this.mode,
-            cell,
             loader,
             this.spreadsheetLabelNameResolver,
-            this.spreadsheetContext,
+            spreadsheetContext,
             this.terminalContext
         );
     }
@@ -316,10 +318,10 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
         final SpreadsheetContext context = this.spreadsheetContext;
+        context.setSpreadsheetCell(cell);
 
         return this.spreadsheetMetadataOrFail()
             .spreadsheetFormatterContext(
-                () -> cell,
                 (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).spreadsheetExpressionEvaluationContext(
@@ -352,6 +354,16 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         return this.spreadsheetContext.storeRepository();
     }
 
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.spreadsheetContext.spreadsheetCell();
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        this.spreadsheetContext.setSpreadsheetCell(spreadsheetCell);
+    }
+    
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
         return this.spreadsheetContext.spreadsheetId();

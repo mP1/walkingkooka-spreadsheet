@@ -581,12 +581,7 @@ public final class SpreadsheetEngineSpreadsheetMetadataStampingTest implements S
                                                                                                  final SpreadsheetExpressionReferenceLoader loader) {
                 Objects.requireNonNull(cell, "cell");
 
-                return new FakeSpreadsheetExpressionEvaluationContext() {
-                    @Override
-                    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-                        return this;
-                    }
-                };
+                return new FakeSpreadsheetExpressionEvaluationContext();
             }
 
             @Override

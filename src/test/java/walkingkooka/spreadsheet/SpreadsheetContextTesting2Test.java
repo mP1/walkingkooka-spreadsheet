@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.SpreadsheetContextTesting2Test.TestSpreadsheetCo
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
@@ -143,6 +144,11 @@ public final class SpreadsheetContextTesting2Test implements SpreadsheetContextT
         @Override
         public AbsoluteUrl serverUrl() {
             return this.spreadsheetEnvironmentContext.serverUrl();
+        }
+
+        @Override
+        public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+            this.spreadsheetEnvironmentContext.setSpreadsheetCell(spreadsheetCell);
         }
 
         @Override

@@ -162,19 +162,6 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
-    public Optional<SpreadsheetCell> spreadsheetCell() {
-        return this.context.spreadsheetCell();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-        return SpreadsheetExpressionEvaluationContexts.cell(
-            cell,
-            this
-        );
-    }
-
-    @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.context.loadCell(cell);
     }
@@ -588,6 +575,16 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
         return this.context.serverUrl();
     }
 
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.context.spreadsheetCell();
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        this.context.setSpreadsheetCell(spreadsheetCell);
+    }
+    
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
         return this.context.spreadsheetId();

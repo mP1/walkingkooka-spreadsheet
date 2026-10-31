@@ -630,7 +630,6 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
         };
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = SPREADSHEET_METADATA.spreadsheetFormatterContext(
-        HAS_SPREADSHEET_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,
@@ -643,7 +642,6 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
     );
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SPREADSHEET_METADATA.spreadsheetFormatterProviderSamplesContext(
-        SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         MEDIA_TYPE_DETECTOR,

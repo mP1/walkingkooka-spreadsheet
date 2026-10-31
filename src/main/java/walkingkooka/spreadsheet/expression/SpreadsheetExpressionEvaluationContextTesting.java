@@ -200,17 +200,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting extends FormHandl
         );
     }
 
-    // setCell..........................................................................................................
-
-    default void setCellAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                 final Optional<SpreadsheetCell> cell,
-                                 final SpreadsheetExpressionEvaluationContext expected) {
-        this.checkEquals(
-            expected,
-            context.setSpreadsheetCell(cell)
-        );
-    }
-
     // nextEmptyColumn.....................................................................................................
 
     default void nextEmptyColumnAndCheck(final SpreadsheetExpressionEvaluationContext context,

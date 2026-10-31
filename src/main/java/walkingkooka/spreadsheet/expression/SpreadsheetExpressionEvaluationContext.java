@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
@@ -82,7 +81,6 @@ import java.util.function.Function;
  */
 public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpressionEvaluationContext<SpreadsheetValidationReference, SpreadsheetDelta>,
     CanEvaluateStringDelegator,
-    HasSpreadsheetCell,
     HasSpreadsheetMetadata,
     JsonNodeExpressionEvaluationContext,
     SpreadsheetConverterContext,
@@ -129,11 +127,6 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
             this
         );
     }
-
-    /**
-     * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
-     */
-    SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell);
 
     /**
      * If the {@link ExpressionReference} cannot be found an {@link SpreadsheetError} is created with {@link SpreadsheetError#referenceNotFound(ExpressionReference)}.

@@ -770,7 +770,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         
         @Override
         public SpreadsheetContext cloneEnvironment() {
-            throw new UnsupportedOperationException();
+            return this; // cloning not required as instance only used once within a test
         }
 
         @Override

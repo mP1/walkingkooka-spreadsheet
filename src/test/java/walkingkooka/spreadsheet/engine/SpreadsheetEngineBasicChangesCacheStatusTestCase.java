@@ -133,9 +133,11 @@ public abstract class SpreadsheetEngineBasicChangesCacheStatusTestCase<STATUS ex
 
     // deleted..........................................................................................................
 
+    // without cast eclipse compiler throws ecj Invalid receiver type class java.lang.Enum; not a subtype
     @Test
     public final void testDeletedAll() {
         Arrays.stream(this.values())
+            .map(SpreadsheetEngineBasicChangesCacheStatus.class::cast)
             .forEach(SpreadsheetEngineBasicChangesCacheStatus::deleted);
     }
 
