@@ -33,7 +33,7 @@ import walkingkooka.validation.provider.ValidatorProvider;
 public final class SpreadsheetProviders implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetProvider}
+     * {@see SpreadsheetProviderBasic}
      */
     public static SpreadsheetProvider basic(final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                             final ConverterProvider converterProvider,
