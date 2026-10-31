@@ -144,24 +144,24 @@ public final class SpreadsheetEnvironmentContextBasicTest implements Spreadsheet
     public void testWithEnvironmentContext() {
         final StorageEnvironmentContext storageEnvironmentContext = StorageEnvironmentContexts.fake();
 
-        final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext = this.createContext(storageEnvironmentContext);
+        final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic = this.createContext(storageEnvironmentContext);
 
         this.storageAndCheck(
-            basicSpreadsheetEnvironmentContext,
+            spreadsheetEnvironmentContextBasic,
             STORAGE
         );
 
         this.environmentContextAndCheck(
-            basicSpreadsheetEnvironmentContext,
+            spreadsheetEnvironmentContextBasic,
             storageEnvironmentContext
         );
     }
 
-    private void environmentContextAndCheck(final SpreadsheetEnvironmentContextBasic basicSpreadsheetEnvironmentContext,
+    private void environmentContextAndCheck(final SpreadsheetEnvironmentContextBasic spreadsheetEnvironmentContextBasic,
                                             final EnvironmentContext environmentContext) {
         assertSame(
             environmentContext,
-            basicSpreadsheetEnvironmentContext.environmentContext(),
+            spreadsheetEnvironmentContextBasic.environmentContext(),
             "environmentContext"
         );
     }
