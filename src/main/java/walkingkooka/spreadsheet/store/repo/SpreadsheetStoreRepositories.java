@@ -53,7 +53,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
     }
 
     /**
-     * {@see BasicSpreadsheetStoreRepository}
+     * {@see SpreadsheetStoreRepositoryBasic}
      */
     public static SpreadsheetStoreRepository basic(final SpreadsheetCellStore cells,
                                                    final SpreadsheetCellReferencesStore cellReferences,
@@ -95,7 +95,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
     }
 
     /**
-     * {@see BasicSpreadsheetStoreRepository}
+     * {@see SpreadsheetStoreRepositoryBasic}
      */
     public static SpreadsheetStoreRepository treeMap(final SpreadsheetMetadataStore metadatas) {
         return basic(
