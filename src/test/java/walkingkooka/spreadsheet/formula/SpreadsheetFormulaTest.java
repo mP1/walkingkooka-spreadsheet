@@ -65,6 +65,7 @@ import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -1701,7 +1702,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
                 .setToken(
                     Optional.of(
                         SpreadsheetFormulaParserToken.date(
-                            Lists.of(
+                            Lists.<ParserToken>of(
                                 SpreadsheetFormulaParserToken.dayNumber(
                                     31,
                                     "31"

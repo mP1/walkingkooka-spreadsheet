@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.ValidationReferenceTesting;
@@ -2083,7 +2084,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.toParserTokenAndCheck(
             SpreadsheetSelection.parseCell(text),
             SpreadsheetFormulaParserToken.cell(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetSelection.parseColumn("B")
                         .toParserToken(),
                     SpreadsheetSelection.parseRow("2")
@@ -2102,7 +2103,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         this.toParserTokenAndCheck(
             SpreadsheetSelection.parseCell(text),
             SpreadsheetFormulaParserToken.cell(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetSelection.parseColumn("$C")
                         .toParserToken(),
                     SpreadsheetSelection.parseRow("$3")

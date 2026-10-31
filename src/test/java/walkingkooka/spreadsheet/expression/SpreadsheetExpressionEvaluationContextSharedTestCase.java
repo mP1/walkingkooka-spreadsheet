@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.math.MathContext;
 
@@ -164,7 +165,7 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
         this.parseValueOrExpressionAndCheck(
             text,
             SpreadsheetFormulaParserToken.date(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.year(1999, "1999"),
                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                     SpreadsheetFormulaParserToken.monthNumber(12, "12"),
@@ -254,7 +255,7 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
         this.parseValueOrExpressionAndCheck(
             text,
             SpreadsheetFormulaParserToken.time(
-                Lists.of(
+                Lists.<ParserToken>of(
                     SpreadsheetFormulaParserToken.hour(12, "12"),
                     SpreadsheetFormulaParserToken.textLiteral(":", ":"),
                     SpreadsheetFormulaParserToken.minute(58, "58"),

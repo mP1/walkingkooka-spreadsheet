@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 
 import java.time.LocalDate;
@@ -307,7 +308,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
             formula.setToken(
                 Optional.of(
                     SpreadsheetFormulaParserToken.date(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.dayNumber(99, "99"),
                             SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                             SpreadsheetFormulaParserToken.monthNumber(12, "12"),
@@ -518,7 +519,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
             .setToken(
                 Optional.of(
                     SpreadsheetFormulaParserToken.date(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.dayNumber(9, "9"),
                             SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                             SpreadsheetFormulaParserToken.monthName(2, "February"),
@@ -553,7 +554,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                     .setToken(
                         Optional.of(
                             SpreadsheetFormulaParserToken.date(
-                                Lists.of(
+                                Lists.<ParserToken>of(
                                     SpreadsheetFormulaParserToken.dayNumber(9, "9"),
                                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                                     SpreadsheetFormulaParserToken.monthName(2, "marzo"),
@@ -585,7 +586,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
             .setToken(
                 Optional.of(
                     SpreadsheetFormulaParserToken.date(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.dayNumber(9, "9"),
                             SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                             SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "Feb"),
@@ -620,7 +621,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                     .setToken(
                         Optional.of(
                             SpreadsheetFormulaParserToken.date(
-                                Lists.of(
+                                Lists.<ParserToken>of(
                                     SpreadsheetFormulaParserToken.dayNumber(9, "9"),
                                     SpreadsheetFormulaParserToken.textLiteral("/", "/"),
                                     SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "mar."),
@@ -781,7 +782,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
             .setToken(
                 Optional.of(
                     SpreadsheetFormulaParserToken.time(
-                        Lists.of(
+                        Lists.<ParserToken>of(
                             SpreadsheetFormulaParserToken.hour(9, "9"),
                             SpreadsheetFormulaParserToken.textLiteral(":", ":"),
                             SpreadsheetFormulaParserToken.minute(59, "59"),
@@ -816,7 +817,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                     .setToken(
                         Optional.of(
                             SpreadsheetFormulaParserToken.time(
-                                Lists.of(
+                                Lists.<ParserToken>of(
                                     SpreadsheetFormulaParserToken.hour(9, "9"),
                                     SpreadsheetFormulaParserToken.textLiteral(":", ":"),
                                     SpreadsheetFormulaParserToken.minute(59, "59"),
