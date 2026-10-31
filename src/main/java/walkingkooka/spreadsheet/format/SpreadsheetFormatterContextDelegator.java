@@ -26,7 +26,8 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
-import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellDelegator;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
@@ -35,18 +36,13 @@ import java.util.Optional;
  * Simplifies implementing a delegate to a wrapped {@link SpreadsheetFormatterContext}.
  */
 public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatterContext,
+    HasSpreadsheetCellDelegator,
     SpreadsheetConverterContextDelegator,
     ColorContextDelegator {
 
     @Override
     default SpreadsheetConverterContext spreadsheetConverterContext() {
         return this.spreadsheetFormatterContext();
-    }
-
-    @Override
-    default Optional<SpreadsheetCell> spreadsheetCell() {
-        return this.spreadsheetFormatterContext()
-            .spreadsheetCell();
     }
 
     @Override
@@ -101,6 +97,13 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
 
     @Override
     default ColorContext colorContext() {
+        return this.spreadsheetFormatterContext();
+    }
+
+    // HasSpreadsheetCellDelegator......................................................................................
+
+    @Override
+    default HasSpreadsheetCell hasSpreadsheetCell() {
         return this.spreadsheetFormatterContext();
     }
 }
