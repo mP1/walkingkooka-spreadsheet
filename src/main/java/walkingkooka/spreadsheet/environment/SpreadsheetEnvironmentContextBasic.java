@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StorageEnvironmentContextDelegator;
@@ -96,6 +97,19 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
         return this.environmentValueOrFail(SERVER_URL);
     }
 
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.environmentValue(SPREADSHEET_CELL);
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        this.context.setOrRemoveEnvironmentValue(
+            SPREADSHEET_CELL,
+            spreadsheetCell
+        );
+    }
+    
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
         return this.environmentValue(SPREADSHEET_ID);

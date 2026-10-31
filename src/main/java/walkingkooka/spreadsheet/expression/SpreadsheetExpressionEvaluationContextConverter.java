@@ -380,19 +380,6 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-        return SpreadsheetExpressionEvaluationContexts.cell(
-            cell,
-            this
-        );
-    }
-
-    @Override
-    public Optional<SpreadsheetCell> spreadsheetCell() {
-        return this.context.spreadsheetCell();
-    }
-
-    @Override
     public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
         return this.context.spreadsheetMetadata();
     }
@@ -744,6 +731,16 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
         return this.context.serverUrl();
     }
 
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.context.spreadsheetCell();
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        this.context.setSpreadsheetCell(spreadsheetCell);
+    }
+    
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
         return this.context.spreadsheetId();

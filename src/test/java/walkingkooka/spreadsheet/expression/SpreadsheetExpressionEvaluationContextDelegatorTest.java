@@ -90,16 +90,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
-    public void testSetSpreadsheetCellWithNullCellFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetSpreadsheetCellWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testSetCurrencyWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
@@ -219,11 +209,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     final static class TestSpreadsheetExpressionEvaluationContextDelegator implements SpreadsheetExpressionEvaluationContextDelegator {
 
         @Override
-        public SpreadsheetExpressionEvaluationContextDelegator setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public Optional<SpreadsheetCell> spreadsheetCell() {
             throw new UnsupportedOperationException();
         }
@@ -265,7 +250,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
             this.spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
-                SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SpreadsheetContexts.fixedSpreadsheetId(

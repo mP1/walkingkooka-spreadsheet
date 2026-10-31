@@ -24,6 +24,9 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellDelegator;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.Storage;
@@ -33,6 +36,7 @@ import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator,
+    HasSpreadsheetCellDelegator,
     HasSpreadsheetMetadataDelegator,
     HasUserDirectoriesDelegator {
 
@@ -58,6 +62,19 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
     }
 
     @Override
+    default Optional<SpreadsheetCell> spreadsheetCell() {
+        return SPREADSHEET_CELL.getEnvironmentValue(this);
+    }
+
+    @Override
+    default void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        SPREADSHEET_CELL.setOrRemoveEnvironmentValue(
+            spreadsheetCell,
+            this
+        );
+    }
+    
+    @Override
     default Optional<SpreadsheetId> spreadsheetId() {
         return SPREADSHEET_ID.getEnvironmentValue(this);
     }
@@ -76,6 +93,13 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
             .storage();
     }
 
+    // HasSpreadsheetCellDelegator......................................................................................
+
+    @Override
+    default HasSpreadsheetCell hasSpreadsheetCell() {
+        return this.spreadsheetEnvironmentContext();
+    }
+    
     // HasSpreadsheetMetadataDelegator..................................................................................
 
     @Override

@@ -671,7 +671,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
     @Test
     public void testSpreadsheetFormatterContext() {
         SPREADSHEET_METADATA.spreadsheetFormatterContext(
-            HAS_SPREADSHEET_CELL,
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },

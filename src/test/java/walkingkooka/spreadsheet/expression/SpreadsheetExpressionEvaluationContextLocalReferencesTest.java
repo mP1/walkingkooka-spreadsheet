@@ -525,6 +525,12 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
+        public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+            Objects.requireNonNull(spreadsheetCell, "spreadsheetCell");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
             Objects.requireNonNull(cell, "cell");
 

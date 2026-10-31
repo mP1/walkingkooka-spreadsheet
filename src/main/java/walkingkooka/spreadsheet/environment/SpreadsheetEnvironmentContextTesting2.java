@@ -144,6 +144,17 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
         );
     }
 
+    // setSpreadsheetCell...............................................................................................
+
+    @Test
+    default void testSetSpreadsheetCellWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .setSpreadsheetCell(null)
+        );
+    }
+    
     // spreadsheetId....................................................................................................
 
     @Test

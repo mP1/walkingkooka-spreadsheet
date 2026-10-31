@@ -113,16 +113,6 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetCell> spreadsheetCell() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void setSpreadsheetMetadata(final Optional<SpreadsheetMetadata> metadata) {
         throw new UnsupportedOperationException();
     }
@@ -191,6 +181,16 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
         throw new UnsupportedOperationException();

@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.store.StoreWatcher;
@@ -98,6 +99,16 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public Optional<SpreadsheetId> spreadsheetId() {
         throw new UnsupportedOperationException();

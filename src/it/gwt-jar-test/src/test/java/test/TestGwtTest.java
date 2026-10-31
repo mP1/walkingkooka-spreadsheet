@@ -132,19 +132,6 @@ public class TestGwtTest extends GWTTestCase {
         );
     }
 
-    // see CellSpreadsheetExpressionEvaluationContext#validatorContext
-    public void testCellSpreadsheetExpressionEvaluationContext() {
-        SpreadsheetExpressionEvaluationContexts.cell(
-            Optional.empty(),
-            new FakeSpreadsheetExpressionEvaluationContext() {
-                @Override
-                public Optional<SpreadsheetCell> spreadsheetCell() {
-                    return Optional.empty();
-                }
-            }
-        );
-    }
-
     private final static Currency CURRENCY = Currency.getInstance("AUD");
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -472,7 +459,6 @@ public class TestGwtTest extends GWTTestCase {
                 ).format(
                     value,
                     metadata.spreadsheetFormatterContext(
-                        () -> Optional.of(cell),
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
@@ -558,14 +544,6 @@ public class TestGwtTest extends GWTTestCase {
         @Override
         public Optional<SpreadsheetCell> spreadsheetCell() {
             return this.cell;
-        }
-
-        @Override
-        public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-            return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
-            );
         }
 
         private final Optional<SpreadsheetCell> cell;

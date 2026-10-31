@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
@@ -49,6 +50,7 @@ import java.util.Optional;
  * {@link EnvironmentContext}, {@link StorageEnvironmentContext}.
  */
 public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext,
+    HasSpreadsheetCell,
     HasSpreadsheetMetadata,
     HasSpreadsheetServerUrl {
 
@@ -81,6 +83,15 @@ public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext
         "spreadsheetMetadata",
         SpreadsheetMetadata.class
     );
+
+    // SpreadsheetCell..................................................................................................
+
+    /**
+     * Sets or replaces the environment value {@link SpreadsheetCell}
+     */
+    void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell);
+
+    // SpreadsheetId....................................................................................................
 
     /**
      * The {@link SpreadsheetId} that identifies a spreadsheet.

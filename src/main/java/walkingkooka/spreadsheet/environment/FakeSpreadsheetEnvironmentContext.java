@@ -22,6 +22,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.FakeStorageEnvironmentContext;
 import walkingkooka.storage.Storage;
 
@@ -35,6 +36,16 @@ public class FakeSpreadsheetEnvironmentContext extends FakeStorageEnvironmentCon
     
     @Override
     public AbsoluteUrl serverUrl() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
         throw new UnsupportedOperationException();
     }
 

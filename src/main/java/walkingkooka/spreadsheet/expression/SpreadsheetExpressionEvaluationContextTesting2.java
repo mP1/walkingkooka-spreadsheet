@@ -42,7 +42,6 @@ import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationCo
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting2<C extends SpreadsheetExpressionEvaluationContext> extends SpreadsheetExpressionEvaluationContextTesting,
@@ -240,29 +239,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting2<C extends Spread
         assertThrows(
             NullPointerException.class,
             () -> this.createContext().loadLabel(null)
-        );
-    }
-
-    // setSpreadsheetCell...............................................................................................
-
-    @Test
-    default void testSetSpreadsheetCellWithNullCellFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .setSpreadsheetCell(null)
-        );
-    }
-
-    @Test
-    default void testSetSpreadsheetCellWithSame() {
-        final C context = this.createContext();
-
-        assertSame(
-            context,
-            context.setSpreadsheetCell(
-                context.spreadsheetCell()
-            )
         );
     }
 

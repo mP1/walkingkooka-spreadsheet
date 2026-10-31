@@ -70,13 +70,11 @@ import java.util.Set;
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext extends SpreadsheetExpressionEvaluationContextShared {
 
     static SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext with(final SpreadsheetMetadataMode mode,
-                                                                               final Optional<SpreadsheetCell> cell,
                                                                                final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                                final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                                                final SpreadsheetContext spreadsheetContext,
                                                                                final TerminalContext terminalContext) {
         Objects.requireNonNull(mode, "mode");
-        Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
@@ -84,7 +82,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
             mode,
-            cell,
             spreadsheetExpressionReferenceLoader,
             spreadsheetLabelNameResolver,
             null, // SpreadsheetConverterContext
@@ -100,7 +97,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     }
 
     private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(final SpreadsheetMetadataMode mode,
-                                                                           final Optional<SpreadsheetCell> cell,
                                                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                            final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                                            final SpreadsheetConverterContext spreadsheetConverterContext,
@@ -116,8 +112,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             terminalContext
         );
         this.mode = mode;
-
-        this.cell = cell;
 
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
@@ -139,21 +133,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setSpreadsheetCell(final Optional<SpreadsheetCell> cell) {
-        return SpreadsheetExpressionEvaluationContexts.cell(
-            cell,
-            this
-        );
-    }
-
-    @Override
-    public Optional<SpreadsheetCell> spreadsheetCell() {
-        return this.cell;
-    }
-
-    private final Optional<SpreadsheetCell> cell;
 
     @Override
     public Optional<SpreadsheetMetadata> spreadsheetMetadata() {
@@ -193,7 +172,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
                 Objects.requireNonNull(mode, "mode"),
-                this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
                 null, // expressionFunctionProvider clear force recreate
@@ -270,7 +248,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
             this.spreadsheetConverterContext = this.spreadsheetMetadataOrFail()
                 .spreadsheetConverterContext(
-                    this.cell,
+                    this.spreadsheetCell(),
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this.spreadsheetLabelNameResolver,
@@ -312,7 +290,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         if (null == this.spreadsheetParserContext) {
             this.spreadsheetParserContext = this.spreadsheetMetadataOrFail()
                 .spreadsheetParserContext(
-                    this.cell,
+                    this.spreadsheetCell(),
                     this, // LocaleContext
                     this // now
                 );
@@ -347,7 +325,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
         return this.spreadsheetMetadataOrFail()
             .spreadsheetFormatterContext(
-                () -> cell,
                 (final Optional<Object> v) -> this.setMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).addLocalVariable(
@@ -435,7 +412,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                                                                                   final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
             this.mode,
-            this.cell,
             this.spreadsheetExpressionReferenceLoader,
             this.spreadsheetLabelNameResolver,
             context,
@@ -499,7 +475,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
                 this.mode,
-                this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
                 null, // spreadsheetConverterContext  clear force recreate!
@@ -541,8 +516,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     public void buildToString(final ToStringBuilder b) {
         b.label("mode")
             .value(this.mode)
-            .label("cell")
-            .value(this.cell)
             .label("spreadsheetExpressionReferenceLoader")
             .value(this.spreadsheetExpressionReferenceLoader)
             .label("spreadsheetLabelNameResolver")

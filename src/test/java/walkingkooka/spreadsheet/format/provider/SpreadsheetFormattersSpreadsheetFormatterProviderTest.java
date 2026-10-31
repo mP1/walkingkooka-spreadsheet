@@ -45,7 +45,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
-import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
@@ -114,10 +113,8 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
             SPREADSHEET_METADATA.spreadsheetFormatterContext(
-                HasSpreadsheetCell.EMPTY_HAS_SPREADSHEET_CELL,
                 (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
-                    SpreadsheetMetadata.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SPREADSHEET_LABEL_NAME_RESOLVER,
                     SpreadsheetContexts.fixedSpreadsheetId(
@@ -4752,19 +4749,23 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     private static SpreadsheetFormatterProviderSamplesContext context(final Optional<Object> value) {
-        return SPREADSHEET_METADATA.spreadsheetFormatterProviderSamplesContext(
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetCell(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(
                     SpreadsheetFormula.EMPTY.setValue(value)
                 )
-            ),
+            )
+        );
+
+        return SPREADSHEET_METADATA.spreadsheetFormatterProviderSamplesContext(
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_METADATA_LOADER,
             CURRENCY_LOCALE_CONTEXT,
-            SPREADSHEET_ENVIRONMENT_CONTEXT,
+            spreadsheetEnvironmentContext,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );

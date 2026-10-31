@@ -635,22 +635,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // setCell..........................................................................................................
-
-    @Override
-    public void testSetSpreadsheetCellWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Test
-    public void testSetSpreadsheetCellFails() {
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> this.createContext()
-                .setSpreadsheetCell(SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL)
-        );
-    }
-
     // loadCell.........................................................................................................
 
     @Test

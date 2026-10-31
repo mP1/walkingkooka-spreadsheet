@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
@@ -44,17 +43,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetExpressionEvaluationContexts implements PublicStaticHelper {
-
-    /**
-     * {@see SpreadsheetExpressionEvaluationContextCell}
-     */
-    public static SpreadsheetExpressionEvaluationContext cell(final Optional<SpreadsheetCell> cell,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-        return SpreadsheetExpressionEvaluationContextCell.with(
-            cell,
-            context
-        );
-    }
 
     /**
      * {@see SpreadsheetExpressionEvaluationContextConverter}
@@ -107,14 +95,12 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext}
      */
     public static SpreadsheetExpressionEvaluationContext spreadsheetContext(final SpreadsheetMetadataMode mode,
-                                                                            final Optional<SpreadsheetCell> cell,
                                                                             final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                             final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                                             final SpreadsheetContext spreadsheetContext,
                                                                             final TerminalContext terminalContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             mode,
-            cell,
             spreadsheetExpressionReferenceLoader,
             spreadsheetLabelNameResolver,
             spreadsheetContext,

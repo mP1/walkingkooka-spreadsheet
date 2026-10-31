@@ -615,7 +615,6 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
             converter,
             SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
-                SpreadsheetExpressionEvaluationContext.NO_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetContexts.fixedSpreadsheetId(
