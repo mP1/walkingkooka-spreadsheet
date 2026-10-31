@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.terminal.TerminalContext;
@@ -41,6 +42,7 @@ import java.util.Optional;
  *  <li>Any {@link EnvironmentValueName} beginning with {@link #COLOR_PREFIX}</li>
  *  <li>{@link #SERVER_URL}</li>
  *  <li>{@link #SPREADSHEET_ID}</li>
+ *  <li>{@link #SPREADSHEET_CELL}</li>
  *  <li>{@link TerminalContext#TERMINAL_ID}</li>
  * </ul>
  * {@link EnvironmentContext}, {@link StorageEnvironmentContext}.
@@ -62,6 +64,11 @@ public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.registerConstant(
         "serverUrl",
         AbsoluteUrl.class
+    );
+
+    EnvironmentValueName<SpreadsheetCell> SPREADSHEET_CELL = EnvironmentValueName.registerConstant(
+        "spreadsheetCell",
+        SpreadsheetCell.class
     );
 
     EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.registerConstant(
