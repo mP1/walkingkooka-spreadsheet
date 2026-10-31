@@ -507,13 +507,13 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
     private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * VIEWPORT_ROW_COUNT;
 
-    private final static String TEST_NUMBER_PARAMETER = "BasicSpreadsheetEngineTestNumberParameter";
+    private final static String TEST_NUMBER_PARAMETER = "SpreadsheetEngineBasicTestNumberParameter";
 
-    private final static String TEST_STRING_PARAMETER = "BasicSpreadsheetEngineTestStringParameter";
+    private final static String TEST_STRING_PARAMETER = "SpreadsheetEngineBasicTestStringParameter";
 
-    private final static String TEST_SUM = "BasicSpreadsheetEngineTestSum";
+    private final static String TEST_SUM = "SpreadsheetEngineBasicTestSum";
 
-    private final static String TEST_VALUE = "BasicSpreadsheetEngineTestValue";
+    private final static String TEST_VALUE = "SpreadsheetEngineBasicTestValue";
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -1470,7 +1470,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             .save(
                 a1.setFormula(
                     SpreadsheetFormula.EMPTY
-                        .setText("=BasicSpreadsheetEngineTestNumberParameter(A2)")
+                        .setText("=SpreadsheetEngineBasicTestNumberParameter(A2)")
                 )
             );
 
@@ -1496,7 +1496,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             .save(
                 a1.setFormula(
                     SpreadsheetFormula.EMPTY
-                        .setText("=BasicSpreadsheetEngineTestStringParameter(A2)")
+                        .setText("=SpreadsheetEngineBasicTestStringParameter(A2)")
                 )
             );
 
@@ -1813,7 +1813,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             .save(
                 this.cell(
                     b2,
-                    "=BasicSpreadsheetEngineTestValue()"
+                    "=SpreadsheetEngineBasicTestValue()"
                 )
             );
 
@@ -2113,7 +2113,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
         final SpreadsheetCell cellB2 = this.cell(
             b2,
-            "=1+2+BasicSpreadsheetEngineTestValue()"
+            "=1+2+SpreadsheetEngineBasicTestValue()"
         );
 
         engine.saveCell(
@@ -2178,7 +2178,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
 
         final SpreadsheetCell cellB2 = this.cell(
             b2,
-            "=1+2+BasicSpreadsheetEngineTestValue()"
+            "=1+2+SpreadsheetEngineBasicTestValue()"
         );
 
         engine.saveCell(
@@ -9046,7 +9046,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
     @Test
     public void testDeleteColumnWithColumnsAfterCellsRefreshedFunction() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck(
-            "=BasicSpreadsheetEngineTestSum(1,99)",
+            "=SpreadsheetEngineBasicTestSum(1,99)",
             1 + 99
         );
     }
@@ -10854,7 +10854,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 a11,
-                "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=20+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -10909,7 +10909,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             a11,
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=20+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             21
         );
 
@@ -11186,7 +11186,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 a1,
-                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -11250,7 +11250,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             a1,
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             1 + 20
         );
 
@@ -12295,7 +12295,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 k1,
-                "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=20+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -12350,7 +12350,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             k1,
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=20+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             21
         );
 
@@ -12607,7 +12607,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 a1,
-                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -12668,7 +12668,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             a1,
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             1 + 20
         );
 
@@ -13342,7 +13342,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 f6,
-                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=2+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -13358,7 +13358,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     Sets.of(
                         this.formatCell(
                             "$G$6",
-                            "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+                            "=2+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
                             2 + 0 + 99 + 0
                         )
                     )
@@ -13397,7 +13397,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             f6.addColumn(count),
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=2+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             2 + 99
         );
     }
@@ -13433,7 +13433,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 a1,
-                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -13503,7 +13503,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             a1,
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             1 + 99
         );
 
@@ -14563,7 +14563,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 f6,
-                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=2+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -14579,7 +14579,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     Sets.of(
                         this.formatCell(
                             "$F$7",
-                            "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+                            "=2+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
                             2 + 0 + 99 + 0
                         ) // $b insert
                     )
@@ -14628,7 +14628,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             f6.addRow(+count),
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=2+0+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             2 + 99
         );
     }
@@ -14664,7 +14664,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         engine.saveCell(
             this.cell(
                 a1,
-                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")"
             ),
             context
         );
@@ -14735,7 +14735,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             a1,
             SpreadsheetEngineEvaluation.SKIP_EVALUATE,
             context,
-            "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+            "=1+SpreadsheetEngineBasicTestSum(" + LABEL + ")",
             1 + 99
         );
 
@@ -17159,7 +17159,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
     @Test
     public void testFillCellsWithFunction() {
         this.fillCellsAndCheck(
-            "=BasicSpreadsheetEngineTestSum(1,99)",
+            "=SpreadsheetEngineBasicTestSum(1,99)",
             1 + 99
         );
     }
