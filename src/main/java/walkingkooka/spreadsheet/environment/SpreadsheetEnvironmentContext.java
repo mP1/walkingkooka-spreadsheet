@@ -43,6 +43,7 @@ import java.util.Optional;
  *  <li>{@link #SERVER_URL}</li>
  *  <li>{@link #SPREADSHEET_ID}</li>
  *  <li>{@link #SPREADSHEET_CELL}</li>
+ *  <li>{@link #SPREADSHEET_METADATA}</li>
  *  <li>{@link TerminalContext#TERMINAL_ID}</li>
  * </ul>
  * {@link EnvironmentContext}, {@link StorageEnvironmentContext}.
