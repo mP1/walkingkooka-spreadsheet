@@ -145,7 +145,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
 
             this.converterLike = this.spreadsheetMetadataOrFail()
                 .spreadsheetConverterContext(
-                    SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this.spreadsheetLabelNameResolver,

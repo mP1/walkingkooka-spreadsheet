@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.currency.provider.SpreadsheetCurrencyExchangeRaterProviders;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -866,31 +867,10 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     // spreadsheetConverterContext......................................................................................
 
     @Test
-    public void testSpreadsheetConverterContextWithNullCellFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                null,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
-                LABEL_NAME_RESOLVER,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                SPREADSHEET_METADATA_LOADER,
-                CONVERTER_PROVIDER,
-                CURRENCY_LOCALE_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testSpreadsheetConverterContextWithNullValidationReferenceFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 null,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -910,7 +890,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 null,
                 LABEL_NAME_RESOLVER,
@@ -930,7 +909,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 null,
@@ -950,7 +928,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -970,7 +947,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -990,7 +966,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -1010,7 +985,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -1030,7 +1004,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -1050,7 +1023,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -1070,7 +1042,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -1090,7 +1061,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         final IllegalStateException thrown = assertThrows(
             IllegalStateException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 LABEL_NAME_RESOLVER,
@@ -1134,6 +1104,11 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             )
         );
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetCell(
+            Optional.of(cell)
+        );
+
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
@@ -1166,7 +1141,6 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         );
 
         final SpreadsheetConverterContext context = metadata.spreadsheetConverterContext(
-            Optional.of(cell),
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             LABEL_NAME_RESOLVER,
@@ -1175,7 +1149,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
             SPREADSHEET_METADATA_LOADER,
             ConverterProviders.converters(),
             CURRENCY_LOCALE_CONTEXT,
-            SPREADSHEET_ENVIRONMENT_CONTEXT,
+            spreadsheetEnvironmentContext,
             PROVIDER_CONTEXT
         );
 

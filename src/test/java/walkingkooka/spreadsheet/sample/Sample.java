@@ -399,7 +399,6 @@ public final class Sample {
                         SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                         CaseSensitivity.INSENSITIVE,
                         metadata.spreadsheetConverterContext(
-                            SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                             LABEL_NAME_RESOLVER,
