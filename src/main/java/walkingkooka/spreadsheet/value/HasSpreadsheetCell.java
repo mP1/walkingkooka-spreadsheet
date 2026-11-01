@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.value;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -52,6 +53,6 @@ public interface HasSpreadsheetCell {
 
     default SpreadsheetCell spreadsheetCellOrFail() {
         return this.spreadsheetCell()
-            .orElseThrow(() -> new IllegalStateException("Missing cell"));
+            .orElseThrow(() -> new NoSuchElementException("Missing cell"));
     }
 }

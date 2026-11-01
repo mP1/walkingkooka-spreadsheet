@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -61,8 +62,8 @@ public final class SpreadsheetExpressionEvaluationContextTest implements PublicC
 
     @Test
     public void testSpreadsheetCellOrFail() {
-        final IllegalStateException thrown = assertThrows(
-            IllegalStateException.class,
+        final NoSuchElementException thrown = assertThrows(
+            NoSuchElementException.class,
             () -> new FakeSpreadsheetExpressionEvaluationContext() {
                 @Override
                 public Optional<SpreadsheetCell> spreadsheetCell() {

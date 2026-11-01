@@ -36,6 +36,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -112,7 +113,11 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testHateosLinkIdMissingIdFails() {
-        assertThrows(IllegalStateException.class, () -> SpreadsheetMetadataEmpty.instance().hateosLinkId());
+        assertThrows(
+            NoSuchElementException.class,
+            () -> SpreadsheetMetadataEmpty.instance()
+                .hateosLinkId()
+        );
     }
 
     // SpreadsheetMetadataVisitor.......................................................................................

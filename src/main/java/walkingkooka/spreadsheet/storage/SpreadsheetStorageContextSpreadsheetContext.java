@@ -53,6 +53,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -152,7 +153,7 @@ final class SpreadsheetStorageContextSpreadsheetContext implements SpreadsheetSt
             );
         final FormName formName = form.name();
         return response.form(formName)
-            .orElseThrow(() -> new IllegalStateException("Missing saved form " + formName));
+            .orElseThrow(() -> new NoSuchElementException("Missing saved form " + formName));
     }
 
     @Override
