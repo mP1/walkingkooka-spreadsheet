@@ -509,9 +509,21 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
     @Override
     public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        return SPREADSHEET_CELL.equals(name) ?
-            Cast.to(this.spreadsheetCell) :
-            this.spreadsheetContext.environmentValue(name);
+        Optional<?> value = null;
+
+        if (SPREADSHEET_CELL.equals(name)) {
+            value = this.spreadsheetCell;
+        } else {
+            if (CURRENCY.equals(name)) {
+                value = this.spreadsheetCell.flatMap(SpreadsheetCell::currency);
+            }
+
+            value = null != value && value.isPresent() ?
+                value :
+                this.spreadsheetContext.environmentValue(name);
+        }
+
+        return Cast.to(value);
     }
 
     @Override
