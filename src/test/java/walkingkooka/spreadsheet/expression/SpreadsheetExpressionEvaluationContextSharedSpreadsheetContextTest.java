@@ -20,7 +20,10 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.HasCurrencyTesting;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.EnvironmentValueNameAndValue;
+import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -72,6 +75,7 @@ import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProv
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -522,6 +526,73 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
     }
 
+    // HasCurrency......................................................................................................
+
+    @Test
+    @Override
+    public void testSetCurrency() {
+        this.setCurrencyAndCheck(
+            this.createContext(
+                SpreadsheetEnvironmentContext.NO_SPREADSHEET_CELL,
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            ),
+            DIFFERENT_CURRENCY
+        );
+    }
+
+    @Test
+    @Override
+    public void testSetCurrencyWithDifferentAndWatcher() {
+        SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(
+            SpreadsheetEnvironmentContext.NO_SPREADSHEET_CELL,
+            SPREADSHEET_ENVIRONMENT_CONTEXT
+        );
+        final AtomicBoolean fired = new AtomicBoolean();
+        context.addEnvironmentWatcher(
+            new EnvironmentWatcher() {
+                @Override
+                public void onValueChange(final Optional<EnvironmentValueNameAndValue<?>> oldValue,
+                                          final Optional<EnvironmentValueNameAndValue<?>> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            EnvironmentValueName.CURRENCY.setValue(HasCurrencyTesting.CURRENCY)
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            EnvironmentValueName.CURRENCY.setValue(HasCurrencyTesting.DIFFERENT_CURRENCY)
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+                    fired.set(true);
+                }
+            });
+        this.setCurrencyAndCheck(
+            context,
+            DIFFERENT_CURRENCY
+        );
+        this.checkEquals(
+            true,
+            fired.get()
+        );
+    }
+
+    @Test
+    public void testCurrencyWhenSpreadsheetCellHasCurrency() {
+        this.currencyAndCheck(
+            this.createContext(
+                Optional.of(
+                    SPREADSHEET_CELL.setCurrency(OPTIONAL_DIFFERENT_CURRENCY)
+                ),
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            ),
+            DIFFERENT_CURRENCY
+        );
+    }
+
     // HasLineEndings...................................................................................................
 
     @Test
@@ -914,6 +985,22 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             spreadsheetEnvironmentContext,
             SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             SPREADSHEET_LABEL_NAME_RESOLVER
+        );
+    }
+
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext(final Optional<SpreadsheetCell> spreadsheetCell,
+                                                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
+            MODE,
+            spreadsheetCell,
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            SPREADSHEET_LABEL_NAME_RESOLVER,
+            spreadsheetContext(
+                spreadsheetEnvironmentContext,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
+            ),
+            TERMINAL_CONTEXT
         );
     }
 
