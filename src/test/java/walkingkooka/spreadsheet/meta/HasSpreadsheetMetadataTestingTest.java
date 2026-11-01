@@ -158,6 +158,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
 
         this.checkEquals(
             Sets.of(
+                SpreadsheetEnvironmentContext.SPREADSHEET_CELL,
                 SpreadsheetEnvironmentContext.SPREADSHEET_ID,
                 SpreadsheetEnvironmentContext.SPREADSHEET_METADATA
             ),

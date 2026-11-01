@@ -1106,14 +1106,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     @Test
     public void testEnvironment() {
-        this.environmentAndCheck(
-            this.createContext(),
-            SPREADSHEET_ENVIRONMENT_CONTEXT.environment()
-        );
-    }
-
-    @Test
-    public void testEnvironmentAfterSpreadsheetCell() {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
         context.setSpreadsheetCell(OPTIONAL_SPREADSHEET_CELL);
 
@@ -1140,6 +1132,101 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                 "    1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
                 "  serverUrl\n" +
                 "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "  spreadsheetCell\n" +
+                "    Cell A1\n" +
+                "      Formula\n" +
+                "        valueType:\n" +
+                "          text/Text\n" +
+                "      currency:\n" +
+                "        AUD (java.util.Currency)\n" +
+                "      currencyExchangeRater:\n" +
+                "        test-currency-exchange-rater-111\n" +
+                "      dateTimeSymbols:\n" +
+                "        DateTimeSymbols\n" +
+                "          ampms\n" +
+                "            am\n" +
+                "            pm\n" +
+                "          monthNames\n" +
+                "            January\n" +
+                "            February\n" +
+                "            March\n" +
+                "            April\n" +
+                "            May\n" +
+                "            June\n" +
+                "            July\n" +
+                "            August\n" +
+                "            September\n" +
+                "            October\n" +
+                "            November\n" +
+                "            December\n" +
+                "          monthNameAbbreviations\n" +
+                "            Jan.\n" +
+                "            Feb.\n" +
+                "            Mar.\n" +
+                "            Apr.\n" +
+                "            May\n" +
+                "            Jun.\n" +
+                "            Jul.\n" +
+                "            Aug.\n" +
+                "            Sep.\n" +
+                "            Oct.\n" +
+                "            Nov.\n" +
+                "            Dec.\n" +
+                "          weekDayNames\n" +
+                "            Sunday\n" +
+                "            Monday\n" +
+                "            Tuesday\n" +
+                "            Wednesday\n" +
+                "            Thursday\n" +
+                "            Friday\n" +
+                "            Saturday\n" +
+                "          weekDayNameAbbreviations\n" +
+                "            Sun.\n" +
+                "            Mon.\n" +
+                "            Tue.\n" +
+                "            Wed.\n" +
+                "            Thu.\n" +
+                "            Fri.\n" +
+                "            Sat.\n" +
+                "      decimalNumberSymbols:\n" +
+                "        DecimalNumberSymbols\n" +
+                "          negativeSign\n" +
+                "            '-'\n" +
+                "          positiveSign\n" +
+                "            '+'\n" +
+                "          zeroDigit\n" +
+                "            '0'\n" +
+                "          currencySymbol\n" +
+                "            \"$\"\n" +
+                "          decimalSeparator\n" +
+                "            '.'\n" +
+                "          exponentSymbol\n" +
+                "            \"e\"\n" +
+                "          groupSeparator\n" +
+                "            ','\n" +
+                "          infinitySymbol\n" +
+                "            \"∞\"\n" +
+                "          monetaryDecimalSeparator\n" +
+                "            '.'\n" +
+                "          nanSymbol\n" +
+                "            \"NaN\"\n" +
+                "          percentSymbol\n" +
+                "            '%'\n" +
+                "          permillSymbol\n" +
+                "            '‰'\n" +
+                "      formatter:\n" +
+                "        formatter-selector-111\n" +
+                "      locale:\n" +
+                "        en_AU (java.util.Locale)\n" +
+                "      parser:\n" +
+                "        parser-selector-111\n" +
+                "      style:\n" +
+                "        TextStyle\n" +
+                "          color=black\n" +
+                "      validator:\n" +
+                "        absolute-url\n" +
+                "      formattedValue:\n" +
+                "        Text \"formatted-value\"\n" +
                 "  spreadsheetId\n" +
                 "    123\n" +
                 "  timeOffset\n" +
