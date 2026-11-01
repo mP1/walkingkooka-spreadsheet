@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -36,6 +37,19 @@ public final class SpreadsheetEnvironmentContextTest implements PublicClassTesti
             EnvironmentValueName.with(
                 "serverUrl",
                 AbsoluteUrl.class
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellConstant() {
+        final EnvironmentValueName<SpreadsheetCell> spreadsheetCell = SpreadsheetEnvironmentContext.SPREADSHEET_CELL;
+
+        assertSame(
+            spreadsheetCell,
+            EnvironmentValueName.with(
+                "spreadsheetCell",
+                SpreadsheetCell.class
             )
         );
     }
