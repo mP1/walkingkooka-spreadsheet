@@ -50,6 +50,7 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -171,7 +172,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                 );
                 final FormName formName = form.name();
                 return response.form(formName)
-                    .orElseThrow(() -> new IllegalStateException("Missing saved form " + formName));
+                    .orElseThrow(() -> new NoSuchElementException("Missing saved form " + formName));
             }
         );
     }

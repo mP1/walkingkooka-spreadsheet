@@ -77,6 +77,7 @@ import walkingkooka.validation.form.FormField;
 import java.math.MathContext;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -198,7 +199,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         final SpreadsheetId spreadsheetId = this.spreadsheetEnvironmentContextFactory.spreadsheetIdOrFail();
 
         return this.spreadsheetContextSupplier.spreadsheetContext(spreadsheetId)
-            .orElseThrow(() -> new IllegalStateException("Missing SpreadsheetContext " + spreadsheetId))
+            .orElseThrow(() -> new NoSuchElementException("Missing SpreadsheetContext " + spreadsheetId))
             .spreadsheetMetadata();
     }
 

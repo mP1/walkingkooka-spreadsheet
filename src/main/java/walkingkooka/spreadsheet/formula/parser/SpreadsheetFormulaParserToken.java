@@ -39,6 +39,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -1304,7 +1305,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
      */
     public final Expression toExpressionOrFail(final ExpressionEvaluationContext context) {
         return this.toExpression(context)
-            .orElseThrow(() -> new IllegalStateException("Unable to make Expression from token"));
+            .orElseThrow(() -> new NoSuchElementException("Unable to make Expression from token"));
     }
 
     // Object ...........................................................................................................

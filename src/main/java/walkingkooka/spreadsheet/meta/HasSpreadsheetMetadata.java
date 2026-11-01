@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -34,7 +35,7 @@ public interface HasSpreadsheetMetadata {
 
     default SpreadsheetMetadata spreadsheetMetadataOrFail() {
         return this.spreadsheetMetadata()
-            .orElseThrow(() -> new IllegalStateException("Missing spreadsheet metadata"));
+            .orElseThrow(() -> new NoSuchElementException("Missing spreadsheet metadata"));
     }
 
     /**

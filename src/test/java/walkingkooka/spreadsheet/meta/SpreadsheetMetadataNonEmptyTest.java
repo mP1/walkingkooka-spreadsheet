@@ -130,6 +130,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -1132,7 +1133,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testHateosLinkIdMissingIdFails() {
-        assertThrows(IllegalStateException.class, () -> this.createSpreadsheetMetadata().hateosLinkId());
+        assertThrows(
+            NoSuchElementException.class,
+            () -> this.createSpreadsheetMetadata()
+                .hateosLinkId()
+        );
     }
 
     // HasConverter.....................................................................................................

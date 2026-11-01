@@ -160,6 +160,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -274,7 +275,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     @Override
     public final String hateosLinkId() {
         return this.id()
-            .orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this))
+            .orElseThrow(() -> new NoSuchElementException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this))
             .hateosLinkId();
     }
 
