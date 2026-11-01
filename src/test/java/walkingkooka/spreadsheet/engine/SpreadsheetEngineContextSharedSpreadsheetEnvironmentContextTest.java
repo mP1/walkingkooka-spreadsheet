@@ -60,6 +60,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorages;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.terminal.TerminalContexts;
@@ -653,6 +654,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                                     @Override
                                     public LineEnding lineEnding() {
                                         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest.LINE_ENDING;
+                                    }
+
+                                    @Override
+                                    public Optional<SpreadsheetCell> spreadsheetCell() {
+                                        return NO_SPREADSHEET_CELL;
                                     }
 
                                     @Override

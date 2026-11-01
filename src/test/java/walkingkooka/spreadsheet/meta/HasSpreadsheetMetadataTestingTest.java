@@ -123,7 +123,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
         );
 
         final SpreadsheetConverterContext converterContext = SPREADSHEET_METADATA.spreadsheetConverterContext(
-            SpreadsheetMetadata.NO_CELL,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             SPREADSHEET_LABEL_NAME_RESOLVER,

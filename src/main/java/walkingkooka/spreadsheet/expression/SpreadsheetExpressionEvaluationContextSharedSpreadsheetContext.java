@@ -258,7 +258,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
             this.spreadsheetConverterContext = this.spreadsheetMetadataOrFail()
                 .spreadsheetConverterContext(
-                    this.spreadsheetCell(),
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this.spreadsheetLabelNameResolver,

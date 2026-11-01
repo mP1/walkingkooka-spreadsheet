@@ -588,7 +588,6 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.empty();
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = SPREADSHEET_METADATA.spreadsheetConverterContext(
-        SpreadsheetMetadata.NO_CELL,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
         SPREADSHEET_LABEL_NAME_RESOLVER,
