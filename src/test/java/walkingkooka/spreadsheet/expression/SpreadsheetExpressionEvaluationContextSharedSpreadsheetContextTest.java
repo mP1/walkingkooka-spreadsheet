@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueNameAndValue;
 import walkingkooka.environment.EnvironmentWatcher;
+import walkingkooka.environment.FakeEnvironmentContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.predicate.Predicates;
@@ -60,6 +61,8 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.storage.StorageEnvironmentContexts;
+import walkingkooka.storage.Storages;
 import walkingkooka.terminal.FakeTerminalContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.CaseSensitivity;
@@ -81,6 +84,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextTest extends SpreadsheetExpressionEvaluationContextSharedTestCase<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext> {
@@ -1255,6 +1260,41 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     @Override
     public void testOutputNotNull() {
         throw new UnsupportedOperationException();
+    }
+
+    // cloneEnvironment.................................................................................................
+
+    @Test
+    public void testCloneEnvironment() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
+
+        assertNotSame(
+            context,
+            context.cloneEnvironment()
+        );
+    }
+
+    @Test
+    public void testCloneEnvironmentWithEnvironmentContextCloneSelf() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(
+            SpreadsheetEnvironmentContexts.basic(
+                SPREADSHEET_METADATA_LOADER,
+                Storages.fake(),
+                StorageEnvironmentContexts.basic(
+                    new FakeEnvironmentContext() {
+                        @Override
+                        public EnvironmentContext cloneEnvironment() {
+                            return this;
+                        }
+                    }
+                )
+            )
+        );
+
+        assertSame(
+            context,
+            context.cloneEnvironment()
+        );
     }
 
     // HasEnvironmentContext............................................................................................
