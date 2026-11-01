@@ -516,6 +516,10 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         } else {
             if (CURRENCY.equals(name)) {
                 value = this.spreadsheetCell.flatMap(SpreadsheetCell::currency);
+            } else {
+                if (LOCALE.equals(name)) {
+                    value = this.spreadsheetCell.flatMap(SpreadsheetCell::locale);
+                }
             }
 
             value = null != value && value.isPresent() ?
