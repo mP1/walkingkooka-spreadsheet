@@ -26,12 +26,14 @@ import walkingkooka.environment.EnvironmentValueNameAndValue;
 import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -105,7 +107,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         final SpreadsheetEnvironmentContext c = SpreadsheetExpressionEvaluationContextTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         c.setSpreadsheetId(OPTIONAL_SPREADSHEET_ID);
         c.setCurrentWorkingDirectory(OPTIONAL_CURRENT_WORKING_DIRECTORY);
-        SPREADSHEET_ENVIRONMENT_CONTEXT = c;
+        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+            Predicates.always(), // all values are readonly
+            c
+        );
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
@@ -534,7 +539,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.setCurrencyAndCheck(
             this.createContext(
                 SpreadsheetEnvironmentContext.NO_SPREADSHEET_CELL,
-                SPREADSHEET_ENVIRONMENT_CONTEXT
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             ),
             DIFFERENT_CURRENCY
         );
@@ -545,7 +550,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testSetCurrencyWithDifferentAndWatcher() {
         SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(
             SpreadsheetEnvironmentContext.NO_SPREADSHEET_CELL,
-            SPREADSHEET_ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         final AtomicBoolean fired = new AtomicBoolean();
         context.addEnvironmentWatcher(
