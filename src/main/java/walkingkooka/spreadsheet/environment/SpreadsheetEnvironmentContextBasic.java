@@ -344,6 +344,7 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
 
         names.addAll(this.storageEnvironmentContext()
             .environmentValueNames());
+        names.add(SPREADSHEET_CELL);
         names.add(SPREADSHEET_ID);
         names.add(SPREADSHEET_METADATA);
 
