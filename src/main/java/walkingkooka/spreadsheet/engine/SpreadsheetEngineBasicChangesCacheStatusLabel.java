@@ -261,10 +261,5 @@ enum SpreadsheetEngineBasicChangesCacheStatusLabel implements SpreadsheetEngineB
 
     private SpreadsheetEngineBasicChangesCacheStatusLabel nonReference;
 
-    @Override
-    public final int priority() {
-        return this.priority;
-    }
-
     private final int priority;
 }

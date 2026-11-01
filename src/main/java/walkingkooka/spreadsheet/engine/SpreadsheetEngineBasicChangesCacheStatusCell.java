@@ -28,67 +28,67 @@ enum SpreadsheetEngineBasicChangesCacheStatusCell implements SpreadsheetEngineBa
      * A marker that indicates the {@link SpreadsheetCellReference} needs to be loaded and evaluated.
      * The value will be null.
      */
-    UNLOADED(0),
+    UNLOADED(),
 
     /**
      * A cell that has not yet been loaded, with the value containing the unevaluated cell.
      */
-    LOADING(1),
+    LOADING(),
 
     /**
      * A cell that has been loaded and evaluated
      */
-    LOADED(2),
+    LOADED(),
 
     /**
      * A {@link #LOADED} that has also had its references refreshed.
      */
-    LOADED_REFERENCES_REFRESHED(3),
+    LOADED_REFERENCES_REFRESHED(),
 
     /**
      * A cell that is being saved but has not yet been fully evaluated. The value will contain the un-evaluated cell.
      */
-    SAVING(1),
+    SAVING(),
 
     /**
      * A cell that has been evaluated and saved.
      */
-    SAVED(2),
+    SAVED(),
 
     /**
      * A {@link #SAVED} that has also had its references refreshed.
      */
-    SAVED_REFERENCES_REFRESHED(3),
+    SAVED_REFERENCES_REFRESHED(),
 
     /**
      * A cell that has been deleted.
      */
-    DELETED(1),
+    DELETED(),
 
     /**
      * A deleted cell that has also had its references refreshed.
      */
-    DELETED_REFERENCES_REFRESHED(2),
+    DELETED_REFERENCES_REFRESHED(),
 
-    REFERENCE_UNLOADED(0),
+    REFERENCE_UNLOADED(),
 
-    REFERENCE_LOADING(1),
+    REFERENCE_LOADING(),
 
-    REFERENCE_LOADED(2),
+    REFERENCE_LOADED(),
 
-    REFERENCE_LOADED_REFERENCES_REFRESHED(3),
+    REFERENCE_LOADED_REFERENCES_REFRESHED(),
 
-    REFERENCE_SAVING(1),
+    REFERENCE_SAVING(),
 
-    REFERENCE_SAVED(2),
+    REFERENCE_SAVED(),
 
-    REFERENCE_SAVED_REFERENCES_REFRESHED(3),
+    REFERENCE_SAVED_REFERENCES_REFRESHED(),
 
-    REFERENCE_DELETED(0),
+    REFERENCE_DELETED(),
 
-    REFERENCE_DELETED_REFERENCES_REFRESHED(1);
+    REFERENCE_DELETED_REFERENCES_REFRESHED();
 
-    SpreadsheetEngineBasicChangesCacheStatusCell(final int priority) {
+    SpreadsheetEngineBasicChangesCacheStatusCell() {
         final String name = this.name();
 
         this.isReference = name.startsWith("REFERENCE_");
@@ -101,8 +101,6 @@ enum SpreadsheetEngineBasicChangesCacheStatusCell implements SpreadsheetEngineBa
         this.isDeleted = this.containsOrEqual(name, "DELETE");
 
         this.referencesRefreshed = name.endsWith("REFERENCES_REFRESHED");
-
-        this.priority = priority;
     }
 
     @Override
@@ -295,11 +293,4 @@ enum SpreadsheetEngineBasicChangesCacheStatusCell implements SpreadsheetEngineBa
     }
 
     private SpreadsheetEngineBasicChangesCacheStatusCell nonReference;
-
-    @Override
-    public final int priority() {
-        return this.priority;
-    }
-
-    private final int priority;
 }

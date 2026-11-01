@@ -98,8 +98,6 @@ interface SpreadsheetEngineBasicChangesCacheStatus<S extends SpreadsheetSelectio
         return value;
     }
 
-    int priority();
-
     default boolean containsOrEqual(final String left,
                                     final String right) {
         return left.equals(right) ||

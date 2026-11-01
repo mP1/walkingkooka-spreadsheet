@@ -112,10 +112,5 @@ enum SpreadsheetEngineBasicChangesCacheStatusColumn implements SpreadsheetEngine
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public int priority() {
-        return this.priority;
-    }
-
     private final int priority;
 }
