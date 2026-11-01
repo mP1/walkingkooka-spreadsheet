@@ -614,6 +614,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             .value(this.spreadsheetExpressionReferenceLoader)
             .label("spreadsheetLabelNameResolver")
             .value(this.spreadsheetLabelNameResolver)
+            .label("spreadsheetContext")
+            .value(this.spreadsheetContext)
             .label("terminalContext")
             .value(this.terminalContext);
     }
