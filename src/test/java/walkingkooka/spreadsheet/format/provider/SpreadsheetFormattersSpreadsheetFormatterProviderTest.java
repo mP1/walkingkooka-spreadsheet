@@ -420,14 +420,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER),
                     PROVIDER_CONTEXT
                 ),
-//
-//                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
-//                    .spreadsheetFormatPattern()
-//                    .get()
-//                    .formatter(),
-//                SpreadsheetFormatters.badgeError(
-//                    SpreadsheetFormatters.p
-//                ),
                 SPREADSHEET_METADATA.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
                     .spreadsheetFormatPattern()
                     .get()
