@@ -1119,7 +1119,33 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
         this.environmentAndCheck(
             context,
-            SPREADSHEET_ENVIRONMENT_CONTEXT.environment() // SPREADSHEET_CELL missing from #environmentValueNames()
+            "Environment\n" +
+                "  charset\n" +
+                "    UTF-8 (sun.nio.cs.UTF_8)\n" +
+                "  currency\n" +
+                "    AUD (java.util.Currency)\n" +
+                "  currentWorkingDirectory\n" +
+                "    /current1/working2/directory3\n" +
+                "  homeDirectory\n" +
+                "    /users/user123@example.com\n" +
+                "  indentation\n" +
+                "    \"  \" (walkingkooka.text.Indentation)\n" +
+                "  lineEnding\n" +
+                "    \"\\n\"\n" +
+                "  locale\n" +
+                "    en_AU (java.util.Locale)\n" +
+                "  loggingLevel\n" +
+                "    NONE\n" +
+                "  now\n" +
+                "    1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
+                "  serverUrl\n" +
+                "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "  spreadsheetId\n" +
+                "    123\n" +
+                "  timeOffset\n" +
+                "    Z (java.time.ZoneOffset)\n" +
+                "  user\n" +
+                "    user123@example.com (walkingkooka.net.email.EmailAddress)\n"
         );
     }
 
