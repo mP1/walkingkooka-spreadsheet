@@ -98,6 +98,11 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     }
 
     @Test
+    default void testParseEnvironmentValueNameWithSpreadsheetCell() {
+        this.parseEnvironmentValueNameAndCachedCheck(SpreadsheetEnvironmentContext.SPREADSHEET_CELL);
+    }
+
+    @Test
     default void testParseEnvironmentValueNameWithSpreadsheetId() {
         this.parseEnvironmentValueNameAndCachedCheck(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
     }

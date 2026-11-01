@@ -170,6 +170,11 @@ final class SpreadsheetEnvironmentContextBasic implements SpreadsheetEnvironment
             );
 
             stringEnvironmentValueNames.put(
+                SPREADSHEET_CELL.value(),
+                SPREADSHEET_CELL
+            );
+
+            stringEnvironmentValueNames.put(
                 SPREADSHEET_ID.value(),
                 SPREADSHEET_ID
             );
