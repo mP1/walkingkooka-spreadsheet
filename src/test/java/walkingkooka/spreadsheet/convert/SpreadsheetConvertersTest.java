@@ -788,6 +788,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "  to Currency (walkingkooka.convert.ConverterToCurrency)\n" +
                 "  to CurrencyCode (walkingkooka.convert.ConverterToCurrencyCode)\n" +
+                "  to CurrencyValue (walkingkooka.convert.ConverterToCurrencyValue)\n" +
                 "  to DateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +
                 "  ConverterCollection\n" +
                 "    to DateTimeSymbols (walkingkooka.convert.ConverterToDateTimeSymbols)\n" +

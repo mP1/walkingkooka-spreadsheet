@@ -8831,6 +8831,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    to-csv-string-list\n" +
                 "    to-currency\n" +
                 "    to-currency-code\n" +
+                "    to-currency-value\n" +
                 "    to-date-time-symbols\n" +
                 "    to-decimal-number-symbols\n" +
                 "    to-environment\n" +
@@ -9298,6 +9299,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    to-csv-string-list\n" +
                 "    to-currency\n" +
                 "    to-currency-code\n" +
+                "    to-currency-value\n" +
                 "    to-date-time-symbols\n" +
                 "    to-decimal-number-symbols\n" +
                 "    to-environment\n" +

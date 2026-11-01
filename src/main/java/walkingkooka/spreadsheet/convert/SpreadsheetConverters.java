@@ -1544,6 +1544,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> toCurrencyCode() {
         return Converters.toCurrencyCode();
     }
+
+    /**
+     * {@link Converters#toCurrencyValue()}
+     */
+    public static Converter<SpreadsheetConverterContext> toCurrencyValue() {
+        return Converters.toCurrencyValue();
+    }
     
     /**
      * {@see ConverterToDateTimeSymbols}

@@ -306,6 +306,7 @@ eg
 - [to-csv-string-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterToCsvStringList.java)
 - [to-currency](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterToCurrency.java)
 - [to-currency-code](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterToCurrencyCode.java)
+- [to-currency-value](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterToCurrencyValue.java)
 - [to-date-time-symbols](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterToDateTimeSymbols.java)
 - [to-decimal-number-symbols](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterToDecimalNumberSymbols.java)
 - [to-formatter-selector](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetConverterToSpreadsheetFormatterSelector.java)
