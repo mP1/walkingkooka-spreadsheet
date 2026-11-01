@@ -115,6 +115,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SPREADSHEET_METADATA.spreadsheetFormatterContext(
                 (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
+                    SpreadsheetMetadata.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SPREADSHEET_LABEL_NAME_RESOLVER,
                     SpreadsheetContexts.fixedSpreadsheetId(

@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -51,6 +52,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.terminal.TerminalContext;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -66,15 +68,18 @@ import java.util.Set;
 
 /**
  * A {@link SpreadsheetExpressionEvaluationContext} that includes a {@link SpreadsheetMetadata}.
+ * Note the given {@link SpreadsheetCell} is available using {@link #SPREADSHEET_CELL} and may be get/set/removed.
  */
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext extends SpreadsheetExpressionEvaluationContextShared {
 
     static SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext with(final SpreadsheetMetadataMode mode,
+                                                                               final Optional<SpreadsheetCell> spreadsheetCell,
                                                                                final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                                final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                                                final SpreadsheetContext spreadsheetContext,
                                                                                final TerminalContext terminalContext) {
         Objects.requireNonNull(mode, "mode");
+        Objects.requireNonNull(spreadsheetCell, "spreadsheetCell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
@@ -82,6 +87,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
             mode,
+            spreadsheetCell,
             spreadsheetExpressionReferenceLoader,
             spreadsheetLabelNameResolver,
             null, // SpreadsheetConverterContext
@@ -97,6 +103,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     }
 
     private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(final SpreadsheetMetadataMode mode,
+                                                                           final Optional<SpreadsheetCell> spreadsheetCell,
                                                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                            final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                                            final SpreadsheetConverterContext spreadsheetConverterContext,
@@ -112,6 +119,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             terminalContext
         );
         this.mode = mode;
+
+        this.spreadsheetCell = spreadsheetCell;
 
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
@@ -172,6 +181,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
                 Objects.requireNonNull(mode, "mode"),
+                this.spreadsheetCell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
                 null, // expressionFunctionProvider clear force recreate
@@ -412,6 +422,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                                                                                   final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
             this.mode,
+            this.spreadsheetCell,
             this.spreadsheetExpressionReferenceLoader,
             this.spreadsheetLabelNameResolver,
             context,
@@ -426,7 +437,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         );
     }
 
-    private final SpreadsheetContext spreadsheetContext;
+    // @VisibleForTesting
+    final SpreadsheetContext spreadsheetContext;
 
     // ValidationExpressionEvaluationContext............................................................................
 
@@ -452,6 +464,85 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
     // EnvironmentContext...............................................................................................
 
+    /**
+     * A local field read that ignores the wrapped {@link EnvironmentContext}.
+     */
+    @Override
+    public Optional<SpreadsheetCell> spreadsheetCell() {
+        return this.spreadsheetCell;
+    }
+
+    /**
+     * Setter that replaces the existing {@link #spreadsheetCell} with the new value. The wrapped
+     * {@link EnvironmentContext} is not updated and any watchers are not notified.
+     */
+    @Override
+    public void setSpreadsheetCell(final Optional<SpreadsheetCell> spreadsheetCell) {
+        Objects.requireNonNull(spreadsheetCell, "spreadsheetCell");
+
+        final Optional<SpreadsheetCell> previous = this.spreadsheetCell;
+        if (false == spreadsheetCell.equals(previous)) {
+            if (this.isDebugEnabled()) {
+                this.logEnterAndExit(
+                    ENVIRONMENT_LOGGER,
+                    () -> {
+                        this.debug("environmentValue " + SPREADSHEET_CELL + " change " + toString(previous) + " to " + toString(spreadsheetCell));
+                        return null;
+                    }
+                );
+            }
+            this.spreadsheetCell = spreadsheetCell;
+
+            // TODO fire EnvironmentWatcher(s)...need to record watchers added to this.
+        }
+    }
+
+    private Optional<SpreadsheetCell> spreadsheetCell;
+
+    private static CharSequence toString(final Optional<SpreadsheetCell> value) {
+        final SpreadsheetCell valueOrNull = value.orElse(null);
+
+        return null != valueOrNull ?
+            CharSequences.quoteIfChars(valueOrNull) :
+            null;
+    }
+
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        return SPREADSHEET_CELL.equals(name) ?
+            Cast.to(this.spreadsheetCell) :
+            this.spreadsheetContext.environmentValue(name);
+    }
+
+    @Override
+    public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                        final T value) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(value, "value");
+
+        if (SPREADSHEET_CELL.equals(name)) {
+            this.setSpreadsheetCell(
+                Cast.to(value)
+            );
+        } else {
+            this.spreadsheetContext.setEnvironmentValue(
+                name,
+                value
+            );
+        }
+    }
+
+    @Override
+    public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        Objects.requireNonNull(name, "name");
+
+        if (SPREADSHEET_CELL.equals(name)) {
+            this.setSpreadsheetCell(NO_SPREADSHEET_CELL);
+        } else {
+            this.spreadsheetContext.removeEnvironmentValue(name);
+        }
+    }
+
     @Override
     public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
         return this.setSpreadsheetContext(
@@ -475,6 +566,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext(
                 this.mode,
+                this.spreadsheetCell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
                 null, // spreadsheetConverterContext  clear force recreate!
@@ -516,6 +608,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     public void buildToString(final ToStringBuilder b) {
         b.label("mode")
             .value(this.mode)
+            .label("spreadsheetCell")
+            .value(this.spreadsheetCell)
             .label("spreadsheetExpressionReferenceLoader")
             .value(this.spreadsheetExpressionReferenceLoader)
             .label("spreadsheetLabelNameResolver")

@@ -212,17 +212,12 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                          final SpreadsheetExpressionReferenceLoader loader) {
-        Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(loader, "loader");
-
-        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext.cloneEnvironment();
-        spreadsheetContext.setSpreadsheetCell(cell);
-
         return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
             this.mode,
+            cell,
             loader,
             this.spreadsheetLabelNameResolver,
-            spreadsheetContext,
+            this.spreadsheetContext,
             this.terminalContext
         );
     }

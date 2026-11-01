@@ -127,6 +127,22 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 null,
+                OPTIONAL_SPREADSHEET_CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
+                MODE,
+                null,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -141,6 +157,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
+                OPTIONAL_SPREADSHEET_CELL,
                 null,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -155,6 +172,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
+                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
                 SPREADSHEET_CONTEXT,
@@ -169,6 +187,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
+                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 null,
@@ -183,6 +202,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
+                OPTIONAL_SPREADSHEET_CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SPREADSHEET_CONTEXT,
@@ -254,6 +274,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyColumnAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
+                OPTIONAL_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -279,6 +300,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.nextEmptyRowAndCheck(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
+                OPTIONAL_SPREADSHEET_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 spreadsheetContext(cellStore),
@@ -557,6 +579,50 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         this.localeAndCheck(
             spreadsheetEnvironmentContext,
             DIFFERENT_LOCALE
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCell() {
+        this.spreadsheetCellAndCheck(
+            this.createContext(),
+            SPREADSHEET_CELL
+        );
+    }
+
+    @Test
+    public void testSetSpreadsheetCellWithDifferent() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetCell(OPTIONAL_SPREADSHEET_CELL);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext spreadsheetExpressionEvaluationContextSharedSpreadsheetContext = this.createContext(spreadsheetEnvironmentContext);
+
+        this.setSpreadsheetCellAndCheck(
+            spreadsheetExpressionEvaluationContextSharedSpreadsheetContext,
+            DIFFERENT_SPREADSHEET_CELL
+        );
+
+        this.spreadsheetCellAndCheck(
+            spreadsheetEnvironmentContext,
+            SPREADSHEET_CELL
+        );
+    }
+
+    @Test
+    public void testRemoveSpreadsheetCell() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetCell(OPTIONAL_SPREADSHEET_CELL);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext spreadsheetExpressionEvaluationContextSharedSpreadsheetContext = this.createContext(spreadsheetEnvironmentContext);
+
+        this.removeEnvironmentValueAndCheck(
+            spreadsheetExpressionEvaluationContextSharedSpreadsheetContext,
+            SpreadsheetEnvironmentContext.SPREADSHEET_CELL
+        );
+
+        this.spreadsheetCellAndCheck(
+            spreadsheetEnvironmentContext,
+            SPREADSHEET_CELL
         );
     }
 
@@ -890,6 +956,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                                                          final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             MODE,
+            OPTIONAL_SPREADSHEET_CELL,
             spreadsheetExpressionReferenceLoader,
             labelNameResolver,
             spreadsheetContext(
@@ -1025,9 +1092,35 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     // HasEnvironmentContext............................................................................................
 
+    @Test
     @Override
     public void testEnvironmentContext() {
-        throw new UnsupportedOperationException();
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
+        this.environmentContextAndCheck(
+            context,
+            context.spreadsheetContext
+        );
+    }
+
+    // HasEnvironment...................................................................................................
+
+    @Test
+    public void testEnvironment() {
+        this.environmentAndCheck(
+            this.createContext(),
+            SPREADSHEET_ENVIRONMENT_CONTEXT.environment()
+        );
+    }
+
+    @Test
+    public void testEnvironmentAfterSpreadsheetCell() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
+        context.setSpreadsheetCell(OPTIONAL_SPREADSHEET_CELL);
+
+        this.environmentAndCheck(
+            context,
+            SPREADSHEET_ENVIRONMENT_CONTEXT.environment() // SPREADSHEET_CELL missing from #environmentValueNames()
+        );
     }
 
     // toString.........................................................................................................
@@ -1036,7 +1129,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "mode=FORMULA spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader spreadsheetLabelNameResolver=SpreadsheetLabelNameResolverEmpty terminalContext=FakeTerminalContext"
+            "mode=FORMULA spreadsheetCell=A1 valueType=text/Text currency=\"AUD\" currencyExchangeRater=\"test-currency-exchange-rater-111\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'\" formatter=\"formatter-selector-111\" formattedValue=\"formatted-value\" locale=\"en_AU\" pa spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader"
         );
     }
 

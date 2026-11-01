@@ -309,6 +309,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         } else {
             spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
+                cell,
                 loader,
                 this.spreadsheetLabelNameResolver(),
                 this.spreadsheetContextSupplier.spreadsheetContextOrFail(spreadsheetIdOrNull),

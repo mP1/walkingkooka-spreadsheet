@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
@@ -95,12 +96,14 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext}
      */
     public static SpreadsheetExpressionEvaluationContext spreadsheetContext(final SpreadsheetMetadataMode mode,
+                                                                            final Optional<SpreadsheetCell> spreadsheetCell,
                                                                             final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                             final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                                             final SpreadsheetContext spreadsheetContext,
                                                                             final TerminalContext terminalContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             mode,
+            spreadsheetCell,
             spreadsheetExpressionReferenceLoader,
             spreadsheetLabelNameResolver,
             spreadsheetContext,
