@@ -341,8 +341,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
 
     @Override
     public final Locale locale() {
-        return this.spreadsheetEnvironmentContext()
-            .locale();
+        return LOCALE.getEnvironmentValueOrFail(this);
     }
 
     @Override

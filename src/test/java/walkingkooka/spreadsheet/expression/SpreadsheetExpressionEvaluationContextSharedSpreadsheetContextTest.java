@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.currency.HasCurrencyTesting;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueNameAndValue;
 import walkingkooka.environment.EnvironmentWatcher;
@@ -74,6 +75,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
+import walkingkooka.util.HasLocaleTesting;
 
 import java.util.List;
 import java.util.Optional;
@@ -629,6 +631,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
     }
 
+    // Locale...........................................................................................................
+
     @Test
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SPREADSHEET_ENVIRONMENT_CONTEXT;
@@ -643,7 +647,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testSetLocale() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(
+            SpreadsheetEnvironmentContext.NO_SPREADSHEET_CELL,
+            spreadsheetEnvironmentContext
+        );
 
         context.setLocale(DIFFERENT_LOCALE);
 
@@ -657,6 +664,74 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             DIFFERENT_LOCALE
         );
     }
+
+    @Test
+    @Override
+    public void testSetLocaleWithDifferent() {
+        this.setLocaleAndCheck(
+            (EnvironmentContext)
+                this.createContext(
+                    SpreadsheetEnvironmentContext.NO_SPREADSHEET_CELL,
+                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                ),
+            DIFFERENT_LOCALE
+        );
+    }
+
+    @Test
+    @Override
+    public void testSetLocaleWithDifferentAndWatcher() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(
+            SpreadsheetEnvironmentContext.NO_SPREADSHEET_CELL,
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
+        final AtomicBoolean fired = new AtomicBoolean();
+        context.addEnvironmentWatcher(
+            new EnvironmentWatcher() {
+                @Override
+                public void onValueChange(final Optional<EnvironmentValueNameAndValue<?>> oldValue,
+                                          final Optional<EnvironmentValueNameAndValue<?>> newValue) {
+                    checkEquals(
+                        Optional.of(
+                            EnvironmentValueName.LOCALE.setValue(HasLocaleTesting.LOCALE)
+                        ),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            EnvironmentValueName.LOCALE.setValue(DIFFERENT_LOCALE)
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+                    fired.set(true);
+                }
+            });
+        this.setLocaleAndCheck(
+            (EnvironmentContext) context,
+            DIFFERENT_LOCALE
+        );
+        this.checkEquals(
+            true,
+            fired.get()
+        );
+    }
+
+    @Test
+    public void testLocaleWhenSpreadsheetCellHasLocale() {
+        this.localeAndCheck(
+            this.createContext(
+                Optional.of(
+                    SPREADSHEET_CELL.setLocale(OPTIONAL_DIFFERENT_LOCALE)
+                ),
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            ),
+            DIFFERENT_LOCALE
+        );
+    }
+
+    // HasSpreadsheetCell...............................................................................................
 
     @Test
     public void testSpreadsheetCell() {
