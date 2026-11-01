@@ -211,12 +211,14 @@ final class SpreadsheetEnvironmentContextSpreadsheetMetadata implements Spreadsh
             final Object value = context.environmentValue(name)
                 .orElse(null);
 
-            nameToValue.put(
-                name,
-                value instanceof LineEnding ?
-                    CharSequences.escape(value.toString()) :
-                    value
-            );
+            if(null != value) {
+                nameToValue.put(
+                    name,
+                    value instanceof LineEnding ?
+                        CharSequences.escape(value.toString()) :
+                        value
+                );
+            }
         }
 
         return nameToValue.toString();
