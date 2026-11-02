@@ -852,6 +852,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
                 "            CurrencyValue to Number (walkingkooka.convert.ConverterCurrencyValueToNumber)\n" +
                 "            CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
+                "            to CurrencyValue (walkingkooka.convert.ConverterToCurrencyValue)\n" +
                 "            Number to CurrencyValue (walkingkooka.convert.ConverterNumberToCurrencyValue)\n" +
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
@@ -1087,6 +1088,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
                 "            CurrencyValue to Number (walkingkooka.convert.ConverterCurrencyValueToNumber)\n" +
                 "            CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
+                "            to CurrencyValue (walkingkooka.convert.ConverterToCurrencyValue)\n" +
                 "            Number to CurrencyValue (walkingkooka.convert.ConverterNumberToCurrencyValue)\n" +
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
@@ -1499,6 +1501,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            CurrencyCode to Currency (walkingkooka.convert.ConverterCurrencyCodeToCurrency)\n" +
                 "            CurrencyValue to Number (walkingkooka.convert.ConverterCurrencyValueToNumber)\n" +
                 "            CurrencyValue to (walkingkooka.convert.ConverterCurrencyValueTo)\n" +
+                "            to CurrencyValue (walkingkooka.convert.ConverterToCurrencyValue)\n" +
                 "            Number to CurrencyValue (walkingkooka.convert.ConverterNumberToCurrencyValue)\n" +
                 "            TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "            TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
