@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.storage.convert.StorageConverterContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.convert.TreeTextConverterContext;
@@ -39,7 +39,7 @@ import java.util.Optional;
 /**
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
  */
-public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext,
+public interface SpreadsheetConverterContext extends TreeConverterContext,
     ColorContext,
     HasConverter<SpreadsheetConverterContext>,
     HasMissingCellNumberValue,

@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.tree.expression.convert.FakeExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.FakeTreeConverterContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -48,7 +48,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConverterContext implements SpreadsheetConverterContext {
+public class FakeSpreadsheetConverterContext extends FakeTreeConverterContext implements SpreadsheetConverterContext {
 
     @Override
     public MediaType detect(final String filename,

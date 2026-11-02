@@ -38,7 +38,7 @@ import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.expression.convert.TreeConverters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -858,7 +858,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
                 Lists.of(
-                    ExpressionNumberConverters.toNumberOrExpressionNumber(
+                    TreeConverters.toNumberOrExpressionNumber(
                         Converters.localDateTimeToNumber()
                     ),
                     Converters.simple()
