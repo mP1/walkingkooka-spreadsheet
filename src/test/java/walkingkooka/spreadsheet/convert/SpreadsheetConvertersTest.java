@@ -1337,6 +1337,18 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testCurrencyConvertStringToCurrencyValue() {
+        this.currencyConvertAndCheck(
+            "12",
+            CurrencyValue.class,
+            CurrencyValue.with(
+                EXPRESSION_NUMBER_KIND.create(12),
+                TO_CURRENCY_CODE
+            )
+        );
+    }
+
     private <T> void currencyConvertAndCheck(final Object value,
                                              final Class<T> type,
                                              final T expected) {
@@ -1365,7 +1377,42 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     );
                 }
 
-                private final Converter<SpreadsheetConverterContext> converter = ExpressionNumberConverters.numberToNumber();
+                private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
+                    Lists.of(
+                        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        ExpressionNumberConverters.numberToNumber(),
+                        new SpreadsheetConverter() {
+
+                            @Override
+                            public boolean canConvert(final Object value,
+                                                      final Class<?> type,
+                                                      final SpreadsheetConverterContext context) {
+                                return value instanceof CharSequence &&
+                                    Number.class == type;
+                            }
+
+                            @Override
+                            public <T> Either<T, String> doConvert(final Object value,
+                                                                   final Class<T> type,
+                                                                   final SpreadsheetConverterContext context) {
+                                return this.successfulConversion(
+                                    EXPRESSION_NUMBER_KIND.parse(
+                                        context.convertOrFail(
+                                            value,
+                                            String.class
+                                        )
+                                    ),
+                                    type
+                                );
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "String to Number";
+                            }
+                        }
+                    )
+                );
 
                 @Override
                 public CurrencyCode currencyCode() {
