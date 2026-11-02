@@ -97,9 +97,9 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.HasExpressionNumberKindTesting;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
-import walkingkooka.tree.expression.convert.FakeExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.FakeTreeConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverterContexts;
+import walkingkooka.tree.expression.convert.TreeConverters;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -1371,7 +1371,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataTestCase.SPREADSHEET_METADATA_LOADER,
                 ColorContexts.fake(),
                 JsonNodeConverterContexts.basic(
-                    ExpressionNumberConverterContexts.basic(
+                    TreeConverterContexts.basic(
                         Converters.fake(),
                         metadata.expressionNumberKind(),
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
@@ -1806,7 +1806,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     return Converters.collection(
                         Lists.of(
                             Converters.simple(),
-                            ExpressionNumberConverters.toNumberOrExpressionNumber(
+                            TreeConverters.toNumberOrExpressionNumber(
                                 Converters.numberToNumber()
                             ),
                             Converters.localDateToLocalDateTime(),
@@ -1815,7 +1815,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     ).convert(
                         value,
                         target,
-                        new FakeExpressionNumberConverterContext() {
+                        new FakeTreeConverterContext() {
                             @Override
                             public ExpressionNumberKind expressionNumberKind() {
                                 return ExpressionNumberKind.BIG_DECIMAL;

@@ -120,8 +120,8 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.expression.convert.TreeConverterContexts;
+import walkingkooka.tree.expression.convert.TreeConverters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.JsonString;
@@ -326,12 +326,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"NUMBER\"\n" +
                 "      ConverterCollection\n" +
-                "        Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
+                "        Number to Number (walkingkooka.tree.expression.convert.TreeConverterNumberToNumber)\n" +
                 "        to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "        Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
                 "  Number to Color (walkingkooka.color.convert.ColorConverterNumberToColor)\n" +
                 "  Number to CurrencyValue (walkingkooka.convert.ConverterNumberToCurrencyValue)\n" +
-                "  Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
+                "  Number to Number (walkingkooka.tree.expression.convert.TreeConverterNumberToNumber)\n" +
                 "  Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
                 "  Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
                 "  ConverterCustomToString\n" +
@@ -582,7 +582,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"number\"\n" +
                 "            ConverterCollection\n" +
-                "              Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
+                "              Number to Number (walkingkooka.tree.expression.convert.TreeConverterNumberToNumber)\n" +
                 "              to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "              Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
                 "        ConverterCustomToString\n" +
@@ -1382,7 +1382,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                     Lists.of(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-                        ExpressionNumberConverters.numberToNumber(),
+                        TreeConverters.numberToNumber(),
                         new SpreadsheetConverter() {
 
                             @Override
@@ -3004,7 +3004,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"NUMBER\"\n" +
                 "    ConverterCollection\n" +
-                "      Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
+                "      Number to Number (walkingkooka.tree.expression.convert.TreeConverterNumberToNumber)\n" +
                 "      to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "      Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n"
         );
@@ -3988,7 +3988,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"number\"\n" +
                 "          ConverterCollection\n" +
-                "            Number to Number (walkingkooka.tree.expression.convert.ExpressionNumberConverterNumberToNumber)\n" +
+                "            Number to Number (walkingkooka.tree.expression.convert.TreeConverterNumberToNumber)\n" +
                 "            to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterToNumber)\n" +
                 "            Number to TEXT (walkingkooka.spreadsheet.convert.SpreadsheetConverterNumberToText)\n" +
                 "      ConverterCustomToString\n" +
@@ -4457,7 +4457,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetMetadataLoaders.fake(),
             ColorContexts.fake(),
             JsonNodeConverterContexts.basic(
-                ExpressionNumberConverterContexts.basic(
+                TreeConverterContexts.basic(
                     Converters.fake(), // not used
                     EXPRESSION_NUMBER_KIND,
                     BinaryNumberConverterFunctions.fake(), // multiplier
@@ -5074,7 +5074,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetMetadataLoaders.fake(),
             ColorContexts.fake(),
             JsonNodeConverterContexts.basic(
-                ExpressionNumberConverterContexts.basic(
+                TreeConverterContexts.basic(
                     Converters.fake(), // not used
                     kind,
                     BinaryNumberConverterFunctions.fake(), // multiplier

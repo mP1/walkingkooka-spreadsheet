@@ -21,7 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverterContext;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
@@ -34,12 +34,12 @@ import java.util.Optional;
  */
 final class SpreadsheetFormatterSharedConverter extends SpreadsheetFormatterShared {
 
-    static SpreadsheetFormatterSharedConverter with(final Converter<ExpressionNumberConverterContext> converter) {
+    static SpreadsheetFormatterSharedConverter with(final Converter<TreeConverterContext> converter) {
         Objects.requireNonNull(converter, "converter");
         return new SpreadsheetFormatterSharedConverter(converter);
     }
 
-    private SpreadsheetFormatterSharedConverter(final Converter<ExpressionNumberConverterContext> converter) {
+    private SpreadsheetFormatterSharedConverter(final Converter<TreeConverterContext> converter) {
         super();
         this.converter = converter;
     }
@@ -72,7 +72,7 @@ final class SpreadsheetFormatterSharedConverter extends SpreadsheetFormatterShar
         throw new UnsupportedOperationException();
     }
 
-    private final Converter<ExpressionNumberConverterContext> converter;
+    private final Converter<TreeConverterContext> converter;
 
     @Override
     public String toString() {

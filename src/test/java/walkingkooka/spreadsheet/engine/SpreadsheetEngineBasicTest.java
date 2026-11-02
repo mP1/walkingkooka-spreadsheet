@@ -166,7 +166,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.expression.convert.TreeConverters;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
@@ -301,7 +301,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     .cast(SpreadsheetConverterContext.class),
                 Converters.localTimeToLocalDateTime()
                     .cast(SpreadsheetConverterContext.class),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(
+                TreeConverters.toNumberOrExpressionNumber(
                     Converters.numberToNumber()
                 ),
                 SpreadsheetConverters.booleanToText(),

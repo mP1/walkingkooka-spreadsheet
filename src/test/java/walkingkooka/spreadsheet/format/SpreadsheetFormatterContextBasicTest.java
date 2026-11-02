@@ -50,8 +50,8 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.convert.TreeConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.text.TextNode;
 
@@ -231,10 +231,10 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         },
         COLOR_CONTEXT,
         JsonNodeConverterContexts.basic(
-            ExpressionNumberConverterContexts.basic(
+            TreeConverterContexts.basic(
                 Converters.fake()
                     .setToString("CONVERTER")
-                    .cast(ExpressionNumberConverterContext.class),
+                    .cast(TreeConverterContext.class),
                 EXPRESSION_NUMBER_KIND,
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 ConverterContexts.basic(

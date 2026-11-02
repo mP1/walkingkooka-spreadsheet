@@ -32,7 +32,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternSpreadsheetFormatters;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverterContext;
 
 import java.math.BigDecimal;
 import java.time.temporal.Temporal;
@@ -106,7 +106,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetFormatterSharedConverter}
      */
-    public static SpreadsheetFormatter converter(final Converter<ExpressionNumberConverterContext> converter) {
+    public static SpreadsheetFormatter converter(final Converter<TreeConverterContext> converter) {
         return SpreadsheetFormatterSharedConverter.with(converter);
     }
 

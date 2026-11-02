@@ -42,8 +42,8 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.convert.TreeConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverterContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -331,7 +331,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                 return this.converter.convert(
                     value,
                     target,
-                    ExpressionNumberConverterContexts.basic(
+                    TreeConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                         ExpressionNumberKind.DEFAULT,
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(),
@@ -350,7 +350,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                 );
             }
 
-            private final Converter<ExpressionNumberConverterContext> converter = Converters.parser(
+            private final Converter<TreeConverterContext> converter = Converters.parser(
                 BigDecimal.class,
                 Parsers.bigDecimal(),
                 (c) -> ParserContexts.basic(

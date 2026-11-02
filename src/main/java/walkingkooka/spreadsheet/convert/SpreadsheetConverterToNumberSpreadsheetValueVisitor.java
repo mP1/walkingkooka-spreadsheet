@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.value.SpreadsheetValueVisitor;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.expression.convert.TreeConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,21 +46,21 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitor extends Spreadsh
         this.converter = BOOLEAN;
     }
 
-    private final static Converter<SpreadsheetConverterContext> BOOLEAN = ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.booleanToNumber());
+    private final static Converter<SpreadsheetConverterContext> BOOLEAN = TreeConverters.toNumberOrExpressionNumber(Converters.booleanToNumber());
 
     @Override
     protected void visit(final LocalDate value) {
         this.converter = DATE;
     }
 
-    private final static Converter<SpreadsheetConverterContext> DATE = ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber());
+    private final static Converter<SpreadsheetConverterContext> DATE = TreeConverters.toNumberOrExpressionNumber(Converters.localDateToNumber());
 
     @Override
     protected void visit(final LocalDateTime value) {
         this.converter = DATE_TIME;
     }
 
-    private final static Converter<SpreadsheetConverterContext> DATE_TIME = ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber());
+    private final static Converter<SpreadsheetConverterContext> DATE_TIME = TreeConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber());
 
     @Override
     protected void visit(final String value) {

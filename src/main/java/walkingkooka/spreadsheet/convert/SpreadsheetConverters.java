@@ -49,7 +49,7 @@ import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.expression.convert.TreeConverters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.convert.JsonNodeConverters;
 import walkingkooka.tree.text.TextNode;
@@ -520,10 +520,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ExpressionNumberConverters#numberToNumber}
+     * {@see TreeConverters#numberToNumber}
      */
     public static Converter<SpreadsheetConverterContext> numberToNumber() {
-        return ExpressionNumberConverters.numberToNumber();
+        return TreeConverters.numberToNumber();
     }
 
     /**
@@ -1237,7 +1237,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * that into a {@link Number}.
      */
     public static Converter<SpreadsheetConverterContext> textToNumber(final Parser<SpreadsheetParserContext> parser) {
-        return ExpressionNumberConverters.toExpressionNumberThen(
+        return TreeConverters.toExpressionNumberThen(
             parser(
                 ExpressionNumber.class, // parserValueType
                 parser,

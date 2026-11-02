@@ -293,7 +293,7 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
                 left,
                 right,
                 type,
-                this // ExpressionNumberConverterContext
+                this // TreeConverterContext
             );
     }
 

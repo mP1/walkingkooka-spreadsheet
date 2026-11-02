@@ -44,8 +44,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.convert.TreeConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
@@ -431,8 +431,8 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
             SPREADSHEET_METADATA_LOADER,
             COLOR_CONTEXT,
             JsonNodeConverterContexts.basic(
-                ExpressionNumberConverterContexts.basic(
-                    Converters.<ExpressionNumberConverterContext>fake()
+                TreeConverterContexts.basic(
+                    Converters.<TreeConverterContext>fake()
                         .setToString("CONVERTER"),
                     EXPRESSION_NUMBER_KIND,
                     Cast.to(MULTIPLIER),

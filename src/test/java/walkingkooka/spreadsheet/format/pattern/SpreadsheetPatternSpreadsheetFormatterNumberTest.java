@@ -37,8 +37,8 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
-import walkingkooka.tree.expression.convert.FakeExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.FakeTreeConverterContext;
+import walkingkooka.tree.expression.convert.TreeConverters;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -78,7 +78,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
                 @Override
                 public <T> Either<T, String> convert(final Object value,
                                                      final Class<T> type) {
-                    return ExpressionNumberConverters.toNumberOrExpressionNumber(
+                    return TreeConverters.toNumberOrExpressionNumber(
                         Converters.localDateTimeToNumber()
                     ).convert(
                         value,
@@ -2527,12 +2527,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return ExpressionNumberConverters.toNumberOrExpressionNumber(
+                return TreeConverters.toNumberOrExpressionNumber(
                     Converters.numberToNumber()
                 ).convert(
                     value,
                     target,
-                    new FakeExpressionNumberConverterContext() {
+                    new FakeTreeConverterContext() {
                         @Override
                         public ExpressionNumberKind expressionNumberKind() {
                             return ExpressionNumberKind.BIG_DECIMAL;

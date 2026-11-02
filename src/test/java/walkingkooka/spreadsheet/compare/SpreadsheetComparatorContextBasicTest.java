@@ -35,7 +35,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.convert.TreeConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
 import java.math.MathContext;
@@ -87,7 +87,7 @@ public final class SpreadsheetComparatorContextBasicTest implements SpreadsheetC
         SPREADSHEET_METADATA_LOADER,
         COLOR_CONTEXT,
         JsonNodeConverterContexts.basic(
-            ExpressionNumberConverterContexts.basic(
+            TreeConverterContexts.basic(
                 Converters.fake(),
                 EXPRESSION_NUMBER_KIND,
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier

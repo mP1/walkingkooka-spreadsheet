@@ -36,7 +36,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.convert.TreeConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
 import java.math.BigDecimal;
@@ -81,7 +81,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
         },
         ColorContexts.fake(),
         JsonNodeConverterContexts.basic(
-            ExpressionNumberConverterContexts.basic(
+            TreeConverterContexts.basic(
                 Converters.fake(),
                 EXPRESSION_NUMBER_KIND,
                 BinaryNumberConverterFunctions.multiply(), // multiplier
