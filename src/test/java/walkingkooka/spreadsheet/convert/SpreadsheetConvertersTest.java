@@ -1418,19 +1418,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 @Override
                 public CurrencyCode currencyCode() {
-                    return TO_CURRENCY_CODE;
+                    return DIFFERENT_CURRENCY_CODE;
                 }
 
                 @Override
                 public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
                                                              final Optional<LocalDateTime> dateTime) {
-                    return Optional.ofNullable(
-                        CurrencyExchange.with(
-                            FROM_CURRENCY_CODE,
-                            TO_CURRENCY_CODE
-                        ).equals(currencyExchange) ?
-                            2.0 :
-                            null
+                    return CURRENCY_EXCHANGE_RATER.currencyExchangeRate(
+                        currencyExchange,
+                        dateTime,
+                        CURRENCY_CONTEXT
                     );
                 }
 
