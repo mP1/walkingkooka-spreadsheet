@@ -607,6 +607,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         final Optional<TextNode> formattedValueRoot = formattedValue.map(TextNode::root);
         return this.formattedValue.equals(formattedValueRoot) ?
             this :
+            // all other would be setters should call #replace which also clears #formattedValue
             new SpreadsheetCell(
                 this.reference,
                 this.formula,
