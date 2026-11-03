@@ -225,6 +225,16 @@ public interface SpreadsheetExpressionEvaluationContext extends FormHandlerExpre
      */
     SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor formula);
 
+    // ExpressionEvaluationContext......................................................................................
+
+    @Override
+    default Object evaluateExpressionValue(final Expression expression) {
+        return SpreadsheetExpressionEvaluationContextExpressionVisitor.evaluate(
+            expression,
+            this
+        );
+    }
+
     // formatting.......................................................................................................
 
     /**
