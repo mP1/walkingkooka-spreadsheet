@@ -335,11 +335,6 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
 
     // convert..........................................................................................................
 
-    private final static CurrencyCode FROM_CURRENCY_CODE = CurrencyCode.parse("AUD");
-    private final static CurrencyCode TO_CURRENCY_CODE = CurrencyCode.parse("NZD");
-
-    private final static int CURRENCY_MULTIPLIER = 2;
-
     @Test
     public void testConvertCurrencyValueIntegerToExpressionNumber() {
         final int number = 123;
@@ -347,10 +342,10 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         this.convertAndCheck(
             CurrencyValue.with(
                 number,
-                FROM_CURRENCY_CODE
+                CURRENCY_CODE
             ),
             ExpressionNumber.class,
-            EXPRESSION_NUMBER_KIND.create(number * CURRENCY_MULTIPLIER)
+            EXPRESSION_NUMBER_KIND.create(number * CURRENCY_EXCHANGE_RATE)
         );
     }
 
@@ -361,10 +356,10 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         this.convertAndCheck(
             CurrencyValue.with(
                 number,
-                FROM_CURRENCY_CODE
+                CURRENCY_CODE
             ),
             Integer.class,
-            number * CURRENCY_MULTIPLIER
+            (int)(number * CURRENCY_EXCHANGE_RATE)
         );
     }
 
@@ -447,24 +442,16 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
 
                             @Override
                             public Currency currency() {
-                                return Currency.getInstance(
-                                    TO_CURRENCY_CODE.value()
-                                );
+                                return DIFFERENT_CURRENCY;
                             }
 
                             @Override
                             public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
                                                                          final Optional<LocalDateTime> dateTime) {
-                                Objects.requireNonNull(currencyExchange, "currencyExchange");
-                                Objects.requireNonNull(dateTime, "dateTime");
-
-                                return Optional.ofNullable(
-                                    CurrencyExchange.with(
-                                        FROM_CURRENCY_CODE,
-                                        TO_CURRENCY_CODE
-                                    ).equals(currencyExchange) ?
-                                        CURRENCY_MULTIPLIER :
-                                        null
+                                return CURRENCY_EXCHANGE_RATER.currencyExchangeRate(
+                                    currencyExchange,
+                                    dateTime,
+                                    this
                                 );
                             }
 
