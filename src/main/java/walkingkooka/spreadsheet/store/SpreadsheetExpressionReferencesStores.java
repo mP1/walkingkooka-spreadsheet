@@ -40,10 +40,10 @@ public final class SpreadsheetExpressionReferencesStores implements PublicStatic
     }
 
     /**
-     * {@see TreeMapSpreadsheetExpressionReferencesStore}
+     * {@see SpreadsheetExpressionReferencesStoreTreeMap}
      */
     public static <T extends SpreadsheetExpressionReference & Comparable<T>> SpreadsheetExpressionReferencesStore<T> treeMap() {
-        return TreeMapSpreadsheetExpressionReferencesStore.create();
+        return SpreadsheetExpressionReferencesStoreTreeMap.create();
     }
 
     /**
