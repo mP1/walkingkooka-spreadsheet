@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.CanHaveCurrencyValue;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyExchangeRater;
@@ -91,6 +92,7 @@ import java.util.function.Function;
  * A spreadsheet cell including its formula, and other attributes such as format, text properties(styling) and more.
  */
 public final class SpreadsheetCell implements CanBeEmpty,
+    CanHaveCurrencyValue,
     CanReplaceReferences<SpreadsheetCell>,
     HasContentType,
     HasOptionalCurrency,
@@ -1676,6 +1678,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
             .value(this.style)
             .label("validator")
             .value(this.validator.map(Object::toString));
+    }
+
+    // CanHaveCurrencyValue.............................................................................................
+
+    /**
+     * If the {@link SpreadsheetFormula#shouldHaveCurrencyValue()} or the {@link walkingkooka.currency.CurrencyValue} is set
+     * and the {@link ValueType} is not {@link ValueType#CURRENCY_VALUE}.
+     */
+    @Override
+    public boolean shouldHaveCurrencyValue() {
+        return this.formula.shouldHaveCurrencyValue() ||
+            this.currency()
+                .isPresent() && this.formula.valueType().isEmpty();
     }
 
     // HasTextNode......................................................................................................
