@@ -35,15 +35,15 @@ import java.util.Set;
 /**
  * A {@link SpreadsheetLabelReferencesStore} that uses a {@link Map} to store a cell or label to its many {@link SpreadsheetLabelName}.
  */
-final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelReferencesStore,
+final class SpreadsheetLabelReferencesStoreTreeMap implements SpreadsheetLabelReferencesStore,
     SpreadsheetExpressionReferencesStoreDelegator<SpreadsheetLabelName>,
     CanBeEmpty {
 
-    static TreeMapSpreadsheetLabelReferencesStore empty() {
-        return new TreeMapSpreadsheetLabelReferencesStore();
+    static SpreadsheetLabelReferencesStoreTreeMap empty() {
+        return new SpreadsheetLabelReferencesStoreTreeMap();
     }
 
-    private TreeMapSpreadsheetLabelReferencesStore() {
+    private SpreadsheetLabelReferencesStoreTreeMap() {
         this.store = SpreadsheetExpressionReferencesStores.treeMap();
     }
 

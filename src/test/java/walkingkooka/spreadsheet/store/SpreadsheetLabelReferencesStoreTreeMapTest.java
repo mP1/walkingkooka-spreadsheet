@@ -26,14 +26,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
 
-public final class TreeMapSpreadsheetLabelReferencesStoreTest implements SpreadsheetLabelReferencesStoreTesting<TreeMapSpreadsheetLabelReferencesStore>,
+public final class SpreadsheetLabelReferencesStoreTreeMapTest implements SpreadsheetLabelReferencesStoreTesting<SpreadsheetLabelReferencesStoreTreeMap>,
     CanBeEmptyTesting {
 
     // findCellsWithCellOrCellRange.....................................................................................
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWithZeroCount() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
@@ -53,7 +53,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereCellWithCellReference() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
@@ -82,7 +82,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereLabelsWithCellReferences() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
@@ -117,7 +117,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereLabelsWithReferencesWithOffset() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
@@ -152,7 +152,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereLabelsWithReferencesWithCount() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
@@ -187,7 +187,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReference() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
@@ -224,7 +224,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReferences() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
@@ -285,7 +285,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReferences2() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
@@ -352,7 +352,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReferencesAndOffsetAndCount() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
@@ -420,7 +420,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testAddValuesAndRemoveByValueAndCount() {
-        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+        final SpreadsheetLabelReferencesStoreTreeMap store = SpreadsheetLabelReferencesStoreTreeMap.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
@@ -471,8 +471,8 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
     // SpreadsheetLabelReferencesStoreTesting............................................................................
 
     @Override
-    public TreeMapSpreadsheetLabelReferencesStore createStore() {
-        return TreeMapSpreadsheetLabelReferencesStore.empty();
+    public SpreadsheetLabelReferencesStoreTreeMap createStore() {
+        return SpreadsheetLabelReferencesStoreTreeMap.empty();
     }
 
     @Override
@@ -497,7 +497,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
 
     @Test
     public void testIsEmptyWhenNotEmpty() {
-        final TreeMapSpreadsheetLabelReferencesStore store = this.createStore();
+        final SpreadsheetLabelReferencesStoreTreeMap store = this.createStore();
 
         store.addValue(
             SpreadsheetSelection.labelName("Label123"),
@@ -513,12 +513,17 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
     // class............................................................................................................
 
     @Override
-    public String typeNamePrefix() {
-        return TreeMap.class.getSimpleName();
+    public Class<SpreadsheetLabelReferencesStoreTreeMap> type() {
+        return SpreadsheetLabelReferencesStoreTreeMap.class;
     }
 
     @Override
-    public Class<TreeMapSpreadsheetLabelReferencesStore> type() {
-        return TreeMapSpreadsheetLabelReferencesStore.class;
+    public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return TreeMap.class.getSimpleName();
     }
 }

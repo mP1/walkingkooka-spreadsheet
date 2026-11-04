@@ -33,10 +33,10 @@ public final class SpreadsheetLabelReferencesStores implements PublicStaticHelpe
     }
 
     /**
-     * {@see TreeMapSpreadsheetLabelReferencesStore}
+     * {@see SpreadsheetLabelReferencesStoreTreeMap}
      */
     public static SpreadsheetLabelReferencesStore treeMap() {
-        return TreeMapSpreadsheetLabelReferencesStore.empty();
+        return SpreadsheetLabelReferencesStoreTreeMap.empty();
     }
 
     /**
