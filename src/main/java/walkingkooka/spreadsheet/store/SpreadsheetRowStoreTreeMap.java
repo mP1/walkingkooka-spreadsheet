@@ -33,21 +33,21 @@ import java.util.TreeMap;
 /**
  * A {@link SpreadsheetRowStore} that uses a {@link TreeMap}.
  */
-final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
+final class SpreadsheetRowStoreTreeMap implements SpreadsheetRowStore {
 
     /**
-     * Factory that creates a new {@link TreeMapSpreadsheetRowStore}
+     * Factory that creates a new {@link SpreadsheetRowStoreTreeMap}
      */
-    static TreeMapSpreadsheetRowStore create() {
-        return new TreeMapSpreadsheetRowStore();
+    static SpreadsheetRowStoreTreeMap create() {
+        return new SpreadsheetRowStoreTreeMap();
     }
 
     /**
      * Private ctor.
      */
-    private TreeMapSpreadsheetRowStore() {
+    private SpreadsheetRowStoreTreeMap() {
         super();
-        this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetRowStore::idSetter);
+        this.store = Stores.treeMap(Comparator.naturalOrder(), SpreadsheetRowStoreTreeMap::idSetter);
     }
 
     private static SpreadsheetRow idSetter(final SpreadsheetRowReference id,
@@ -124,11 +124,11 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof TreeMapSpreadsheetRowStore &&
-                this.equals0((TreeMapSpreadsheetRowStore) other));
+            (other instanceof SpreadsheetRowStoreTreeMap &&
+                this.equals0((SpreadsheetRowStoreTreeMap) other));
     }
 
-    private boolean equals0(final TreeMapSpreadsheetRowStore other) {
+    private boolean equals0(final SpreadsheetRowStoreTreeMap other) {
         return this.store.equals(other.store);
     }
 
