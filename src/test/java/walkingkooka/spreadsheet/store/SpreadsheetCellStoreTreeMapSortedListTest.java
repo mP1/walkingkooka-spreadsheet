@@ -29,8 +29,8 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Optional;
 
-public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackagePrivateClassTesting<TreeMapSpreadsheetCellStoreSortedList>,
-    ToStringTesting<TreeMapSpreadsheetCellStoreSortedList> {
+public final class SpreadsheetCellStoreTreeMapSortedListTest implements PackagePrivateClassTesting<SpreadsheetCellStoreTreeMapSortedList>,
+    ToStringTesting<SpreadsheetCellStoreTreeMapSortedList> {
 
     private final static SpreadsheetCell A1 = SpreadsheetSelection.A1
         .setFormula(SpreadsheetFormula.EMPTY.setText("'A1"));
@@ -45,7 +45,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceNew() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -58,7 +58,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceNew2() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -73,7 +73,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceNew3() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -88,7 +88,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceNew4() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -106,7 +106,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceNew5() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -124,7 +124,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceNew6() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -143,7 +143,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceNew7() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -161,7 +161,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceReplace() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -181,7 +181,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceReplace2() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -205,7 +205,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceReplace3() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -229,7 +229,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceReplace4() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -259,7 +259,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceRLBU() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.RLBU
         );
 
@@ -277,7 +277,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testAddOrReplaceRLBU2() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.RLBU
         );
 
@@ -297,7 +297,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testGet() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -326,7 +326,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testGetUnknown() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -342,7 +342,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testGetUnknown2() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -356,7 +356,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void getAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void getAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                              final SpreadsheetCellReference get) {
         this.getAndCheck(
             list,
@@ -365,7 +365,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void getAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void getAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                              final SpreadsheetCellReference get,
                              final SpreadsheetCell expected) {
         this.getAndCheck(
@@ -375,7 +375,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void getAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void getAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                              final SpreadsheetCellReference get,
                              final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
@@ -389,7 +389,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testGetOrNextEmpty() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -406,7 +406,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testGetOrNext() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -435,7 +435,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testGetOrNextUnknownAfter() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -451,7 +451,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testGetOrNextUnknownBefore() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -478,7 +478,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void getOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void getOrNextAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                                    final SpreadsheetCellReference getOrNext) {
         this.getOrNextAndCheck(
             list,
@@ -487,7 +487,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void getOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void getOrNextAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                                    final SpreadsheetCellReference getOrNext,
                                    final SpreadsheetCell expected) {
         this.getOrNextAndCheck(
@@ -497,7 +497,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void getOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void getOrNextAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                                    final SpreadsheetCellReference getOrNext,
                                    final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
@@ -511,7 +511,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testIndexOfOrNextEmpty() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -530,7 +530,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testIndexOfOrNext() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -565,7 +565,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testIndexOfOrNextUnknownAfter() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -582,7 +582,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testIndexOfOrNextBefore() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -611,7 +611,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testIndexOfOrNextBefore2() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -637,7 +637,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void indexOfOrNextAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void indexOfOrNextAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                                        final SpreadsheetCellReference indexOfOrNext,
                                        final int expected) {
         this.checkEquals(
@@ -651,7 +651,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testOffset() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -680,7 +680,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testOffsetUnknown() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -694,7 +694,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void offsetAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void offsetAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                                 final int offset) {
         this.offsetAndCheck(
             list,
@@ -703,7 +703,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void offsetAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void offsetAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                                 final int offset,
                                 final SpreadsheetCell expected) {
         this.offsetAndCheck(
@@ -713,7 +713,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
         );
     }
 
-    private void offsetAndCheck(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void offsetAndCheck(final SpreadsheetCellStoreTreeMapSortedList list,
                                 final int offset,
                                 final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
@@ -727,7 +727,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testRemove() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -752,7 +752,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testRemoveUnknown() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -770,7 +770,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testRemoveAll() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -797,7 +797,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetCellStoreSortedList list = TreeMapSpreadsheetCellStoreSortedList.with(
+        final SpreadsheetCellStoreTreeMapSortedList list = SpreadsheetCellStoreTreeMapSortedList.with(
             SpreadsheetCellRangeReferencePath.LRTD
         );
 
@@ -813,7 +813,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
 
     // helpers..........................................................................................................
 
-    private void check(final TreeMapSpreadsheetCellStoreSortedList list,
+    private void check(final SpreadsheetCellStoreTreeMapSortedList list,
                        final SpreadsheetCell... cells) {
         this.checkEquals(
             Lists.of(cells),
@@ -825,7 +825,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements PackageP
     // ClassTesting....................................................................................................
 
     @Override
-    public Class<TreeMapSpreadsheetCellStoreSortedList> type() {
-        return TreeMapSpreadsheetCellStoreSortedList.class;
+    public Class<SpreadsheetCellStoreTreeMapSortedList> type() {
+        return SpreadsheetCellStoreTreeMapSortedList.class;
     }
 }
