@@ -34,9 +34,9 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore>
+public final class SpreadsheetLabelStoreTreeMapTest extends SpreadsheetLabelStoreTestCase<SpreadsheetLabelStoreTreeMap>
     implements CanBeEmptyTesting,
-    HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetLabelStore>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetLabelStoreTreeMap>,
     ThrowableTesting {
 
     private final static SpreadsheetLabelName LABEL1 = SpreadsheetSelection.labelName("label1");
@@ -63,7 +63,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testSaveCycleFails() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
 
         final SpreadsheetLabelMapping mapping1 = LABEL1.setLabelMappingReference(LABEL2);
@@ -91,7 +91,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testSaveCycleFails2() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
@@ -128,7 +128,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testBetweenAll() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         store.save(LABEL1.setLabelMappingReference(A1));
         store.save(LABEL2.setLabelMappingReference(A2));
@@ -146,7 +146,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testBetweenOne() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         store.save(LABEL1.setLabelMappingReference(A1));
         store.save(LABEL2.setLabelMappingReference(A2));
@@ -177,7 +177,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private void findLabelsWithReferenceWhereNoneAndCheck(final SpreadsheetExpressionReference reference) {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         store.save(LABEL1.setLabelMappingReference(A1));
         store.save(LABEL2.setLabelMappingReference(A2));
@@ -203,7 +203,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private void findLabelsWithReferenceWhereSomeAndCheck(final SpreadsheetExpressionReference reference) {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         store.save(LABEL1.setLabelMappingReference(A1));
         final SpreadsheetLabelMapping mapping = store.save(LABEL2.setLabelMappingReference(A2));
@@ -230,7 +230,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private void findLabelsWithReferenceWhereSomeAndLabelsToLabelsCheck(final SpreadsheetExpressionReference reference) {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         store.save(
             LABEL1.setLabelMappingReference(A1)
@@ -254,7 +254,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsWithReferenceWhereSomeWithLabel() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         store.save(
             LABEL1.setLabelMappingReference(A1)
@@ -292,7 +292,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private void findLabelsWithReferenceWhereSomeAndCheck2(final SpreadsheetExpressionReference reference) {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
 
@@ -325,7 +325,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private void findLabelsWithReferenceWhereSomeAndOffsetAndCheck(final SpreadsheetExpressionReference reference) {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
         final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("b2:d4");
@@ -362,7 +362,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private void findLabelsWithReferenceWhereSomeAndCountAndCheck(final SpreadsheetExpressionReference reference) {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
         final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("b2:d4");
@@ -400,7 +400,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private void findLabelsWithReferenceWhereSomeAndOffsetAndCountAndCheck(final SpreadsheetExpressionReference reference) {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
         final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("b2:d4");
@@ -446,7 +446,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameNone() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         store.save(
             SpreadsheetLabelMapping.with(
@@ -465,7 +465,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameOnly() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetLabelMapping mapping = LABEL1.setLabelMappingReference(A1);
 
@@ -482,7 +482,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameOnly2() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         final SpreadsheetLabelMapping mapping = LABEL1.setLabelMappingReference(A1);
 
@@ -499,7 +499,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameOnly3() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         final SpreadsheetLabelMapping mapping = LABEL1.setLabelMappingReference(A1);
 
@@ -522,7 +522,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameWithEmpty() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         final SpreadsheetLabelName label123 = SpreadsheetLabelName.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label123.setLabelMappingReference(A1);
@@ -540,7 +540,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameWithNoneSeveral() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
         final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(A1);
@@ -565,7 +565,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameWithPartial() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(A1);
@@ -583,7 +583,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameWithPrefixSeveral() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
         final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(A1);
@@ -608,7 +608,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameWithPrefixSeveral2() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
 
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
         final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(A1);
@@ -633,7 +633,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testFindLabelsByNameWithOffset() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
         final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(A1);
@@ -660,7 +660,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testLoadCellOrCellRangesWithUnknownLabelNotFound() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetLabelMapping.with(
                 LABEL1,
@@ -676,7 +676,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testLoadCellOrCellRangesWithLabelToCell() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetLabelMapping.with(
                 LABEL1,
@@ -699,7 +699,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testLoadCellOrCellRangesWithLabelToLabelToCell() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetLabelMapping.with(
                 LABEL1,
@@ -722,7 +722,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testLoadCellOrCellRangesWithLabelToLabelToLabelToCell() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetLabelMapping.with(
                 LABEL1,
@@ -751,7 +751,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testLoadCellOrCellRangesWithLabelToCellRange() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetLabelMapping.with(
                 LABEL1,
@@ -773,16 +773,16 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     @Override
-    public TreeMapSpreadsheetLabelStore createStore() {
-        return TreeMapSpreadsheetLabelStore.create();
+    public SpreadsheetLabelStoreTreeMap createStore() {
+        return SpreadsheetLabelStoreTreeMap.create();
     }
 
     // hashCode/equals..................................................................................................
 
     @Test
     public void testEquals2() {
-        final TreeMapSpreadsheetLabelStore store1 = this.createStore();
-        final TreeMapSpreadsheetLabelStore store2 = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store1 = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store2 = this.createStore();
 
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
             LABEL1,
@@ -800,7 +800,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testEqualsDifferent() {
-        final TreeMapSpreadsheetLabelStore different = this.createStore();
+        final SpreadsheetLabelStoreTreeMap different = this.createStore();
 
         different.save(
             SpreadsheetLabelMapping.with(
@@ -813,7 +813,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     @Override
-    public TreeMapSpreadsheetLabelStore createObject() {
+    public SpreadsheetLabelStoreTreeMap createObject() {
         return this.createStore();
     }
 
@@ -821,7 +821,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        final SpreadsheetLabelStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetLabelMapping.with(
                 LABEL1,
@@ -846,14 +846,14 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     @Test
     public void testIsEmptyWhenEmpty() {
         this.isEmptyAndCheck(
-            TreeMapSpreadsheetLabelStore.create(),
+            SpreadsheetLabelStoreTreeMap.create(),
             true
         );
     }
 
     @Test
     public void testIsEmptyWhenNotEmpty() {
-        final TreeMapSpreadsheetLabelStore store = TreeMapSpreadsheetLabelStore.create();
+        final SpreadsheetLabelStoreTreeMap store = SpreadsheetLabelStoreTreeMap.create();
 
         store.save(
             LABEL.setLabelMappingReference(SpreadsheetSelection.A1)
@@ -868,12 +868,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     // class............................................................................................................
 
     @Override
-    public Class<TreeMapSpreadsheetLabelStore> type() {
-        return TreeMapSpreadsheetLabelStore.class;
+    public Class<SpreadsheetLabelStoreTreeMap> type() {
+        return SpreadsheetLabelStoreTreeMap.class;
     }
 
     @Override
     public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
         return TreeMap.class.getSimpleName();
     }
 }

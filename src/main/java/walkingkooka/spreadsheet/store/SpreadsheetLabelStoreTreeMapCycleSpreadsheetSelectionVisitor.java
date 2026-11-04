@@ -33,14 +33,14 @@ import java.util.stream.Collectors;
 /**
  * Accepts a {@link SpreadsheetLabelName} fails if a cycle is detected.
  */
-final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static void cycleFreeTest(final SpreadsheetLabelMapping mapping,
                               final SpreadsheetLabelStore store) {
         Objects.requireNonNull(mapping, "mapping");
         Objects.requireNonNull(store, "store");
 
-        final TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor(store);
+        final SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor(store);
         visitor.accept(
             mapping.label()
         );
@@ -53,7 +53,7 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
     }
 
     // @VisibleForTesting
-    TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
+    SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
         super();
         this.store = store;
     }
@@ -72,7 +72,7 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
         if (false == visited.add(label)) {
             throw new IllegalArgumentException(
                 "Cycle detected for " + visited.stream()
-                    .map(TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor::quote)
+                    .map(SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor::quote)
                     .collect(Collectors.joining(
                             " -> ",
                             "",
