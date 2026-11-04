@@ -25,6 +25,8 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.InvalidTextLengthException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.CanHaveCurrencyValueTesting;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
@@ -103,6 +105,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest implements PublicClassTesting<SpreadsheetFormula>,
     CanBeEmptyTesting,
+    CanHaveCurrencyValueTesting,
     CanReplaceReferencesTesting2<SpreadsheetFormula>,
     DateTimeContextTesting,
     DecimalNumberContextTesting,
@@ -3682,6 +3685,62 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         return SpreadsheetFormula.unmarshall(
             jsonNode,
             context
+        );
+    }
+
+    // CanHaveCurrencyValue.............................................................................................
+
+    @Test
+    public void testShouldHaveCurrencyValueWithEmpty() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetFormula.EMPTY,
+            false
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueMissingValueType() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetFormula.EMPTY.setText("=1+2"),
+            false
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithValueTypeCurrency() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+                .setValueType(
+                    Optional.of(ValueType.CURRENCY_VALUE)
+                ),
+            true
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithValueTypeNumber() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+                .setValueType(
+                    Optional.of(ValueType.NUMBER)
+                ),
+            false
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithCurrencyValue() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+                .setValue(
+                    Optional.of(
+                        CurrencyValue.with(
+                            1,
+                            CURRENCY_CODE
+                        )
+                    )
+                ),
+            false
         );
     }
 
