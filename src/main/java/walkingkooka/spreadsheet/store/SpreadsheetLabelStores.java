@@ -32,10 +32,10 @@ public final class SpreadsheetLabelStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see ReadOnlySpreadsheetLabelStore}
+     * {@see SpreadsheetLabelStoreReadOnly}
      */
     public static SpreadsheetLabelStore readOnly(final SpreadsheetLabelStore store) {
-        return ReadOnlySpreadsheetLabelStore.with(store);
+        return SpreadsheetLabelStoreReadOnly.with(store);
     }
 
     /**

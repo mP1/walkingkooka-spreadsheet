@@ -32,13 +32,13 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<ReadOnlySpreadsheetLabelStore>
-    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetLabelStore, SpreadsheetLabelName, SpreadsheetLabelMapping>,
-    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetLabelStore> {
+public final class SpreadsheetLabelStoreReadOnlyTest extends SpreadsheetLabelStoreTestCase<SpreadsheetLabelStoreReadOnly>
+    implements ReadOnlyStoreTesting<SpreadsheetLabelStoreReadOnly, SpreadsheetLabelName, SpreadsheetLabelMapping>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetLabelStoreReadOnly> {
 
     @Test
     public void testWithNullStoreFails() {
-        assertThrows(NullPointerException.class, () -> ReadOnlySpreadsheetLabelStore.with(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetLabelStoreReadOnly.with(null));
     }
 
     @Test
@@ -49,7 +49,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, REFERENCE);
         store.save(mapping);
 
-        assertSame(mapping, ReadOnlySpreadsheetLabelStore.with(store).loadOrFail(LABEL));
+        assertSame(mapping, SpreadsheetLabelStoreReadOnly.with(store).loadOrFail(LABEL));
     }
 
     @Override
@@ -101,7 +101,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(ReadOnlySpreadsheetLabelStore.with(store), 0, 3, a.label(), b.label(), c.label());
+        this.idsAndCheck(SpreadsheetLabelStoreReadOnly.with(store), 0, 3, a.label(), b.label(), c.label());
     }
 
     @SuppressWarnings("unused")
@@ -123,7 +123,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         store.save(c);
 
         this.valuesAndCheck(
-            ReadOnlySpreadsheetLabelStore.with(store),
+            SpreadsheetLabelStoreReadOnly.with(store),
             0,
             3,
             a,
@@ -144,7 +144,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(reference);
 
         this.findLabelsWithReferenceAndCheck(
-            ReadOnlySpreadsheetLabelStore.with(
+            SpreadsheetLabelStoreReadOnly.with(
                 new FakeSpreadsheetLabelStore() {
                     @Override
                     public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference r,
@@ -176,18 +176,18 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     @Test
     public void testToString() {
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.fake();
-        this.toStringAndCheck(ReadOnlySpreadsheetLabelStore.with(store), store.toString());
+        this.toStringAndCheck(SpreadsheetLabelStoreReadOnly.with(store), store.toString());
     }
 
     @Override
-    public ReadOnlySpreadsheetLabelStore createStore() {
-        return ReadOnlySpreadsheetLabelStore.with(SpreadsheetLabelStores.treeMap());
+    public SpreadsheetLabelStoreReadOnly createStore() {
+        return SpreadsheetLabelStoreReadOnly.with(SpreadsheetLabelStores.treeMap());
     }
 
-    private ReadOnlySpreadsheetLabelStore createStore2() {
+    private SpreadsheetLabelStoreReadOnly createStore2() {
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(this.labelMapping());
-        return ReadOnlySpreadsheetLabelStore.with(store);
+        return SpreadsheetLabelStoreReadOnly.with(store);
     }
 
     private SpreadsheetLabelMapping labelMapping() {
@@ -215,8 +215,8 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         store2.save(mapping);
 
         this.checkEquals(
-            ReadOnlySpreadsheetLabelStore.with(store1),
-            ReadOnlySpreadsheetLabelStore.with(store2)
+            SpreadsheetLabelStoreReadOnly.with(store1),
+            SpreadsheetLabelStoreReadOnly.with(store2)
         );
     }
 
@@ -229,19 +229,24 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         );
 
         this.checkNotEquals(
-            ReadOnlySpreadsheetLabelStore.with(different)
+            SpreadsheetLabelStoreReadOnly.with(different)
         );
     }
 
     @Override
-    public ReadOnlySpreadsheetLabelStore createObject() {
+    public SpreadsheetLabelStoreReadOnly createObject() {
         return this.createStore();
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<ReadOnlySpreadsheetLabelStore> type() {
-        return ReadOnlySpreadsheetLabelStore.class;
+    public Class<SpreadsheetLabelStoreReadOnly> type() {
+        return SpreadsheetLabelStoreReadOnly.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

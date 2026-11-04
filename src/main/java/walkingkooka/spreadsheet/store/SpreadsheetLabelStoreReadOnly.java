@@ -31,14 +31,14 @@ import java.util.Set;
 /**
  * Wraps another store and presents a readonly view.
  */
-final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
+final class SpreadsheetLabelStoreReadOnly implements SpreadsheetLabelStore {
 
-    static ReadOnlySpreadsheetLabelStore with(final SpreadsheetLabelStore store) {
+    static SpreadsheetLabelStoreReadOnly with(final SpreadsheetLabelStore store) {
         Objects.requireNonNull(store, "store");
-        return new ReadOnlySpreadsheetLabelStore(store);
+        return new SpreadsheetLabelStoreReadOnly(store);
     }
 
-    private ReadOnlySpreadsheetLabelStore(SpreadsheetLabelStore store) {
+    private SpreadsheetLabelStoreReadOnly(SpreadsheetLabelStore store) {
         this.store = store;
     }
 
@@ -140,11 +140,11 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof ReadOnlySpreadsheetLabelStore &&
-                this.equals0((ReadOnlySpreadsheetLabelStore) other));
+            (other instanceof SpreadsheetLabelStoreReadOnly &&
+                this.equals0((SpreadsheetLabelStoreReadOnly) other));
     }
 
-    private boolean equals0(final ReadOnlySpreadsheetLabelStore other) {
+    private boolean equals0(final SpreadsheetLabelStoreReadOnly other) {
         return this.store.equals(other.store);
     }
     
