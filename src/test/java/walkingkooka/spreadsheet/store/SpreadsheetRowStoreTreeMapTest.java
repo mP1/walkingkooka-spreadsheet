@@ -156,6 +156,11 @@ implements HashCodeEqualsDefinedTesting2<SpreadsheetRowStoreTreeMap> {
 
     @Override
     public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
         return TreeMap.class.getSimpleName();
     }
 }
