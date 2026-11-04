@@ -54,10 +54,10 @@ public final class SpreadsheetMetadataStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeMapSpreadsheetMetadataStore}
+     * {@see SpreadsheetMetadataStoreTreeMap}
      */
     public static SpreadsheetMetadataStore treeMap() {
-        return TreeMapSpreadsheetMetadataStore.empty();
+        return SpreadsheetMetadataStoreTreeMap.empty();
     }
 
     /**

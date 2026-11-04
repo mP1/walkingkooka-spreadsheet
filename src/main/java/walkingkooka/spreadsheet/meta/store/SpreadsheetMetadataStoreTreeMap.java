@@ -38,22 +38,22 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetMetadataStore} that uses a {@link Map}.
  */
-final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore {
+final class SpreadsheetMetadataStoreTreeMap implements SpreadsheetMetadataStore {
 
     /**
-     * Factory that creates a new {@link TreeMapSpreadsheetMetadataStore}
+     * Factory that creates a new {@link SpreadsheetMetadataStoreTreeMap}
      */
-    static TreeMapSpreadsheetMetadataStore empty() {
-        return new TreeMapSpreadsheetMetadataStore();
+    static SpreadsheetMetadataStoreTreeMap empty() {
+        return new SpreadsheetMetadataStoreTreeMap();
     }
 
     /**
      * Private ctor.
      */
-    private TreeMapSpreadsheetMetadataStore() {
+    private SpreadsheetMetadataStoreTreeMap() {
         super();
 
-        this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::idSetter);
+        this.store = Stores.treeMap(Comparator.naturalOrder(), SpreadsheetMetadataStoreTreeMap::idSetter);
 
     }
 
@@ -167,11 +167,11 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof TreeMapSpreadsheetMetadataStore &&
+            other instanceof SpreadsheetMetadataStoreTreeMap &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final TreeMapSpreadsheetMetadataStore other) {
+    private boolean equals0(final SpreadsheetMetadataStoreTreeMap other) {
         return this.store.equals(other.store);
     }
 

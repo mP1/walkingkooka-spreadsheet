@@ -29,8 +29,8 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.TreeMap;
 
-public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<TreeMapSpreadsheetMetadataStore>
-    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetMetadataStore> {
+public final class SpreadsheetMetadataStoreTreeMapTest extends SpreadsheetMetadataStoreTestCase<SpreadsheetMetadataStoreTreeMap>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetMetadataStoreTreeMap> {
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -46,7 +46,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
 
     @Test
     public void testFindByNameWithEmpty() {
-        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+        final SpreadsheetMetadataStoreTreeMap store = this.createStore();
 
         final SpreadsheetMetadata metadata1 = store.save(
             createMetadata("Hello1")
@@ -68,7 +68,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
 
     @Test
     public void testFindByNameWithExactNameMatch() {
-        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+        final SpreadsheetMetadataStoreTreeMap store = this.createStore();
 
         final SpreadsheetMetadata metadata1 = store.save(
             createMetadata("Hello1")
@@ -89,7 +89,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
 
     @Test
     public void testFindByNameWithMultipleCommonPrefix() {
-        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+        final SpreadsheetMetadataStoreTreeMap store = this.createStore();
 
         final SpreadsheetMetadata metadata1 = store.save(
             createMetadata("Hello1")
@@ -120,7 +120,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
 
     @Test
     public void testFindByNameWithMultipleCommonPrefixAndOffsetAndCount() {
-        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+        final SpreadsheetMetadataStoreTreeMap store = this.createStore();
 
         final SpreadsheetMetadata metadata1 = store.save(
             createMetadata("Hello1")
@@ -168,15 +168,15 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     }
 
     @Override
-    public TreeMapSpreadsheetMetadataStore createStore() {
-        return TreeMapSpreadsheetMetadataStore.empty();
+    public SpreadsheetMetadataStoreTreeMap createStore() {
+        return SpreadsheetMetadataStoreTreeMap.empty();
     }
 
     // hashCode/equals..................................................................................................
 
     @Test
     public void testEqualsDifferentStore() {
-        final TreeMapSpreadsheetMetadataStore store = TreeMapSpreadsheetMetadataStore.empty();
+        final SpreadsheetMetadataStoreTreeMap store = SpreadsheetMetadataStoreTreeMap.empty();
         store.save(
             createMetadata("Different")
         );
@@ -185,14 +185,14 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     }
 
     @Override
-    public TreeMapSpreadsheetMetadataStore createObject() {
+    public SpreadsheetMetadataStoreTreeMap createObject() {
         return this.createStore();
     }
 
     // toString.........................................................................................................
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+        final SpreadsheetMetadataStoreTreeMap store = this.createStore();
         store.save(this.metadata(1, "user1@example.com"));
         store.save(this.metadata(2, "user2@example.com"));
 
@@ -223,14 +223,17 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     // class.........................................................................................................
 
     @Override
-    public Class<TreeMapSpreadsheetMetadataStore> type() {
-        return TreeMapSpreadsheetMetadataStore.class;
+    public Class<SpreadsheetMetadataStoreTreeMap> type() {
+        return SpreadsheetMetadataStoreTreeMap.class;
     }
-
-    // TypeNameTesting..................................................................
 
     @Override
     public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
         return TreeMap.class.getSimpleName();
     }
 }
