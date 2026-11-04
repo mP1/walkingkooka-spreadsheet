@@ -26,12 +26,12 @@ import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 
 import java.util.TreeMap;
 
-final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTestCase<TreeMapSpreadsheetColumnStore> 
-    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetColumnStore> {
+final class SpreadsheetColumnStoreTreeMapTest extends SpreadsheetColumnStoreTestCase<SpreadsheetColumnStoreTreeMap>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetColumnStoreTreeMap> {
 
     @Test
     public void testLoadColumns() {
-        final TreeMapSpreadsheetColumnStore store = this.createStore();
+        final SpreadsheetColumnStoreTreeMap store = this.createStore();
 
         final SpreadsheetColumn a = SpreadsheetColumn.with(
             SpreadsheetSelection.parseColumn("A")
@@ -64,7 +64,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
 
     @Test
     public void testSaveColumns() {
-        final TreeMapSpreadsheetColumnStore store = this.createStore();
+        final SpreadsheetColumnStoreTreeMap store = this.createStore();
 
         final SpreadsheetColumn a = SpreadsheetColumn.with(
             SpreadsheetSelection.parseColumn("A")
@@ -84,16 +84,16 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
     }
 
     @Override
-    public TreeMapSpreadsheetColumnStore createStore() {
-        return TreeMapSpreadsheetColumnStore.create();
+    public SpreadsheetColumnStoreTreeMap createStore() {
+        return SpreadsheetColumnStoreTreeMap.create();
     }
 
     // hashCode/equals..................................................................................................
 
     @Test
     public void testEquals2() {
-        final TreeMapSpreadsheetColumnStore store1 = this.createStore();
-        final TreeMapSpreadsheetColumnStore store2 = this.createStore();
+        final SpreadsheetColumnStoreTreeMap store1 = this.createStore();
+        final SpreadsheetColumnStoreTreeMap store2 = this.createStore();
 
         final SpreadsheetColumn column = SpreadsheetColumn.with(
             SpreadsheetSelection.parseColumn("A")
@@ -110,7 +110,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
 
     @Test
     public void testEqualsDifferent() {
-        final TreeMapSpreadsheetColumnStore different = this.createStore();
+        final SpreadsheetColumnStoreTreeMap different = this.createStore();
 
         different.save(
             SpreadsheetColumn.with(
@@ -122,7 +122,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
     }
 
     @Override
-    public TreeMapSpreadsheetColumnStore createObject() {
+    public SpreadsheetColumnStoreTreeMap createObject() {
         return this.createStore();
     }
     
@@ -130,7 +130,7 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetColumnStore store = this.createStore();
+        final SpreadsheetColumnStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.parseColumn("B")
                 .column()
@@ -145,12 +145,17 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
     // class............................................................................................................
 
     @Override
-    public Class<TreeMapSpreadsheetColumnStore> type() {
-        return TreeMapSpreadsheetColumnStore.class;
+    public Class<SpreadsheetColumnStoreTreeMap> type() {
+        return SpreadsheetColumnStoreTreeMap.class;
     }
 
     @Override
     public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
         return TreeMap.class.getSimpleName();
     }
 }

@@ -34,10 +34,10 @@ public final class SpreadsheetColumnStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeMapSpreadsheetColumnStore}
+     * {@see SpreadsheetColumnStoreTreeMap}
      */
     public static SpreadsheetColumnStore treeMap() {
-        return TreeMapSpreadsheetColumnStore.create();
+        return SpreadsheetColumnStoreTreeMap.create();
     }
 
     /**
