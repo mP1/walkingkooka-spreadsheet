@@ -38,6 +38,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.convert.provider.FakeConverterProvider;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -2610,6 +2611,170 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     this.formatCell(
                         a1Cell,
                         null
+                    )
+                )
+
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithValueTypeCurrencyValueAndCurrencyValue() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final Optional<Object> value = Optional.of(
+            CurrencyValue.with(
+                12,
+                CURRENCY_CODE
+            )
+        );
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValueType(
+                        Optional.of(ValueType.CURRENCY_VALUE)
+                    ).setValue(value)
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    a1Cell.setFormattedValue(
+                        Optional.of(
+                            TextNode.text("12 FORMATTED_PATTERN_SUFFIX")
+                                .setTextStyle(STYLE)
+                        )
+                    )
+                )
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithValueTypeCurrencyValueAndNumber() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final Optional<Object> value = Optional.of(12);
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValueType(
+                        Optional.of(ValueType.CURRENCY_VALUE)
+                    ).setValue(value)
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell,
+                        value,
+                        STYLE
+                    )
+                )
+
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithCurrencyAndNumber() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final Optional<Object> value = Optional.of(12);
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(value)
+                    ).setCurrency(OPTIONAL_CURRENCY)
+                    .setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell,
+                        value,
+                        STYLE
+                    )
+                )
+
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithCurrencyAndNumber2() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final Optional<Object> value = Optional.of(12);
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(value)
+                    ).setCurrency(OPTIONAL_DIFFERENT_CURRENCY)
+                    .setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell,
+                        value,
+                        STYLE
                     )
                 )
 
