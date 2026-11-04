@@ -23,6 +23,7 @@ import walkingkooka.HasValue;
 import walkingkooka.InvalidTextLengthException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.currency.CanHaveCurrencyValue;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.header.HasContentType;
@@ -80,6 +81,7 @@ import java.util.function.Function;
  * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
 public final class SpreadsheetFormula implements CanBeEmpty,
+    CanHaveCurrencyValue,
     CanReplaceReferences<SpreadsheetFormula>,
     HasContentType,
     HasExpression,
@@ -990,6 +992,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         final Expression expression = this.expression.orElse(null);
         return this.value.isPresent() ||
             (null != expression && expression.isPure(context));
+    }
+
+    // CanHaveCurrencyValue.............................................................................................
+
+    @Override
+    public boolean shouldHaveCurrencyValue() {
+        return CanHaveCurrencyValue.maybeShouldHaveCurrencyValue(
+            this.valueType.orElse(null)
+        );
     }
 
     // HasContentType...................................................................................................
