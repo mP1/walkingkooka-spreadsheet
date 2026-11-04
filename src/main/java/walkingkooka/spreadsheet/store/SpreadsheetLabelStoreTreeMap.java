@@ -42,20 +42,20 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetLabelStore} that uses a {@link Map}.
  */
-final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore,
+final class SpreadsheetLabelStoreTreeMap implements SpreadsheetLabelStore,
     CanBeEmpty {
 
     /**
-     * Factory that creates a new {@link TreeMapSpreadsheetLabelStore}
+     * Factory that creates a new {@link SpreadsheetLabelStoreTreeMap}
      */
-    static TreeMapSpreadsheetLabelStore create() {
-        return new TreeMapSpreadsheetLabelStore();
+    static SpreadsheetLabelStoreTreeMap create() {
+        return new SpreadsheetLabelStoreTreeMap();
     }
 
     /**
      * Private ctor.
      */
-    private TreeMapSpreadsheetLabelStore() {
+    private SpreadsheetLabelStoreTreeMap() {
         super();
     }
 
@@ -69,7 +69,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore,
     public SpreadsheetLabelMapping save(final SpreadsheetLabelMapping mapping) {
         Objects.requireNonNull(mapping, "mapping");
 
-        TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor.cycleFreeTest(
+        SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor.cycleFreeTest(
             mapping,
             this
         );
@@ -178,7 +178,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore,
         Objects.requireNonNull(label, "label");
 
         return Sets.readOnly(
-            TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor.gather(
+            SpreadsheetLabelStoreTreeMapReferencesSpreadsheetSelectionVisitor.gather(
                 label,
                 this.mappings
             )
@@ -195,7 +195,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore,
             count
         );
 
-        return TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor.gather(
+        return SpreadsheetLabelStoreTreeMapFindLabelsWithReferencesSpreadsheetSelectionVisitor.gather(
             this.mappings,
             reference,
             offset,
@@ -230,11 +230,11 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof TreeMapSpreadsheetLabelStore &&
-                this.equals0((TreeMapSpreadsheetLabelStore) other));
+            (other instanceof SpreadsheetLabelStoreTreeMap &&
+                this.equals0((SpreadsheetLabelStoreTreeMap) other));
     }
 
-    private boolean equals0(final TreeMapSpreadsheetLabelStore other) {
+    private boolean equals0(final SpreadsheetLabelStoreTreeMap other) {
         return this.mappings.equals(other.mappings);
     }
     

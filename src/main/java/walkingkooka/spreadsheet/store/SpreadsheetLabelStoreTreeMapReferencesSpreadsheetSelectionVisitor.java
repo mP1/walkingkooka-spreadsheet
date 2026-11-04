@@ -32,17 +32,17 @@ import java.util.Set;
 /**
  * A {@link SpreadsheetSelectionVisitor} that visits all label targets, and aims to return only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRangeReference}.
  */
-final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetLabelStoreTreeMapReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Set<SpreadsheetCellReferenceOrRange> gather(final SpreadsheetLabelName label,
                                                        final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
-        final TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor(mappings);
+        final SpreadsheetLabelStoreTreeMapReferencesSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreTreeMapReferencesSpreadsheetSelectionVisitor(mappings);
         visitor.accept(label);
         return visitor.cellOrCellRanges;
     }
 
     // VisibleForTesting
-    TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
+    SpreadsheetLabelStoreTreeMapReferencesSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
         super();
 
         this.mappings = mappings;

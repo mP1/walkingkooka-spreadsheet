@@ -20,21 +20,23 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor>,
-    PackagePrivateClassTesting<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor> {
+public final class SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor>,
+    PackagePrivateClassTesting<SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor> {
 
     @Override
-    public TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor createVisitor() {
-        return new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor(null);
+    public SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor(null);
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetLabelStoreTreeMapCycleSpreadsheetSelectionVisitor.class;
     }
 
     @Override
     public String typeNamePrefix() {
-        return TreeMapSpreadsheetLabelStore.class.getSimpleName();
-    }
-
-    @Override
-    public Class<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor> type() {
-        return TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor.class;
+        return SpreadsheetLabelStoreTreeMap.class.getSimpleName();
     }
 }

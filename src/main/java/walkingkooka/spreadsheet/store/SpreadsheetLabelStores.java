@@ -39,10 +39,10 @@ public final class SpreadsheetLabelStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeMapSpreadsheetLabelStore}
+     * {@see SpreadsheetLabelStoreTreeMap}
      */
     public static SpreadsheetLabelStore treeMap() {
-        return TreeMapSpreadsheetLabelStore.create();
+        return SpreadsheetLabelStoreTreeMap.create();
     }
 
     /**
