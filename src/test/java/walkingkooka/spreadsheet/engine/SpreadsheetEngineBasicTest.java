@@ -2659,7 +2659,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
     }
 
     @Test
-    public void testLoadCellWithFormulaTextAndValueType() {
+    public void testLoadCellWithFormulaTextAndValueTypeText() {
         final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2687,6 +2687,46 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     this.formatCell(
                         a1Cell,
                         Optional.of("Hello"),
+                        STYLE
+                    )
+                )
+
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithFormulaTextAndValueTypeNumber() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("12")
+                        .setValueType(
+                            Optional.of(ValueType.TEXT)
+                        )
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell,
+                        Optional.of("12"),
                         STYLE
                     )
                 )
@@ -2729,6 +2769,92 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     )
                 )
 
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithValueTypeTextAndText() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final Optional<Object> value = Optional.of(
+            "Hello"
+        );
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValueType(
+                        Optional.of(ValueType.TEXT)
+                    ).setValue(value)
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    a1Cell.setFormattedValue(
+                        Optional.of(
+                            TextNode.text("Hello FORMATTED_PATTERN_SUFFIX")
+                                .setTextStyle(STYLE)
+                        )
+                    )
+                )
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithValueTypeNumberAndText() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValueType(
+                        Optional.of(ValueType.NUMBER)
+                    ).setText("'12")
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell.setFormula(
+                            a1Cell.formula()
+                                .setValue(
+                                    Optional.of(
+                                        EXPRESSION_NUMBER_KIND.create(12)
+                                    )
+                                )
+                        )
+                    )
+                )
             ).setColumnWidths(columnWidths("A")
             ).setRowHeights(rowHeights("1")
             ).setColumnCount(OptionalInt.of(1)

@@ -1839,6 +1839,17 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                                     )
                                 );
                             }
+                        } else {
+                            final ValueType valueType = cell.valueType()
+                                .orElse(null);
+                            if (null != valueType) {
+                                value = Optional.ofNullable(
+                                    context.convertOrFail(
+                                        valueOrNull,
+                                        valueType.type()
+                                    )
+                                );
+                            }
                         }
                     }
 
