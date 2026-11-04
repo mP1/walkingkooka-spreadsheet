@@ -32,10 +32,10 @@ public final class SpreadsheetCellReferencesStores implements PublicStaticHelper
     }
 
     /**
-     * {@see TreeMapSpreadsheetCellReferencesStore}
+     * {@see SpreadsheetCellReferencesStoreTreeMap}
      */
     public static SpreadsheetCellReferencesStore treeMap() {
-        return TreeMapSpreadsheetCellReferencesStore.empty();
+        return SpreadsheetCellReferencesStoreTreeMap.empty();
     }
 
     /**
