@@ -36,10 +36,10 @@ public final class SpreadsheetMetadataStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see ReadOnlySpreadsheetMetadataStore}
+     * {@see SpreadsheetMetadataStoreReadOnly}
      */
     public static SpreadsheetMetadataStore readOnly(final SpreadsheetMetadataStore store) {
-        return ReadOnlySpreadsheetMetadataStore.with(store);
+        return SpreadsheetMetadataStoreReadOnly.with(store);
     }
 
     /**

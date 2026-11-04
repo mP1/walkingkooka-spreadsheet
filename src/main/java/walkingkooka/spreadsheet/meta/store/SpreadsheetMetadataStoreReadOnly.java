@@ -29,14 +29,14 @@ import java.util.Set;
 /**
  * Wraps another {@link SpreadsheetMetadataStore} and presents a readonly view.
  */
-final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore {
+final class SpreadsheetMetadataStoreReadOnly implements SpreadsheetMetadataStore {
 
-    static ReadOnlySpreadsheetMetadataStore with(final SpreadsheetMetadataStore store) {
+    static SpreadsheetMetadataStoreReadOnly with(final SpreadsheetMetadataStore store) {
         Objects.requireNonNull(store, "store");
-        return new ReadOnlySpreadsheetMetadataStore(store);
+        return new SpreadsheetMetadataStoreReadOnly(store);
     }
 
-    private ReadOnlySpreadsheetMetadataStore(SpreadsheetMetadataStore store) {
+    private SpreadsheetMetadataStoreReadOnly(SpreadsheetMetadataStore store) {
         this.store = store;
     }
 
