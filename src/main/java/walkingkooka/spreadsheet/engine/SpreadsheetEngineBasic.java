@@ -21,6 +21,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
@@ -1802,15 +1804,45 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
             final Optional<Expression> maybeExpression = formula.expression();
             if (maybeExpression.isPresent()) {
                 try {
+                    Optional<Object> value = evaluation.evaluate(
+                        this,
+                        cell,
+                        loader,
+                        context
+                    );
+
+                    Object valueOrNull = value.orElse(null);
+
+                    // do nothing if value is a CurrencyValue or error
+                    if (false == (valueOrNull instanceof CurrencyValue || valueOrNull instanceof SpreadsheetError)) {
+
+                        // if cell should have a CurrencyValue convert the value to a CurrencyValue
+                        if (cell.shouldHaveCurrencyValue()) {
+
+                            // convert valueOrNull to CurrencyValue
+                            final Number number = context.convertOrFail(
+                                valueOrNull,
+                                Number.class
+                            );
+
+                            // create CurrencyValue using SpreadsheetCell.currency or context.currency
+                            value = Optional.ofNullable(
+                                CurrencyValue.with(
+                                    number,
+                                    CurrencyCode.fromCurrency(
+                                        cell.currency()
+                                            .orElse(
+                                                context.currency()
+                                            )
+                                    )
+                                )
+                            );
+                        }
+                    }
+
                     result = cell.setFormula(
-                        formula.setValue(
-                            evaluation.evaluate(
-                                this,
-                                cell,
-                                loader,
-                                context
-                            )
-                        ).setValueIfError(context)
+                        formula.setValue(value)
+                            .setValueIfError(context)
                     );
                 } catch (final UnsupportedOperationException rethrow) {
                     throw rethrow;
