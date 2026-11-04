@@ -1812,30 +1812,33 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
 
                     Object valueOrNull = value.orElse(null);
 
-                    // do nothing if value is a CurrencyValue or error
-                    if (false == (valueOrNull instanceof CurrencyValue || valueOrNull instanceof SpreadsheetError)) {
+                    // skip if value is error
+                    if (false == valueOrNull instanceof SpreadsheetError) {
 
                         // if cell should have a CurrencyValue convert the value to a CurrencyValue
                         if (cell.shouldHaveCurrencyValue()) {
 
-                            // convert valueOrNull to CurrencyValue
-                            final Number number = context.convertOrFail(
-                                valueOrNull,
-                                Number.class
-                            );
+                            // already CurrencyValue then skip
+                            if (false == (valueOrNull instanceof CurrencyValue)) {
+                                // convert valueOrNull to CurrencyValue
+                                final Number number = context.convertOrFail(
+                                    valueOrNull,
+                                    Number.class
+                                );
 
-                            // create CurrencyValue using SpreadsheetCell.currency or context.currency
-                            value = Optional.ofNullable(
-                                CurrencyValue.with(
-                                    number,
-                                    CurrencyCode.fromCurrency(
-                                        cell.currency()
-                                            .orElse(
-                                                context.currency()
-                                            )
+                                // create CurrencyValue using SpreadsheetCell.currency or context.currency
+                                value = Optional.ofNullable(
+                                    CurrencyValue.with(
+                                        number,
+                                        CurrencyCode.fromCurrency(
+                                            cell.currency()
+                                                .orElse(
+                                                    context.currency()
+                                                )
+                                        )
                                     )
-                                )
-                            );
+                                );
+                            }
                         }
                     }
 
