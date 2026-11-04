@@ -25,15 +25,15 @@ import java.util.Objects;
 /**
  * A read only wrapper around a {@link SpreadsheetExpressionReferencesStore}
  */
-final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference>
+final class SpreadsheetExpressionReferencesStoreReadOnly<T extends SpreadsheetExpressionReference>
     implements SpreadsheetExpressionReferencesStoreDelegator<T> {
 
-    static <T extends SpreadsheetExpressionReference> ReadOnlySpreadsheetExpressionReferencesStore<T> with(final SpreadsheetExpressionReferencesStore<T> store) {
+    static <T extends SpreadsheetExpressionReference> SpreadsheetExpressionReferencesStoreReadOnly<T> with(final SpreadsheetExpressionReferencesStore<T> store) {
         Objects.requireNonNull(store, "store");
-        return new ReadOnlySpreadsheetExpressionReferencesStore<>(store);
+        return new SpreadsheetExpressionReferencesStoreReadOnly<>(store);
     }
 
-    private ReadOnlySpreadsheetExpressionReferencesStore(final SpreadsheetExpressionReferencesStore<T> store) {
+    private SpreadsheetExpressionReferencesStoreReadOnly(final SpreadsheetExpressionReferencesStore<T> store) {
         this.store = store;
     }
 
@@ -88,11 +88,11 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof ReadOnlySpreadsheetExpressionReferencesStore &&
-                this.equals0((ReadOnlySpreadsheetExpressionReferencesStore<?>) other));
+            (other instanceof SpreadsheetExpressionReferencesStoreReadOnly &&
+                this.equals0((SpreadsheetExpressionReferencesStoreReadOnly<?>) other));
     }
 
-    private boolean equals0(final ReadOnlySpreadsheetExpressionReferencesStore<?> other) {
+    private boolean equals0(final SpreadsheetExpressionReferencesStoreReadOnly<?> other) {
         return this.store.equals(other.store);
     }
 
