@@ -53,10 +53,10 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeMapSpreadsheetCellStore}
+     * {@see SpreadsheetCellStoreTreeMap}
      */
     public static SpreadsheetCellStore treeMap() {
-        return TreeMapSpreadsheetCellStore.create();
+        return SpreadsheetCellStoreTreeMap.create();
     }
 
     /**

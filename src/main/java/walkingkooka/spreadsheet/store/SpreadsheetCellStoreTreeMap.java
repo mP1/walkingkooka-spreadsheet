@@ -52,22 +52,22 @@ import java.util.stream.Stream;
 /**
  * A {@link SpreadsheetCellStore} that uses a {@link Map}.
  */
-final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore,
+final class SpreadsheetCellStoreTreeMap implements SpreadsheetCellStore,
     CanBeEmpty {
 
     /**
-     * Factory that creates a new {@link TreeMapSpreadsheetCellStore}
+     * Factory that creates a new {@link SpreadsheetCellStoreTreeMap}
      */
-    static TreeMapSpreadsheetCellStore create() {
-        return new TreeMapSpreadsheetCellStore();
+    static SpreadsheetCellStoreTreeMap create() {
+        return new SpreadsheetCellStoreTreeMap();
     }
 
     /**
      * Private ctor.
      */
-    private TreeMapSpreadsheetCellStore() {
+    private SpreadsheetCellStoreTreeMap() {
         super();
-        this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetCellStore::idSetter);
+        this.store = Stores.treeMap(Comparator.naturalOrder(), SpreadsheetCellStoreTreeMap::idSetter);
     }
 
     private static SpreadsheetCell idSetter(final SpreadsheetCellReference id, final SpreadsheetCell spreadsheetCell) {
@@ -151,7 +151,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore,
             )
         );
 
-        final TreeMapSpreadsheetCellStoreSortedList list;
+        final SpreadsheetCellStoreTreeMapSortedList list;
 
         switch (path) {
             case LRTD:
@@ -492,34 +492,34 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore,
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 
-    private final TreeMapSpreadsheetCellStoreSortedList lrtd = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList lrtd = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.LRTD
     );
-    private final TreeMapSpreadsheetCellStoreSortedList rltd = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList rltd = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.RLTD
     );
 
-    private final TreeMapSpreadsheetCellStoreSortedList lrbu = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList lrbu = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.LRBU
     );
 
-    private final TreeMapSpreadsheetCellStoreSortedList rlbu = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList rlbu = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.RLBU
     );
 
-    private final TreeMapSpreadsheetCellStoreSortedList tdlr = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList tdlr = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.TDLR
     );
 
-    private final TreeMapSpreadsheetCellStoreSortedList tdrl = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList tdrl = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.TDRL
     );
 
-    private final TreeMapSpreadsheetCellStoreSortedList bulr = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList bulr = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.BULR
     );
 
-    private final TreeMapSpreadsheetCellStoreSortedList burl = TreeMapSpreadsheetCellStoreSortedList.with(
+    private final SpreadsheetCellStoreTreeMapSortedList burl = SpreadsheetCellStoreTreeMapSortedList.with(
         SpreadsheetCellRangeReferencePath.BURL
     );
 
@@ -533,11 +533,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof TreeMapSpreadsheetCellStore &&
-                this.equals0((TreeMapSpreadsheetCellStore) other));
+            (other instanceof SpreadsheetCellStoreTreeMap &&
+                this.equals0((SpreadsheetCellStoreTreeMap) other));
     }
 
-    private boolean equals0(final TreeMapSpreadsheetCellStore other) {
+    private boolean equals0(final SpreadsheetCellStoreTreeMap other) {
         return this.store.equals(other.store);
     }
 

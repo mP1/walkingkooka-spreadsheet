@@ -31,15 +31,15 @@ import java.util.Optional;
 
 /**
  * A very simple abstraction that holds {@link SpreadsheetCell cells} sorted by the given {@link Comparator} only exists
- * to support {@link TreeMapSpreadsheetCellStore#loadCellRange(SpreadsheetCellRangeReference, SpreadsheetCellRangeReferencePath, int, int)}.
+ * to support {@link SpreadsheetCellStoreTreeMap#loadCellRange(SpreadsheetCellRangeReference, SpreadsheetCellRangeReferencePath, int, int)}.
  */
-final class TreeMapSpreadsheetCellStoreSortedList {
+final class SpreadsheetCellStoreTreeMapSortedList {
 
-    static TreeMapSpreadsheetCellStoreSortedList with(final SpreadsheetCellRangeReferencePath path) {
-        return new TreeMapSpreadsheetCellStoreSortedList(path);
+    static SpreadsheetCellStoreTreeMapSortedList with(final SpreadsheetCellRangeReferencePath path) {
+        return new SpreadsheetCellStoreTreeMapSortedList(path);
     }
 
-    private TreeMapSpreadsheetCellStoreSortedList(final SpreadsheetCellRangeReferencePath path) {
+    private SpreadsheetCellStoreTreeMapSortedList(final SpreadsheetCellRangeReferencePath path) {
         super();
         this.comparator = SpreadsheetCellReference.cellComparator(
             path.comparator()

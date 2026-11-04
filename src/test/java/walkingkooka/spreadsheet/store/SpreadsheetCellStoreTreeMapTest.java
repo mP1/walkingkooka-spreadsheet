@@ -46,15 +46,15 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore>
+final class SpreadsheetCellStoreTreeMapTest extends SpreadsheetCellStoreTestCase<SpreadsheetCellStoreTreeMap>
     implements CanBeEmptyTesting,
-    HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetCellStore> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetCellStoreTreeMap> {
 
     // between..........................................................................................................
 
     @Test
     public void testBetween() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY);
@@ -89,7 +89,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRange() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -126,7 +126,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeMixedReferenceKind() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -164,7 +164,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeOppositeReferenceKind() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -201,7 +201,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeCountZero() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -234,7 +234,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeCountLess() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -270,7 +270,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeRLTD() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -307,7 +307,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeRLTDOffset() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -343,7 +343,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeRLTDOffset2() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -378,7 +378,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeRLTDCount() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -414,7 +414,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeBULRCount() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -457,7 +457,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeAllLrtd() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -495,7 +495,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testLoadCellRangeAllBurl() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1
@@ -541,7 +541,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         store.addStoreWatcher(
             new StoreWatcher<>() {
@@ -571,7 +571,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testDeleteCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         store.save(
             SpreadsheetSelection.A1
@@ -612,7 +612,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
             SpreadsheetFormula.EMPTY.setText("'Hello")
         );
 
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(a1);
 
         final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -645,7 +645,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testClearParsedFormulaExpressions() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell withoutParsedFormula = SpreadsheetSelection.A1
             .setFormula(
@@ -676,7 +676,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testClearParsedFormulaExpressions2() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell withoutParsedFormula = SpreadsheetSelection.A1
             .setFormula(
@@ -739,7 +739,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testClearFormatted() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell withoutFormatted = SpreadsheetSelection.A1
             .setFormula(
@@ -772,7 +772,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testClearFormatted2() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell withoutFormatted = SpreadsheetSelection.A1
             .setFormula(
@@ -848,13 +848,13 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testMaxColumnWidthColumnWithoutCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         maxColumnWidthAndCheck(store, SpreadsheetSelection.parseColumn("A"), 0);
     }
 
     @Test
     public void testMaxColumnWidthWithCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(cellWithWidth("C3", 50.0));
         store.save(cellWithWidth("D4", 150.0));
 
@@ -863,7 +863,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testMaxColumnWidthWithCellsMissingWidth() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(cellWithWidth("C3", 50.0));
         store.save(cellWithWidth("C4", 0));
 
@@ -872,7 +872,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testMaxColumnWidthWithSeveralCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(cellWithWidth("C3", 50.0));
         store.save(cellWithWidth("C4", 40.0));
         store.save(cellWithWidth("C5", 99.0));
@@ -894,7 +894,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         return cell;
     }
 
-    private void maxColumnWidthAndCheck(final TreeMapSpreadsheetCellStore store,
+    private void maxColumnWidthAndCheck(final SpreadsheetCellStoreTreeMap store,
                                         final SpreadsheetColumnReference column,
                                         final double expected) {
         this.checkEquals(expected,
@@ -911,13 +911,13 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testMaxRowHeightRowWithoutCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         maxRowHeightAndCheck(store, SpreadsheetSelection.parseRow("9"), 0);
     }
 
     @Test
     public void testMaxRowHeightWithCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(cellWithHeight("C3", 50.0));
         store.save(cellWithHeight("D4", 150.0));
 
@@ -926,7 +926,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testMaxRowHeightWithCellsMissingWidth() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(cellWithHeight("C3", 50.0));
         store.save(cellWithHeight("C4", 0));
 
@@ -935,7 +935,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testMaxRowHeightWithSeveralCells() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(cellWithHeight("C3", 50.0));
         store.save(cellWithHeight("D3", 40.0));
         store.save(cellWithHeight("E3", 99.0));
@@ -958,7 +958,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         return cell;
     }
 
-    private void maxRowHeightAndCheck(final TreeMapSpreadsheetCellStore store,
+    private void maxRowHeightAndCheck(final SpreadsheetCellStoreTreeMap store,
                                       final SpreadsheetRowReference row,
                                       final double expected) {
         this.checkEquals(expected,
@@ -970,7 +970,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testFindCellsWithValueType() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1.setFormula(
@@ -1043,7 +1043,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testFindCellsWithValueTypeExpressionNumber() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1.setFormula(
@@ -1120,7 +1120,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testFindCellsWithValueTypeWildcard() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1.setFormula(
@@ -1194,7 +1194,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testFindCellsWithValueTypeWildcardAndMax() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1.setFormula(
@@ -1269,7 +1269,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testCountCellsWithValueType() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1.setFormula(
@@ -1340,7 +1340,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testCountCellsWithValueTypeWildcard() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
             SpreadsheetSelection.A1.setFormula(
@@ -1381,7 +1381,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testNextEmptyColumnWhenEmptyRow() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.A1
                 .setFormula(
@@ -1399,7 +1399,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testNextEmptyColumnWhenSeveralRows() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.A1
                 .setFormula(
@@ -1438,7 +1438,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testNextEmptyColumnWhenFull() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.A1
                 .setFormula(
@@ -1472,7 +1472,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testNextEmptyRowWhenEmptyColumn() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.A1
                 .setFormula(
@@ -1490,7 +1490,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testNextEmptyRowWhenSeveralColumns() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.A1
                 .setFormula(
@@ -1529,7 +1529,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testNextEmptyRowWhenFull() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.A1
                 .setFormula(
@@ -1560,16 +1560,16 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Override
-    public TreeMapSpreadsheetCellStore createStore() {
-        return TreeMapSpreadsheetCellStore.create();
+    public SpreadsheetCellStoreTreeMap createStore() {
+        return SpreadsheetCellStoreTreeMap.create();
     }
 
     // hashCode/equals..................................................................................................
 
     @Test
     public void testEquals2() {
-        final TreeMapSpreadsheetCellStore store1 = this.createStore();
-        final TreeMapSpreadsheetCellStore store2 = this.createStore();
+        final SpreadsheetCellStoreTreeMap store1 = this.createStore();
+        final SpreadsheetCellStoreTreeMap store2 = this.createStore();
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1")
@@ -1586,7 +1586,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testEqualsDifferent() {
-        final TreeMapSpreadsheetCellStore different = this.createStore();
+        final SpreadsheetCellStoreTreeMap different = this.createStore();
 
         different.save(
             SpreadsheetSelection.A1.setFormula(
@@ -1598,7 +1598,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Override
-    public TreeMapSpreadsheetCellStore createObject() {
+    public SpreadsheetCellStoreTreeMap createObject() {
         return this.createStore();
     }
     
@@ -1606,7 +1606,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.A1
                 .setFormula(
@@ -1633,7 +1633,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
     @Test
     public void testIsEmptyWhenNotEmpty() {
-        final TreeMapSpreadsheetCellStore store = this.createStore();
+        final SpreadsheetCellStoreTreeMap store = this.createStore();
 
         store.save(
             SpreadsheetSelection.A1
@@ -1649,12 +1649,17 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     // class.............................................................................................................
 
     @Override
-    public Class<TreeMapSpreadsheetCellStore> type() {
-        return TreeMapSpreadsheetCellStore.class;
+    public Class<SpreadsheetCellStoreTreeMap> type() {
+        return SpreadsheetCellStoreTreeMap.class;
     }
 
     @Override
     public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
         return TreeMap.class.getSimpleName();
     }
 }
