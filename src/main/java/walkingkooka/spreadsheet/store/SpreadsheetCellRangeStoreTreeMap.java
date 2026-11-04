@@ -34,21 +34,21 @@ import java.util.function.Supplier;
 /**
  * A {@link SpreadsheetCellRangeStore} that wraps a {@link walkingkooka.store.TreeMapMultiValueStore}.
  */
-final class TreeMapSpreadsheetCellRangeStore implements SpreadsheetCellRangeStore,
+final class SpreadsheetCellRangeStoreTreeMap implements SpreadsheetCellRangeStore,
     MultiValueStoreDelegator<SpreadsheetCellRangeReference, SpreadsheetCellReference>,
     CanBeEmpty {
 
     /**
-     * Factory that creates a new {@link TreeMapSpreadsheetCellRangeStore}
+     * Factory that creates a new {@link SpreadsheetCellRangeStoreTreeMap}
      */
-    static TreeMapSpreadsheetCellRangeStore create() {
-        return new TreeMapSpreadsheetCellRangeStore();
+    static SpreadsheetCellRangeStoreTreeMap create() {
+        return new SpreadsheetCellRangeStoreTreeMap();
     }
 
     /**
      * Private ctor.
      */
-    private TreeMapSpreadsheetCellRangeStore() {
+    private SpreadsheetCellRangeStoreTreeMap() {
         super();
 
         this.store = MultiValueStores.treeMap(
@@ -118,11 +118,11 @@ final class TreeMapSpreadsheetCellRangeStore implements SpreadsheetCellRangeStor
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof TreeMapSpreadsheetCellRangeStore &&
-                this.equals0((TreeMapSpreadsheetCellRangeStore) other));
+            (other instanceof SpreadsheetCellRangeStoreTreeMap &&
+                this.equals0((SpreadsheetCellRangeStoreTreeMap) other));
     }
 
-    private boolean equals0(final TreeMapSpreadsheetCellRangeStore other) {
+    private boolean equals0(final SpreadsheetCellRangeStoreTreeMap other) {
         return this.store.equals(other.store);
     }
 

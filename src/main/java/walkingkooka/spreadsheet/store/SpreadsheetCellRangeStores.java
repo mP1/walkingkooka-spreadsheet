@@ -39,10 +39,10 @@ public final class SpreadsheetCellRangeStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeMapSpreadsheetCellRangeStore}
+     * {@see SpreadsheetCellRangeStoreTreeMap}
      */
     public static SpreadsheetCellRangeStore treeMap() {
-        return TreeMapSpreadsheetCellRangeStore.create();
+        return SpreadsheetCellRangeStoreTreeMap.create();
     }
 
     /**
