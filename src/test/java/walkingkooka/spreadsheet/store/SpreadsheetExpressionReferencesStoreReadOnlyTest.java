@@ -26,9 +26,9 @@ import walkingkooka.store.ReadOnlyStoreTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends SpreadsheetExpressionReferencesStoreTestCase<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>, SpreadsheetCellReference>
-    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>, SpreadsheetCellReference, SpreadsheetCellReference>,
-    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>> {
+public class SpreadsheetExpressionReferencesStoreReadOnlyTest extends SpreadsheetExpressionReferencesStoreTestCase<SpreadsheetExpressionReferencesStoreReadOnly<SpreadsheetCellReference>, SpreadsheetCellReference>
+    implements ReadOnlyStoreTesting<SpreadsheetExpressionReferencesStoreReadOnly<SpreadsheetCellReference>, SpreadsheetCellReference, SpreadsheetCellReference>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetExpressionReferencesStoreReadOnly<SpreadsheetCellReference>> {
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
@@ -53,7 +53,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
             B1
         );
 
-        final ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> readOnly = ReadOnlySpreadsheetExpressionReferencesStore.with(store);
+        final SpreadsheetExpressionReferencesStoreReadOnly<SpreadsheetCellReference> readOnly = SpreadsheetExpressionReferencesStoreReadOnly.with(store);
 
         this.findValuesByIdAndCheck(
             readOnly,
@@ -126,7 +126,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
 
         this.idsAndCheck(
-            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
+            SpreadsheetExpressionReferencesStoreReadOnly.with(store),
             0,
             3,
             A1, B1, C1
@@ -158,7 +158,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
 
         //noinspection unchecked
         this.valuesAndCheck(
-            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
+            SpreadsheetExpressionReferencesStoreReadOnly.with(store),
             0,
             3,
             F99, G99, H99
@@ -215,7 +215,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
 
         this.countAndCheck(
-            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
+            SpreadsheetExpressionReferencesStoreReadOnly.with(store),
             2
         );
     }
@@ -233,9 +233,9 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     }
 
     @Override
-    public ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> createStore() {
+    public SpreadsheetExpressionReferencesStoreReadOnly<SpreadsheetCellReference> createStore() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> s = SpreadsheetExpressionReferencesStores.treeMap();
-        return ReadOnlySpreadsheetExpressionReferencesStore.with(s);
+        return SpreadsheetExpressionReferencesStoreReadOnly.with(s);
     }
 
     // hashCode/equals..................................................................................................
@@ -264,8 +264,8 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
 
         this.checkEquals(
-            ReadOnlySpreadsheetExpressionReferencesStore.with(store1),
-            ReadOnlySpreadsheetExpressionReferencesStore.with(store2)
+            SpreadsheetExpressionReferencesStoreReadOnly.with(store1),
+            SpreadsheetExpressionReferencesStoreReadOnly.with(store2)
         );
     }
 
@@ -283,12 +283,12 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
 
         this.checkNotEquals(
-            ReadOnlySpreadsheetExpressionReferencesStore.with(different)
+            SpreadsheetExpressionReferencesStoreReadOnly.with(different)
         );
     }
 
     @Override
-    public ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> createObject() {
+    public SpreadsheetExpressionReferencesStoreReadOnly<SpreadsheetCellReference> createObject() {
         return this.createStore();
     }
 
@@ -308,7 +308,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
 
         this.toStringAndCheck(
-            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
+            SpreadsheetExpressionReferencesStoreReadOnly.with(store),
             store.toString()
         );
     }
@@ -316,7 +316,12 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     // class............................................................................................................
 
     @Override
-    public Class<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>> type() {
-        return Cast.to(ReadOnlySpreadsheetExpressionReferencesStore.class);
+    public Class<SpreadsheetExpressionReferencesStoreReadOnly<SpreadsheetCellReference>> type() {
+        return Cast.to(SpreadsheetExpressionReferencesStoreReadOnly.class);
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

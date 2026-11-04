@@ -33,10 +33,10 @@ public final class SpreadsheetExpressionReferencesStores implements PublicStatic
     }
 
     /**
-     * {@see ReadOnlySpreadsheetExpressionReferencesStore}
+     * {@see SpreadsheetExpressionReferencesStoreReadOnly}
      */
     public static <T extends SpreadsheetExpressionReference> SpreadsheetExpressionReferencesStore<T> readOnly(final SpreadsheetExpressionReferencesStore<T> store) {
-        return ReadOnlySpreadsheetExpressionReferencesStore.with(store);
+        return SpreadsheetExpressionReferencesStoreReadOnly.with(store);
     }
 
     /**
