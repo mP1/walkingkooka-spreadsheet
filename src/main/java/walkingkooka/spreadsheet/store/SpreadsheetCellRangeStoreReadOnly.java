@@ -23,14 +23,14 @@ import walkingkooka.store.StoreWatcher;
 
 import java.util.Objects;
 
-final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeStoreDelegator {
+final class SpreadsheetCellRangeStoreReadOnly implements SpreadsheetCellRangeStoreDelegator {
 
-    static ReadOnlySpreadsheetCellRangeStore with(final SpreadsheetCellRangeStore store) {
+    static SpreadsheetCellRangeStoreReadOnly with(final SpreadsheetCellRangeStore store) {
         Objects.requireNonNull(store, "store");
-        return new ReadOnlySpreadsheetCellRangeStore(store);
+        return new SpreadsheetCellRangeStoreReadOnly(store);
     }
 
-    private ReadOnlySpreadsheetCellRangeStore(final SpreadsheetCellRangeStore store) {
+    private SpreadsheetCellRangeStoreReadOnly(final SpreadsheetCellRangeStore store) {
         this.store = store;
     }
 
@@ -87,11 +87,11 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof ReadOnlySpreadsheetCellRangeStore &&
-                this.equals0((ReadOnlySpreadsheetCellRangeStore) other));
+            (other instanceof SpreadsheetCellRangeStoreReadOnly &&
+                this.equals0((SpreadsheetCellRangeStoreReadOnly) other));
     }
 
-    private boolean equals0(final ReadOnlySpreadsheetCellRangeStore other) {
+    private boolean equals0(final SpreadsheetCellRangeStoreReadOnly other) {
         return this.store.equals(other.store);
     }
 
