@@ -27,9 +27,9 @@ import walkingkooka.store.ReadOnlyStoreTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetCellRangeStoreTesting<ReadOnlySpreadsheetCellRangeStore>,
-    ReadOnlyStoreTesting<ReadOnlySpreadsheetCellRangeStore, SpreadsheetCellRangeReference, SpreadsheetCellReference>,
-    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetCellRangeStore> {
+public final class SpreadsheetCellRangeStoreReadOnlyTest implements SpreadsheetCellRangeStoreTesting<SpreadsheetCellRangeStoreReadOnly>,
+    ReadOnlyStoreTesting<SpreadsheetCellRangeStoreReadOnly, SpreadsheetCellRangeReference, SpreadsheetCellReference>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetCellRangeStoreReadOnly> {
 
     private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("a1:b2");
     private final static SpreadsheetCellReference VALUE = SpreadsheetSelection.A1;
@@ -46,7 +46,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
         this.countAndCheck(store, 1);
 
         this.findValuesByIdAndCheck(
-            ReadOnlySpreadsheetCellRangeStore.with(store),
+            SpreadsheetCellRangeStoreReadOnly.with(store),
             RANGE,
             VALUE
         );
@@ -96,7 +96,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
         store.addValue(RANGE, VALUE);
 
         this.findIdsByValueAndCheck(
-            ReadOnlySpreadsheetCellRangeStore.with(store),
+            SpreadsheetCellRangeStoreReadOnly.with(store),
             VALUE,
             RANGE
         );
@@ -104,7 +104,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(ReadOnlySpreadsheetCellRangeStore.with(new FakeSpreadsheetCellRangeStore() {
+        this.toStringAndCheck(SpreadsheetCellRangeStoreReadOnly.with(new FakeSpreadsheetCellRangeStore() {
             @Override
             public String toString() {
                 return "ABC";
@@ -118,8 +118,8 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Override
-    public ReadOnlySpreadsheetCellRangeStore createStore() {
-        return ReadOnlySpreadsheetCellRangeStore.with(SpreadsheetCellRangeStores.treeMap());
+    public SpreadsheetCellRangeStoreReadOnly createStore() {
+        return SpreadsheetCellRangeStoreReadOnly.with(SpreadsheetCellRangeStores.treeMap());
     }
 
     // hashCode/equals..................................................................................................
@@ -158,19 +158,24 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
         );
 
         this.checkNotEquals(
-            ReadOnlySpreadsheetCellRangeStore.with(different)
+            SpreadsheetCellRangeStoreReadOnly.with(different)
         );
     }
 
     @Override
-    public ReadOnlySpreadsheetCellRangeStore createObject() {
+    public SpreadsheetCellRangeStoreReadOnly createObject() {
         return this.createStore();
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<ReadOnlySpreadsheetCellRangeStore> type() {
-        return Cast.to(ReadOnlySpreadsheetCellRangeStore.class);
+    public Class<SpreadsheetCellRangeStoreReadOnly> type() {
+        return Cast.to(SpreadsheetCellRangeStoreReadOnly.class);
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

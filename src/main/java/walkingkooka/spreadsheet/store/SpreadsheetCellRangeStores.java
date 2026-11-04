@@ -32,10 +32,10 @@ public final class SpreadsheetCellRangeStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see ReadOnlySpreadsheetCellRangeStore}
+     * {@see SpreadsheetCellRangeStoreReadOnly}
      */
     public static <V> SpreadsheetCellRangeStore readOnly(final SpreadsheetCellRangeStore store) {
-        return ReadOnlySpreadsheetCellRangeStore.with(store);
+        return SpreadsheetCellRangeStoreReadOnly.with(store);
     }
 
     /**
