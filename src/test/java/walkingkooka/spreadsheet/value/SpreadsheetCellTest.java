@@ -23,6 +23,8 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.currency.CanHaveCurrencyValueTesting;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.currency.HasOptionalCurrencyTesting;
 import walkingkooka.currency.provider.CurrencyExchangeRaterSelector;
 import walkingkooka.currency.provider.HasOptionalCurrencyExchangeRaterSelectorTesting;
@@ -70,6 +72,7 @@ import walkingkooka.validation.HasOptionalValueTypeTesting;
 import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
+import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -83,6 +86,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     PublicClassTesting<SpreadsheetCell>,
+    CanHaveCurrencyValueTesting,
     CanReplaceReferencesTesting2<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
     HasContentTypeTesting,
@@ -4071,6 +4075,103 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 Parsers.never()
             ),
             SPREADSHEET_PARSER_CONTEXT
+        );
+    }
+
+    // CanHaveCurrencyValue.............................................................................................
+
+    @Test
+    public void testShouldHaveCurrencyValueWithEmptySpreadsheetFormula() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+            false
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithNumberValue() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(1)
+                )
+            ),
+            false
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithCurrencyValue() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(
+                        CurrencyValue.with(
+                            1,
+                            CURRENCY_CODE
+                        )
+                    )
+                )
+            ),
+            false
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithCurrency() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setCurrency(OPTIONAL_CURRENCY),
+            true
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithCurrencyAndError() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setError(
+                    Optional.of(SpreadsheetErrorKind.VALUE.spreadsheetError())
+                )
+            ).setCurrency(OPTIONAL_CURRENCY),
+            true
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithCurrencyAndNumberValue() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(1)
+                )
+            ).setCurrency(OPTIONAL_CURRENCY),
+            true
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithCurrencyAndValueTypeCurrencyValue() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValueType(
+                    Optional.of(ValueType.CURRENCY_VALUE)
+                )
+            ).setCurrency(OPTIONAL_CURRENCY),
+            true
+        );
+    }
+
+    @Test
+    public void testShouldHaveCurrencyValueWithCurrencyAndValueTypeCurrencyValue2() {
+        this.shouldHaveCurrencyValueAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValueType(
+                        Optional.of(ValueType.CURRENCY_VALUE)
+                    )
+            ).setCurrency(OPTIONAL_CURRENCY),
+            true
         );
     }
 
