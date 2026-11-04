@@ -540,7 +540,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 text,
                 this.token,
                 NO_EXPRESSION,
-                NO_VALUE_TYPE,
+                this.valueType,
                 NO_VALUE,
                 NO_ERROR
             ) :

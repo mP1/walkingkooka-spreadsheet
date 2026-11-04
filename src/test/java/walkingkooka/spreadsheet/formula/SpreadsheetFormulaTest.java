@@ -1440,6 +1440,27 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
     }
 
     @Test
+    public void testClearWhenValueType() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE);
+
+        final SpreadsheetFormula cleared = formula.clear();
+        assertSame(
+            formula,
+            cleared
+        );
+
+        this.textAndCheck(cleared);
+        this.tokenAndCheck(cleared);
+        this.expressionAndCheck(cleared);
+        this.valueTypeAndCheck(
+            cleared,
+            VALUE_TYPE
+        );
+        this.valueAndCheck(cleared);
+        this.errorAndCheck(cleared);
+    }
+
+    @Test
     public void testClearWhenValue() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValue(OPTIONAL_VALUE);
 
@@ -1453,6 +1474,31 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
         this.tokenAndCheck(cleared);
         this.expressionAndCheck(cleared);
         this.valueTypeAndCheck(cleared);
+        this.valueAndCheck(
+            cleared,
+            OPTIONAL_VALUE
+        );
+        this.errorAndCheck(cleared);
+    }
+
+    @Test
+    public void testClearWhenValueTypeAndValue() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
+            .setValue(OPTIONAL_VALUE);
+
+        final SpreadsheetFormula cleared = formula.clear();
+        assertSame(
+            formula,
+            cleared
+        );
+
+        this.textAndCheck(cleared);
+        this.tokenAndCheck(cleared);
+        this.expressionAndCheck(cleared);
+        this.valueTypeAndCheck(
+            cleared,
+            OPTIONAL_VALUE_TYPE
+        );
         this.valueAndCheck(
             cleared,
             OPTIONAL_VALUE

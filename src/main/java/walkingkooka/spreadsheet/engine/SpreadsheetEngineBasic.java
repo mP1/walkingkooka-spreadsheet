@@ -1731,9 +1731,8 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
                             TextCursors.charSequence(formulaText),
                             Optional.of(cell)
                         );
-                        formula = SpreadsheetFormula.EMPTY.setText(
-                            formulaText
-                        );
+                        // SpreadsheetFormula.EMPTY.setText loses any ValueType
+                        formula = formula.setText(formulaText);
                     } catch (final UnsupportedOperationException rethrow) {
                         throw rethrow;
                     } catch (final RuntimeException cause) {
