@@ -2622,6 +2622,121 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
     }
 
     @Test
+    public void testLoadCellWithFormulaText() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("'Hello")
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell,
+                        Optional.of("Hello"),
+                        STYLE
+                    )
+                )
+
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithFormulaTextAndValueType() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("'Hello")
+                        .setValueType(
+                            Optional.of(ValueType.TEXT)
+                        )
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell,
+                        Optional.of("Hello"),
+                        STYLE
+                    )
+                )
+
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithValue() {
+        final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final Optional<Object> value = Optional.of("Hello");
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+            .cells()
+            .save(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(value)
+                ).setStyle(STYLE)
+            );
+
+        this.loadCellsAndCheck(
+            engine,
+            a1,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.formatCell(
+                        a1Cell,
+                        value,
+                        STYLE
+                    )
+                )
+
+            ).setColumnWidths(columnWidths("A")
+            ).setRowHeights(rowHeights("1")
+            ).setColumnCount(OptionalInt.of(1)
+            ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
     public void testLoadCellWithValueTypeCurrencyValueAndCurrencyValue() {
         final SpreadsheetEngineBasic engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
