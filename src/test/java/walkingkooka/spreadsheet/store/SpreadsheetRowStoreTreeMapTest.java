@@ -27,12 +27,12 @@ import walkingkooka.spreadsheet.value.SpreadsheetRow;
 
 import java.util.TreeMap;
 
-final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<TreeMapSpreadsheetRowStore> 
-implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
+final class SpreadsheetRowStoreTreeMapTest extends SpreadsheetRowStoreTestCase<SpreadsheetRowStoreTreeMap>
+implements HashCodeEqualsDefinedTesting2<SpreadsheetRowStoreTreeMap> {
 
     @Test
     public void testLoadRows() {
-        final TreeMapSpreadsheetRowStore store = this.createStore();
+        final SpreadsheetRowStoreTreeMap store = this.createStore();
 
         final SpreadsheetRow row1 = SpreadsheetRow.with(
             SpreadsheetSelection.parseRow("1")
@@ -65,7 +65,7 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
 
     @Test
     public void testSaveRows() {
-        final TreeMapSpreadsheetRowStore store = this.createStore();
+        final SpreadsheetRowStoreTreeMap store = this.createStore();
 
         final SpreadsheetRow row1 = SpreadsheetRow.with(
             SpreadsheetSelection.parseRow("1")
@@ -90,16 +90,16 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
     }
 
     @Override
-    public TreeMapSpreadsheetRowStore createStore() {
-        return TreeMapSpreadsheetRowStore.create();
+    public SpreadsheetRowStoreTreeMap createStore() {
+        return SpreadsheetRowStoreTreeMap.create();
     }
 
     // hashCode/equals..................................................................................................
 
     @Test
     public void testEquals2() {
-        final TreeMapSpreadsheetRowStore store1 = this.createStore();
-        final TreeMapSpreadsheetRowStore store2 = this.createStore();
+        final SpreadsheetRowStoreTreeMap store1 = this.createStore();
+        final SpreadsheetRowStoreTreeMap store2 = this.createStore();
 
         final SpreadsheetRow row = SpreadsheetRow.with(
             SpreadsheetSelection.parseRow("1")
@@ -116,7 +116,7 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
 
     @Test
     public void testEqualsDifferent() {
-        final TreeMapSpreadsheetRowStore different = this.createStore();
+        final SpreadsheetRowStoreTreeMap different = this.createStore();
 
         different.save(
             SpreadsheetRow.with(
@@ -128,7 +128,7 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
     }
 
     @Override
-    public TreeMapSpreadsheetRowStore createObject() {
+    public SpreadsheetRowStoreTreeMap createObject() {
         return this.createStore();
     }
 
@@ -136,7 +136,7 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetRowStore store = this.createStore();
+        final SpreadsheetRowStoreTreeMap store = this.createStore();
         store.save(
             SpreadsheetSelection.parseRow("2").row()
         );
@@ -150,8 +150,8 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
     // class............................................................................................................
 
     @Override
-    public Class<TreeMapSpreadsheetRowStore> type() {
-        return TreeMapSpreadsheetRowStore.class;
+    public Class<SpreadsheetRowStoreTreeMap> type() {
+        return SpreadsheetRowStoreTreeMap.class;
     }
 
     @Override
