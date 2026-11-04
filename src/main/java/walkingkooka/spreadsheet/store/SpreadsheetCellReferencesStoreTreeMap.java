@@ -29,15 +29,15 @@ import walkingkooka.store.Store;
 import java.util.Objects;
 import java.util.Set;
 
-final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellReferencesStore,
+final class SpreadsheetCellReferencesStoreTreeMap implements SpreadsheetCellReferencesStore,
     SpreadsheetExpressionReferencesStoreDelegator<SpreadsheetCellReference>,
     CanBeEmpty {
 
-    static TreeMapSpreadsheetCellReferencesStore empty() {
-        return new TreeMapSpreadsheetCellReferencesStore();
+    static SpreadsheetCellReferencesStoreTreeMap empty() {
+        return new SpreadsheetCellReferencesStoreTreeMap();
     }
 
-    private TreeMapSpreadsheetCellReferencesStore() {
+    private SpreadsheetCellReferencesStoreTreeMap() {
         this.store = SpreadsheetExpressionReferencesStores.treeMap();
     }
 

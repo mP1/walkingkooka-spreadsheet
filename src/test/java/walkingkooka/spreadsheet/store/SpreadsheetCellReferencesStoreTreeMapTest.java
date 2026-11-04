@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
 
-public final class TreeMapSpreadsheetCellReferencesStoreTest implements SpreadsheetCellReferencesStoreTesting<TreeMapSpreadsheetCellReferencesStore>,
+public final class SpreadsheetCellReferencesStoreTreeMapTest implements SpreadsheetCellReferencesStoreTesting<SpreadsheetCellReferencesStoreTreeMap>,
     CanBeEmptyTesting {
 
     final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
@@ -40,7 +40,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testFindCellsWithCellOrCellRangeWithZeroCount() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             b2,
@@ -57,7 +57,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testFindCellsWithCellOrCellRangeWhereCellWithReference() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             b2,
@@ -83,7 +83,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferences() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             b2,
@@ -113,7 +113,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithOffset() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             z9,
@@ -143,7 +143,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRange() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             f6,
@@ -173,7 +173,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRange2() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             f6,
@@ -216,7 +216,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRangeAndOffsetAndCount() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             f6,
@@ -260,7 +260,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testAddValuesAndRemoveByValueAndFindIdsByValueAndCount() {
-        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+        final SpreadsheetCellReferencesStoreTreeMap store = SpreadsheetCellReferencesStoreTreeMap.empty();
 
         store.addValue(
             b2,
@@ -305,8 +305,8 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     // SpreadsheetCellReferencesStoreTesting............................................................................
 
     @Override
-    public TreeMapSpreadsheetCellReferencesStore createStore() {
-        return TreeMapSpreadsheetCellReferencesStore.empty();
+    public SpreadsheetCellReferencesStoreTreeMap createStore() {
+        return SpreadsheetCellReferencesStoreTreeMap.empty();
     }
 
     @Override
@@ -331,7 +331,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
     @Test
     public void testIsEmptyWhenNotEmpty() {
-        final TreeMapSpreadsheetCellReferencesStore store = this.createStore();
+        final SpreadsheetCellReferencesStoreTreeMap store = this.createStore();
 
         store.addValue(
             b2,
@@ -347,12 +347,17 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     // class............................................................................................................
 
     @Override
-    public String typeNamePrefix() {
-        return TreeMap.class.getSimpleName();
+    public Class<SpreadsheetCellReferencesStoreTreeMap> type() {
+        return SpreadsheetCellReferencesStoreTreeMap.class;
     }
 
     @Override
-    public Class<TreeMapSpreadsheetCellReferencesStore> type() {
-        return TreeMapSpreadsheetCellReferencesStore.class;
+    public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return TreeMap.class.getSimpleName();
     }
 }
