@@ -25,12 +25,12 @@ import walkingkooka.store.ReadOnlyStoreTesting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<ReadOnlySpreadsheetMetadataStore>
-    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetMetadataStore, SpreadsheetId, SpreadsheetMetadata> {
+public final class SpreadsheetMetadataStoreReadOnlyTest extends SpreadsheetMetadataStoreTestCase<SpreadsheetMetadataStoreReadOnly>
+    implements ReadOnlyStoreTesting<SpreadsheetMetadataStoreReadOnly, SpreadsheetId, SpreadsheetMetadata> {
 
     @Test
     public void testWithNullStoreFails() {
-        assertThrows(NullPointerException.class, () -> ReadOnlySpreadsheetMetadataStore.with(null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataStoreReadOnly.with(null));
     }
 
     @Override
@@ -47,7 +47,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         final SpreadsheetMetadata metadata = this.metadata(this.id(), "user@example.com");
         store.save(metadata);
 
-        assertSame(metadata, ReadOnlySpreadsheetMetadataStore.with(store).loadOrFail(this.id()));
+        assertSame(metadata, SpreadsheetMetadataStoreReadOnly.with(store).loadOrFail(this.id()));
     }
 
     @Override
@@ -100,7 +100,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(ReadOnlySpreadsheetMetadataStore.with(store),
+        this.idsAndCheck(SpreadsheetMetadataStoreReadOnly.with(store),
             0,
             3,
             a.id().get(), b.id().get(), c.id().get());
@@ -125,7 +125,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         store.save(c);
 
         this.valuesAndCheck(
-            ReadOnlySpreadsheetMetadataStore.with(store),
+            SpreadsheetMetadataStoreReadOnly.with(store),
             0,
             3,
             a,
@@ -142,18 +142,18 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     @Test
     public void testToString() {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.fake();
-        this.toStringAndCheck(ReadOnlySpreadsheetMetadataStore.with(store), store.toString());
+        this.toStringAndCheck(SpreadsheetMetadataStoreReadOnly.with(store), store.toString());
     }
 
     @Override
-    public ReadOnlySpreadsheetMetadataStore createStore() {
-        return ReadOnlySpreadsheetMetadataStore.with(createTreeMap());
+    public SpreadsheetMetadataStoreReadOnly createStore() {
+        return SpreadsheetMetadataStoreReadOnly.with(createTreeMap());
     }
 
-    private ReadOnlySpreadsheetMetadataStore createStore2() {
+    private SpreadsheetMetadataStoreReadOnly createStore2() {
         final SpreadsheetMetadataStore store = createTreeMap();
         store.save(this.metadata(1, "user1@example.com"));
-        return ReadOnlySpreadsheetMetadataStore.with(store);
+        return SpreadsheetMetadataStoreReadOnly.with(store);
     }
 
     private SpreadsheetMetadataStore createTreeMap() {
@@ -161,7 +161,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     }
 
     @Override
-    public Class<ReadOnlySpreadsheetMetadataStore> type() {
-        return ReadOnlySpreadsheetMetadataStore.class;
+    public Class<SpreadsheetMetadataStoreReadOnly> type() {
+        return SpreadsheetMetadataStoreReadOnly.class;
     }
 }
