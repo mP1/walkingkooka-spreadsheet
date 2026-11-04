@@ -33,6 +33,15 @@ public final class SpreadsheetMetadataStoreReadOnlyTest extends SpreadsheetMetad
         assertThrows(NullPointerException.class, () -> SpreadsheetMetadataStoreReadOnly.with(null));
     }
 
+    @Test
+    public void testWithReadOnlyFails() {
+        final SpreadsheetMetadataStoreReadOnly store = this.createStore();
+        assertSame(
+            store,
+            SpreadsheetMetadataStoreReadOnly.with(store)
+        );
+    }
+
     @Override
     @SuppressWarnings("unused")
     public void testSaveWithoutRequiredFails() {
