@@ -32,8 +32,11 @@ import java.util.Set;
 final class SpreadsheetMetadataStoreReadOnly implements SpreadsheetMetadataStore {
 
     static SpreadsheetMetadataStoreReadOnly with(final SpreadsheetMetadataStore store) {
-        Objects.requireNonNull(store, "store");
-        return new SpreadsheetMetadataStoreReadOnly(store);
+        return store instanceof SpreadsheetMetadataStoreReadOnly ?
+            (SpreadsheetMetadataStoreReadOnly) store :
+            new SpreadsheetMetadataStoreReadOnly(
+                Objects.requireNonNull(store, "store")
+            );
     }
 
     private SpreadsheetMetadataStoreReadOnly(SpreadsheetMetadataStore store) {
