@@ -173,4 +173,14 @@ public final class SpreadsheetMetadataStoreReadOnlyTest extends SpreadsheetMetad
     public Class<SpreadsheetMetadataStoreReadOnly> type() {
         return SpreadsheetMetadataStoreReadOnly.class;
     }
+
+    @Override
+    public String typeNamePrefix() {
+        return "";
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return "ReadOnly";
+    }
 }
