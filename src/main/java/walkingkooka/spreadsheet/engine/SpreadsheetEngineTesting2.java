@@ -163,7 +163,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null,
                     SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -177,7 +177,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     Sets.of(SpreadsheetSelection.ALL_CELLS),
                     null,
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -191,7 +191,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     Sets.of(SpreadsheetSelection.ALL_CELLS),
                     SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                     null,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -477,7 +477,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null, // cells
                     SpreadsheetValueType.ANY,
                     Expression.value(true),
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -491,7 +491,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     Sets.empty(), // cells
                     null, // valueType
                     Expression.value(true),
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -507,7 +507,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     ),
                     SpreadsheetValueType.ANY,
                     null, // expression
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -565,7 +565,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null,
                     0, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -579,7 +579,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetSelection.A1,
                     -1, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -593,7 +593,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetSelection.A1,
                     0, // offset
                     -1, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -624,7 +624,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     0, // offset
                     1, // count
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -639,7 +639,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     -1, // offset
                     1, // count
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -654,7 +654,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     0, // offset
                     -1, // count
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -669,7 +669,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     0, // offset
                     1, // count
                     null,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -704,7 +704,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
+                    this.createContext() // context
                 )
         );
     }
@@ -722,7 +722,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
+                    this.createContext() // context
                 )
         );
     }
@@ -740,7 +740,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
+                    this.createContext() // context
                 )
         );
     }
@@ -758,7 +758,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
+                    this.createContext() // context
                 )
         );
     }
@@ -776,7 +776,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null, // valueType
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
+                    this.createContext() // context
                 )
         );
     }
@@ -794,7 +794,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetValueType.ANY,
                     null, // expression
                     SpreadsheetDeltaProperties.ALL,
-                    SpreadsheetEngineContexts.fake() // context
+                    this.createContext() // context
                 )
         );
     }
@@ -812,7 +812,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     null,
-                    SpreadsheetEngineContexts.fake() // context
+                    this.createContext() // context
                 )
         );
     }
@@ -846,7 +846,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null,
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
                     Sets.empty(), // deltaProperties
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -860,7 +860,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetSelection.A1.toCellRange(),
                     null,
                     Sets.empty(), // deltaProperties
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -874,7 +874,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetSelection.A1.toCellRange(),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
                     null, // deltaProperties
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1199,7 +1199,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                 .loadForms(
                     -1, // offset
                     0, // count
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1212,7 +1212,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                 .loadForms(
                     0, // offset
                     -1, // count
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1327,7 +1327,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null,
                     0, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1341,7 +1341,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     "",
                     -1, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1355,7 +1355,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     "",
                     0, // offset
                     -1, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1438,7 +1438,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
             () -> this.createSpreadsheetEngine()
                 .loadLabel(
                     null,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1465,7 +1465,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                 .loadLabels(
                     -1, // offset
                     0, // count
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1478,7 +1478,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                 .loadLabels(
                     0, // offset
                     -1, // count
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1507,7 +1507,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null,
                     0, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1521,7 +1521,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     "",
                     -1, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1535,7 +1535,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     "",
                     0, // offset
                     -1, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1565,7 +1565,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     null,
                     0, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1579,7 +1579,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetSelection.A1,
                     -1, // offset
                     0, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1593,7 +1593,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
                     SpreadsheetSelection.A1,
                     0, // offset
                     -1, // count,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1632,7 +1632,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
             () -> this.createSpreadsheetEngine()
                 .columnWidth(
                     null,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1681,7 +1681,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
             () -> this.createSpreadsheetEngine()
                 .rowHeight(
                     null,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1718,7 +1718,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
             () -> this.createSpreadsheetEngine()
                 .navigate(
                     null,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
@@ -1749,7 +1749,7 @@ public interface SpreadsheetEngineTesting2<E extends SpreadsheetEngine> extends 
             () -> this.createSpreadsheetEngine()
                 .window(
                     null,
-                    SpreadsheetEngineContexts.fake()
+                    this.createContext()
                 )
         );
     }
