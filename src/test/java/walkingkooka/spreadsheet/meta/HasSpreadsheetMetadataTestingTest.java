@@ -738,7 +738,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
@@ -973,7 +973,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
@@ -1208,7 +1208,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
@@ -1384,7 +1384,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
@@ -1619,7 +1619,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
@@ -1716,7 +1716,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
