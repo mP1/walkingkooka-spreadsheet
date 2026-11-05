@@ -20,12 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.convert.BinaryNumberConverterFunctions;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyLocaleContexts;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
@@ -34,16 +28,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.text.BinaryTextContextTesting;
-import walkingkooka.text.cursor.parser.BigDecimalParserToken;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
-import walkingkooka.tree.expression.convert.TreeConverterContext;
-import walkingkooka.tree.expression.convert.TreeConverterContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -328,40 +314,18 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                     );
                 }
 
-                return this.converter.convert(
+                if(value instanceof CharSequence && CharSequence.class == target) {
+                    return this.successfulConversion(
+                        value.toString(),
+                        target
+                    );
+                }
+
+                return this.failConversion(
                     value,
-                    target,
-                    TreeConverterContexts.basic(
-                        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-                        ExpressionNumberKind.DEFAULT,
-                        ExpressionNumberBinaryNumberConverterFunctions.multiply(),
-                        ConverterContexts.basic(
-                            false, // canNumbersHaveGroupSeparator
-                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            ',', // valueSeparator
-                            Converters.fake(),
-                            BinaryNumberConverterFunctions.fake(), // multiplier
-                            BINARY_TEXT_CONTEXT,
-                            CurrencyLocaleContexts.fake(),
-                            DateTimeContexts.fake(),
-                            this
-                        )
-                    )
+                    target
                 );
             }
-
-            private final Converter<TreeConverterContext> converter = Converters.parser(
-                BigDecimal.class,
-                Parsers.bigDecimal(),
-                (c) -> ParserContexts.basic(
-                    false, // canNumbersHaveGroupSeparator
-                    InvalidCharacterExceptionFactory.POSITION,
-                    ',', // valueSeparator
-                    c,
-                    c
-                ),
-                (t, c) -> t.cast(BigDecimalParserToken.class).value()
-            );
         };
     }
 

@@ -511,7 +511,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
 
             private final Converter<SpreadsheetConverterContext> converters = Converters.collection(
                 Lists.of(
-                    Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                    SpreadsheetConverters.toText(),
                     SpreadsheetConverters.toJsonNode(),
                     SpreadsheetConverters.toMultiLineText()
                 )

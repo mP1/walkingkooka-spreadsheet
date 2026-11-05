@@ -1265,7 +1265,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
             ColorContexts.fake(),
             JsonNodeConverterContexts.basic(
                 TreeConverterContexts.basic(
-                    Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                    Converters.toText(),
                     kind,
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(

@@ -4259,7 +4259,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     value,
                     target,
                     TreeConverterContexts.basic(
-                        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        Converters.toText(),
                         this.expressionNumberKind(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(

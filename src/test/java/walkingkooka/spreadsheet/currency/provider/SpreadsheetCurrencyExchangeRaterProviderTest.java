@@ -97,7 +97,7 @@ public final class SpreadsheetCurrencyExchangeRaterProviderTest implements Curre
         private final Converter<StorageConverterContext> converter = Converters.collection(
             Lists.of(
                 Converters.simple(),
-                Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                Converters.toText(),
                 StorageConverters.textToStoragePath()
             )
         );

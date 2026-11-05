@@ -1379,7 +1379,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                     Lists.of(
-                        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        SpreadsheetConverters.toText(),
                         TreeConverters.numberToNumber(),
                         new SpreadsheetConverter() {
 
