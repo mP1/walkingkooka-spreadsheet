@@ -4235,6 +4235,30 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // text.............................................................................................................
 
     @Test
+    public void testTextConvertObjectToCharacterFails() {
+        this.textConvertFails(
+            Object.class,
+            Character.class
+        );
+    }
+
+    @Test
+    public void testTextConvertObjectToCharSequenceFails() {
+        this.textConvertFails(
+            Object.class,
+            CharSequence.class
+        );
+    }
+
+    @Test
+    public void testTextConvertObjectToStringFails() {
+        this.textConvertFails(
+            Object.class,
+            String.class
+        );
+    }
+
+    @Test
     public void testTextConvertCharacterToString() {
         this.textConvertAndCheck(
             'A',
@@ -4299,12 +4323,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    private void textConvertAndCheck(final Object value,
-                                     final Object expected) {
-        this.textConvertAndCheck(
+    private void textConvertFails(final Object value,
+                                  final Class<?> type) {
+        this.convertFails(
+            SpreadsheetConverters.text(),
             value,
-            expected.getClass(),
-            Cast.to(expected)
+            type,
+            TEXT_CONVERTER_CONTEXT
         );
     }
 
@@ -4315,42 +4340,44 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             SpreadsheetConverters.text(),
             value,
             type,
-            new FakeSpreadsheetConverterContext() {
-                @Override
-                public boolean canConvert(final Object value,
-                                          final Class<?> type) {
-                    return this.converter.canConvert(
-                        value,
-                        type,
-                        this
-                    );
-                }
-
-                @Override
-                public <TT> Either<TT, String> convert(final Object value,
-                                                       final Class<TT> target) {
-                    return this.converter.convert(
-                        value,
-                        target,
-                        this
-                    );
-                }
-
-                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
-                    Lists.of(
-                        SpreadsheetConverters.text(),
-                        SpreadsheetConverters.text()
-                    )
-                );
-
-                @Override
-                public Charset charset() {
-                    return CHARSET;
-                }
-            },
+            TEXT_CONVERTER_CONTEXT,
             expected
         );
     }
+
+    private final static SpreadsheetConverterContext TEXT_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <TT> Either<TT, String> convert(final Object value,
+                                               final Class<TT> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.text(),
+                SpreadsheetConverters.text()
+            )
+        );
+
+        @Override
+        public Charset charset() {
+            return CHARSET;
+        }
+    };
 
     // textToDate.......................................................................................................
 
