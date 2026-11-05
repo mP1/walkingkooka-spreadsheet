@@ -4284,20 +4284,75 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testTextConvertStringToCharacter() {
+    public void testTextConvertNullToCharacter() {
         this.textConvertAndCheck(
-            "Z",
+            null,
             Character.class,
-            'Z'
+            null
+        );
+    }
+
+    @Test
+    public void testTextConvertNullToCharSequence() {
+        this.textConvertAndCheck(
+            null,
+            CharSequence.class,
+            null
+        );
+    }
+
+    @Test
+    public void testTextConvertNullToString() {
+        this.textConvertAndCheck(
+            null,
+            String.class,
+            null
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToCharacter() {
+        final String character = "Z";
+
+        this.textConvertAndCheck(
+            character,
+            Character.class,
+            character.charAt(0)
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToCharSequence() {
+        final String string = "Hello";
+
+        this.textConvertAndCheck(
+            string,
+            CharSequence.class,
+            string
         );
     }
 
     @Test
     public void testTextConvertStringToString() {
+        final String string = "Hello";
+
         this.textConvertAndCheck(
-            "Hello",
+            string,
             String.class,
-            "Hello"
+            string
+        );
+    }
+
+    @Test
+    public void testTextConvertCharSequenceToCharset() {
+        final Charset charset = StandardCharsets.UTF_8;
+
+        this.textConvertAndCheck(
+            new StringBuilder(
+                charset.toString()
+            ),
+            Charset.class,
+            charset
         );
     }
 
