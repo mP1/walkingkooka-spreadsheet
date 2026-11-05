@@ -39,6 +39,13 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetEngineLogging}
+     */
+    public static SpreadsheetEngine logging(final SpreadsheetEngine engine) {
+        return SpreadsheetEngineLogging.with(engine);
+    }
+
+    /**
      * {@see SpreadsheetEngineSpreadsheetMetadataStamping}
      */
     public static SpreadsheetEngine stamper(final SpreadsheetEngine engine,
