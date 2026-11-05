@@ -943,7 +943,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         if (null == TEXT) {
             TEXT = namedCollection(
                 "TEXT",
-                Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                Converters.toText(),
                 textToCharset(),
                 textToIndentation(),
                 textToLineEnding()
