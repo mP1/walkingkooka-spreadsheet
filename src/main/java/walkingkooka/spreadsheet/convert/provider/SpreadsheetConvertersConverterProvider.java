@@ -290,6 +290,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
                 converter = SpreadsheetConverters.nullToNumber();
                 break;
+            case OBJECT_TO_TEXT_STRING:
+                this.noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.objectToText();
+                break;
             case OPTIONAL_TO_STRING:
                 this.noParameterCheck(copy);
 
@@ -935,11 +940,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
                 converter = SpreadsheetConverters.toStyleable();
                 break;
-            case TO_TEXT_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.toText();
-                break;
             case TO_TEXT_NODE_STRING:
                 this.noParameterCheck(copy);
 
@@ -1183,6 +1183,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
     private final static String NUMBER_TO_TEXT_STRING = "number-to-text";
 
     final static ConverterName NUMBER_TO_TEXT = ConverterName.with(NUMBER_TO_TEXT_STRING);
+
+    private final static String OBJECT_TO_TEXT_STRING = "object-to-text";
+
+    final static ConverterName OBJECT_TO_TEXT = ConverterName.with(OBJECT_TO_TEXT_STRING);
 
     private final static String OPTIONAL_TO_STRING = "optional-to";
 
@@ -1700,10 +1704,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
 
-    private final static String TO_TEXT_STRING = "to-text";
-
-    final static ConverterName TO_TEXT = ConverterName.with(TO_TEXT_STRING);
-
     private final static String TO_TEXT_NODE_STRING = "to-text-node";
 
     final static ConverterName TO_TEXT_NODE = ConverterName.with(TO_TEXT_NODE_STRING);
@@ -1808,6 +1808,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             converterInfo(NUMBER_TO_CURRENCY_VALUE),
             converterInfo(NUMBER_TO_NUMBER),
             converterInfo(NUMBER_TO_TEXT),
+            converterInfo(OBJECT_TO_TEXT),
             converterInfo(OPTIONAL_TO),
             converterInfo(PLUGINS),
             converterInfo(PROPERTIES),
@@ -1936,7 +1937,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             converterInfo(TO_PROPERTIES),
             converterInfo(TO_STYLE),
             converterInfo(TO_STYLEABLE),
-            converterInfo(TO_TEXT),
             converterInfo(TO_TEXT_NODE),
             converterInfo(TO_TSV_STRING_LIST),
             converterInfo(TO_VALIDATION_CHECKBOX),

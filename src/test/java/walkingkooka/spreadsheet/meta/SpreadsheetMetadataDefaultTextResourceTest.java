@@ -8718,6 +8718,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    number-to-currency-value\n" +
                 "    number-to-number\n" +
                 "    number-to-text\n" +
+                "    object-to-text\n" +
                 "    optional-to\n" +
                 "    plugins\n" +
                 "    properties\n" +
@@ -8847,7 +8848,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    to-spreadsheet-selection\n" +
                 "    to-style\n" +
                 "    to-styleable\n" +
-                "    to-text\n" +
                 "    to-text-node\n" +
                 "    to-tsv-string-list\n" +
                 "    to-validation-checkbox\n" +
@@ -9186,6 +9186,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    number-to-currency-value\n" +
                 "    number-to-number\n" +
                 "    number-to-text\n" +
+                "    object-to-text\n" +
                 "    optional-to\n" +
                 "    plugins\n" +
                 "    properties\n" +
@@ -9315,7 +9316,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    to-spreadsheet-selection\n" +
                 "    to-style\n" +
                 "    to-styleable\n" +
-                "    to-text\n" +
                 "    to-text-node\n" +
                 "    to-tsv-string-list\n" +
                 "    to-validation-checkbox\n" +
