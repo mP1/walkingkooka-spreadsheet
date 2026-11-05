@@ -271,7 +271,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"net\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
                 "            to HasHostAddress (walkingkooka.net.convert.NetConverterToHasHostAddress)\n" +
                 "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "            TEXT to HasHostAddress (walkingkooka.net.convert.NetConverterTextToHasHostAddress)\n" +
@@ -507,7 +506,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"net\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
                 "            to HasHostAddress (walkingkooka.net.convert.NetConverterToHasHostAddress)\n" +
                 "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "            TEXT to HasHostAddress (walkingkooka.net.convert.NetConverterTextToHasHostAddress)\n" +
@@ -684,7 +682,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"net\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
                 "            to HasHostAddress (walkingkooka.net.convert.NetConverterToHasHostAddress)\n" +
                 "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "            TEXT to HasHostAddress (walkingkooka.net.convert.NetConverterTextToHasHostAddress)\n" +
@@ -920,7 +917,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "      ConverterCustomToString\n" +
                 "        \"net\"\n" +
                 "          ConverterCollection\n" +
-                "            Character or CharSequence or HasText or String to Character or CharSequence or String (walkingkooka.convert.ConverterCharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString)\n" +
                 "            to HasHostAddress (walkingkooka.net.convert.NetConverterToHasHostAddress)\n" +
                 "            to HostAddress (walkingkooka.net.convert.NetConverterToHostAddress)\n" +
                 "            TEXT to HasHostAddress (walkingkooka.net.convert.NetConverterTextToHasHostAddress)\n" +
