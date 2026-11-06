@@ -808,6 +808,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  to SpreadsheetFormatterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetFormatterSelector)\n" +
                 "  to SpreadsheetParserSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterToSpreadsheetParserSelector)\n" +
                 "  to Styleable (walkingkooka.tree.text.convert.TreeTextConverterToStyleable)\n" +
+                "  to Text (walkingkooka.convert.ConverterToText)\n" +
                 "  to TextNode (walkingkooka.tree.text.convert.TreeTextConverterToTextNode)\n" +
                 "  to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterToTextStyle)\n" +
                 "  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +

@@ -1673,6 +1673,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#toText()}.
+     */
+    public static Converter<SpreadsheetConverterContext> toText() {
+        return Converters.toText();
+    }
+
+    /**
      * {@see TreeTextConverters#toTextNode}
      */
     public static Converter<SpreadsheetConverterContext> toTextNode() {
