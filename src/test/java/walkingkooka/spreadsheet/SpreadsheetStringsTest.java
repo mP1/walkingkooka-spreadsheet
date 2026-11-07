@@ -27,6 +27,67 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetStringsTest implements PublicStaticHelperTesting<SpreadsheetStrings> {
 
+    // toBoolean........................................................................................................
+
+    @Test
+    public void testToBooleanWithNull() {
+        this.toBooleanAndCheck(
+            null,
+            false
+        );
+    }
+
+    @Test
+    public void testToBooleanWithFalse() {
+        this.toBooleanAndCheck(
+            "false",
+            false
+        );
+    }
+
+    @Test
+    public void testToBooleanWithFalseUpperCase() {
+        this.toBooleanAndCheck(
+            "FALSE",
+            false
+        );
+    }
+
+    @Test
+    public void testToBooleanWithTrue() {
+        this.toBooleanAndCheck(
+            "true",
+            true
+        );
+    }
+
+    @Test
+    public void testToBooleanWithTrueSurroundedBySpaces() {
+        this.toBooleanAndCheck(
+            " true ",
+            false
+        );
+    }
+
+    @Test
+    public void testToBooleanWithTrueUpperCase() {
+        this.toBooleanAndCheck(
+            "TRUE",
+            true
+        );
+    }
+
+    private void toBooleanAndCheck(final String text,
+                                   final boolean expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetStrings.toBoolean(text),
+            text
+        );
+    }
+
+    // CASE_SENSITIVITY.................................................................................................
+
     @Test
     public void testCaseSensitivity() {
         assertSame(
