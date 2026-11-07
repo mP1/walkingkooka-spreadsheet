@@ -29,6 +29,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterValueTest implements PublicClassTesting<MissingConverterValue>,
@@ -41,13 +43,16 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
 
     private final static String TYPE = String.class.getName();
 
+    private final static Optional<String> MESSAGE = Optional.of("Message123");
+
     @Test
     public void testWithNullTypeFails() {
         assertThrows(
             NullPointerException.class,
             () -> MissingConverterValue.with(
                 VALUE,
-                null
+                null,
+                MESSAGE
             )
         );
     }
@@ -58,7 +63,20 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
             IllegalArgumentException.class,
             () -> MissingConverterValue.with(
                 VALUE,
-                ""
+                "",
+                MESSAGE
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullMessageFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> MissingConverterValue.with(
+                VALUE,
+                TYPE,
+                null
             )
         );
     }
@@ -67,7 +85,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
     public void testWith() {
         final MissingConverterValue missing = MissingConverterValue.with(
             VALUE,
-            TYPE
+            TYPE,
+            MESSAGE
         );
 
         this.checkEquals(
@@ -80,13 +99,20 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
             missing.type(),
             "type"
         );
+
+        this.checkEquals(
+            MESSAGE,
+            missing.message(),
+            "message"
+        );
     }
 
     @Test
     public void testWithNullValue() {
         final MissingConverterValue missing = MissingConverterValue.with(
             null,
-            TYPE
+            TYPE,
+            MESSAGE
         );
 
         this.checkEquals(
@@ -98,6 +124,12 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
             TYPE,
             missing.type(),
             "type"
+        );
+
+        this.checkEquals(
+            MESSAGE,
+            missing.message(),
+            "message"
         );
     }
 
@@ -108,7 +140,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.checkNotEquals(
             MissingConverterValue.with(
                 "different",
-                TYPE
+                TYPE,
+                MESSAGE
             )
         );
     }
@@ -118,7 +151,19 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.checkNotEquals(
             MissingConverterValue.with(
                 VALUE,
-                Void.class.getName()
+                Void.class.getName(),
+                MESSAGE
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMessage() {
+        this.checkNotEquals(
+            MissingConverterValue.with(
+                VALUE,
+                TYPE,
+                Optional.of("different")
             )
         );
     }
@@ -127,7 +172,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
     public MissingConverterValue createObject() {
         return MissingConverterValue.with(
             VALUE,
-            TYPE
+            TYPE,
+            MESSAGE
         );
     }
 
@@ -137,7 +183,7 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
     public void testToStringWithString() {
         this.toStringAndCheck(
             this.createObject(),
-            "\"Hello\" java.lang.String"
+            "\"Hello\" java.lang.String \"Message123\""
         );
     }
 
@@ -146,7 +192,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.toStringAndCheck(
             MissingConverterValue.with(
                 'A',
-                String.class.getName()
+                String.class.getName(),
+                MissingConverterValue.NO_MESSAGE
             ),
             "'A' java.lang.String"
         );
@@ -157,7 +204,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.toStringAndCheck(
             MissingConverterValue.with(
                 123,
-                String.class.getName()
+                String.class.getName(),
+                MissingConverterValue.NO_MESSAGE
             ),
             "123 java.lang.String"
         );
@@ -170,7 +218,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.treePrintAndCheck(
             MissingConverterValue.with(
                 Url.parseAbsolute("https://www.example.com/123"),
-                String.class.getName()
+                String.class.getName(),
+                MissingConverterValue.NO_MESSAGE
             ),
             "MissingConverterValue\n" +
                 "  value\n" +
@@ -190,7 +239,9 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
                 "    \"Hello\"\n" +
                 "      java.lang.String\n" +
                 "  type\n" +
-                "    java.lang.String\n"
+                "    java.lang.String\n" +
+                "  message\n" +
+                "    \"Message123\"\n"
         );
     }
 
@@ -204,29 +255,52 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
                         printer.print("Hello");
                     }
                 },
-                String.class.getName()
+                String.class.getName(),
+                MESSAGE
             ),
             "MissingConverterValue\n" +
                 "  value\n" +
                 "    Hello\n" +
                 "      walkingkooka.spreadsheet.convert.provider.MissingConverterValueTest$1\n" +
                 "  type\n" +
-                "    java.lang.String\n"
+                "    java.lang.String\n" +
+                "  message\n" +
+                "    \"Message123\"\n"
         );
     }
 
     @Test
-    public void testTreePrintableWithNullValue() {
+    public void testTreePrintableWithNullValueAndNoMessage() {
         this.treePrintAndCheck(
             MissingConverterValue.with(
                 null,
-                String.class.getName()
+                String.class.getName(),
+                MissingConverterValue.NO_MESSAGE
             ),
             "MissingConverterValue\n" +
                 "  value\n" +
                 "    null\n" +
                 "  type\n" +
                 "    java.lang.String\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            MissingConverterValue.with(
+                VALUE,
+                String.class.getName(),
+                MESSAGE
+            ),
+            "MissingConverterValue\n" +
+                "  value\n" +
+                "    \"Hello\"\n" +
+                "      java.lang.String\n" +
+                "  type\n" +
+                "    java.lang.String\n" +
+                "  message\n" +
+                "    \"Message123\"\n"
         );
     }
 
@@ -237,7 +311,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.marshallAndCheck(
             MissingConverterValue.with(
                 null,
-                Void.class.getName()
+                Void.class.getName(),
+                MissingConverterValue.NO_MESSAGE
             ),
             "{\n" +
                 "  \"type\": \"java.lang.Void\"\n" +
@@ -250,7 +325,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.marshallAndCheck(
             MissingConverterValue.with(
                 VALUE,
-                Void.class.getName()
+                Void.class.getName(),
+                MissingConverterValue.NO_MESSAGE
             ),
             "{\n" +
                 "  \"value\": \"Hello\",\n" +
@@ -264,7 +340,8 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
         this.marshallAndCheck(
             MissingConverterValue.with(
                 Url.parse("https://example.com/123"),
-                Void.class.getName()
+                Void.class.getName(),
+                MissingConverterValue.NO_MESSAGE
             ),
             "{\n" +
                 "  \"value\": {\n" +
@@ -272,6 +349,25 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
                 "    \"value\": \"https://example.com/123\"\n" +
                 "  },\n" +
                 "  \"type\": \"java.lang.Void\"\n" +
+                "}"
+        );
+    }
+
+    @Test
+    public void testMarshallWithValueAndMessage() {
+        this.marshallAndCheck(
+            MissingConverterValue.with(
+                Url.parse("https://example.com/123"),
+                Void.class.getName(),
+                MESSAGE
+            ),
+            "{\n" +
+                "  \"value\": {\n" +
+                "    \"type\": \"absolute-url\",\n" +
+                "    \"value\": \"https://example.com/123\"\n" +
+                "  },\n" +
+                "  \"type\": \"java.lang.Void\",\n" +
+                "  \"message\": \"Message123\"\n" +
                 "}"
         );
     }

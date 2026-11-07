@@ -3043,7 +3043,8 @@ final class MissingConverterVerifier {
                      final Throwable cause) {
         final MissingConverterValue missingConverterValue = MissingConverterValue.with(
             value,
-            type.getName()
+            type.getName(),
+            MissingConverterValue.NO_MESSAGE
         );
 
         final MissingConverter missingConverter = this.missing.get(name);

@@ -42,7 +42,8 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
             Sets.of(
                 MissingConverterValue.with(
                     "Hello",
-                    String.class.getName()
+                    String.class.getName(),
+                    MissingConverterValue.NO_MESSAGE
                 )
             )
         );
@@ -76,7 +77,8 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
                     Sets.of(
                         MissingConverterValue.with(
                             "Hello1",
-                            String.class.getName()
+                            String.class.getName(),
+                            MissingConverterValue.NO_MESSAGE
                         )
                     )
                 ),
@@ -85,7 +87,8 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
                     Sets.of(
                         MissingConverterValue.with(
                             "Hello2",
-                            String.class.getName()
+                            String.class.getName(),
+                            MissingConverterValue.NO_MESSAGE
                         )
                     )
                 ),
@@ -94,7 +97,8 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
                     Sets.of(
                         MissingConverterValue.with(
                             "Hello2",
-                            String.class.getName()
+                            String.class.getName(),
+                            MissingConverterValue.NO_MESSAGE
                         )
                     )
                 )

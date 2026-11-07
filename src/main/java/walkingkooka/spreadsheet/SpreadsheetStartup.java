@@ -154,7 +154,8 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                 Sets.of(
                     MissingConverterValue.with(
                         "Hello",
-                        "text"
+                        "text",
+                        MissingConverterValue.NO_MESSAGE
                     )
                 )
             )
