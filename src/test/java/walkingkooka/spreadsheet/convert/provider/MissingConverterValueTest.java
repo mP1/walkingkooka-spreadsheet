@@ -134,10 +134,32 @@ public final class MissingConverterValueTest implements PublicClassTesting<Missi
     // toString.........................................................................................................
 
     @Test
-    public void testToString() {
+    public void testToStringWithString() {
         this.toStringAndCheck(
             this.createObject(),
             "\"Hello\" java.lang.String"
+        );
+    }
+
+    @Test
+    public void testToStringWithCharacter() {
+        this.toStringAndCheck(
+            MissingConverterValue.with(
+                'A',
+                String.class.getName()
+            ),
+            "'A' java.lang.String"
+        );
+    }
+
+    @Test
+    public void testToStringWithNumber() {
+        this.toStringAndCheck(
+            MissingConverterValue.with(
+                123,
+                String.class.getName()
+            ),
+            "123 java.lang.String"
         );
     }
 
