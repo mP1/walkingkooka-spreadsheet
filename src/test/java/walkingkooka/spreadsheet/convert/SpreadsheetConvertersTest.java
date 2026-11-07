@@ -561,7 +561,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "  ConverterCustomToString\n" +
-                "    \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
+                "    \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, error-throwing)\"\n" +
                 "      ConverterCollection\n" +
                 "        ConverterCustomToString\n" +
                 "          \"null-to-number\"\n" +
@@ -644,9 +644,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "              to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "              * to String (walkingkooka.convert.ConverterObjectToString)\n" +
-                "        ConverterCustomToString\n" +
-                "          \"error-throwing\"\n" +
-                "            throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"color\"\n" +
                 "            ConverterCollection\n" +
@@ -765,6 +762,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"collection-to\"\n" +
                 "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
+                "        ConverterCustomToString\n" +
+                "          \"error-throwing\"\n" +
+                "            throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"net\"\n" +
                 "      ConverterCollection\n" +
@@ -3963,7 +3963,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.treePrintAndCheck(
             SpreadsheetConverters.system(),
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, error-throwing, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to)\"\n" +
+                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, error-throwing)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -4046,9 +4046,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            * to String (walkingkooka.convert.ConverterObjectToString)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"error-throwing\"\n" +
-                "          throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -4166,7 +4163,10 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"collection-to\"\n" +
-                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n"
+                "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"error-throwing\"\n" +
+                "          throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n"
         );
     }
 
