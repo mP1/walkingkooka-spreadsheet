@@ -90,7 +90,7 @@ public final class MissingConverterValue implements HasValue<Object>,
 
     @Override
     public String toString() {
-        return CharSequences.quoteIfChars(this.value) + " " + this.type;
+        return ToStringBuilder.buildFrom(this);
     }
 
     // UsesToStringBuilder..............................................................................................
