@@ -139,14 +139,14 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingFormulaConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataTestingFormulaConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingFormulaConverterDifferentDateOffset() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataTestingFormulaConverterDifferentDateOffset() {
         this.verifyAndCheck(
             SPREADSHEET_METADATA_TESTING.set(
                 SpreadsheetMetadataPropertyName.DATE_OFFSET,
@@ -157,77 +157,77 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testVerifyAndCheckWithWithMetadataDefaultFormulaConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataDefaultFormulaConverter() {
         this.spreadsheetMetadataDefaultVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingFormattingConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataTestingFormattingConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithMetadataDefaultFormattingConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataDefaultFormattingConverter() {
         this.spreadsheetMetadataDefaultVerifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingQueryConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataTestingQueryConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataDefaultQueryConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataDefaultQueryConverter() {
         this.spreadsheetMetadataDefaultVerifyAndCheck(
             SpreadsheetMetadataPropertyName.QUERY_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingScriptingConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataTestingScriptingConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataDefaultScriptingConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataDefaultScriptingConverter() {
         this.spreadsheetMetadataDefaultVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingSortConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataTestingSortConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataDefaultsSortConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataDefaultsSortConverter() {
         this.spreadsheetMetadataDefaultVerifyAndCheck(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataTestingValidationConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataTestingValidationConverter() {
         this.spreadsheetMetadataTestingVerifyAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSpreadsheetMetadataDefaultValidationConverter() {
+    public void testVerifyAndCheckWithSpreadsheetMetadataDefaultValidationConverter() {
         this.spreadsheetMetadataDefaultVerifyAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
         );
