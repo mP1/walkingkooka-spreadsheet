@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.HasValue;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringBuilderOption;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -33,7 +36,9 @@ import java.util.Objects;
 /**
  * Captures an unsupported value and type, with type being the class name, because GWT doesnt support {@link Class} serialization.
  */
-public final class MissingConverterValue implements HasValue<Object>, TreePrintable {
+public final class MissingConverterValue implements HasValue<Object>,
+    TreePrintable,
+    UsesToStringBuilder {
 
     public static MissingConverterValue with(final Object value,
                                              final String type) {
@@ -86,6 +91,15 @@ public final class MissingConverterValue implements HasValue<Object>, TreePrinta
     @Override
     public String toString() {
         return CharSequences.quoteIfChars(this.value) + " " + this.type;
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder builder) {
+        builder.value(this.value)
+            .disable(ToStringBuilderOption.QUOTE)
+            .value(this.type);
     }
 
     // TreePrintable....................................................................................................
