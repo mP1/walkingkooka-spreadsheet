@@ -44,11 +44,11 @@ final class SpreadsheetConverterSpreadsheetIdToSpreadsheetMetadata implements Tr
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
         return null != value &&
+            SpreadsheetMetadata.isClass(type) &&
             context.canConvert(
-            value,
-            SpreadsheetId.class
-        ) &&
-            SpreadsheetMetadata.isClass(type);
+                value,
+                SpreadsheetId.class
+            );
     }
 
     @Override
