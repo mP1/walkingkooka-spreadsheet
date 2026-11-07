@@ -3041,10 +3041,14 @@ final class MissingConverterVerifier {
                      final Class<?> type,
                      final ConverterName name,
                      final Throwable cause) {
+        final String message = null != cause ?
+            cause.getMessage() :
+            null;
+
         final MissingConverterValue missingConverterValue = MissingConverterValue.with(
             value,
             type.getName(),
-            MissingConverterValue.NO_MESSAGE
+            Optional.ofNullable(message)
         );
 
         final MissingConverter missingConverter = this.missing.get(name);
