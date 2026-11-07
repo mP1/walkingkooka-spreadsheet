@@ -32,6 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Captures an unsupported value and type, with type being the class name, because GWT doesnt support {@link Class} serialization.
@@ -40,18 +41,24 @@ public final class MissingConverterValue implements HasValue<Object>,
     TreePrintable,
     UsesToStringBuilder {
 
+    public final static Optional<String> NO_MESSAGE = Optional.empty();
+
     public static MissingConverterValue with(final Object value,
-                                             final String type) {
+                                             final String type,
+                                             final Optional<String> message) {
         return new MissingConverterValue(
             value,
-            CharSequences.failIfNullOrEmpty(type, "type")
+            CharSequences.failIfNullOrEmpty(type, "type"),
+            Objects.requireNonNull(message, "message")
         );
     }
 
     private MissingConverterValue(final Object value,
-                                  final String type) {
+                                  final String type,
+                                  final Optional<String> message) {
         this.value = value;
         this.type = type;
+        this.message = message;
     }
 
     @Override
@@ -67,13 +74,20 @@ public final class MissingConverterValue implements HasValue<Object>,
 
     private final String type;
 
+    public Optional<String> message() {
+        return this.message;
+    }
+
+    private final Optional<String> message;
+
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
         return Objects.hash(
             this.value,
-            this.type
+            this.type,
+            this.message
         );
     }
 
@@ -85,7 +99,8 @@ public final class MissingConverterValue implements HasValue<Object>,
 
     private boolean equals0(final MissingConverterValue other) {
         return Objects.equals(this.value, other.value) &&
-            this.type.equals(other.type);
+            this.type.equals(other.type) &&
+            this.message.equals(other.message);
     }
 
     @Override
@@ -99,7 +114,9 @@ public final class MissingConverterValue implements HasValue<Object>,
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.value)
             .disable(ToStringBuilderOption.QUOTE)
-            .value(this.type);
+            .value(this.type)
+            .enable(ToStringBuilderOption.QUOTE)
+            .value(this.message);
     }
 
     // TreePrintable....................................................................................................
@@ -119,6 +136,8 @@ public final class MissingConverterValue implements HasValue<Object>,
      *       java.lang.String
      *   type
      *     java.lang.String
+     *   message
+     *     "Message 123"
      * </pre>
      */
     @Override
@@ -159,6 +178,18 @@ public final class MissingConverterValue implements HasValue<Object>,
                 printer.println(this.type);
             }
             printer.outdent();
+
+            final String message = this.message.orElse(null);
+            if (null != message) {
+                printer.println("message");
+                printer.indent();
+                {
+                    printer.println(
+                        CharSequences.quoteIfChars(message)
+                    );
+                }
+                printer.outdent();
+            }
         }
         printer.outdent();
     }
@@ -169,6 +200,7 @@ public final class MissingConverterValue implements HasValue<Object>,
                                             final JsonNodeUnmarshallContext context) {
         Object value = null;
         String type = null;
+        String message = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -182,6 +214,12 @@ public final class MissingConverterValue implements HasValue<Object>,
                         String.class
                     );
                     break;
+                case MESSAGE_PROPERTY_STRING:
+                    message = context.unmarshall(
+                        child,
+                        String.class
+                    );
+                    break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
                     break;
@@ -190,7 +228,8 @@ public final class MissingConverterValue implements HasValue<Object>,
 
         return with(
             value,
-            type
+            type,
+            Optional.ofNullable(message)
         );
     }
 
@@ -205,10 +244,20 @@ public final class MissingConverterValue implements HasValue<Object>,
             );
         }
 
-        return object.set(
+        object = object.set(
             TYPE_PROPERTY,
             context.marshall(this.type)
         );
+
+        final String message = this.message.orElse(null);
+        if (null != message) {
+            object = object.set(
+                MESSAGE_PROPERTY,
+                context.marshall(message)
+            );
+        }
+
+        return object;
     }
 
     private final static String VALUE_PROPERTY_STRING = "value";
@@ -216,6 +265,9 @@ public final class MissingConverterValue implements HasValue<Object>,
 
     private final static String TYPE_PROPERTY_STRING = "type";
     final static JsonPropertyName TYPE_PROPERTY = JsonPropertyName.with(TYPE_PROPERTY_STRING);
+
+    private final static String MESSAGE_PROPERTY_STRING = "message";
+    final static JsonPropertyName MESSAGE_PROPERTY = JsonPropertyName.with(MESSAGE_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register(

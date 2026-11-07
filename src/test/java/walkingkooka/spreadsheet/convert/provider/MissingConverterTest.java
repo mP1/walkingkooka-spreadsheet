@@ -32,6 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -49,7 +50,8 @@ public final class MissingConverterTest implements PublicClassTesting<MissingCon
     private final static Set<MissingConverterValue> VALUES = Sets.of(
         MissingConverterValue.with(
             "Hello",
-            String.class.getName()
+            String.class.getName(),
+            MissingConverterValue.NO_MESSAGE
         )
     );
 
@@ -114,7 +116,8 @@ public final class MissingConverterTest implements PublicClassTesting<MissingCon
                 Sets.of(
                     MissingConverterValue.with(
                         "Different",
-                        String.class.getName()
+                        String.class.getName(),
+                        MissingConverterValue.NO_MESSAGE
                     )
                 )
             )
@@ -201,11 +204,13 @@ public final class MissingConverterTest implements PublicClassTesting<MissingCon
                 Sets.of(
                     MissingConverterValue.with(
                         true,
-                        Boolean.class.getName()
+                        Boolean.class.getName(),
+                        MissingConverterValue.NO_MESSAGE
                     ),
                     MissingConverterValue.with(
                         1,
-                        Integer.class.getName()
+                        Integer.class.getName(),
+                        MissingConverterValue.NO_MESSAGE
                     ),
                     MissingConverterValue.with(
                         LocalDate.of(
@@ -213,7 +218,8 @@ public final class MissingConverterTest implements PublicClassTesting<MissingCon
                             12,
                             31
                         ),
-                        LocalDate.class.getName()
+                        LocalDate.class.getName(),
+                        Optional.of("Message 333")
                     )
                 )
             ),
@@ -236,7 +242,9 @@ public final class MissingConverterTest implements PublicClassTesting<MissingCon
                 "        1999-12-31\n" +
                 "          java.time.LocalDate\n" +
                 "      type\n" +
-                "        java.time.LocalDate\n"
+                "        java.time.LocalDate\n" +
+                "      message\n" +
+                "        \"Message 333\"\n"
         );
     }
 
