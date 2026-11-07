@@ -44,7 +44,7 @@ public final class SpreadsheetStrings implements PublicStaticHelper {
      * Tests if the given {@link String} which may be null is equivalent to {@link #BOOLEAN_TRUE}, if not returning false.
      */
     public static boolean toBoolean(final String text) {
-        return null != text && CASE_SENSITIVITY.equals(
+        return CASE_SENSITIVITY.equals(
             BOOLEAN_TRUE,
             text
         );
