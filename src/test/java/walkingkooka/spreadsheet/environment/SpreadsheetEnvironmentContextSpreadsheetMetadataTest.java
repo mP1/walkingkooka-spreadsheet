@@ -931,7 +931,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "      time\n" +
                 "    formattingConverter\n" +
                 "      collection\n" +
-                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "    formattingCurrencyExchangeRater\n" +
                 "      storage-properties\n" +
                 "        \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -939,7 +939,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "    formHandlers\n" +
                 "    formulaConverter\n" +
                 "      collection\n" +
-                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "    formulaCurrencyExchangeRater\n" +
                 "      storage-properties\n" +
                 "        \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -991,13 +991,13 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "      7\n" +
                 "    queryConverter\n" +
                 "      collection\n" +
-                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "    queryFunctions\n" +
                 "    roundingMode\n" +
                 "      HALF_UP\n" +
                 "    scriptingConverter\n" +
                 "      collection\n" +
-                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "    scriptingCurrencyExchangeRater\n" +
                 "      storage-properties\n" +
                 "        \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -1040,7 +1040,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "      user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "    validationConverter\n" +
                 "      collection\n" +
-                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\"\n" +
+                "        \"(null-to-number, simple, text, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to, error-throwing)\"\n" +
                 "    validationCurrencyExchangeRater\n" +
                 "      storage-properties\n" +
                 "        \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -1433,7 +1433,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "          time\n" +
                 "        formattingConverter: \n" +
                 "          collection\n" +
-                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "        formattingCurrencyExchangeRater: \n" +
                 "          storage-properties\n" +
                 "            \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -1441,7 +1441,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "        formHandlers: \n" +
                 "        formulaConverter: \n" +
                 "          collection\n" +
-                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "        formulaCurrencyExchangeRater: \n" +
                 "          storage-properties\n" +
                 "            \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -1481,12 +1481,12 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "        precision: 7\n" +
                 "        queryConverter: \n" +
                 "          collection\n" +
-                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "        queryFunctions: \n" +
                 "        roundingMode: HALF_UP\n" +
                 "        scriptingConverter: \n" +
                 "          collection\n" +
-                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to)\"\n" +
+                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\"\n" +
                 "        scriptingCurrencyExchangeRater: \n" +
                 "          storage-properties\n" +
                 "            \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -1516,7 +1516,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "        twoDigitYear: 50\n" +
                 "        validationConverter: \n" +
                 "          collection\n" +
-                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, value, error-throwing, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to)\"\n" +
+                "            \"(null-to-number, simple, text, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to, error-throwing)\"\n" +
                 "        validationCurrencyExchangeRater: \n" +
                 "          storage-properties\n" +
                 "            \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +

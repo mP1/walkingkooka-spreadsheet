@@ -2921,7 +2921,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      handler3\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
-                "        \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "        \"(text, boolean, number, date-time, basic, value, color, expression, environment, json, locale, template, net, error-throwing)\"\n" +
                 "    formulaFunctions: \n" +
                 "      function1\n" +
                 "      function2\n" +
@@ -3161,7 +3161,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      handler3\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
-                "        \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "        \"(text, boolean, number, date-time, basic, value, color, expression, environment, json, locale, template, net, error-throwing)\"\n" +
                 "    formulaFunctions: \n" +
                 "      function1\n" +
                 "      function2\n" +
@@ -3399,7 +3399,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    handler3\n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, value, color, expression, environment, json, locale, template, net, error-throwing)\"\n" +
                 "  formulaFunctions: \n" +
                 "    function1\n" +
                 "    function2\n" +
@@ -3638,7 +3638,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    handler3\r\n" +
                 "  formulaConverter: \r\n" +
                 "    collection\r\n" +
-                "      \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\r\n" +
+                "      \"(text, boolean, number, date-time, basic, value, color, expression, environment, json, locale, template, net, error-throwing)\"\r\n" +
                 "  formulaFunctions: \r\n" +
                 "    function1\r\n" +
                 "    function2\r\n" +
@@ -3877,7 +3877,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    handler3\r" +
                 "  formulaConverter: \r" +
                 "    collection\r" +
-                "      \"(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)\"\r" +
+                "      \"(text, boolean, number, date-time, basic, value, color, expression, environment, json, locale, template, net, error-throwing)\"\r" +
                 "  formulaFunctions: \r" +
                 "    function1\r" +
                 "    function2\r" +
@@ -4042,7 +4042,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     FormHandlerAliasSet.parse("handler1, handler2, handler3")
                 ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse("collection(text, boolean, number, date-time, basic, value, error-throwing, color, expression, environment, json, locale, template, net)")
+                    ConverterSelector.parse("collection(text, boolean, number, date-time, basic, value, color, expression, environment, json, locale, template, net, error-throwing)")
                 ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("function1, function2, function3")
