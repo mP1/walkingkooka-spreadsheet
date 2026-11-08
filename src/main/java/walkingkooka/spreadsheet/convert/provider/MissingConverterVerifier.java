@@ -2675,24 +2675,34 @@ final class MissingConverterVerifier {
             }
 
             // text.....................................................................................................
+            final Character character = 'Z';
+
             verifier.addIfConversionFail(
-                ' ',
-                Lists.of(
-                    Character.class,
-                    String.class
-                ),
+                character,
+                Character.class,
                 SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_NOT_NULL
+                character
             );
 
             verifier.addIfConversionFail(
-                "A",
-                Lists.of(
-                    Character.class,
-                    String.class
-                ),
+                character,
+                String.class,
                 SpreadsheetConvertersConverterProvider.TEXT, // TEXT
-                IS_NOT_NULL
+                character.toString()
+            );
+
+            verifier.addIfConversionFail(
+                character.toString(),
+                Character.class,
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                character
+            );
+
+            verifier.addIfConversionFail(
+                character.toString(),
+                String.class,
+                SpreadsheetConvertersConverterProvider.TEXT, // TEXT
+                character.toString()
             );
 
             verifier.addIfConversionFail(
