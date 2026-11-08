@@ -885,7 +885,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     // @VisibleForTesting
     public final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
-        "collection(null-to-number, simple, text, boolean, number, date-time, locale, value, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, error-throwing)"
+        "collection(null-to-number, simple, boolean, number, date-time, locale, value, color, expression, environment, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, text, json, error-throwing)"
     );
 
     /**
@@ -953,7 +953,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 Converters.toText(),
                 textToCharset(),
                 textToIndentation(),
-                textToLineEnding()
+                textToLineEnding(),
+                objectToText()
             );
         }
         return TEXT;
@@ -1818,8 +1819,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 csv(),
                 tsv(),
                 binaryToText(),
-                toMultiLineText(),
-                Converters.objectToString()
+                toMultiLineText()//,
+                //Converters.objectToString()
             );
         }
         return VALUE;

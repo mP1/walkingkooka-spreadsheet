@@ -1286,7 +1286,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testConverterDateToString() {
+    public void testConverterStringToDate() {
         this.converterConvertAndCheck(
             "Date 2000 12 31",
             LocalDate.of(2000, 12, 31)
@@ -1294,7 +1294,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testConverterStringToDate() {
+    public void testConverterDateToString() {
         this.converterConvertAndCheck(
             LocalDate.of(2000, 12, 31),
             "Date 2000 12 31"
@@ -1302,7 +1302,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testConverterDateTimeToString() {
+    public void testConverterStringToDateTime() {
         this.converterConvertAndCheck(
             "DateTime 2000 12",
             LocalDateTime.of(2000, 1, 1, 12, 0, 0)
@@ -1310,7 +1310,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testConverterStringToDateTime() {
+    public void testConverterDateTimeToString() {
         this.converterConvertAndCheck(
             LocalDateTime.of(2000, 1, 1, 12, 0, 0),
             "DateTime 2000 12"
@@ -1324,7 +1324,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testConverterTimeToString() {
+    public void testConverterStringToTime() {
         this.converterConvertAndCheck(
             "Time 59 12",
             LocalTime.of(12, 0, 59)
@@ -1332,7 +1332,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testConverterStringToTime() {
+    public void testConverterTimeToString() {
         this.converterConvertAndCheck(
             LocalTime.of(12, 58, 59),
             "Time 59 12"
@@ -1407,7 +1407,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
                 DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
             ).set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-            .set(converterSelector, ConverterSelector.parse("collection(text, number, date-time, simple, value)"))
+            .set(converterSelector, ConverterSelector.parse("collection(number, date-time, simple, value, text)"))
             .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)

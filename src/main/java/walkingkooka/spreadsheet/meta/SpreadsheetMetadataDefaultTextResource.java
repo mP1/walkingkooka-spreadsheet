@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet.meta;
  * Used to load SpreadsheetMetadataDefaultTextResource.json
  * <br/>
  * <a href="https://www.excelsupersite.com/what-are-the-56-colorindex-colors-in-excel">What are the 56 color in Excel</a>
+ * text must be before json otherwise things break.
  */
 @walkingkooka.resource.TextResourceAware(fileExtension = "json")
 public final class SpreadsheetMetadataDefaultTextResource {

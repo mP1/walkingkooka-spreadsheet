@@ -141,11 +141,11 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"exporters\": \"collection, empty, json\",\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
-                "  \"formattingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"formattingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"formattingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"formattingFunctions\": \"@\",\n" +
                 "  \"formHandlers\": \"\",\n" +
-                "  \"formulaConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"formulaConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"formulaCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"formulaFunctions\": \"@\",\n" +
                 "  \"functions\": \"@\",\n" +
@@ -156,10 +156,10 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"parsers\": \"date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\",\n" +
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 7,\n" +
-                "  \"queryConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"queryConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, text, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"queryFunctions\": \"@\",\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"scriptingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"scriptingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"scriptingFunctions\": \"@\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
@@ -167,7 +167,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"showGridLines\": true,\n" +
                 "  \"showHeadings\": true,\n" +
                 "  \"sortComparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\",\n" +
-                "  \"sortConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, locale, value, optional-to, collection-to)\",\n" +
+                "  \"sortConverter\": \"collection(null-to-number, simple, boolean, number, date-time, locale, value, text, optional-to, collection-to)\",\n" +
                 "  \"style\": {\n" +
                 "    \"height\": \"50px\",\n" +
                 "    \"width\": \"100px\"\n" +
@@ -176,7 +176,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"timeFormatter\": \"time hh:mm:ss\",\n" +
                 "  \"timeParser\": \"time hh:mm:ss\",\n" +
                 "  \"twoDigitYear\": 50,\n" +
-                "  \"validationConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
@@ -286,11 +286,11 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"exporters\": \"collection, empty, json\",\r\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\r\n" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\r\n" +
-                "  \"formattingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r\n" +
+                "  \"formattingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\r\n" +
                 "  \"formattingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r\n" +
                 "  \"formattingFunctions\": \"@\",\r\n" +
                 "  \"formHandlers\": \"\",\r\n" +
-                "  \"formulaConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r\n" +
+                "  \"formulaConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\r\n" +
                 "  \"formulaCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r\n" +
                 "  \"formulaFunctions\": \"@\",\r\n" +
                 "  \"functions\": \"@\",\r\n" +
@@ -301,10 +301,10 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"parsers\": \"date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\",\r\n" +
                 "  \"plugins\": \"\",\r\n" +
                 "  \"precision\": 7,\r\n" +
-                "  \"queryConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r\n" +
+                "  \"queryConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, text, optional-to, collection-to, error-throwing)\",\r\n" +
                 "  \"queryFunctions\": \"@\",\r\n" +
                 "  \"roundingMode\": \"HALF_UP\",\r\n" +
-                "  \"scriptingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r\n" +
+                "  \"scriptingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\r\n" +
                 "  \"scriptingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r\n" +
                 "  \"scriptingFunctions\": \"@\",\r\n" +
                 "  \"showFormulaEditor\": true,\r\n" +
@@ -312,7 +312,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"showGridLines\": true,\r\n" +
                 "  \"showHeadings\": true,\r\n" +
                 "  \"sortComparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\",\r\n" +
-                "  \"sortConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, locale, value, optional-to, collection-to)\",\r\n" +
+                "  \"sortConverter\": \"collection(null-to-number, simple, boolean, number, date-time, locale, value, text, optional-to, collection-to)\",\r\n" +
                 "  \"style\": {\r\n" +
                 "    \"height\": \"50px\",\r\n" +
                 "    \"width\": \"100px\"\r\n" +
@@ -321,7 +321,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r\n" +
                 "  \"timeParser\": \"time hh:mm:ss\",\r\n" +
                 "  \"twoDigitYear\": 50,\r\n" +
-                "  \"validationConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to, error-throwing)\",\r\n" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\",\r\n" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r\n" +
                 "  \"validationFunctions\": \"@\",\r\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\r\n" +
@@ -431,11 +431,11 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"exporters\": \"collection, empty, json\",\r" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\r" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\r" +
-                "  \"formattingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r" +
+                "  \"formattingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\r" +
                 "  \"formattingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r" +
                 "  \"formattingFunctions\": \"@\",\r" +
                 "  \"formHandlers\": \"\",\r" +
-                "  \"formulaConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r" +
+                "  \"formulaConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\r" +
                 "  \"formulaCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r" +
                 "  \"formulaFunctions\": \"@\",\r" +
                 "  \"functions\": \"@\",\r" +
@@ -446,10 +446,10 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"parsers\": \"date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\",\r" +
                 "  \"plugins\": \"\",\r" +
                 "  \"precision\": 7,\r" +
-                "  \"queryConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r" +
+                "  \"queryConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, text, optional-to, collection-to, error-throwing)\",\r" +
                 "  \"queryFunctions\": \"@\",\r" +
                 "  \"roundingMode\": \"HALF_UP\",\r" +
-                "  \"scriptingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\r" +
+                "  \"scriptingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)\",\r" +
                 "  \"scriptingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r" +
                 "  \"scriptingFunctions\": \"@\",\r" +
                 "  \"showFormulaEditor\": true,\r" +
@@ -457,7 +457,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"showGridLines\": true,\r" +
                 "  \"showHeadings\": true,\r" +
                 "  \"sortComparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\",\r" +
-                "  \"sortConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, locale, value, optional-to, collection-to)\",\r" +
+                "  \"sortConverter\": \"collection(null-to-number, simple, boolean, number, date-time, locale, value, text, optional-to, collection-to)\",\r" +
                 "  \"style\": {\r" +
                 "    \"height\": \"50px\",\r" +
                 "    \"width\": \"100px\"\r" +
@@ -466,7 +466,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r" +
                 "  \"timeParser\": \"time hh:mm:ss\",\r" +
                 "  \"twoDigitYear\": 50,\r" +
-                "  \"validationConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to, error-throwing)\",\r" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\",\r" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r" +
                 "  \"validationFunctions\": \"@\",\r" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\r" +
