@@ -357,9 +357,11 @@ final class MissingConverterVerifier {
     private final static Hyperlink HYPERLINK = Hyperlink.hyperlink(ABSOLUTE_URL);
     private final static Image IMAGE = Image.image(ABSOLUTE_URL);
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
+
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-        SpreadsheetId.with(1)
+        SPREADSHEET_ID
     ).set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
         SpreadsheetName.with("Spreadsheet111")
@@ -1682,22 +1684,21 @@ final class MissingConverterVerifier {
             }
 
             // text-to-spreadsheet-id...................................................................................
-            final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
 
             // will be enabled by terminal
             if (formula || scripting) {
                 verifier.addIfConversionFail(
-                    spreadsheetId.toString(),
+                    SPREADSHEET_ID.toString(),
                     SpreadsheetId.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, // TEXT_TO_SPREADSHEET_ID
-                    spreadsheetId
+                    SPREADSHEET_ID
                 );
             }
 
             // text-to-spreadsheet-metadata.................................................................................
             final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                spreadsheetId
+                SPREADSHEET_ID
             );
 
             if (formula || scripting) {
@@ -2910,7 +2911,7 @@ final class MissingConverterVerifier {
                     Lists.of(
                         AUDIT_INFO,
                         ERROR,
-                        SpreadsheetId.with(1),
+                        SPREADSHEET_ID,
                         STORAGE_PATH,
                         StorageValue.with(
                             STORAGE_PATH
