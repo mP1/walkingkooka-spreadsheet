@@ -55,14 +55,17 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.text.printer.Printers;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
@@ -101,6 +104,101 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
+
+    @Test
+    public void testConvertStringToSpreadsheetId() {
+        String c = null;
+
+
+        //final String a = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, storage, style, text-node, template, net, binary, spreadsheet-metadata, optional-to, collection-to, text, never)";
+        c = "collection( text-to-spreadsheet-id, text )";
+        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, " +
+            "currency, logging, plugins, properties, storage, style, text-node, template, net, binary, spreadsheet-metadata, text, optional-to, collection-to, never)";
+
+        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, " +
+            "currency, logging, plugins, properties, storage, style, text-node, template, net, binary, text-to-spreadsheet-id, text, optional-to, collection-to, never)";
+
+        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, " +
+            "currency, logging, plugins, properties, storage, style, text-node, template, net, binary, " +
+            "properties-to-spreadsheet-metadata, text-to-spreadsheet-id, " +//spreadsheet-id-to-spreadsheet-metadata," + // spreadsheet-metadata
+            "spreadsheet-id-to-spreadsheet-metadata, "+
+            "text-to-spreadsheet-metadata, " +
+            "text-to-spreadsheet-metadata-property-name, " +
+            "text-to-spreadsheet-name, " +
+            //"spreadsheet-metadata" +
+            ", text, optional-to, collection-to, never)";
+
+        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, " +
+            "expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, " +
+            "text-node, template, net, binary, text, optional-to, collection-to, error-throwing)";
+
+        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, " +
+            "expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, " +
+            "text-node, template, net, binary, text, optional-to, collection-to, error-throwing)";
+
+        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, "+
+            "expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, "+
+            "text-node, template, net, binary, text, optional-to, collection-to, error-throwing)"; // default formatter
+
+        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, "+
+            "expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, "+
+            "text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)"; // default formatter
+
+        final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
+
+        final Converter<SpreadsheetConverterContext> converter = CONVERTER_PROVIDER.converter(
+            ConverterSelector.parse(c),
+            PROVIDER_CONTEXT
+        );
+
+        System.out.println(
+            ((TreePrintable)converter).treeToString(
+                TEXT_CONTEXT
+            )
+        );
+
+        final TestSpreadsheetConverterContext context = new TestSpreadsheetConverterContext(
+            SPREADSHEET_METADATA_TESTING.set(
+                propertyName,
+                ConverterSelector.parse(c)
+            ),
+            converter
+        );
+
+//        final StorageValue storageValue = StorageValue.with(
+//            StoragePath.parse("/path1/path2")
+//        ).setValue(
+//            Optional.of("StorageValue123")
+//        );
+//
+//        final Object o = context.convertOrFail(
+//            storageValue,
+//            String.class
+//        );
+//
+//        this.checkEquals(
+//            storageValue.toString(),
+//            context.convertOrFail(
+//                storageValue,
+//                String.class
+//            )
+//        );
+
+        final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("SpreadsheetName111")
+        );
+
+        this.checkEquals(
+            spreadsheetMetadata.properties(),
+            context.convertOrFail(
+                spreadsheetMetadata,
+                walkingkooka.props.Properties.class
+            )
+        );
+    }
+
+
 
     @Test
     public void testVerifyAndCheckWithNullConverterFails() {
@@ -366,21 +464,10 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 "        , locale \"en-AU\" walkingkooka.datetime.DateTimeSymbols, en_AU walkingkooka.datetime.DateTimeSymbols, \"en-AU\" walkingkooka.math.DecimalNumberSymbols, en_AU walkingkooka.math.DecimalNumberSymbols, \"en-AU\" java.util.Locale, en_AU java.util.Locale, A1 \"=1+2+3\" valueType=text/Text currencyExchangeRater=\"test-currency-exchange-rater\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol, net \"https://example.com/123\" walkingkooka.net.Url, \"mailto:user@example.com\" walkingkooka.net.Url, \"/path1/path2?k1=v1#fragment111\" walkingkooka.net.Url, \"user@example.com\" walkingkooka.net.email.EmailAddress, \"text/plain; charset=UTF-8\" walkingkooka.net.header.MediaType, \"https://example.com/123\" walkingkooka.net.HasHostAddress, \"user@example.com\" walkingkooka.net.HasHostAddress, \"mailto:user@example.com\" walkingkooka.net.HasHostAddress, number walkingkooka.tree.expression.ExpressionNumber, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Float, java.lang.Double, java.math.BigInteger, java.math.BigDecimal, 1 walkingkooka.tree.expression.ExpressionNumber, 1 java.lang.Byte, 1 java.lang.Short, 1 java.lang.Integer, 1 java.lang.Long, 1 java.lang.Float, 1 java.lang.Double, 1 java.math.BigInteger, 1 java.math.BigDecimal, optional-to java.lang.Boolean, java.lang.Boolean, true java.lang.Boolean, 123 walkingkooka.tree.expression.ExpressionNumber, 123 java.lang.Byte, 123 java.lang.Short, 123 java.lang.Integer, 123 java.lang.Long, 123 java.lang.Float, 123 java.lang.Double, 123 java.math.BigInteger, 123 java.math.BigDecimal, 1999-12-31 java.time.LocalDate, 1999-12-31T12:58 java.time.LocalDateTime, 1999-12-31T12:58 walkingkooka.datetime.LocalDateTimeList, \"Hello\" java.lang.String, 12:58 java.time.LocalTime, plugins A1 \"=1+2+3\" valueType=text/Text currencyExchangeRater=\"test-currency-exchange-rater\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'\" formatter=\"test-formatter\" locale=\"en_AU\" parser=\"test-parser\" style={color=black} validator=\"test-validator\" w, properties {\n" +
                 "  \"spreadsheetId\": \"7b\",\n" +
                 "  \"spreadsheetName\": \"Spreadsheet111\"\n" +
-                "} walkingkooka.props.Properties, spreadsheet-metadata \"123\" walkingkooka.spreadsheet.meta.SpreadsheetMetadata, 123 walkingkooka.spreadsheet.meta.SpreadsheetMetadata, {\n" +
-                "  \"spreadsheetId\": \"123\",\n" +
-                "  \"auditInfo\": {\n" +
-                "    \"createdBy\": \"user123@example.com\",\n" +
-                "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
-                "    \"modifiedBy\": \"user123@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"1999-12-31T12:58:59\"\n" +
-                "  },\n" +
-                "  \"autoHideScrollbars\": false,\n" +
-                "  \"cellCharacterWidth\": 1,\n" +
-                "  \"color1\": \"black\",\n" +
-                "  \"color2\": \"white\",\n" +
-                "  \"colorBlack\": 1,\n" +
-                "  \"colorWhite\": 2,\n" +
-                "  \"comparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, date-time, day-of-month, day-of-week, error, formatter, hour-of-am-pm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, text-decorat, storage-binary-to-storage-value-binary /file.bin 00 01 02                                                    ???                 \n" +
+                "} walkingkooka.props.Properties, spreadsheet-metadata \"123\" walkingkooka.spreadsheet.meta.SpreadsheetMetadata, 123 walkingkooka.spreadsheet.meta.SpreadsheetMetadata, \"7b\" walkingkooka.spreadsheet.meta.SpreadsheetId, \"{\n" +
+                "  \"spreadsheetId\": \"7b\"\n" +
+                "}\" walkingkooka.spreadsheet.meta.SpreadsheetMetadata, \"SpreadsheetName123\" walkingkooka.spreadsheet.meta.SpreadsheetName, \"spreadsheetName\" walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName, spreadsheetId=7b\n" +
+                " walkingkooka.spreadsheet.meta.SpreadsheetMetadata, storage-binary-to-storage-value-binary /file.bin 00 01 02                                                    ???                 \n" +
                 " walkingkooka.storage.StorageValue, /file.bin=00 01 02                                                    ???                 \n" +
                 " walkingkooka.storage.StorageBinary, storage-binary-to-storage-value-csv /file.csv 41 70 70 6c 65 20 31 2c 42 61 6e 61 6e 61 20 32             Apple 1,Banana 2    \n" +
                 " walkingkooka.storage.StorageValue, storage-binary-to-storage-value-environment /EnvironmentContext.env 63 68 61 72 73 65 74 3d 55 54 46 2d 38 0a 63 75 72 72 65 6e charset=UTF-8?curren\n" +
@@ -702,7 +789,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 "  \"colorBlack\": 1,\n" +
                 "  \"colorWhite\": 2,\n" +
                 "  \"comparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, date-time, day-of-month, day-of-week, error, formatter, hour-of-am-pm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, text-decoration-color, text-with-numbers, text-with-numbers-case-insensitive, time, validator, value-type, year\",\n" +
-                "  \"converters\": \"binary, binary-to-text, boolean, boolean-to-text, collection, collection-to, collection-to-list, color, color-to-number, csv, currency, currency-code-to-currency, currency-value-to, currency-value-to-number, date-time, date-time-symbols, decimal-number-symbols, environment, environment-to-binary, environment-to-text, error-throwing, error-to-error, error-to-number, expression, form-and-validation, format-pattern-to-string, json, json-node-to, locale, locale-to-text, logging, net, never, null-to-number, number, number-to-color, number-to-currency-value, number-to-number, number-to-text, optional-to, plugins, properties, properties-to-date-time-symbols, properties-to-decimal-number-symbols, properties-to-spreadsheet-metadata, properties-to-text-style, simple, spreadsheet-cell-set, spreadsheet-id-to-spreadsheet-metadata, spreadsheet-metadata, spreadsheet-metadata-to-text, spreadsheet-selection, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, storage, storage-binary-to-storage-value-binary, storage-binary-to-storage-value-csv, storage-binary-to-storage-value-environment, storage-binary-to-storage-value-expression, storage-binary-to-storage-value-json, storage-binary-to-storage-value-properties, storage-binary-to-storage-value-tsv, storage-binary-to-storage-value-txt, storage-value-info-list-to-text, storage-value-to-storage-binary-binary, storage-value-to-storage-binary-csv, storage-value-to-storage-binary-environment, storage-value-to-storage-binary-expression, storage-value-to-storage-binary-json, storage-value-to-storage-binary-properties, storage-value-to-storage-binary-tsv, storage-value-to-storage-binary-txt, style, system, template, text, text-node, text-to-binary, text-to-boolean-list, text-to-border, text-to-charset, text-to-color, text-to-converter-selector, text-to-csv-string-list, text-to-csv-string-set, text-to-currency, text-to-currency-code, text-to-currency-exchange-rater-selector, text-to-currency-value, text-to-date-list, text-to-date-time-list, text-to-email-address, text-to-environment, text-to-environment-value-name, text-to-error, text-to-expression, text-to-expression-function-selector, text-to-flag, text-to-form-name, text-to-has-host-address, text-to-host-address, text-to-indentation, text-to-json, text-to-json-pointer, text-to-json-selector, text-to-line-ending, text-to-locale, text-to-locale-language-tag, text-to-logging-level, text-to-margin, text-to-media-type, text-to-number-list, text-to-object, text-to-padding, text-to-path, text-to-properties, text-to-spreadsheet-comparator-selector, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-parser-selector, text-to-spreadsheet-selection, text-to-spreadsheet-text, text-to-storage-path, text-to-string-list, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-time-list, text-to-tsv-string-list, text-to-tsv-string-set, text-to-url, text-to-url-fragment, text-to-url-query-string, text-to-validation-error, text-to-validator-selector, text-to-value-type, text-to-web-color-name, text-to-zone-offset, to-binary, to-boolean, to-color, to-color-properties, to-csv-string-list, to-currency, to-currency-code, to-currency-value, to-date-time-symbols, to-decimal-number-symbols, to-environment, to-formatter-selector, to-has-host-address, to-host-address, to-json-node, to-locale, to-locale-language-tag, to-multi-line-text, to-number, to-parser-selector, to-properties, to-spreadsheet-selection, to-style, to-styleable, to-text, to-text-node, to-tsv-string-list, to-validation-checkbox, to-validation-choice, to-validation-choice-list, to-validation-error-list, to-validator-selector, to-value, to-value-type, tsv, url, url-to-hyperlink, url-to-image, value\",\n" +
+                "  \"converters\": \"binary, binary-to-text, boolean, boolean-to-text, collection, collection-to, collection-to-list, color, color-to-number, csv, currency, currency-code-to-currency, currency-value-to, currency-value-to-number, date-time, date-time-symbols, decimal-number-symbols, environment, environment-to-binary, environment-to-text, error-throwing, error-to-error, error-to-number, expression, form-and-validation, format-pattern-to-string, json, json-node-to, locale, locale-to-text, logging, net, null-to-number, number, number-to-color, number-to-currency-value, number-to-number, number-to-text, optional-to, plugins, properties, properties-to-date-time-symbols, properties-to-decimal-number-symbols, properties-to-spreadsheet-metadata, properties-to-text-style, simple, spreadsheet-cell-set, spreadsheet-id-to-spreadsheet-metadata, spreadsheet-metadata, spreadsheet-metadata-to-text, spreadsheet-selection, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, storage, storage-binary-to-storage-value-binary, storage-binary-to-storage-value-csv, storage-binary-to-storage-value-environment, storage-binary-to-storage-value-expression, storage-binary-to-storage-value-json, storage-binary-to-storage-value-properties, storage-binary-to-storage-value-tsv, storage-binary-to-storage-value-txt, storage-value-info-list-to-text, storage-value-to-storage-binary-binary, storage-value-to-storage-binary-csv, storage-value-to-storage-binary-environment, storage-value-to-storage-binary-expression, storage-value-to-storage-binary-json, storage-value-to-storage-binary-properties, storage-value-to-storage-binary-tsv, storage-value-to-storage-binary-txt, style, system, template, text, text-node, text-to-binary, text-to-boolean-list, text-to-border, text-to-charset, text-to-color, text-to-converter-selector, text-to-csv-string-list, text-to-csv-string-set, text-to-currency, text-to-currency-code, text-to-currency-exchange-rater-selector, text-to-currency-value, text-to-date-list, text-to-date-time-list, text-to-email-address, text-to-environment, text-to-environment-value-name, text-to-error, text-to-expression, text-to-expression-function-selector, text-to-flag, text-to-form-name, text-to-has-host-address, text-to-host-address, text-to-indentation, text-to-json, text-to-json-pointer, text-to-json-selector, text-to-line-ending, text-to-locale, text-to-locale-language-tag, text-to-logging-level, text-to-margin, text-to-media-type, text-to-number-list, text-to-object, text-to-padding, text-to-path, text-to-properties, text-to-spreadsheet-comparator-selector, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-parser-selector, text-to-spreadsheet-selection, text-to-spreadsheet-text, text-to-storage-path, text-to-string-list, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-time-list, text-to-tsv-string-list, text-to-tsv-string-set, text-to-url, text-to-url-fragment, text-to-url-query-string, text-to-validation-error, text-to-validator-selector, text-to-value-type, text-to-web-color-name, text-to-zone-offset, to-binary, to-boolean, to-color, to-color-properties, to-csv-string-list, to-currency, to-currency-code, to-currency-value, to-date-time-symbols, to-decimal-number-symbols, to-environment, to-formatter-selector, to-has-host-address, to-host-address, to-json-node, to-locale, to-locale-language-tag, to-multi-line-text, to-number, to-parser-selector, to-properties, to-spreadsheet-selection, to-style, to-styleable, to-text, to-text-node, to-tsv-string-list, to-validation-checkbox, to-validation-choice, to-validation-choice-list, to-validation-error-list, to-validator-selector, to-value, to-value-type, tsv, url, url-to-hyperlink, url-to-image, value\",\n" +
                 "  \"currency\": \"AUD\",\n" +
                 "  \"dateFormatter\": \"date yyyy/mm/dd\",\n" +
                 "  \"dateOffset\": \"-25569\",\n" +
@@ -782,11 +869,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 "  \"exporters\": \"collection, empty, json\",\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
-                "  \"formattingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"formattingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"formattingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"formattingFunctions\": \"@\",\n" +
                 "  \"formHandlers\": \"\",\n" +
-                "  \"formulaConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"formulaConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"formulaCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"formulaFunctions\": \"@\",\n" +
                 "  \"functions\": \"@\",\n" +
@@ -797,10 +884,10 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 "  \"parsers\": \"date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\",\n" +
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 7,\n" +
-                "  \"queryConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"queryConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, properties, spreadsheet-metadata, style, text-node, template, net, binary, text, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"queryFunctions\": \"@\",\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"scriptingConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net, binary, text, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"scriptingCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"scriptingFunctions\": \"@\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
@@ -808,7 +895,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 "  \"showGridLines\": true,\n" +
                 "  \"showHeadings\": true,\n" +
                 "  \"sortComparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\",\n" +
-                "  \"sortConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, locale, value, optional-to, collection-to)\",\n" +
+                "  \"sortConverter\": \"collection(null-to-number, simple, boolean, number, date-time, locale, value, text, optional-to, collection-to)\",\n" +
                 "  \"style\": {\n" +
                 "    \"height\": \"50px\",\n" +
                 "    \"width\": \"100px\"\n" +
@@ -817,7 +904,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 "  \"timeFormatter\": \"time hh:mm:ss\",\n" +
                 "  \"timeParser\": \"time hh:mm:ss\",\n" +
                 "  \"twoDigitYear\": 50,\n" +
-                "  \"validationConverter\": \"collection(null-to-number, simple, text, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
@@ -1148,16 +1235,32 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public <T> Either<T, String> convert(final Object value,
                                              final Class<T> type) {
-            return this.converter.convert(
-                value,
-                type,
-                SpreadsheetConverterContexts.cycle(
+             try {
+                System.out.println("Test convert " + i + " " + (null != value ? value.getClass().getSimpleName() : "NULL") + " TO TO TO " + type.getSimpleName()
+                 + " from ==" + CharSequences.quoteIfChars(value) );
+                i++;
+
+                return this.converter.convert(
                     value,
                     type,
-                    this
-                )
-            );
+                    SpreadsheetConverterContexts.cycle(
+                        value,
+                        type,
+                        this
+                    )
+                );
+            } catch (final StackOverflowError e) {
+                if (i == 10) {
+                    System.out.println("DUMP Test convert " + i + " " + CharSequences.quoteIfChars(value) + " " + type.getSimpleName());
+                    Thread.dumpStack();
+                }
+                throw e;
+            } finally {
+                i--;
+            }
         }
+
+        int i = 0;
 
         private final Converter<SpreadsheetConverterContext> converter;
 
@@ -1377,7 +1480,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         final Set<MissingConverter> missing = MissingConverterVerifier.verify(
             converter,
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-            new TestSpreadsheetConverterContext(
+            new MissingConverterVerifierTest.TestSpreadsheetConverterContext(
                 SPREADSHEET_METADATA_TESTING,
                 converter
             )

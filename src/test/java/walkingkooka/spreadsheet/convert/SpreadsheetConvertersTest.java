@@ -431,6 +431,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "        TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
                 "        TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "        * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "  TEXT to Binary (walkingkooka.convert.ConverterTextToBinary)\n" +
                 "  TEXT to BooleanList (walkingkooka.convert.ConverterTextToCollectionListBooleanList)\n" +
                 "  TEXT to Border (walkingkooka.tree.text.convert.TreeTextConverterTextToBorder)\n" +
@@ -559,21 +560,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "        Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
-                "        * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "  ConverterCustomToString\n" +
-                "    \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, error-throwing)\"\n" +
+                "    \"collection (null-to-number, simple, boolean, number, date-time, locale, value, color, expression, environment, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, text, json, error-throwing)\"\n" +
                 "      ConverterCollection\n" +
                 "        ConverterCustomToString\n" +
                 "          \"null-to-number\"\n" +
                 "            null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "        simple (walkingkooka.convert.ConverterSimple)\n" +
-                "        ConverterCustomToString\n" +
-                "          \"text\"\n" +
-                "            ConverterCollection\n" +
-                "              to Text (walkingkooka.convert.ConverterToText)\n" +
-                "              TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
-                "              TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "              TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"boolean\"\n" +
                 "            ConverterCollection\n" +
@@ -643,7 +636,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                    TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "              to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
-                "              * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"color\"\n" +
                 "            ConverterCollection\n" +
@@ -664,15 +656,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              Environment to TEXT (walkingkooka.environment.convert.EnvironmentConverterEnvironmentToString)\n" +
                 "              TEXT to Environment (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironment)\n" +
                 "              TEXT to EnvironmentValueName (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironmentValueName)\n" +
-                "        ConverterCustomToString\n" +
-                "          \"json\"\n" +
-                "            ConverterCollection\n" +
-                "              JsonNode to type (walkingkooka.tree.json.convert.JsonNodeConverterJsonNodeTo)\n" +
-                "              Json TEXT to Object (walkingkooka.tree.json.convert.JsonNodeConverterTextToObject)\n" +
-                "              * to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterToJsonNode)\n" +
-                "              TEXT to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonNode)\n" +
-                "              TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
-                "              TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"currency\"\n" +
                 "            ConverterCollection\n" +
@@ -762,6 +745,23 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"collection-to\"\n" +
                 "            Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
+                "        ConverterCustomToString\n" +
+                "          \"text\"\n" +
+                "            ConverterCollection\n" +
+                "              to Text (walkingkooka.convert.ConverterToText)\n" +
+                "              TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
+                "              TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
+                "              TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "              * to String (walkingkooka.convert.ConverterObjectToString)\n" +
+                "        ConverterCustomToString\n" +
+                "          \"json\"\n" +
+                "            ConverterCollection\n" +
+                "              JsonNode to type (walkingkooka.tree.json.convert.JsonNodeConverterJsonNodeTo)\n" +
+                "              Json TEXT to Object (walkingkooka.tree.json.convert.JsonNodeConverterTextToObject)\n" +
+                "              * to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterToJsonNode)\n" +
+                "              TEXT to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonNode)\n" +
+                "              TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
+                "              TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"error-throwing\"\n" +
                 "            throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n" +
@@ -2184,13 +2184,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testJsonConvertExpressionNumberToJsonNode() {
-        final ExpressionNumber number = EXPRESSION_NUMBER_KIND.create(123.5);
-        final JsonNode json = JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(number);
+        final double value = 123.5;
 
         this.jsonConvertAndCheck(
-            number,
+            EXPRESSION_NUMBER_KIND.create(123.5),
             JsonNode.class,
-            json
+            JsonNode.number(value)
         );
     }
 
@@ -3963,19 +3962,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.treePrintAndCheck(
             SpreadsheetConverters.system(),
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, text, boolean, number, date-time, locale, value, color, expression, environment, json, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, error-throwing)\"\n" +
+                "  \"collection (null-to-number, simple, boolean, number, date-time, locale, value, color, expression, environment, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, text, json, error-throwing)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
                 "          null to Number (walkingkooka.spreadsheet.convert.SpreadsheetConverterNullToNumber)\n" +
                 "      simple (walkingkooka.convert.ConverterSimple)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"text\"\n" +
-                "          ConverterCollection\n" +
-                "            to Text (walkingkooka.convert.ConverterToText)\n" +
-                "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
-                "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"boolean\"\n" +
                 "          ConverterCollection\n" +
@@ -4045,7 +4037,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
-                "            * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -4066,15 +4057,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            Environment to TEXT (walkingkooka.environment.convert.EnvironmentConverterEnvironmentToString)\n" +
                 "            TEXT to Environment (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironment)\n" +
                 "            TEXT to EnvironmentValueName (walkingkooka.environment.convert.EnvironmentConverterTextToEnvironmentValueName)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"json\"\n" +
-                "          ConverterCollection\n" +
-                "            JsonNode to type (walkingkooka.tree.json.convert.JsonNodeConverterJsonNodeTo)\n" +
-                "            Json TEXT to Object (walkingkooka.tree.json.convert.JsonNodeConverterTextToObject)\n" +
-                "            * to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterToJsonNode)\n" +
-                "            TEXT to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonNode)\n" +
-                "            TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
-                "            TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"currency\"\n" +
                 "          ConverterCollection\n" +
@@ -4165,6 +4147,23 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        \"collection-to\"\n" +
                 "          Collection to (walkingkooka.convert.ConverterCollectionTo)\n" +
                 "      ConverterCustomToString\n" +
+                "        \"text\"\n" +
+                "          ConverterCollection\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
+                "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
+                "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
+                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "            * to String (walkingkooka.convert.ConverterObjectToString)\n" +
+                "      ConverterCustomToString\n" +
+                "        \"json\"\n" +
+                "          ConverterCollection\n" +
+                "            JsonNode to type (walkingkooka.tree.json.convert.JsonNodeConverterJsonNodeTo)\n" +
+                "            Json TEXT to Object (walkingkooka.tree.json.convert.JsonNodeConverterTextToObject)\n" +
+                "            * to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterToJsonNode)\n" +
+                "            TEXT to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonNode)\n" +
+                "            TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
+                "            TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n" +
+                "      ConverterCustomToString\n" +
                 "        \"error-throwing\"\n" +
                 "          throws SpreadsheetError (walkingkooka.spreadsheet.convert.SpreadsheetConverterSpreadsheetErrorThrowing)\n"
         );
@@ -4252,10 +4251,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testTextConvertObjectToStringFails() {
-        this.textConvertFails(
-            Object.class,
-            String.class
+    public void testTextConvertObjectToString() {
+        final Object object = new Object();
+
+        this.textConvertAndCheck(
+            object,
+            String.class,
+            object.toString()
         );
     }
 
@@ -4779,7 +4781,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      to Text (walkingkooka.convert.ConverterToText)\n" +
                 "      TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "      TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "      TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n"
+                "      TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "      * to String (walkingkooka.convert.ConverterObjectToString)\n"
         );
     }
 
@@ -5222,83 +5225,71 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testValueConvertByteToString() {
+    public void testValueConvertByteToStringFails() {
         final Byte byteValue = 123;
 
-        this.valueConvertAndCheck(
+        this.valueConvertFails(
             byteValue,
-            byteValue.toString()
+            String.class
         );
     }
 
     @Test
-    public void testValueConvertDateToString() {
-        final LocalDate date = LocalDate.of(
-            1999,
-            12,
-            31
-        );
-
-        this.valueConvertAndCheck(
-            date,
-            date.toString()
+    public void testValueConvertDateToStringFails() {
+        this.valueConvertFails(
+            LocalDate.of(
+                1999,
+                12,
+                31
+            ),
+            String.class
         );
     }
 
     @Test
-    public void testValueConvertDateTimeToString() {
-        final LocalDateTime dateTime = LocalDateTime.of(
-            1999,
-            12,
-            31,
-            12,
-            58,
-            59
-        );
-
-        this.valueConvertAndCheck(
-            dateTime,
-            dateTime.toString()
+    public void testValueConvertDateTimeToStringFails() {
+        this.valueConvertFails(
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                58,
+                59
+            ),
+            String.class
         );
     }
 
     @Test
-    public void testValueConvertExpressionNumberBigDecimalToString() {
-        final ExpressionNumber expressionNumber = ExpressionNumberKind.BIG_DECIMAL.create(123);
-
-        this.valueConvertAndCheck(
-            expressionNumber,
-            expressionNumber.toString()
+    public void testValueConvertExpressionNumberBigDecimalToStringFails() {
+        this.valueConvertFails(
+            ExpressionNumberKind.BIG_DECIMAL.create(123),
+            String.class
         );
     }
 
     @Test
-    public void testValueConvertExpressionNumberDoubleToString() {
-        final ExpressionNumber expressionNumber = ExpressionNumberKind.DOUBLE.create(123);
-
-        this.valueConvertAndCheck(
-            expressionNumber,
-            expressionNumber.toString()
+    public void testValueConvertExpressionNumberDoubleToStringFails() {
+        this.valueConvertFails(
+            ExpressionNumberKind.DOUBLE.create(123),
+            String.class
         );
     }
 
     @Test
-    public void testValueConvertIntegerToString() {
-        final Integer integer = 123;
-
-        this.valueConvertAndCheck(
-            integer,
-            integer.toString()
+    public void testValueConvertIntegerToStringFails() {
+        this.valueConvertFails(
+            123,
+            String.class
         );
     }
 
     @Test
-    public void testValueConvertLongToString() {
-        final Long longValue = 456L;
-
-        this.valueConvertAndCheck(
-            longValue,
-            longValue.toString()
+    public void testValueConvertLongToStringFails() {
+        this.valueConvertFails(
+            456L,
+            String.class
         );
     }
 
@@ -5567,12 +5558,10 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testValueConvertStringToZoneOffset() {
-        final ZoneOffset zoneOffset = ZoneOffset.of("+11");
-
-        this.valueConvertAndCheck(
-            zoneOffset,
-            zoneOffset.toString()
+    public void testValueConvertStringToZoneOffsetFails() {
+        this.valueConvertFails(
+            ZoneOffset.of("+11"),
+            String.class
         );
     }
 
@@ -5871,16 +5860,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testValueConvertTimeToString() {
-        final LocalTime time = LocalTime.of(
-            12,
-            58,
-            59
-        );
-
-        this.valueConvertAndCheck(
-            time,
-            time.toString()
+    public void testValueConvertTimeFails() {
+        this.valueConvertFails(
+            LocalTime.of(
+                12,
+                58,
+                59
+            ),
+            String.class
         );
     }
 
@@ -5902,6 +5889,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             type,
             SPREADSHEET_VALUE_CONVERTER_CONTEXT,
             expected
+        );
+    }
+
+    private void valueConvertFails(final Object value,
+                                   final Class<?> type) {
+        this.convertFails(
+            SpreadsheetConverters.value(),
+            value,
+            type,
+            SPREADSHEET_VALUE_CONVERTER_CONTEXT
         );
     }
 
@@ -6170,8 +6167,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "            TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "      to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
-                "      * to String (walkingkooka.convert.ConverterObjectToString)\n"
+                "      to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n"
         );
     }
 
