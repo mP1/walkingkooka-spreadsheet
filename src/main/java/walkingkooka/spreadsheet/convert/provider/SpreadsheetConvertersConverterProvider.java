@@ -230,10 +230,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
                 converter = SpreadsheetConverters.json();
                 break;
-            case JSON_TO_STRING:
+            case JSON_NODE_TO_STRING:
                 this.noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.jsonTo();
+                converter = SpreadsheetConverters.jsonNodeTo();
                 break;
             case LOCALE_STRING:
                 this.noParameterCheck(copy);
@@ -1141,9 +1141,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
     final static ConverterName JSON = ConverterName.with(JSON_STRING);
 
-    private final static String JSON_TO_STRING = "json-to";
+    private final static String JSON_NODE_TO_STRING = "json-node-to";
 
-    final static ConverterName JSON_TO = ConverterName.with(JSON_TO_STRING);
+    final static ConverterName JSON_NODE_TO = ConverterName.with(JSON_NODE_TO_STRING);
 
     private final static String LOCALE_STRING = "locale";
 
@@ -1805,7 +1805,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             converterInfo(FORM_AND_VALIDATION),
             converterInfo(TO_SPREADSHEET_SELECTION),
             converterInfo(JSON),
-            converterInfo(JSON_TO),
+            converterInfo(JSON_NODE_TO),
             converterInfo(LOCALE),
             converterInfo(LOCALE_TO_TEXT),
             converterInfo(LOGGING),

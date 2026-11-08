@@ -332,10 +332,10 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithJsonTo() {
+    public void testConverterSelectorWithJsonNodeTo() {
         this.converterAndCheck(
-            "json-to",
-            SpreadsheetConverters.jsonTo()
+            "json-node-to",
+            SpreadsheetConverters.jsonNodeTo()
         );
     }
 
@@ -1527,7 +1527,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/form-and-validation form-and-validation\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/format-pattern-to-string format-pattern-to-string\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/json json\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/json-to json-to\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/json-node-to json-node-to\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/locale locale\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/locale-to-text locale-to-text\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/logging logging\n" +
