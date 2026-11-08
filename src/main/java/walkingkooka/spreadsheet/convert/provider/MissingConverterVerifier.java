@@ -2896,6 +2896,16 @@ final class MissingConverterVerifier {
                     spreadsheetCell.text()
                 );
 
+                verifier.addIfConversionFail(
+                    StorageValueInfo.with(
+                        STORAGE_PATH,
+                        AUDIT_INFO
+                    ),
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.VALUE,
+                    STORAGE_PATH.toString()
+                );
+
                 verifier.addIfConversionFailTest(
                     Lists.of(
                         AUDIT_INFO,
@@ -2906,10 +2916,6 @@ final class MissingConverterVerifier {
                             STORAGE_PATH
                         ).setValue(
                             Optional.of("StorageValue123")
-                        ),
-                        StorageValueInfo.with(
-                            STORAGE_PATH,
-                            AUDIT_INFO
                         ),
                         STYLE,
                         ZoneOffset.UTC
