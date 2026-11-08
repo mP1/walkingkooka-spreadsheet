@@ -178,7 +178,7 @@ final class MissingConverterVerifier {
         NUMBER_TYPES_WITHOUT_BYTE_SHORT = types;
     }
 
-    private static final List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
+    private final static List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
 
     private final static Predicate<Object> IS_BIG_DECIMAL = (v) -> v instanceof BigDecimal;
 
@@ -375,32 +375,32 @@ final class MissingConverterVerifier {
         Optional.of("StorageValue123")
     );
 
-    private static final StoragePath STORAGE_PATH_BINARY = StoragePath.parse("/file.bin");
-    private static final StorageBinary STORAGE_BINARY_UNKNOWN_BINARY = StorageBinary.with(
+    private final static StoragePath STORAGE_PATH_BINARY = StoragePath.parse("/file.bin");
+    private final static StorageBinary STORAGE_BINARY_UNKNOWN_BINARY = StorageBinary.with(
         STORAGE_PATH_BINARY,
         UNKNOWN_BINARY_FILE
     );
 
-    private static final StoragePath STORAGE_PATH_CSV = StoragePath.parse("/file.csv");
+    private final static StoragePath STORAGE_PATH_CSV = StoragePath.parse("/file.csv");
 
-    private static final StoragePath STORAGE_PATH_ENVIRONMENT = StoragePath.parse("/EnvironmentContext.env");
+    private final static StoragePath STORAGE_PATH_ENVIRONMENT = StoragePath.parse("/EnvironmentContext.env");
 
-    private static final StoragePath STORAGE_PATH_EXPRESSION = StoragePath.parse("/formula.expression.txt");
+    private final static StoragePath STORAGE_PATH_EXPRESSION = StoragePath.parse("/formula.expression.txt");
 
-    private static final StoragePath STORAGE_PATH_TXT = StoragePath.parse("/file1.file2.txt");
+    private final static StoragePath STORAGE_PATH_TXT = StoragePath.parse("/file1.file2.txt");
 
-    private static final StoragePath STORAGE_PATH_JSON = StoragePath.parse("/file1/file2.json");
+    private final static StoragePath STORAGE_PATH_JSON = StoragePath.parse("/file1/file2.json");
 
-    private static final StoragePath STORAGE_PATH_PROPERTIES = StoragePath.parse("/file1/file2.properties");
+    private final static StoragePath STORAGE_PATH_PROPERTIES = StoragePath.parse("/file1/file2.properties");
 
-    private static final StoragePath STORAGE_PATH_TSV = StoragePath.parse("/file.tsv");
+    private final static StoragePath STORAGE_PATH_TSV = StoragePath.parse("/file.tsv");
 
-    private static final StorageValue STORAGE_VALUE_BINARY = StorageValue.with(STORAGE_PATH_BINARY)
+    private final static StorageValue STORAGE_VALUE_BINARY = StorageValue.with(STORAGE_PATH_BINARY)
         .setValue(
             Optional.of(BINARY)
         );
 
-    private static final StorageBinary STORAGE_BINARY_BINARY = StorageBinary.with(
+    private final static StorageBinary STORAGE_BINARY_BINARY = StorageBinary.with(
         STORAGE_PATH_BINARY,
         BINARY
     );
