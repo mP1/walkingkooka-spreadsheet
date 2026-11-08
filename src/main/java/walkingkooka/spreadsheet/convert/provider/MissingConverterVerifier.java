@@ -369,6 +369,12 @@ final class MissingConverterVerifier {
 
     private final static StoragePath STORAGE_PATH = StoragePath.parse("/path1/file2.txt");
 
+    private final static StorageValue STORAGE_VALUE = StorageValue.with(
+        STORAGE_PATH
+    ).setValue(
+        Optional.of("StorageValue123")
+    );
+
     private static final StoragePath STORAGE_PATH_BINARY = StoragePath.parse("/file.bin");
     private static final StorageBinary STORAGE_BINARY_UNKNOWN_BINARY = StorageBinary.with(
         STORAGE_PATH_BINARY,
@@ -2898,6 +2904,13 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
+                    STORAGE_VALUE,
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.VALUE,
+                    STORAGE_VALUE.toString() // should be json
+                );
+
+                verifier.addIfConversionFail(
                     StorageValueInfo.with(
                         STORAGE_PATH,
                         AUDIT_INFO
@@ -2913,11 +2926,6 @@ final class MissingConverterVerifier {
                         ERROR,
                         SPREADSHEET_ID,
                         STORAGE_PATH,
-                        StorageValue.with(
-                            STORAGE_PATH
-                        ).setValue(
-                            Optional.of("StorageValue123")
-                        ),
                         STYLE,
                         ZoneOffset.UTC
                     ),
