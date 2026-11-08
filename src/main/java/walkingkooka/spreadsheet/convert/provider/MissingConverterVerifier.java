@@ -357,15 +357,23 @@ final class MissingConverterVerifier {
     private final static Hyperlink HYPERLINK = Hyperlink.hyperlink(ABSOLUTE_URL);
     private final static Image IMAGE = Image.image(ABSOLUTE_URL);
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
+
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-        SpreadsheetId.with(1)
+        SPREADSHEET_ID
     ).set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
         SpreadsheetName.with("Spreadsheet111")
     );
 
     private final static StoragePath STORAGE_PATH = StoragePath.parse("/path1/file2.txt");
+
+    private final static StorageValue STORAGE_VALUE = StorageValue.with(
+        STORAGE_PATH
+    ).setValue(
+        Optional.of("StorageValue123")
+    );
 
     private static final StoragePath STORAGE_PATH_BINARY = StoragePath.parse("/file.bin");
     private static final StorageBinary STORAGE_BINARY_UNKNOWN_BINARY = StorageBinary.with(
@@ -1682,22 +1690,21 @@ final class MissingConverterVerifier {
             }
 
             // text-to-spreadsheet-id...................................................................................
-            final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
 
             // will be enabled by terminal
             if (formula || scripting) {
                 verifier.addIfConversionFail(
-                    spreadsheetId.toString(),
+                    SPREADSHEET_ID.toString(),
                     SpreadsheetId.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, // TEXT_TO_SPREADSHEET_ID
-                    spreadsheetId
+                    SPREADSHEET_ID
                 );
             }
 
             // text-to-spreadsheet-metadata.................................................................................
             final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                spreadsheetId
+                SPREADSHEET_ID
             );
 
             if (formula || scripting) {
@@ -2897,6 +2904,13 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
+                    STORAGE_VALUE,
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.VALUE,
+                    STORAGE_VALUE.toString() // should be json
+                );
+
+                verifier.addIfConversionFail(
                     StorageValueInfo.with(
                         STORAGE_PATH,
                         AUDIT_INFO
@@ -2910,13 +2924,8 @@ final class MissingConverterVerifier {
                     Lists.of(
                         AUDIT_INFO,
                         ERROR,
-                        SpreadsheetId.with(1),
+                        SPREADSHEET_ID,
                         STORAGE_PATH,
-                        StorageValue.with(
-                            STORAGE_PATH
-                        ).setValue(
-                            Optional.of("StorageValue123")
-                        ),
                         STYLE,
                         ZoneOffset.UTC
                     ),
