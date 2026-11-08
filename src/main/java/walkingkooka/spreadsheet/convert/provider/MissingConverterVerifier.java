@@ -571,7 +571,7 @@ final class MissingConverterVerifier {
             true
         );
 
-        verifier.addIfConversionFail(
+        verifier.addIfConversionFailTest(
             Lists.of(
                 SpreadsheetStrings.BOOLEAN_TRUE,
                 SpreadsheetStrings.BOOLEAN_FALSE
@@ -630,7 +630,7 @@ final class MissingConverterVerifier {
                     expressionNumberKind.create(333.5),
                     null
                 );
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     numberList,
                     NumberList.class,
                     SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST, // COLLECTION_TO_LIST
@@ -669,7 +669,7 @@ final class MissingConverterVerifier {
                 true
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 (Object)
                     Lists.of(
                     123
@@ -739,7 +739,7 @@ final class MissingConverterVerifier {
             );
 
             // color-to-number..........................................................................................
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 Color.BLACK,
                 NUMBER_TYPES_WITHOUT_BYTE_SHORT,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
@@ -748,28 +748,28 @@ final class MissingConverterVerifier {
 
             final RgbColor rgb = Color.parseRgb("#12345678");
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 rgb.alpha(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
                 IS_NUMBER
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 rgb.red(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
                 IS_NUMBER
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 rgb.green(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
                 IS_NUMBER
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 rgb.blue(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
@@ -819,7 +819,7 @@ final class MissingConverterVerifier {
                     currencyCode
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     CurrencyValue.with(
                         1,
                         currencyCode
@@ -829,7 +829,7 @@ final class MissingConverterVerifier {
                     IS_NUMBER
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     CurrencyValue.with(
                         2L,
                         currencyCode
@@ -839,7 +839,7 @@ final class MissingConverterVerifier {
                     IS_NUMBER
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     CurrencyValue.with(
                         3.0f,
                         currencyCode
@@ -849,7 +849,7 @@ final class MissingConverterVerifier {
                     IS_NUMBER
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     CurrencyValue.with(
                         4.0f,
                         currencyCode
@@ -859,7 +859,7 @@ final class MissingConverterVerifier {
                     IS_NUMBER
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     Lists.of(
                         "AUD 1.5",
                         "1.5 AUD",
@@ -877,7 +877,7 @@ final class MissingConverterVerifier {
                     currency
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     Lists.of(
                         1,
                         1.5,
@@ -958,7 +958,7 @@ final class MissingConverterVerifier {
                 expressionNumberKind.create(dateNumberValue)
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 DATE,
                 String.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -981,7 +981,7 @@ final class MissingConverterVerifier {
                 DATE
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 DATE_TIME,
                 BigDecimal.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -995,7 +995,7 @@ final class MissingConverterVerifier {
                 BigInteger.valueOf((int)dateNumberValue)
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 DATE_TIME,
                 Double.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -1023,7 +1023,7 @@ final class MissingConverterVerifier {
                 expressionNumberKind.create(dateNumberValue)
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 DATE_TIME,
                 String.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -1031,7 +1031,7 @@ final class MissingConverterVerifier {
             );
 
             // text -> number
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 "123",
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -1039,7 +1039,7 @@ final class MissingConverterVerifier {
             );
 
             // text -> date
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 "1999/12/31",
                 LocalDate.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -1055,7 +1055,7 @@ final class MissingConverterVerifier {
             );
 
             // text -> time
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 "12:58:59", // "12:58" fails
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -1119,7 +1119,7 @@ final class MissingConverterVerifier {
                 expressionNumberKind.create(timeNumberValue)
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 DATE_TIME,
                 String.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
@@ -1260,7 +1260,7 @@ final class MissingConverterVerifier {
         // expression...................................................................................................
         {
             if (formatting || formula || query || scripting || validation) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     "1+sum(2)",
                     Expression.class,
                     SpreadsheetConvertersConverterProvider.EXPRESSION,
@@ -1272,7 +1272,7 @@ final class MissingConverterVerifier {
         // json.........................................................................................................
         if (formatting || formula || scripting | validation) {
             // to-json..................................................................................................
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     "Hello",
                     Lists.of(
                         JsonNode.class,
@@ -1444,7 +1444,7 @@ final class MissingConverterVerifier {
         {
             // null-to-number...........................................................................................
             if (formula || formatting || scripting) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     (Object) null, // dont want List overload
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.NUMBER,
@@ -1453,7 +1453,7 @@ final class MissingConverterVerifier {
             }
 
             // number-to-number.........................................................................................
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 1,
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.NUMBER,
@@ -1484,7 +1484,7 @@ final class MissingConverterVerifier {
                 true
             );
 
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 Optional.of(
                     123
                 ),
@@ -1673,7 +1673,7 @@ final class MissingConverterVerifier {
             if (formula || scripting) {
                 final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     metadata,
                     String.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, //
@@ -1767,7 +1767,7 @@ final class MissingConverterVerifier {
                     BINARY
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     text,
                     Binary.class,
                     SpreadsheetConvertersConverterProvider.BINARY,
@@ -1879,7 +1879,7 @@ final class MissingConverterVerifier {
                         "lineEnding=" + lineEnding.name() + lineEnding +
                         "locale=" + locale.toLanguageTag();
 
-                    verifier.addIfConversionFail(
+                    verifier.addIfConversionFailTest(
                         StorageValue.with(
                             STORAGE_PATH_ENVIRONMENT
                         ).setValue(
@@ -1908,7 +1908,7 @@ final class MissingConverterVerifier {
                 }
                 
                 {
-                    verifier.addIfConversionFail(
+                    verifier.addIfConversionFailTest(
                         StorageValue.with(
                             STORAGE_PATH_EXPRESSION
                         ).setValue(
@@ -1919,7 +1919,7 @@ final class MissingConverterVerifier {
                         IS_STORAGE_BINARY
                     );
 
-                    verifier.addIfConversionFail(
+                    verifier.addIfConversionFailTest(
                         StorageBinary.with(
                             STORAGE_PATH_EXPRESSION,
                             Binary.with(
@@ -2074,7 +2074,7 @@ final class MissingConverterVerifier {
                     STORAGE_BINARY_BINARY
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     StorageValueInfoList.EMPTY.concat(
                         StorageValueInfo.with(
                             StoragePath.parse("/path1/file2.txt"),
@@ -2263,7 +2263,7 @@ final class MissingConverterVerifier {
             );
 
             // text-to-date-time-list...............................................................................
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 "1999/12/31 12:58",
                 LocalDateTimeList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST,
@@ -2289,7 +2289,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-number-list..................................................................................
-            verifier.addIfConversionFail(
+            verifier.addIfConversionFailTest(
                 "1, 22, 333.5",
                 NumberList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST,
@@ -2469,7 +2469,7 @@ final class MissingConverterVerifier {
 
                 if (validation) {
                     // to-validation-checkbox.............................................................................
-                    verifier.addIfConversionFail(
+                    verifier.addIfConversionFailTest(
                         Lists.of(
                             Lists.empty(),
                             Lists.of("true"),
@@ -2488,7 +2488,7 @@ final class MissingConverterVerifier {
                     );
 
                     // to-validation-choice.............................................................................
-                    verifier.addIfConversionFail(
+                    verifier.addIfConversionFailTest(
                         Lists.of(
                             111,
                             "Choice1"
@@ -2544,7 +2544,7 @@ final class MissingConverterVerifier {
 
             // error-to-number..........................................................................................
             if (formula) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     ERROR,
                     ExpressionNumber.class,
                     SpreadsheetConvertersConverterProvider.VALUE, // ERROR_TO_NUMBER
@@ -2555,21 +2555,21 @@ final class MissingConverterVerifier {
             // number-to-number.........................................................................................
 
             if (formatting || formula || scripting) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     null, // dont want List overload
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
                     IS_NUMBER
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     1, // dont want List overload
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
                     IS_NUMBER
                 );
 
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     1.0, // dont want List overload
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.VALUE, // NULL_TO_NUMBER
@@ -2666,7 +2666,7 @@ final class MissingConverterVerifier {
 
             // text-to-error............................................................................................
             if (validation) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     ERROR.text(),
                     SpreadsheetError.class,
                     SpreadsheetConvertersConverterProvider.VALUE, // TEXT_TO_ERROR
@@ -2888,7 +2888,7 @@ final class MissingConverterVerifier {
             // values to text...........................................................................................
 
             if (formula || scripting || validation) {
-                verifier.addIfConversionFail(
+                verifier.addIfConversionFailTest(
                     Lists.of(
                         AUDIT_INFO,
                         spreadsheetCell,
@@ -2967,12 +2967,12 @@ final class MissingConverterVerifier {
         }
     }
 
-    private void addIfConversionFail(final List<Object> values,
-                                     final Class<?> type,
-                                     final ConverterName name,
-                                     final Predicate<Object> answerChecker) {
+    private void addIfConversionFailTest(final List<Object> values,
+                                         final Class<?> type,
+                                         final ConverterName name,
+                                         final Predicate<Object> answerChecker) {
         for (final Object value : values) {
-            this.addIfConversionFail(
+            this.addIfConversionFailTest(
                 value,
                 type,
                 name,
@@ -2981,12 +2981,12 @@ final class MissingConverterVerifier {
         }
     }
 
-    private void addIfConversionFail(final Object value,
-                                     final List<Class<?>> types,
-                                     final ConverterName name,
-                                     final Predicate<Object> answerChecker) {
+    private void addIfConversionFailTest(final Object value,
+                                         final List<Class<?>> types,
+                                         final ConverterName name,
+                                         final Predicate<Object> answerChecker) {
         for (final Class<?> type : types) {
-            this.addIfConversionFail(
+            this.addIfConversionFailTest(
                 value,
                 type,
                 name,
@@ -3010,7 +3010,7 @@ final class MissingConverterVerifier {
                                      final Class<?> type,
                                      final ConverterName name,
                                      final Object expected) {
-        this.addIfConversionFail(
+        this.addIfConversionFailTest(
             value,
             type,
             name,
@@ -3018,10 +3018,10 @@ final class MissingConverterVerifier {
         );
     }
 
-    private void addIfConversionFail(final Object value,
-                                     final Class<?> type,
-                                     final ConverterName name,
-                                     final Predicate<Object> answerChecker) {
+    private void addIfConversionFailTest(final Object value,
+                                         final Class<?> type,
+                                         final ConverterName name,
+                                         final Predicate<Object> answerChecker) {
         boolean failed;
 
         Either<?, String> converted = null;
