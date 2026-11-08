@@ -2888,10 +2888,17 @@ final class MissingConverterVerifier {
             // values to text...........................................................................................
 
             if (formula || scripting || validation) {
+                // SpreadsheetCell to CSV String
+                verifier.addIfConversionFail(
+                    spreadsheetCell,
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.VALUE,
+                    spreadsheetCell.text()
+                );
+
                 verifier.addIfConversionFailTest(
                     Lists.of(
                         AUDIT_INFO,
-                        spreadsheetCell,
                         ERROR,
                         SpreadsheetId.with(1),
                         STORAGE_PATH,
