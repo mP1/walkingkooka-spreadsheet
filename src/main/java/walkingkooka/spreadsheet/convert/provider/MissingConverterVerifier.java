@@ -2210,16 +2210,32 @@ final class MissingConverterVerifier {
 
         // text.........................................................................................................
         {
-            verifier.addIfConversionFail(
-                Lists.of(
-                    'A',
-                    "Text",
-                    Url.parseAbsolute("https://example.com/123"),
-                    spreadsheetCell.formula()
-                ),
+            verifier.addIfConversionFail2(
+                'A',
                 String.class,
                 SpreadsheetConvertersConverterProvider.TEXT,
-                IS_STRING
+                Object::toString
+            );
+
+            verifier.addIfConversionFail2(
+                "Text123",
+                String.class,
+                SpreadsheetConvertersConverterProvider.TEXT,
+                Object::toString
+            );
+
+            verifier.addIfConversionFail2(
+                Url.parseAbsolute("https://example.com/123"),
+                String.class,
+                SpreadsheetConvertersConverterProvider.TEXT,
+                Object::toString
+            );
+
+            verifier.addIfConversionFail2(
+                spreadsheetCell.formula(),
+                String.class,
+                SpreadsheetConvertersConverterProvider.TEXT,
+                SpreadsheetFormula::text
             );
 
             // text-to-boolean-list.................................................................................
