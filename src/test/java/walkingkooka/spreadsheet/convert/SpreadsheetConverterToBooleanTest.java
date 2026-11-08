@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
@@ -139,7 +138,6 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     private final static LocalTime TIME = LocalTime.of(12, 58, 59);
 
     @Test
-    @Disabled
     public void testConvertTimeToBooleanFails() {
         this.convertFails(
             TIME,
