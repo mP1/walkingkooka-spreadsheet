@@ -410,7 +410,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> JSON = namedCollection(
         "JSON",
-        jsonTo(),
+        jsonNodeTo(),
         textToObject(),
         toJsonNode(),
         textToJson(),
@@ -421,7 +421,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     /**
      * {@see JsonNodeConverters#jsonNodeTo}
      */
-    public static Converter<SpreadsheetConverterContext> jsonTo() {
+    public static Converter<SpreadsheetConverterContext> jsonNodeTo() {
         return JsonNodeConverters.jsonNodeTo();
     }
 

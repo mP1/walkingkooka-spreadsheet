@@ -1957,7 +1957,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    form-and-validation\n" +
                 "    format-pattern-to-string\n" +
                 "    json\n" +
-                "    json-to\n" +
+                "    json-node-to\n" +
                 "    locale\n" +
                 "    locale-to-text\n" +
                 "    logging\n" +
@@ -2437,7 +2437,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    form-and-validation\n" +
                 "    format-pattern-to-string\n" +
                 "    json\n" +
-                "    json-to\n" +
+                "    json-node-to\n" +
                 "    locale\n" +
                 "    locale-to-text\n" +
                 "    logging\n" +
