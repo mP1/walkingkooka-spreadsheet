@@ -411,8 +411,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> JSON = namedCollection(
         "JSON",
         jsonTo(),
-        toJsonNode(),
         textToObject(),
+        toJsonNode(),
         textToJson(),
         textToJsonPointer(),
         textToJsonSelector()
