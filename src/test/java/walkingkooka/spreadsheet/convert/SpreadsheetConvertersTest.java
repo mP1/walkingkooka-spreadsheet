@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.Cast;
@@ -2166,7 +2165,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // json.............................................................................................................
 
     @Test
-    @Disabled
     public void testJsonConvertJsonToString() {
         final JsonNode json = JsonNode.object()
             .set(
