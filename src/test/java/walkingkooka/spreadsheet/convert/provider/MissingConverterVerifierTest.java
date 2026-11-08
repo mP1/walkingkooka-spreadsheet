@@ -59,7 +59,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.Printer;
@@ -1138,32 +1137,16 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public <T> Either<T, String> convert(final Object value,
                                              final Class<T> type) {
-             try {
-                System.out.println("Test convert " + i + " " + (null != value ? value.getClass().getSimpleName() : "NULL") + " TO TO TO " + type.getSimpleName()
-                 + " from ==" + CharSequences.quoteIfChars(value) );
-                i++;
-
-                return this.converter.convert(
+            return this.converter.convert(
+                value,
+                type,
+                SpreadsheetConverterContexts.cycle(
                     value,
                     type,
-                    SpreadsheetConverterContexts.cycle(
-                        value,
-                        type,
-                        this
-                    )
-                );
-            } catch (final StackOverflowError e) {
-                if (i == 10) {
-                    System.out.println("DUMP Test convert " + i + " " + CharSequences.quoteIfChars(value) + " " + type.getSimpleName());
-                    Thread.dumpStack();
-                }
-                throw e;
-            } finally {
-                i--;
-            }
+                    this
+                )
+            );
         }
-
-        int i = 0;
 
         private final Converter<SpreadsheetConverterContext> converter;
 
