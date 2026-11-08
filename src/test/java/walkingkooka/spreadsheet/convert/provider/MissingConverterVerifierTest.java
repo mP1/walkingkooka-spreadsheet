@@ -55,7 +55,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
@@ -65,7 +64,6 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.text.printer.Printers;
-import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
@@ -104,101 +102,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
-
-    @Test
-    public void testConvertStringToSpreadsheetId() {
-        String c = null;
-
-
-        //final String a = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, currency, logging, plugins, properties, storage, style, text-node, template, net, binary, spreadsheet-metadata, optional-to, collection-to, text, never)";
-        c = "collection( text-to-spreadsheet-id, text )";
-        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, json, " +
-            "currency, logging, plugins, properties, storage, style, text-node, template, net, binary, spreadsheet-metadata, text, optional-to, collection-to, never)";
-
-        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, " +
-            "currency, logging, plugins, properties, storage, style, text-node, template, net, binary, text-to-spreadsheet-id, text, optional-to, collection-to, never)";
-
-        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, error-throwing, color, expression, " +
-            "currency, logging, plugins, properties, storage, style, text-node, template, net, binary, " +
-            "properties-to-spreadsheet-metadata, text-to-spreadsheet-id, " +//spreadsheet-id-to-spreadsheet-metadata," + // spreadsheet-metadata
-            "spreadsheet-id-to-spreadsheet-metadata, "+
-            "text-to-spreadsheet-metadata, " +
-            "text-to-spreadsheet-metadata-property-name, " +
-            "text-to-spreadsheet-name, " +
-            //"spreadsheet-metadata" +
-            ", text, optional-to, collection-to, never)";
-
-        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, " +
-            "expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, " +
-            "text-node, template, net, binary, text, optional-to, collection-to, error-throwing)";
-
-        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, " +
-            "expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, " +
-            "text-node, template, net, binary, text, optional-to, collection-to, error-throwing)";
-
-        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, "+
-            "expression, json, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, "+
-            "text-node, template, net, binary, text, optional-to, collection-to, error-throwing)"; // default formatter
-
-        c = "collection(null-to-number, simple, boolean, number, date-time, environment, locale, value, color, "+
-            "expression, currency, logging, plugins, properties, spreadsheet-metadata, storage, style, "+
-            "text-node, template, net, binary, text, json, optional-to, collection-to, error-throwing)"; // default formatter
-
-        final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
-
-        final Converter<SpreadsheetConverterContext> converter = CONVERTER_PROVIDER.converter(
-            ConverterSelector.parse(c),
-            PROVIDER_CONTEXT
-        );
-
-        System.out.println(
-            ((TreePrintable)converter).treeToString(
-                TEXT_CONTEXT
-            )
-        );
-
-        final TestSpreadsheetConverterContext context = new TestSpreadsheetConverterContext(
-            SPREADSHEET_METADATA_TESTING.set(
-                propertyName,
-                ConverterSelector.parse(c)
-            ),
-            converter
-        );
-
-//        final StorageValue storageValue = StorageValue.with(
-//            StoragePath.parse("/path1/path2")
-//        ).setValue(
-//            Optional.of("StorageValue123")
-//        );
-//
-//        final Object o = context.convertOrFail(
-//            storageValue,
-//            String.class
-//        );
-//
-//        this.checkEquals(
-//            storageValue.toString(),
-//            context.convertOrFail(
-//                storageValue,
-//                String.class
-//            )
-//        );
-
-        final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
-            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-            SpreadsheetName.with("SpreadsheetName111")
-        );
-
-        this.checkEquals(
-            spreadsheetMetadata.properties(),
-            context.convertOrFail(
-                spreadsheetMetadata,
-                walkingkooka.props.Properties.class
-            )
-        );
-    }
-
-
 
     @Test
     public void testVerifyAndCheckWithNullConverterFails() {
