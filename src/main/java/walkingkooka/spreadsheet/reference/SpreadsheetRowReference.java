@@ -134,6 +134,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
         return value;
     }
 
+    @Override
     public SpreadsheetReferenceKind referenceKind() {
         return this.referenceKind;
     }

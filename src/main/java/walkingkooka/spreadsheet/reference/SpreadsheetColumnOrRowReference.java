@@ -52,4 +52,6 @@ public interface SpreadsheetColumnOrRowReference extends HasText {
     default SpreadsheetSelection toSelection() {
         return (SpreadsheetSelection) this;
     }
+
+    SpreadsheetReferenceKind referenceKind();
 }
