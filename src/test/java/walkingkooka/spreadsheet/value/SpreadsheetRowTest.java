@@ -35,8 +35,9 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     implements HasSpreadsheetReferenceTesting,
     PatchableTesting<SpreadsheetRow> {
 
-    private final static int ROW = 21;
-    private final static SpreadsheetRowReference REFERENCE = reference(ROW);
+    private final static SpreadsheetRowReference REFERENCE = SpreadsheetReferenceKind.RELATIVE.firstRow();
+
+    private final static SpreadsheetRowReference DIFFERENT_REFERENCE = SpreadsheetReferenceKind.RELATIVE.row(99);
 
     @Test
     public void testWithNullReferenceFails() {
@@ -47,8 +48,8 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     public void testWith() {
         final SpreadsheetRow row = this.createRow();
 
-        this.checkReference(row);
-        this.checkHidden(row);
+        this.referenceAndCheck(row);
+        this.hiddenAndCheck(row);
     }
 
 
@@ -58,8 +59,8 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
             REFERENCE.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)
         );
 
-        this.checkReference(row);
-        this.checkHidden(row);
+        this.referenceAndCheck(row);
+        this.hiddenAndCheck(row);
     }
 
     // SetReference.....................................................................................................
@@ -78,13 +79,15 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testSetReferenceDifferent() {
         final SpreadsheetRow row = this.createRow();
-        final SpreadsheetRowReference differentReference = differentReference();
-        final SpreadsheetRow different = row.setReference(differentReference);
+        final SpreadsheetRow different = row.setReference(DIFFERENT_REFERENCE);
         assertNotSame(row, different);
 
-        this.checkReference(different, differentReference);
+        this.referenceAndCheck(
+            different,
+            DIFFERENT_REFERENCE
+        );
 
-        this.checkReference(row);
+        this.referenceAndCheck(row);
     }
 
     @Test
@@ -94,12 +97,12 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         final SpreadsheetRow different = row.setReference(differentReference);
         assertNotSame(row, different);
 
-        this.checkReference(
+        this.referenceAndCheck(
             different,
             differentReference.toRelative()
         );
 
-        this.checkReference(row);
+        this.referenceAndCheck(row);
     }
 
     // SetHidden........................................................................................................
@@ -114,13 +117,12 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testSetHiddenDifferent() {
         final SpreadsheetRow row = this.createRow();
-        final boolean differentHidden = differentHidden();
-        final SpreadsheetRow different = row.setHidden(differentHidden);
+        final SpreadsheetRow different = row.setHidden(DIFFERENT_HIDDEN);
         assertNotSame(row, different);
 
-        this.checkHidden(different, differentHidden);
+        this.hiddenAndCheck(different, DIFFERENT_HIDDEN);
 
-        this.checkHidden(row);
+        this.hiddenAndCheck(row);
     }
 
     // equals ..........................................................................................................
@@ -128,7 +130,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testEqualsDifferentRow() {
         this.checkNotEquals(
-            this.createObject(ROW + 999)
+            DIFFERENT_REFERENCE.row()
         );
     }
 
@@ -136,7 +138,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     public void testEqualsDifferentHidden() {
         this.checkNotEquals(
             this.createObject()
-                .setHidden(differentHidden())
+                .setHidden(DIFFERENT_HIDDEN)
         );
     }
 
@@ -202,7 +204,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     public void testToString() {
         this.toStringAndCheck(
             REFERENCE.row(),
-            "21"
+            "1"
         );
     }
 
@@ -211,7 +213,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         this.toStringAndCheck(
             REFERENCE.row()
                 .setHidden(true),
-            "21 hidden=true"
+            "1 hidden=true"
         );
     }
 
@@ -235,31 +237,21 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
 
     @Override
     public SpreadsheetRow createObject() {
-        return this.createObject(ROW);
+        return REFERENCE.row();
     }
 
-    private SpreadsheetRow createObject(final int row) {
-        return reference(row).row();
-    }
-
-    private static SpreadsheetRowReference differentReference() {
-        return reference(999);
-    }
-
-    private static SpreadsheetRowReference reference(final int row) {
-        return SpreadsheetReferenceKind.RELATIVE.row(row);
-    }
-
-    private void checkReference(final SpreadsheetRow row) {
-        this.checkReference(row, REFERENCE);
-        this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE,
-            row.reference.referenceKind()
+    private void referenceAndCheck(final SpreadsheetRow row) {
+        this.referenceAndCheck(
+            row,
+            REFERENCE
         );
     }
 
-    private void checkHidden(final SpreadsheetRow row) {
-        this.checkHidden(row, false);
+    private void hiddenAndCheck(final SpreadsheetRow row) {
+        this.hiddenAndCheck(
+            row,
+            false
+        );
     }
 
     // ClassTesting.....................................................................................................

@@ -22,6 +22,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.PublicClassTesting;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -33,27 +36,42 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
     R extends SpreadsheetSelection & Comparable<R>>
     implements PublicClassTesting<T>,
     HashCodeEqualsDefinedTesting2<T>,
+    HasSpreadsheetReferenceTesting,
     JsonNodeMarshallerTesting<T>,
     ToStringTesting<T>,
     TreePrintableTesting {
+
+    final static boolean DIFFERENT_HIDDEN = true;
 
     SpreadsheetColumnOrRowTestCase() {
         super();
     }
 
-    static boolean differentHidden() {
-        return true;
+    final void referenceAndCheck(final T columnOrRow,
+                                 final R reference) {
+        HasSpreadsheetReferenceTesting.super.referenceAndCheck(
+            columnOrRow,
+            reference
+        );
+        this.checkEquals(
+            SpreadsheetReferenceKind.RELATIVE,
+            ((SpreadsheetColumnOrRowReference) columnOrRow.reference())
+                .referenceKind()
+        );
+        this.checkEquals(
+            Optional.of(reference),
+            columnOrRow.id(),
+            "id"
+        );
     }
 
-    final void checkReference(final T columnOrRow,
-                              final R reference) {
-        this.checkEquals(reference, columnOrRow.reference(), "reference");
-        this.checkEquals(Optional.of(reference), columnOrRow.id(), "id");
-    }
-
-    final void checkHidden(final T columnOrRow,
-                           final boolean hidden) {
-        this.checkEquals(hidden, columnOrRow.hidden(), "hidden");
+    final void hiddenAndCheck(final T columnOrRow,
+                              final boolean hidden) {
+        this.checkEquals(
+            hidden,
+            columnOrRow.hidden(),
+            "hidden"
+        );
     }
 
     // JsonNodeMarshallerTesting........................................................................................
@@ -61,6 +79,11 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
     @Test
     public final void testUnmarshallStringFails() {
         this.unmarshallFails(JsonNode.string("fails"));
+    }
+
+    @Override
+    public final T createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 
     // TreePrintable....................................................................................................
@@ -73,12 +96,5 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
             columnOrRow,
             columnOrRow.reference().toString() + LINE_ENDING
         );
-    }
-
-    // JsonNodeMarshallerTesting........................................................................................
-
-    @Override
-    public final T createJsonNodeMarshallingValue() {
-        return this.createObject();
     }
 }

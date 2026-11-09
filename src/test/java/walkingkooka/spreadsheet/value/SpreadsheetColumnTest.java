@@ -35,8 +35,9 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     implements HasSpreadsheetReferenceTesting,
     PatchableTesting<SpreadsheetColumn> {
 
-    private final static int COLUMN = 21;
-    private final static SpreadsheetColumnReference REFERENCE = reference(COLUMN);
+    private final static SpreadsheetColumnReference REFERENCE = SpreadsheetReferenceKind.RELATIVE.firstColumn();
+
+    private final static SpreadsheetColumnReference DIFFERENT_REFERENCE = SpreadsheetReferenceKind.RELATIVE.column(99);
 
     @Test
     public void testWithNullReferenceFails() {
@@ -47,8 +48,8 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     public void testWith() {
         final SpreadsheetColumn column = this.createColumn();
 
-        this.checkReference(column);
-        this.checkHidden(column);
+        this.referenceAndCheck(column);
+        this.hiddenAndCheck(column);
     }
 
     @Test
@@ -57,8 +58,8 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
             REFERENCE.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)
         );
 
-        this.checkReference(column);
-        this.checkHidden(column);
+        this.referenceAndCheck(column);
+        this.hiddenAndCheck(column);
     }
 
     // SetReference.....................................................................................................
@@ -77,13 +78,15 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testSetReferenceDifferent() {
         final SpreadsheetColumn column = this.createColumn();
-        final SpreadsheetColumnReference differentReference = differentReference();
-        final SpreadsheetColumn different = column.setReference(differentReference);
+        final SpreadsheetColumn different = column.setReference(DIFFERENT_REFERENCE);
         assertNotSame(column, different);
 
-        this.checkReference(different, differentReference);
+        this.referenceAndCheck(
+            different,
+            DIFFERENT_REFERENCE
+        );
 
-        this.checkReference(column);
+        this.referenceAndCheck(column);
     }
 
     @Test
@@ -93,12 +96,12 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         final SpreadsheetColumn different = column.setReference(differentReference);
         assertNotSame(column, different);
 
-        this.checkReference(
+        this.referenceAndCheck(
             different,
             differentReference.toRelative()
         );
 
-        this.checkReference(column);
+        this.referenceAndCheck(column);
     }
 
     // SetHidden........................................................................................................
@@ -113,13 +116,15 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testSetHiddenDifferent() {
         final SpreadsheetColumn column = this.createColumn();
-        final boolean differentHidden = differentHidden();
-        final SpreadsheetColumn different = column.setHidden(differentHidden);
+        final SpreadsheetColumn different = column.setHidden(DIFFERENT_HIDDEN);
         assertNotSame(column, different);
 
-        this.checkHidden(different, differentHidden);
+        this.hiddenAndCheck(
+            different,
+            DIFFERENT_HIDDEN
+        );
 
-        this.checkHidden(column);
+        this.hiddenAndCheck(column);
     }
 
     // equals ..........................................................................................................
@@ -127,7 +132,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testEqualsDifferentColumn() {
         this.checkNotEquals(
-            this.createObject(COLUMN + 999)
+            DIFFERENT_REFERENCE.column()
         );
     }
 
@@ -135,7 +140,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     public void testCompareDifferentHidden() {
         this.checkNotEquals(
             this.createObject()
-                .setHidden(differentHidden())
+                .setHidden(DIFFERENT_HIDDEN)
         );
     }
 
@@ -204,7 +209,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     public void testToString() {
         this.toStringAndCheck(
             REFERENCE.column(),
-            "U"
+            "A"
         );
     }
 
@@ -213,7 +218,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         this.toStringAndCheck(
             REFERENCE.column()
                 .setHidden(true),
-            "U hidden=true"
+            "A hidden=true"
         );
     }
 
@@ -237,32 +242,21 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
 
     @Override
     public SpreadsheetColumn createObject() {
-        return this.createObject(COLUMN);
+        return REFERENCE.column();
     }
 
-    private SpreadsheetColumn createObject(final int column) {
-        return reference(column)
-            .column();
-    }
-
-    private static SpreadsheetColumnReference differentReference() {
-        return reference(999);
-    }
-
-    private static SpreadsheetColumnReference reference(final int column) {
-        return SpreadsheetReferenceKind.RELATIVE.column(column);
-    }
-
-    private void checkReference(final SpreadsheetColumn column) {
-        this.checkReference(column, REFERENCE);
-        this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE,
-            column.reference.referenceKind()
+    private void referenceAndCheck(final SpreadsheetColumn column) {
+        this.referenceAndCheck(
+            column,
+            REFERENCE
         );
     }
 
-    private void checkHidden(final SpreadsheetColumn column) {
-        this.checkHidden(column, false);
+    private void hiddenAndCheck(final SpreadsheetColumn column) {
+        this.hiddenAndCheck(
+            column,
+            false
+        );
     }
 
     // ClassTesting.....................................................................................................
