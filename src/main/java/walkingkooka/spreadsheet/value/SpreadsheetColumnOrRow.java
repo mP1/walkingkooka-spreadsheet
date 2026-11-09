@@ -30,7 +30,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -40,10 +39,6 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection & Co
     HateosResource<R>,
     TreePrintable,
     UsesToStringBuilder {
-
-    static void checkReference(final SpreadsheetSelection reference) {
-        Objects.requireNonNull(reference, "reference");
-    }
 
     SpreadsheetColumnOrRow(final R reference,
                            final boolean hidden) {

@@ -51,6 +51,16 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         this.checkHidden(column);
     }
 
+    @Test
+    public void testWithAbsoluteSpreadsheetColumn() {
+        final SpreadsheetColumn column = SpreadsheetColumn.with(
+            REFERENCE.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)
+        );
+
+        this.checkReference(column);
+        this.checkHidden(column);
+    }
+
     // SetReference.....................................................................................................
 
     @Test
@@ -72,6 +82,21 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         assertNotSame(column, different);
 
         this.checkReference(different, differentReference);
+
+        this.checkReference(column);
+    }
+
+    @Test
+    public void testSetReferenceDifferentAbsoluteColumn() {
+        final SpreadsheetColumn column = this.createColumn();
+        final SpreadsheetColumnReference differentReference = SpreadsheetColumnReference.parseColumn("$Z");
+        final SpreadsheetColumn different = column.setReference(differentReference);
+        assertNotSame(column, different);
+
+        this.checkReference(
+            different,
+            differentReference.toRelative()
+        );
 
         this.checkReference(column);
     }
@@ -129,31 +154,6 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         );
     }
 
-    @Test
-    public void testMarshallAbsolute() {
-        this.marshallAndCheck(
-            this.createColumn(),
-            "{\n" +
-                "  \"$U\": {\n" +
-                "    \"hidden\": false\n" +
-                "  }\n" +
-                "}"
-        );
-    }
-
-    @Test
-    public void testMarshallAbsoluteHidden() {
-        this.marshallAndCheck(
-            this.createColumn()
-                .setHidden(true),
-            "{\n" +
-                "  \"$U\": {\n" +
-                "    \"hidden\": true\n" +
-                "  }\n" +
-                "}"
-        );
-    }
-
     // Patchable........................................................................................................
 
     @Test
@@ -204,7 +204,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     public void testToString() {
         this.toStringAndCheck(
             REFERENCE.column(),
-            "$U"
+            "U"
         );
     }
 
@@ -213,7 +213,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         this.toStringAndCheck(
             REFERENCE.column()
                 .setHidden(true),
-            "$U hidden=true"
+            "U hidden=true"
         );
     }
 
@@ -250,11 +250,15 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     }
 
     private static SpreadsheetColumnReference reference(final int column) {
-        return SpreadsheetReferenceKind.ABSOLUTE.column(column);
+        return SpreadsheetReferenceKind.RELATIVE.column(column);
     }
 
     private void checkReference(final SpreadsheetColumn column) {
         this.checkReference(column, REFERENCE);
+        this.checkEquals(
+            SpreadsheetReferenceKind.RELATIVE,
+            column.reference.referenceKind()
+        );
     }
 
     private void checkHidden(final SpreadsheetColumn column) {
