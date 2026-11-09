@@ -1785,6 +1785,18 @@ final class MissingConverterVerifier {
                 );
             }
 
+            // spreadsheet-spreadsheet-to-spreadsheet-text..............................................................
+            if (formula || scripting) {
+                final SpreadsheetMetadata metadata = context.spreadsheetMetadataOrFail();
+
+                verifier.addIfConversionFail(
+                    metadata,
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA, //
+                    metadata.toString()
+                );
+            }
+
             // text-to-spreadsheet-metadata.................................................................................
             final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,

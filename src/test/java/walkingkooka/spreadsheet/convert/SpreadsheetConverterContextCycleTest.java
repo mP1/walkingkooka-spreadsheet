@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
@@ -77,6 +80,24 @@ public final class SpreadsheetConverterContextCycleTest implements SpreadsheetCo
             CONTEXT
         );
     }
+
+    @Test
+    public void testCanConvert() {
+        this.canConvertAndCheck(
+            1,
+            Long.class,
+            true
+        );
+    }
+
+    @Test
+    public void testConvert() {
+        this.convertAndCheck(
+            1,
+            Long.class,
+            1L
+        );
+    }
     
     @Override
     public void testSetObjectPostProcessor() {
@@ -107,7 +128,32 @@ public final class SpreadsheetConverterContextCycleTest implements SpreadsheetCo
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 Optional.empty(), // validationReference
-                Converters.fake(),
+                SpreadsheetConverters.collection(
+                    Lists.of(
+                        new Converter<>() {
+                            @Override
+                            public boolean canConvert(final Object value,
+                                                      final Class<?> type,
+                                                      final SpreadsheetConverterContext context) {
+                                return context.canConvert(
+                                    value,
+                                    type
+                                );
+                            }
+
+                            @Override
+                            public <T> Either<T, String> convert(final Object value,
+                                                                 final Class<T> type,
+                                                                 final SpreadsheetConverterContext context) {
+                                return context.convert(
+                                    value,
+                                    type
+                                );
+                            }
+                        },
+                        Converters.numberToNumber()
+                    )
+                ),
                 MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.multiply(), // multiplier
                 SpreadsheetLabelNameResolvers.empty(),
