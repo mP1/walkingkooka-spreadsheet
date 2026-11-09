@@ -1049,7 +1049,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
         this.converterTreePrintAndCheck(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
             "ConverterCustomToString\n" +
-                "  \"collection (null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\"\n" +
+                "  \"collection (null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\"\n" +
                 "    ConverterCollection\n" +
                 "      ConverterCustomToString\n" +
                 "        \"null-to-number\"\n" +
@@ -1169,6 +1169,14 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "        \"template\"\n" +
                 "          TEXT to TemplateValueName (walkingkooka.template.convert.TextToTemplateValueNameConverter)\n" +
                 "      ConverterCustomToString\n" +
+                "        \"text\"\n" +
+                "          ConverterCollection\n" +
+                "            to Text (walkingkooka.convert.ConverterToText)\n" +
+                "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
+                "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
+                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
+                "            * to String (walkingkooka.convert.ConverterObjectToString)\n" +
+                "      ConverterCustomToString\n" +
                 "        \"json\"\n" +
                 "          ConverterCollection\n" +
                 "            JsonNode to type (walkingkooka.tree.json.convert.JsonNodeConverterJsonNodeTo)\n" +
@@ -1177,14 +1185,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to JsonNode (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonNode)\n" +
                 "            TEXT to JsonPointer (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonPointer)\n" +
                 "            TEXT to JsonSelector (walkingkooka.tree.json.convert.JsonNodeConverterTextToJsonSelector)\n" +
-                "      ConverterCustomToString\n" +
-                "        \"text\"\n" +
-                "          ConverterCollection\n" +
-                "            to Text (walkingkooka.convert.ConverterToText)\n" +
-                "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
-                "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
-                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
-                "            * to String (walkingkooka.convert.ConverterObjectToString)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"optional-to\"\n" +
                 "          Optional to (walkingkooka.convert.ConverterOptionalTo)\n" +
@@ -9003,7 +9003,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "  twoDigitYear: 20\n" +
                 "  validationConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\"\n" +
+                "      \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\"\n" +
                 "  validationCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -9570,7 +9570,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "  twoDigitYear: 20\n" +
                 "  validationConverter: \n" +
                 "    collection\n" +
-                "      \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\"\n" +
+                "      \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\"\n" +
                 "  validationCurrencyExchangeRater: \n" +
                 "    storage-path-properties\n" +
                 "      \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +

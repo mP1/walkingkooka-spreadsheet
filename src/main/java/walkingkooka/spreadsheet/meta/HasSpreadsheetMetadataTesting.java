@@ -362,7 +362,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
                 .aliasSet()
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-            ConverterSelector.parse("collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)")
+            ConverterSelector.parse("collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CURRENCY_EXCHANGE_RATER,
             CurrencyExchangeRaterSelector.parse("storage-properties(\"/samples/CurrencyExchangeRates.properties\")")
