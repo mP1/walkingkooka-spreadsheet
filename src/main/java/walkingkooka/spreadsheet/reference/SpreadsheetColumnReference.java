@@ -146,6 +146,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
         return value;
     }
 
+    @Override
     public SpreadsheetReferenceKind referenceKind() {
         return this.referenceKind;
     }
