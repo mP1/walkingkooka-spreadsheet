@@ -1040,7 +1040,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "      user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "    validationConverter\n" +
                 "      collection\n" +
-                "        \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\"\n" +
+                "        \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\"\n" +
                 "    validationCurrencyExchangeRater\n" +
                 "      storage-properties\n" +
                 "        \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +
@@ -1516,7 +1516,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "        twoDigitYear: 50\n" +
                 "        validationConverter: \n" +
                 "          collection\n" +
-                "            \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\"\n" +
+                "            \"(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\"\n" +
                 "        validationCurrencyExchangeRater: \n" +
                 "          storage-properties\n" +
                 "            \"(\\\"/samples/CurrencyExchangeRates.properties\\\")\"\n" +

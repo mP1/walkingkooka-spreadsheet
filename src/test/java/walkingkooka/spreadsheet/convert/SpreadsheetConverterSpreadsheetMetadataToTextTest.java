@@ -176,7 +176,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"timeFormatter\": \"time hh:mm:ss\",\n" +
                 "  \"timeParser\": \"time hh:mm:ss\",\n" +
                 "  \"twoDigitYear\": 50,\n" +
-                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\",\n" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
@@ -321,7 +321,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r\n" +
                 "  \"timeParser\": \"time hh:mm:ss\",\r\n" +
                 "  \"twoDigitYear\": 50,\r\n" +
-                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\",\r\n" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\",\r\n" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r\n" +
                 "  \"validationFunctions\": \"@\",\r\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\r\n" +
@@ -466,7 +466,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r" +
                 "  \"timeParser\": \"time hh:mm:ss\",\r" +
                 "  \"twoDigitYear\": 50,\r" +
-                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, json, text, optional-to, collection-to, error-throwing)\",\r" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\",\r" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r" +
                 "  \"validationFunctions\": \"@\",\r" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\r" +
