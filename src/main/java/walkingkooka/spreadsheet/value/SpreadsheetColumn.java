@@ -62,14 +62,10 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
 
         return this.reference.equals(reference) ?
             this :
-            this.replace(reference);
-    }
-
-    private SpreadsheetColumn replace(final SpreadsheetColumnReference reference) {
-        return new SpreadsheetColumn(
-            reference,
-            this.hidden
-        );
+            new SpreadsheetColumn(
+                reference,
+                this.hidden
+            );
     }
 
     // hidden .......................................................................................................
@@ -78,14 +74,10 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
 
         return this.hidden == hidden ?
             this :
-            this.replace(hidden);
-    }
-
-    private SpreadsheetColumn replace(final boolean hidden) {
-        return new SpreadsheetColumn(
-            this.reference,
-            hidden
-        );
+            new SpreadsheetColumn(
+                this.reference,
+                hidden
+            );
     }
 
     // Json.............................................................................................................
