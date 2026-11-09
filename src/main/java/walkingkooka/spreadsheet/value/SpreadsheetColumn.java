@@ -45,9 +45,11 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
      * Factory that creates a new {@link SpreadsheetColumn}
      */
     public static SpreadsheetColumn with(final SpreadsheetColumnReference reference) {
-        checkReference(reference);
-
-        return new SpreadsheetColumn(reference, false);
+        return new SpreadsheetColumn(
+            Objects.requireNonNull(reference, "reference")
+                .toRelative(),
+            false
+        );
     }
 
     private SpreadsheetColumn(final SpreadsheetColumnReference reference,
@@ -58,12 +60,11 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
     // reference .......................................................................................................
 
     public SpreadsheetColumn setReference(final SpreadsheetColumnReference reference) {
-        checkReference(reference);
-
         return this.reference.equals(reference) ?
             this :
             new SpreadsheetColumn(
-                reference,
+                Objects.requireNonNull(reference, "reference")
+                    .toRelative(),
                 this.hidden
             );
     }
@@ -127,7 +128,8 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
             JsonNodeUnmarshallContext.missingProperty(HIDDEN_PROPERTY, node);
         }
 
-        return new SpreadsheetColumn(reference, hidden); // lgtm [java/dereferenced-value-may-be-null]
+        return with(reference)
+            .setHidden(hidden);
     }
 
     static {

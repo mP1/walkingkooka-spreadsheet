@@ -330,8 +330,8 @@ public final class SpreadsheetEngineLoggingTest implements SpreadsheetEngineTest
                 );
             },
             "environment DEBUG environmentValue spreadsheetId change null to 123\n" +
-                "engine INFO saveColumn $A\n" +
-                "engine INFO saveColumn $A > columns: $A\n"
+                "engine INFO saveColumn A\n" +
+                "engine INFO saveColumn A > columns: A\n"
         );
     }
 
@@ -380,8 +380,8 @@ public final class SpreadsheetEngineLoggingTest implements SpreadsheetEngineTest
                 );
             },
             "environment DEBUG environmentValue spreadsheetId change null to 123\n" +
-                "engine INFO saveRow $2\n" +
-                "engine INFO saveRow $2 > rows: $2\n"
+                "engine INFO saveRow 2\n" +
+                "engine INFO saveRow 2 > rows: 2\n"
         );
     }
 
