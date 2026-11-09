@@ -57,7 +57,7 @@ final class SpreadsheetConverterContextCycle implements SpreadsheetConverterCont
     }
 
     @Override
-    public SpreadsheetConverterContext setPreProcessor(JsonNodeUnmarshallContextPreProcessor processor) {
+    public SpreadsheetConverterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
         Objects.requireNonNull(processor, "processor");
         throw new UnsupportedOperationException();
     }
