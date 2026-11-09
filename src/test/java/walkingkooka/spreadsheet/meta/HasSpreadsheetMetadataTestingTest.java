@@ -2033,7 +2033,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    text-to-has-host-address\n" +
                 "    text-to-host-address\n" +
                 "    text-to-indentation\n" +
-                "    text-to-json\n" +
+                "    text-to-json-node\n" +
                 "    text-to-json-pointer\n" +
                 "    text-to-json-selector\n" +
                 "    text-to-line-ending\n" +
@@ -2513,7 +2513,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    text-to-has-host-address\n" +
                 "    text-to-host-address\n" +
                 "    text-to-indentation\n" +
-                "    text-to-json\n" +
+                "    text-to-json-node\n" +
                 "    text-to-json-pointer\n" +
                 "    text-to-json-selector\n" +
                 "    text-to-line-ending\n" +

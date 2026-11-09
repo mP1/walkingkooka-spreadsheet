@@ -860,10 +860,10 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithTextToJson() {
+    public void testConverterSelectorWithTextToJsonNode() {
         this.converterAndCheck(
-            "text-to-json",
-            SpreadsheetConverters.textToJson()
+            "text-to-json-node",
+            SpreadsheetConverters.textToJsonNode()
         );
     }
 
@@ -1603,7 +1603,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-has-host-address text-to-has-host-address\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-host-address text-to-host-address\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-indentation text-to-indentation\n" +
-                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-json text-to-json\n" +
+                "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-json-node text-to-json-node\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-json-pointer text-to-json-pointer\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-json-selector text-to-json-selector\n" +
                 "    https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-line-ending text-to-line-ending\n" +
