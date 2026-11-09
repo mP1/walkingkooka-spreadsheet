@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
@@ -231,11 +230,11 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
     private final static byte BYTE_DATE = 32;
     
     @Test
-    @Disabled
-    public void testConvertDateToNumberFails() {
-        this.convertFails(
+    public void testConvertDateToNumber() {
+        this.convertAndCheck(
             DATE,
-            Number.class
+            Number.class,
+            32L
         );
     }
 
@@ -322,11 +321,10 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
     private final static float BYTE_DATETIME_HALF = 32.5f;
 
     @Test
-    @Disabled
-    public void testConvertDateTimeToNumberFails() {
-        this.convertFails(
+    public void testConvertDateTimeToNumber() {
+        this.convertAndCheck(
             DATETIME,
-            Number.class
+            32
         );
     }
 
@@ -407,7 +405,6 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
     private final static LocalTime TIME = LocalTime.of(12, 58, 59);
 
     @Test
-    @Disabled
     public void testConvertTimeToNumberFails() {
         this.convertFails(
             TIME,
@@ -496,15 +493,6 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
     private final static byte BYTE_STRING = 123;
 
     private final static float BYTE_STRING_HALF = 123.5f;
-
-    @Test
-    @Disabled
-    public void testConvertStringToNumberFails() {
-        this.convertFails(
-            STRING,
-            Number.class
-        );
-    }
 
     @Test
     public void testConvertStringToByte() {
