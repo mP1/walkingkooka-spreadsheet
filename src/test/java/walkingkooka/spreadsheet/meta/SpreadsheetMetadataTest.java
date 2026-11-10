@@ -1710,7 +1710,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "dateTimeFormatter=date-time yyyy/mm/dd hh:mm\n" +
                 "dateTimeParser=date-time yyyy/mm/dd hh:mm\n" +
                 "dateTimeSymbols=\"am,pm\",\"January,February,March,April,May,June,July,August,September,October,November,December\",\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\",\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\",\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\n" +
-                "decimalNumberDigitCount=8\n" +
+                "decimalNumberDigitCount=9\n" +
                 "decimalNumberSymbols=-,+,0,$,.,e,\",\",\\u221e,.,NaN,%,\\u2030\n" +
                 "defaultFormHandler=basic\n" +
                 "defaultYear=2000\n" +
@@ -1892,7 +1892,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "dateTimeFormatter=date-time yyyy/mm/dd hh:mm\n" +
                 "dateTimeParser=date-time yyyy/mm/dd hh:mm\n" +
                 "dateTimeSymbols=\"am,pm\",\"January,February,March,April,May,June,July,August,September,October,November,December\",\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\",\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\",\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\n" +
-                "decimalNumberDigitCount=8\n" +
+                "decimalNumberDigitCount=9\n" +
                 "decimalNumberSymbols=-,+,0,$,.,e,\",\",\\u221e,.,NaN,%,\\u2030\n" +
                 "defaultFormHandler=basic\n" +
                 "defaultYear=2000\n" +
