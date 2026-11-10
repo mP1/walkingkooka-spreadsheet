@@ -860,7 +860,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "          Fri.\n" +
                 "          Sat.\n" +
                 "    decimalNumberDigitCount\n" +
-                "      8\n" +
+                "      9\n" +
                 "    decimalNumberSymbols\n" +
                 "      DecimalNumberSymbols\n" +
                 "        negativeSign\n" +
@@ -1364,7 +1364,7 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "              Thu.\n" +
                 "              Fri.\n" +
                 "              Sat.\n" +
-                "        decimalNumberDigitCount: 8\n" +
+                "        decimalNumberDigitCount: 9\n" +
                 "        decimalNumberSymbols: \n" +
                 "          DecimalNumberSymbols\n" +
                 "            negativeSign\n" +

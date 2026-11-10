@@ -147,8 +147,6 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
 
     CharsetName CHARSET_NAME = CharsetName.UTF_8;
 
-    int DECIMAL_NUMBER_DIGIT_COUNT = 8;
-
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
     );

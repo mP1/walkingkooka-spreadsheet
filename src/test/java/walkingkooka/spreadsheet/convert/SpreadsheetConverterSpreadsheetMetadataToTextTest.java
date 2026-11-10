@@ -120,7 +120,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "      \"Sat.\"\n" +
                 "    ]\n" +
                 "  },\n" +
-                "  \"decimalNumberDigitCount\": 8,\n" +
+                "  \"decimalNumberDigitCount\": 9,\n" +
                 "  \"decimalNumberSymbols\": {\n" +
                 "    \"negativeSign\": \"-\",\n" +
                 "    \"positiveSign\": \"+\",\n" +
@@ -265,7 +265,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "      \"Sat.\"\r\n" +
                 "    ]\r\n" +
                 "  },\r\n" +
-                "  \"decimalNumberDigitCount\": 8,\r\n" +
+                "  \"decimalNumberDigitCount\": 9,\r\n" +
                 "  \"decimalNumberSymbols\": {\r\n" +
                 "    \"negativeSign\": \"-\",\r\n" +
                 "    \"positiveSign\": \"+\",\r\n" +
@@ -410,7 +410,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "      \"Sat.\"\r" +
                 "    ]\r" +
                 "  },\r" +
-                "  \"decimalNumberDigitCount\": 8,\r" +
+                "  \"decimalNumberDigitCount\": 9,\r" +
                 "  \"decimalNumberSymbols\": {\r" +
                 "    \"negativeSign\": \"-\",\r" +
                 "    \"positiveSign\": \"+\",\r" +
