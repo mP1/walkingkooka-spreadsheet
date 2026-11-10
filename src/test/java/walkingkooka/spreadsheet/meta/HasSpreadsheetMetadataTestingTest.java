@@ -799,12 +799,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
                 "            ConverterCustomToString\n" +
-                "              \"CSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
-                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
@@ -931,6 +925,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            ConverterCustomToString\n" +
+                "              \"CSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1034,12 +1034,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
                 "            ConverterCustomToString\n" +
-                "              \"CSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
-                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
@@ -1166,6 +1160,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            ConverterCustomToString\n" +
+                "              \"CSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1269,12 +1269,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
                 "            ConverterCustomToString\n" +
-                "              \"CSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
-                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
@@ -1351,6 +1345,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            ConverterCustomToString\n" +
+                "              \"CSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1444,12 +1444,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"CSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
-                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -1577,6 +1571,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            ConverterCustomToString\n" +
+                "              \"CSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1672,12 +1672,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
                 "            ConverterCustomToString\n" +
-                "              \"CSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
-                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
@@ -1686,6 +1680,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            ConverterCustomToString\n" +
+                "              \"CSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1762,12 +1762,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
                 "            ConverterCustomToString\n" +
-                "              \"CSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
-                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
-                "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
@@ -1827,6 +1821,12 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            ConverterCustomToString\n" +
+                "              \"CSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
+                "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
+                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
