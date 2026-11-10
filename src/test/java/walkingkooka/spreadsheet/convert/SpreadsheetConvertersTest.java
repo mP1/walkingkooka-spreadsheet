@@ -555,7 +555,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        TEXT to BooleanList (walkingkooka.convert.ConverterTextToCollectionListBooleanList)\n" +
                 "        TEXT to LocalDateList (walkingkooka.convert.ConverterTextToCollectionListLocalDateList)\n" +
                 "        TEXT to LocalDateTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalDateTimeList)\n" +
-                "        TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "        TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "        TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "        TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
@@ -617,7 +616,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              TEXT to BooleanList (walkingkooka.convert.ConverterTextToCollectionListBooleanList)\n" +
                 "              TEXT to LocalDateList (walkingkooka.convert.ConverterTextToCollectionListLocalDateList)\n" +
                 "              TEXT to LocalDateTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalDateTimeList)\n" +
-                "              TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "              TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "              TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "              TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
@@ -4017,7 +4015,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            TEXT to BooleanList (walkingkooka.convert.ConverterTextToCollectionListBooleanList)\n" +
                 "            TEXT to LocalDateList (walkingkooka.convert.ConverterTextToCollectionListLocalDateList)\n" +
                 "            TEXT to LocalDateTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalDateTimeList)\n" +
-                "            TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
@@ -6214,7 +6211,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      TEXT to BooleanList (walkingkooka.convert.ConverterTextToCollectionListBooleanList)\n" +
                 "      TEXT to LocalDateList (walkingkooka.convert.ConverterTextToCollectionListLocalDateList)\n" +
                 "      TEXT to LocalDateTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalDateTimeList)\n" +
-                "      TEXT to LineEnding (walkingkooka.convert.ConverterTextToLineEnding)\n" +
                 "      TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "      TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "      TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n"
