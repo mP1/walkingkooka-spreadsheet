@@ -1819,8 +1819,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 csv(),
                 tsv(),
                 binaryToText(),
-                toMultiLineText()//,
-                //Converters.objectToString()
+                toMultiLineText()
             );
         }
         return VALUE;
