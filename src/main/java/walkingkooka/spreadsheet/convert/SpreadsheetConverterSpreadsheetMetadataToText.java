@@ -70,7 +70,7 @@ final class SpreadsheetConverterSpreadsheetMetadataToText extends SpreadsheetCon
                     type
                 );
             } else {
-                converted = Cast.to(jsonNode);
+                converted = Cast.to(multiLine);
             }
         } else {
             converted = Cast.to(jsonNode);
