@@ -134,12 +134,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
-                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -267,6 +261,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -369,12 +369,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
-                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -502,6 +496,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -596,12 +596,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
-                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -687,6 +681,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -780,12 +780,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
-                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -913,6 +907,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1007,12 +1007,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
-                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"url\"\n" +
                 "          ConverterCollection\n" +
@@ -1028,6 +1022,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1103,12 +1103,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "            TEXT to NumberList (walkingkooka.convert.ConverterTextToCollectionListNumberList)\n" +
                 "            TEXT to LocalTimeList (walkingkooka.convert.ConverterTextToCollectionListLocalTimeList)\n" +
                 "            TEXT to StringList (walkingkooka.convert.ConverterTextToCollectionListStringList)\n" +
-                "            ConverterCustomToString\n" +
-                "              \"TSV\"\n" +
-                "                ConverterCollection\n" +
-                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
-                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"expression\"\n" +
                 "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
@@ -1169,6 +1163,12 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
                 "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
+                "            ConverterCustomToString\n" +
+                "              \"TSV\"\n" +
+                "                ConverterCollection\n" +
+                "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
+                "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
+                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
