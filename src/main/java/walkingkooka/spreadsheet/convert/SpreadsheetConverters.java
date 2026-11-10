@@ -952,7 +952,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 "TEXT",
                 binaryToText(),
                 toMultiLineText(),
-                Converters.toText(),
+                toText(),
                 textToCharset(),
                 textToIndentation(),
                 textToLineEnding(),
