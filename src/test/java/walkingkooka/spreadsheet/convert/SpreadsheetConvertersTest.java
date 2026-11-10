@@ -426,6 +426,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"TEXT\"\n" +
                 "      ConverterCollection\n" +
+                "        Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        to Text (walkingkooka.convert.ConverterToText)\n" +
                 "        TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
@@ -558,7 +559,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "              TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "              TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "        Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"collection (null-to-number, simple, boolean, number, date-time, locale, value, color, expression, environment, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, text, json, error-throwing)\"\n" +
                 "      ConverterCollection\n" +
@@ -633,7 +633,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                    to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                    TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                    TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"color\"\n" +
                 "            ConverterCollection\n" +
@@ -746,6 +745,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"text\"\n" +
                 "            ConverterCollection\n" +
+                "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "              to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "              to Text (walkingkooka.convert.ConverterToText)\n" +
                 "              TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
@@ -4033,7 +4033,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -4146,6 +4145,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
@@ -4231,6 +4231,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     };
 
     // text.............................................................................................................
+
+    @Test
+    public void testTextConvertBinaryToString() {
+        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
+
+        this.textConvertAndCheck(
+            jsonNode.binary(CHARSET),
+            String.class,
+            jsonNode.toString()
+        );
+    }
 
     @Test
     public void testTextConvertObjectToCharacterFails() {
@@ -4791,6 +4802,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"TEXT\"\n" +
                 "    ConverterCollection\n" +
+                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "      to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      to Text (walkingkooka.convert.ConverterToText)\n" +
                 "      TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
@@ -5215,12 +5227,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testValueConvertBinaryToString() {
-        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
-
-        this.valueConvertAndCheck(
-            jsonNode.binary(CHARSET),
-            jsonNode.toString()
+    public void testValueConvertBinaryToStringFails() {
+        this.valueConvertFails(
+            JsonNode.array()
+                .binary(CHARSET),
+            String.class
         );
     }
 
@@ -5843,7 +5854,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testValueConvertStorageBinaryToString() {
+    public void testValueConvertStorageBinaryToStringFails() {
         final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
 
         final StorageBinary storageBinary = StorageBinary.with(
@@ -5851,9 +5862,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             jsonNode.binary(CHARSET)
         );
 
-        this.valueConvertAndCheck(
+        this.valueConvertFails(
             storageBinary,
-            jsonNode.toString()
+            String.class
         );
     }
 
@@ -6163,8 +6174,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "          ConverterCollection\n" +
                 "            to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "            TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "            TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n"
+                "            TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n"
         );
     }
 
