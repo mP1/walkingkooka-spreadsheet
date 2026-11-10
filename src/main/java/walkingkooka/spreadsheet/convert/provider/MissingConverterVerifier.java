@@ -1292,7 +1292,6 @@ final class MissingConverterVerifier {
 
         // json.........................................................................................................
         if (formatting || formula || scripting | validation) {
-            // to-json..................................................................................................
                 verifier.addIfConversionFailTest(
                     "Hello",
                     Lists.of(
@@ -1395,7 +1394,7 @@ final class MissingConverterVerifier {
                     context.marshall(spreadsheetCell)
                         .toString(),
                     SpreadsheetCell.class,
-                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    SpreadsheetConvertersConverterProvider.JSON, // textToObject
                     spreadsheetCell
                 );
 
