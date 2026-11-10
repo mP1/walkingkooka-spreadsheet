@@ -811,7 +811,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -933,6 +932,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -1046,7 +1046,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -1168,6 +1167,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -1281,7 +1281,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -1353,6 +1352,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -1457,7 +1457,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -1579,6 +1578,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -1684,10 +1684,10 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -1774,7 +1774,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"expression\"\n" +
                 "          TEXT to Expression (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToExpression)\n" +
@@ -1829,6 +1828,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
