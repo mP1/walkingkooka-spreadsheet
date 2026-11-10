@@ -103,6 +103,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonArray;
 import walkingkooka.tree.json.JsonBoolean;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNull;
 import walkingkooka.tree.json.JsonNumber;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -297,11 +298,23 @@ final class MissingConverterVerifier {
 
     private final static String EXPRESSION_TEXT = "1+2";
 
+    private final static JsonArray JSON_ARRAY = JsonNode.array()
+        .append(true)
+        .append(1);
+
+    private final static JsonBoolean JSON_BOOLEAN = JsonNode.booleanNode(true);
+
+    private final static JsonNull JSON_NULL = JsonNode.nullNode();
+
+    private final static JsonNumber JSON_NUMBER = JsonNode.number(123);
+
     private final static JsonObject JSON_OBJECT = JsonNode.object()
         .set(
             JsonPropertyName.with("hello"),
             "world"
         );
+
+    private final static JsonString JSON_STRING = JsonNode.string("HelloWorld");
 
     private final static JsonPointer JSON_POINTER = JsonPointer.parse("/json1/pointer2/");
 
@@ -1295,10 +1308,94 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
+                    JSON_ARRAY.toString(),
+                    JsonNode.class,
+                    SpreadsheetConvertersConverterProvider.JSON,
+                    JSON_ARRAY
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_ARRAY.toString(),
+                    JsonArray.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_ARRAY
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_BOOLEAN.toString(),
+                    JsonNode.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_BOOLEAN
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_BOOLEAN.toString(),
+                    JsonBoolean.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_BOOLEAN
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_NULL.toString(),
+                    JsonNode.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_NULL
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_NULL.toString(),
+                    JsonNull.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_NULL
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_NUMBER.toString(),
+                    JsonNode.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_NUMBER
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_NUMBER.toString(),
+                    JsonNumber.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_NUMBER
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_OBJECT.toString(),
+                    JsonNode.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_OBJECT
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_OBJECT.toString(),
+                    JsonString.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_OBJECT
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_STRING.toString(),
+                    JsonNode.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_STRING
+                );
+
+                verifier.addIfConversionFail(
+                    JSON_STRING.toString(),
+                    JsonString.class,
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
+                    JSON_STRING
+                );
+
+                verifier.addIfConversionFail(
                     context.marshall(spreadsheetCell)
                         .toString(),
                     SpreadsheetCell.class,
-                    SpreadsheetConvertersConverterProvider.JSON, // textToObject
+                    SpreadsheetConvertersConverterProvider.JSON, // textToJsonNode
                     spreadsheetCell
                 );
 
