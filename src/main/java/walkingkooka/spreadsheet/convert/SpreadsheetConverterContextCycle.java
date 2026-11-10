@@ -67,31 +67,81 @@ final class SpreadsheetConverterContextCycle implements SpreadsheetConverterCont
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
-        // guard against trying same value & type combo AGAIN which would probably result in StackOverflowError
-        return this.isRecursive(value, type) ?
+        return this.isCycle(value, type) ?
             false :
-            this.context.canConvert(value, type);
+            this.context.converter()
+                .canConvert(
+                    value,
+                    type,
+                    this.createSpreadsheetConverterContextCycle(
+                        value,
+                        type
+                    )
+                );
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
-        return this.isRecursive(value, type) ?
+        return this.isCycle(value, type) ?
             this.failConversion(
                 value,
                 type
             ) :
-            this.context.convert(value, type);
+            this.context.converter()
+                .convert(
+                    value,
+                    type,
+                    this.createSpreadsheetConverterContextCycle(
+                        value,
+                        type
+                    )
+                );
     }
 
-    private boolean isRecursive(final Object value,
-                                final Class<?> type) {
-        return Objects.equals(this.value, value) &&
+    /**
+     * Check if the given value and {@link Class type} combination has been seen before and a cycle must be active.
+     */
+    private boolean isCycle(final Object value,
+                            final Class<?> type) {
+
+        boolean cycle = Objects.equals(
+            this.value,
+            value
+        ) &&
             this.type.equals(type);
+
+        if (false == cycle) {
+            final SpreadsheetConverterContext context = this.context;
+            if (context instanceof SpreadsheetConverterContextCycle) {
+                cycle = ((SpreadsheetConverterContextCycle) context).isCycle(
+                    value,
+                    type
+                );
+            }
+        }
+
+        return cycle;
     }
 
+    /**
+     * The current nullable value in this context
+     */
     private final Object value;
+
+    /**
+     * The accompanying type.
+     */
     private final Class<?> type;
+
+    private SpreadsheetConverterContextCycle createSpreadsheetConverterContextCycle(final Object value,
+                                                                                    final Class<?> type) {
+        return new SpreadsheetConverterContextCycle(
+            value,
+            type,
+            this
+        );
+    }
 
     // SpreadsheetConverterContextDelegator.............................................................................
 
