@@ -426,6 +426,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  ConverterCustomToString\n" +
                 "    \"TEXT\"\n" +
                 "      ConverterCollection\n" +
+                "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        to Text (walkingkooka.convert.ConverterToText)\n" +
                 "        TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "        TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -558,7 +559,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "              TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "              TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "        Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"collection (null-to-number, simple, boolean, number, date-time, locale, value, color, expression, environment, currency, logging, plugins, spreadsheet-metadata, style, text-node, template, net, form-and-validation, optional-to, collection-to, text, json, error-throwing)\"\n" +
                 "      ConverterCollection\n" +
@@ -634,7 +634,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                    TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                    TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "              to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"color\"\n" +
                 "            ConverterCollection\n" +
@@ -747,6 +746,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "        ConverterCustomToString\n" +
                 "          \"text\"\n" +
                 "            ConverterCollection\n" +
+                "              to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "              to Text (walkingkooka.convert.ConverterToText)\n" +
                 "              TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "              TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -4034,7 +4034,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"color\"\n" +
                 "          ConverterCollection\n" +
@@ -4147,6 +4146,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCustomToString\n" +
                 "        \"text\"\n" +
                 "          ConverterCollection\n" +
+                "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
                 "            TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "            TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -4379,6 +4379,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testTextConvertSpreadsheetMetadataToMultiLineText() {
+        this.textConvertAndCheck(
+            SPREADSHEET_METADATA.properties(),
+            MultiLineText.class,
+            SPREADSHEET_METADATA.properties()
+                .multiLineText(TEXT_CONVERTER_CONTEXT)
+        );
+    }
+
     private void textConvertFails(final Object value,
                                   final Class<?> type) {
         this.convertFails(
@@ -4432,6 +4442,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         @Override
         public Charset charset() {
             return CHARSET;
+        }
+
+        @Override
+        public LineEnding lineEnding() {
+            return LINE_ENDING;
         }
     };
 
@@ -4776,6 +4791,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             "ConverterCustomToString\n" +
                 "  \"TEXT\"\n" +
                 "    ConverterCollection\n" +
+                "      to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      to Text (walkingkooka.convert.ConverterToText)\n" +
                 "      TEXT to Charset (walkingkooka.convert.ConverterTextToCharset)\n" +
                 "      TEXT to Indentation (walkingkooka.convert.ConverterTextToIndentation)\n" +
@@ -5199,20 +5215,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testValueConvertJsonObjectToMultiValueText() {
-        final String text = "{\"Hello\": \"World\" }";
-
-        this.valueConvertAndCheck(
-            JsonNode.parse(text),
-            MultiLineText.with(
-                "{\n" +
-                    "  \"Hello\": \"World\"\n" +
-                    "}"
-            )
-        );
-    }
-
-    @Test
     public void testValueConvertBinaryToString() {
         final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
 
@@ -5280,6 +5282,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.valueConvertFails(
             123,
             String.class
+        );
+    }
+
+    @Test
+    public void testValueConvertJsonObjectToMultiValueTextFails() {
+        this.valueConvertFails(
+            JsonNode.parse("{\"Hello\": \"World\" }"),
+            MultiLineText.class
         );
     }
 
@@ -5805,16 +5815,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testValueConvertStringToMultiValueText() {
-        final String text = "Hello World 123";
-
-        this.valueConvertAndCheck(
-            text,
-            MultiLineText.with(text)
-        );
-    }
-
-    @Test
     public void testValueConvertStringToNumberList() {
         this.valueConvertAndCheck(
             "1,22,333.5",
@@ -6164,8 +6164,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "            TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
                 "            TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
-                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
-                "      to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n"
+                "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n"
         );
     }
 

@@ -950,6 +950,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         if (null == TEXT) {
             TEXT = namedCollection(
                 "TEXT",
+                toMultiLineText(),
                 Converters.toText(),
                 textToCharset(),
                 textToIndentation(),
@@ -1818,8 +1819,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 textToStringList(),
                 csv(),
                 tsv(),
-                binaryToText(),
-                toMultiLineText()
+                binaryToText()
             );
         }
         return VALUE;
