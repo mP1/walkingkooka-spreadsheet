@@ -22,7 +22,6 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -42,7 +41,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
     implements ComparableTesting2<SpreadsheetLabelName>,
     NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName>,
-    PublicClassTesting<SpreadsheetLabelName>,
     ThrowableTesting {
 
     @Test

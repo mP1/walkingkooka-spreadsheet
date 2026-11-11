@@ -20,14 +20,12 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-final public class SpreadsheetFunctionNameTest implements PublicClassTesting<SpreadsheetFunctionName>,
-    NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName>,
+final public class SpreadsheetFunctionNameTest implements NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName>,
     JsonNodeMarshallerTesting<SpreadsheetFunctionName> {
 
     // toExpressionFunctionName ........................................................................................

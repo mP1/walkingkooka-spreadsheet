@@ -23,7 +23,6 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -32,7 +31,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, SpreadsheetName>,
     ComparableTesting2<SpreadsheetName>,
     JsonNodeMarshallerTesting<SpreadsheetName>,
-    PublicClassTesting<SpreadsheetName>,
     ToStringTesting<SpreadsheetName> {
 
     private final static String VALUE = "SpreadsheetName123";
