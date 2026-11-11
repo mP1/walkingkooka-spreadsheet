@@ -481,6 +481,18 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
         );
     }
 
+    @Test
+    public void testParseDateTimeWithTwoPatterns() {
+        this.checkEquals(
+            LocalDateTime.of(1999, 12, 31, 12, 58),
+            this.createPattern("yyyy;yyyy/mm/dd/hh/mm")
+                .parse(
+                    "1999/12/31/12/58",
+                    this.parserContext()
+                )
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
