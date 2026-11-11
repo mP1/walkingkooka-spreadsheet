@@ -26,10 +26,7 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyCode;
-import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyValue;
-import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -50,9 +47,6 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
 import java.math.MathContext;
-import java.time.LocalDateTime;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -342,10 +336,10 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         this.convertAndCheck(
             CurrencyValue.with(
                 number,
-                CURRENCY_CODE
+                DIFFERENT_CURRENCY_CODE
             ),
             ExpressionNumber.class,
-            EXPRESSION_NUMBER_KIND.create(number * CURRENCY_EXCHANGE_RATE)
+            EXPRESSION_NUMBER_KIND.create(number / CURRENCY_EXCHANGE_RATE)
         );
     }
 
@@ -353,13 +347,15 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     public void testConvertCurrencyValueIntegerToInteger() {
         final int number = 123;
 
+        // maths is done using integers and the exchange rate of 0.5 gets converted to integer giving 0 before the
+        // multiply with $number
         this.convertAndCheck(
             CurrencyValue.with(
                 number,
-                CURRENCY_CODE
+                DIFFERENT_CURRENCY_CODE
             ),
             Integer.class,
-            (int)(number * CURRENCY_EXCHANGE_RATE)
+            0 // 123 * (int)0.5
         );
     }
 
@@ -438,33 +434,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         BINARY_TEXT_CONTEXT,
-                        new FakeCurrencyContext() {
-
-                            @Override
-                            public Currency currency() {
-                                return DIFFERENT_CURRENCY;
-                            }
-
-                            @Override
-                            public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                                         final Optional<LocalDateTime> dateTime) {
-                                return CURRENCY_EXCHANGE_RATER.currencyExchangeRate(
-                                    currencyExchange,
-                                    dateTime,
-                                    this
-                                );
-                            }
-
-                            @Override
-                            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                                return CURRENCY_CONTEXT.currencyForCurrencyCode(currencyCode);
-                            }
-
-                            @Override
-                            public Optional<Currency> currencyForLocale(final Locale locale) {
-                                return CURRENCY_CONTEXT.currencyForLocale(locale);
-                            }
-                        }.setLocaleContext(LOCALE_CONTEXT),
+                        CURRENCY_LOCALE_CONTEXT,
                         DATE_TIME_CONTEXT,
                         DECIMAL_NUMBER_CONTEXT
                     )
@@ -479,12 +449,12 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
 
     @Override
     public int decimalNumberDigitCount() {
-        return DECIMAL_NUMBER_CONTEXT.decimalNumberDigitCount();
+        return DECIMAL_NUMBER_DIGIT_COUNT;
     }
 
     @Override
     public MathContext mathContext() {
-        return DECIMAL_NUMBER_CONTEXT.mathContext();
+        return MATH_CONTEXT;
     }
 
     // DecimalNumberContextDelegator....................................................................................
