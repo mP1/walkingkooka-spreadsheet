@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -243,5 +244,61 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
             .value(this.spreadsheetProvider)
             .label("providerContext")
             .value(this.providerContext);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    void printTreeProperties(final IndentingPrinter printer) {
+        this.printTreeProperty(
+            "mediaTypeDetector",
+            this.mediaTypeDetector,
+            printer
+        );
+        this.printTreeProperty(
+            "metadataCreator",
+            this.metadataCreator,
+            printer
+        );
+        this.printTreeProperty(
+            "multiplier",
+            this.multiplier,
+            printer
+        );
+        this.printTreeProperty(
+            "storeRepository",
+            this.storeRepository,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetMetadataContext",
+            this.spreadsheetMetadataContext,
+            printer
+        );
+        this.printTreeProperty(
+            "httpRouterFactory",
+            this.httpRouterFactory,
+            printer
+        );
+        this.printTreeProperty(
+            "currencyLocaleContext",
+            this.currencyLocaleContext,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetEnvironmentContext",
+            this.spreadsheetEnvironmentContext,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetProvider",
+            this.spreadsheetProvider,
+            printer
+        );
+        this.printTreeProperty(
+            "providerContext",
+            this.providerContext,
+            printer
+        );
     }
 }

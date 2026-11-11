@@ -42,6 +42,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataCreator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.store.MissingStoreException;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -56,6 +58,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetEnvironmentContextDelegator,
     CurrencyLocaleContextDelegator,
     SpreadsheetProviderDelegator,
+    TreePrintable,
     UsesToStringBuilder {
 
     SpreadsheetContextShared(final MediaTypeDetector mediaTypeDetector,
@@ -353,5 +356,34 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     @Override
     public final String toString() {
         return ToStringBuilder.buildFrom(this);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public final void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            this.printTreeProperties(printer);
+        }
+        printer.outdent();
+    }
+
+    abstract void printTreeProperties(final IndentingPrinter printer);
+
+    final void printTreeProperty(final String label,
+                                 final Object value,
+                                 final IndentingPrinter printer) {
+        printer.println(label);
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                value,
+                printer
+            );
+        }
+        printer.outdent();
     }
 }

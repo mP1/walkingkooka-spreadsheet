@@ -49,7 +49,6 @@ import walkingkooka.storage.StorageEnvironmentContexts;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -65,8 +64,17 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         }
     };
 
-    final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> HTTP_ROUTER_FACTORY = (SpreadsheetEngineContext c) -> {
-        throw new UnsupportedOperationException();
+    final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>>> HTTP_ROUTER_FACTORY = new Function<>() {
+
+        @Override
+        public Router<HttpRequestAttribute<?>, HttpHandler<HttpHandlerContext>> apply(SpreadsheetEngineContext spreadsheetEngineContext) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String toString() {
+            return "HTTP_ROUTER_FACTORY";
+        }
     };
 
     @Test
@@ -488,12 +496,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                     return "REPO";
                 }
             },
-            (c) -> new Router<>() {
-                @Override
-                public Optional<HttpHandler<HttpHandlerContext>> route(final Map<HttpRequestAttribute<?>, Object> attributes) {
-                    throw new UnsupportedOperationException();
-                }
-            },
+            HTTP_ROUTER_FACTORY,
             currencyLocaleContext,
             spreadsheetEnvironmentContext,
             spreadsheetProvider,
@@ -535,6 +538,103 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 "  \"dateParser\": \"date dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                 "  \"dateTimeFormatter\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                 "  \"dateTimeParser\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy"
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createContext(),
+            "SpreadsheetContextSharedFixedSpreadsheetId\n" +
+                "  mediaTypeDetector\n" +
+                "    application/octet-stream (walkingkooka.net.header.MediaTypeDetectorBinary)\n" +
+                "  metadataCreator\n" +
+                "    SPREADSHEET_METADATA_CREATOR (walkingkooka.spreadsheet.SpreadsheetContextSharedTestCase$2)\n" +
+                "  multiplier\n" +
+                "    walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction (walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction)\n" +
+                "  storeRepository\n" +
+                "    REPO (walkingkooka.spreadsheet.SpreadsheetContextSharedFixedSpreadsheetIdTest$3)\n" +
+                "  spreadsheetMetadataContext\n" +
+                "    createMetadata=this store={123={\n" +
+                "      \"spreadsheetId\": \"123\",\n" +
+                "      \"auditInfo\": {\n" +
+                "        \"createdBy\": \"creator@example.com\",\n" +
+                "        \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                "        \"modifiedBy\": \"creator@example.com\",\n" +
+                "        \"modifiedTimestamp\": \"1999-12-31T12:58:59\"\n" +
+                "      },\n" +
+                "      \"comparators\": \"\",\n" +
+                "      \"converters\": \"\",\n" +
+                "      \"currency\": \"AUD\",\n" +
+                "      \"dateFormatter\": \"date dddd, d mmmm yyyy\",\n" +
+                "      \"dateParser\": \"date dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                "      \"dateTimeFormatter\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                "      \"dateTimeParser\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss AM/PM;dddd, d mmmm yy \\\\a\\\\t h:mm:ss;dddd, d mmmm yy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss.0;dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss;dddd, d mmmm yyyy \\\\a\\\\t h:mm AM/PM;dddd, d mmmm yyyy  (walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextBasic)\n" +
+                "  httpRouterFactory\n" +
+                "    HTTP_ROUTER_FACTORY (walkingkooka.spreadsheet.SpreadsheetContextSharedFixedSpreadsheetIdTest$2)\n" +
+                "  currencyLocaleContext\n" +
+                "    JRE ReadOnly JRE en-AU (walkingkooka.currency.CurrencyLocaleContextReadOnly)\n" +
+                "  spreadsheetEnvironmentContext\n" +
+                "    SpreadsheetEnvironmentContextBasic\n" +
+                "      environment\n" +
+                "        StorageEnvironmentContextBasic\n" +
+                "          EnvironmentContextSharedMap\n" +
+                "            charset\n" +
+                "              UTF-8 (sun.nio.cs.UTF_8)\n" +
+                "            currency\n" +
+                "              AUD (java.util.Currency)\n" +
+                "            currentWorkingDirectory\n" +
+                "              /current1/working2/directory3\n" +
+                "            homeDirectory\n" +
+                "              /users/user123@example.com\n" +
+                "            indentation\n" +
+                "              \"  \" (walkingkooka.text.Indentation)\n" +
+                "            lineEnding\n" +
+                "              \"\\n\"\n" +
+                "            locale\n" +
+                "              en_AU (java.util.Locale)\n" +
+                "            loggingLevel\n" +
+                "              NONE\n" +
+                "            now\n" +
+                "              1999-12-31T12:58:59 (java.time.LocalDateTime)\n" +
+                "            serverUrl\n" +
+                "              https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "            spreadsheetId\n" +
+                "              123\n" +
+                "            timeOffset\n" +
+                "              Z (java.time.ZoneOffset)\n" +
+                "            user\n" +
+                "              user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "      spreadsheetMetadataLoader\n" +
+                "        SpreadsheetMetadataLoaderEmpty (walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaderEmpty)\n" +
+                "      storage\n" +
+                "        STORAGE (walkingkooka.spreadsheet.SpreadsheetContextSharedTestCase$3)\n" +
+                "  spreadsheetProvider\n" +
+                "    SpreadsheetProviderBasic\n" +
+                "      comparatorProvider\n" +
+                "        EmptySpreadsheetComparatorProvider (walkingkooka.spreadsheet.compare.provider.EmptySpreadsheetComparatorProvider)\n" +
+                "      converterProvider\n" +
+                "        EmptyConverterProvider (walkingkooka.convert.provider.EmptyConverterProvider)\n" +
+                "      currencyExchangeRaterProvider\n" +
+                "        EmptyCurrencyExchangeRaterProvider (walkingkooka.currency.provider.EmptyCurrencyExchangeRaterProvider)\n" +
+                "      spreadsheetExporterProvider\n" +
+                "        EmptySpreadsheetExporterProvider (walkingkooka.spreadsheet.export.provider.EmptySpreadsheetExporterProvider)\n" +
+                "      expressionFunctionProvider\n" +
+                "        EmptyExpressionFunctionProvider (walkingkooka.tree.expression.function.provider.EmptyExpressionFunctionProvider)\n" +
+                "      spreadsheetFormatterProvider\n" +
+                "        EmptySpreadsheetFormatterProvider (walkingkooka.spreadsheet.format.provider.EmptySpreadsheetFormatterProvider)\n" +
+                "      formHandlerProvider\n" +
+                "        EmptyFormHandlerProvider (walkingkooka.validation.form.provider.EmptyFormHandlerProvider)\n" +
+                "      spreadsheetImporterProvider\n" +
+                "        EmptySpreadsheetImporterProvider (walkingkooka.spreadsheet.importer.provider.EmptySpreadsheetImporterProvider)\n" +
+                "      spreadsheetParserProvider\n" +
+                "        EmptySpreadsheetParserProvider (walkingkooka.spreadsheet.parser.provider.EmptySpreadsheetParserProvider)\n" +
+                "      validatorProvider\n" +
+                "        EmptyValidatorProvider (walkingkooka.validation.provider.EmptyValidatorProvider)\n" +
+                "  providerContext\n" +
+                "    PROVIDER_CONTEXT (walkingkooka.spreadsheet.SpreadsheetContextSharedTestCase$4)\n"
         );
     }
 
