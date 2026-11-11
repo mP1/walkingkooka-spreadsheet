@@ -323,11 +323,31 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetParserSelectorWithDateTwoPatterns() {
+        this.spreadsheetParserAndCheck(
+            "date dd/mm/yy;yy/mm/dd",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("dd/mm/yy;yy/mm/dd")
+                .parser()
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserSelectorWithDateTime() {
         this.spreadsheetParserAndCheck(
             "date-time dd/mm/yyyy hh:mm:ss",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithDateTimeTwoPatterns() {
+        this.spreadsheetParserAndCheck(
+            "date-time dd/mm/yyyy;dd/mm/yyyy hh:mm:ss",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy;dd/mm/yyyy hh:mm:ss")
                 .parser()
         );
     }
@@ -405,6 +425,16 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
             "time hh:mm:ss.SSS AM/PM",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS AM/PM")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithTimeTwoPatterns() {
+        this.spreadsheetParserAndCheck(
+            "time hh:mm:ss.SSS AM/PM;hh:mm",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS AM/PM;hh:mm")
                 .parser()
         );
     }
