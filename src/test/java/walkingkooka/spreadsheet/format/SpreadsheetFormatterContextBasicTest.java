@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.TreeConverterContext;
@@ -202,7 +203,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     );
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-        HAS_USER_DIRECTORIES,
         Optional.of(SPREADSHEET_METADATA),
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.collection(
@@ -214,7 +214,6 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 )
             )
         ),
-        MEDIA_TYPE_DETECTOR,
         BinaryNumberConverterFunctions.multiply(), // multiplier
         LABEL_NAME_RESOLVER,
         new SpreadsheetMetadataLoader() {
@@ -230,27 +229,32 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             }
         },
         COLOR_CONTEXT,
-        JsonNodeConverterContexts.basic(
-            TreeConverterContexts.basic(
-                Converters.fake()
-                    .setToString("CONVERTER")
-                    .cast(TreeConverterContext.class),
-                EXPRESSION_NUMBER_KIND,
-                ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
-                ConverterContexts.basic(
-                    false, // canNumbersHaveGroupSeparator
-                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                    ',', // valueSeparator
-                    Converters.fake(),
-                    BinaryNumberConverterFunctions.fake(), // multiplier
-                    BINARY_TEXT_CONTEXT,
-                    CURRENCY_LOCALE_CONTEXT,
-                    DATE_TIME_CONTEXT,
-                    DECIMAL_NUMBER_CONTEXT
-                )
-            ),
-            ENVIRONMENT_CONTEXT,
-            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+        StorageConverterContexts.basic(
+            Converters.fake(),
+            HAS_USER_DIRECTORIES,
+            MEDIA_TYPE_DETECTOR,
+            JsonNodeConverterContexts.basic(
+                TreeConverterContexts.basic(
+                    Converters.fake()
+                        .setToString("CONVERTER")
+                        .cast(TreeConverterContext.class),
+                    EXPRESSION_NUMBER_KIND,
+                    ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
+                    ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        ',', // valueSeparator
+                        Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
+                        BINARY_TEXT_CONTEXT,
+                        CURRENCY_LOCALE_CONTEXT,
+                        DATE_TIME_CONTEXT,
+                        DECIMAL_NUMBER_CONTEXT
+                    )
+                ),
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
         ),
         LOCALE_CONTEXT,
         LOGGING_CONTEXT
@@ -542,11 +546,11 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "cellCharacterWidth=1 hasSpreadsheetCell=HAS_SPREADSHEET_CELL formatter=SpreadsheetFormatterContextBasicTest.formatter() spreadsheetConverterContext=hasUserDirectories=HAS_USER_DIRECTORIES spreadsheetMetadata={\n" +
+            "cellCharacterWidth=1 hasSpreadsheetCell=HAS_SPREADSHEET_CELL formatter=SpreadsheetFormatterContextBasicTest.formatter() spreadsheetConverterContext=spreadsheetMetadata={\n" +
                 "  \"spreadsheetId\": \"123\",\n" +
                 "  \"color2\": \"#123456\",\n" +
                 "  \"colorBingo\": 2\n" +
-                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number mediaTypeDetector=application/octet-stream multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver colorContext=color1: black\n" +
+                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver colorContext=color1: black\n" +
                 "color2: white\n" +
                 "color3: red\n" +
                 "color4: lime\n" +
@@ -572,7 +576,13 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 "color24: #ccf\n" +
                 "color25: navy\n" +
                 "color26: magenta\n" +
-                "color27:"
+                "color27: yellow\n" +
+                "color28: cyan\n" +
+                "color29: purple\n" +
+                "color30: maroon\n" +
+                "color31: teal\n" +
+                "color32: blue\n" +
+                "c"
         );
     }
 

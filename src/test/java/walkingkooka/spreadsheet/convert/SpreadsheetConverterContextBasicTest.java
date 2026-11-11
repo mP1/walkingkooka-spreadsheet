@@ -39,11 +39,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.storage.convert.StorageConverterContext;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.TreeConverterContext;
 import walkingkooka.tree.expression.convert.TreeConverterContexts;
-import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
 import java.math.MathContext;
@@ -72,7 +73,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
-    private final static JsonNodeConverterContext JSON_NODE_CONVERTER_CONTEXT = JsonNodeConverterContexts.fake();
+    private final static StorageConverterContext STORAGE_CONVERTER_CONTEXT = StorageConverterContexts.fake();
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -95,43 +96,20 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     };
 
     // with.............................................................................................................
-
-    @Test
-    public void testWithNullHasUserDirectoriesFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetConverterContextBasic.with(
-                null,
-                SpreadsheetConverterContexts.NO_METADATA,
-                VALIDATION_REFERENCE,
-                CONVERTER,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                LABEL_RESOLVER,
-                SPREADSHEET_METADATA_LOADER,
-                COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT,
-                LOGGING_CONTEXT
-            )
-        );
-    }
-
+    
     @Test
     public void testWithNullSpreadsheetMetadataFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 null,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT,
                 LOGGING_CONTEXT
             )
@@ -143,37 +121,14 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
-                null,
-                MEDIA_TYPE_DETECTOR,
-                MULTIPLIER,
-                LABEL_RESOLVER,
-                SPREADSHEET_METADATA_LOADER,
-                COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
-                LOCALE_CONTEXT,
-                LOGGING_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullMediaTypeDetectorFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
-                SpreadsheetConverterContexts.NO_METADATA,
-                VALIDATION_REFERENCE,
-                CONVERTER,
                 null,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT,
                 LOGGING_CONTEXT
             )
@@ -185,16 +140,14 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 null,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT,
                 LOGGING_CONTEXT
             )
@@ -206,16 +159,14 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT,
                 LOGGING_CONTEXT
             )
@@ -227,16 +178,14 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 null,
                 COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT,
                 LOGGING_CONTEXT
             )
@@ -248,16 +197,14 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 null, // ColorContext
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT,
                 LOGGING_CONTEXT
             )
@@ -265,15 +212,13 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     }
 
     @Test
-    public void testWithNullJsonNodeConverterContextFails() {
+    public void testWithNullStorageConverterContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
@@ -290,16 +235,14 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 null,
                 LOGGING_CONTEXT
             )
@@ -311,16 +254,14 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetConverterContextBasic.with(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_RESOLVER,
                 SPREADSHEET_METADATA_LOADER,
                 COLOR_CONTEXT,
-                JSON_NODE_CONVERTER_CONTEXT,
+                STORAGE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT,
                 null
             )
@@ -412,35 +353,38 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     @Override
     public SpreadsheetConverterContextBasic createContext() {
         return SpreadsheetConverterContextBasic.with(
-            HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             VALIDATION_REFERENCE,
             CONVERTER,
-            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             LABEL_RESOLVER,
             SPREADSHEET_METADATA_LOADER,
             COLOR_CONTEXT,
-            JsonNodeConverterContexts.basic(
-                TreeConverterContexts.basic(
-                    Converters.<TreeConverterContext>fake()
-                        .setToString("CONVERTER"),
-                    EXPRESSION_NUMBER_KIND,
-                    Cast.to(MULTIPLIER),
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        ',', // valueSeparator
-                        Converters.fake(),
-                        BinaryNumberConverterFunctions.fake(), // multiplier
-                        BINARY_TEXT_CONTEXT,
-                        CURRENCY_LOCALE_CONTEXT,
-                        DATE_TIME_CONTEXT,
-                        DECIMAL_NUMBER_CONTEXT
-                    )
-                ),
-                ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            StorageConverterContexts.basic(
+                Cast.to(CONVERTER),
+                HAS_USER_DIRECTORIES,
+                MEDIA_TYPE_DETECTOR,
+                JsonNodeConverterContexts.basic(
+                    TreeConverterContexts.basic(
+                        Converters.<TreeConverterContext>fake()
+                            .setToString("CONVERTER"),
+                        EXPRESSION_NUMBER_KIND,
+                        Cast.to(MULTIPLIER),
+                        ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
+                            Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
+                            BINARY_TEXT_CONTEXT,
+                            CURRENCY_LOCALE_CONTEXT,
+                            DATE_TIME_CONTEXT,
+                            DECIMAL_NUMBER_CONTEXT
+                        )
+                    ),
+                    ENVIRONMENT_CONTEXT,
+                    JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+                )
             ),
             LOCALE_CONTEXT,
             LOGGING_CONTEXT
@@ -470,7 +414,7 @@ public final class SpreadsheetConverterContextBasicTest implements SpreadsheetCo
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "hasUserDirectories=HAS_USER_DIRECTORIES converter=CurrencyValue to Number | Number to Number mediaTypeDetector=application/octet-stream multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction spreadsheetLabelNameResolver=SpreadsheetLabelNameResolverEmpty jsonNodeConverterContext=converter=CONVERTER multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction expressionNumberKind=BIG_DECIMAL context=binaryTextContext=charset=\"UTF-8\" indentation=\"  \" lineEnding=\"\\n\" dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\" locale"
+            "converter=CurrencyValue to Number | Number to Number multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction spreadsheetLabelNameResolver=SpreadsheetLabelNameResolverEmpty storageConverterContext=converter: CurrencyValue to Number | Number to Number, hasUserDirectories: HAS_USER_DIRECTORIES, mediaTypeDetector: application/octet-stream, context: converter=CONVERTER multiplier=walkingkooka.tree.expression.convert.BasicMultiplyBinaryNumberConverterFunction expressionNumberKind=BIG_DECIMAL context=binaryTextContext=charset=\"UTF-8\" indentation=\"  \" lineEnding=\"\\n\" dateTimeContext=symbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbrevia"
         );
     }
 

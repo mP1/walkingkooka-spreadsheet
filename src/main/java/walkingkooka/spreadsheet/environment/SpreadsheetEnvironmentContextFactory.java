@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.HasSpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -337,36 +338,39 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
-                spreadsheetEnvironmentContext, // HasUserDirectories
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 converter,
-                this.mediaTypeDetector,
                 this.multiplier,
                 SpreadsheetLabelNameResolvers.empty(),
                 this.spreadsheetMetadataLoader,
                 SpreadsheetColorContexts.environmentContext(spreadsheetEnvironmentContext),
-                JsonNodeConverterContexts.basic(
-                    TreeConverterContexts.basic(
-                        Converters.fake(),
-                        expressionNumberKind,
-                        BinaryNumberConverterFunctions.fake(), // multiplier
-                        ConverterContexts.basic(
-                            false, // canNumbersHaveGroupSeparator
-                            dateOffset,
-                            valueSeparator, // valueSeparator
+                StorageConverterContexts.basic(
+                    Converters.fake(),
+                    spreadsheetEnvironmentContext, // HasUserDirectories
+                    this.mediaTypeDetector,
+                    JsonNodeConverterContexts.basic(
+                        TreeConverterContexts.basic(
                             Converters.fake(),
+                            expressionNumberKind,
                             BinaryNumberConverterFunctions.fake(), // multiplier
-                            spreadsheetEnvironmentContext, // BinaryTextContext
-                            currencyLocaleContext,
-                            dateTimeContext,
-                            decimalNumberContext
+                            ConverterContexts.basic(
+                                false, // canNumbersHaveGroupSeparator
+                                dateOffset,
+                                valueSeparator, // valueSeparator
+                                Converters.fake(),
+                                BinaryNumberConverterFunctions.fake(), // multiplier
+                                spreadsheetEnvironmentContext, // BinaryTextContext
+                                currencyLocaleContext,
+                                dateTimeContext,
+                                decimalNumberContext
+                            )
+                        ),
+                        spreadsheetEnvironmentContext,
+                        JsonNodeMarshallUnmarshallContexts.basic(
+                            jsonNodeMarshallContext,
+                            jsonNodeUnmarshallContext
                         )
-                    ),
-                    spreadsheetEnvironmentContext,
-                    JsonNodeMarshallUnmarshallContexts.basic(
-                        jsonNodeMarshallContext,
-                        jsonNodeUnmarshallContext
                     )
                 ),
                 currencyLocaleContext,

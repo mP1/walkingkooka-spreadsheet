@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.tree.expression.convert.TreeConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
@@ -60,11 +61,9 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
     );
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-        HasUserDirectorieses.fake(),
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         SpreadsheetConverters.system(),
-        MediaTypeDetectors.binary(),
         BinaryNumberConverterFunctions.multiply(), // multiplier
         SpreadsheetLabelNameResolvers.empty(),
         new SpreadsheetMetadataLoader() {
@@ -80,25 +79,30 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
             }
         },
         ColorContexts.fake(),
-        JsonNodeConverterContexts.basic(
-            TreeConverterContexts.basic(
-                Converters.fake(),
-                EXPRESSION_NUMBER_KIND,
-                BinaryNumberConverterFunctions.multiply(), // multiplier
-                ConverterContexts.basic(
-                    false, // canNumbersHaveGroupSeparator
-                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                    ',', // valueSeparator
+        StorageConverterContexts.basic(
+            Converters.fake(),
+            HasUserDirectorieses.fake(),
+            MediaTypeDetectors.binary(),
+            JsonNodeConverterContexts.basic(
+                TreeConverterContexts.basic(
                     Converters.fake(),
-                    BinaryNumberConverterFunctions.fake(), // multiplier
-                    BINARY_TEXT_CONTEXT,
-                    CURRENCY_LOCALE_CONTEXT,
-                    DATE_TIME_CONTEXT,
-                    DECIMAL_NUMBER_CONTEXT
-                )
-            ),
-            ENVIRONMENT_CONTEXT,
-            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+                    EXPRESSION_NUMBER_KIND,
+                    BinaryNumberConverterFunctions.multiply(), // multiplier
+                    ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        ',', // valueSeparator
+                        Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
+                        BINARY_TEXT_CONTEXT,
+                        CURRENCY_LOCALE_CONTEXT,
+                        DATE_TIME_CONTEXT,
+                        DECIMAL_NUMBER_CONTEXT
+                    )
+                ),
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
         ),
         LOCALE_CONTEXT,
         LOGGING_CONTEXT

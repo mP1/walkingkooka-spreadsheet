@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
@@ -31,8 +30,6 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.logging.LoggingContext;
 import walkingkooka.logging.LoggingContextDelegator;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.net.header.MediaType;
-import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
@@ -40,10 +37,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
-import walkingkooka.storage.HasUserDirectories;
-import walkingkooka.storage.HasUserDirectoriesDelegator;
-import walkingkooka.tree.json.convert.JsonNodeConverterContext;
-import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
+import walkingkooka.storage.convert.StorageConverterContext;
+import walkingkooka.storage.convert.StorageConverterContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
@@ -54,93 +49,80 @@ import java.util.Optional;
 final class SpreadsheetConverterContextBasic implements SpreadsheetConverterContext,
     ColorContextDelegator,
     CanParseEnvironmentValueNameDelegator,
-    HasUserDirectoriesDelegator,
-    JsonNodeConverterContextDelegator,
+    StorageConverterContextDelegator,
     LoggingContextDelegator,
     UsesToStringBuilder {
 
-    static SpreadsheetConverterContextBasic with(final HasUserDirectories hasUserDirectories,
-                                                 final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+    static SpreadsheetConverterContextBasic with(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetValidationReference > validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
-                                                 final MediaTypeDetector mediaTypeDetector,
                                                  final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                  final ColorContext colorContext,
-                                                 final JsonNodeConverterContext jsonNodeConverterContext,
+                                                 final StorageConverterContext storageConverterContext,
                                                  final LocaleContext localeContext,
                                                  final LoggingContext loggingContext) {
-        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
-        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(spreadsheetMetadataLoader, "spreadsheetMetadataLoader");
         Objects.requireNonNull(colorContext, "colorContext");
-        Objects.requireNonNull(jsonNodeConverterContext, "jsonNodeConverterContext");
+        Objects.requireNonNull(storageConverterContext, "storageConverterContext");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(loggingContext, "loggingContext");
 
         return new SpreadsheetConverterContextBasic(
-            hasUserDirectories,
             spreadsheetMetadata,
             validationReference,
             converter,
-            mediaTypeDetector,
             multiplier,
             spreadsheetLabelNameResolver,
             spreadsheetMetadataLoader,
             colorContext,
-            jsonNodeConverterContext,
+            storageConverterContext,
             localeContext,
             loggingContext
         );
     }
 
-    private SpreadsheetConverterContextBasic(final HasUserDirectories hasUserDirectories,
-                                             final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+    private SpreadsheetConverterContextBasic(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetValidationReference > validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
-                                             final MediaTypeDetector mediaTypeDetector,
                                              final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                              final ColorContext colorContext,
-                                             final JsonNodeConverterContext jsonNodeConverterContext,
+                                             final StorageConverterContext storageConverterContext,
                                              final LocaleContext localeContext,
                                              final LoggingContext loggingContext) {
         super();
 
-        this.hasUserDirectories = hasUserDirectories;
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
-        this.mediaTypeDetector = mediaTypeDetector;
         this.multiplier = multiplier;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.spreadsheetMetadataLoader = spreadsheetMetadataLoader;
 
         this.colorContext = colorContext;
-        this.jsonNodeConverterContext = jsonNodeConverterContext;
+        this.storageConverterContext = storageConverterContext;
         this.localeContext = localeContext;
         this.loggingContext = loggingContext;
     }
 
     @Override
     public SpreadsheetConverterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        final JsonNodeConverterContext before = this.jsonNodeConverterContext;
-        final JsonNodeConverterContext after = before.setObjectPostProcessor(processor);
+        final StorageConverterContext before = this.storageConverterContext;
+        final StorageConverterContext after = before.setObjectPostProcessor(processor);
         return before.equals(after) ?
             this :
             new SpreadsheetConverterContextBasic(
-                this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
-                this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetLabelNameResolver,
                 this.spreadsheetMetadataLoader,
@@ -153,16 +135,14 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
 
     @Override
     public SpreadsheetConverterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final JsonNodeConverterContext before = this.jsonNodeConverterContext;
-        final JsonNodeConverterContext after = before.setPreProcessor(processor);
+        final StorageConverterContext before = this.storageConverterContext;
+        final StorageConverterContext after = before.setPreProcessor(processor);
         return before.equals(after) ?
             this :
             new SpreadsheetConverterContextBasic(
-                this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
-                this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetLabelNameResolver,
                 this.spreadsheetMetadataLoader,
@@ -257,19 +237,6 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
 
     private final Converter<SpreadsheetConverterContext> converter;
 
-    // MediaTypeDetector................................................................................................
-
-    @Override
-    public MediaType detect(final String filename,
-                            final Binary content) {
-        return this.mediaTypeDetector.detect(
-            filename,
-            content
-        );
-    }
-
-    private final MediaTypeDetector mediaTypeDetector;
-
     // SpreadsheetLabelNameResolver.....................................................................................
 
     @Override
@@ -279,10 +246,10 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
 
     private final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
 
-    // JsonNodeConverterContext.........................................................................................
+    // StorageConverterContext.........................................................................................
 
     /**
-     * If this was delegated to the wrapped {@link JsonNodeConverterContext}, this will fail with a {@link ClassCastException}
+     * If this was delegated to the wrapped {@link StorageConverterContext}, this will fail with a {@link ClassCastException}
      * when the values are converted by a {@link SpreadsheetConverter}.
      */
     @Override
@@ -300,11 +267,11 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
     private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
     @Override
-    public JsonNodeConverterContext jsonNodeConverterContext() {
-        return this.jsonNodeConverterContext;
+    public StorageConverterContext storageConverterContext() {
+        return this.storageConverterContext;
     }
 
-    private final JsonNodeConverterContext jsonNodeConverterContext;
+    private final StorageConverterContext storageConverterContext;
 
     // LocaleContext....................................................................................................
 
@@ -318,22 +285,13 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
         return this.localeContext.decimalNumberSymbolsForLocale(locale);
     }
 
-    // without this override JsonNodeConverterContextDelegator#locale
+    // without this override StorageConverterContextDelegator#locale
     @Override
     public Locale locale() {
         return this.localeContext.locale();
     }
 
     private final LocaleContext localeContext;
-
-    // HasUserDirectories...............................................................................................
-
-    @Override
-    public HasUserDirectories hasUserDirectories() {
-        return this.hasUserDirectories;
-    }
-
-    private final HasUserDirectories hasUserDirectories;
 
     // toString.........................................................................................................
 
@@ -346,24 +304,20 @@ final class SpreadsheetConverterContextBasic implements SpreadsheetConverterCont
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.label("hasUserDirectories")
-            .value(this.hasUserDirectories)
-            .label("spreadsheetMetadata")
+        builder.label("spreadsheetMetadata")
             .value(this.spreadsheetMetadata)
             .label("validationReference")
             .value(this.validationReference)
             .label("converter")
             .value(this.converter)
-            .label("mediaTypeDetector")
-            .value(this.mediaTypeDetector)
             .label("multiplier")
             .value(this.multiplier)
             .label("spreadsheetLabelNameResolver")
             .value(this.spreadsheetLabelNameResolver)
             .label("colorContext")
             .value(this.colorContext)
-            .label("jsonNodeConverterContext")
-            .value(this.jsonNodeConverterContext)
+            .label("storageConverterContext")
+            .value(this.storageConverterContext)
             .label("localeContext")
             .value(this.localeContext)
             .label("loggingContext")
