@@ -204,12 +204,34 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetParserNameWithDateTwoPatterns() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.DATE,
+            Lists.of("dd/mm/yy;dd/mm/yyyy"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("dd/mm/yy;dd/mm/yyyy")
+                .parser()
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserNameWithDateTime() {
         this.spreadsheetParserAndCheck(
             SpreadsheetParserName.DATE_TIME,
             Lists.of("dd/mm/yyyy hh:mm:ss"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithDateTimeTwoPatterns() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.DATE_TIME,
+            Lists.of("dd/mm/yyyy hh:mm:ss;yyyy"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss;yyyy")
                 .parser()
         );
     }
@@ -269,6 +291,17 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetParserNameWithNumberTwoPatterns() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.NUMBER,
+            Lists.of("$0.00;$0"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseNumberParsePattern("$0.00;$0")
+                .parser()
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserNameWithShortDate() {
         this.spreadsheetParserAndCheck(
             SpreadsheetParserName.SHORT_DATE,
@@ -288,7 +321,6 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         );
     }
 
-
     @Test
     public void testSpreadsheetParserNameWithTime() {
         this.spreadsheetParserAndCheck(
@@ -296,6 +328,17 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
             Lists.of("hh:mm:ss"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithTimeTwoPatterns() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.TIME,
+            Lists.of("hh:mm:ss;hh:mm"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss;hh:mm")
                 .parser()
         );
     }
