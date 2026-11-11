@@ -18,11 +18,13 @@
 package walkingkooka.spreadsheet.parser.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 
-public final class EmptySpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<EmptySpreadsheetParserProvider> {
+public final class EmptySpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<EmptySpreadsheetParserProvider>,
+    ToStringTesting<EmptySpreadsheetParserProvider> {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -61,6 +63,18 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
     public EmptySpreadsheetParserProvider createSpreadsheetParserProvider() {
         return EmptySpreadsheetParserProvider.INSTANCE;
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createSpreadsheetParserProvider(),
+            "EmptySpreadsheetParserProvider"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<EmptySpreadsheetParserProvider> type() {
