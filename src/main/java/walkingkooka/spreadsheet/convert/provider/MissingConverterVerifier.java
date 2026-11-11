@@ -197,6 +197,12 @@ final class MissingConverterVerifier {
         0 // formatting patterns often dont include seconds.
     );
 
+    private final static LocalTime TIME_WITH_SECONDS = LocalTime.of(
+        12,
+        58,
+        59
+    );
+
     // time component must be zero for non decimal number types
     private final static LocalDateTime DATE_TIME = LocalDateTime.of(
         DATE,
@@ -1076,11 +1082,19 @@ final class MissingConverterVerifier {
             );
 
             // text -> time
-            verifier.addIfConversionFailTest(
-                "12:58:59", // "12:58" fails
+            verifier.addIfConversionFail(
+                "12:58",
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME,
-                IS_TIME
+                TIME
+            );
+
+            // text -> time
+            verifier.addIfConversionFail(
+                "12:58:59",
+                LocalTime.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME,
+                TIME_WITH_SECONDS
             );
 
             // time ->
