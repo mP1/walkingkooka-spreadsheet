@@ -30,8 +30,6 @@ import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.reflect.FieldAttributes;
-import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
@@ -64,7 +62,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     CurrencyLocaleContextTesting,
     HasSpreadsheetPatternKindTesting,
     JsonNodeUnmarshallContextTesting,
-    PublicClassTesting<SpreadsheetMetadataPropertyName<?>>,
     ThrowableTesting {
 
     // with.............................................................................................................
@@ -771,10 +768,5 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Override
     public Class<SpreadsheetMetadataPropertyName<?>> type() {
         return Cast.to(SpreadsheetMetadataPropertyName.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }
