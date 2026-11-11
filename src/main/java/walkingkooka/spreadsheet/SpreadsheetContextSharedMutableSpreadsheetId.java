@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Objects;
 
@@ -208,5 +209,56 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
             .value(this.spreadsheetProvider)
             .label("providerContext")
             .value(this.providerContext);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    void printTreeProperties(final IndentingPrinter printer) {
+        this.printTreeProperty(
+            "mediaTypeDetector",
+            this.mediaTypeDetector,
+            printer
+        );
+        this.printTreeProperty(
+            "multiplier",
+            this.multiplier,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetEngine",
+            this.spreadsheetEngine,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetContextSupplier",
+            this.spreadsheetContextSupplier,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetMetadataContext",
+            this.spreadsheetMetadataContext,
+            printer
+        );
+        this.printTreeProperty(
+            "currencyLocaleContext",
+            this.currencyLocaleContext,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetEnvironmentContext",
+            this.spreadsheetEnvironmentContext,
+            printer
+        );
+        this.printTreeProperty(
+            "spreadsheetProvider",
+            this.spreadsheetProvider,
+            printer
+        );
+        this.printTreeProperty(
+            "providerContext",
+            this.providerContext,
+            printer
+        );
     }
 }

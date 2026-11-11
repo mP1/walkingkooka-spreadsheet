@@ -51,10 +51,10 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.Storages;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -129,7 +129,13 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         return storageEnvironmentContext;
     }
 
-    final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
+    final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage() {
+
+        @Override
+        public String toString() {
+            return "STORAGE";
+        }
+    };
 
     final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         Predicates.always(), // all values are readonly
@@ -156,6 +162,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     );
 
     final static ProviderContext PROVIDER_CONTEXT = new FakeProviderContext() {
+
         @Override
         public String toString() {
             return "PROVIDER_CONTEXT";
