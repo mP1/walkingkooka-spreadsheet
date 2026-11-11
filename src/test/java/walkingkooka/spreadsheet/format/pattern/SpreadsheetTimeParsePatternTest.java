@@ -568,6 +568,30 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
         );
     }
 
+    @Test
+    public void testParseTimeWithTwoPatterns() {
+        this.checkEquals(
+            LocalTime.of(12, 58, 59),
+            this.createPattern("hh;hh/mm/ss AM/PM")
+                .parse(
+                    "12/58/59 AM",
+                    this.parserContext()
+                )
+        );
+    }
+
+    @Test
+    public void testParseTimeWithTwoPatterns2() {
+        this.checkEquals(
+            LocalTime.of(12, 58, 59),
+            this.createPattern("hh/mm/ss AM/PM;hh")
+                .parse(
+                    "12/58/59 AM",
+                    this.parserContext()
+                )
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
