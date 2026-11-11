@@ -77,4 +77,11 @@ final class EmptySpreadsheetParserProvider implements SpreadsheetParserProvider 
     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
         return SpreadsheetParserInfoSet.EMPTY;
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
