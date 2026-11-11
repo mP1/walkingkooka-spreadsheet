@@ -335,7 +335,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     }
 
     @Test
-    public void testWithNullConverterContextFails() {
+    public void testWithNullSpreadsheetConverterContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterContextBasic.with(
