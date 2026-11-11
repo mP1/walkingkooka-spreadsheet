@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -88,7 +89,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     PackagePrivateClassTesting<MissingConverterVerifier>,
     SpreadsheetEnvironmentContextTesting {
 
-    private final static SpreadsheetMetadata SPREADSHEET_METADATA_TESTING = SPREADSHEET_METADATA.set(
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SPREADSHEET_ID
     );
@@ -148,7 +149,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     @Test
     public void testVerifyAndCheckWithSpreadsheetMetadataTestingFormulaConverterDifferentDateOffset() {
         this.verifyAndCheck(
-            SPREADSHEET_METADATA_TESTING.set(
+            SPREADSHEET_METADATA.set(
                 SpreadsheetMetadataPropertyName.DATE_OFFSET,
                 DIFFERENT_DATE_OFFSET
             ),
@@ -236,7 +237,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     private void spreadsheetMetadataTestingVerifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                                           final MissingConverter... expected) {
         this.verifyAndCheck(
-            SPREADSHEET_METADATA_TESTING,
+            SPREADSHEET_METADATA,
             propertyName,
             expected
         );
@@ -260,7 +261,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             converter,
             propertyName,
             new TestSpreadsheetConverterContext(
-                SPREADSHEET_METADATA_TESTING.set(
+                SPREADSHEET_METADATA.set(
                     propertyName,
                     ConverterSelector.parse("never")
                 ),
@@ -1050,7 +1051,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             converter,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             new TestSpreadsheetConverterContext(
-                SPREADSHEET_METADATA_TESTING,
+                SPREADSHEET_METADATA,
                 converter,
                 loggingLevel,
                 printer
@@ -1358,7 +1359,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             converter,
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
             new MissingConverterVerifierTest.TestSpreadsheetConverterContext(
-                SPREADSHEET_METADATA_TESTING,
+                SPREADSHEET_METADATA,
                 converter
             )
         );
