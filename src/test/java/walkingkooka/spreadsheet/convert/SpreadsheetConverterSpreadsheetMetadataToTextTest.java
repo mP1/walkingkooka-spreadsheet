@@ -67,7 +67,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"dateOffset\": \"-25569\",\n" +
                 "  \"dateParser\": \"date yyyy/mm/dd\",\n" +
                 "  \"dateTimeFormatter\": \"date-time yyyy/mm/dd hh:mm\",\n" +
-                "  \"dateTimeParser\": \"date-time yyyy/mm/dd hh:mm\",\n" +
+                "  \"dateTimeParser\": \"date-time yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\",\n" +
                 "  \"dateTimeSymbols\": {\n" +
                 "    \"ampms\": [\n" +
                 "      \"am\",\n" +
@@ -174,7 +174,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  },\n" +
                 "  \"textFormatter\": \"text @\",\n" +
                 "  \"timeFormatter\": \"time hh:mm:ss\",\n" +
-                "  \"timeParser\": \"time hh:mm:ss\",\n" +
+                "  \"timeParser\": \"time hh:mm:ss;hh:mm\",\n" +
                 "  \"twoDigitYear\": 50,\n" +
                 "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\",\n" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\n" +
@@ -212,7 +212,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"dateOffset\": \"-25569\",\r\n" +
                 "  \"dateParser\": \"date yyyy/mm/dd\",\r\n" +
                 "  \"dateTimeFormatter\": \"date-time yyyy/mm/dd hh:mm\",\r\n" +
-                "  \"dateTimeParser\": \"date-time yyyy/mm/dd hh:mm\",\r\n" +
+                "  \"dateTimeParser\": \"date-time yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\",\r\n" +
                 "  \"dateTimeSymbols\": {\r\n" +
                 "    \"ampms\": [\r\n" +
                 "      \"am\",\r\n" +
@@ -319,7 +319,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  },\r\n" +
                 "  \"textFormatter\": \"text @\",\r\n" +
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r\n" +
-                "  \"timeParser\": \"time hh:mm:ss\",\r\n" +
+                "  \"timeParser\": \"time hh:mm:ss;hh:mm\",\r\n" +
                 "  \"twoDigitYear\": 50,\r\n" +
                 "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\",\r\n" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r\n" +
@@ -357,7 +357,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"dateOffset\": \"-25569\",\r" +
                 "  \"dateParser\": \"date yyyy/mm/dd\",\r" +
                 "  \"dateTimeFormatter\": \"date-time yyyy/mm/dd hh:mm\",\r" +
-                "  \"dateTimeParser\": \"date-time yyyy/mm/dd hh:mm\",\r" +
+                "  \"dateTimeParser\": \"date-time yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\",\r" +
                 "  \"dateTimeSymbols\": {\r" +
                 "    \"ampms\": [\r" +
                 "      \"am\",\r" +
@@ -464,7 +464,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  },\r" +
                 "  \"textFormatter\": \"text @\",\r" +
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r" +
-                "  \"timeParser\": \"time hh:mm:ss\",\r" +
+                "  \"timeParser\": \"time hh:mm:ss;hh:mm\",\r" +
                 "  \"twoDigitYear\": 50,\r" +
                 "  \"validationConverter\": \"collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\",\r" +
                 "  \"validationCurrencyExchangeRater\": \"storage-properties(\\\"/samples/CurrencyExchangeRates.properties\\\")\",\r" +

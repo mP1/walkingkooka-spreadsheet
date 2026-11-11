@@ -432,74 +432,170 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
                 "    AndEmptyTextCursorParser\n" +
-                "      TransformingParser\n" +
-                "        parser\n" +
-                "          SequenceParser\n" +
-                "            digit{4,4}, \"/\", digit{1,2}, \"/\", digit{1,2}, \" \", digit{1,2}, \":\", digit{1,2}\n" +
-                "              0\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{4,4} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              1\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    StringParser\n" +
-                "                      \"/\"\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              2\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              3\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    StringParser\n" +
-                "                      \"/\"\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              4\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              5\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    StringParser\n" +
-                "                      \" \"\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              6\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              7\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    StringParser\n" +
-                "                      \":\"\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              8\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "        transformer\n" +
-                "          Lambda\n" +
+                "      AlternativesParser\n" +
+                "        yyyy/mm/dd hh:mm:ss | yyyy/mm/dd hh:mm\n" +
+                "          0\n" +
+                "            AndEmptyTextCursorParser\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  SequenceParser\n" +
+                "                    digit{4,4}, \"/\", digit{1,2}, \"/\", digit{1,2}, \" \", digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}\n" +
+                "                      0\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{4,4} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      1\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \"/\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      2\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      3\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \"/\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      4\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      5\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \" \"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      6\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      7\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \":\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      8\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      9\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \":\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      10\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
+                "          1\n" +
+                "            AndEmptyTextCursorParser\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  SequenceParser\n" +
+                "                    digit{4,4}, \"/\", digit{1,2}, \"/\", digit{1,2}, \" \", digit{1,2}, \":\", digit{1,2}\n" +
+                "                      0\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{4,4} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      1\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \"/\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      2\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      3\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \"/\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      4\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      5\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \" \"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      6\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      7\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \":\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      8\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
                 "  valueType\n" +
                 "    date-time/DateTime\n" +
                 "  tokens\n" +
-                "    Sequence \"yyyy/mm/dd hh:mm\"\n" +
+                "    Sequence \"yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\"\n" +
+                "      DateTimeSpreadsheetFormat \"yyyy/mm/dd hh:mm:ss\"\n" +
+                "        YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        MonthSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        DaySpreadsheetFormat \"dd\" \"dd\"\n" +
+                "        TextLiteralSpreadsheetFormat \" \" \" \"\n" +
+                "        HourSpreadsheetFormat \"hh\" \"hh\"\n" +
+                "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "        MinuteSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "        SecondSpreadsheetFormat \"ss\" \"ss\"\n" +
+                "      SeparatorSymbolSpreadsheetFormat \";\" \";\"\n" +
                 "      DateTimeSpreadsheetFormat \"yyyy/mm/dd hh:mm\"\n" +
                 "        YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n" +
                 "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
@@ -533,54 +629,90 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
             "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
                 "  parser\n" +
                 "    AndEmptyTextCursorParser\n" +
-                "      TransformingParser\n" +
-                "        parser\n" +
-                "          SequenceParser\n" +
-                "            digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}\n" +
-                "              0\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              1\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    StringParser\n" +
-                "                      \":\"\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              2\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              3\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    StringParser\n" +
-                "                      \":\"\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "              4\n" +
-                "                TransformingParser\n" +
-                "                  parser\n" +
-                "                    digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
-                "                  transformer\n" +
-                "                    Lambda\n" +
-                "        transformer\n" +
-                "          Lambda\n" +
+                "      AlternativesParser\n" +
+                "        hh:mm:ss | hh:mm\n" +
+                "          0\n" +
+                "            AndEmptyTextCursorParser\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  SequenceParser\n" +
+                "                    digit{1,2}, \":\", digit{1,2}, \":\", digit{1,2}\n" +
+                "                      0\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      1\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \":\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      2\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      3\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \":\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      4\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
+                "          1\n" +
+                "            AndEmptyTextCursorParser\n" +
+                "              TransformingParser\n" +
+                "                parser\n" +
+                "                  SequenceParser\n" +
+                "                    digit{1,2}, \":\", digit{1,2}\n" +
+                "                      0\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      1\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            StringParser\n" +
+                "                              \":\"\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                      2\n" +
+                "                        TransformingParser\n" +
+                "                          parser\n" +
+                "                            digit{1,2} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "                          transformer\n" +
+                "                            Lambda\n" +
+                "                transformer\n" +
+                "                  Lambda\n" +
                 "  valueType\n" +
                 "    date-time/Time\n" +
                 "  tokens\n" +
-                "    Sequence \"hh:mm:ss\"\n" +
+                "    Sequence \"hh:mm:ss;hh:mm\"\n" +
                 "      TimeSpreadsheetFormat \"hh:mm:ss\"\n" +
                 "        HourSpreadsheetFormat \"hh\" \"hh\"\n" +
                 "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
                 "        MinuteSpreadsheetFormat \"mm\" \"mm\"\n" +
                 "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
-                "        SecondSpreadsheetFormat \"ss\" \"ss\"\n"
+                "        SecondSpreadsheetFormat \"ss\" \"ss\"\n" +
+                "      SeparatorSymbolSpreadsheetFormat \";\" \";\"\n" +
+                "      TimeSpreadsheetFormat \"hh:mm\"\n" +
+                "        HourSpreadsheetFormat \"hh\" \"hh\"\n" +
+                "        TextLiteralSpreadsheetFormat \":\" \":\"\n" +
+                "        MinuteSpreadsheetFormat \"mm\" \"mm\"\n"
         );
     }
 
@@ -2121,7 +2253,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      \"yyyy/mm/dd hh:mm\"\n" +
                 "  dateTimeParser: \n" +
                 "    date-time\n" +
-                "      \"yyyy/mm/dd hh:mm\"\n" +
+                "      \"yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\"\n" +
                 "  dateTimeSymbols: \n" +
                 "    DateTimeSymbols\n" +
                 "      ampms\n" +
@@ -2317,7 +2449,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      \"hh:mm:ss\"\n" +
                 "  timeParser: \n" +
                 "    time\n" +
-                "      \"hh:mm:ss\"\n" +
+                "      \"hh:mm:ss;hh:mm\"\n" +
                 "  twoDigitYear: 50\n" +
                 "  validationConverter: \n" +
                 "    collection\n" +
@@ -2601,7 +2733,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      \"yyyy/mm/dd hh:mm\"\n" +
                 "  dateTimeParser: \n" +
                 "    date-time\n" +
-                "      \"yyyy/mm/dd hh:mm\"\n" +
+                "      \"yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\"\n" +
                 "  dateTimeSymbols: \n" +
                 "    DateTimeSymbols\n" +
                 "      ampms\n" +
@@ -2797,7 +2929,7 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "      \"hh:mm:ss\"\n" +
                 "  timeParser: \n" +
                 "    time\n" +
-                "      \"hh:mm:ss\"\n" +
+                "      \"hh:mm:ss;hh:mm\"\n" +
                 "  twoDigitYear: 50\n" +
                 "  validationConverter: \n" +
                 "    collection\n" +

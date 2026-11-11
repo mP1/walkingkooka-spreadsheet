@@ -223,7 +223,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             DATE_OFFSET
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
-            SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
+            SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm").spreadsheetParserSelector()
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
             DATE_TIME_SYMBOLS
@@ -349,7 +349,7 @@ public interface HasSpreadsheetMetadataTesting extends BinaryTextContextTesting,
             SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector()
         ).set(
             SpreadsheetMetadataPropertyName.TIME_PARSER,
-            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector()
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss;hh:mm").spreadsheetParserSelector()
         ).set(
             SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
             50

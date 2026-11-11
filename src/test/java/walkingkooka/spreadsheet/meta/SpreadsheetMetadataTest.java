@@ -1708,7 +1708,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "dateOffset=-25569\n" +
                 "dateParser=date yyyy/mm/dd\n" +
                 "dateTimeFormatter=date-time yyyy/mm/dd hh:mm\n" +
-                "dateTimeParser=date-time yyyy/mm/dd hh:mm\n" +
+                "dateTimeParser=date-time yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\n" +
                 "dateTimeSymbols=\"am,pm\",\"January,February,March,April,May,June,July,August,September,October,November,December\",\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\",\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\",\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\n" +
                 "decimalNumberDigitCount=9\n" +
                 "decimalNumberSymbols=-,+,0,$,.,e,\",\",\\u221e,.,NaN,%,\\u2030\n" +
@@ -1750,7 +1750,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "style.width=100px\n" +
                 "textFormatter=text @\n" +
                 "timeFormatter=time hh:mm:ss\n" +
-                "timeParser=time hh:mm:ss\n" +
+                "timeParser=time hh:mm:ss;hh:mm\n" +
                 "twoDigitYear=50\n" +
                 "validationConverter=collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\n" +
                 "validationCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
@@ -1890,7 +1890,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "dateOffset=-25569\n" +
                 "dateParser=date yyyy/mm/dd\n" +
                 "dateTimeFormatter=date-time yyyy/mm/dd hh:mm\n" +
-                "dateTimeParser=date-time yyyy/mm/dd hh:mm\n" +
+                "dateTimeParser=date-time yyyy/mm/dd hh:mm:ss;yyyy/mm/dd hh:mm\n" +
                 "dateTimeSymbols=\"am,pm\",\"January,February,March,April,May,June,July,August,September,October,November,December\",\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\",\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\",\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\n" +
                 "decimalNumberDigitCount=9\n" +
                 "decimalNumberSymbols=-,+,0,$,.,e,\",\",\\u221e,.,NaN,%,\\u2030\n" +
@@ -1932,7 +1932,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
                 "style.width=100px\n" +
                 "textFormatter=text @\n" +
                 "timeFormatter=time hh:mm:ss\n" +
-                "timeParser=time hh:mm:ss\n" +
+                "timeParser=time hh:mm:ss;hh:mm\n" +
                 "twoDigitYear=50\n" +
                 "validationConverter=collection(null-to-number, simple, boolean, number, date-time, environment, value, expression, form-and-validation, locale, logging, plugins, properties, template, text, json, optional-to, collection-to, error-throwing)\n" +
                 "validationCurrencyExchangeRater=storage-properties(\"/samples/CurrencyExchangeRates.properties\")\n" +
