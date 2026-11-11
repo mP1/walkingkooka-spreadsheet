@@ -1737,6 +1737,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         )
                     );
                 }
+
+                @Override
+                public String toString() {
+                    return SpreadsheetMetadata.class.getSimpleName() + ".nonLocaleDefaults " + CurrencyCodeLanguageTagContext.class.getSimpleName();
+                }
             },
             MathContext.DECIMAL32
         ).unmarshall(
