@@ -202,7 +202,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         COLOR_NUMBER
     );
 
-    private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+    private final static SpreadsheetConverterContext SPREADSHEET_CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         Optional.of(SPREADSHEET_METADATA),
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.collection(
@@ -279,7 +279,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
+                SPREADSHEET_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -295,7 +295,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 -1,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
+                SPREADSHEET_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -311,7 +311,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 0,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
+                SPREADSHEET_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -327,7 +327,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 null,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
+                SPREADSHEET_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -359,7 +359,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
+                SPREADSHEET_CONVERTER_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
             )
@@ -375,7 +375,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
+                SPREADSHEET_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 null
             )
@@ -462,7 +462,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
             CELL_CHARACTER_WIDTH,
             FORMATTER,
             SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-            CONVERTER_CONTEXT,
+            SPREADSHEET_CONVERTER_CONTEXT,
             SPREADSHEET_FORMATTER_PROVIDER,
             PROVIDER_CONTEXT
         );
