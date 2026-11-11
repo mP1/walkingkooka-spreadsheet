@@ -114,6 +114,7 @@ import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -1150,36 +1151,39 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
-            spreadsheetEnvironmentContext, // HasUserDirectories,
             Optional.of(this),
             validationReference,
             converter,
-            mediaTypeDetector,
             multiplier,
             labelNameResolver,
             spreadsheetMetadataLoader,
             this, // ColorContext
-            JsonNodeConverterContexts.basic(
-                TreeConverterContexts.basic(
-                    Converters.fake(),
-                    expressionNumberKind,
-                    BinaryNumberConverterFunctions.fake(),
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        dateOffset,
-                        valueSeparator, // valueSeparator
+            StorageConverterContexts.basic(
+                Converters.fake(),
+                spreadsheetEnvironmentContext, // HasUserDirectories,
+                mediaTypeDetector,
+                JsonNodeConverterContexts.basic(
+                    TreeConverterContexts.basic(
                         Converters.fake(),
+                        expressionNumberKind,
                         BinaryNumberConverterFunctions.fake(),
-                        spreadsheetEnvironmentContext, // BinaryTextContext,
-                        currencyLocaleContext,
-                        dateTimeContext,
-                        decimalNumberContext
+                        ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
+                            dateOffset,
+                            valueSeparator, // valueSeparator
+                            Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(),
+                            spreadsheetEnvironmentContext, // BinaryTextContext,
+                            currencyLocaleContext,
+                            dateTimeContext,
+                            decimalNumberContext
+                        )
+                    ),
+                    spreadsheetEnvironmentContext, // EnvironmentContext
+                    JsonNodeMarshallUnmarshallContexts.basic(
+                        jsonNodeMarshallContext,
+                        jsonNodeUnmarshallContext
                     )
-                ),
-                spreadsheetEnvironmentContext, // EnvironmentContext
-                JsonNodeMarshallUnmarshallContexts.basic(
-                    jsonNodeMarshallContext,
-                    jsonNodeUnmarshallContext
                 )
             ),
             currencyLocaleContext, // LocaleContext

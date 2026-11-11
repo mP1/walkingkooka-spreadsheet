@@ -85,6 +85,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.Storages;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
@@ -1361,34 +1362,37 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             expected,
             converter,
             SpreadsheetConverterContexts.basic(
-                HasUserDirectorieses.fake(),
                 Optional.of(metadata),
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 converter,
-                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 LABEL_NAME_RESOLVER,
                 SpreadsheetMetadataTestCase.SPREADSHEET_METADATA_LOADER,
                 ColorContexts.fake(),
-                JsonNodeConverterContexts.basic(
-                    TreeConverterContexts.basic(
-                        Converters.fake(),
-                        metadata.expressionNumberKind(),
-                        ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
-                        ConverterContexts.basic(
-                            false, // canNumbersHaveGroupSeparator
-                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            ',', // valueSeparator
+                StorageConverterContexts.basic(
+                    Converters.fake(),
+                    HasUserDirectorieses.fake(),
+                    MEDIA_TYPE_DETECTOR,
+                    JsonNodeConverterContexts.basic(
+                        TreeConverterContexts.basic(
                             Converters.fake(),
-                            BinaryNumberConverterFunctions.fake(), // multiplier
-                            BINARY_TEXT_CONTEXT,
-                            CurrencyLocaleContexts.fake(),
-                            DATE_TIME_CONTEXT,
-                            DECIMAL_NUMBER_CONTEXT
-                        )
-                    ),
-                    ENVIRONMENT_CONTEXT,
-                    JsonNodeMarshallUnmarshallContexts.fake()
+                            metadata.expressionNumberKind(),
+                            ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
+                            ConverterContexts.basic(
+                                false, // canNumbersHaveGroupSeparator
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                ',', // valueSeparator
+                                Converters.fake(),
+                                BinaryNumberConverterFunctions.fake(), // multiplier
+                                BINARY_TEXT_CONTEXT,
+                                CurrencyLocaleContexts.fake(),
+                                DATE_TIME_CONTEXT,
+                                DECIMAL_NUMBER_CONTEXT
+                            )
+                        ),
+                        ENVIRONMENT_CONTEXT,
+                        JsonNodeMarshallUnmarshallContexts.fake()
+                    )
                 ),
                 LOCALE_CONTEXT,
                 LOGGING_CONTEXT

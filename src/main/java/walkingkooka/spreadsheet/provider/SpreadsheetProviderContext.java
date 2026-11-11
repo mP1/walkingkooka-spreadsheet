@@ -49,6 +49,8 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageWatcher;
+import walkingkooka.storage.convert.StorageConverterContext;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -247,48 +249,51 @@ final class SpreadsheetProviderContext implements ProviderContext,
         missing.reportIfMissing();
 
         this.converterContext = SpreadsheetConverterContexts.basic(
-            storageEnvironmentContext, // HasUserDirectories
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             converter,
-            this.mediaTypeDetector,
             multiplier,
             SpreadsheetLabelNameResolvers.empty(),
             SpreadsheetMetadataLoaders.empty(), // dont support loading SpreadsheetMetadata from a ProviderContext
             SpreadsheetColorContexts.environmentContext(storageEnvironmentContext), //
-            JsonNodeConverterContexts.basic(
-                TreeConverterContexts.basic(
-                    converter.cast(TreeConverterContext.class),
-                    expressionNumberKind,
-                    Cast.to(multiplier), // TreeConverterContext
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        dateOffset,
-                        valueSeparator,
-                        converter.cast(ConverterContext.class),
-                        Cast.to(multiplier),
-                        storageEnvironmentContext, // BinaryTextContext
-                        this.currencyLocaleContext,
-                        DateTimeContexts.basic(
-                            currencyLocaleContext.dateTimeSymbolsForLocaleOrFail(locale),
-                            locale,
-                            defaultYear,
-                            twoDigitYear,
-                            storageEnvironmentContext
-                        ),
-                        DecimalNumberContexts.basic(
-                            decimalNumberDigitCount,
-                            currencyLocaleContext.decimalNumberSymbolsForLocaleOrFail(locale),
-                            locale,
-                            new MathContext(
-                                precision,
-                                roundingMode
+            StorageConverterContexts.basic(
+                converter.cast(StorageConverterContext.class),
+                storageEnvironmentContext, // HasUserDirectories
+                this.mediaTypeDetector,
+                JsonNodeConverterContexts.basic(
+                    TreeConverterContexts.basic(
+                        converter.cast(TreeConverterContext.class),
+                        expressionNumberKind,
+                        Cast.to(multiplier), // TreeConverterContext
+                        ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
+                            dateOffset,
+                            valueSeparator,
+                            converter.cast(ConverterContext.class),
+                            Cast.to(multiplier),
+                            storageEnvironmentContext, // BinaryTextContext
+                            this.currencyLocaleContext,
+                            DateTimeContexts.basic(
+                                currencyLocaleContext.dateTimeSymbolsForLocaleOrFail(locale),
+                                locale,
+                                defaultYear,
+                                twoDigitYear,
+                                storageEnvironmentContext
+                            ),
+                            DecimalNumberContexts.basic(
+                                decimalNumberDigitCount,
+                                currencyLocaleContext.decimalNumberSymbolsForLocaleOrFail(locale),
+                                locale,
+                                new MathContext(
+                                    precision,
+                                    roundingMode
+                                )
                             )
                         )
-                    )
-                ),
-                storageEnvironmentContext, // EnvironmentContext
-                this.jsonNodeMarshallUnmarshallContext
+                    ),
+                    storageEnvironmentContext, // EnvironmentContext
+                    this.jsonNodeMarshallUnmarshallContext
+                )
             ),
             currencyLocaleContext,
             storageEnvironmentContext // LoggingContext

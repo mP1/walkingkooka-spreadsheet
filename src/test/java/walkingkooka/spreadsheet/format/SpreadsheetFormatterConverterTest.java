@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -145,34 +146,37 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     @Override
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
-            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.system(),
-            MediaTypeDetectors.binary(),
             ExpressionNumberBinaryNumberConverterFunctions.multiply(),
             SpreadsheetLabelNameResolvers.empty(),
             SpreadsheetMetadataLoaders.fake(),
             ColorContexts.fake(),
-            JsonNodeConverterContexts.basic(
-                TreeConverterContexts.basic(
-                    Converters.fake(),
-                    EXPRESSION_NUMBER_KIND,
-                    ExpressionNumberBinaryNumberConverterFunctions.multiply(),
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        ',', // valueSeparator
+            StorageConverterContexts.basic(
+                Converters.fake(),
+                HasUserDirectorieses.fake(),
+                MediaTypeDetectors.binary(),
+                JsonNodeConverterContexts.basic(
+                    TreeConverterContexts.basic(
                         Converters.fake(),
-                        BinaryNumberConverterFunctions.fake(),
-                        BINARY_TEXT_CONTEXT,
-                        CurrencyLocaleContexts.fake(),
-                        DateTimeContexts.fake(),
-                        DECIMAL_NUMBER_CONTEXT
-                    )
-                ),
-                ENVIRONMENT_CONTEXT,
-                JsonNodeMarshallUnmarshallContexts.fake()
+                        EXPRESSION_NUMBER_KIND,
+                        ExpressionNumberBinaryNumberConverterFunctions.multiply(),
+                        ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
+                            Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(),
+                            BINARY_TEXT_CONTEXT,
+                            CurrencyLocaleContexts.fake(),
+                            DateTimeContexts.fake(),
+                            DECIMAL_NUMBER_CONTEXT
+                        )
+                    ),
+                    ENVIRONMENT_CONTEXT,
+                    JsonNodeMarshallUnmarshallContexts.fake()
+                )
             ),
             LocaleContexts.fake(),
             LOGGING_CONTEXT

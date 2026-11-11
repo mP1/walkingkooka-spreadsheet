@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -1254,34 +1255,37 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
 
     private SpreadsheetConverterContext createConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
-            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(),
-            MediaTypeDetectors.fake(),
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(),
             SpreadsheetMetadataLoaders.fake(),
             ColorContexts.fake(),
-            JsonNodeConverterContexts.basic(
-                TreeConverterContexts.basic(
-                    Converters.toText(),
-                    kind,
-                    BinaryNumberConverterFunctions.fake(), // multiplier
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        ',', // valueSeparator
-                        Converters.fake(),
+            StorageConverterContexts.basic(
+                Converters.fake(),
+                HasUserDirectorieses.fake(),
+                MediaTypeDetectors.fake(),
+                JsonNodeConverterContexts.basic(
+                    TreeConverterContexts.basic(
+                        Converters.toText(),
+                        kind,
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        BINARY_TEXT_CONTEXT,
-                        CurrencyLocaleContexts.fake(),
-                        DateTimeContexts.fake(), // DateTimeContext unused
-                        this.decimalNumberContext()
-                    )
-                ),
-                ENVIRONMENT_CONTEXT,
-                JsonNodeMarshallUnmarshallContexts.fake()
+                        ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
+                            Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
+                            BINARY_TEXT_CONTEXT,
+                            CurrencyLocaleContexts.fake(),
+                            DateTimeContexts.fake(), // DateTimeContext unused
+                            this.decimalNumberContext()
+                        )
+                    ),
+                    ENVIRONMENT_CONTEXT,
+                    JsonNodeMarshallUnmarshallContexts.fake()
+                )
             ),
             LocaleContexts.fake(),
             LOGGING_CONTEXT

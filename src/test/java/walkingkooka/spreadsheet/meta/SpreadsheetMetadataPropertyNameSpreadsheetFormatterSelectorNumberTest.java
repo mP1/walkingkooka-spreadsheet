@@ -27,7 +27,6 @@ import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContextTesting;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -40,6 +39,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -105,7 +105,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 throw new UnsupportedOperationException();
             },
             SpreadsheetConverterContexts.basic(
-                HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 new FakeConverter<>() {
@@ -127,30 +126,34 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                         );
                     }
                 },
-                MediaTypeDetectors.binary(),
                 MULTIPLIER,
                 LABEL_NAME_RESOLVER,
                 SpreadsheetMetadataLoaders.empty(),
                 new FakeColorContext(),
-                JsonNodeConverterContexts.basic(
-                    TreeConverterContexts.basic(
-                        Converters.fake(),
-                        ExpressionNumberKind.DEFAULT,
-                        ExpressionNumberBinaryNumberConverterFunctions.multiply(),
-                        ConverterContexts.basic(
-                            false, // canNumbersHaveGroupSeparator
-                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            ',', // valueSeparator
+                StorageConverterContexts.basic(
+                    Converters.fake(),
+                    HAS_USER_DIRECTORIES,
+                    MEDIA_TYPE_DETECTOR,
+                    JsonNodeConverterContexts.basic(
+                        TreeConverterContexts.basic(
                             Converters.fake(),
-                            BinaryNumberConverterFunctions.fake(),
-                            BINARY_TEXT_CONTEXT,
-                            CURRENCY_LOCALE_CONTEXT,
-                            DATE_TIME_CONTEXT,
-                            DECIMAL_NUMBER_CONTEXT
-                        )
-                    ),
-                    ENVIRONMENT_CONTEXT,
-                    JsonNodeMarshallUnmarshallContexts.fake()
+                            ExpressionNumberKind.DEFAULT,
+                            ExpressionNumberBinaryNumberConverterFunctions.multiply(),
+                            ConverterContexts.basic(
+                                false, // canNumbersHaveGroupSeparator
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                ',', // valueSeparator
+                                Converters.fake(),
+                                BinaryNumberConverterFunctions.fake(),
+                                BINARY_TEXT_CONTEXT,
+                                CURRENCY_LOCALE_CONTEXT,
+                                DATE_TIME_CONTEXT,
+                                DECIMAL_NUMBER_CONTEXT
+                            )
+                        ),
+                        ENVIRONMENT_CONTEXT,
+                        JsonNodeMarshallUnmarshallContexts.fake()
+                    )
                 ),
                 LocaleContexts.fake(),
                 LOGGING_CONTEXT

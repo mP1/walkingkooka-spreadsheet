@@ -108,6 +108,7 @@ import walkingkooka.spreadsheet.value.collection.SpreadsheetCellSet;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.StorageBinary;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.convert.StorageConverterContexts;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.HasText;
@@ -4603,34 +4604,37 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext textToDateOrDateTimeOrTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
-            HAS_USER_DIRECTORIES,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used
-            MEDIA_TYPE_DETECTOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),
             ColorContexts.fake(),
-            JsonNodeConverterContexts.basic(
-                TreeConverterContexts.basic(
-                    Converters.fake(), // not used
-                    EXPRESSION_NUMBER_KIND,
-                    BinaryNumberConverterFunctions.fake(), // multiplier
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        ',', // valueSeparator
-                        Converters.fake(),
+            StorageConverterContexts.basic(
+                Converters.fake(), // not used
+                HAS_USER_DIRECTORIES,
+                MEDIA_TYPE_DETECTOR,
+                JsonNodeConverterContexts.basic(
+                    TreeConverterContexts.basic(
+                        Converters.fake(), // not used
+                        EXPRESSION_NUMBER_KIND,
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        BINARY_TEXT_CONTEXT,
-                        CurrencyLocaleContexts.fake(),
-                        DATE_TIME_CONTEXT,
-                        DecimalNumberContexts.fake()
-                    )
-                ),
-                ENVIRONMENT_CONTEXT,
-                JsonNodeMarshallUnmarshallContexts.fake()
+                        ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
+                            Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
+                            BINARY_TEXT_CONTEXT,
+                            CurrencyLocaleContexts.fake(),
+                            DATE_TIME_CONTEXT,
+                            DecimalNumberContexts.fake()
+                        )
+                    ),
+                    ENVIRONMENT_CONTEXT,
+                    JsonNodeMarshallUnmarshallContexts.fake()
+                )
             ),
             LOCALE_CONTEXT,
             LOGGING_CONTEXT
@@ -5235,34 +5239,37 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
-            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used
-            MEDIA_TYPE_DETECTOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(), // not required
             SpreadsheetMetadataLoaders.fake(),
             ColorContexts.fake(),
-            JsonNodeConverterContexts.basic(
-                TreeConverterContexts.basic(
-                    Converters.fake(), // not used
-                    kind,
-                    BinaryNumberConverterFunctions.fake(), // multiplier
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        ',', // valueSeparator
-                        Converters.fake(),
+            StorageConverterContexts.basic(
+                Converters.fake(), // not used
+                HasUserDirectorieses.fake(),
+                MEDIA_TYPE_DETECTOR,
+                JsonNodeConverterContexts.basic(
+                    TreeConverterContexts.basic(
+                        Converters.fake(), // not used
+                        kind,
                         BinaryNumberConverterFunctions.fake(), // multiplier
-                        BINARY_TEXT_CONTEXT,
-                        CurrencyLocaleContexts.fake(),
-                        DateTimeContexts.fake(), // unused only doing numbers
-                        DecimalNumberContexts.american(MathContext.DECIMAL32)
-                    )
-                ),
-                ENVIRONMENT_CONTEXT,
-                JsonNodeMarshallUnmarshallContexts.fake()
+                        ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
+                            Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
+                            BINARY_TEXT_CONTEXT,
+                            CurrencyLocaleContexts.fake(),
+                            DateTimeContexts.fake(), // unused only doing numbers
+                            DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        )
+                    ),
+                    ENVIRONMENT_CONTEXT,
+                    JsonNodeMarshallUnmarshallContexts.fake()
+                )
             ),
             LocaleContexts.fake(),
             LOGGING_CONTEXT

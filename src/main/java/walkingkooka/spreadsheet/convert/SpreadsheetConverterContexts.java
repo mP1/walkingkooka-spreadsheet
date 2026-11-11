@@ -23,14 +23,12 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.logging.LoggingContext;
-import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
-import walkingkooka.storage.HasUserDirectories;
-import walkingkooka.tree.json.convert.JsonNodeConverterContext;
+import walkingkooka.storage.convert.StorageConverterContext;
 
 import java.util.Optional;
 
@@ -43,29 +41,25 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetConverterContextBasic}
      */
-    public static SpreadsheetConverterContext basic(final HasUserDirectories hasUserDirectories,
-                                                    final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+    public static SpreadsheetConverterContext basic(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                     final Optional<SpreadsheetValidationReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
-                                                    final MediaTypeDetector mediaTypeDetector,
                                                     final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                     final SpreadsheetMetadataLoader spreadsheetMetadataLoader,
                                                     final ColorContext colorContext,
-                                                    final JsonNodeConverterContext jsonNodeConverterContext,
+                                                    final StorageConverterContext storageConverterContext,
                                                     final LocaleContext localeContext,
                                                     final LoggingContext loggingContext) {
         return SpreadsheetConverterContextBasic.with(
-            hasUserDirectories,
             spreadsheetMetadata,
             validationReference,
             converter,
-            mediaTypeDetector,
             multiplier,
             spreadsheetLabelNameResolver,
             spreadsheetMetadataLoader,
             colorContext,
-            jsonNodeConverterContext,
+            storageConverterContext,
             localeContext,
             loggingContext
         );
