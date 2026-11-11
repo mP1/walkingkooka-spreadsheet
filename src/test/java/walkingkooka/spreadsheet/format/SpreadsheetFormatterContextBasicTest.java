@@ -208,7 +208,10 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
         Converters.collection(
             Cast.to(
                 Lists.of(
-                    SpreadsheetConverters.textToText(),
+                    // SpreadsheetMetadata -> String & the 3 converters below will generate a StackOverflowError without cycle detection
+                    SpreadsheetConverters.spreadsheetMetadataToText(),
+                    SpreadsheetConverters.text(),
+                    SpreadsheetConverters.json(),
                     Converters.numberToBoolean(),
                     SpreadsheetConverters.errorToNumber()
                 )
@@ -391,6 +394,15 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
     }
 
     @Test
+    public void testConvertSpreadsheetMetadataToString() {
+        this.convertAndCheck(
+            SPREADSHEET_METADATA,
+            String.class,
+            SPREADSHEET_METADATA.toString()
+        );
+    }
+
+    @Test
     public void testConvertNumberOneToBoolean() {
         this.convertAndCheck(
             1,
@@ -550,7 +562,7 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 "  \"spreadsheetId\": \"123\",\n" +
                 "  \"color2\": \"#123456\",\n" +
                 "  \"colorBingo\": 2\n" +
-                "} converter=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver colorContext=color1: black\n" +
+                "} converter=SpreadsheetMetadata to TEXT | TEXT | JSON | Number to Boolean | SpreadsheetError to Number multiplier=walkingkooka.convert.BinaryNumberConverterFunctionBasicMultiply spreadsheetLabelNameResolver=FakeSpreadsheetLabelNameResolver colorContext=color1: black\n" +
                 "color2: white\n" +
                 "color3: red\n" +
                 "color4: lime\n" +
@@ -582,7 +594,10 @@ public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFo
                 "color30: maroon\n" +
                 "color31: teal\n" +
                 "color32: blue\n" +
-                "c"
+                "color33: #0cf\n" +
+                "color34: #cff\n" +
+                "color35: #cfc\n" +
+                "col"
         );
     }
 

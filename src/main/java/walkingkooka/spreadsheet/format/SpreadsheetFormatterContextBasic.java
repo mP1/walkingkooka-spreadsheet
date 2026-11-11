@@ -124,22 +124,20 @@ final class SpreadsheetFormatterContextBasic implements SpreadsheetFormatterCont
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
-        return this.converter()
+        return this.converterContext()
             .canConvert(
                 value,
-                type,
-                this
+                type
             );
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
-        return this.converter()
+        return this.converterContext()
             .convert(
                 value,
-                type,
-                this
+                type
             );
     }
 
