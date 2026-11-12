@@ -137,7 +137,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -167,6 +166,22 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static NamedColor NAMED_COLOR7 = NamedColor.YELLOW;
 
+    private final static SpreadsheetMetadataPropertyName<AuditInfo> PROPERTY1 = SpreadsheetMetadataPropertyName.AUDIT_INFO;
+
+    private final static AuditInfo VALUE1 = AUDIT_INFO.setCreatedBy(
+        EmailAddress.parse("created@example.com")
+    ).setModifiedBy(
+        EmailAddress.parse("modified@example.com")
+    ).setModifiedTimestamp(DIFFERENT_NOW);
+
+    private final static SpreadsheetMetadataPropertyName<Boolean> PROPERTY2 = SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES;
+
+    private final static Boolean VALUE2 = true;
+
+    private final static SpreadsheetMetadataPropertyName<Integer> PROPERTY3 = SpreadsheetMetadataPropertyName.PRECISION;
+
+    private final static Integer VALUE3 = 10;
+
     @Test
     public void testId() {
         final SpreadsheetId id = SpreadsheetId.with(123);
@@ -193,36 +208,35 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testGet() {
-        this.getAndCheck(this.createSpreadsheetMetadata(),
-            this.property1(),
-            this.value1());
+        this.getAndCheck(
+            this.createSpreadsheetMetadata(),
+            PROPERTY1,
+            VALUE1
+        );
     }
 
     @Test
     public void testGet2() {
-        this.getAndCheck(this.createSpreadsheetMetadata(),
-            this.property2(),
-            this.value2());
+        this.getAndCheck(
+            this.createSpreadsheetMetadata(),
+            PROPERTY2,
+            VALUE2
+        );
     }
 
     @Test
     public void testGetActualNotDefault() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
-        final AuditInfo auditInfo = AuditInfo.with(
-            EmailAddress.parse("created@example.com"),
-            LocalDateTime.MIN,
-            EmailAddress.parse("modified@example.com"),
-            LocalDateTime.MAX
-        );
-
         final SpreadsheetMetadata notEmpty = SpreadsheetMetadataNonEmpty.with(
-            Maps.of(propertyName, auditInfo),
+            Maps.of(
+                PROPERTY1,
+                VALUE1
+            ),
             SpreadsheetMetadata.EMPTY
         );
         this.getAndCheck(
             notEmpty,
-            propertyName,
-            auditInfo
+            PROPERTY1,
+            VALUE1
         );
     }
 
@@ -230,25 +244,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testGetOrFailPresent() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
-        final AuditInfo auditInfo = AuditInfo.with(
-            EmailAddress.parse("created@example.com"),
-            LocalDateTime.MIN,
-            EmailAddress.parse("modified@example.com"),
-            LocalDateTime.MAX
-        );
-
         final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(
             Maps.of(
-                propertyName,
-                auditInfo
+                PROPERTY1,
+                VALUE1
             ),
             SpreadsheetMetadata.EMPTY
         );
         this.checkEquals(
-            auditInfo,
-            metadata.getOrFail(propertyName),
-            () -> "getOrFail " + propertyName + " in " + metadata
+            VALUE1,
+            metadata.getOrFail(PROPERTY1),
+            () -> "getOrFail " + PROPERTY1 + " in " + metadata
         );
     }
 
@@ -412,15 +418,18 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testSetExistingPropertyAndValue() {
         this.setAndCheck(this.createSpreadsheetMetadata(),
-            this.property1(),
-            this.value1());
+            PROPERTY1,
+            VALUE1
+        );
     }
 
     @Test
     public void testSetExistingPropertyAndValue2() {
-        this.setAndCheck(this.createSpreadsheetMetadata(),
-            this.property2(),
-            this.value2());
+        this.setAndCheck(
+            this.createSpreadsheetMetadata(),
+            PROPERTY2,
+            VALUE2
+        );
     }
 
     @Test
@@ -451,33 +460,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetReplacePropertyAndValue() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> auditInfo = this.property1();
-        final AuditInfo value1 = this.value1();
-
-        final SpreadsheetMetadataPropertyName<Boolean> hideIfZero = this.property2();
-        final Boolean value2 = this.value2();
-
-        final AuditInfo different = AuditInfo.with(
-            EmailAddress.parse("different@example.com"),
-            LocalDateTime.MIN,
-            EmailAddress.parse("different@example.com"),
-            LocalDateTime.MAX
-        );
-        assertNotSame(different, value1);
-
         this.setAndCheck(
             this.createSpreadsheetMetadata(
-                auditInfo, value1,
-                hideIfZero, value2
+                PROPERTY1, 
+                VALUE1,
+                PROPERTY2,
+                VALUE2
             ),
-            auditInfo,
-            different,
+            PROPERTY1,
+            DIFFERENT_AUDIT_INFO,
             "{\n" +
                 "  \"auditInfo\": {\n" +
-                "    \"createdBy\": \"different@example.com\",\n" +
-                "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
-                "    \"modifiedBy\": \"different@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
+                "    \"createdBy\": \"different-user-456@example.com\",\n" +
+                "    \"createdTimestamp\": \"2000-01-31T12:58:59\",\n" +
+                "    \"modifiedBy\": \"different-user-456@example.com\",\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true\n" +
                 "}"
@@ -486,30 +483,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetReplacePropertyAndValue2() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> auditInfo = this.property1();
-        final AuditInfo value1 = this.value1();
-
-        final SpreadsheetMetadataPropertyName<Boolean> hideIfZero = this.property2();
-        final Boolean value2 = this.value2();
-
-        final Boolean different = !value2;
-        assertNotSame(different, value2);
-
         this.setAndCheck(
             this.createSpreadsheetMetadata(
-                auditInfo,
-                value1,
-                hideIfZero,
-                value2
+                PROPERTY1,
+                VALUE1,
+                PROPERTY2,
+                VALUE2
             ),
-            hideIfZero,
-            different,
+            PROPERTY2,
+            !VALUE2,
             "{\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": false\n" +
                 "}"
@@ -518,30 +506,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetNewPropertyAndValue() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> auditInfo = this.property1();
-        final AuditInfo value1 = this.value1();
-
-        final SpreadsheetMetadataPropertyName<Boolean> hideIfZero = this.property2();
-        final Boolean value2 = this.value2();
-
-        final SpreadsheetMetadataPropertyName<Integer> precision = this.property3();
-        final Integer value3 = this.value3();
-
         this.setAndCheck(
             this.createSpreadsheetMetadata(
-                auditInfo,
-                value1,
-                hideIfZero,
-                value2
+                PROPERTY1,
+                VALUE1,
+                PROPERTY2,
+                VALUE2
             ),
-            precision,
-            value3,
+            PROPERTY3,
+            VALUE3,
             "{\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true,\n" +
                 "  \"precision\": 10\n" +
@@ -552,59 +531,60 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private <T> void setAndCheck(final SpreadsheetMetadata metadata,
                                  final SpreadsheetMetadataPropertyName<T> propertyName,
                                  final T value) {
-        assertSame(metadata,
-            metadata.set(propertyName, value),
-            () -> metadata + " set " + propertyName + " and " + CharSequences.quoteIfChars(value));
+        assertSame(
+            metadata,
+            metadata.set(
+                propertyName,
+                value
+            ),
+            () -> metadata + " set " + propertyName + " and " + CharSequences.quoteIfChars(value)
+        );
     }
 
     // remove...........................................................................................................
 
     @Test
     public void testRemove() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> property1 = this.property1();
-
-        final SpreadsheetMetadataPropertyName<Boolean> property2 = this.property2();
-        final Boolean value2 = this.value2();
-
         this.removeAndCheck(
             this.createSpreadsheetMetadata(
-                property1,
-                this.value1(),
-                property2,
-                value2
+                PROPERTY1,
+                VALUE1,
+                PROPERTY2,
+                VALUE2
             ),
-            property1,
-            this.createSpreadsheetMetadata(property2, value2)
+            SpreadsheetMetadataNonEmptyTest.PROPERTY1,
+            this.createSpreadsheetMetadata(
+                PROPERTY2,
+                VALUE2
+            )
         );
     }
 
     @Test
     public void testRemove2() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> property1 = this.property1();
-        final AuditInfo value1 = this.value1();
-
-        final SpreadsheetMetadataPropertyName<Boolean> property2 = this.property2();
-
         this.removeAndCheck(
             this.createSpreadsheetMetadata(
-                property1,
-                value1,
-                property2,
-                this.value2()
+                PROPERTY1,
+                VALUE1,
+                PROPERTY2,
+                VALUE2
             ),
-            property2,
-            this.createSpreadsheetMetadata(property1, value1)
+            PROPERTY2,
+            this.createSpreadsheetMetadata(
+                PROPERTY1,
+                VALUE1
+            )
         );
     }
 
     @Test
     public void testRemoveBecomesEmpty() {
-        final SpreadsheetMetadataPropertyName<AuditInfo> property1 = this.property1();
-        final AuditInfo value1 = this.value1();
-
         this.removeAndCheck(
-            this.createSpreadsheetMetadata(property1, value1),
-            property1,
+            this.createSpreadsheetMetadata(
+                PROPERTY1,
+                VALUE1
+            ),
+            PROPERTY1,
             SpreadsheetMetadata.EMPTY
         );
     }
@@ -614,35 +594,31 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testSetSetRemoveRemove() {
         //set
-        final SpreadsheetMetadataPropertyName<AuditInfo> property1 = this.property1();
-        final AuditInfo value1 = this.value1();
         final SpreadsheetMetadata metadata1 = this.setAndCheck(
             SpreadsheetMetadata.EMPTY,
-            property1,
-            value1,
+            PROPERTY1,
+            VALUE1,
             "{\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  }\n" +
                 "}"
         );
 
         //set
-        final SpreadsheetMetadataPropertyName<Boolean> property2 = this.property2();
-        final Boolean value2 = this.value2();
         final SpreadsheetMetadata metadata2 = this.setAndCheck(
             metadata1,
-            property2,
-            value2,
+            PROPERTY2,
+            VALUE2,
             "{\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true\n" +
                 "}"
@@ -650,46 +626,47 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         // remove1
         final SpreadsheetMetadata metadata3 = this.removeAndCheck(metadata2,
-            property1,
-            this.createSpreadsheetMetadata(property2, value2));
+            PROPERTY1,
+            this.createSpreadsheetMetadata(
+                PROPERTY2,
+                VALUE2
+            )
+        );
 
         this.removeAndCheck(metadata3,
-            property2,
-            SpreadsheetMetadata.EMPTY);
+            PROPERTY2,
+            SpreadsheetMetadata.EMPTY
+        );
     }
 
     @Test
     public void testSetSetRemoveSet() {
         //set
-        final SpreadsheetMetadataPropertyName<AuditInfo> property1 = this.property1();
-        final AuditInfo value1 = this.value1();
         final SpreadsheetMetadata metadata1 = this.setAndCheck(
             SpreadsheetMetadata.EMPTY,
-            property1,
-            value1,
+            PROPERTY1,
+            VALUE1,
             "{\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  }\n" +
                 "}"
         );
 
         //set
-        final SpreadsheetMetadataPropertyName<Boolean> property2 = this.property2();
-        final Boolean value2 = this.value2();
         final SpreadsheetMetadata metadata2 = this.setAndCheck(
             metadata1,
-            property2,
-            value2,
+            PROPERTY2,
+            VALUE2,
             "{\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true\n" +
                 "}"
@@ -697,20 +674,24 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         // remove1
         final SpreadsheetMetadata metadata3 = this.removeAndCheck(metadata2,
-            property1,
-            this.createSpreadsheetMetadata(property2, value2));
+            PROPERTY1,
+            this.createSpreadsheetMetadata(
+                PROPERTY2,
+                VALUE2
+            )
+        );
 
 
-        //set property1 again
+        //set PROPERTY1 again
         this.setAndCheck(metadata3,
-            property1,
-            value1,
+            PROPERTY1,
+            VALUE1,
             "{\n" +
                 "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true\n" +
                 "}"
@@ -2307,7 +2288,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testMissingProperties() {
         this.missingRequiredPropertiesAndCheck(
             SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP),
-            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            PROPERTY1,
             SpreadsheetMetadataPropertyName.LOCALE
         );
     }
@@ -2319,7 +2300,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.missingRequiredPropertiesAndCheck(
             SpreadsheetMetadata.EMPTY.setDefaults(defaults),
-            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            PROPERTY1,
             SpreadsheetMetadataPropertyName.LOCALE
         );
     }
@@ -2328,7 +2309,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testMissingPropertiesNonMissing() {
         this.missingRequiredPropertiesAndCheck(
             SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                PROPERTY1,
                 AuditInfo.with(
                     EmailAddress.parse("created@example.com"),
                     LocalDateTime.MIN,
@@ -2344,7 +2325,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.missingRequiredPropertiesAndCheck(
             SpreadsheetMetadata.EMPTY
                 .set(
-                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    PROPERTY1,
                     AuditInfo.with(
                         EmailAddress.parse("created@example.com"),
                         LocalDateTime.MIN,
@@ -2360,8 +2341,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testToString() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
-        map.put(this.property1(), this.value1());
-        map.put(this.property2(), this.value2());
+        map.put(PROPERTY1, VALUE1);
+        map.put(PROPERTY2, VALUE2);
 
         this.toStringAndCheck(
             SpreadsheetMetadataNonEmpty.with(map, null),
@@ -2370,7 +2351,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true\n" +
                 "}"
@@ -2393,8 +2374,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testToStringWithDefaults() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
-        map.put(this.property1(), this.value1());
-        map.put(this.property2(), this.value2());
+        map.put(PROPERTY1, VALUE1);
+        map.put(PROPERTY2, VALUE2);
 
         this.toStringAndCheck(
             SpreadsheetMetadataNonEmpty.with(
@@ -2412,7 +2393,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"hideZeroValues\": true,\n" +
                 "  \"_defaults\": {\n" +
@@ -2446,7 +2427,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
-                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "    \"modifiedTimestamp\": \"2000-01-31T12:58:59\"\n" +
                 "  },\n" +
                 "  \"cellCharacterWidth\": 0,\n" +
                 "  \"color1\": \"#000001\",\n" +
@@ -2516,7 +2497,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
         properties.put(
-            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            PROPERTY1,
             AuditInfo.with(
                 EmailAddress.parse("created@example.com"),
                 LocalDateTime.MIN,
@@ -2617,7 +2598,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         );
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT);
-        properties.put(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES, true);
+        properties.put(PROPERTY2, true);
         properties.put(
             SpreadsheetMetadataPropertyName.IMPORTERS,
             SpreadsheetImporterAliasSet.EMPTY
@@ -3990,7 +3971,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     LOCALE
                 ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
                 .set(
-                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    PROPERTY1,
                     AuditInfo.create(
                         USER,
                         LocalDateTime.MIN
@@ -4142,12 +4123,22 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     private SpreadsheetMetadataNonEmpty createSpreadsheetMetadata() {
-        return this.createSpreadsheetMetadata(this.property1(), this.value1(), this.property2(), this.value2());
+        return this.createSpreadsheetMetadata(
+            PROPERTY1,
+            VALUE1,
+            PROPERTY2,
+            VALUE2
+        );
     }
 
     private <X> SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
                                                                       final X value1) {
-        return this.createSpreadsheetMetadata(Maps.of(property1, value1));
+        return this.createSpreadsheetMetadata(
+            Maps.of(
+                property1,
+                value1
+            )
+        );
     }
 
     private <X, Y> SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
@@ -4161,39 +4152,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     private SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
-        return SpreadsheetMetadataNonEmpty.with(map, null);
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    private SpreadsheetMetadataPropertyName<AuditInfo> property1() {
-        return SpreadsheetMetadataPropertyName.AUDIT_INFO;
-    }
-
-    private AuditInfo value1() {
-        return AuditInfo.with(
-            EmailAddress.parse("created@example.com"),
-            LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-            EmailAddress.parse("modified@example.com"),
-            LocalDateTime.of(2000, 1, 2, 12, 58, 59)
+        return SpreadsheetMetadataNonEmpty.with(
+            map,
+            null
         );
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    private SpreadsheetMetadataPropertyName<Boolean> property2() {
-        return SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES;
-    }
-
-    private Boolean value2() {
-        return true;
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    private SpreadsheetMetadataPropertyName<Integer> property3() {
-        return SpreadsheetMetadataPropertyName.PRECISION;
-    }
-
-    private Integer value3() {
-        return 10;
     }
 
     // class............................................................................................................
