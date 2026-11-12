@@ -340,8 +340,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         return Cast.to(SpreadsheetMetadata.EMPTY);
     }
 
+    // class............................................................................................................
+
     @Override
-    Class<SpreadsheetMetadataEmpty> metadataType() {
+    public Class<SpreadsheetMetadataEmpty> type() {
         return SpreadsheetMetadataEmpty.class;
     }
 }

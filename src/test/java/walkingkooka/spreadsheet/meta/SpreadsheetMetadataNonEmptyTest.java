@@ -4134,7 +4134,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    // helpers...........................................................................................................
+    // helpers..........................................................................................................
 
     @Override
     public SpreadsheetMetadataNonEmpty createObject() {
@@ -4196,8 +4196,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         return 10;
     }
 
+    // class............................................................................................................
+
     @Override
-    Class<SpreadsheetMetadataNonEmpty> metadataType() {
+    public Class<SpreadsheetMetadataNonEmpty> type() {
         return SpreadsheetMetadataNonEmpty.class;
     }
 
