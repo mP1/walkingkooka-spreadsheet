@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTesting<SpreadsheetProviderBasic>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderBasic>,
-    ToStringTesting<SpreadsheetProviderBasic>,
+    ToStringTesting,
     HasSpreadsheetMetadataTesting,
     TreePrintableTesting {
 

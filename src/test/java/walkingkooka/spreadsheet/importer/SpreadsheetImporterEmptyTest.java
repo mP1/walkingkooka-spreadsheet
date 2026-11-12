@@ -21,11 +21,13 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 
 import java.util.Optional;
 
 public final class SpreadsheetImporterEmptyTest implements SpreadsheetImporterTesting<SpreadsheetImporterEmpty>,
-    ToStringTesting<SpreadsheetImporterEmpty> {
+    PackagePrivateClassTesting<SpreadsheetImporterEmpty>,
+    ToStringTesting {
 
     @Test
     public void testCanImportFalse() {

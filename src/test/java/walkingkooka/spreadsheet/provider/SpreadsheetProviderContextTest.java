@@ -54,7 +54,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     HasSpreadsheetMetadataTesting,
     JsonNodeMarshallUnmarshallContextTesting,
     MediaTypeDetectorTesting,
-    ToStringTesting<SpreadsheetProviderContext> {
+    ToStringTesting {
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.multiply();
 

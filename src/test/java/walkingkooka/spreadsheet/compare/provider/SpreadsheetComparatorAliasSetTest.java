@@ -35,7 +35,7 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     SpreadsheetComparatorAlias,
     SpreadsheetComparatorAliasSet>,
     HashCodeEqualsDefinedTesting2<SpreadsheetComparatorAliasSet>,
-    ToStringTesting<SpreadsheetComparatorAliasSet>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<SpreadsheetComparatorAliasSet> {
 
     // name.............................................................................................................

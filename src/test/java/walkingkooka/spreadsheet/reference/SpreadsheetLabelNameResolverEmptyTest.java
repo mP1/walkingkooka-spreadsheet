@@ -22,7 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 
 public final class SpreadsheetLabelNameResolverEmptyTest implements SpreadsheetLabelNameResolverTesting2<SpreadsheetLabelNameResolverEmpty>,
-    ToStringTesting<SpreadsheetLabelNameResolverEmpty>,
+    ToStringTesting,
     ClassTesting<SpreadsheetLabelNameResolverEmpty> {
 
     @Test

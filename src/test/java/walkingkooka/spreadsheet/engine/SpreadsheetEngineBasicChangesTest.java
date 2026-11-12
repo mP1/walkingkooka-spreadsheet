@@ -45,7 +45,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import java.util.Optional;
 
 public final class SpreadsheetEngineBasicChangesTest extends SpreadsheetEngineBasicTestCase<SpreadsheetEngineBasicChanges>
-    implements ToStringTesting<SpreadsheetEngineBasicChanges> {
+    implements ToStringTesting {
 
     // toString.........................................................................................................
 

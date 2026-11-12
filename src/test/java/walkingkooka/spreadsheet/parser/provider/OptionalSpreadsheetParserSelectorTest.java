@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class OptionalSpreadsheetParserSelectorTest implements PublicClassTesting<OptionalSpreadsheetParserSelector>,
     HashCodeEqualsDefinedTesting2<OptionalSpreadsheetParserSelector>,
-    ToStringTesting<OptionalSpreadsheetParserSelector>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<OptionalSpreadsheetParserSelector> {
 
     // with.............................................................................................................

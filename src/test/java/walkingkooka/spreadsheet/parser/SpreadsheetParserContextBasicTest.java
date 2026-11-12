@@ -43,7 +43,7 @@ public final class SpreadsheetParserContextBasicTest implements ClassTesting2<Sp
     SpreadsheetParserContextTesting2<SpreadsheetParserContextBasic>,
     DateTimeContextTesting,
     DecimalNumberContextDelegator,
-    ToStringTesting<SpreadsheetParserContextBasic> {
+    ToStringTesting {
 
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY = InvalidCharacterExceptionFactory.POSITION;
 

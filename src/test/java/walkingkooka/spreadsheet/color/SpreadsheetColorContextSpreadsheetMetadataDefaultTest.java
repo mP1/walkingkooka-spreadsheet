@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColorContextSpreadsheetMetadataDefaultTest implements ColorContextTesting2<SpreadsheetColorContextSpreadsheetMetadataDefault>,
     ThrowableTesting,
-    ToStringTesting<SpreadsheetColorContextSpreadsheetMetadataDefault> {
+    ToStringTesting {
 
     // indexedColor.....................................................................................................
 

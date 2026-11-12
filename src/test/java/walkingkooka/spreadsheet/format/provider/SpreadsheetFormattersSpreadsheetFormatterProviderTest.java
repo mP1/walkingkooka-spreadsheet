@@ -59,7 +59,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
-    ToStringTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
+    ToStringTesting,
     SpreadsheetEnvironmentContextTesting {
 
     private final static ProviderContext PROVIDER_CONTEXT = new FakeProviderContext() {

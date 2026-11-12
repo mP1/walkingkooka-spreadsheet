@@ -24,7 +24,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 
 public final class EmptySpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<EmptySpreadsheetParserProvider>,
-    ToStringTesting<EmptySpreadsheetParserProvider> {
+    ToStringTesting {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 

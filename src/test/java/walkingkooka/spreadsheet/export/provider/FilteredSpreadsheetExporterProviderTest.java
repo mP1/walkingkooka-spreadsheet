@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import java.util.List;
 
 public final class FilteredSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<FilteredSpreadsheetExporterProvider>,
-    ToStringTesting<FilteredSpreadsheetExporterProvider> {
+    ToStringTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 

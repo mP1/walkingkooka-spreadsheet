@@ -72,7 +72,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     ParseStringTesting<S>,
     PredicateTesting2<S, SpreadsheetSelection>,
     ThrowableTesting,
-    ToStringTesting<S>,
+    ToStringTesting,
     TreePrintableTesting {
 
     private final static SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();

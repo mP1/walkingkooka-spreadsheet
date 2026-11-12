@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporters;
 import java.util.List;
 
 public final class FilteredSpreadsheetImporterProviderTest implements SpreadsheetImporterProviderTesting<FilteredSpreadsheetImporterProvider>,
-    ToStringTesting<FilteredSpreadsheetImporterProvider> {
+    ToStringTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 

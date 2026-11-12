@@ -26,9 +26,4 @@ public abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor
     SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitorTestCase() {
         super();
     }
-
-    @Override
-    public void testCheckToStringOverridden() {
-        throw new UnsupportedOperationException();
-    }
 }

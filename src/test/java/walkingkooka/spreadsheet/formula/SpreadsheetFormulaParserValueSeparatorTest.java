@@ -38,7 +38,7 @@ public final class SpreadsheetFormulaParserValueSeparatorTest implements ParserT
     PackagePrivateClassTesting<SpreadsheetFormulaParserValueSeparator>,
     SpreadsheetParserContextTesting,
     TypeNameTesting<SpreadsheetFormulaParserValueSeparator>,
-    ToStringTesting<SpreadsheetFormulaParserValueSeparator> {
+    ToStringTesting {
 
     @Test
     public void testIncorrectCharacterFails() {

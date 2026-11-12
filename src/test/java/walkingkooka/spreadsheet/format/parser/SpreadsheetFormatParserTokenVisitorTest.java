@@ -2085,14 +2085,6 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final List<ParserToken> visited;
     }
 
-    // ToString.........................................................................................................
-
-    @Override
-    public void testCheckToStringOverridden() {
-    }
-
-    // helpers..........................................................................................................
-
     @Override
     public SpreadsheetFormatParserTokenVisitor createVisitor() {
         return new SpreadsheetFormatParserTokenVisitor() {

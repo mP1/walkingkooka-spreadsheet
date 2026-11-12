@@ -38,7 +38,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     HateosResourceTesting2<SpreadsheetLabelMapping, SpreadsheetLabelName>,
     ThrowableTesting,
     TreePrintableTesting,
-    ToStringTesting<SpreadsheetLabelMapping> {
+    ToStringTesting {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("label123");
     private final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1)

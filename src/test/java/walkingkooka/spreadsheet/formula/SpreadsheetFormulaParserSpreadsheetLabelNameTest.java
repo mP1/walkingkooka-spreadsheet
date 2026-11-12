@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetFormulaParserSpreadsheetLabelNameTest implements SpreadsheetParserTesting2<SpreadsheetFormulaParserSpreadsheetLabelName>,
     PackagePrivateClassTesting<SpreadsheetFormulaParserSpreadsheetLabelName>,
-    ToStringTesting<SpreadsheetFormulaParserSpreadsheetLabelName> {
+    ToStringTesting {
 
     @Test
     public void testParseWrongFirstCharFail() {

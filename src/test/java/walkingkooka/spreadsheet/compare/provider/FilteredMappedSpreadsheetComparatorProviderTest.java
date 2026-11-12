@@ -32,7 +32,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FilteredMappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<FilteredMappedSpreadsheetComparatorProvider>,
-    ToStringTesting<FilteredMappedSpreadsheetComparatorProvider> {
+    ToStringTesting {
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/comparator123");
 

@@ -52,7 +52,7 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
     CanBeEmptyTesting,
     HasTextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetCellQueryRequest>,
-    ToStringTesting<SpreadsheetCellQueryRequest>,
+    ToStringTesting,
     ParseStringTesting<SpreadsheetCellQueryRequest>,
     JsonNodeMarshallerTesting<SpreadsheetCellQueryRequest>,
     ThrowableTesting {

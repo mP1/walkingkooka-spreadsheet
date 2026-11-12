@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
@@ -34,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExporterCollectionTest implements SpreadsheetExporterTesting2<SpreadsheetExporterCollection>,
     HashCodeEqualsDefinedTesting2<SpreadsheetExporterCollection>,
-    ToStringTesting<SpreadsheetExporterCollection> {
+    PackagePrivateClassTesting<SpreadsheetExporterCollection>,
+    ToStringTesting {
 
     @Test
     public void testWithNullFails() {

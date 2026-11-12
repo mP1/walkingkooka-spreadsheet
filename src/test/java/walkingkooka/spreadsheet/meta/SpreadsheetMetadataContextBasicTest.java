@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataContextBasicTest implements SpreadsheetMetadataContextTesting2<SpreadsheetMetadataContextBasic>,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadataContextBasic>,
     HasNowTesting,
-    ToStringTesting<SpreadsheetMetadataContextBasic> {
+    ToStringTesting {
 
     private final static SpreadsheetMetadataCreator CREATE_METADATA = new SpreadsheetMetadataCreator() {
         @Override

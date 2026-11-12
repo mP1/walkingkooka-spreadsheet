@@ -119,7 +119,7 @@ public final class SpreadsheetFormulaTest implements PublicClassTesting<Spreadsh
     JsonNodeMarshallerTesting<SpreadsheetFormula>,
     PatchableTesting<SpreadsheetFormula>,
     SpreadsheetParserContextTesting,
-    ToStringTesting<SpreadsheetFormula>,
+    ToStringTesting,
     HasTextTesting,
     ThrowableTesting,
     TreePrintableTesting {

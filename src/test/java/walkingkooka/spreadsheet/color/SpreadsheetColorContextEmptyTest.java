@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColorContextEmptyTest implements SpreadsheetColorContextTesting2<SpreadsheetColorContextEmpty>,
     ThrowableTesting,
-    ToStringTesting<SpreadsheetColorContextEmpty> {
+    ToStringTesting {
 
     // indexedColor.....................................................................................................
 

@@ -33,7 +33,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MergedMappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<MergedMappedSpreadsheetComparatorProvider>,
-    ToStringTesting<MergedMappedSpreadsheetComparatorProvider> {
+    ToStringTesting {
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/rename-comparator111");
 

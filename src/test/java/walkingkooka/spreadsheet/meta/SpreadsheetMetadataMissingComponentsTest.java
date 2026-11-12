@@ -34,7 +34,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataMissingComponentsTest implements PublicClassTesting<SpreadsheetMetadataMissingComponents>,
-    ToStringTesting<SpreadsheetMetadataMissingComponents>,
+    ToStringTesting,
     TypeNameTesting<SpreadsheetMetadataMissingComponents>,
     ThrowableTesting {
 

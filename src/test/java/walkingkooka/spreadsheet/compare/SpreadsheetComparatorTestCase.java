@@ -23,7 +23,7 @@ import walkingkooka.text.CharSequences;
 
 public abstract class SpreadsheetComparatorTestCase<C extends SpreadsheetComparator<T>, T> implements SpreadsheetComparatorTesting2<C, T>,
     PackagePrivateClassTesting<C>,
-    ToStringTesting<C>  {
+    ToStringTesting  {
 
     SpreadsheetComparatorTestCase() {
         super();

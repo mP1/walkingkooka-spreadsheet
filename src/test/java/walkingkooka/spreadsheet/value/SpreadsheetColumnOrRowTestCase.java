@@ -38,7 +38,7 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
     HashCodeEqualsDefinedTesting2<T>,
     HasSpreadsheetReferenceTesting,
     JsonNodeMarshallerTesting<T>,
-    ToStringTesting<T>,
+    ToStringTesting,
     TreePrintableTesting {
 
     final static boolean DIFFERENT_HIDDEN = true;

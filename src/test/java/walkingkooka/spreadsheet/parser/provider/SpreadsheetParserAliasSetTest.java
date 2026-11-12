@@ -35,7 +35,7 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     SpreadsheetParserAlias,
     SpreadsheetParserAliasSet>,
     HashCodeEqualsDefinedTesting2<SpreadsheetParserAliasSet>,
-    ToStringTesting<SpreadsheetParserAliasSet>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<SpreadsheetParserAliasSet> {
 
     // name.............................................................................................................

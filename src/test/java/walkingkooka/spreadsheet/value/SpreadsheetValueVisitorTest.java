@@ -964,11 +964,6 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Override
-    public void testCheckToStringOverridden() {
-        // using FakeSpreadsheetValueVisitor disable test
-    }
-
-    @Override
     public SpreadsheetValueVisitor createVisitor() {
         return new FakeSpreadsheetValueVisitor();
     }

@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.function.Consumer;
 
-public final class SpreadsheetCellRangeReferenceCellsConsumerTest implements PackagePrivateClassTesting<SpreadsheetCellRangeReferenceCellsConsumer>, ToStringTesting<SpreadsheetCellRangeReferenceCellsConsumer> {
+public final class SpreadsheetCellRangeReferenceCellsConsumerTest implements PackagePrivateClassTesting<SpreadsheetCellRangeReferenceCellsConsumer>, ToStringTesting {
 
     @Test
     public void testToString() {

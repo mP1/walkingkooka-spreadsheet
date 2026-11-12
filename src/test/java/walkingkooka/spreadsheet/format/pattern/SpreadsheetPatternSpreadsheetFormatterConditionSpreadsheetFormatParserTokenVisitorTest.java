@@ -32,7 +32,7 @@ import java.util.function.Predicate;
 
 public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor>
     implements PredicateTesting,
-    ToStringTesting<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor> {
+    ToStringTesting {
 
     @Test
     public void testEquals() {

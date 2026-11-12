@@ -108,11 +108,6 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
     );
 
     @Override
-    public void testCheckToStringOverridden() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testTypeNaming() {
         throw new UnsupportedOperationException();
     }

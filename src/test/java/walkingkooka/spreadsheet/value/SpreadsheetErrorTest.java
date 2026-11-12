@@ -68,7 +68,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     HasValidationPromptValueTesting,
     ThrowableTesting,
     TreePrintableTesting,
-    ToStringTesting<SpreadsheetError>,
+    ToStringTesting,
     HasTerminalErrorTextTesting2<SpreadsheetError>,
     HasValueTesting {
 

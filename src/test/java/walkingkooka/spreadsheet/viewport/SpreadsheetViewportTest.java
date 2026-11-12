@@ -47,7 +47,7 @@ public final class SpreadsheetViewportTest implements PublicClassTesting<Spreads
     HashCodeEqualsDefinedTesting2<SpreadsheetViewport>,
     JsonNodeMarshallerTesting<SpreadsheetViewport>,
     ThrowableTesting,
-    ToStringTesting<SpreadsheetViewport>,
+    ToStringTesting,
     TreePrintableTesting {
 
     private final static SpreadsheetCellReference HOME = SpreadsheetSelection.A1;

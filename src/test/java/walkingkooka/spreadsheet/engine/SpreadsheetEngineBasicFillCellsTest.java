@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 
 public final class SpreadsheetEngineBasicFillCellsTest extends SpreadsheetEngineBasicTestCase<SpreadsheetEngineBasicFillCells>
-    implements ToStringTesting<SpreadsheetEngineBasicFillCells> {
+    implements ToStringTesting {
 
     @Test
     public void testToString() {

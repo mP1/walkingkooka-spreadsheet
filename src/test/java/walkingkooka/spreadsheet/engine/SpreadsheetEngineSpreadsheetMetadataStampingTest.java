@@ -77,7 +77,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetEngineSpreadsheetMetadataStampingTest implements SpreadsheetEngineTesting2<SpreadsheetEngineSpreadsheetMetadataStamping>,
     CurrencyContextTesting,
     LocaleContextTesting,
-    ToStringTesting<SpreadsheetEngineSpreadsheetMetadataStamping> {
+    ToStringTesting {
 
     private final static SpreadsheetId ID = SpreadsheetId.parse("123");
 

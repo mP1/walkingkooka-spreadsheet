@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import java.util.List;
 
 public final class FilteredSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<FilteredSpreadsheetComparatorProvider>,
-    ToStringTesting<FilteredSpreadsheetComparatorProvider> {
+    ToStringTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 

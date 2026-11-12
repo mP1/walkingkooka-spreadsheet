@@ -24,7 +24,7 @@ import walkingkooka.ToStringTesting;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class HasSpreadsheetMetadataMutableTest implements HasSpreadsheetMetadataTesting2<HasSpreadsheetMetadataMutable>,
-    ToStringTesting<HasSpreadsheetMetadataMutable> {
+    ToStringTesting {
 
     @Test
     public void testWithNullHasSpreadsheetMetadataFails() {

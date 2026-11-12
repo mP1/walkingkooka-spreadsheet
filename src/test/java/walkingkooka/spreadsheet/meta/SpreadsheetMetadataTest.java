@@ -146,7 +146,7 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
     MediaTypeDetectorTesting,
     PatchableTesting<SpreadsheetMetadata>,
     SpreadsheetEnvironmentContextTesting,
-    ToStringTesting<SpreadsheetMetadata>,
+    ToStringTesting,
     TreePrintableTesting {
 
     private static final SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();

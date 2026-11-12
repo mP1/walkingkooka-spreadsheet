@@ -69,7 +69,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormatterContextBasicTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterContextBasic>,
     SpreadsheetEnvironmentContextTesting,
     SpreadsheetLabelNameResolverTesting,
-    ToStringTesting<SpreadsheetFormatterContextBasic> {
+    ToStringTesting {
 
     private final static Color COLOR = Color.fromRgb(0x123456);
 

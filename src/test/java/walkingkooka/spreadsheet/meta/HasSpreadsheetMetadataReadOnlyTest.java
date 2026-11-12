@@ -23,7 +23,7 @@ import walkingkooka.ToStringTesting;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class HasSpreadsheetMetadataReadOnlyTest implements HasSpreadsheetMetadataTesting2<HasSpreadsheetMetadataReadOnly>,
-    ToStringTesting<HasSpreadsheetMetadataReadOnly> {
+    ToStringTesting {
 
     @Test
     public void testWithNullHasSpreadsheetMetadataFails() {

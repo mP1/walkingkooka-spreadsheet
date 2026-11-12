@@ -59,7 +59,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     HasValueTesting,
     JsonNodeUnmarshallContextTesting,
     LocaleContextTesting,
-    ToStringTesting<N>,
+    ToStringTesting,
     ThrowableTesting {
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();

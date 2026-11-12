@@ -50,7 +50,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     ComparatorTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     HasTextTesting,
-    ToStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
+    ToStringTesting,
     ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     JsonNodeMarshallerTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     TreePrintableTesting,

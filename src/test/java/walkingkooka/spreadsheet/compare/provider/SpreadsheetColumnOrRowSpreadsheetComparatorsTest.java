@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements PublicClassTesting<SpreadsheetColumnOrRowSpreadsheetComparators>,
     ComparatorTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetColumnOrRowSpreadsheetComparators>,
-    ToStringTesting<SpreadsheetColumnOrRowSpreadsheetComparators>,
+    ToStringTesting,
     ParseStringTesting<List<SpreadsheetColumnOrRowSpreadsheetComparators>> {
 
     @Test

@@ -106,7 +106,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     HashCodeEqualsDefinedTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
     LocaleContextTesting,
     HasSpreadsheetMetadataTesting,
-    ToStringTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
+    ToStringTesting,
     ThrowableTesting {
 
     private final static String NAME = "Name1234";

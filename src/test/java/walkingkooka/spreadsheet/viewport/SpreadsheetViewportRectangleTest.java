@@ -41,7 +41,7 @@ public final class SpreadsheetViewportRectangleTest implements PublicClassTestin
     JsonNodeMarshallerTesting<SpreadsheetViewportRectangle>,
     ParseStringTesting<SpreadsheetViewportRectangle>,
     ThrowableTesting,
-    ToStringTesting<SpreadsheetViewportRectangle>,
+    ToStringTesting,
     TreePrintableTesting,
     HasUrlFragmentTesting {
 

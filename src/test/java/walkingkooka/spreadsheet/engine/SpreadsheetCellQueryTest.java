@@ -51,7 +51,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     HasTextTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetCellQuery>,
-    ToStringTesting<SpreadsheetCellQuery>,
+    ToStringTesting,
     ParseStringTesting<SpreadsheetCellQuery>,
     TreePrintableTesting,
     JsonNodeMarshallerTesting<SpreadsheetCellQuery> {

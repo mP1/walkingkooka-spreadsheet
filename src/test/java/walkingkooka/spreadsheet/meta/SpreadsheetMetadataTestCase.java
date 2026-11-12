@@ -86,7 +86,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     SpreadsheetColorContextTesting2<T>,
     SpreadsheetEnvironmentContextTesting,
     ThrowableTesting,
-    ToStringTesting<T>,
+    ToStringTesting,
     TreePrintableTesting {
 
     private final static Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {

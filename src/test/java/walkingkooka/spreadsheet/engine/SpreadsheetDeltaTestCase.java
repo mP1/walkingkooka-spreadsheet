@@ -72,7 +72,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> implements PackagePrivateClassTesting<D>,
     TypeNameTesting<D>,
     HashCodeEqualsDefinedTesting2<D>,
-    ToStringTesting<D>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<D>,
     TreePrintableTesting {
 

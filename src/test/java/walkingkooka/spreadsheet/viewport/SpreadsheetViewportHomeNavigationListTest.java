@@ -39,7 +39,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements PublicCl
     HasUrlFragmentTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetViewportHomeNavigationList>,
     ThrowableTesting,
-    ToStringTesting<SpreadsheetViewportHomeNavigationList>,
+    ToStringTesting,
     TreePrintableTesting {
 
     private final static SpreadsheetCellReference HOME = SpreadsheetSelection.A1;

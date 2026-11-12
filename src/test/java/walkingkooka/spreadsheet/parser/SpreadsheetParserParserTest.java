@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTokens;
@@ -34,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserParserTest implements SpreadsheetParserTesting2<SpreadsheetParserParser>,
     HashCodeEqualsDefinedTesting2<SpreadsheetParserParser>,
-    ToStringTesting<SpreadsheetParserParser> {
+    PackagePrivateClassTesting<SpreadsheetParserParser>,
+    ToStringTesting {
 
     private final static String TOKEN = "Hello123";
 

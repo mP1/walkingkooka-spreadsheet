@@ -29,7 +29,7 @@ import java.util.List;
 
 public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<FilteredSpreadsheetParserProvider>,
     HasSpreadsheetMetadataTesting,
-    ToStringTesting<FilteredSpreadsheetParserProvider> {
+    ToStringTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 

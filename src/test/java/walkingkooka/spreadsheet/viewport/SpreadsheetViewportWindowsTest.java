@@ -53,7 +53,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
     PredicateTesting,
     ThrowableTesting,
     TreePrintableTesting,
-    ToStringTesting<SpreadsheetViewportWindows> {
+    ToStringTesting {
 
     @Test
     public void testWithNullFails() {
