@@ -73,21 +73,21 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
-    PackagePrivateClassTesting<SpreadsheetMetadata>,
     ConverterTesting,
     CurrencyLocaleContextTesting,
     HasContentTypeTesting,
     HasOptionalNameTesting,
-    HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
-    JsonNodeMarshallerTesting<SpreadsheetMetadata>,
+    HashCodeEqualsDefinedTesting2<T>,
+    HateosResourceTesting2<T, SpreadsheetId>,
+    JsonNodeMarshallerTesting<T>,
     LocaleContextTesting,
     MediaTypeDetectorTesting,
-    HateosResourceTesting2<SpreadsheetMetadata, SpreadsheetId>,
-    SpreadsheetColorContextTesting2<SpreadsheetMetadata>,
+    PackagePrivateClassTesting<T>,
+    SpreadsheetColorContextTesting2<T>,
+    SpreadsheetEnvironmentContextTesting,
     ThrowableTesting,
-    ToStringTesting<SpreadsheetMetadata>,
-    TreePrintableTesting,
-    SpreadsheetEnvironmentContextTesting {
+    ToStringTesting<T>,
+    TreePrintableTesting {
 
     private final static Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {
         throw new UnsupportedOperationException();
@@ -1087,13 +1087,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Override
-    public final SpreadsheetMetadata unmarshall(final JsonNode from,
-                                                final JsonNodeUnmarshallContext context) {
-        return SpreadsheetMetadata.unmarshall(from, context);
+    public final T unmarshall(final JsonNode from,
+                              final JsonNodeUnmarshallContext context) {
+        return (T) SpreadsheetMetadata.unmarshall(
+            from,
+            context
+        );
     }
 
     @Override
-    public final SpreadsheetMetadata createJsonNodeMarshallingValue() {
+    public final T createJsonNodeMarshallingValue() {
         return this.createObject();
     }
 
@@ -1131,25 +1134,18 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     // HateosResourceTesting.............................................................................................
 
     @Override
-    public final SpreadsheetMetadata createHateosResource() {
+    public final T createHateosResource() {
         return this.createObject();
     }
 
     // ColorContext.....................................................................................................
 
     @Override
-    public final SpreadsheetMetadata createContext() {
+    public final T createContext() {
         return this.createObject();
     }
 
-    // class...........................................................................................................
-
-    @Override
-    public final Class<SpreadsheetMetadata> type() {
-        return Cast.to(this.metadataType());
-    }
-
-    abstract Class<T> metadataType();
+    // class............................................................................................................
 
     @Override
     public final JavaVisibility typeVisibility() {
