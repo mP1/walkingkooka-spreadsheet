@@ -70,11 +70,11 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
     }
 
     public SpreadsheetCellRange setRange(final SpreadsheetCellRangeReference range) {
-        Objects.requireNonNull(range, "range");
-
         return this.range.equals(range) ?
             this :
-            this.setRange0(range);
+            this.setRange0(
+                Objects.requireNonNull(range, "range")
+            );
     }
 
     private SpreadsheetCellRange setRange0(final SpreadsheetCellRangeReference range) {
@@ -148,12 +148,10 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
      * cells will be clipped and lost.
      */
     public SpreadsheetCellRange move(final SpreadsheetCellRangeReference range) {
-        Objects.requireNonNull(range, "range");
-
         return this.range.equalsIgnoreReferenceKind(range) ?
             this.setRange(range) :
             this.move0(
-                range,
+                Objects.requireNonNull(range, "range"),
                 this.range.replaceReferencesMapper(range)
                     .orElse(CanReplaceReferences.NULL_REPLACE_REFERENCE_MAPPER)
             );
@@ -339,7 +337,8 @@ public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof SpreadsheetCellRange && this.equals0((SpreadsheetCellRange) other);
+            other instanceof SpreadsheetCellRange &&
+                this.equals0((SpreadsheetCellRange) other);
     }
 
     private boolean equals0(final SpreadsheetCellRange other) {
