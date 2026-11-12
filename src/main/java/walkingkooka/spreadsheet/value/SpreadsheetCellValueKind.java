@@ -172,6 +172,20 @@ public enum SpreadsheetCellValueKind implements HasContentType,
 
     public abstract Object cellValue(final SpreadsheetCell cell);
 
+    // HasContentType...................................................................................................
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return this.contentType;
+    }
+
+    private final Optional<MediaType> contentType;
+
+    // fileExtension....................................................................................................
+
+    /**
+     * Parses the given file extension trying to match a {@link SpreadsheetCellValueKind}.
+     */
     public static SpreadsheetCellValueKind parse(final String fileExtension) {
         Objects.requireNonNull(fileExtension, "fileExtension");
 
@@ -248,15 +262,6 @@ public enum SpreadsheetCellValueKind implements HasContentType,
             )).findFirst()
             .orElse(null);
     }
-
-    // HasContentType...................................................................................................
-
-    @Override
-    public Optional<MediaType> contentType() {
-        return this.contentType;
-    }
-
-    private final Optional<MediaType> contentType;
 
     // HasFileExtension.................................................................................................
 
