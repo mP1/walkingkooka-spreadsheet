@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetEnvironmentContextBasicTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextBasic>,
     HasSpreadsheetMetadataTesting,
     TreePrintableTesting,
-    ToStringTesting<SpreadsheetEnvironmentContextBasic> {
+    ToStringTesting {
 
     private final static SpreadsheetMetadata SPREADSHEET_METADATA = HasSpreadsheetMetadataTesting.SPREADSHEET_METADATA.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,

@@ -26,7 +26,7 @@ import walkingkooka.text.cursor.parser.ParserTesting2;
 public abstract class SpreadsheetNonNumberParsePatternParserTestCase<P extends SpreadsheetNonNumberParsePatternParser>
     extends SpreadsheetNonNumberParsePatternTestCase<P>
     implements ParserTesting2<P, SpreadsheetParserContext>,
-    ToStringTesting<P>,
+    ToStringTesting,
     TypeNameTesting<P> {
 
     SpreadsheetNonNumberParsePatternParserTestCase() {

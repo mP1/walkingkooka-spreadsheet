@@ -44,7 +44,7 @@ public final class SpreadsheetTextTest implements PublicClassTesting<Spreadsheet
     HasTextTesting,
     HasTextNodeTesting,
     JsonNodeMarshallerTesting<SpreadsheetText>,
-    ToStringTesting<SpreadsheetText>,
+    ToStringTesting,
     TreePrintableTesting {
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);

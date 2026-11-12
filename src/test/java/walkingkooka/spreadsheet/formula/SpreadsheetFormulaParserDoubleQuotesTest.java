@@ -20,13 +20,15 @@ package walkingkooka.spreadsheet.formula;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 
 public final class SpreadsheetFormulaParserDoubleQuotesTest implements ParserTesting2<SpreadsheetFormulaParserDoubleQuotes, SpreadsheetParserContext>,
-    ToStringTesting<SpreadsheetFormulaParserDoubleQuotes> {
+    PackagePrivateClassTesting<SpreadsheetFormulaParserDoubleQuotes>,
+    ToStringTesting {
 
     @Test
     public void testParseNotDoubleQuote() {

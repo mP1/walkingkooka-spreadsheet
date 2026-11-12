@@ -27,7 +27,7 @@ import walkingkooka.storage.StorageTesting2;
 
 public abstract class SpreadsheetStorageTestCase<T extends SpreadsheetStorage> implements StorageTesting2<T, SpreadsheetStorageContext>,
     TypeNameTesting<T>,
-    ToStringTesting<T>,
+    ToStringTesting,
     HasSpreadsheetMetadataTesting,
     PackagePrivateClassTesting<T>,
     SpreadsheetEnvironmentContextTesting,

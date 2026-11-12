@@ -24,7 +24,7 @@ import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements IteratorTesting,
     PackagePrivateClassTesting<SpreadsheetCellRangeReferencePathCellsIterator>,
-    ToStringTesting<SpreadsheetCellRangeReferencePathCellsIterator> {
+    ToStringTesting {
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 

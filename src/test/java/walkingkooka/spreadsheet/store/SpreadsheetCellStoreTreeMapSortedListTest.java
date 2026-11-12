@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import java.util.Optional;
 
 public final class SpreadsheetCellStoreTreeMapSortedListTest implements PackagePrivateClassTesting<SpreadsheetCellStoreTreeMapSortedList>,
-    ToStringTesting<SpreadsheetCellStoreTreeMapSortedList> {
+    ToStringTesting {
 
     private final static SpreadsheetCell A1 = SpreadsheetSelection.A1
         .setFormula(SpreadsheetFormula.EMPTY.setText("'A1"));

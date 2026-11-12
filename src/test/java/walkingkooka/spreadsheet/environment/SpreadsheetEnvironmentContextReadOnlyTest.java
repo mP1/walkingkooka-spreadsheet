@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEnvironmentContextReadOnlyTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextReadOnly>,
-    ToStringTesting<SpreadsheetEnvironmentContextReadOnly> {
+    ToStringTesting {
 
     // ONLY user is writable
     private final Predicate<EnvironmentValueName<?>> READ_ONLY_FILTER = Predicates.not(

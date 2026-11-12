@@ -35,7 +35,7 @@ public final class SpreadsheetFormatterAliasSetTest implements PluginAliasSetLik
     SpreadsheetFormatterAlias,
     SpreadsheetFormatterAliasSet>,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormatterAliasSet>,
-    ToStringTesting<SpreadsheetFormatterAliasSet>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<SpreadsheetFormatterAliasSet> {
 
     // name.............................................................................................................

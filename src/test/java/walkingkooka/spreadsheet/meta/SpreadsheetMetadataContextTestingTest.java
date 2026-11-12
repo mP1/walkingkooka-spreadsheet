@@ -29,11 +29,6 @@ import java.util.Optional;
 
 public final class SpreadsheetMetadataContextTestingTest implements SpreadsheetMetadataContextTesting2<TestSpreadsheetMetadataContext> {
 
-    @Override
-    public void testCheckToStringOverridden() {
-        throw new UnsupportedOperationException();
-    }
-
     static class TestSpreadsheetMetadataContext extends FakeSpreadsheetMetadataContext {
 
         @Override

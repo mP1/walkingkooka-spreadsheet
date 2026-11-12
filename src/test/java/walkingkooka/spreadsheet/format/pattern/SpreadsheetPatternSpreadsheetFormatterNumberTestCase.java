@@ -21,7 +21,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.PackagePrivateClassTesting;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterNumberTestCase<T> implements PackagePrivateClassTesting<T>,
-    ToStringTesting<T> {
+    ToStringTesting {
 
     SpreadsheetPatternSpreadsheetFormatterNumberTestCase() {
         super();

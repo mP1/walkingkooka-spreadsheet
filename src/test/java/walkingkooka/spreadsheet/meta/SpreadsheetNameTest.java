@@ -31,7 +31,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, SpreadsheetName>,
     ComparableTesting2<SpreadsheetName>,
     JsonNodeMarshallerTesting<SpreadsheetName>,
-    ToStringTesting<SpreadsheetName> {
+    ToStringTesting {
 
     private final static String VALUE = "SpreadsheetName123";
 

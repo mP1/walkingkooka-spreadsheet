@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorFormattedValueTextStylePropertyName<Color>, Color>,
     HashCodeEqualsDefinedTesting2<SpreadsheetComparatorFormattedValueTextStylePropertyName<Color>>,
-    ToStringTesting<SpreadsheetComparatorFormattedValueTextStylePropertyName<Color>> {
+    ToStringTesting {
 
     private final static TextStylePropertyName<Color> TEXT_STYLE_PROPERTY_NAME = TextStylePropertyName.COLOR;
 

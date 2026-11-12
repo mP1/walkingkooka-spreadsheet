@@ -39,7 +39,7 @@ public final class SpreadsheetIdTest implements PublicClassTesting<SpreadsheetId
     JsonNodeMarshallerTesting<SpreadsheetId>,
     ParseStringTesting<SpreadsheetId>,
     TreePrintableTesting,
-    ToStringTesting<SpreadsheetId>,
+    ToStringTesting,
     HasValueTesting {
 
     private final static Long VALUE = 123L;

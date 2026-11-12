@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextSpreadsheetMetadata>,
-    ToStringTesting<SpreadsheetEnvironmentContextSpreadsheetMetadata> {
+    ToStringTesting {
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 

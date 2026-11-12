@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class AnchoredSpreadsheetSelectionTest implements PublicClassTesting<AnchoredSpreadsheetSelection>,
     HashCodeEqualsDefinedTesting2<AnchoredSpreadsheetSelection>,
-    ToStringTesting<AnchoredSpreadsheetSelection>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<AnchoredSpreadsheetSelection>,
     TreePrintableTesting,
     HasUrlFragmentTesting {

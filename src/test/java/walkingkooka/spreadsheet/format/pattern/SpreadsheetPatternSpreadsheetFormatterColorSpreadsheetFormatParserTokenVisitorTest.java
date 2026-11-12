@@ -28,7 +28,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 public final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor>
-    implements ToStringTesting<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor> {
+    implements ToStringTesting {
 
     @Test
     public void testColorName() {

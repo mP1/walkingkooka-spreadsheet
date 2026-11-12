@@ -29,7 +29,7 @@ import java.util.function.Predicate;
 
 public final class SpreadsheetFormatParserTokenPredicateTest implements PredicateTesting2<SpreadsheetFormatParserTokenPredicate, ParserToken>,
     PackagePrivateClassTesting<SpreadsheetFormatParserTokenPredicate>,
-    ToStringTesting<SpreadsheetFormatParserTokenPredicate> {
+    ToStringTesting {
 
     @Test
     public void testTestNullFalse() {

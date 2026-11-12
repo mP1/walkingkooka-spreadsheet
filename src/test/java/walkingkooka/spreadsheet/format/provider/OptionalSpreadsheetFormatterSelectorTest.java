@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class OptionalSpreadsheetFormatterSelectorTest implements PublicClassTesting<OptionalSpreadsheetFormatterSelector>,
     HashCodeEqualsDefinedTesting2<OptionalSpreadsheetFormatterSelector>,
-    ToStringTesting<OptionalSpreadsheetFormatterSelector>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<OptionalSpreadsheetFormatterSelector> {
     // with.............................................................................................................
 

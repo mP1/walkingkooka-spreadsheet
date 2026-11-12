@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportNavigationContextBasicTest implements ClassTesting<SpreadsheetViewportNavigationContextBasic>,
     SpreadsheetViewportNavigationContextTesting2<SpreadsheetViewportNavigationContextBasic>,
-    ToStringTesting<SpreadsheetViewportNavigationContextBasic> {
+    ToStringTesting {
 
     private final static SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 

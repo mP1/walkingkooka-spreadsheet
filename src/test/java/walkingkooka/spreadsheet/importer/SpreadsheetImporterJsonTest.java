@@ -49,7 +49,7 @@ import java.util.Optional;
 
 public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTesting<SpreadsheetImporterJson>,
     HasSpreadsheetMetadataTesting,
-    ToStringTesting<SpreadsheetImporterJson>,
+    ToStringTesting,
     PackagePrivateClassTesting<SpreadsheetImporterJson> {
 
     private final static Optional<Object> VALUE = Optional.of(

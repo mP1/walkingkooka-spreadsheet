@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterContextBasicTest implements SpreadsheetImporterContextTesting2<SpreadsheetImporterContextBasic>,
     JsonNodeUnmarshallContextTesting,
-    ToStringTesting<SpreadsheetImporterContextBasic> {
+    ToStringTesting {
 
     @Test
     public void testWithNullJsonNodeUnmarshallContextFails() {

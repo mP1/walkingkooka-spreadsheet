@@ -30,7 +30,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
     PackagePrivateClassTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
-    ToStringTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
+    ToStringTesting,
     TreePrintableTesting {
 
     @Test

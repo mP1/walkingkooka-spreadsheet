@@ -35,7 +35,7 @@ public final class SpreadsheetExporterAliasSetTest implements PluginAliasSetLike
     SpreadsheetExporterAlias,
     SpreadsheetExporterAliasSet>,
     HashCodeEqualsDefinedTesting2<SpreadsheetExporterAliasSet>,
-    ToStringTesting<SpreadsheetExporterAliasSet>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<SpreadsheetExporterAliasSet> {
 
     // name.............................................................................................................

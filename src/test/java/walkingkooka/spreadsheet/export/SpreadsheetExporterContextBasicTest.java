@@ -25,7 +25,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExporterContextBasicTest implements SpreadsheetExporterContextTesting2<SpreadsheetExporterContextBasic>,
-    ToStringTesting<SpreadsheetExporterContextBasic> {
+    ToStringTesting {
 
     @Test
     public void testWithNullSpreadsheetMetadataFails() {

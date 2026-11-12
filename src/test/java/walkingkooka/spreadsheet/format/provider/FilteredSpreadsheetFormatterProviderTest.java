@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import java.util.List;
 
 public final class FilteredSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<FilteredSpreadsheetFormatterProvider>,
-    ToStringTesting<FilteredSpreadsheetFormatterProvider> {
+    ToStringTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 

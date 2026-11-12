@@ -24,7 +24,7 @@ import walkingkooka.reflect.ClassTesting;
 
 public final class SpreadsheetNumberParsePatternRequestTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternRequest>
     implements ClassTesting<SpreadsheetNumberParsePatternRequest>,
-    ToStringTesting<SpreadsheetNumberParsePatternRequest> {
+    ToStringTesting {
 
     @Test
     public void testToString() {

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.FakeParser;
@@ -33,8 +34,9 @@ import walkingkooka.text.cursor.parser.Parsers;
 import java.util.Optional;
 
 public final class SpreadsheetFormatParsersFormatColorParserTest implements ParserTesting2<SpreadsheetFormatParsersFormatColorParser, SpreadsheetFormatParserContext>,
+    PackagePrivateClassTesting<SpreadsheetFormatParsersFormatColorParser>,
     SpreadsheetFormatParserContextTesting,
-    ToStringTesting<SpreadsheetFormatParsersFormatColorParser> {
+    ToStringTesting {
 
     @Test
     public void testParseNotColor() {
@@ -250,7 +252,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         );
     }
 
-    // ToStringTesting..................................................................................................
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetFormatParsersFormatColorParser> type() {

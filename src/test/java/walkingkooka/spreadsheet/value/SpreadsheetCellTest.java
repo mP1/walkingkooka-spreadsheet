@@ -112,7 +112,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     PatchableTesting<SpreadsheetCell>,
     HasSpreadsheetMetadataTesting,
     ThrowableTesting,
-    ToStringTesting<SpreadsheetCell>,
+    ToStringTesting,
     TreePrintableTesting {
 
     private final static SpreadsheetFormula FORMULA = SpreadsheetFormula.EMPTY

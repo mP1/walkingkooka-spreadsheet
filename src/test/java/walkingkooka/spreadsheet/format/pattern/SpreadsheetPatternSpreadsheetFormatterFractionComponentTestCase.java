@@ -21,7 +21,7 @@ import walkingkooka.ToStringTesting;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterFractionComponentTestCase<C extends SpreadsheetPatternSpreadsheetFormatterFractionComponent>
     extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<C>
-    implements ToStringTesting<C> {
+    implements ToStringTesting {
 
     SpreadsheetPatternSpreadsheetFormatterFractionComponentTestCase() {
         super();

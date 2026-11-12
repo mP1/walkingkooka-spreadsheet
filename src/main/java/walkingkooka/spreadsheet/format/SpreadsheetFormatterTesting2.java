@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     extends SpreadsheetFormatterTesting,
-    ToStringTesting<F>,
+    ToStringTesting,
     TypeNameTesting<F> {
 
     // format...........................................................................................................

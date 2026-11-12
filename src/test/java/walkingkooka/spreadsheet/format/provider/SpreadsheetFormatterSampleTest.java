@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSample>,
     PublicClassTesting<SpreadsheetFormatterSample>,
-    ToStringTesting<SpreadsheetFormatterSample>,
+    ToStringTesting,
     TreePrintableTesting,
     JsonNodeMarshallerTesting<SpreadsheetFormatterSample> {
 

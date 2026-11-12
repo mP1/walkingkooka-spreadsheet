@@ -33,7 +33,7 @@ import java.math.MathContext;
 public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C extends SpreadsheetExpressionEvaluationContextShared> implements SpreadsheetExpressionEvaluationContextTesting2<C>,
     HasSpreadsheetMetadataTesting,
     DecimalNumberContextDelegator,
-    ToStringTesting<C> {
+    ToStringTesting {
 
     SpreadsheetExpressionEvaluationContextSharedTestCase() {
         super();

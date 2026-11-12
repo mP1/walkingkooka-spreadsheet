@@ -71,10 +71,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     PackagePrivateClassTesting<SpreadsheetMetadataVisitor> {
 
     @Override
-    public void testCheckToStringOverridden() {
-    }
-
-    @Override
     public void testClassVisibility() {
     }
 

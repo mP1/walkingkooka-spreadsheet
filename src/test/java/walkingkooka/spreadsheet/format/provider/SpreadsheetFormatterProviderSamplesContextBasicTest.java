@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormatterProviderSamplesContextBasicTest implements SpreadsheetFormatterProviderSamplesContextTesting<SpreadsheetFormatterProviderSamplesContextBasic>,
     HasSpreadsheetMetadataTesting,
     DecimalNumberContextDelegator,
-    ToStringTesting<SpreadsheetFormatterProviderSamplesContextBasic> {
+    ToStringTesting {
 
     @Test
     public void testWithNullSpreadsheetFormatterContextFails() {

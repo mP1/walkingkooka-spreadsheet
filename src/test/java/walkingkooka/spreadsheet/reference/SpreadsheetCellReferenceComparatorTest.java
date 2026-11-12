@@ -28,7 +28,7 @@ import java.util.Comparator;
 
 public final class SpreadsheetCellReferenceComparatorTest implements ComparatorTesting2<SpreadsheetCellReferenceComparator, SpreadsheetCell>,
     PackagePrivateClassTesting<SpreadsheetCellReferenceComparator>,
-    ToStringTesting<SpreadsheetCellReferenceComparator> {
+    ToStringTesting {
 
     private final static Comparator<SpreadsheetCellReference> COMPARATOR = SpreadsheetCellRangeReferencePath.RLTD.comparator();
 

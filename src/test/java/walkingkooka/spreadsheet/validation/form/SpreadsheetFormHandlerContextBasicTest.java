@@ -72,7 +72,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormHandlerContextBasicTest implements SpreadsheetFormHandlerContextTesting<SpreadsheetFormHandlerContextBasic>,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormHandlerContextBasic>,
-    ToStringTesting<SpreadsheetFormHandlerContextBasic> {
+    ToStringTesting {
 
     private final static Form<SpreadsheetValidationReference> FORM = Form.with(
         FormName.with("Form123")

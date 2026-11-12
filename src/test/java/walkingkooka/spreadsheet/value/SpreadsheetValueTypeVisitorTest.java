@@ -1033,15 +1033,11 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Override
-    public void testCheckToStringOverridden() {
-    }
-
-    @Override
     public SpreadsheetValueTypeVisitor createVisitor() {
         return new FakeSpreadsheetValueTypeVisitor();
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetValueTypeVisitor> type() {

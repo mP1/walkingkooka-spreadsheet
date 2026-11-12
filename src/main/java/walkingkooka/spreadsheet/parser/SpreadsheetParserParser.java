@@ -37,8 +37,8 @@ import java.util.Optional;
 final class SpreadsheetParserParser implements SpreadsheetParser,
     TreePrintable {
 
-    public static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
-                                         final Optional<ValueType> valueType) {
+    static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
+                                  final Optional<ValueType> valueType) {
         return parser instanceof SpreadsheetParser ?
             (SpreadsheetParser) parser :
             new SpreadsheetParserParser(

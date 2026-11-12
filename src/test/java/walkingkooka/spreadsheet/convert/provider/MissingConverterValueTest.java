@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterValueTest implements PublicClassTesting<MissingConverterValue>,
     HashCodeEqualsDefinedTesting2<MissingConverterValue>,
-    ToStringTesting<MissingConverterValue>,
+    ToStringTesting,
     TreePrintableTesting,
     JsonNodeMarshallerTesting<MissingConverterValue> {
 

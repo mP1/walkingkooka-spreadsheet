@@ -23,7 +23,7 @@ import walkingkooka.reflect.TypeNameTesting;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public interface SpreadsheetStoreRepositoryTesting<S extends SpreadsheetStoreRepository> extends ToStringTesting<S>,
+public interface SpreadsheetStoreRepositoryTesting<S extends SpreadsheetStoreRepository> extends ToStringTesting,
     TypeNameTesting<S> {
 
     @Test

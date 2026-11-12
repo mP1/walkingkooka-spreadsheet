@@ -55,7 +55,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     ParserTesting,
     ParseStringTesting<P>,
     TreePrintableTesting,
-    ToStringTesting<P> {
+    ToStringTesting {
 
     SpreadsheetPatternTestCase() {
         super();

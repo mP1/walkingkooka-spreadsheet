@@ -60,7 +60,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     HasCurrencyTesting,
     HasLocaleTesting,
     HasValueTesting,
-    ToStringTesting<SpreadsheetImporterCellValue>,
+    ToStringTesting,
     TreePrintableTesting,
     PublicClassTesting<SpreadsheetImporterCellValue> {
     

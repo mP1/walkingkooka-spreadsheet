@@ -31,7 +31,7 @@ import java.util.Iterator;
 
 public abstract class SpreadsheetNumberParsePatternComponentTestCase<C extends SpreadsheetNumberParsePatternComponent> extends SpreadsheetNumberParsePatternTestCase<C>
     implements ParserTesting,
-    ToStringTesting<C> {
+    ToStringTesting {
 
     SpreadsheetNumberParsePatternComponentTestCase() {
         super();

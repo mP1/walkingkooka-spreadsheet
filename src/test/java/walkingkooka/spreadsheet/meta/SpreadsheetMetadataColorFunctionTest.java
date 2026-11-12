@@ -31,7 +31,7 @@ import java.util.function.Function;
 
 public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataColorFunction<Integer, Color>>
     implements FunctionTesting2<SpreadsheetMetadataColorFunction<Integer, Color>, Integer, Optional<Color>>,
-    ToStringTesting<SpreadsheetMetadataColorFunction<Integer, Color>>,
+    ToStringTesting,
     PackagePrivateClassTesting<SpreadsheetMetadataColorFunction<Integer, Color>> {
 
     @Test

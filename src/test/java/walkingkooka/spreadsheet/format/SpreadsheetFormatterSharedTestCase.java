@@ -26,7 +26,7 @@ import walkingkooka.reflect.PackagePrivateClassTesting;
 import java.util.Optional;
 
 public abstract class SpreadsheetFormatterSharedTestCase<F extends SpreadsheetFormatterShared> implements SpreadsheetFormatterTesting2<F>,
-    ToStringTesting<F>,
+    ToStringTesting,
     PackagePrivateClassTesting<F> {
 
     final static Color COLOR_INDEX_44 = Color.indexed(44);

@@ -35,7 +35,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<SpreadsheetParserSpreadsheetParserProvider>,
-    ToStringTesting<SpreadsheetParserSpreadsheetParserProvider> {
+    ToStringTesting {
 
     private final static ProviderContext PROVIDER_CONTEXT = new FakeProviderContext() {
         @Override

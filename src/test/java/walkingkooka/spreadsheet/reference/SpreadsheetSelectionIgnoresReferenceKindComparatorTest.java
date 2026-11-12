@@ -22,7 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparatorTesting2;
 
 public final class SpreadsheetSelectionIgnoresReferenceKindComparatorTest implements ComparatorTesting2<SpreadsheetSelectionIgnoresReferenceKindComparator, SpreadsheetSelection>,
-    ToStringTesting<SpreadsheetSelectionIgnoresReferenceKindComparator> {
+    ToStringTesting {
 
     @Test
     public void testCompareSameCellSelectionDifferentSpreadsheetReferenceKind() {

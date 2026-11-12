@@ -41,7 +41,7 @@ public final class MissingConverterTest implements PublicClassTesting<MissingCon
     HashCodeEqualsDefinedTesting2<MissingConverter>,
     ComparableTesting2<MissingConverter>,
     IteratorTesting,
-    ToStringTesting<MissingConverter>,
+    ToStringTesting,
     TreePrintableTesting,
     JsonNodeMarshallerTesting<MissingConverter> {
 

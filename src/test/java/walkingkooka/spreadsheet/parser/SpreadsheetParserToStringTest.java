@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserToStringTest implements SpreadsheetParserTesting2<SpreadsheetParserToString>,
     HashCodeEqualsDefinedTesting2<SpreadsheetParserToString>,
-    ToStringTesting<SpreadsheetParserToString>,
+    ToStringTesting,
     PackagePrivateClassTesting<SpreadsheetParserToString> {
 
     private final static List<SpreadsheetParserSelectorToken> TOKENS = Lists.of(
