@@ -149,9 +149,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     HasExpressionNumberKindTesting,
     SpreadsheetEnvironmentContextTesting,
     SpreadsheetFormatterTesting {
-
-    private final static int DECIMAL_NUMBER_DIGIT_COUNT = DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT - 1;
-
+    
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
     private final static SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
@@ -1390,7 +1388,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("\"DateTime\" yyyy hh").spreadsheetParserSelector())
             .set(
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
-                DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
+                DECIMAL_NUMBER_DIGIT_COUNT
             ).set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
             .set(converterSelector, ConverterSelector.parse("collection(number, date-time, simple, value, text)"))
             .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").spreadsheetFormatterSelector())
@@ -1548,7 +1546,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    // DecimalNumberContext.............................................................................................
+    // DECIMAL_NUMBER_DIGIT_COUNT.......................................................................................
 
     @Test
     public void testDecimalNumberContextSomeRequiredPropertiesAbsentFails() {
@@ -1588,7 +1586,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testDecimalNumberContextWithSpreadsheetCellWithDecimalNumberSymbols() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
+            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
@@ -1611,7 +1609,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testDecimalNumberContextWithSpreadsheetCellWithDecimalNumberSymbolsAndLocale() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
+            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
@@ -1639,7 +1637,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testDecimalNumberContextWithSpreadsheetCellWithLocale() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
+            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
@@ -1860,7 +1858,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER)
             .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
             .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
+            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
@@ -1908,7 +1906,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER)
             .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
             .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
+            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
@@ -2597,7 +2595,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             SpreadsheetMetadataPropertyName.FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         );
-        properties.put(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT);
+        properties.put(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT);
         properties.put(PROPERTY2, true);
         properties.put(
             SpreadsheetMetadataPropertyName.IMPORTERS,
@@ -2836,7 +2834,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          Thu.\n" +
                 "          Fri.\n" +
                 "          Sat.\n" +
-                "    decimalNumberDigitCount: 8\n" +
+                "    decimalNumberDigitCount: 9\n" +
                 "    decimalNumberSymbols: \n" +
                 "      DecimalNumberSymbols\n" +
                 "        negativeSign\n" +
@@ -3076,7 +3074,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          Thu.\n" +
                 "          Fri.\n" +
                 "          Sat.\n" +
-                "    decimalNumberDigitCount: 8\n" +
+                "    decimalNumberDigitCount: 9\n" +
                 "    decimalNumberSymbols: \n" +
                 "      DecimalNumberSymbols\n" +
                 "        negativeSign\n" +
@@ -3314,7 +3312,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        Thu.\n" +
                 "        Fri.\n" +
                 "        Sat.\n" +
-                "  decimalNumberDigitCount: 8\n" +
+                "  decimalNumberDigitCount: 9\n" +
                 "  decimalNumberSymbols: \n" +
                 "    DecimalNumberSymbols\n" +
                 "      negativeSign\n" +
@@ -3553,7 +3551,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        Thu.\r\n" +
                 "        Fri.\r\n" +
                 "        Sat.\r\n" +
-                "  decimalNumberDigitCount: 8\r\n" +
+                "  decimalNumberDigitCount: 9\r\n" +
                 "  decimalNumberSymbols: \r\n" +
                 "    DecimalNumberSymbols\r\n" +
                 "      negativeSign\r\n" +
@@ -3792,7 +3790,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        Thu.\r" +
                 "        Fri.\r" +
                 "        Sat.\r" +
-                "  decimalNumberDigitCount: 8\r" +
+                "  decimalNumberDigitCount: 9\r" +
                 "  decimalNumberSymbols: \r" +
                 "    DecimalNumberSymbols\r" +
                 "      negativeSign\r" +
