@@ -41,6 +41,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Captures one or more windows that define the cells within a viewport.
@@ -351,9 +352,11 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
 
     @Override
     public String toString() {
-        return SEPARATOR.toSeparatedString(
-            this.cellRanges,
-            SpreadsheetCellRangeReference::toStringMaybeStar
+        return SEPARATOR.toDelimiteredString(
+            this.cellRanges.stream()
+                .map(SpreadsheetCellRangeReference::toStringMaybeStar)
+                .collect(Collectors.toList()),
+            SEPARATOR.constantSeparator()
         );
     }
 

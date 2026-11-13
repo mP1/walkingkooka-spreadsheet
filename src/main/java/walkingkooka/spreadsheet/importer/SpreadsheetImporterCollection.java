@@ -24,6 +24,7 @@ import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetImporter} that forms a collection trying each {@link SpreadsheetImporter importer} until success.
@@ -108,9 +109,11 @@ final class SpreadsheetImporterCollection implements SpreadsheetImporter {
     @Override
     public String toString() {
         return "collection(" +
-            CharacterConstant.COMMA.toSeparatedString(
-                this.importers,
-                SpreadsheetImporter::toString
+            CharacterConstant.COMMA.toDelimiteredString(
+                this.importers.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.toList()),
+                CharacterConstant.COMMA.constantSeparator()
             ) +
             ")";
     }

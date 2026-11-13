@@ -116,9 +116,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
 
     @Override
     public String text() {
-        return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toSeparatedString(
-            this,
-            Object::toString
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toDelimiteredString(
+            this.stream()
+                .map(Object::toString)
+                .collect(Collectors.toList()),
+            SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.constantSeparator()
         );
     }
 

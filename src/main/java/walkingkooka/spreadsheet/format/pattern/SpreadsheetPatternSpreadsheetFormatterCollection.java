@@ -28,6 +28,7 @@ import walkingkooka.text.printer.TreePrintable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -121,9 +122,11 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
 
     @Override
     public String toString() {
-        return SpreadsheetPattern.SEPARATOR.toSeparatedString(
-            this.formatters,
-            SpreadsheetFormatter::toString
+        return SpreadsheetPattern.SEPARATOR.toDelimiteredString(
+            this.formatters.stream()
+                .map(Object::toString)
+                .collect(Collectors.toList()),
+            SpreadsheetPattern.SEPARATOR.constantSeparator()
         );
     }
 

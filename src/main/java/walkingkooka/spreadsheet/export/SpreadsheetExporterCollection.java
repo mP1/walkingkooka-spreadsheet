@@ -26,6 +26,7 @@ import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetExporter} that forms a collection trying each {@link SpreadsheetExporter exporter} until success.
@@ -121,9 +122,11 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
     @Override
     public String toString() {
         return "collection(" +
-            CharacterConstant.COMMA.toSeparatedString(
-                this.exporters,
-                SpreadsheetExporter::toString
+            CharacterConstant.COMMA.toDelimiteredString(
+                this.exporters.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.toList()),
+                CharacterConstant.COMMA.constantSeparator()
             ) +
             ")";
     }

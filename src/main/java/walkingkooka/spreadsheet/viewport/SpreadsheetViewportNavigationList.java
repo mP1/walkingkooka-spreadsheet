@@ -64,6 +64,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * An {@link walkingkooka.collect.list.ImmutableList} holding zero or more {@link SpreadsheetViewportNavigation}.
@@ -685,9 +686,11 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
 
     @Override
     public String text() {
-        return SEPARATOR.toSeparatedString(
-            this,
-            SpreadsheetViewportNavigation::text
+        return SEPARATOR.toDelimiteredString(
+            this.stream()
+                .map(SpreadsheetViewportNavigation::text)
+                .collect(Collectors.toList()),
+            SEPARATOR.constantSeparator()
         );
     }
 
