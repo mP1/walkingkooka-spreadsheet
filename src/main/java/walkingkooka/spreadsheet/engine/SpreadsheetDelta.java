@@ -1733,9 +1733,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         if (false == invalidProperties.isEmpty()) {
             throw new IllegalArgumentException(
                 "Patch includes invalid properties: " +
-                    CharacterConstant.COMMA.toSeparatedString(
-                        invalidProperties,
-                        JsonPropertyName::value
+                    CharacterConstant.COMMA.toDelimiteredString(
+                        invalidProperties.stream()
+                            .map(JsonPropertyName::value)
+                            .collect(Collectors.toList()),
+                        CharacterConstant.COMMA.constantSeparator()
                     )
             );
         }
@@ -1743,10 +1745,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         if (cell && cellProperties) {
             throw new IllegalArgumentException(
                 "Invalid patch includes: cell, " +
-                    CharacterConstant.COMMA.toSeparatedString(
-                        cellPropertyNames,
-                        JsonPropertyName::value
-                    ));
+                    CharacterConstant.COMMA.toDelimiteredString(
+                        cellPropertyNames.stream()
+                            .map(JsonPropertyName::value)
+                            .collect(Collectors.toList()),
+                        CharacterConstant.COMMA.constantSeparator()
+                    )
+            );
         }
         if (cell && column) {
             throw new IllegalArgumentException("Invalid patch includes: cell, column");
@@ -2606,9 +2611,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private <T extends TreePrintable> void printTreeCollectionCsv(final Collection<T> collection,
                                                                   final IndentingPrinter printer) {
         printer.println(
-            CharacterConstant.COMMA.toSeparatedString(
-                collection,
-                Object::toString
+            CharacterConstant.COMMA.toDelimiteredString(
+                collection.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.toList()),
+                CharacterConstant.COMMA.constantSeparator()
             )
         );
     }

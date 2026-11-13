@@ -80,6 +80,7 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -122,9 +123,11 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         @Override
         public String apply(final List<Object> objects,
                             final SpreadsheetExpressionEvaluationContext context) {
-            return CharacterConstant.COMMA.toSeparatedString(
-                objects,
-                Object::toString
+            return CharacterConstant.COMMA.toDelimiteredString(
+                objects.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.toList()),
+                CharacterConstant.COMMA.constantSeparator()
             );
         }
 
