@@ -663,7 +663,6 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                 if (null == result) {
                     final List<SpreadsheetViewportNavigation> compact = Lists.array();
 
-                    int i = 0;
                     for (SpreadsheetViewportNavigation item : temp) {
                         if (null != item) {
                             compact.add(item);
