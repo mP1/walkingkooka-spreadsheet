@@ -205,8 +205,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
             CSV = namedCollection(
                 "CSV",
                 toCsvStringList(),
-                textToCsvStringList(),
-                textToCsvStringSet()
+                textToCsvStringList()
             );
         }
         return CSV;
@@ -1036,13 +1035,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToCsvStringList() {
         return Converters.textToCsvStringList();
-    }
-
-    /**
-     * {@link Converters#textToCsvStringSet()}
-     */
-    public static Converter<SpreadsheetConverterContext> textToCsvStringSet() {
-        return Converters.textToCsvStringSet();
     }
 
     /**

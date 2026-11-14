@@ -25,7 +25,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.list.TsvStringList;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.CsvStringSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
@@ -228,13 +227,6 @@ final class MissingConverterVerifier {
 
     private final static CsvStringList CSV_STRING_LIST = CsvStringList.EMPTY.setElements(
         Lists.of(
-            "Apple 1",
-            "Banana 2"
-        )
-    );
-
-    private final static CsvStringSet CSV_STRING_SET = CsvStringSet.EMPTY.setElements(
-        Sets.of(
             "Apple 1",
             "Banana 2"
         )

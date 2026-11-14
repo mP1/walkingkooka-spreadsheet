@@ -259,7 +259,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                ConverterCollection\n" +
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -493,7 +492,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                ConverterCollection\n" +
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -677,7 +675,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                ConverterCollection\n" +
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -902,7 +899,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                ConverterCollection\n" +
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -1016,7 +1012,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                ConverterCollection\n" +
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -1156,7 +1151,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "                ConverterCollection\n" +
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -8758,7 +8752,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    text-to-color\n" +
                 "    text-to-converter-selector\n" +
                 "    text-to-csv-string-list\n" +
-                "    text-to-csv-string-set\n" +
                 "    text-to-currency\n" +
                 "    text-to-currency-code\n" +
                 "    text-to-currency-exchange-rater-selector\n" +
@@ -9227,7 +9220,6 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements JsonNod
                 "    text-to-color\n" +
                 "    text-to-converter-selector\n" +
                 "    text-to-csv-string-list\n" +
-                "    text-to-csv-string-set\n" +
                 "    text-to-currency\n" +
                 "    text-to-currency-code\n" +
                 "    text-to-currency-exchange-rater-selector\n" +

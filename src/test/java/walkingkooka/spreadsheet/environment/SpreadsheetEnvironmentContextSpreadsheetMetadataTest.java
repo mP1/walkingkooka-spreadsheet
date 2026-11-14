@@ -695,7 +695,6 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "      text-to-color\n" +
                 "      text-to-converter-selector\n" +
                 "      text-to-csv-string-list\n" +
-                "      text-to-csv-string-set\n" +
                 "      text-to-currency\n" +
                 "      text-to-currency-code\n" +
                 "      text-to-currency-exchange-rater-selector\n" +
@@ -1204,7 +1203,6 @@ public final class SpreadsheetEnvironmentContextSpreadsheetMetadataTest implemen
                 "          text-to-color\n" +
                 "          text-to-converter-selector\n" +
                 "          text-to-csv-string-list\n" +
-                "          text-to-csv-string-set\n" +
                 "          text-to-currency\n" +
                 "          text-to-currency-code\n" +
                 "          text-to-currency-exchange-rater-selector\n" +

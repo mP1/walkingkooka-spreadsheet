@@ -520,11 +520,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
                 converter = SpreadsheetConverters.textToCsvStringList();
                 break;
-            case TEXT_TO_CSV_STRING_SET_STRING:
-                this.noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.textToCsvStringSet();
-                break;
             case TEXT_TO_CURRENCY_STRING:
                 this.noParameterCheck(copy);
 
@@ -1373,10 +1368,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
 
     final static ConverterName TEXT_TO_CSV_STRING_LIST = ConverterName.with(TEXT_TO_CSV_STRING_LIST_STRING);
 
-    private final static String TEXT_TO_CSV_STRING_SET_STRING = "text-to-csv-string-set";
-
-    final static ConverterName TEXT_TO_CSV_STRING_SET = ConverterName.with(TEXT_TO_CSV_STRING_SET_STRING);
-
     private final static String TEXT_TO_CURRENCY_STRING = "text-to-currency";
 
     final static ConverterName TEXT_TO_CURRENCY = ConverterName.with(TEXT_TO_CURRENCY_STRING);
@@ -1863,7 +1854,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider,
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_CONVERTER_SELECTOR),
             converterInfo(TEXT_TO_CSV_STRING_LIST),
-            converterInfo(TEXT_TO_CSV_STRING_SET),
             converterInfo(TEXT_TO_CURRENCY),
             converterInfo(TEXT_TO_CURRENCY_CODE),
             converterInfo(TEXT_TO_CURRENCY_EXCHANGE_RATER_SELECTOR),
