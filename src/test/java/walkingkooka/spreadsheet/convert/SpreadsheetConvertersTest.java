@@ -27,8 +27,6 @@ import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.list.TsvStringList;
-import walkingkooka.collect.set.CsvStringSet;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorContexts;
@@ -246,7 +244,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCollection\n" +
                 "        to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "        TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "        TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"CURRENCY\"\n" +
                 "      ConverterCollection\n" +
@@ -432,7 +429,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            ConverterCollection\n" +
                 "              to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "              TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "              TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "        ConverterCustomToString\n" +
                 "          \"TSV\"\n" +
                 "            ConverterCollection\n" +
@@ -453,7 +449,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  TEXT to Color (walkingkooka.color.convert.ColorConverterTextToColor)\n" +
                 "  TEXT to ConverterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToConverterSelector)\n" +
                 "  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "  TEXT to Currency (walkingkooka.convert.ConverterTextToCurrency)\n" +
                 "  TEXT to CurrencyCode (walkingkooka.convert.ConverterTextToCurrencyCode)\n" +
                 "  TEXT to CurrencyExchangeRaterSelector (walkingkooka.spreadsheet.convert.SpreadsheetConverterTextToCurrencyExchangeRaterSelector)\n" +
@@ -737,7 +732,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                  ConverterCollection\n" +
                 "                    to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                    TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                    TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "              ConverterCustomToString\n" +
                 "                \"TSV\"\n" +
                 "                  ConverterCollection\n" +
@@ -1246,14 +1240,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    @Test
-    public void testCsvConvertCsvStringSetToCsv() {
-        this.csvConvertAndCheck(
-            CsvStringSet.EMPTY.setElements(CSV_STRING_LIST),
-            CSV_STRING_LIST
-        );
-    }
-
     private void csvConvertAndCheck(final Object value,
                                     final CsvStringList expected) {
         this.convertAndCheck(
@@ -1302,8 +1288,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  \"CSV\"\n" +
                 "    ConverterCollection\n" +
                 "      to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
-                "      TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "      TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n"
+                "      TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n"
         );
     }
 
@@ -4136,7 +4121,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                ConverterCollection\n" +
                 "                  to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "                  TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "                  TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "            ConverterCustomToString\n" +
                 "              \"TSV\"\n" +
                 "                ConverterCollection\n" +
@@ -4279,21 +4263,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             set.text(),
             TsvStringSet.class,
             set
-        );
-    }
-
-    @Test
-    public void testTextConvertStringToCsvStringSet() {
-        this.textConvertAndCheck(
-            "Apple,Banana,\"333 444\"",
-            CsvStringSet.class,
-            CsvStringSet.EMPTY.setElements(
-                Sets.of(
-                    "Apple",
-                    "Banana",
-                    "333 444"
-                )
-            )
         );
     }
 
@@ -4864,7 +4833,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "          ConverterCollection\n" +
                 "            to CsvStringList (walkingkooka.convert.ConverterToCsvStringList)\n" +
                 "            TEXT to CsvStringList (walkingkooka.convert.ConverterTextToCollectionListCsvStringList)\n" +
-                "            TEXT to CsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetCsvStringSet)\n" +
                 "      ConverterCustomToString\n" +
                 "        \"TSV\"\n" +
                 "          ConverterCollection\n" +
@@ -5804,14 +5772,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.valueConvertFails(
             "Apple,Banana,\"333 444\"",
             CsvStringList.class
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToCsvStringSetFails() {
-        this.valueConvertFails(
-            "Apple,Banana,\"333 444\"",
-            CsvStringSet.class
         );
     }
 
