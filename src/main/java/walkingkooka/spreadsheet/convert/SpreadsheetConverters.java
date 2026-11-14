@@ -1439,13 +1439,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link Converters#textToTsvStringSet()}
-     */
-    public static Converter<SpreadsheetConverterContext> textToTsvStringSet() {
-        return Converters.textToTsvStringSet();
-    }
-
-    /**
      * {@see NetConverters#textToUrl()}
      */
     public static Converter<SpreadsheetConverterContext> textToUrl() {
@@ -1747,8 +1740,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
             TSV = namedCollection(
                 "TSV",
                 toTsvStringList(),
-                textToTsvStringList(),
-                textToTsvStringSet()
+                textToTsvStringList()
             );
         }
         return TSV;

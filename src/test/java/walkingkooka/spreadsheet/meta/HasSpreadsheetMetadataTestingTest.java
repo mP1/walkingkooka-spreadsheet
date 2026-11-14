@@ -1060,7 +1060,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1293,7 +1292,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1476,7 +1474,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1700,7 +1697,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1807,7 +1803,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -1946,7 +1941,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -2185,7 +2179,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    text-to-text-style-property-name\n" +
                 "    text-to-time-list\n" +
                 "    text-to-tsv-string-list\n" +
-                "    text-to-tsv-string-set\n" +
                 "    text-to-url\n" +
                 "    text-to-url-fragment\n" +
                 "    text-to-url-query-string\n" +
@@ -2664,7 +2657,6 @@ public final class HasSpreadsheetMetadataTestingTest implements HasSpreadsheetMe
                 "    text-to-text-style-property-name\n" +
                 "    text-to-time-list\n" +
                 "    text-to-tsv-string-list\n" +
-                "    text-to-tsv-string-set\n" +
                 "    text-to-url\n" +
                 "    text-to-url-fragment\n" +
                 "    text-to-url-query-string\n" +

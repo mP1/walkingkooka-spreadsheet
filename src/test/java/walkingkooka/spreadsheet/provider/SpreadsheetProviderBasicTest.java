@@ -629,7 +629,6 @@ public final class SpreadsheetProviderBasicTest implements SpreadsheetProviderTe
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-text-style-property-name text-to-text-style-property-name\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-time-list text-to-time-list\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-tsv-string-list text-to-tsv-string-list\n" +
-                "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-tsv-string-set text-to-tsv-string-set\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-url text-to-url\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-url-fragment text-to-url-fragment\n" +
                 "        https://github.com/mP1/walkingkooka-spreadsheet/Converter/text-to-url-query-string text-to-url-query-string\n" +
