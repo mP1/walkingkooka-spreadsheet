@@ -27,7 +27,6 @@ import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.list.TsvStringList;
-import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorContexts;
 import walkingkooka.color.ColorProperties;
@@ -434,7 +433,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "            ConverterCollection\n" +
                 "              to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "              TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "              TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "        Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "        to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "        to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -497,7 +495,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  TEXT to TextStyle (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStyle)\n" +
                 "  TEXT to TextStylePropertyName (walkingkooka.tree.text.convert.TreeTextConverterTextToTextStylePropertyName)\n" +
                 "  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "  TEXT to Url (walkingkooka.net.convert.NetConverterTextToUrl)\n" +
                 "  TEXT to UrlFragment (walkingkooka.net.convert.NetConverterTextToUrlFragment)\n" +
                 "  TEXT to UrlQueryString (walkingkooka.net.convert.NetConverterTextToUrlQueryString)\n" +
@@ -520,7 +517,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "      ConverterCollection\n" +
                 "        to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "        TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "        TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "  ConverterCustomToString\n" +
                 "    \"URL\"\n" +
                 "      ConverterCollection\n" +
@@ -737,7 +733,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                  ConverterCollection\n" +
                 "                    to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                    TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                    TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "              Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "              to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "              to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -4126,7 +4121,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "                ConverterCollection\n" +
                 "                  to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "                  TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "                  TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "            Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "            to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "            to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -4250,19 +4244,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             list.text(),
             TsvStringList.class,
             list
-        );
-    }
-
-    @Test
-    public void testTextConvertStringToTsvStringSet() {
-        final TsvStringSet set = TsvStringSet.EMPTY.concat("abc")
-            .concat("def")
-            .concat("gh\t i");
-
-        this.textConvertAndCheck(
-            set.text(),
-            TsvStringSet.class,
-            set
         );
     }
 
@@ -4838,7 +4819,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "          ConverterCollection\n" +
                 "            to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
                 "            TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "            TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n" +
                 "      Binary to TEXT (walkingkooka.convert.ConverterBinaryToString)\n" +
                 "      to MultiLineText (walkingkooka.convert.ConverterToMultiLineText)\n" +
                 "      to Text (walkingkooka.convert.ConverterToText)\n" +
@@ -5021,14 +5001,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    @Test
-    public void testTsvConvertTsvStringSetToTsvStringList() {
-        this.tsvConvertAndCheck(
-            TsvStringSet.EMPTY.setElements(TSV_STRING_LIST),
-            TSV_STRING_LIST
-        );
-    }
-
     private void tsvConvertAndCheck(final Object value,
                                     final TsvStringList expected) {
         this.convertAndCheck(
@@ -5077,8 +5049,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 "  \"TSV\"\n" +
                 "    ConverterCollection\n" +
                 "      to TsvStringList (walkingkooka.convert.ConverterToTsvStringList)\n" +
-                "      TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n" +
-                "      TEXT to TsvStringSet (walkingkooka.convert.ConverterTextToCollectionSetTsvStringSet)\n"
+                "      TEXT to TsvStringList (walkingkooka.convert.ConverterTextToCollectionListTsvStringList)\n"
         );
     }
     
@@ -5591,17 +5562,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 SpreadsheetFormula.EMPTY.setValueType(OPTIONAL_VALUE_TYPE)
             ),
             VALUE_TYPE
-        );
-    }
-
-    @Test
-    public void testValueConvertStringToTsvStringSetFails() {
-        this.valueConvertFails(
-            TsvStringSet.EMPTY.concat("abc")
-                .concat("def")
-                .concat("gh\t i")
-                .text(),
-            TsvStringList.class
         );
     }
 

@@ -26,7 +26,6 @@ import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.list.TsvStringList;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.TsvStringSet;
 import walkingkooka.color.Color;
 import walkingkooka.color.ColorProperties;
 import walkingkooka.color.HslColor;
@@ -264,13 +263,6 @@ final class MissingConverterVerifier {
 
     private final static TsvStringList TSV_STRING_LIST = TsvStringList.EMPTY.setElements(
         Lists.of(
-            "Apple 1",
-            "Banana 2"
-        )
-    );
-
-    private final static TsvStringSet TSV_STRING_SET = TsvStringSet.EMPTY.setElements(
-        Sets.of(
             "Apple 1",
             "Banana 2"
         )
@@ -2429,14 +2421,6 @@ final class MissingConverterVerifier {
                 TsvStringList.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_LIST,
                 TSV_STRING_LIST
-            );
-
-            // text-to-tsv-string-set..............................................................................
-            verifier.addIfConversionFail(
-                TSV_STRING_SET.text(),
-                TsvStringSet.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_TSV_STRING_SET,
-                TSV_STRING_SET
             );
         }
 
