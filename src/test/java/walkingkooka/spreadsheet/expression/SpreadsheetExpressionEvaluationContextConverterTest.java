@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
@@ -80,7 +81,6 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -124,9 +124,10 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         public String apply(final List<Object> objects,
                             final SpreadsheetExpressionEvaluationContext context) {
             return CharacterConstant.COMMA.toDelimiteredString(
-                objects.stream()
-                    .map(Object::toString)
-                    .collect(Collectors.toList()),
+                Iterables.mapping(
+                    objects,
+                    Object::toString
+                ),
                 CharacterConstant.COMMA.constantSeparator()
             );
         }

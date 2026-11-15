@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.ColorContexts;
@@ -64,7 +65,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * An {@link walkingkooka.collect.list.ImmutableList} holding zero or more {@link SpreadsheetViewportNavigation}.
@@ -686,9 +686,10 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     @Override
     public String text() {
         return SEPARATOR.toDelimiteredString(
-            this.stream()
-                .map(SpreadsheetViewportNavigation::text)
-                .collect(Collectors.toList()),
+            Iterables.mapping(
+                this,
+                SpreadsheetViewportNavigation::text
+            ),
             SEPARATOR.constantSeparator()
         );
     }

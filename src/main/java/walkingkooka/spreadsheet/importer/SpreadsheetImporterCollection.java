@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
 import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetImporter} that forms a collection trying each {@link SpreadsheetImporter importer} until success.
@@ -110,9 +110,10 @@ final class SpreadsheetImporterCollection implements SpreadsheetImporter {
     public String toString() {
         return "collection(" +
             CharacterConstant.COMMA.toDelimiteredString(
-                this.importers.stream()
-                    .map(Object::toString)
-                    .collect(Collectors.toList()),
+                Iterables.mapping(
+                    this.importers,
+                    Object::toString
+                ),
                 CharacterConstant.COMMA.constantSeparator()
             ) +
             ")";

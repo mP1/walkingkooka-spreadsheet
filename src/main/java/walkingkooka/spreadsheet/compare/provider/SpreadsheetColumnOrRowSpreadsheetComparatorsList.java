@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare.provider;
 
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
@@ -26,7 +27,6 @@ import java.util.AbstractList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * {@link List} that holds multiple {@link SpreadsheetColumnOrRowSpreadsheetComparators} typically one for each sortable
@@ -117,9 +117,10 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     @Override
     public String text() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toDelimiteredString(
-            this.stream()
-                .map(Object::toString)
-                .collect(Collectors.toList()),
+            Iterables.mapping(
+                this,
+                Object::toString
+            ),
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.constantSeparator()
         );
     }

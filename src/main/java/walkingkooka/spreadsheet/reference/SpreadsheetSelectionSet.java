@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.text.CharacterConstant;
@@ -33,7 +34,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 /**
  * A {@link Set} or {@link SpreadsheetCellReference}.
@@ -120,9 +120,10 @@ abstract class SpreadsheetSelectionSet<E extends SpreadsheetSelection, S extends
     @Override
     public final String text() {
         return SEPARATOR.toDelimiteredString(
-            this.references.stream()
-                .map(Object::toString)
-                .collect(Collectors.toList()),
+            Iterables.mapping(
+                this.references,
+                Object::toString
+            ),
             SEPARATOR.constantSeparator()
         );
     }

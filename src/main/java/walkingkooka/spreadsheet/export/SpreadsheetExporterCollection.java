@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
@@ -26,7 +27,6 @@ import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetExporter} that forms a collection trying each {@link SpreadsheetExporter exporter} until success.
@@ -123,9 +123,10 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
     public String toString() {
         return "collection(" +
             CharacterConstant.COMMA.toDelimiteredString(
-                this.exporters.stream()
-                    .map(Object::toString)
-                    .collect(Collectors.toList()),
+                Iterables.mapping(
+                    this.exporters,
+                    Object::toString
+                ),
                 CharacterConstant.COMMA.constantSeparator()
             ) +
             ")";

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.CanBeEmpty;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -41,7 +42,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Captures one or more windows that define the cells within a viewport.
@@ -353,9 +353,10 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     @Override
     public String toString() {
         return SEPARATOR.toDelimiteredString(
-            this.cellRanges.stream()
-                .map(SpreadsheetCellRangeReference::toStringMaybeStar)
-                .collect(Collectors.toList()),
+            Iterables.mapping(
+                this.cellRanges,
+                SpreadsheetCellRangeReference::toStringMaybeStar
+            ),
             SEPARATOR.constantSeparator()
         );
     }
