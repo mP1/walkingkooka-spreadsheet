@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.compare.provider;
 
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
@@ -117,9 +118,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     @Override
     public String text() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toDelimiteredString(
-            this.stream()
-                .map(Object::toString)
-                .collect(Collectors.toList()),
+            Iterables.mapping(
+                this,
+                Object::toString
+            ),
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.constantSeparator()
         );
     }

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.ImmutableSortedSet;
@@ -1734,9 +1735,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             throw new IllegalArgumentException(
                 "Patch includes invalid properties: " +
                     CharacterConstant.COMMA.toDelimiteredString(
-                        invalidProperties.stream()
-                            .map(JsonPropertyName::value)
-                            .collect(Collectors.toList()),
+                        Iterables.mapping(
+                            invalidProperties,
+                            JsonPropertyName::value
+                        ),
                         CharacterConstant.COMMA.constantSeparator()
                     )
             );
@@ -1746,9 +1748,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             throw new IllegalArgumentException(
                 "Invalid patch includes: cell, " +
                     CharacterConstant.COMMA.toDelimiteredString(
-                        cellPropertyNames.stream()
-                            .map(JsonPropertyName::value)
-                            .collect(Collectors.toList()),
+                        Iterables.mapping(
+                            cellPropertyNames,
+                            JsonPropertyName::value
+                        ),
                         CharacterConstant.COMMA.constantSeparator()
                     )
             );
@@ -2612,9 +2615,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                   final IndentingPrinter printer) {
         printer.println(
             CharacterConstant.COMMA.toDelimiteredString(
-                collection.stream()
-                    .map(Object::toString)
-                    .collect(Collectors.toList()),
+                Iterables.mapping(
+                    collection,
+                    Object::toString
+                ),
                 CharacterConstant.COMMA.constantSeparator()
             )
         );

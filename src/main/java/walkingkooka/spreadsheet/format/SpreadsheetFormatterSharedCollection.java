@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
@@ -28,7 +29,6 @@ import walkingkooka.tree.text.TextNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -119,9 +119,10 @@ final class SpreadsheetFormatterSharedCollection extends SpreadsheetFormatterSha
     @Override
     public String toString() {
         return SpreadsheetPattern.SEPARATOR.toDelimiteredString(
-            this.formatters.stream()
-                .map(SpreadsheetFormatter::toString)
-                .collect(Collectors.toList()),
+            Iterables.mapping(
+                this.formatters,
+                SpreadsheetFormatter::toString
+            ),
             SpreadsheetPattern.SEPARATOR.constantSeparator()
         );
     }
