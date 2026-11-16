@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.CanParseEnvironmentValueName;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.logging.LoggingContext;
@@ -139,6 +140,19 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
         return this.spreadsheetExpressionEvaluationContext();
     }
 
+    // EnvironmentExpressionEvaluationContext...........................................................................
+
+    @Override
+    default CurrencyCode currencyCode() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .currencyCode();
+    }
+
+    @Override
+    default EnvironmentExpressionEvaluationContext environmentExpressionEvaluationContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
     // HasJsonSelectorContext...........................................................................................
 
     @Override
@@ -153,6 +167,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default Locale locale() {
         return this.spreadsheetExpressionEvaluationContext()
             .locale();
+    }
+
+    @Override
+    default void setLocale(final Locale locale) {
+        this.spreadsheetExpressionEvaluationContext()
+            .setLocale(locale);
     }
 
     @Override
