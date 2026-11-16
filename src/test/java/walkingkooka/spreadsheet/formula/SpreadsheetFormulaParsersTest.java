@@ -31,8 +31,8 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.logging.LoggingContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -3996,8 +3996,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         },
                         CaseSensitivity.SENSITIVE,
                         ConverterContexts.fake(),
-                        EnvironmentContexts.fake(),
-                        LocaleContexts.fake()
+                        LocaleContexts.fake(),
+                        LoggingContexts.fake()
                     )
                 ).map(Object::toString)
                 .orElse("")

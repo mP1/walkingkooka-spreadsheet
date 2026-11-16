@@ -39,6 +39,7 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.logging.CanLogs;
+import walkingkooka.logging.LoggingContexts;
 import walkingkooka.logging.LoggingLevel;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -409,8 +410,8 @@ public class J2clTest {
                             spreadsheetEnvironmentContext,
                             providerContext
                         ),
-                        EnvironmentContexts.fake(),
-                        LocaleContexts.fake()
+                        LocaleContexts.fake(),
+                        LoggingContexts.fake()
                     )
                 );
             }
