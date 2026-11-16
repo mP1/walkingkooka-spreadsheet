@@ -21,7 +21,6 @@ import walkingkooka.Either;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.HasNow;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
@@ -192,17 +191,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     private DecimalNumberContext decimalNumberContext;
 
     // ExpressionEvaluationContextDelegator.............................................................................
-
-    @Override
-    public ExpressionEvaluationContext cloneEnvironment() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        Objects.requireNonNull(environmentContext, "environmentContext");
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public ExpressionEvaluationContext expressionEvaluationContext() {
