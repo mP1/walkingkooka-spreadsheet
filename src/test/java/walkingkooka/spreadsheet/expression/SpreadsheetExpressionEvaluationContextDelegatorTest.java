@@ -21,6 +21,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -38,6 +39,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
@@ -52,6 +54,8 @@ import walkingkooka.store.StoreWatchers;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.validation.expression.ValidatorExpressionEvaluationContext;
+import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContext;
 
 import java.math.MathContext;
 import java.util.List;
@@ -383,6 +387,16 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         private final Storage<StorageContext> storage = Storages.treeMapStore();
+
+        @Override
+        public FormHandlerExpressionEvaluationContext<SpreadsheetValidationReference, SpreadsheetDelta> formHandlerExpressionEvaluationContext() {
+            return this.spreadsheetExpressionEvaluationContext;
+        }
+
+        @Override
+        public ValidatorExpressionEvaluationContext<SpreadsheetValidationReference> validatorExpressionEvaluationContext() {
+            return this.spreadsheetExpressionEvaluationContext;
+        }
 
         @Override
         public String toString() {
