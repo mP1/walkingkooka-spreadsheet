@@ -44,6 +44,7 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -276,6 +277,12 @@ public class FakeSpreadsheetConverterContext extends FakeTreeConverterContext im
 
     @Override
     public boolean isLoggingEnabled(final LoggingLevel loggingLevel) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setLoggingLevel(final LoggingLevel loggingLevel) {
+        Objects.requireNonNull(loggingLevel, "loggingLevel");
         throw new UnsupportedOperationException();
     }
 
