@@ -23,6 +23,12 @@ import java.util.Comparator;
 
 /**
  * A {@link Comparator} that may be used to compare all types of {@link SpreadsheetSelection} ignoring their {@link SpreadsheetReferenceKind}.
+ * Note that sorting is done rows first followed by columns, so given
+ * <pre>
+ * A1, A2, B1, B2
+ * -&gt;
+ * A1, B1, A2, B2
+ * </pre>
  */
 final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Comparator<SpreadsheetSelection> {
 
