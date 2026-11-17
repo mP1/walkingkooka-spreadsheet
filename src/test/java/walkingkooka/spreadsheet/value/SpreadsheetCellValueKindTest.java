@@ -55,6 +55,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     HasOptionalValidatorSelectorTesting,
     HasOptionalValueTypeTesting,
     HasSpreadsheetCellTesting,
+    HasSpreadsheetCellValueKindTesting,
     HasValueTesting,
     ParseStringTesting<SpreadsheetCellValueKind>,
     PublicClassTesting<SpreadsheetCellValueKind> {
@@ -620,6 +621,24 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
                 )
             );
         }
+    }
+
+    // HasSpreadsheetCellValueKind......................................................................................
+
+    @Test
+    public void testSpreadsheetCellValueKindWhenCell() {
+        this.spreadsheetCellValueKindAndCheck(
+            SpreadsheetCellValueKind.CELL,
+            SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    @Test
+    public void testSpreadsheetCellValueKindWhenCurrency() {
+        this.spreadsheetCellValueKindAndCheck(
+            SpreadsheetCellValueKind.CURRENCY,
+            SpreadsheetCellValueKind.CURRENCY
+        );
     }
 
     // class............................................................................................................

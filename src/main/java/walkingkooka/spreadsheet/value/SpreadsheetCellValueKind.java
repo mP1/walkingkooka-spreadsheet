@@ -45,7 +45,8 @@ import java.util.Optional;
  * Directive that controls what part of a cell to export or when importing what part of a cell to replace.
  */
 public enum SpreadsheetCellValueKind implements HasContentType,
-    HasFileExtension {
+    HasFileExtension,
+    HasSpreadsheetCellValueKind {
 
     CELL(SpreadsheetMediaTypes.MEMORY_CELL) {
         @Override
@@ -280,4 +281,12 @@ public enum SpreadsheetCellValueKind implements HasContentType,
     }
 
     private final Optional<FileExtension> fileExtension;
+
+    // HasSpreadsheetCellValueKind......................................................................................
+
+    @Override
+    public final SpreadsheetCellValueKind spreadsheetCellValueKind() {
+        return this;
+    }
+
 }
