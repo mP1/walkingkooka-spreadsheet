@@ -17,9 +17,19 @@
 
 package walkingkooka.spreadsheet.value;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.PublicClassTesting;
 
-public final class HasSpreadsheetCellValueKindTestingTest implements PublicClassTesting<HasSpreadsheetCellValueKindTesting> {
+public final class HasSpreadsheetCellValueKindTestingTest implements HasSpreadsheetCellValueKindTesting,
+    PublicClassTesting<HasSpreadsheetCellValueKindTesting> {
+
+    @Test
+    public void testSpreadsheetCellValueKindAndCheck() {
+        this.spreadsheetCellValueKindAndCheck(
+            SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
+            SpreadsheetCellValueKind.DATE_TIME_SYMBOLS
+        );
+    }
 
     @Override
     public Class<HasSpreadsheetCellValueKindTesting> type() {
