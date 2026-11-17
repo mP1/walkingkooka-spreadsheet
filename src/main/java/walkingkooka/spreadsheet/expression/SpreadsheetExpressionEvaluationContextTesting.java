@@ -32,7 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextTesting;
+import walkingkooka.storage.expression.StorageExpressionEvaluationContextTesting;
 import walkingkooka.terminal.expression.TerminalExpressionEvaluationContextTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;

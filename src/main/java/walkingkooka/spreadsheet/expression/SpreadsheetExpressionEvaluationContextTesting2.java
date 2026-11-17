@@ -32,7 +32,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting2;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextTesting2;
+import walkingkooka.storage.expression.StorageExpressionEvaluationContextTesting2;
 import walkingkooka.terminal.expression.TerminalExpressionEvaluationContextTesting2;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContextTesting2;

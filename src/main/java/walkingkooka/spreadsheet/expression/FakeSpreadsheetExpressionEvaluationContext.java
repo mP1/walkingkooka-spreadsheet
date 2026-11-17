@@ -46,7 +46,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.expression.function.FakeStorageExpressionEvaluationContext;
+import walkingkooka.storage.expression.FakeStorageExpressionEvaluationContext;
 import walkingkooka.store.StoreWatcher;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.cursor.TextCursor;
