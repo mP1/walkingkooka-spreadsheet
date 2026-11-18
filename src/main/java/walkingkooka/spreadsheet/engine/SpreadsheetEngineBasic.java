@@ -2038,7 +2038,7 @@ final class SpreadsheetEngineBasic implements SpreadsheetEngine {
     Optional<Object> evaluateCellIfNecessary(final SpreadsheetCell cell,
                                              final SpreadsheetExpressionReferenceLoader loader,
                                              final SpreadsheetEngineContext context) {
-        return cell.formattedValue().isPresent() && cell.expressionOrFail().isPure(context) ?
+        return cell.output().isPresent() && cell.expressionOrFail().isPure(context) ?
             cell.formula()
                 .value() :
             this.evaluateCell(

@@ -145,7 +145,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             Optional.of(111)
         )
     );
-    private static final SpreadsheetCell FORMATTED_CELL1 = CELL1.setFormattedValue(
+    private static final SpreadsheetCell FORMATTED_CELL1 = CELL1.setOutput(
         Optional.of(
             TextNode.text("111.")
         )
@@ -157,7 +157,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 Optional.of(222)
             )
         );
-    private static final SpreadsheetCell FORMATTED_CELL2 = CELL2.setFormattedValue(
+    private static final SpreadsheetCell FORMATTED_CELL2 = CELL2.setOutput(
         Optional.of(
             TextNode.text("222.")
         )
@@ -203,7 +203,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         )
     );
 
-    private static final SpreadsheetCell DIFFERENT_FORMATTED_CELL = DIFFERENT_UNFORMATTED_CELL.setFormattedValue(
+    private static final SpreadsheetCell DIFFERENT_FORMATTED_CELL = DIFFERENT_UNFORMATTED_CELL.setOutput(
         Optional.of(
             TextNode.text("999.")
         )
@@ -1794,7 +1794,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                             value1.setPath(path2)
                                 .setValue(
                                     Optional.of(
-                                        CELL1.setFormattedValue(
+                                        CELL1.setOutput(
                                             Optional.of(
                                                 TextNode.text("111.")
                                             )
@@ -1814,7 +1814,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                             value2.setPath(path2)
                                 .setValue(
                                     Optional.of(
-                                        cell2.setFormattedValue(
+                                        cell2.setOutput(
                                             Optional.of(
                                                 TextNode.text("different111")
                                             )
@@ -1844,7 +1844,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 StoragePath.parse("/cell")
             ).setValue(
                 Optional.of(
-                    cell2.setFormattedValue(
+                    cell2.setOutput(
                         Optional.of(
                             TextNode.text("different111")
                         )
@@ -1908,7 +1908,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                             value1.setPath(path2)
                                 .setValue(
                                     Optional.of(
-                                        CELL1.setFormattedValue(
+                                        CELL1.setOutput(
                                             Optional.of(
                                                 TextNode.text("111.")
                                             )
@@ -1928,7 +1928,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                             value2.setPath(path2)
                                 .setValue(
                                     Optional.of(
-                                        cell2.setFormattedValue(
+                                        cell2.setOutput(
                                             Optional.of(
                                                 TextNode.text("different111")
                                             )
@@ -1958,7 +1958,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 StoragePath.parse("/cell")
             ).setValue(
                 Optional.of(
-                    cell2.setFormattedValue(
+                    cell2.setOutput(
                         Optional.of(
                             TextNode.text("different111")
                         )

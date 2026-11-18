@@ -90,7 +90,7 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         );
     }
 
-    public static SpreadsheetImporterCellValue formattedValue(final SpreadsheetCellReference cell,
+    public static SpreadsheetImporterCellValue output(final SpreadsheetCellReference cell,
                                                               final OptionalTextNode value) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(value, "value");

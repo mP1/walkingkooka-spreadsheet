@@ -117,7 +117,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
     //    error:
     //      #FORMATTING
     //        "Unknown formatter date"
-    //  formattedValue:
+    //  output:
     //    Text "#ERROR"
     @Test
     public void testLoadCells() {
@@ -147,7 +147,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
                             SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                         )
                     )
-            ).setFormattedValue(
+            ).setOutput(
                 Optional.of(
                     TextNode.text("#ERROR")
                 )
@@ -205,7 +205,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
                                 SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                             )
                         )
-                ).setFormattedValue(
+                ).setOutput(
                     Optional.of(
                         TextNode.text("#ERROR")
                     )
@@ -302,7 +302,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
                         SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                     )
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR")
             )
@@ -380,7 +380,7 @@ public final class SpreadsheetStorageContextBasicTest implements SpreadsheetStor
                         SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                     )
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR")
             )

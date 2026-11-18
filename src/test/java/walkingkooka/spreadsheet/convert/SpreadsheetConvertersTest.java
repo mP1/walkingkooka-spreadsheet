@@ -4866,7 +4866,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         this.textNodeConvertAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormattedValue(
+                .setOutput(
                     Optional.of(textNode)
                 ),
             textNode

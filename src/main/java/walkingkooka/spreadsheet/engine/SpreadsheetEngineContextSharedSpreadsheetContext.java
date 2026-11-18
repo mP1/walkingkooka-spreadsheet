@@ -307,7 +307,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             );
         }
 
-        return formattedCell.setFormattedValue(formatted);
+        return formattedCell.setOutput(formatted);
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {

@@ -3135,7 +3135,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // @VisibleForTesting
     final static JsonPropertyName DECIMAL_NUMBER_SYMBOLS_PROPERTY = JsonPropertyName.with(DECIMAL_NUMBER_SYMBOLS_STRING);
 
-    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
+    private final static String FORMATTED_VALUE_PROPERTY_STRING = "output";
 
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
 

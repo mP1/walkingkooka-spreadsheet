@@ -535,7 +535,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                             )
                         )
                     )
-            ).setFormattedValue(
+            ).setOutput(
                 Optional.of(
                     TextNode.text("#ERROR")
                 )
@@ -560,7 +560,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             cell,
             SpreadsheetPattern.parseNumberFormatPattern("#.00")
                 .spreadsheetFormatterSelector(),
-            cell.setFormattedValue(
+            cell.setOutput(
                 Optional.of(
                     TextNode.text("1.00")
                 )
@@ -585,7 +585,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             cell,
             SpreadsheetPattern.parseNumberFormatPattern("$#.00")
                 .spreadsheetFormatterSelector(),
-            cell.setFormattedValue(
+            cell.setOutput(
                 Optional.of(
                     TextNode.text("CURR1:00")
                 )
@@ -780,7 +780,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         )
     );
 
-    private final static SpreadsheetCell SAVED_CELL = UNSAVED_CELL.setFormattedValue(
+    private final static SpreadsheetCell SAVED_CELL = UNSAVED_CELL.setOutput(
         Optional.of(
             TextNode.text("Hello World")
         )
@@ -834,7 +834,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         this.loadCellsAndCheck(
             context,
             b2.reference(),
-            b2.setFormattedValue(
+            b2.setOutput(
                 Optional.of(
                     TextNode.text("Hello World B2")
                 )

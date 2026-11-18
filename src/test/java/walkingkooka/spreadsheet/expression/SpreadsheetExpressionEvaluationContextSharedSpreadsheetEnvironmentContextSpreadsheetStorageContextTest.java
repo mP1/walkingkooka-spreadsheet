@@ -109,7 +109,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     //    error:
     //      #FORMATTING
     //        "Unknown formatter date"
-    //  formattedValue:
+    //  output:
     //    Text "#ERROR"
     @Test
     public void testLoadCells() {
@@ -139,7 +139,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                             SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                         )
                     )
-            ).setFormattedValue(
+            ).setOutput(
                 Optional.of(
                     TextNode.text("#ERROR")
                 )
@@ -197,7 +197,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                 SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                             )
                         )
-                ).setFormattedValue(
+                ).setOutput(
                     Optional.of(
                         TextNode.text("#ERROR")
                     )
@@ -294,7 +294,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                     )
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR")
             )
@@ -372,7 +372,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
                     )
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR")
             )

@@ -107,7 +107,7 @@ public enum SpreadsheetCellValueKind implements HasContentType,
     OUTPUT(SpreadsheetMediaTypes.MEMORY_OUTPUT) {
         @Override
         public Optional<TextNode> cellValue(final SpreadsheetCell cell) {
-            return cell.formattedValue();
+            return cell.output();
         }
     },
 

@@ -219,14 +219,14 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                               final SpreadsheetEngineEvaluation evaluation,
                                               final SpreadsheetEngineContext context,
                                               final Object value,
-                                              final String formattedValueText) {
+                                              final String outputText) {
         return this.loadCellsAndCheck(
             engine,
             cell,
             evaluation,
             context,
             value,
-            formattedValueText,
+            outputText,
             null
         );
     }
@@ -236,7 +236,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
                                               final SpreadsheetEngineEvaluation evaluation,
                                               final SpreadsheetEngineContext context,
                                               final Object value,
-                                              final String formattedValueText,
+                                              final String outputText,
                                               final String errorContains) {
         final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
             engine,
@@ -249,9 +249,9 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
             value
         );
 
-        this.cellFormattedValueAndCheck(
+        this.cellOutputAndCheck(
             spreadsheetCell,
-            formattedValueText
+            outputText
         );
 
         if (null != errorContains) {
@@ -1332,25 +1332,25 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
             () -> "formula values returned cell=" + cell);
     }
 
-    default void cellFormattedValueAndCheck(final SpreadsheetCell cell) {
+    default void cellOutputAndCheck(final SpreadsheetCell cell) {
         this.checkEquals(
             Optional.empty(),
-            cell.formattedValue(),
-            "formattedValue text absent"
+            cell.output(),
+            "output text absent"
         );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    default void cellFormattedValueAndCheck(final SpreadsheetCell cell,
+    default void cellOutputAndCheck(final SpreadsheetCell cell,
                                             final String text) {
         this.checkNotEquals(
             Optional.empty(),
-            cell.formattedValue(),
-            "formattedValue present"
+            cell.output(),
+            "output present"
         );
         this.checkEquals(
             text,
-            cell.formattedValue()
+            cell.output()
                 .get()
                 .text(),
             "formattedText"

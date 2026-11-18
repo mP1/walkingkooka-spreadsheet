@@ -98,14 +98,14 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
                             .setParser(PARSER)
                             .setStyle(STYLE)
                             .setValidator(VALIDATOR)
-                            .setFormattedValue(FORMATTED_VALUE),
+                            .setOutput(FORMATTED_VALUE),
                         CELL_A2
                     )
                 ),
             SpreadsheetCellValueKind.CELL,
             "A1-XFD1048576.json",
             SpreadsheetMediaTypes.JSON_CELL,
-            "{\n" +
+                "{\n" +
                 "  \"A1\": {\n" +
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
@@ -179,15 +179,15 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
                 "    },\n" +
                 "    \"formatter\": \"text @\",\n" +
                 "    \"locale\": \"en-AU\",\n" +
+                "    \"output\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"Formatted text 123\"\n" +
+                "    },\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
                 "    \"style\": {\n" +
                 "      \"color\": \"black\"\n" +
                 "    },\n" +
-                "    \"validator\": \"test-validator-123\",\n" +
-                "    \"formattedValue\": {\n" +
-                "      \"type\": \"text\",\n" +
-                "      \"value\": \"Formatted text 123\"\n" +
-                "    }\n" +
+                "    \"validator\": \"test-validator-123\"\n" +
                 "  },\n" +
                 "  \"A2\": {\n" +
                 "    \"formula\": {\n" +
@@ -388,7 +388,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
                 .setValue(
                     Sets.of(
-                        CELL_A1.setFormattedValue(FORMATTED_VALUE),
+                        CELL_A1.setOutput(FORMATTED_VALUE),
                         CELL_A2
                     )
                 ),

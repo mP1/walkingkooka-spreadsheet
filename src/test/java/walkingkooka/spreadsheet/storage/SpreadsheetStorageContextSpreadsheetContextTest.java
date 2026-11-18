@@ -127,7 +127,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
         this.saveCellsAndCheck(
             this.createContext(),
             Sets.of(cell),
-            cell.setFormattedValue(
+            cell.setOutput(
                 Optional.of(
                     TextNode.text("Hello")
                 )
@@ -152,7 +152,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
         this.loadCellsAndCheck(
             context,
             cell.reference(),
-            cell.setFormattedValue(
+            cell.setOutput(
                 Optional.of(
                     TextNode.text("Hello")
                 )
@@ -206,7 +206,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
                     );
                     checkEquals(
                         Optional.of(
-                            cell.setFormattedValue(
+                            cell.setOutput(
                                 Optional.of(
                                     TextNode.text("Hello")
                                 )
@@ -226,7 +226,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
         this.saveCellsAndCheck(
             context,
             Sets.of(cell),
-            cell.setFormattedValue(
+            cell.setOutput(
                 Optional.of(
                     TextNode.text("Hello")
                 )
@@ -262,7 +262,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
                     );
                     checkEquals(
                         Optional.of(
-                            cell.setFormattedValue(
+                            cell.setOutput(
                                 Optional.of(
                                     TextNode.text("Hello111")
                                 )
@@ -282,7 +282,7 @@ public final class SpreadsheetStorageContextSpreadsheetContextTest implements Sp
         this.saveCellsAndCheck(
             context,
             Sets.of(cell),
-            cell.setFormattedValue(
+            cell.setOutput(
                 Optional.of(
                     TextNode.text("Hello111")
                 )
