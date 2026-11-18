@@ -105,12 +105,12 @@ these will be a plugin where users can contribute an alternative or supplementar
 All sorting is performed by using a selected [SpreadsheetComparator](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java),
 which is identical to a `java.util.Comparator`. These may be enabled to supporting sorting one or more column/row/cell-range.
 
-- [background-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
-- [border-bottom-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
-- [border-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
-- [border-left-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
-- [border-right-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
-- [border-top-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
+- [background-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
+- [border-bottom-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
+- [border-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
+- [border-left-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
+- [border-right-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
+- [border-top-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
 - [color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
 - [currency](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorSharedCurrency.java)
 - [custom-list](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/CustomListComparatorCaseSensitive.java)
@@ -127,12 +127,12 @@ which is identical to a `java.util.Comparator`. These may be enabled to supporti
 - Month of Year
 - Nano of Second
 - Number
-- [outline-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
+- [outline-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
 - [parser](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorSharedParser.java)
 - Second of Minute
 - Text
 - Text case-insensitive
-- [text-decoration-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorFormattedValueTextStylePropertyName.java)
+- [text-decoration-color](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorOutputTextStylePropertyName.java)
 - [text-with-numbers](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseSensitive.java)
 - [text-with-numbers-case-insensitive](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/compare/TextWithNumbersComparatorCaseInsensitive.java)
 - Time
