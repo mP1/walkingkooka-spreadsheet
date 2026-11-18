@@ -246,13 +246,13 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
         );
     }
 
-    // formattedValue...................................................................................................
+    // output...........................................................................................................
 
     @Test
-    public void testFormattedValueWithNullCellFails() {
+    public void testOutputWithNullCellFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetImporterCellValue.formattedValue(
+            () -> SpreadsheetImporterCellValue.output(
                 null,
                 OptionalTextNode.EMPTY
             )
@@ -260,10 +260,10 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     }
 
     @Test
-    public void testFormattedValueWithNullFormattedValueFails() {
+    public void testOutputWithNullOutputFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetImporterCellValue.formattedValue(
+            () -> SpreadsheetImporterCellValue.output(
                 SpreadsheetSelection.A1,
                 null
             )
@@ -271,19 +271,19 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     }
 
     @Test
-    public void testFormattedValue() {
-        final OptionalTextNode formattedValue = OptionalTextNode.with(
+    public void testOutput() {
+        final OptionalTextNode output = OptionalTextNode.with(
             Optional.of(
                 TextNode.text("Hello")
             )
         );
 
         this.check(
-            SpreadsheetImporterCellValue.formattedValue(
+            SpreadsheetImporterCellValue.output(
                 REFERENCE,
-                formattedValue
+                output
             ),
-            formattedValue
+            output
         );
     }
 

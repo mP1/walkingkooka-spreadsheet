@@ -149,7 +149,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithOutput() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.OUTPUT,
-            SpreadsheetCell::formattedValue
+            SpreadsheetCell::output
         );
     }
 

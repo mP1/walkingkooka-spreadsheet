@@ -411,7 +411,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
             )
             .setStyle(this.style())
             .setFormatter(this.formatter())
-            .setFormattedValue(this.formattedValue());
+            .setOutput(this.output());
     }
 
     final SpreadsheetCellReference cellReference(final int column,
@@ -470,8 +470,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @SuppressWarnings("SameReturnValue")
-    private Optional<TextNode> formattedValue() {
-        return SpreadsheetCell.NO_FORMATTED_VALUE;
+    private Optional<TextNode> output() {
+        return SpreadsheetCell.NO_OUTPUT;
     }
 
     // TypeNameTesting..................................................................

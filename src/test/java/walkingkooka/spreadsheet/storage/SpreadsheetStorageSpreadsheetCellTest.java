@@ -92,7 +92,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                     )
                 )
             )
-    ).setFormattedValue(
+    ).setOutput(
         Optional.of(
             TextNode.text("#ERROR")
         )

@@ -3832,9 +3832,9 @@ public final class SpreadsheetDeltaTest implements PublicClassTesting<Spreadshee
     }
 
     @Test
-    public void testPatchCellsFormattedValueFails() {
+    public void testPatchCellsOutputFails() {
         this.patchCellsWithInvalidPropertyFails(
-            JsonPropertyName.with("formattedValue"),
+            JsonPropertyName.with("output"),
             JsonNode.nullNode()
         );
     }

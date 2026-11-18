@@ -166,7 +166,7 @@ final class SpreadsheetExporterJson implements SpreadsheetExporter {
                 break;
             case OUTPUT:
                 value = (c) -> context.marshallOptionalWithType(
-                    c.formattedValue()
+                    c.output()
                 ).setName(
                     name(c)
                 );

@@ -75,7 +75,7 @@ public final class SpreadsheetImporterJsonTest implements SpreadsheetImporterTes
         .setParser(OPTIONAL_PARSER_SELECTOR)
         .setStyle(TEXT_STYLE)
         .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
-        .setFormattedValue(FORMATTED_VALUE);
+        .setOutput(FORMATTED_VALUE);
 
     private final static SpreadsheetCellReference A2 = SpreadsheetSelection.parseCell("A2");
 

@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Wraps a {@link Comparator} sorting a {@link walkingkooka.tree.text.TextStylePropertyName} found in a {@link SpreadsheetCell#formattedValue()}.
+ * Wraps a {@link Comparator} sorting a {@link walkingkooka.tree.text.TextStylePropertyName} found in a {@link SpreadsheetCell#output()}.
  */
 final class SpreadsheetComparatorOutputTextStylePropertyName<T> implements SpreadsheetComparator<T> {
 
@@ -50,7 +50,7 @@ final class SpreadsheetComparatorOutputTextStylePropertyName<T> implements Sprea
     }
 
     /**
-     * Extracts the {@link TextStylePropertyName} value from the given {@link SpreadsheetCell#formattedValue()} using
+     * Extracts the {@link TextStylePropertyName} value from the given {@link SpreadsheetCell#output()} using
      * {@link TextStylePropertyName#firstValueOrEmpty(TextNode)}.
      */
     @Override
@@ -59,7 +59,7 @@ final class SpreadsheetComparatorOutputTextStylePropertyName<T> implements Sprea
         Objects.requireNonNull(context, "context");
 
         return null != cell ?
-            cell.formattedValue()
+            cell.output()
                 .flatMap(SpreadsheetComparatorOutputTextStylePropertyName.this.textStylePropertyName::firstValueOrEmpty) :
             Optional.empty();
     }

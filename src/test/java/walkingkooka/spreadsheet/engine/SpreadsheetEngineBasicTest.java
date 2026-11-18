@@ -1756,7 +1756,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             second,
             LocalDate.of(1900, 2, 1)
         );
-        this.cellFormattedValueAndCheck(
+        this.cellOutputAndCheck(
             second,
             "1900/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -1798,7 +1798,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             second,
             LocalDate.of(1900, 2, 1)
         );
-        this.cellFormattedValueAndCheck(
+        this.cellOutputAndCheck(
             second,
             "1900/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -1832,7 +1832,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             first,
             value
         );
-        this.cellFormattedValueAndCheck(
+        this.cellOutputAndCheck(
             first,
             "1 FORMATTED_PATTERN_SUFFIX"
         );
@@ -1850,7 +1850,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             second,
             value2
         );
-        this.cellFormattedValueAndCheck(
+        this.cellOutputAndCheck(
             second,
             "2 FORMATTED_PATTERN_SUFFIX"
         );
@@ -1880,7 +1880,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetCell second = this.loadCellOrFail(engine, b2, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
 
-        this.cellFormattedValueAndCheck(
+        this.cellOutputAndCheck(
             second,
             "#ERROR " + FORMATTED_PATTERN_SUFFIX
         );
@@ -1937,7 +1937,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 1
             )
         );
-        this.cellFormattedValueAndCheck(
+        this.cellOutputAndCheck(
             second,
             "2000/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -2492,7 +2492,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
             )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(TextNode.text("Formatted Hello"))
         ).setStyle(STYLE);
 
@@ -2528,7 +2528,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
             )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(TextNode.text("This Formatted must be replaced!"))
         ).setStyle(STYLE);
 
@@ -2805,7 +2805,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             context,
             SpreadsheetDelta.EMPTY.setCells(
                 Sets.of(
-                    a1Cell.setFormattedValue(
+                    a1Cell.setOutput(
                         Optional.of(
                             TextNode.text("Hello FORMATTED_PATTERN_SUFFIX")
                                 .setTextStyle(STYLE)
@@ -2894,7 +2894,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             context,
             SpreadsheetDelta.EMPTY.setCells(
                 Sets.of(
-                    a1Cell.setFormattedValue(
+                    a1Cell.setOutput(
                         Optional.of(
                             TextNode.text("12 FORMATTED_PATTERN_SUFFIX")
                                 .setTextStyle(STYLE)
@@ -5555,7 +5555,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
             .setCells(
                 Sets.of(
-                    a1Cell.setFormattedValue(
+                    a1Cell.setOutput(
                         Optional.of(
                             STYLE.replace(formatted)
                                 .root()
@@ -5650,7 +5650,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                             ).setValidator(
                                 Optional.of(validatorSelector)
                             ).setStyle(STYLE)
-                            .setFormattedValue(
+                            .setOutput(
                                 Optional.of(
                                     TextNode.text("#VALUE! " + FORMATTED_PATTERN_SUFFIX)
                                         .setTextStyle(STYLE)
@@ -5747,7 +5747,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                             ).setValidator(
                                 Optional.of(validatorSelector)
                             ).setStyle(STYLE)
-                            .setFormattedValue(
+                            .setOutput(
                                 Optional.of(
                                     TextNode.text("#VALUE! " + FORMATTED_PATTERN_SUFFIX)
                                         .setTextStyle(STYLE)
@@ -5845,7 +5845,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                             ).setValidator(
                                 Optional.of(validatorSelector)
                             ).setStyle(STYLE)
-                            .setFormattedValue(
+                            .setOutput(
                                 Optional.of(
                                     TextNode.text("#VALUE! " + FORMATTED_PATTERN_SUFFIX)
                                         .setTextStyle(STYLE)
@@ -6087,7 +6087,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 .setError(
                     SpreadsheetError.validationErrors(validationError)
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR " + FORMATTED_PATTERN_SUFFIX)
                     .setTextStyle(STYLE)
@@ -6239,7 +6239,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 .setError(
                     SpreadsheetError.validationErrors(converterOutput)
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text(
                     "#ERROR " + FORMATTED_PATTERN_SUFFIX
@@ -6387,7 +6387,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 .setError(
                     SpreadsheetError.validationErrors(validationErrors)
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text(
                     SpreadsheetError.validationErrors(validationErrors)
@@ -6565,7 +6565,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 ).setError(
                     SpreadsheetError.validationErrors(validationErrorsFail1)
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR " + FORMATTED_PATTERN_SUFFIX)
                     .setTextStyle(STYLE)
@@ -6601,7 +6601,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 ).setError(
                     SpreadsheetError.validationErrors(validationErrorsFail2)
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR " + FORMATTED_PATTERN_SUFFIX)
                     .setTextStyle(STYLE)
@@ -6773,7 +6773,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 ).setError(
                     SpreadsheetError.validationErrors(validationErrorsFail)
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR " + FORMATTED_PATTERN_SUFFIX)
                     .setTextStyle(STYLE)
@@ -6809,7 +6809,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 ).setError(
                     SpreadsheetError.validationErrors(validationErrorsPass)
                 )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text(value + " " + FORMATTED_PATTERN_SUFFIX)
                     .setTextStyle(STYLE)
@@ -6857,7 +6857,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 Optional.of(FRANCE_DATE_TIME_SYMBOLS)
             ).setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -6909,7 +6909,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 Optional.of(FRANCE_DATE_TIME_SYMBOLS)
             ).setStyle(STYLE);
 
-        SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -6942,7 +6942,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 Optional.of(DATE_TIME_SYMBOLS)
             );
 
-        a1FormattedCell = a1Cell.setFormattedValue(
+        a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -6991,7 +6991,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7043,7 +7043,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7102,7 +7102,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 )
             ).setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7152,7 +7152,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7201,7 +7201,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7253,7 +7253,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7306,7 +7306,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7365,7 +7365,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 )
             ).setStyle(STYLE);
 
-        SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7398,7 +7398,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 Optional.of(DECIMAL_NUMBER_SYMBOLS)
             ).setStyle(STYLE);
 
-        a1FormattedCell = a1Cell.setFormattedValue(
+        a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7449,7 +7449,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 Optional.of(Locale.FRENCH)
             ).setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        final SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7506,7 +7506,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     )
                 )
             )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR")
             )
@@ -7603,7 +7603,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                     )
                 )
             )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 TextNode.text("#ERROR")
             )
@@ -7647,7 +7647,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
                 )
             ).setStyle(STYLE);
 
-        SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+        SpreadsheetCell a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7681,7 +7681,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             )
         );
 
-        a1FormattedCell = a1Cell.setFormattedValue(
+        a1FormattedCell = a1Cell.setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7752,7 +7752,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             ).setValue(
                 Optional.of(value)
             )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -7809,7 +7809,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             ).setValue(
                 Optional.of(value)
             )
-        ).setFormattedValue(
+        ).setOutput(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
@@ -27976,7 +27976,7 @@ public final class SpreadsheetEngineBasicTest extends SpreadsheetEngineBasicTest
             () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
         );
 
-        return result.setFormattedValue(
+        return result.setOutput(
             Optional.of(
                 style.replace(formattedText)
                     .root()

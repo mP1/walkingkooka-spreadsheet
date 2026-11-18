@@ -58,9 +58,9 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
         .setParser(OPTIONAL_PARSER_SELECTOR)
         .setStyle(TEXT_STYLE)
         .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
-        .setFormattedValue(
+        .setOutput(
             Optional.of(
-                TextNode.text("formatted-value")
+                TextNode.text("output")
             )
         );
 
@@ -75,9 +75,9 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
         .setParser(OPTIONAL_DIFFERENT_PARSER_SELECTOR)
         .setStyle(DIFFERENT_TEXT_STYLE)
         .setValidator(OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR)
-        .setFormattedValue(
+        .setOutput(
             Optional.of(
-                TextNode.text("different-formatted-value")
+                TextNode.text("different-output")
             )
         );
 

@@ -134,7 +134,7 @@ public final class SpreadsheetEngineLoggingTest implements SpreadsheetEngineTest
             "environment DEBUG environmentValue spreadsheetId change null to 123\n" +
                 "engine INFO saveCell: A2 \"=1+2\"\n" +
                 "environment DEBUG environmentValue spreadsheetCell change null to A2 \"=1+2\" value=3\n" +
-                "engine INFO saveCell: A2 \"=1+2\" > cells: A2 \"=1+2\" value: 3 formattedValue: \"3.\" max: A=100.0, 2=50.0 columnCount=1 rowCount=2\n"
+                "engine INFO saveCell: A2 \"=1+2\" > cells: A2 \"=1+2\" value: 3 output: \"3.\" max: A=100.0, 2=50.0 columnCount=1 rowCount=2\n"
         );
     }
 
@@ -155,7 +155,7 @@ public final class SpreadsheetEngineLoggingTest implements SpreadsheetEngineTest
             "environment DEBUG environmentValue spreadsheetId change null to 123\n" +
                 "engine INFO saveCells [A2 \"=1+2\"]\n" +
                 "environment DEBUG environmentValue spreadsheetCell change null to A2 \"=1+2\" value=3\n" +
-                "engine INFO saveCells [A2 \"=1+2\"] > cells: A2 \"=1+2\" value: 3 formattedValue: \"3.\" max: A=100.0, 2=50.0 columnCount=1 rowCount=2\n"
+                "engine INFO saveCells [A2 \"=1+2\"] > cells: A2 \"=1+2\" value: 3 output: \"3.\" max: A=100.0, 2=50.0 columnCount=1 rowCount=2\n"
         );
     }
 
@@ -195,11 +195,11 @@ public final class SpreadsheetEngineLoggingTest implements SpreadsheetEngineTest
                 "engine INFO fillCells [A2] from: $A$2:B2 to: B2:C3\n" +
                 "environment DEBUG environmentValue spreadsheetCell change null to B2\n" +
                 "environment DEBUG environmentValue spreadsheetCell change B2 to B3\n" +
-                "environment DEBUG environmentValue spreadsheetCell change B3 to B2 formattedValue=\"\"\n" +
-                "environment DEBUG environmentValue spreadsheetCell change B2 formattedValue=\"\" to B3 formattedValue=\"\"\n" +
-                "environment DEBUG environmentValue spreadsheetCell change B3 formattedValue=\"\" to B2 formattedValue=\"\"\n" +
-                "environment DEBUG environmentValue spreadsheetCell change B2 formattedValue=\"\" to B3 formattedValue=\"\"\n" +
-                "engine INFO fillCells [A2] from: $A$2:B2 to: B2:C3 > cells: B2 formattedValue: \"\", B3 formattedValue: \"\" max: B=100.0, 2=50.0, 3=50.0 columnCount=2 rowCount=3\n"
+                "environment DEBUG environmentValue spreadsheetCell change B3 to B2 output=\"\"\n" +
+                "environment DEBUG environmentValue spreadsheetCell change B2 output=\"\" to B3 output=\"\"\n" +
+                "environment DEBUG environmentValue spreadsheetCell change B3 output=\"\" to B2 output=\"\"\n" +
+                "environment DEBUG environmentValue spreadsheetCell change B2 output=\"\" to B3 output=\"\"\n" +
+                "engine INFO fillCells [A2] from: $A$2:B2 to: B2:C3 > cells: B2 output: \"\", B3 output: \"\" max: B=100.0, 2=50.0, 3=50.0 columnCount=2 rowCount=3\n"
         );
     }
 

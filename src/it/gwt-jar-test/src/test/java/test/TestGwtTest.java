@@ -188,7 +188,7 @@ public class TestGwtTest extends GWTTestCase {
                                         EXPRESSION_NUMBER_KIND.create(12)
                                     )
                                 )
-                        ).setFormattedValue(
+                        ).setOutput(
                             Optional.of(
                                 TextNode.text("12.0")
                             )
@@ -488,7 +488,7 @@ public class TestGwtTest extends GWTTestCase {
             @Override
             public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                        final Optional<SpreadsheetFormatterSelector> formatter) {
-                return cell.setFormattedValue(
+                return cell.setOutput(
                     Optional.of(
                         this.formatValue(
                             cell,

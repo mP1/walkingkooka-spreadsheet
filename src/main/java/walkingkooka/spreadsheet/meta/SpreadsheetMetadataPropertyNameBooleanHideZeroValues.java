@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 /**
- * When true the UI will hide rather than display zero values. The {@link SpreadsheetCell#formattedValue()} will still contain the zero value formatted as text.
+ * When true the UI will hide rather than display zero values. The {@link SpreadsheetCell#output()} will still contain the zero value formatted as text.
  */
 final class SpreadsheetMetadataPropertyNameBooleanHideZeroValues extends SpreadsheetMetadataPropertyNameBoolean {
 

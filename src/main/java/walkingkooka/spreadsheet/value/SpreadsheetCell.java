@@ -137,11 +137,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public final static Optional<DecimalNumberSymbols> NO_DECIMAL_NUMBER_SYMBOLS = Optional.empty();
 
     /**
-     * Holds an absent {@link TextNode}.
-     */
-    public final static Optional<TextNode> NO_FORMATTED_VALUE = Optional.empty();
-
-    /**
      * Holds an absent {@link SpreadsheetFormatterSelector}.
      */
     public final static Optional<SpreadsheetFormatterSelector> NO_FORMATTER = Optional.empty();
@@ -150,6 +145,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * No {@link Locale}.
      */
     public final static Optional<Locale> NO_LOCALE = Optional.empty();
+
+    /**
+     * Holds an absent {@link TextNode}.
+     */
+    public final static Optional<TextNode> NO_OUTPUT = Optional.empty();
 
     /**
      * Holds an absent {@link SpreadsheetParserSelector}.
@@ -179,10 +179,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
             NO_DATETIME_SYMBOLS,
             NO_DECIMAL_NUMBER_SYMBOLS,
             NO_LOCALE,
+            NO_OUTPUT,
             NO_FORMATTER,
             NO_PARSER,
             NO_STYLE,
-            NO_FORMATTED_VALUE,
             NO_VALIDATOR
         );
     }
@@ -197,10 +197,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
                             final Optional<DateTimeSymbols> dateTimeSymbols,
                             final Optional<DecimalNumberSymbols> decimalNumberSymbols,
                             final Optional<Locale> locale,
+                            final Optional<TextNode> output,
                             final Optional<SpreadsheetFormatterSelector> formatter,
                             final Optional<SpreadsheetParserSelector> parser,
                             final TextStyle style,
-                            final Optional<TextNode> formattedValue,
                             final Optional<ValidatorSelector> validator) {
         super();
 
@@ -212,10 +212,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
         this.dateTimeSymbols = dateTimeSymbols;
         this.decimalNumberSymbols = decimalNumberSymbols;
         this.locale = locale;
+        this.output = output;
         this.formatter = formatter;
         this.parser = parser;
         this.style = style;
-        this.formattedValue = formattedValue;
         this.validator = validator;
     }
 
@@ -597,19 +597,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.style;
     }
 
-    // formatted .......................................................................................................
+    // output ..........................................................................................................
 
-    public Optional<TextNode> formattedValue() {
-        return this.formattedValue;
+    public Optional<TextNode> output() {
+        return this.output;
     }
 
-    public SpreadsheetCell setFormattedValue(final Optional<TextNode> formattedValue) {
-        Objects.requireNonNull(formattedValue, "formattedValue");
+    public SpreadsheetCell setOutput(final Optional<TextNode> output) {
+        Objects.requireNonNull(output, "output");
 
-        final Optional<TextNode> formattedValueRoot = formattedValue.map(TextNode::root);
-        return this.formattedValue.equals(formattedValueRoot) ?
+        final Optional<TextNode> outputRoot = output.map(TextNode::root);
+        return this.output.equals(outputRoot) ?
             this :
-            // all other would be setters should call #replace which also clears #formattedValue
+            // all other would be setters should call #replace which also clears #output
             new SpreadsheetCell(
                 this.reference,
                 this.formula,
@@ -618,18 +618,18 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
+                outputRoot,
                 this.formatter,
                 this.parser,
                 this.style,
-                formattedValueRoot,
                 this.validator
             );
     }
 
     /**
-     * A cached form of the cell output formatted and formula executed.
+     * A cached form of the cell output or formatted value after the formula is executed.
      */
-    private final Optional<TextNode> formattedValue;
+    private final Optional<TextNode> output;
 
     // validator........................................................................................................
 
@@ -684,7 +684,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     // replace..........................................................................................................
 
     /**
-     * Replacing any of the properties other than formatted will clear formatted
+     * Replacing any of the properties other than output will clear ouptput
      */
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
@@ -705,10 +705,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
             dateTimeSymbols,
             decimalNumberSymbols,
             locale,
+            NO_OUTPUT,
             formatter,
             parser,
             style,
-            NO_FORMATTED_VALUE,
             validator
         );
     }
@@ -756,7 +756,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     // Patchable.......................................................................................................
 
     /**
-     * Patches the given {@link SpreadsheetCell}. The cell and formatted properties cannot be updated via a patch.
+     * Patches the given {@link SpreadsheetCell}. The cell and output properties cannot be updated via a patch.
      */
     @Override
     public SpreadsheetCell patch(final JsonNode json,
@@ -852,7 +852,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     );
                     break;
                 case REFERENCE_PROPERTY_STRING:
-                case FORMATTED_VALUE_PROPERTY_STRING:
+                case OUTPUT_PROPERTY_STRING:
                     Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
                     break;
                 default:
@@ -1012,7 +1012,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     /**
      * Returns a CSV record with ALL cell properties. Empty or missing properties will have empty tokens.
      * Most properties are converted to text (they implement {@link HasText#text()}, except for
-     * {@link SpreadsheetFormula#valueType()} and {@link SpreadsheetCell#formattedValue()}.
+     * {@link SpreadsheetFormula#valueType()} and {@link SpreadsheetCell#output()}.
      * <br>
      * This text will be used by various save history tokens to serialize a complete cell.
      */
@@ -1035,7 +1035,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 toText(this.parser),
                 this.style.text(),
                 toText(this.validator),
-                toJsonText(this.formattedValue)
+                toJsonText(this.output)
             )
         ).text();
     }
@@ -1063,7 +1063,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     /**
-     * The {@link SpreadsheetFormula#value()} and {@link #formattedValue()} will both be marshalled to JSON
+     * The {@link SpreadsheetFormula#value()} and {@link #output()} will both be marshalled to JSON
      * before being included in the CSV {@link #text()}.
      */
     private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
@@ -1158,12 +1158,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
             )
         );
 
-        final Optional<TextNode> formattedValue = unmarshallCellComponentWithType(
+        final Optional<TextNode> output = unmarshallCellComponentWithType(
             list.get(13)
         );
 
-        // must call setFormattedValue must be last
-        return cell.setFormattedValue(formattedValue);
+        // must call setoutput must be last
+        return cell.setOutput(output);
     }
 
     private static <TT> Optional<TT> parseCellComponent(final String text,
@@ -1278,8 +1278,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
 
             this.printTreeLabel(
-                "formattedValue",
-                this.formattedValue,
+                "output",
+                this.output,
                 printer
             );
         }
@@ -1359,7 +1359,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         TextStyle style = TextStyle.EMPTY;
         Optional<ValidatorSelector> validator = NO_VALIDATOR;
 
-        Optional<TextNode> formatted = NO_FORMATTED_VALUE;
+        Optional<TextNode> output = NO_OUTPUT;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -1403,6 +1403,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         Locale.class
                     );
                     break;
+                case OUTPUT_PROPERTY_STRING:
+                    output = context.unmarshallOptionalWithType(child);
+                    break;
                 case PARSER_PROPERTY_STRING:
                     parser = context.unmarshallOptional(
                         child,
@@ -1421,9 +1424,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         ValidatorSelector.class
                     );
                     break;
-                case FORMATTED_VALUE_PROPERTY_STRING:
-                    formatted = context.unmarshallOptionalWithType(child);
-                    break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(
                         name,
@@ -1441,10 +1441,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
             dateTimeSymbols,
             decimalNumberSymbols,
             locale,
+            output,
             formatter,
             parser,
             style,
-            formatted,
             validator
         );
     }
@@ -1521,6 +1521,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
         }
 
+        if (this.output.isPresent()) {
+            object = object.set(
+                OUTPUT_PROPERTY,
+                context.marshallOptionalWithType(this.output)
+            );
+        }
+
         final Optional<SpreadsheetParserSelector> parser = this.parser;
         if (parser.isPresent()) {
             object = object.set(
@@ -1537,13 +1544,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
             object = object.set(
                 VALIDATOR_PROPERTY,
                 context.marshallOptional(this.validator)
-            );
-        }
-
-        if (this.formattedValue.isPresent()) {
-            object = object.set(
-                FORMATTED_VALUE_PROPERTY,
-                context.marshallOptionalWithType(this.formattedValue)
             );
         }
 
@@ -1566,13 +1566,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String LOCALE_PROPERTY_STRING = "locale";
 
+    private final static String OUTPUT_PROPERTY_STRING = "output";
+
     private final static String PARSER_PROPERTY_STRING = "parser";
 
     private final static String STYLE_PROPERTY_STRING = "style";
 
     private final static String VALIDATOR_PROPERTY_STRING = "validator";
-
-    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
@@ -1590,13 +1590,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     final static JsonPropertyName LOCALE_PROPERTY = JsonPropertyName.with(LOCALE_PROPERTY_STRING);
 
+    final static JsonPropertyName OUTPUT_PROPERTY = JsonPropertyName.with(OUTPUT_PROPERTY_STRING);
+
     final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
 
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
 
     final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING);
-
-    final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register(
@@ -1619,10 +1619,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
+            this.output,
             this.style,
             this.parser,
             this.formatter,
-            this.formattedValue,
             this.validator
         );
     }
@@ -1645,7 +1645,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.style.equals(other.style) &&
             this.parser.equals(other.parser) &&
             this.formatter.equals(other.formatter) &&
-            this.formattedValue.equals(other.formattedValue) &&
+            this.output.equals(other.output) &&
             this.validator.equals(other.validator);
     }
 
@@ -1668,8 +1668,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
             .value(this.decimalNumberSymbols.map(Object::toString))
             .label("formatter")
             .value(this.formatter.map(Object::toString))
-            .label("formattedValue")
-            .value(this.formattedValue)
+            .label("output")
+            .value(this.output)
             .label("locale")
             .value(this.locale.map(Object::toString))
             .label("parser")
@@ -1697,7 +1697,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     @Override
     public TextNode textNode() {
-        return this.formattedValue()
+        return this.output()
             .orElse(null);
     }
 
