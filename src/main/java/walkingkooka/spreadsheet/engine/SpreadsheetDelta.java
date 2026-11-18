@@ -1698,9 +1698,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case DATE_TIME_SYMBOLS_STRING:
                 case DECIMAL_NUMBER_SYMBOLS_STRING:
                 case FORMATTER_PROPERTY_STRING:
-                case FORMATTED_VALUE_PROPERTY_STRING:
                 case FORMULA_PROPERTY_STRING:
                 case LOCALE_PROPERTY_STRING:
+                case OUTPUT_PROPERTY_STRING:
                 case PARSER_PROPERTY_STRING:
                 case STYLE_PROPERTY_STRING:
                 case VALIDATOR_PROPERTY_STRING:
@@ -3135,8 +3135,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // @VisibleForTesting
     final static JsonPropertyName DECIMAL_NUMBER_SYMBOLS_PROPERTY = JsonPropertyName.with(DECIMAL_NUMBER_SYMBOLS_STRING);
 
-    private final static String FORMATTED_VALUE_PROPERTY_STRING = "output";
-
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
 
     private final static String FORMULA_PROPERTY_STRING = "formula";
@@ -3161,6 +3159,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // @VisibleForTesting
     final static JsonPropertyName LOCALE_PROPERTY = JsonPropertyName.with(LOCALE_PROPERTY_STRING);
+
+    private final static String OUTPUT_PROPERTY_STRING = "output";
 
     private final static String PARSER_PROPERTY_STRING = "parser";
     // @VisibleForTesting
