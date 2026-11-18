@@ -178,9 +178,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
             NO_CURRENCY_EXCHANGE_RATER_SELECTOR,
             NO_DATETIME_SYMBOLS,
             NO_DECIMAL_NUMBER_SYMBOLS,
+            NO_FORMATTER,
             NO_LOCALE,
             NO_OUTPUT,
-            NO_FORMATTER,
             NO_PARSER,
             NO_STYLE,
             NO_VALIDATOR
@@ -196,9 +196,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
                             final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater,
                             final Optional<DateTimeSymbols> dateTimeSymbols,
                             final Optional<DecimalNumberSymbols> decimalNumberSymbols,
+                            final Optional<SpreadsheetFormatterSelector> formatter,
                             final Optional<Locale> locale,
                             final Optional<TextNode> output,
-                            final Optional<SpreadsheetFormatterSelector> formatter,
                             final Optional<SpreadsheetParserSelector> parser,
                             final TextStyle style,
                             final Optional<ValidatorSelector> validator) {
@@ -212,8 +212,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         this.dateTimeSymbols = dateTimeSymbols;
         this.decimalNumberSymbols = decimalNumberSymbols;
         this.locale = locale;
-        this.output = output;
         this.formatter = formatter;
+        this.output = output;
         this.parser = parser;
         this.style = style;
         this.validator = validator;
@@ -248,8 +248,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 this.style,
                 this.validator
@@ -283,8 +283,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 this.style,
                 this.validator
@@ -336,8 +336,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 this.style,
                 this.validator
@@ -369,8 +369,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 Objects.requireNonNull(currencyExchangeRater, "currencyExchangeRater"),
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 this.style,
                 this.validator
@@ -410,8 +410,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 Objects.requireNonNull(dateTimeSymbols, "dateTimeSymbols"),
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 this.style,
                 this.validator
@@ -444,8 +444,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 Objects.requireNonNull(decimalNumberSymbols, "decimalNumberSymbols"),
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 this.style,
                 this.validator
@@ -456,6 +456,42 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * An optional {@link DecimalNumberSymbols} which will override the default {@link DecimalNumberSymbols}.
      */
     private final Optional<DecimalNumberSymbols> decimalNumberSymbols;
+
+    // formatter........................................................................................................
+
+    public Optional<SpreadsheetFormatterSelector> formatter() {
+        return this.formatter;
+    }
+
+    public SpreadsheetCell setFormatter(final Optional<SpreadsheetFormatterSelector> formatter) {
+        return this.formatter.equals(formatter) ?
+            this :
+            this.replace(
+                this.reference,
+                this.formula,
+                this.currency,
+                this.currencyExchangeRater,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                Objects.requireNonNull(formatter, "formatter"),
+                this.locale,
+                this.parser,
+                this.style,
+                this.validator
+            );
+    }
+
+    /**
+     * Used to format the output of the cell's formula.
+     */
+    private final Optional<SpreadsheetFormatterSelector> formatter;
+
+    // HasOptionalSpreadsheetFormatterSelector..........................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatterSelector> formatterSelector() {
+        return this.formatter();
+    }
 
     // locale...........................................................................................................
 
@@ -474,8 +510,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                Objects.requireNonNull(locale, "locale"),
                 this.formatter,
+                Objects.requireNonNull(locale, "locale"),
                 this.parser,
                 this.style,
                 this.validator
@@ -484,24 +520,29 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final Optional<Locale> locale;
 
-    // formatter........................................................................................................
+    // output ..........................................................................................................
 
-    public Optional<SpreadsheetFormatterSelector> formatter() {
-        return this.formatter;
+    public Optional<TextNode> output() {
+        return this.output;
     }
 
-    public SpreadsheetCell setFormatter(final Optional<SpreadsheetFormatterSelector> formatter) {
-        return this.formatter.equals(formatter) ?
+    public SpreadsheetCell setOutput(final Optional<TextNode> output) {
+        Objects.requireNonNull(output, "output");
+
+        final Optional<TextNode> outputRoot = output.map(TextNode::root);
+        return this.output.equals(outputRoot) ?
             this :
-            this.replace(
+            // all other would be setters should call #replace which also clears #output
+            new SpreadsheetCell(
                 this.reference,
                 this.formula,
                 this.currency,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
+                this.formatter,
                 this.locale,
-                Objects.requireNonNull(formatter, "formatter"),
+                outputRoot,
                 this.parser,
                 this.style,
                 this.validator
@@ -509,16 +550,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     /**
-     * Used to format the output of the cell's formula.
+     * A cached form of the cell output or formatted value after the formula is executed.
      */
-    private final Optional<SpreadsheetFormatterSelector> formatter;
-
-    // HasOptionalSpreadsheetFormatterSelector..........................................................................
-
-    @Override
-    public Optional<SpreadsheetFormatterSelector> formatterSelector() {
-        return this.formatter();
-    }
+    private final Optional<TextNode> output;
 
     // parser...........................................................................................................
 
@@ -541,8 +575,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 Objects.requireNonNull(parser, "parser"),
                 this.style,
                 this.validator
@@ -577,8 +611,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 Objects.requireNonNull(style, "style"),
                 this.validator
@@ -597,40 +631,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.style;
     }
 
-    // output ..........................................................................................................
-
-    public Optional<TextNode> output() {
-        return this.output;
-    }
-
-    public SpreadsheetCell setOutput(final Optional<TextNode> output) {
-        Objects.requireNonNull(output, "output");
-
-        final Optional<TextNode> outputRoot = output.map(TextNode::root);
-        return this.output.equals(outputRoot) ?
-            this :
-            // all other would be setters should call #replace which also clears #output
-            new SpreadsheetCell(
-                this.reference,
-                this.formula,
-                this.currency,
-                this.currencyExchangeRater,
-                this.dateTimeSymbols,
-                this.decimalNumberSymbols,
-                this.locale,
-                outputRoot,
-                this.formatter,
-                this.parser,
-                this.style,
-                this.validator
-            );
-    }
-
-    /**
-     * A cached form of the cell output or formatted value after the formula is executed.
-     */
-    private final Optional<TextNode> output;
-
     // validator........................................................................................................
 
     public Optional<ValidatorSelector> validator() {
@@ -647,8 +647,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.currencyExchangeRater,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
-                this.locale,
                 this.formatter,
+                this.locale,
                 this.parser,
                 this.style,
                 Objects.requireNonNull(validator, "validator")
@@ -692,8 +692,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater,
                                     final Optional<DateTimeSymbols> dateTimeSymbols,
                                     final Optional<DecimalNumberSymbols> decimalNumberSymbols,
-                                    final Optional<Locale> locale,
                                     final Optional<SpreadsheetFormatterSelector> formatter,
+                                    final Optional<Locale> locale,
                                     final Optional<SpreadsheetParserSelector> parser,
                                     final TextStyle style,
                                     final Optional<ValidatorSelector> validator) {
@@ -704,9 +704,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
             currencyExchangeRater,
             dateTimeSymbols,
             decimalNumberSymbols,
+            formatter,
             locale,
             NO_OUTPUT,
-            formatter,
             parser,
             style,
             validator
@@ -725,8 +725,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.currencyExchangeRater.isEmpty() &&
             this.dateTimeSymbols.isEmpty() &&
             this.decimalNumberSymbols.isEmpty() &&
-            this.locale.isEmpty() &&
             this.formatter.isEmpty() &&
+            this.locale.isEmpty() &&
             this.parser.isEmpty() &&
             this.style.isEmpty() &&
             this.validator.isEmpty();
@@ -1440,9 +1440,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
             currencyExchangeRater,
             dateTimeSymbols,
             decimalNumberSymbols,
+            formatter,
             locale,
             output,
-            formatter,
             parser,
             style,
             validator
