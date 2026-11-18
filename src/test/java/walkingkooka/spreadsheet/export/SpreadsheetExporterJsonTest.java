@@ -381,7 +381,30 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
                 "}"
         );
     }
-    
+
+    @Test
+    public void testExportWithOutput() {
+        this.exportAndCheck(
+            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
+                .setValue(
+                    Sets.of(
+                        CELL_A1.setFormattedValue(FORMATTED_VALUE),
+                        CELL_A2
+                    )
+                ),
+            SpreadsheetCellValueKind.OUTPUT,
+            "A1-XFD1048576.output.json",
+            SpreadsheetMediaTypes.JSON_OUTPUT,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"type\": \"text\",\n" +
+                "    \"value\": \"Formatted text 123\"\n" +
+                "  },\n" +
+                "  \"A2\": null\n" +
+                "}"
+        );
+    }
+
     @Test
     public void testExportWithParser() {
         this.exportAndCheck(
@@ -512,29 +535,6 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
             "{\n" +
                 "  \"A1\": \"DateTime\",\n" +
-                "  \"A2\": null\n" +
-                "}"
-        );
-    }
-
-    @Test
-    public void testExportWithFormattedValue() {
-        this.exportAndCheck(
-            SpreadsheetCellRange.with(SpreadsheetSelection.ALL_CELLS)
-                .setValue(
-                    Sets.of(
-                        CELL_A1.setFormattedValue(FORMATTED_VALUE),
-                        CELL_A2
-                    )
-                ),
-            SpreadsheetCellValueKind.FORMATTED_VALUE,
-            "A1-XFD1048576.formattedValue.json",
-            SpreadsheetMediaTypes.JSON_OUTPUT,
-            "{\n" +
-                "  \"A1\": {\n" +
-                "    \"type\": \"text\",\n" +
-                "    \"value\": \"Formatted text 123\"\n" +
-                "  },\n" +
                 "  \"A2\": null\n" +
                 "}"
         );
