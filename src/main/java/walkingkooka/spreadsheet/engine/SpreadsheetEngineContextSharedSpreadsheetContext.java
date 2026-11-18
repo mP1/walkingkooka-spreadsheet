@@ -268,11 +268,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             .formula();
         final Optional<Object> value = formula.errorOrValue();
 
-        SpreadsheetCell formattedCell = cell;
-        Optional<TextNode> formatted;
+        SpreadsheetCell cellWithOutput = cell;
+        Optional<TextNode> output;
 
         try {
-            formatted = this.formatValue(
+            output = this.formatValue(
                 cell,
                 value,
                 formatter
@@ -293,21 +293,21 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                 formatter.orElse(null)
             );
 
-            formatted = Optional.of(
+            output = Optional.of(
                 TextNode.text(
                     error.toExpressionError()
                         .get()
                         .text())
             );
 
-            formattedCell = formattedCell.setFormula(
+            cellWithOutput = cellWithOutput.setFormula(
                 formula.setError(
                     Optional.of(error)
                 )
             );
         }
 
-        return formattedCell.setOutput(formatted);
+        return cellWithOutput.setOutput(output);
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
