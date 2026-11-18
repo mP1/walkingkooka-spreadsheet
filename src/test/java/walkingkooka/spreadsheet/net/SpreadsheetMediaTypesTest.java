@@ -94,6 +94,14 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
+    public void testJsonOutput() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.JSON_OUTPUT,
+            "application/json+walkingkooka.tree.text.TextNode"
+        );
+    }
+
+    @Test
     public void testJsonParser() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_PARSER,
@@ -112,7 +120,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testJsonFormattedValue() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
+            SpreadsheetMediaTypes.JSON_OUTPUT,
             "application/json+walkingkooka.tree.text.TextNode"
         );
     }
@@ -172,6 +180,14 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA,
             "application/memory+walkingkooka.spreadsheet.meta.SpreadsheetMetadata"
+        );
+    }
+
+    @Test
+    public void testMemoryOutput() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.MEMORY_OUTPUT,
+            "application/memory+walkingkooka.tree.text.TextNode"
         );
     }
 

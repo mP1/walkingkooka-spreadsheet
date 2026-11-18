@@ -170,7 +170,7 @@ final class SpreadsheetExporterJson implements SpreadsheetExporter {
                 ).setName(
                     name(c)
                 );
-                contentType = SpreadsheetMediaTypes.JSON_FORMATTED_VALUE;
+                contentType = SpreadsheetMediaTypes.JSON_OUTPUT;
                 break;
             default:
                 value = null;

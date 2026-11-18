@@ -59,13 +59,13 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType JSON_FORM = Form.CONTENT_TYPE;
 
-    public static final MediaType JSON_FORMATTED_VALUE = TextNode.CONTENT_TYPE;
-
     public static final MediaType JSON_FORMATTER = SpreadsheetFormatterSelector.CONTENT_TYPE;
 
     public static final MediaType JSON_FORMULA = SpreadsheetFormula.CONTENT_TYPE;
 
     public static final MediaType JSON_LOCALE = HasContentType.LOCALE;
+
+    public static final MediaType JSON_OUTPUT = TextNode.CONTENT_TYPE;
 
     public static final MediaType JSON_PARSER = SpreadsheetParserSelector.CONTENT_TYPE;
 
@@ -93,8 +93,6 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType MEMORY_FORM = object(Form.class);
 
-    public static final MediaType MEMORY_FORMATTED_VALUE = object(TextNode.class);
-
     public static final MediaType MEMORY_FORMATTER = object(SpreadsheetFormatterSelector.class);
 
     public static final MediaType MEMORY_FORMULA = object(SpreadsheetFormula.class);
@@ -102,6 +100,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     public static final MediaType MEMORY_LABEL = object(SpreadsheetLabelName.class);
 
     public static final MediaType MEMORY_LOCALE = object(Locale.class);
+
+    public static final MediaType MEMORY_OUTPUT = object(TextNode.class);
 
     public static final MediaType MEMORY_PARSER = object(SpreadsheetParserSelector.class);
 
