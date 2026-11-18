@@ -104,6 +104,13 @@ public enum SpreadsheetCellValueKind implements HasContentType,
         }
     },
 
+    OUTPUT(SpreadsheetMediaTypes.MEMORY_OUTPUT) {
+        @Override
+        public Optional<TextNode> cellValue(final SpreadsheetCell cell) {
+            return cell.formattedValue();
+        }
+    },
+
     PARSER(SpreadsheetMediaTypes.MEMORY_PARSER) {
         @Override
         public Optional<SpreadsheetParserSelector> cellValue(final SpreadsheetCell cell) {
@@ -138,13 +145,6 @@ public enum SpreadsheetCellValueKind implements HasContentType,
         public Optional<ValueType> cellValue(final SpreadsheetCell cell) {
             return cell.formula()
                 .valueType();
-        }
-    },
-
-    FORMATTED_VALUE(SpreadsheetMediaTypes.MEMORY_OUTPUT) {
-        @Override
-        public Optional<TextNode> cellValue(final SpreadsheetCell cell) {
-            return cell.formattedValue();
         }
     };
 

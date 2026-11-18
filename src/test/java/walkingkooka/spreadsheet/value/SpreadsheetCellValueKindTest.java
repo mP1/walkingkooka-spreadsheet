@@ -190,7 +190,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     @Test
     public void testCellValueWithFormattedValue() {
         this.cellValueAndCheck(
-            SpreadsheetCellValueKind.FORMATTED_VALUE,
+            SpreadsheetCellValueKind.OUTPUT,
             SpreadsheetCell::formattedValue
         );
     }
@@ -256,14 +256,6 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testFileExtensionWithFormattedValue() {
-        this.fileExtensionAndCheck(
-            SpreadsheetCellValueKind.FORMATTED_VALUE,
-            "formattedValue"
-        );
-    }
-
-    @Test
     public void testFileExtensionWithFormatter() {
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.FORMATTER,
@@ -284,6 +276,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.LOCALE,
             "locale"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithOutput() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.OUTPUT,
+            "output"
         );
     }
 
@@ -351,18 +351,18 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testParseWithFormattedValueString() {
-        this.parseStringAndCheck(
-            "formattedValue",
-            SpreadsheetCellValueKind.FORMATTED_VALUE
-        );
-    }
-
-    @Test
     public void testParseWithFormatter() {
         this.parseStringAndCheck(
             "formatter",
             SpreadsheetCellValueKind.FORMATTER
+        );
+    }
+
+    @Test
+    public void testParseWithOutputString() {
+        this.parseStringAndCheck(
+            "output",
+            SpreadsheetCellValueKind.OUTPUT
         );
     }
 
@@ -514,6 +514,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     }
 
     @Test
+    public void testFromFileExtensionWithOutput() {
+        this.fromFileExtensionAndCheck(
+            FileExtension.parse("output"),
+            SpreadsheetCellValueKind.OUTPUT
+        );
+    }
+
+    @Test
     public void testFromFileExtensionWithParser() {
         this.fromFileExtensionAndCheck(
             FileExtension.parse("parser"),
@@ -550,14 +558,6 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         this.fromFileExtensionAndCheck(
             FileExtension.parse("valueType"),
             SpreadsheetCellValueKind.VALUE_TYPE
-        );
-    }
-
-    @Test
-    public void testFromFileExtensionWithFormattedValue() {
-        this.fromFileExtensionAndCheck(
-            FileExtension.parse("formattedValue"),
-            SpreadsheetCellValueKind.FORMATTED_VALUE
         );
     }
 
@@ -619,7 +619,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
                     SpreadsheetMediaTypes.class.getField(
                         "MEMORY_" +
                             (
-                                kind == SpreadsheetCellValueKind.FORMATTED_VALUE ?
+                                kind == SpreadsheetCellValueKind.OUTPUT ?
                                     "OUTPUT" :
                                     kind.name()
                             )
