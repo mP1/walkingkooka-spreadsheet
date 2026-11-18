@@ -30,18 +30,18 @@ import java.util.Optional;
 /**
  * Wraps a {@link Comparator} sorting a {@link walkingkooka.tree.text.TextStylePropertyName} found in a {@link SpreadsheetCell#formattedValue()}.
  */
-final class SpreadsheetComparatorFormattedValueTextStylePropertyName<T> implements SpreadsheetComparator<T> {
+final class SpreadsheetComparatorOutputTextStylePropertyName<T> implements SpreadsheetComparator<T> {
 
-    static <T> SpreadsheetComparatorFormattedValueTextStylePropertyName<T> with(final TextStylePropertyName<T> textStylePropertyName,
-                                                                                final Comparator<? super T> comparator) {
-        return new SpreadsheetComparatorFormattedValueTextStylePropertyName<>(
+    static <T> SpreadsheetComparatorOutputTextStylePropertyName<T> with(final TextStylePropertyName<T> textStylePropertyName,
+                                                                        final Comparator<? super T> comparator) {
+        return new SpreadsheetComparatorOutputTextStylePropertyName<>(
             Objects.requireNonNull(textStylePropertyName, "textStylePropertyName"),
             Objects.requireNonNull(comparator, "comparator")
         );
     }
 
-    private SpreadsheetComparatorFormattedValueTextStylePropertyName(final TextStylePropertyName<T> textStylePropertyName,
-                                                                     final Comparator<? super T> comparator) {
+    private SpreadsheetComparatorOutputTextStylePropertyName(final TextStylePropertyName<T> textStylePropertyName,
+                                                             final Comparator<? super T> comparator) {
         this.textStylePropertyName = textStylePropertyName;
         this.comparator = comparator;
         this.name = SpreadsheetComparatorName.with(
@@ -60,7 +60,7 @@ final class SpreadsheetComparatorFormattedValueTextStylePropertyName<T> implemen
 
         return null != cell ?
             cell.formattedValue()
-                .flatMap(SpreadsheetComparatorFormattedValueTextStylePropertyName.this.textStylePropertyName::firstValueOrEmpty) :
+                .flatMap(SpreadsheetComparatorOutputTextStylePropertyName.this.textStylePropertyName::firstValueOrEmpty) :
             Optional.empty();
     }
 
@@ -101,10 +101,10 @@ final class SpreadsheetComparatorFormattedValueTextStylePropertyName<T> implemen
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof SpreadsheetComparatorFormattedValueTextStylePropertyName && this.equals0(Cast.to(other));
+            other instanceof SpreadsheetComparatorOutputTextStylePropertyName && this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetComparatorFormattedValueTextStylePropertyName<?> other) {
+    private boolean equals0(final SpreadsheetComparatorOutputTextStylePropertyName<?> other) {
         return this.textStylePropertyName.equals(other.textStylePropertyName) &&
             this.comparator.equals(other.comparator);
     }
