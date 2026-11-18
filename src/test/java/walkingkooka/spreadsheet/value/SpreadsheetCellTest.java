@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.HasCsvStringListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.currency.CanHaveCurrencyValueTesting;
@@ -89,6 +90,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     CanHaveCurrencyValueTesting,
     CanReplaceReferencesTesting2<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
+    HasCsvStringListTesting,
     HasContentTypeTesting,
     HasExpressionTesting,
     HasOptionalCurrencyTesting,
@@ -4183,6 +4185,43 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.contentTypeAndCheck(
             this.createObject(),
             "application/json+walkingkooka.spreadsheet.value.SpreadsheetCell"
+        );
+    }
+
+    // HasCsvStringList.................................................................................................
+
+    @Test
+    public void testCsvStringListWithOnlyReferenceAndFormula() {
+        this.csvStringListAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+            ),
+            "A1,=1+2,,,,,,,,,,,,"
+        );
+    }
+
+    @Test
+    public void testCsvStringList() {
+        this.csvStringListAndCheck(
+            this.createObject(),
+            "A1\n" +
+                "=1+2\n" +
+                "AUD\n" +
+                "test-currency-exchange-rater-111\n" +
+                "\"\"\"am,pm\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\"\"\n" +
+                "\"-,+,0,$,.,e,\"\",\"\",∞,.,NaN,%,‰\"\n" +
+                "formatter-selector-111,en-AU,\"{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"output-text\"\"}\",parser-selector-111,color: black;,absolute-url,,"
+        );
+    }
+
+    @Test
+    public void testCsvStringListThenParse() {
+        final SpreadsheetCell spreadsheetCell = this.createCell();
+
+        this.parseStringAndCheck(
+            spreadsheetCell.csvStringList()
+                .text(),
+            spreadsheetCell
         );
     }
 
