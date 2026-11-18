@@ -529,7 +529,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
                 ),
             SpreadsheetCellValueKind.FORMATTED_VALUE,
             "A1-XFD1048576.formattedValue.json",
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
+            SpreadsheetMediaTypes.JSON_OUTPUT,
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"type\": \"text\",\n" +

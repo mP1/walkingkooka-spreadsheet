@@ -616,8 +616,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
             this.contentTypeAndCheck(
                 kind,
                 MediaType.class.cast(
-                    SpreadsheetMediaTypes.class.getField("MEMORY_" + kind.name())
-                        .get(null)
+                    SpreadsheetMediaTypes.class.getField(
+                        "MEMORY_" +
+                            (
+                                kind == SpreadsheetCellValueKind.FORMATTED_VALUE ?
+                                    "OUTPUT" :
+                                    kind.name()
+                            )
+                    ).get(null)
                 )
             );
         }
