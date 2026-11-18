@@ -60,7 +60,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
         .setValidator(OPTIONAL_VALIDATOR_SELECTOR)
         .setOutput(
             Optional.of(
-                TextNode.text("output")
+                TextNode.text("*output*")
             )
         );
 
@@ -77,7 +77,7 @@ public interface HasSpreadsheetCellTesting extends HasContentTypeTesting,
         .setValidator(OPTIONAL_DIFFERENT_VALIDATOR_SELECTOR)
         .setOutput(
             Optional.of(
-                TextNode.text("different-output")
+                TextNode.text("*different-output*")
             )
         );
 

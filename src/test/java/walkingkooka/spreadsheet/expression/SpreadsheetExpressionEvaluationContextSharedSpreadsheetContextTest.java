@@ -1433,7 +1433,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                 "      validator:\n" +
                 "        absolute-url\n" +
                 "      output:\n" +
-                "        Text \"output\"\n" +
+                "        Text \"*output*\"\n" +
                 "  spreadsheetId\n" +
                 "    123\n" +
                 "  timeOffset\n" +
@@ -1449,7 +1449,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "mode=FORMULA spreadsheetCell=A1 valueType=text/Text currency=\"AUD\" currencyExchangeRater=\"test-currency-exchange-rater-111\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'\" formatter=\"formatter-selector-111\" output=\"output\" locale=\"en_AU\" parser=\"parser-sele spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader"
+            "mode=FORMULA spreadsheetCell=A1 valueType=text/Text currency=\"AUD\" currencyExchangeRater=\"test-currency-exchange-rater-111\" dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\" decimalNumberSymbols=\"negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰'\" formatter=\"formatter-selector-111\" output=\"*output*\" locale=\"en_AU\" parser=\"parser-se spreadsheetExpressionReferenceLoader=SpreadsheetExpressionReferenceLoader"
         );
     }
 
