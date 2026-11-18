@@ -228,9 +228,9 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
 
                         final boolean filter;
                         switch (name) {
-                            case "formattedValueTextStylePropertyName":
                             case "nullAfter":
                             case "nullBefore":
+                            case "outputTextStylePropertyName":
                             case "reverse":
                             case "value":
                                 filter = false;
