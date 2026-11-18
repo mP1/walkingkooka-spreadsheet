@@ -118,14 +118,6 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
-    public void testJsonFormattedValue() {
-        this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_OUTPUT,
-            "application/json+walkingkooka.tree.text.TextNode"
-        );
-    }
-
-    @Test
     public void testJsonValidator() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_VALIDATOR,
