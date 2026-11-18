@@ -1622,11 +1622,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.currencyExchangeRater,
             this.dateTimeSymbols,
             this.decimalNumberSymbols,
+            this.formatter,
             this.locale,
             this.output,
-            this.style,
             this.parser,
-            this.formatter,
+            this.style,
             this.validator
         );
     }
@@ -1645,11 +1645,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.currencyExchangeRater.equals(other.currencyExchangeRater) &&
             this.dateTimeSymbols.equals(other.dateTimeSymbols) &&
             this.decimalNumberSymbols.equals(other.decimalNumberSymbols) &&
-            this.locale.equals(other.locale) &&
-            this.style.equals(other.style) &&
-            this.parser.equals(other.parser) &&
             this.formatter.equals(other.formatter) &&
+            this.locale.equals(other.locale) &&
             this.output.equals(other.output) &&
+            this.parser.equals(other.parser) &&
+            this.style.equals(other.style) &&
             this.validator.equals(other.validator);
     }
 
