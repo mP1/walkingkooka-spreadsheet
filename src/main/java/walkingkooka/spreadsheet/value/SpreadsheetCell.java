@@ -1024,18 +1024,18 @@ public final class SpreadsheetCell implements CanBeEmpty,
             Lists.of(
                 this.reference().text(), // cell reference
                 formula.text(),
-                toText(formula.valueType()),
-                toJsonText(formula.value()),
                 this.currency.map(Currency::toString).orElse(""),
                 toText(this.currencyExchangeRater),
                 toText(this.dateTimeSymbols),
                 toText(this.decimalNumberSymbols),
                 toText(this.formatter),
                 toJsonText(this.locale),
+                toJsonText(this.output),
                 toText(this.parser),
                 this.style.text(),
                 toText(this.validator),
-                toJsonText(this.output)
+                toJsonText(formula.value()),
+                toText(formula.valueType())
             )
         ).text();
     }
@@ -1091,79 +1091,83 @@ public final class SpreadsheetCell implements CanBeEmpty,
             throw new IllegalArgumentException("Expected 14 tokens but got " + count);
         }
 
-        SpreadsheetCell cell = SpreadsheetCell.with(
-            SpreadsheetSelection.parseCell(
-                list.get(0)
-            ),
-            SpreadsheetFormula.EMPTY.setText(
-                list.get(1)
-            )
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell(
+            list.get(0)
         );
 
-        cell = cell.setFormula(
-            cell.formula()
-                .setValueType(
-                    parseCellComponent(
-                        list.get(2),
-                        ValueType::parseOrFail
-                    )
-                ).setValue(
-                    unmarshallCellComponentWithType(
-                        list.get(3)
-                    )
-                )
-        ).setCurrency(
-            parseCellComponent(
-                list.get(4),
-                Currency::getInstance
-            )
-        ).setCurrencyExchangeRater(
-            parseCellComponent(
-                list.get(5),
-                CurrencyExchangeRaterSelector::parse
-            )
-        ).setDateTimeSymbols(
-            parseCellComponent(
-                list.get(6),
-                DateTimeSymbols::parse
-            )
-        ).setDecimalNumberSymbols(
-            parseCellComponent(
-                list.get(7),
-                DecimalNumberSymbols::parse
-            )
-        ).setFormatter(
-            parseCellComponent(
-                list.get(8),
-                SpreadsheetFormatterSelector::parse
-            )
-        ).setLocale(
-            parseCellComponent(
-                list.get(9),
-                Locale::forLanguageTag
-            )
-        ).setParser(
-            parseCellComponent(
-                list.get(10),
-                SpreadsheetParserSelector::parse
-            )
-        ).setStyle(
-            TextStyle.parse(
-                list.get(11)
-            )
-        ).setValidator(
-            parseCellComponent(
-                list.get(12),
-                ValidatorSelector::parse
-            )
+        SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText(
+            list.get(1)
+        );
+
+        final Optional<Currency> currency = parseCellComponent(
+            list.get(2),
+            Currency::getInstance
+        );
+
+        final Optional<CurrencyExchangeRaterSelector> currencyExchangeRater = parseCellComponent(
+            list.get(3),
+            CurrencyExchangeRaterSelector::parse
+        );
+
+        final Optional<DateTimeSymbols> dateTimeSymbols = parseCellComponent(
+            list.get(4),
+            DateTimeSymbols::parse
+        );
+
+        final Optional<DecimalNumberSymbols> decimalNumberSymbols = parseCellComponent(
+            list.get(5),
+            DecimalNumberSymbols::parse
+        );
+
+        final Optional<SpreadsheetFormatterSelector> formatter = parseCellComponent(
+            list.get(6),
+            SpreadsheetFormatterSelector::parse
+        );
+
+        final Optional<Locale> locale = parseCellComponent(
+            list.get(7),
+            Locale::forLanguageTag
         );
 
         final Optional<TextNode> output = unmarshallCellComponentWithType(
-            list.get(13)
+            list.get(8)
         );
 
-        // must call setoutput must be last
-        return cell.setOutput(output);
+        final Optional<SpreadsheetParserSelector> parser = parseCellComponent(
+            list.get(9),
+            SpreadsheetParserSelector::parse
+        );
+
+        final TextStyle style = TextStyle.parse(
+            list.get(10)
+        );
+
+        final Optional<ValidatorSelector> validator = parseCellComponent(
+            list.get(11),
+            ValidatorSelector::parse
+        );
+
+        final Optional<Object> value = unmarshallCellComponentWithType(
+            list.get(12)
+        );
+
+        final Optional<ValueType> valueType = parseCellComponent(
+            list.get(13),
+            ValueType::parseOrFail
+        );
+
+        return cell.setFormula(
+                formula.setValueType(valueType)
+                    .setValue(value)
+            ).setCurrency(currency)
+            .setCurrencyExchangeRater(currencyExchangeRater)
+            .setDateTimeSymbols(dateTimeSymbols)
+            .setDecimalNumberSymbols(decimalNumberSymbols)
+            .setFormatter(formatter).setLocale(locale)
+            .setParser(parser)
+            .setStyle(style)
+            .setValidator(validator)
+            .setOutput(output); // must be last otherwse other components will be cleared.
     }
 
     private static <TT> Optional<TT> parseCellComponent(final String text,
