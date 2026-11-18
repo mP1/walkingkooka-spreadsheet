@@ -52,7 +52,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> backgroundColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.BACKGROUND_COLOR,
             colorCollection
         );
@@ -62,7 +62,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderBottomColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.BORDER_BOTTOM_COLOR,
             colorCollection
         );
@@ -72,7 +72,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.BORDER_COLOR,
             colorCollection
         );
@@ -82,7 +82,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderLeftColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.BORDER_LEFT_COLOR,
             colorCollection
         );
@@ -92,7 +92,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderRightColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.BORDER_RIGHT_COLOR,
             colorCollection
         );
@@ -102,7 +102,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderTopColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.BORDER_TOP_COLOR,
             colorCollection
         );
@@ -112,7 +112,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> color(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.COLOR,
             colorCollection
         );
@@ -204,28 +204,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      */
     public static <T> FakeSpreadsheetComparator<T> fake() {
         return new FakeSpreadsheetComparator<>();
-    }
-
-    /**
-     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
-     */
-    public static <T> SpreadsheetComparator<T> formattedValueTextStylePropertyName(final TextStylePropertyName<T> textStylePropertyName,
-                                                                                   final Comparator<? super T> comparator) {
-        return SpreadsheetComparatorOutputTextStylePropertyName.with(
-            textStylePropertyName,
-            comparator
-        );
-    }
-
-    /**
-     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
-     */
-    private static SpreadsheetComparator<Color> formattedValueTextStylePropertyNameColor(final TextStylePropertyName<Color> textStylePropertyName,
-                                                                                         final String colorCollection) {
-        return formattedValueTextStylePropertyName(
-            textStylePropertyName,
-            ColorComparators.colorCollection(colorCollection)
-        );
     }
 
     /**
@@ -336,9 +314,31 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> outlineColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.OUTLINE_COLOR,
             colorCollection
+        );
+    }
+
+    /**
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
+     */
+    public static <T> SpreadsheetComparator<T> outputTextStylePropertyName(final TextStylePropertyName<T> textStylePropertyName,
+                                                                           final Comparator<? super T> comparator) {
+        return SpreadsheetComparatorOutputTextStylePropertyName.with(
+            textStylePropertyName,
+            comparator
+        );
+    }
+
+    /**
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
+     */
+    private static SpreadsheetComparator<Color> outputTextStylePropertyNameColor(final TextStylePropertyName<Color> textStylePropertyName,
+                                                                                 final String colorCollection) {
+        return outputTextStylePropertyName(
+            textStylePropertyName,
+            ColorComparators.colorCollection(colorCollection)
         );
     }
 
@@ -436,7 +436,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> textDecorationColor(final String colorCollection) {
-        return formattedValueTextStylePropertyNameColor(
+        return outputTextStylePropertyNameColor(
             TextStylePropertyName.TEXT_DECORATION_COLOR,
             colorCollection
         );
