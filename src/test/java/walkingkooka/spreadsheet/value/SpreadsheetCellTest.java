@@ -3679,7 +3679,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintFormulaTokenExpressionValueStyleFormatterFormatted() {
+    public void testTreePrintFormulaTokenExpressionValueFormatterOutputStyle() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                     ABSOLUTE_REFERENCE,
@@ -3707,11 +3707,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      3\n" +
                 "  formatter:\n" +
                 "    formatter-selector-111\n" +
+                "  output:\n" +
+                "    Text \"output-text\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      color=black\n" +
-                "  output:\n" +
-                "    Text \"output-text\"\n"
+                "      color=black\n"
         );
     }
 
