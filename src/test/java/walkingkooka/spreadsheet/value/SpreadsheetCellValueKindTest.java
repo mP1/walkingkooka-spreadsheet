@@ -146,6 +146,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     }
 
     @Test
+    public void testCellValueWithOutput() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.OUTPUT,
+            SpreadsheetCell::formattedValue
+        );
+    }
+
+    @Test
     public void testCellValueWithParser() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.PARSER,
@@ -184,14 +192,6 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
             SpreadsheetCellValueKind.VALUE_TYPE,
             (c) -> c.formula()
                 .valueType()
-        );
-    }
-
-    @Test
-    public void testCellValueWithFormattedValue() {
-        this.cellValueAndCheck(
-            SpreadsheetCellValueKind.OUTPUT,
-            SpreadsheetCell::formattedValue
         );
     }
 
