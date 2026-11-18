@@ -1261,6 +1261,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
 
             this.printTreeLabel(
+                "output",
+                this.output,
+                printer
+            );
+
+            this.printTreeLabel(
                 "parser",
                 this.parser,
                 printer
@@ -1278,12 +1284,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.printTreeLabel(
                 "validator",
                 this.validator,
-                printer
-            );
-
-            this.printTreeLabel(
-                "output",
-                this.output,
                 printer
             );
         }

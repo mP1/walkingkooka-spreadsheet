@@ -1425,6 +1425,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                 "        formatter-selector-111\n" +
                 "      locale:\n" +
                 "        en_AU (java.util.Locale)\n" +
+                "      output:\n" +
+                "        Text \"*output*\"\n" +
                 "      parser:\n" +
                 "        parser-selector-111\n" +
                 "      style:\n" +
@@ -1432,8 +1434,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                 "          color=black\n" +
                 "      validator:\n" +
                 "        absolute-url\n" +
-                "      output:\n" +
-                "        Text \"*output*\"\n" +
                 "  spreadsheetId\n" +
                 "    123\n" +
                 "  timeOffset\n" +
