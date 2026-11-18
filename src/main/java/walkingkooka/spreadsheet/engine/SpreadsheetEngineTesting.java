@@ -1342,7 +1342,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     default void cellOutputAndCheck(final SpreadsheetCell cell,
-                                            final String text) {
+                                    final String text) {
         this.checkNotEquals(
             Optional.empty(),
             cell.output(),
@@ -1353,7 +1353,7 @@ public interface SpreadsheetEngineTesting extends BinaryTextContextTesting,
             cell.output()
                 .get()
                 .text(),
-            "formattedText"
+            "output.text"
         );
     }
 }
