@@ -30,8 +30,8 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorFormattedValueTextStylePropertyName<Color>, Color>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorFormattedValueTextStylePropertyName<Color>>,
+public final class SpreadsheetComparatorOutputTextStylePropertyNameTest implements SpreadsheetComparatorTesting2<SpreadsheetComparatorOutputTextStylePropertyName<Color>, Color>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorOutputTextStylePropertyName<Color>>,
     ToStringTesting {
 
     private final static TextStylePropertyName<Color> TEXT_STYLE_PROPERTY_NAME = TextStylePropertyName.COLOR;
@@ -42,7 +42,7 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
     public void testWithNullTextStylePropertyNameFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+            () -> SpreadsheetComparatorOutputTextStylePropertyName.with(
                 null,
                 COMPARATOR
             )
@@ -53,7 +53,7 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
     public void testWithNullComparatorFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+            () -> SpreadsheetComparatorOutputTextStylePropertyName.with(
                 TEXT_STYLE_PROPERTY_NAME,
                 null
             )
@@ -62,7 +62,7 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
 
     @Test
     public void testWith() {
-        final SpreadsheetComparatorFormattedValueTextStylePropertyName<Color> comparator = SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+        final SpreadsheetComparatorOutputTextStylePropertyName<Color> comparator = SpreadsheetComparatorOutputTextStylePropertyName.with(
             TEXT_STYLE_PROPERTY_NAME,
             COMPARATOR
         );
@@ -82,8 +82,8 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
     }
 
     @Override
-    public SpreadsheetComparatorFormattedValueTextStylePropertyName<Color> createComparator() {
-        return SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+    public SpreadsheetComparatorOutputTextStylePropertyName<Color> createComparator() {
+        return SpreadsheetComparatorOutputTextStylePropertyName.with(
             TEXT_STYLE_PROPERTY_NAME,
             COMPARATOR
         );
@@ -99,7 +99,7 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
     @Test
     public void testEqualsDifferentTextStylePropertyName() {
         this.checkNotEquals(
-            SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+            SpreadsheetComparatorOutputTextStylePropertyName.with(
                 TextStylePropertyName.BACKGROUND_COLOR,
                 COMPARATOR
             )
@@ -109,7 +109,7 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
     @Test
     public void testEqualsDifferentComparator() {
         this.checkNotEquals(
-            SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+            SpreadsheetComparatorOutputTextStylePropertyName.with(
                 TEXT_STYLE_PROPERTY_NAME,
                 ColorComparators.green()
             )
@@ -117,7 +117,7 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
     }
 
     @Override
-    public SpreadsheetComparatorFormattedValueTextStylePropertyName<Color> createObject() {
+    public SpreadsheetComparatorOutputTextStylePropertyName<Color> createObject() {
         return this.createComparator();
     }
 
@@ -134,9 +134,9 @@ public final class SpreadsheetComparatorFormattedValueTextStylePropertyNameTest 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetComparatorFormattedValueTextStylePropertyName<Color>> type() {
+    public Class<SpreadsheetComparatorOutputTextStylePropertyName<Color>> type() {
         return Cast.to(
-            SpreadsheetComparatorFormattedValueTextStylePropertyName.class
+            SpreadsheetComparatorOutputTextStylePropertyName.class
         );
     }
 

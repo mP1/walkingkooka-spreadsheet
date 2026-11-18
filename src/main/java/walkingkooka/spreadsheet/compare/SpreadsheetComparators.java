@@ -49,7 +49,7 @@ import java.util.Objects;
 public final class SpreadsheetComparators implements PublicStaticHelper {
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> backgroundColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -59,7 +59,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderBottomColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -69,7 +69,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -79,7 +79,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
     
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderLeftColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -89,7 +89,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderRightColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -99,7 +99,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> borderTopColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -109,7 +109,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> color(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -207,18 +207,18 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static <T> SpreadsheetComparator<T> formattedValueTextStylePropertyName(final TextStylePropertyName<T> textStylePropertyName,
                                                                                    final Comparator<? super T> comparator) {
-        return SpreadsheetComparatorFormattedValueTextStylePropertyName.with(
+        return SpreadsheetComparatorOutputTextStylePropertyName.with(
             textStylePropertyName,
             comparator
         );
     }
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     private static SpreadsheetComparator<Color> formattedValueTextStylePropertyNameColor(final TextStylePropertyName<Color> textStylePropertyName,
                                                                                          final String colorCollection) {
@@ -333,7 +333,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     );
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> outlineColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
@@ -433,7 +433,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     );
 
     /**
-     * {@see SpreadsheetComparatorFormattedValueTextStylePropertyName}
+     * {@see SpreadsheetComparatorOutputTextStylePropertyName}
      */
     public static SpreadsheetComparator<Color> textDecorationColor(final String colorCollection) {
         return formattedValueTextStylePropertyNameColor(
