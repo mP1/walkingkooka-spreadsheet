@@ -1318,7 +1318,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             ).textNode()
                     )
                 ),
-            "A1,123,AUD,test-currency-exchange-rater-111,\"\"\"am,pm\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\"\",\"-,+,0,$,.,e,\"\",\"\",∞,.,NaN,%,‰\",formatter-selector-111,\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Output-text\"\"}]}}\",parser-selector-111,color: black;,hello-validator,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\","
+            "A1,123,AUD,test-currency-exchange-rater-111,\"\"\"am,pm\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\"\",\"-,+,0,$,.,e,\"\",\"\",∞,.,NaN,%,‰\",formatter-selector-111,en-AU,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Output-text\"\"}]}}\",parser-selector-111,color: black;,hello-validator,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\","
         );
     }
 
