@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.CsvStringList;
+import walkingkooka.collect.list.HasCsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.currency.CanHaveCurrencyValue;
 import walkingkooka.currency.CurrencyCode;
@@ -95,6 +96,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     CanHaveCurrencyValue,
     CanReplaceReferences<SpreadsheetCell>,
     HasContentType,
+    HasCsvStringList,
     HasOptionalCurrency,
     HasOptionalCurrencyExchangeRaterSelector,
     HasOptionalDateTimeSymbols,
@@ -1018,6 +1020,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     @Override
     public String text() {
+        return this.csvStringList()
+            .text();
+    }
+
+    // HasCsvStringList.................................................................................................
+
+    @Override
+    public CsvStringList csvStringList() {
         final SpreadsheetFormula formula = this.formula;
 
         return CsvStringList.EMPTY.setElements(
@@ -1038,7 +1048,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 toJsonText(formula.value()),
                 toText(formula.valueType())
             )
-        ).text();
+        );
     }
 
     private static String toJsonText(final Optional<?> value) {
