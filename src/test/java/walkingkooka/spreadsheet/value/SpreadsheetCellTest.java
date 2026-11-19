@@ -22,6 +22,7 @@ import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.HasCsvStringListTesting;
+import walkingkooka.collect.list.HasTsvStringListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.currency.CanHaveCurrencyValueTesting;
@@ -91,6 +92,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     CanReplaceReferencesTesting2<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
     HasCsvStringListTesting,
+    HasTsvStringListTesting,
     HasContentTypeTesting,
     HasExpressionTesting,
     HasOptionalCurrencyTesting,
@@ -4227,6 +4229,37 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             spreadsheetCell.csvStringList()
                 .text(),
             spreadsheetCell
+        );
+    }
+
+    // HasTsvStringList.................................................................................................
+
+    @Test
+    public void testTsvStringListWithOnlyReferenceAndFormula() {
+        this.tsvStringListAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+            ),
+            "A1\t=1+2\t\t\t\t\t\t\t\t\t\t\t\t"
+        );
+    }
+
+    @Test
+    public void testTsvStringList() {
+        this.tsvStringListAndCheck(
+            this.createObject(),
+            "A1\n" +
+                "=1+2\n" +
+                "AUD\n" +
+                "test-currency-exchange-rater-111\n" +
+                "\"\"\"am\tpm\"\"\t\"\"January\tFebruary\tMarch\tApril\tMay\tJune\tJuly\tAugust\tSeptember\tOctober\tNovember\tDecember\"\"\t\"\"Jan.\tFeb.\tMar.\tApr.\tMay\tJun.\tJul.\tAug.\tSep.\tOct.\tNov.\tDec.\"\"\t\"\"Sunday\tMonday\tTuesday\tWednesday\tThursday\tFriday\tSaturday\"\"\t\"\"Sun.\tMon.\tTue.\tWed.\tThu.\tFri.\tSat.\"\"\"\n" +
+                "\"-\t+\t0\t$\t.\te\t,\t∞\t.\tNaN\t%\t‰\"\n" +
+                "formatter-selector-111\n" +
+                "en-AU\n" +
+                "\"{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"output-text\"\"}\"\n" +
+                "parser-selector-111\n" +
+                "color: black;\n" +
+                "absolute-url\n\n"
         );
     }
 
