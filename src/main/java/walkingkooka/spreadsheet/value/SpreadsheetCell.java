@@ -23,7 +23,9 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.HasCsvStringList;
+import walkingkooka.collect.list.HasTsvStringList;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.TsvStringList;
 import walkingkooka.currency.CanHaveCurrencyValue;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
@@ -84,6 +86,7 @@ import java.math.MathContext;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Currency;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -97,6 +100,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     CanReplaceReferences<SpreadsheetCell>,
     HasContentType,
     HasCsvStringList,
+    HasTsvStringList,
     HasOptionalCurrency,
     HasOptionalCurrencyExchangeRaterSelector,
     HasOptionalDateTimeSymbols,
@@ -1028,25 +1032,58 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     @Override
     public CsvStringList csvStringList() {
+        return CsvStringList.EMPTY.setElements(
+            this.toStringList(SpreadsheetCell::toCsv)
+        );
+    }
+
+    private static String toCsv(final Optional<?> has) {
+        return has.map(
+            (Object h) -> ((HasCsvStringList)h).csvStringList()
+                .text()
+        ).orElse("");
+    }
+
+    // HasTsvStringList.................................................................................................
+
+    @Override
+    public TsvStringList tsvStringList() {
+        return TsvStringList.EMPTY.setElements(
+            this.toStringList(SpreadsheetCell::toTsv)
+        );
+    }
+
+    private static String toTsv(final Optional<?> has) {
+        return has.map(
+            (Object h) -> ((HasTsvStringList) h).tsvStringList()
+                .text()
+        ).orElse("");
+    }
+
+    private List<String> toStringList(final Function<Optional<?>, String> property) {
         final SpreadsheetFormula formula = this.formula;
 
-        return CsvStringList.EMPTY.setElements(
-            Lists.of(
-                this.reference().text(), // cell reference
-                formula.text(),
-                this.currency.map(Currency::toString).orElse(""),
-                toText(this.currencyExchangeRater),
-                toText(this.dateTimeSymbols),
-                toText(this.decimalNumberSymbols),
-                toText(this.formatter),
-                this.locale.map(Locale::toLanguageTag)
-                    .orElse(""),
-                toJsonText(this.output),
-                toText(this.parser),
-                this.style.text(),
-                toText(this.validator),
-                toJsonText(formula.value()),
-                toText(formula.valueType())
+        return Lists.of(
+            this.reference()
+                .text(), // cell reference
+            formula.text(),
+            this.currency.map(Currency::toString)
+                .orElse(""),
+            toText(this.currencyExchangeRater),
+            property.apply(this.dateTimeSymbols),
+            property.apply(this.decimalNumberSymbols),
+            toText(this.formatter),
+            this.locale.map(Locale::toLanguageTag)
+                .orElse(""),
+            toJsonText(this.output),
+            toText(this.parser),
+            this.style.text(),
+            toText(this.validator),
+            toJsonText(
+                formula.value()
+            ),
+            toText(
+                formula.valueType()
             )
         );
     }
