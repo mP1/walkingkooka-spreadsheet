@@ -4210,7 +4210,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "test-currency-exchange-rater-111\n" +
                 "\"\"\"am,pm\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\"\"\n" +
                 "\"-,+,0,$,.,e,\"\",\"\",∞,.,NaN,%,‰\"\n" +
-                "formatter-selector-111,en-AU,\"{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"output-text\"\"}\",parser-selector-111,color: black;,absolute-url,,"
+                "formatter-selector-111\n" +
+                "en-AU\n" +
+                "\"{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"output-text\"\"}\"\n" +
+                "parser-selector-111\n" +
+                "color: black;\n" +
+                "absolute-url\n\n"
         );
     }
 
