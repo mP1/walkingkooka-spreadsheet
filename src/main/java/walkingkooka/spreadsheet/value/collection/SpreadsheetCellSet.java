@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.value.collection;
 
 import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.list.CsvStringList;
+import walkingkooka.collect.list.HasCsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
@@ -45,12 +47,14 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * An immutable {@link Set} of unique {@link SpreadsheetCell}, with the {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}
  * ignored.
  */
 public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> implements ImmutableSortedSetDefaults<SpreadsheetCellSet, SpreadsheetCell>,
+    HasCsvStringList,
     HasSpreadsheetCellValueKind,
     HasUrlFragment,
     TreePrintable {
@@ -253,6 +257,19 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
             );
             printer.lineStart();
         }
+    }
+
+    // HasCsvStringList.................................................................................................
+
+    @Override
+    public CsvStringList csvStringList() {
+        return CsvStringList.EMPTY.setElements(
+            this.stream()
+                .map(
+                    (SpreadsheetCell spreadsheetCell) -> spreadsheetCell.csvStringList()
+                        .text()
+                ).collect(Collectors.toList())
+        );
     }
 
     // HasSpreadsheetCellValueKind......................................................................................

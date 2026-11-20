@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.value.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.CsvStringList;
+import walkingkooka.collect.list.HasCsvStringListTesting;
 import walkingkooka.collect.set.ImmutableSortedSetTesting;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragmentTesting;
@@ -41,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<SpreadsheetCellSet, SpreadsheetCell>,
     TreePrintableTesting,
     JsonNodeMarshallerTesting<SpreadsheetCellSet>,
+    HasCsvStringListTesting,
     HasSpreadsheetCellValueKindTesting,
     HasUrlFragmentTesting {
 
@@ -171,6 +174,19 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
         this.spreadsheetCellValueKindAndCheck(
             this.createSet(),
             SpreadsheetCellValueKind.CELL
+        );
+    }
+
+    // HasCsvStringList.................................................................................................
+
+    @Test
+    public void testCsvStringList() {
+        this.csvStringListAndCheck(
+            this.createSet(),
+            CsvStringList.parse(
+                "\"A1,=1,,,,,,,,,,,,\"\n" +
+                    "\"A2,=2,,,,,,,,,,,,\""
+            )
         );
     }
 
