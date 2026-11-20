@@ -23,7 +23,9 @@ import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -49,6 +51,7 @@ import java.util.function.Consumer;
  * ignored.
  */
 public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> implements ImmutableSortedSetDefaults<SpreadsheetCellSet, SpreadsheetCell>,
+    HasSpreadsheetCellValueKind,
     HasUrlFragment,
     TreePrintable {
 
@@ -250,5 +253,12 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
             );
             printer.lineStart();
         }
+    }
+
+    // HasSpreadsheetCellValueKind......................................................................................
+
+    @Override
+    public SpreadsheetCellValueKind spreadsheetCellValueKind() {
+        return SpreadsheetCellValueKind.CELL;
     }
 }
