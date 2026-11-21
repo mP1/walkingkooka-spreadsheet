@@ -2172,9 +2172,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
-                "    \"style\": {\n" +
-                "      \"color\": \"black\"\n" +
-                "    }\n" +
+                "    \"style\": \"color: black\"\n" +
                 "  }\n" +
                 "}"
         );
@@ -2283,9 +2281,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    \"formatter\": \"formatter-selector-111\",\n" +
                 "    \"locale\": \"en-AU\",\n" +
                 "    \"parser\": \"parser-selector-111\",\n" +
-                "    \"style\": {\n" +
-                "      \"color\": \"black\"\n" +
-                "    },\n" +
+                "    \"style\": \"color: black\",\n" +
                 "    \"validator\": \"absolute-url\",\n" +
                 "    \"output\": {\n" +
                 "      \"type\": \"text\",\n" +
@@ -2339,9 +2335,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.unmarshallAndCheck(
             "{\n" +
                 "   \"A123\": {\n" +
-                "      \"style\": {\n" +
-                "          \"color\": \"black\"\n" +
-                "      }\n" +
+                "      \"style\": \"color: black\"\n" +
                 "   }\n" +
                 "}",
             SpreadsheetSelection.parseCell("A123")
@@ -2589,7 +2583,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    JSON_NODE_MARSHALL_CONTEXT.marshall(TEXT_STYLE)
+                    TEXT_STYLE.textStylePatch(JSON_NODE_MARSHALL_CONTEXT)
                 ),
             cell.setStyle(TEXT_STYLE)
         );
@@ -2607,7 +2601,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             JsonNode.object()
                 .set(
                     SpreadsheetCell.STYLE_PROPERTY,
-                    JSON_NODE_MARSHALL_CONTEXT.marshall(DIFFERENT_TEXT_STYLE)
+                    DIFFERENT_TEXT_STYLE.textStylePatch(JSON_NODE_MARSHALL_CONTEXT)
                 ),
             cell.setStyle(DIFFERENT_TEXT_STYLE)
         );

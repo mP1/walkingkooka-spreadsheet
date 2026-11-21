@@ -1438,7 +1438,12 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         this.patchAndCheck(
             before,
             JsonNode.object()
-                .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.STYLE.value()), marshall(style)),
+                .set(
+                    JsonPropertyName.with(
+                        SpreadsheetMetadataPropertyName.STYLE.value()
+                    ),
+                    style.textStylePatch(JSON_NODE_MARSHALL_CONTEXT)
+                ),
             before
                 .set(SpreadsheetMetadataPropertyName.STYLE, style)
         );
@@ -1461,7 +1466,12 @@ public final class SpreadsheetMetadataTest implements BinaryTextContextTesting,
         this.patchAndCheck(
             before,
             JsonNode.object()
-                .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.STYLE.value()), marshall(style)),
+                .set(
+                    JsonPropertyName.with(
+                        SpreadsheetMetadataPropertyName.STYLE.value()
+                    ),
+                    style.textStylePatch(JSON_NODE_MARSHALL_CONTEXT)
+                ),
             before.set(
                 SpreadsheetMetadataPropertyName.STYLE,
                 styleBefore.set(TextStylePropertyName.COLOR, Color.WHITE)

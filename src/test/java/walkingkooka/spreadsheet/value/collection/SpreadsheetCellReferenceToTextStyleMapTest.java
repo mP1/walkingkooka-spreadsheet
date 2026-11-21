@@ -206,10 +206,8 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
         this.marshallAndCheck(
             this.createMap(),
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"color\": \"#123456\"\n" +
-                "  },\n" +
-                "  \"A2\": {}\n" +
+                "  \"A1\": \"color: #123456\",\n" +
+                "  \"A2\": \"\"\n" +
                 "}"
         );
     }
@@ -218,10 +216,8 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"color\": \"#123456\"\n" +
-                "  },\n" +
-                "  \"A2\": {}\n" +
+                "  \"A1\": \"color: #123456\",\n" +
+                "  \"A2\": \"\"\n" +
                 "}",
             this.createMap()
         );
@@ -247,7 +243,7 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22color%22:%20%22%23123456%22%0A%20%20%7D,%0A%20%20%22A2%22:%20%7B%7D%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22color:%20%23123456%22,%0A%20%20%22A2%22:%20%22%22%0A%7D"
         );
     }
 

@@ -982,7 +982,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.makePatch(
             STYLE_PROPERTY,
-            context.marshall(this.style)
+            this.style.textStylePatch(context)
         );
     }
 
