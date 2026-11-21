@@ -184,9 +184,7 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
                 "      \"value\": \"Formatted text 123\"\n" +
                 "    },\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
-                "    \"style\": {\n" +
-                "      \"color\": \"black\"\n" +
-                "    },\n" +
+                "    \"style\": \"color: black\",\n" +
                 "    \"validator\": \"test-validator-123\"\n" +
                 "  },\n" +
                 "  \"A2\": {\n" +
@@ -439,10 +437,8 @@ public final class SpreadsheetExporterJsonTest implements SpreadsheetExporterTes
             "A1-XFD1048576.style.json",
             SpreadsheetMediaTypes.JSON_STYLE,
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"color\": \"black\"\n" +
-                "  },\n" +
-                "  \"A2\": {}\n" +
+                "  \"A1\": \"color: black\",\n" +
+                "  \"A2\": \"\"\n" +
                 "}"
         );
     }

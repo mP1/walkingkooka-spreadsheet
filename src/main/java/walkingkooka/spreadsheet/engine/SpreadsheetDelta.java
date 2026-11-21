@@ -1209,7 +1209,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return cellsPatchFromMap(
             cellToStyles,
             STYLE_PROPERTY,
-            context::marshall
+            (TextStyle textStyle) -> textStyle.textStylePatch(context)
         );
     }
 
@@ -1260,7 +1260,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static <T> JsonNode cellsPatchFromMap(final Map<SpreadsheetCellReference, T> cellToValue,
                                                   final JsonPropertyName propertyName,
-                                                  final Function<T, JsonNode> marshaller) {
+                                                  final Function<T, JsonNode> patchMaker) {
         // {
         //  "cells": [
         //    {
@@ -1285,7 +1285,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                         .map(ctv -> JsonNode.object()
                             .setChildren(
                                 Lists.of(
-                                    marshaller.apply(
+                                    patchMaker.apply(
                                         ctv.getValue()
                                     ).setName(propertyName)
                                 )

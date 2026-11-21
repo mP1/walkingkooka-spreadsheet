@@ -168,10 +168,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"showHeadings\": true,\n" +
                 "  \"sortComparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\",\n" +
                 "  \"sortConverter\": \"collection(null-to-number, simple, boolean, number, date-time, locale, value, text, optional-to, collection-to)\",\n" +
-                "  \"style\": {\n" +
-                "    \"height\": \"50px\",\n" +
-                "    \"width\": \"100px\"\n" +
-                "  },\n" +
+                "  \"style\": \"height: 50px; width: 100px\",\n" +
                 "  \"textFormatter\": \"text @\",\n" +
                 "  \"timeFormatter\": \"time hh:mm:ss\",\n" +
                 "  \"timeParser\": \"time hh:mm:ss;hh:mm\",\n" +
@@ -313,10 +310,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"showHeadings\": true,\r\n" +
                 "  \"sortComparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\",\r\n" +
                 "  \"sortConverter\": \"collection(null-to-number, simple, boolean, number, date-time, locale, value, text, optional-to, collection-to)\",\r\n" +
-                "  \"style\": {\r\n" +
-                "    \"height\": \"50px\",\r\n" +
-                "    \"width\": \"100px\"\r\n" +
-                "  },\r\n" +
+                "  \"style\": \"height: 50px; width: 100px\",\r\n" +
                 "  \"textFormatter\": \"text @\",\r\n" +
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r\n" +
                 "  \"timeParser\": \"time hh:mm:ss;hh:mm\",\r\n" +
@@ -458,10 +452,7 @@ public final class SpreadsheetConverterSpreadsheetMetadataToTextTest extends Spr
                 "  \"showHeadings\": true,\r" +
                 "  \"sortComparators\": \"background-color, border-bottom-color, border-color, border-left-color, border-right-color, border-top-color, color, currency, custom-list, custom-list-case-insensitive, date, datetime, day-of-month, day-of-year, formatter, hour-of-ampm, hour-of-day, locale, minute-of-hour, month-of-year, nano-of-second, number, outline-color, parser, seconds-of-minute, text, text-case-insensitive, time, validator, value-type, year\",\r" +
                 "  \"sortConverter\": \"collection(null-to-number, simple, boolean, number, date-time, locale, value, text, optional-to, collection-to)\",\r" +
-                "  \"style\": {\r" +
-                "    \"height\": \"50px\",\r" +
-                "    \"width\": \"100px\"\r" +
-                "  },\r" +
+                "  \"style\": \"height: 50px; width: 100px\",\r" +
                 "  \"textFormatter\": \"text @\",\r" +
                 "  \"timeFormatter\": \"time hh:mm:ss\",\r" +
                 "  \"timeParser\": \"time hh:mm:ss;hh:mm\",\r" +

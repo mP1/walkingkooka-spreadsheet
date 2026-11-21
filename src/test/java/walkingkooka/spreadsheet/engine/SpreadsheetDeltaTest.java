@@ -1694,19 +1694,15 @@ public final class SpreadsheetDeltaTest implements PublicClassTesting<Spreadshee
                 SpreadsheetSelection.A1,
                 STYLE
             ),
-            JsonNode.object()
-                .set(
-                    SpreadsheetDelta.CELLS_PROPERTY,
-                    JsonNode.object()
-                        .set(
-                            JsonPropertyName.with("A1"),
-                            JsonNode.object()
-                                .set(
-                                    JsonPropertyName.with("style"),
-                                    marshall(STYLE)
-                                )
-                        )
-                )
+            JsonNode.parse("{\n" +
+                "  \"cells\": {\n" +
+                "    \"A1\": {\n" +
+                "      \"style\": {\n" +
+                "        \"color\": \"black\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  }\n" +
+                "}").objectOrFail()
         );
     }
 
@@ -1747,14 +1743,14 @@ public final class SpreadsheetDeltaTest implements PublicClassTesting<Spreadshee
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("style"),
-                                    marshall(STYLE)
+                                    STYLE.textStylePatch(JSON_NODE_MARSHALL_CONTEXT)
                                 )
                         ).set(
                             JsonPropertyName.with("A2"),
                             JsonNode.object()
                                 .set(
                                     JsonPropertyName.with("style"),
-                                    marshall(style2)
+                                    style2.textStylePatch(JSON_NODE_MARSHALL_CONTEXT)
                                 )
                         )
                 )
@@ -3463,7 +3459,7 @@ public final class SpreadsheetDeltaTest implements PublicClassTesting<Spreadshee
                     )
                 ),
             SpreadsheetDelta.stylePatch(
-                this.marshall(STYLE)
+                STYLE.textStylePatch(JSON_NODE_MARSHALL_CONTEXT)
             ),
             SpreadsheetDelta.EMPTY
                 .setCells(
