@@ -1,0 +1,115 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.format;
+
+import walkingkooka.collect.list.CsvStringList;
+import walkingkooka.collect.list.HasCsvStringListTsvStringList;
+import walkingkooka.collect.list.ImmutableListDefaults;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringLikeList;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+
+import java.util.AbstractList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+/**
+ * A {@link List} that holds non-null {@link SpreadsheetFormatterSelector spreadsheetFormatterSelector}.
+ */
+public final class SpreadsheetFormatterSelectorList extends AbstractList<SpreadsheetFormatterSelector>
+    implements ImmutableListDefaults<SpreadsheetFormatterSelectorList, SpreadsheetFormatterSelector>,
+    HasCsvStringListTsvStringList {
+
+    public static SpreadsheetFormatterSelectorList fromStringLikeList(final StringLikeList stringLikeList) {
+        Objects.requireNonNull(stringLikeList, "stringLikeList");
+
+        return EMPTY.setElements(
+            stringLikeList.stream()
+                .map(SpreadsheetFormatterSelector::parse)
+                .collect(Collectors.toList())
+        );
+    }
+
+    public final static SpreadsheetFormatterSelectorList EMPTY = new SpreadsheetFormatterSelectorList(Lists.empty());
+
+    // @VisibleForTesting
+    SpreadsheetFormatterSelectorList(final List<SpreadsheetFormatterSelector> list) {
+        super();
+        this.list = list;
+    }
+
+    @Override
+    public SpreadsheetFormatterSelector get(final int index) {
+        return this.list.get(index);
+    }
+
+    @Override
+    public int size() {
+        return this.list.size();
+    }
+
+    @Override
+    public SpreadsheetFormatterSelectorList setElements(final Collection<SpreadsheetFormatterSelector> collection) {
+        final SpreadsheetFormatterSelectorList currencyList;
+
+        if (collection instanceof SpreadsheetFormatterSelectorList) {
+            currencyList = (SpreadsheetFormatterSelectorList) collection;
+        } else {
+            Objects.requireNonNull(collection, "collection");
+
+            final List<SpreadsheetFormatterSelector> copy = Lists.array();
+            for (final SpreadsheetFormatterSelector spreadsheetFormatterSelector : collection) {
+                this.elementCheck(spreadsheetFormatterSelector);
+
+                copy.add(spreadsheetFormatterSelector);
+            }
+
+            if (copy.equals(this)) {
+                currencyList = this;
+            } else {
+                currencyList = copy.isEmpty() ?
+                    EMPTY :
+                    new SpreadsheetFormatterSelectorList(copy);
+            }
+        }
+
+        return currencyList;
+    }
+
+    @Override
+    public void elementCheck(final SpreadsheetFormatterSelector spreadsheetFormatterSelector) {
+        Objects.requireNonNull(spreadsheetFormatterSelector, "spreadsheetFormatterSelector");
+    }
+
+    private final List<SpreadsheetFormatterSelector> list;
+
+    // HasCsvString.....................................................................................................
+
+    /**
+     * Returns a {@link CsvStringList}, with each value a single {@link SpreadsheetFormatterSelector} after converting to CSV.
+     */
+    @Override
+    public CsvStringList csvStringList() {
+        return CsvStringList.makeCsvStringList(
+            this.list,
+            SpreadsheetFormatterSelector::text
+        );
+    }
+}
