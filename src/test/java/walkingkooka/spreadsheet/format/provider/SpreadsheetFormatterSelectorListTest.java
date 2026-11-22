@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.format.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.EmptyTextException;
@@ -24,8 +24,6 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
-import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelectorTesting;
-import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 import java.util.Arrays;
 

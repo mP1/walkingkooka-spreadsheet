@@ -15,14 +15,13 @@
  *
  */
 
-package walkingkooka.spreadsheet.format;
+package walkingkooka.spreadsheet.format.provider;
 
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringLikeList;
-import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 import java.util.AbstractList;
 import java.util.Collection;
