@@ -22,6 +22,10 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringLikeList;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractList;
 import java.util.Collection;
@@ -109,6 +113,31 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
         return CsvStringList.makeCsvStringList(
             this.list,
             SpreadsheetParserSelector::text
+        );
+    }
+
+    // json.............................................................................................................
+
+    static {
+        JsonNodeContext.register(
+            JsonNodeContext.computeTypeName(SpreadsheetParserSelectorList.class),
+            SpreadsheetParserSelectorList::unmarshall,
+            SpreadsheetParserSelectorList::marshall,
+            SpreadsheetParserSelectorList.class
+        );
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return context.marshall(this.csvStringList());
+    }
+
+    static SpreadsheetParserSelectorList unmarshall(final JsonNode node,
+                                                    final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserSelectorList.fromStringLikeList(
+            context.unmarshall(
+                node,
+                CsvStringList.class
+            )
         );
     }
 }
