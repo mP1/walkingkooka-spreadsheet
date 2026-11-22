@@ -24,6 +24,9 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 
@@ -31,7 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserSelectorListTest implements ImmutableListTesting<SpreadsheetParserSelectorList, SpreadsheetParserSelector>,
     HasCsvStringListTsvStringListTesting2<SpreadsheetParserSelectorList>,
-    HasOptionalSpreadsheetParserSelectorTesting {
+    HasOptionalSpreadsheetParserSelectorTesting,
+    JsonNodeMarshallerTesting<SpreadsheetParserSelectorList> {
 
     // fromStringLikeList................................................................................................
 
@@ -187,6 +191,31 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
 
     @Override
     public SpreadsheetParserSelectorList createHasCsvStringListTsvStringList() {
+        return this.createList();
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+            SpreadsheetParserSelectorList.EMPTY.concat(PARSER_SELECTOR)
+                .concat(DIFFERENT_PARSER_SELECTOR),
+            "\"parser-selector-111,different-parser-selector-222\""
+        );
+    }
+
+    @Override
+    public SpreadsheetParserSelectorList unmarshall(final JsonNode jsonNode,
+                                                    final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserSelectorList.unmarshall(
+            jsonNode,
+            context
+        );
+    }
+
+    @Override
+    public SpreadsheetParserSelectorList createJsonNodeMarshallingValue() {
         return this.createList();
     }
 
