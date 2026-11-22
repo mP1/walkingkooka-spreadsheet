@@ -24,6 +24,10 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 
@@ -31,7 +35,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterSelectorListTest implements ImmutableListTesting<SpreadsheetFormatterSelectorList, SpreadsheetFormatterSelector>,
     HasCsvStringListTsvStringListTesting2<SpreadsheetFormatterSelectorList>,
-    HasOptionalSpreadsheetFormatterSelectorTesting {
+    HasOptionalSpreadsheetFormatterSelectorTesting,
+    HasSpreadsheetCellTesting,
+    JsonNodeMarshallerTesting<SpreadsheetFormatterSelectorList> {
 
     // fromStringLikeList................................................................................................
 
@@ -187,6 +193,31 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
 
     @Override
     public SpreadsheetFormatterSelectorList createHasCsvStringListTsvStringList() {
+        return this.createList();
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+            SpreadsheetFormatterSelectorList.EMPTY.concat(FORMATTER_SELECTOR)
+                .concat(DIFFERENT_FORMATTER_SELECTOR),
+            "\"formatter-selector-111,different-formatter-selector-222\""
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterSelectorList unmarshall(final JsonNode jsonNode,
+                                                       final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatterSelectorList.unmarshall(
+            jsonNode,
+            context
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterSelectorList createJsonNodeMarshallingValue() {
         return this.createList();
     }
 
