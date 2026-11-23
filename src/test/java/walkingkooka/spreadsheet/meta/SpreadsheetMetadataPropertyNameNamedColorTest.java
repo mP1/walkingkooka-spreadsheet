@@ -46,7 +46,7 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
                 IllegalArgumentException.class,
                 () -> SpreadsheetMetadataPropertyNameNamedColor.withNamedColor(namedColor)
             ),
-            "Invalid character '1' at 7"
+            "Invalid \"NamedColor\" character '1' at 7"
         );
     }
 

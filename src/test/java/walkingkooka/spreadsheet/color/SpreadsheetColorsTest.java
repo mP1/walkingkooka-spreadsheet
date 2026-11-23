@@ -109,7 +109,7 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
                 IllegalArgumentException.class,
                 () -> SpreadsheetColors.checkColorName("Hello1World")
             ),
-            "Invalid character '1' at 5"
+            "Invalid \"NamedColor\" character '1' at 5"
         );
     }
 
@@ -181,7 +181,7 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
                     Color.named("Hello1World")
                 )
             ),
-            "Invalid character '1' at 5"
+            "Invalid \"NamedColor\" character '1' at 5"
         );
     }
 

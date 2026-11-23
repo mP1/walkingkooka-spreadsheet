@@ -75,7 +75,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         this.withFails(
             "1abc",
             InvalidCharacterException.class,
-            "Invalid character '1' at 0"
+            "Invalid \"Label\" character '1' at 0"
         );
     }
 
@@ -84,7 +84,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         this.withFails(
             "abc$def",
             InvalidCharacterException.class,
-            "Invalid character '$' at 3"
+            "Invalid \"Label\" character '$' at 3"
         );
     }
 
@@ -93,7 +93,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         this.withFails(
             "Label\\",
             InvalidCharacterException.class,
-            "Invalid character '\\\\' at 5"
+            "Invalid \"Label\" character '\\\\' at 5"
         );
     }
 

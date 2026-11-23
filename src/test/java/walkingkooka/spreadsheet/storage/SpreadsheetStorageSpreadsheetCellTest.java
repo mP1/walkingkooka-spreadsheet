@@ -150,7 +150,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
         this.getMessageAndCheck(
             thrown,
-            "Invalid character '9' at 0"
+            "Invalid \"Label\" character '9' at 0"
         );
     }
 

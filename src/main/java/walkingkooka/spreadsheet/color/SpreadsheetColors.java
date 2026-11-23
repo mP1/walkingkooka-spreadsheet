@@ -76,7 +76,7 @@ public final class SpreadsheetColors implements PublicStaticHelper {
     public static String checkColorName(final String namedColor) {
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(
             namedColor,
-            "namedColor",
+            "NamedColor",
             CharPredicates.letter(),
             CharPredicates.letter()
         );
