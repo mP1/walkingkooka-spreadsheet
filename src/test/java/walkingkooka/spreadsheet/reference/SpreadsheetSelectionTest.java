@@ -567,27 +567,17 @@ public final class SpreadsheetSelectionTest implements PublicClassTesting<Spread
 
     @Test
     public void testParseCellFails() {
-        final String text = "ABC!123";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('!')
-            )
+        this.parseStringInvalidCharacterFails(
+            "ABC!123",
+            '!'
         );
     }
 
     @Test
     public void testParseCellFails2() {
-        final String text = "ABC123!456";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('!')
-            )
+        this.parseStringInvalidCharacterFails(
+            "ABC123!456",
+            '!'
         );
     }
 
@@ -595,27 +585,17 @@ public final class SpreadsheetSelectionTest implements PublicClassTesting<Spread
 
     @Test
     public void testParseCellRangeFails() {
-        final String text = "A1:!B";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('!')
-            )
+        this.parseStringInvalidCharacterFails(
+            "A1:!B",
+            '!'
         );
     }
 
     @Test
     public void testParseCellRangeFails2() {
-        final String text = "A1:B!Hello";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('!')
-            )
+        this.parseStringInvalidCharacterFails(
+            "A1:B!Hello",
+            '!'
         );
     }
 
@@ -639,19 +619,9 @@ public final class SpreadsheetSelectionTest implements PublicClassTesting<Spread
 
     @Test
     public void testParseCellRangeOrLabelWithInvalidFails() {
-        final String text = "A1:B!Hello";
-
-        final InvalidCharacterException thrown = assertThrows(
-            InvalidCharacterException.class,
-            () -> SpreadsheetSelection.parseCellRange(text)
-        );
-
-        this.getMessageAndCheck(
-            thrown,
-            new InvalidCharacterException(
-                text,
-                text.indexOf("!")
-            ).getMessage()
+        this.parseStringInvalidCharacterFails(
+            "A1:B!Hello",
+            '!'
         );
     }
 
@@ -1053,10 +1023,7 @@ public final class SpreadsheetSelectionTest implements PublicClassTesting<Spread
 
         this.getMessageAndCheck(
             thrown,
-            new InvalidCharacterException(
-                text,
-                text.indexOf(' ')
-            ).getMessage()
+            "Invalid \"Label\" character ' ' at 6"
         );
     }
 

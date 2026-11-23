@@ -126,7 +126,7 @@ public interface SpreadsheetColorContextTesting2<C extends SpreadsheetColorConte
                         Color.named("Hello!World")
                     )
             ),
-            "Invalid character '!' at 5"
+            "Invalid \"NamedColor\" character '!' at 5"
         );
     }
 
@@ -140,7 +140,7 @@ public interface SpreadsheetColorContextTesting2<C extends SpreadsheetColorConte
                 () -> this.createContext()
                     .namedColor("Hello!World")
             ),
-            "Invalid character '!' at 5"
+            "Invalid \"NamedColor\" character '!' at 5"
         );
     }
 
