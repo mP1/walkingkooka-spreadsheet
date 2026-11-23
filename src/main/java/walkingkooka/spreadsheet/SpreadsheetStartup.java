@@ -46,6 +46,8 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterInfo;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorList;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorTokenAlternative;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorTokenList;
@@ -60,6 +62,8 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserInfo;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserName;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorList;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceSet;
@@ -198,6 +202,10 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                     )
                 )
             );
+
+            SpreadsheetFormatterSelectorList.EMPTY.concat(
+                SpreadsheetFormatterSelector.parse("hello")
+            );
         }
 
         {
@@ -221,6 +229,10 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                         SpreadsheetParserName.TIME
                     )
                 )
+            );
+
+            SpreadsheetParserSelectorList.EMPTY.concat(
+                SpreadsheetParserSelector.parse("hello")
             );
         }
 
