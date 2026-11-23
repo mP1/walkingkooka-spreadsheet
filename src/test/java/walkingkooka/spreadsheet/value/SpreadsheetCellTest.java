@@ -4211,7 +4211,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "\"{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"output-text\"\"}\"\n" +
                 "parser-selector-111\n" +
                 "color: black\n" +
-                "absolute-url\n\n"
+                "absolute-url\n" +
+                "\n" +
+                "\n"
         );
     }
 
@@ -4253,7 +4255,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "\"{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"output-text\"\"}\"\n" +
                 "parser-selector-111\n" +
                 "color: black\n" +
-                "absolute-url\n\n"
+                "absolute-url\n" +
+                "\n" +
+                "\n"
         );
     }
 
