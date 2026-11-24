@@ -213,16 +213,6 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         return SpreadsheetCellQuery.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
-        return thrown;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
-        return thrown;
-    }
-
     // extract..........................................................................................................
 
     @Test

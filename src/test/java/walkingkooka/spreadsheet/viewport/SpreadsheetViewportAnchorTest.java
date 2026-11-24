@@ -717,16 +717,6 @@ public final class SpreadsheetViewportAnchorTest implements PublicClassTesting<S
         return SpreadsheetViewportAnchor.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
-        return thrown;
-    }
-
     // toColumnOrColumnRangeAnchor..............................................................................................
 
     @Test

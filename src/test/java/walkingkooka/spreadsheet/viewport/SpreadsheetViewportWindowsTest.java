@@ -241,16 +241,6 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
         return SpreadsheetViewportWindows.parse(windows);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
-        return thrown;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
-        return thrown;
-    }
-
     // last.............................................................................................................
 
     @Test

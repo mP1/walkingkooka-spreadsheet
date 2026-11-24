@@ -611,16 +611,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements P
         );
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
-    }
-
     // compare..........................................................................................................
 
     @Test

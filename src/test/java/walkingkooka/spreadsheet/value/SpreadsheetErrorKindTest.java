@@ -558,16 +558,6 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         return SpreadsheetErrorKind.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
-        return thrown;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
-        return thrown;
-    }
-
     // Class............................................................................................................
 
     @Override

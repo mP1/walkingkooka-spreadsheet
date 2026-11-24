@@ -391,17 +391,7 @@ public final class SpreadsheetViewportRectangleTest implements PublicClassTestin
         return SpreadsheetViewportRectangle.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> classs) {
-        return classs;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
-    }
-
-    // parseUrlFragment.................................................................................................
+    // fromUrlFragment..................................................................................................
 
     @Test
     public void testFromUrlFragmentWithNullFails() {

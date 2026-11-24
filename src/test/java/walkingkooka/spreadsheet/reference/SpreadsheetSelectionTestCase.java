@@ -60,7 +60,6 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements PublicClassTesting<S>,
     HashCodeEqualsDefinedTesting2<S>,
@@ -2201,26 +2200,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final String typeNameSuffix() {
         throw new UnsupportedOperationException();
-    }
-
-    // ParsingTesting...................................................................................................
-
-    @Override
-    public final Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        assertTrue(
-            IllegalArgumentException.class.isAssignableFrom(expected),
-            expected.getName() + " not a subclass of " + IllegalArgumentException.class
-        );
-        return expected;
-    }
-
-    @Override
-    public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        assertTrue(
-            expected instanceof IllegalArgumentException,
-            expected.getClass().getName() + "=" + expected + " not a subclass of " + IllegalArgumentException.class
-        );
-        return expected;
     }
 
     // PredicateTesting.................................................................................................

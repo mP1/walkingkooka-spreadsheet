@@ -526,18 +526,6 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         return Predicates.never();
     }
 
-    // ParseStringTesting...............................................................................................
-
-    @Override
-    public final Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        return expected;
-    }
-
-    @Override
-    public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
-    }
-
     // ToString.........................................................................................................
 
     @Test
