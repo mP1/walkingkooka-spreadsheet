@@ -310,16 +310,6 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     }
 
     @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
-    }
-
-    @Override
     public SpreadsheetViewportNavigationList createList() {
         return SpreadsheetViewportNavigationList.EMPTY;
     }

@@ -142,16 +142,6 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
         return SpreadsheetLabelNameSet.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException type) {
-        return type;
-    }
-
     // HasText..........................................................................................................
 
     @Test

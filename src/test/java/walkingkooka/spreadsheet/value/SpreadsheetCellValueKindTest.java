@@ -387,16 +387,6 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         return SpreadsheetCellValueKind.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
-        return thrown;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
-        return thrown;
-    }
-
     // fromFileExtension................................................................................................
 
     @Test

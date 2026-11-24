@@ -669,16 +669,6 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements PublicClas
         return SpreadsheetColumnOrRowReferenceKind.parseColumnOrRow(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
-    }
-
     // Class............................................................................................................
 
     @Override

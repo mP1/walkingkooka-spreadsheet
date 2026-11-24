@@ -133,16 +133,6 @@ public final class SpreadsheetRowReferenceSetTest implements ImmutableSortedSetT
         return SpreadsheetRowReferenceSet.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException type) {
-        return type;
-    }
-
     // HasText..........................................................................................................
 
     @Test

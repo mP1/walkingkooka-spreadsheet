@@ -111,16 +111,6 @@ public final class SpreadsheetIdTest implements PublicClassTesting<SpreadsheetId
         return SpreadsheetId.parse(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
-    }
-
     // equals...........................................................................................................
 
     @Test

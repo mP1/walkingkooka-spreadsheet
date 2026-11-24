@@ -1413,16 +1413,6 @@ public final class SpreadsheetSelectionTest implements PublicClassTesting<Spread
         return SpreadsheetSelection.parseExpressionReference(text);
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(Class<? extends RuntimeException> throwing) {
-        return throwing;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
-    }
-
     // textLabel........................................................................................................
 
     @Test
