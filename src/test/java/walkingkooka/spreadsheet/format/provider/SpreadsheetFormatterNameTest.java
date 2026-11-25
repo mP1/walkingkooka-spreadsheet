@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginNameTesting;
 import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -31,9 +33,22 @@ import java.lang.reflect.Field;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class SpreadsheetFormatterNameTest implements PluginNameTesting<SpreadsheetFormatterName>,
-    ConstantsTesting<SpreadsheetFormatterName> {
+    ConstantsTesting<SpreadsheetFormatterName>,
+    ThrowableTesting {
+
+    @Test
+    public void testWithInvalidCharacterFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetFormatterName.with("hello!")
+            ),
+            "Invalid \"SpreadsheetFormatterName\" character '!' at 5"
+        );
+    }
 
     // constants........................................................................................................
 

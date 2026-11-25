@@ -18,10 +18,12 @@
 package walkingkooka.spreadsheet.compare.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginNameTesting;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
@@ -32,8 +34,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final public class SpreadsheetComparatorNameTest implements PluginNameTesting<SpreadsheetComparatorName> {
+final public class SpreadsheetComparatorNameTest implements PluginNameTesting<SpreadsheetComparatorName>,
+    ThrowableTesting {
 
     @Test
     public void testConstants() {
@@ -54,6 +58,17 @@ final public class SpreadsheetComparatorNameTest implements PluginNameTesting<Sp
             constants.stream()
                 .filter(f -> SpreadsheetComparatorName.with(f) != SpreadsheetComparatorName.with(f))
                 .collect(Collectors.toCollection(SortedSets::tree))
+        );
+    }
+
+    @Test
+    public void testWithInvalidCharacterFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetComparatorName.with("hello!")
+            ),
+            "Invalid \"SpreadsheetComparatorName\" character '!' at 5"
         );
     }
 
