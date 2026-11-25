@@ -64,30 +64,6 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
 
     public final static SpreadsheetFormatterSelectorTokenList EMPTY = new SpreadsheetFormatterSelectorTokenList(Lists.empty());
 
-    private static SpreadsheetFormatterSelectorTokenList withCopy(final Collection<SpreadsheetFormatterSelectorToken> tokens) {
-        Objects.requireNonNull(tokens, "tokens");
-
-        SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokens;
-
-        if (tokens instanceof SpreadsheetFormatterSelectorTokenList) {
-            spreadsheetFormatterSelectorTokens = (SpreadsheetFormatterSelectorTokenList) tokens;
-        } else {
-            final List<SpreadsheetFormatterSelectorToken> copy = Lists.array();
-            for (final SpreadsheetFormatterSelectorToken token : tokens) {
-                copy.add(
-                    Objects.requireNonNull(token, "Includes null token")
-                );
-            }
-
-            spreadsheetFormatterSelectorTokens =
-                copy.isEmpty() ?
-                    EMPTY :
-                    new SpreadsheetFormatterSelectorTokenList(copy);
-        }
-
-        return spreadsheetFormatterSelectorTokens;
-    }
-
     // @VisibleForTesting
     SpreadsheetFormatterSelectorTokenList(final List<SpreadsheetFormatterSelectorToken> tokens) {
         this.tokens = tokens;
