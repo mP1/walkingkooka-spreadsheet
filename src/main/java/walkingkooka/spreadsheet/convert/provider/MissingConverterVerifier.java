@@ -787,6 +787,18 @@ final class MissingConverterVerifier {
                 IS_NUMBER
             );
 
+            // number-to-color..........................................................................................
+
+            final int colorIndex = 12;
+
+            verifier.addIfConversionFail(
+                colorIndex,
+                Color.class,
+                SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR,
+                context.indexedColor(colorIndex)
+            );
+
+
             // text-to-color............................................................................................
             final String color = "#123456";
 
