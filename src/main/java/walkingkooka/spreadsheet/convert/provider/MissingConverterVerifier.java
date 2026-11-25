@@ -798,7 +798,6 @@ final class MissingConverterVerifier {
                 context.indexedColor(colorIndex)
             );
 
-
             // text-to-color............................................................................................
             final String color = "#123456";
 
