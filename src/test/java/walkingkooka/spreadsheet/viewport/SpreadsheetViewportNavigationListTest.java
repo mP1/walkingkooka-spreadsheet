@@ -47,6 +47,15 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     JsonNodeMarshallerTesting<SpreadsheetViewportNavigationList> {
 
     @Test
+    public void testSetElementsWithEmpty() {
+        this.setElementsAndCheck(
+            this.createList(),
+            Lists.empty(),
+            SpreadsheetViewportNavigationList.EMPTY
+        );
+    }
+
+    @Test
     public void testSetElementsIncludesNullFails() {
         assertThrows(
             NullPointerException.class,

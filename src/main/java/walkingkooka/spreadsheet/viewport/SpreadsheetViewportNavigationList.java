@@ -83,45 +83,21 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
      * Factory that creates a new {@link SpreadsheetViewportNavigationList} after taking a defensive copy.
      */
     public static final SpreadsheetViewportNavigationList EMPTY = new SpreadsheetViewportNavigationList(
-        new SpreadsheetViewportNavigation[0]
+        Lists.empty()
     );
 
-    private static SpreadsheetViewportNavigationList with(final Collection<SpreadsheetViewportNavigation> navigations) {
-        Objects.requireNonNull(navigations, "navigations");
-
-        final int size = navigations.size();
-        final SpreadsheetViewportNavigation[] copy = new SpreadsheetViewportNavigation[navigations.size()];
-
-        int i = 0;
-        for (final SpreadsheetViewportNavigation navigation : navigations) {
-            copy[i++] = Objects.requireNonNull(navigation, "includes null navigation");
-        }
-
-        final SpreadsheetViewportNavigationList result;
-        switch (size) {
-            case 0:
-                result = EMPTY;
-                break;
-            default:
-                result = new SpreadsheetViewportNavigationList(copy);
-                break;
-        }
-
-        return result;
-    }
-
-    private SpreadsheetViewportNavigationList(final SpreadsheetViewportNavigation[] list) {
+    private SpreadsheetViewportNavigationList(final List<SpreadsheetViewportNavigation> list) {
         this.list = list;
     }
 
     @Override
     public SpreadsheetViewportNavigation get(final int index) {
-        return this.list[index];
+        return this.list.get(index);
     }
 
     @Override
     public int size() {
-        return this.list.length;
+        return this.list.size();
     }
 
     @Override
@@ -131,13 +107,30 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
 
     @Override
     public SpreadsheetViewportNavigationList setElements(final Collection<SpreadsheetViewportNavigation> navigations) {
-        final SpreadsheetViewportNavigationList copy = with(navigations);
-        return this.equals(copy) ?
-            this :
-            copy;
+        final SpreadsheetViewportNavigationList spreadsheetViewportNavigationList;
+
+        if(navigations instanceof SpreadsheetViewportNavigationList) {
+            spreadsheetViewportNavigationList = (SpreadsheetViewportNavigationList) navigations;
+        } else {
+            Objects.requireNonNull(navigations, "navigations");
+
+            final List<SpreadsheetViewportNavigation> copy = Lists.array();
+            for(final SpreadsheetViewportNavigation spreadsheetViewportNavigation : navigations) {
+                this.elementCheck(spreadsheetViewportNavigation);
+                copy.add(spreadsheetViewportNavigation);
+            }
+
+            spreadsheetViewportNavigationList = copy.isEmpty() ?
+                EMPTY :
+                this.list.equals(copy) ?
+                    this :
+                    new SpreadsheetViewportNavigationList(copy);
+        }
+
+        return spreadsheetViewportNavigationList;
     }
 
-    private final SpreadsheetViewportNavigation[] list;
+    private final List<SpreadsheetViewportNavigation> list;
 
     // parse............................................................................................................
 
@@ -260,7 +253,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
             SEPARATOR_PARSER.parse(cursor, PARSER_CONTEXT);
         }
 
-        return with(navigations);
+        return EMPTY.setElements(navigations);
     }
 
     // select cell A1
@@ -669,10 +662,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                         }
                     }
 
-                    final SpreadsheetViewportNavigation[] array = new SpreadsheetViewportNavigation[compact.size()];
-                    compact.toArray(array);
-
-                    result = new SpreadsheetViewportNavigationList(array);
+                    result = this.setElements(compact);
                 }
 
                 break;
