@@ -18,20 +18,37 @@
 
 package walkingkooka.spreadsheet.importer.provider;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.PluginNameTesting;
 import walkingkooka.reflect.ConstantsTesting;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 final public class SpreadsheetImporterNameTest implements PluginNameTesting<SpreadsheetImporterName>,
-    ConstantsTesting<SpreadsheetImporterName> {
+    ConstantsTesting<SpreadsheetImporterName>,
+    ThrowableTesting {
 
     @Override
     public Set<SpreadsheetImporterName> intentionalDuplicateConstants() {
         return Sets.empty();
+    }
+
+    @Test
+    public void testWithInvalidCharacterFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                InvalidCharacterException.class,
+                () -> SpreadsheetImporterName.with("hello!")
+            ),
+            "Invalid \"SpreadsheetImporterName\" character '!' at 5"
+        );
     }
 
     // name.............................................................................................................

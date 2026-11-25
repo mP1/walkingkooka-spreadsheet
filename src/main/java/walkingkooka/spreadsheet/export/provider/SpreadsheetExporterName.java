@@ -54,6 +54,8 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
+    private final static String PLUGIN_NAME_LABEL = SpreadsheetExporterName.class.getSimpleName();
+
     // constants........................................................................................................
 
     final static String COLLECTION_STRING = "collection";
@@ -113,8 +115,10 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
      */
     private SpreadsheetExporterName(final String name) {
         super();
-        this.name = PluginName.with(name)
-            .checkLength("Exporter");
+        this.name = PluginName.with(
+            PLUGIN_NAME_LABEL,
+            name
+        ).checkLength(PLUGIN_NAME_LABEL);
     }
 
     @Override

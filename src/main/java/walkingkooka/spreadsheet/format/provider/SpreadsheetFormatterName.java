@@ -56,6 +56,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
+    private final static String PLUGIN_NAME_LABEL = SpreadsheetFormatterName.class.getSimpleName();
+
     // SpreadsheetFormatterName instances...............................................................................
 
     final static String ACCOUNTING_STRING = "accounting";
@@ -448,8 +450,10 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
     private SpreadsheetFormatterName(final String name,
                                      final SpreadsheetPatternKind patternKind) {
         super();
-        this.name = PluginName.with(name)
-            .checkLength("Formatter");
+        this.name = PluginName.with(
+            PLUGIN_NAME_LABEL,
+            name
+        ).checkLength(PLUGIN_NAME_LABEL);
         this.patternKind = patternKind;
     }
 

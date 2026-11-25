@@ -57,6 +57,8 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
+    private final static String PLUGIN_NAME_LABEL = SpreadsheetComparatorName.class.getSimpleName();
+
     // constants........................................................................................................
 
     final static String BACKGROUND_COLOR_STRING = "background-color";
@@ -201,7 +203,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     private static SpreadsheetComparatorName registerConstant(final String name) {
         return new SpreadsheetComparatorName(
-            PluginName.with(name)
+            PluginName.with(
+                PLUGIN_NAME_LABEL,
+                name
+            )
         );
     }
 
@@ -321,8 +326,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             default:
                 spreadsheetComparatorName = new SpreadsheetComparatorName(
-                    PluginName.with(name)
-                        .checkLength("comparator")
+                    PluginName.with(
+                        PLUGIN_NAME_LABEL,
+                        name
+                    ).checkLength("comparator")
                 );
                 break;
         }

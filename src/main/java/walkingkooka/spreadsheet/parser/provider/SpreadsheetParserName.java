@@ -55,6 +55,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
+    private final static String PLUGIN_NAME_LABEL = SpreadsheetParserName.class.getSimpleName();
+
     // SpreadsheetParserName instances...............................................................................
 
     final static String DATE_STRING = "date";
@@ -314,8 +316,10 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     private SpreadsheetParserName(final String name,
                                   final SpreadsheetPatternKind patternKind) {
         super();
-        this.name = PluginName.with(name)
-            .checkLength("Parser");
+        this.name = PluginName.with(
+            PLUGIN_NAME_LABEL,
+            name
+        ).checkLength(PLUGIN_NAME_LABEL);
         this.patternKind = patternKind;
     }
 

@@ -54,6 +54,7 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
+    private final static String PLUGIN_NAME_LABEL = SpreadsheetImporterName.class.getSimpleName();
     // constants........................................................................................................
 
     final static String COLLECTION_STRING = "collection";
@@ -116,8 +117,10 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
      */
     private SpreadsheetImporterName(final String name) {
         super();
-        this.name = PluginName.with(name)
-            .checkLength("Importer");
+        this.name = PluginName.with(
+            PLUGIN_NAME_LABEL,
+            name
+        ).checkLength(PLUGIN_NAME_LABEL);
     }
 
     @Override
