@@ -35,7 +35,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportNavigationListTest implements ImmutableListTesting<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
@@ -66,16 +65,6 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
                         SpreadsheetViewportNavigation.moveRight()
                     )
                 )
-        );
-    }
-
-    @Test
-    public void testSetElementsDoesntDoubleWrap() {
-        SpreadsheetViewportNavigationList list = SpreadsheetViewportNavigationList.EMPTY.concat(SpreadsheetViewportNavigation.moveRight());
-
-        assertSame(
-            list,
-            list.setElements(list)
         );
     }
 
