@@ -757,31 +757,32 @@ final class MissingConverterVerifier {
                 IS_NUMBER
             );
 
-            final RgbColor rgb = Color.parseRgb("#12345678");
+            final RgbColor rgbWithAlpha = Color.parseRgb("#12345678");
+            final RgbColor rgb = Color.parseRgb("#123456");
 
             verifier.addIfConversionFailTest(
-                rgb.alpha(),
+                rgbWithAlpha.alpha(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
                 IS_NUMBER
             );
 
             verifier.addIfConversionFailTest(
-                rgb.red(),
+                rgbWithAlpha.red(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
                 IS_NUMBER
             );
 
             verifier.addIfConversionFailTest(
-                rgb.green(),
+                rgbWithAlpha.green(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
                 IS_NUMBER
             );
 
             verifier.addIfConversionFailTest(
-                rgb.blue(),
+                rgbWithAlpha.blue(),
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.COLOR, // COLOR_TO_NUMBER
                 IS_NUMBER
@@ -796,6 +797,20 @@ final class MissingConverterVerifier {
                 Color.class,
                 SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR,
                 context.indexedColor(colorIndex)
+            );
+
+            verifier.addIfConversionFail(
+                rgb.value(),
+                Color.class,
+                SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR,
+                rgb
+            );
+
+            verifier.addIfConversionFail(
+                rgb.value(),
+                RgbColor.class,
+                SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR,
+                rgb
             );
 
             // text-to-color............................................................................................
