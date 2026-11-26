@@ -70,10 +70,10 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
 
     @Override
     public SpreadsheetParserSelectorList setElements(final Collection<SpreadsheetParserSelector> collection) {
-        final SpreadsheetParserSelectorList currencyList;
+        final SpreadsheetParserSelectorList spreadsheetParserSelectorList;
 
         if (collection instanceof SpreadsheetParserSelectorList) {
-            currencyList = (SpreadsheetParserSelectorList) collection;
+            spreadsheetParserSelectorList = (SpreadsheetParserSelectorList) collection;
         } else {
             Objects.requireNonNull(collection, "collection");
 
@@ -85,15 +85,15 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
             }
 
             if (copy.equals(this)) {
-                currencyList = this;
+                spreadsheetParserSelectorList = this;
             } else {
-                currencyList = copy.isEmpty() ?
+                spreadsheetParserSelectorList = copy.isEmpty() ?
                     EMPTY :
                     new SpreadsheetParserSelectorList(copy);
             }
         }
 
-        return currencyList;
+        return spreadsheetParserSelectorList;
     }
 
     @Override
