@@ -70,10 +70,10 @@ public final class SpreadsheetFormatterSelectorList extends AbstractList<Spreads
 
     @Override
     public SpreadsheetFormatterSelectorList setElements(final Collection<SpreadsheetFormatterSelector> collection) {
-        final SpreadsheetFormatterSelectorList currencyList;
+        final SpreadsheetFormatterSelectorList spreadsheetFormatterSelectorList;
 
         if (collection instanceof SpreadsheetFormatterSelectorList) {
-            currencyList = (SpreadsheetFormatterSelectorList) collection;
+            spreadsheetFormatterSelectorList = (SpreadsheetFormatterSelectorList) collection;
         } else {
             Objects.requireNonNull(collection, "collection");
 
@@ -85,15 +85,15 @@ public final class SpreadsheetFormatterSelectorList extends AbstractList<Spreads
             }
 
             if (copy.equals(this)) {
-                currencyList = this;
+                spreadsheetFormatterSelectorList = this;
             } else {
-                currencyList = copy.isEmpty() ?
+                spreadsheetFormatterSelectorList = copy.isEmpty() ?
                     EMPTY :
                     new SpreadsheetFormatterSelectorList(copy);
             }
         }
 
-        return currencyList;
+        return spreadsheetFormatterSelectorList;
     }
 
     @Override
