@@ -132,9 +132,8 @@ final class SpreadsheetFormHandlerContextBasic implements SpreadsheetFormHandler
     @Override
     public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetValidationReference>> fields) {
         return this.saveFormFieldValues0(
-            FormFieldList.with(
-                Objects.requireNonNull(fields, "fields")
-            )
+            FormFieldList.<SpreadsheetValidationReference>empty()
+                .setElements(fields)
         );
     }
 
