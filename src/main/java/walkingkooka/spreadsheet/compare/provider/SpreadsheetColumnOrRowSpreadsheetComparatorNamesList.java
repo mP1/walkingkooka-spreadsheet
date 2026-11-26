@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare.provider;
 
 import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.ImmutableListDefaults;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
@@ -52,66 +53,66 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text);
     }
 
-    public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
-        Objects.requireNonNull(comparatorNames, "comparatorNames");
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> list) {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList spreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 
-        return comparatorNames instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList ?
-            (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) comparatorNames :
-            copyAndCreate(comparatorNames);
-    }
+        if (list instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) {
+            spreadsheetColumnOrRowSpreadsheetComparatorNamesList = (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) list;
+        } else {
+            Objects.requireNonNull(list, "list");
 
-    static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copyAndCreate(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
-        final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] copy = comparatorNames.toArray(
-            new SpreadsheetColumnOrRowSpreadsheetComparatorNames[comparatorNames.size()]
-        );
+            final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> copy = Lists.array();
+            final Set<SpreadsheetSelection> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
-        if (copy.length == 0) {
-            throw new IllegalArgumentException("Expected several sorted column/rows got 0");
-        }
-
-        final Set<SpreadsheetSelection> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-
-        for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
-            if (null == columnOrRowComparators) {
-                throw new NullPointerException("Includes null names");
-            }
-
-            final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();
-
-            if (false == duplicates.isEmpty()) {
-                duplicates.iterator()
-                    .next()
-                    .ifDifferentColumnOrRowTypeFail(columnOrRow);
-            }
-
-            if (false == duplicates.add(columnOrRow)) {
-                throw new IllegalArgumentException(
-                    "Duplicate " +
-                        columnOrRow.cellColumnOrRowText() +
-                        " " +
-                        columnOrRow
+            for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames names : list) {
+                Objects.requireNonNull(
+                    names,
+                    "Includes null names"
                 );
+                final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = names.columnOrRow();
+
+                if (false == duplicates.isEmpty()) {
+                    duplicates.iterator()
+                        .next()
+                        .ifDifferentColumnOrRowTypeFail(columnOrRow);
+                }
+
+                if (false == duplicates.add(columnOrRow)) {
+                    throw new IllegalArgumentException(
+                        "Duplicate " +
+                            columnOrRow.cellColumnOrRowText() +
+                            " " +
+                            columnOrRow
+                    );
+                }
+                copy.add(names);
             }
+
+            if (copy.isEmpty()) {
+                throw new IllegalArgumentException("Missing comparators");
+            }
+
+            spreadsheetColumnOrRowSpreadsheetComparatorNamesList = new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(copy);
         }
 
-        return new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(copy);
+        return spreadsheetColumnOrRowSpreadsheetComparatorNamesList;
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] comparators) {
+    private SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators) {
         this.comparators = comparators;
     }
 
     @Override
     public SpreadsheetColumnOrRowSpreadsheetComparatorNames get(final int index) {
-        return this.comparators[index];
+        return this.comparators.get(index);
     }
 
     @Override
     public int size() {
-        return this.comparators.length;
+        return this.comparators.size();
     }
 
-    private final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] comparators;
+    private final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators;
 
     // HasText..........................................................................................................
 
@@ -172,7 +173,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
 
     @Override
     public void elementCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames names) {
-        Objects.requireNonNull(names, "names");
+        Objects.requireNonNull(names, "Includes null names");
     }
 
     @Override
