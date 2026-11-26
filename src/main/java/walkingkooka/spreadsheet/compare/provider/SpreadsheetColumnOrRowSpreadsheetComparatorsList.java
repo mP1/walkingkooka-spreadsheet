@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare.provider;
 
 import walkingkooka.collect.iterable.Iterables;
 import walkingkooka.collect.list.ImmutableListDefaults;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.text.HasText;
@@ -37,65 +38,68 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     HasText {
 
     static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
-        Objects.requireNonNull(columnOrRows, "columnOrRows");
+        final SpreadsheetColumnOrRowSpreadsheetComparatorsList spreadsheetColumnOrRowSpreadsheetComparatorsList;
 
-        return columnOrRows instanceof SpreadsheetColumnOrRowSpreadsheetComparatorsList ?
-            (SpreadsheetColumnOrRowSpreadsheetComparatorsList) columnOrRows :
-            copyAndCreate(columnOrRows);
-    }
+        if (columnOrRows instanceof SpreadsheetColumnOrRowSpreadsheetComparatorsList) {
+            spreadsheetColumnOrRowSpreadsheetComparatorsList = (SpreadsheetColumnOrRowSpreadsheetComparatorsList) columnOrRows;
+        } else {
+            Objects.requireNonNull(columnOrRows, "columnOrRows");
 
-    static SpreadsheetColumnOrRowSpreadsheetComparatorsList copyAndCreate(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
-        final SpreadsheetColumnOrRowSpreadsheetComparators[] copy = columnOrRows.toArray(
-            new SpreadsheetColumnOrRowSpreadsheetComparators[columnOrRows.size()]
-        );
+            final List<SpreadsheetColumnOrRowSpreadsheetComparators> copy = Lists.array();
 
-        if (copy.length == 0) {
-            throw new IllegalArgumentException("Expected several sorted column/rows got 0");
-        }
+            SpreadsheetColumnOrRowReferenceKind first = null;
+            int i = 0;
 
-        SpreadsheetColumnOrRowReferenceKind first = null;
-        int i = 0;
+            for (final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators : columnOrRows) {
+                Objects.requireNonNull(columnOrRowComparators, "Includes null comparator");
 
-        for (final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators : columnOrRows) {
-            Objects.requireNonNull(columnOrRowComparators, "Includes null comparator");
-
-            final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();
-            if (null == first) {
-                first = columnOrRow.columnOrRowReferenceKind();
-            } else {
-                if (first != columnOrRow.columnOrRowReferenceKind()) {
-                    throw new IllegalArgumentException(
-                        "All sorted columns/rows must be " +
-                            first +
-                            " but " +
-                            i +
-                            " is " +
-                            first.flip()
-                    );
+                final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();
+                if (null == first) {
+                    first = columnOrRow.columnOrRowReferenceKind();
+                } else {
+                    if (first != columnOrRow.columnOrRowReferenceKind()) {
+                        throw new IllegalArgumentException(
+                            "All sorted columns/rows must be " +
+                                first +
+                                " but " +
+                                i +
+                                " is " +
+                                first.flip()
+                        );
+                    }
                 }
+
+                i++;
+
+                copy.add(columnOrRowComparators);
             }
 
-            i++;
+            if(copy.isEmpty()) {
+                throw new IllegalArgumentException("Empty list");
+            }
+
+            spreadsheetColumnOrRowSpreadsheetComparatorsList = new SpreadsheetColumnOrRowSpreadsheetComparatorsList(copy);
         }
 
-        return new SpreadsheetColumnOrRowSpreadsheetComparatorsList(copy);
+        return spreadsheetColumnOrRowSpreadsheetComparatorsList;
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparatorsList(final SpreadsheetColumnOrRowSpreadsheetComparators[] comparators) {
+    private SpreadsheetColumnOrRowSpreadsheetComparatorsList(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
+        super();
         this.comparators = comparators;
     }
 
     @Override
     public SpreadsheetColumnOrRowSpreadsheetComparators get(final int index) {
-        return this.comparators[index];
+        return this.comparators.get(index);
     }
 
     @Override
     public int size() {
-        return this.comparators.length;
+        return this.comparators.size();
     }
 
-    private final SpreadsheetColumnOrRowSpreadsheetComparators[] comparators;
+    private final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators;
 
     // ImmutableListDefaults............................................................................................
 
