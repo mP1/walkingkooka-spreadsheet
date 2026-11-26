@@ -58,42 +58,13 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
         return PluginNameLike.parse(
             text,
             SpreadsheetComparatorName::with,
-            SpreadsheetComparatorNameList::with
+            SpreadsheetComparatorNameList.EMPTY::setElements
         );
     }
 
-    /**
-     * Factory that creates a {@link SpreadsheetComparatorNameList} from the list of {@link SpreadsheetComparatorName names}.
-     */
-    public static SpreadsheetComparatorNameList with(final Collection<SpreadsheetComparatorName> names) {
-        Objects.requireNonNull(names, "names");
-
-        final SpreadsheetComparatorNameList spreadsheetComparatorNameList;
-
-        if (names instanceof SpreadsheetComparatorNameList) {
-            spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) names;
-        } else {
-            final List<SpreadsheetComparatorName> copy = Lists.array();
-            for (final SpreadsheetComparatorName name : names) {
-                copy.add(
-                    Objects.requireNonNull(name, "includes null name")
-                );
-            }
-
-            switch (names.size()) {
-                case 0:
-                    spreadsheetComparatorNameList = EMPTY;
-                    break;
-                default:
-                    spreadsheetComparatorNameList = new SpreadsheetComparatorNameList(copy);
-                    break;
-            }
-        }
-
-        return spreadsheetComparatorNameList;
-    }
-
-    private SpreadsheetComparatorNameList(final List<SpreadsheetComparatorName> names) {
+    // @VisibleForTesting
+    SpreadsheetComparatorNameList(final List<SpreadsheetComparatorName> names) {
+        super();
         this.names = names;
     }
 
@@ -116,10 +87,28 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
 
     @Override
     public SpreadsheetComparatorNameList setElements(final Collection<SpreadsheetComparatorName> names) {
-        final SpreadsheetComparatorNameList copy = with(names);
-        return this.equals(copy) ?
-            this :
-            copy;
+        final SpreadsheetComparatorNameList spreadsheetComparatorNameList;
+
+        if (names instanceof SpreadsheetComparatorNameList) {
+            spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) names;
+        } else {
+            Objects.requireNonNull(names, "names");
+
+            final List<SpreadsheetComparatorName> copy = Lists.array();
+            for (final SpreadsheetComparatorName name : names) {
+                copy.add(
+                    Objects.requireNonNull(name, "includes null name")
+                );
+            }
+
+            spreadsheetComparatorNameList = copy.isEmpty() ?
+                EMPTY :
+                this.equals(copy) ?
+                    this :
+                    new SpreadsheetComparatorNameList(copy);
+        }
+
+        return spreadsheetComparatorNameList;
     }
 
     // HasUrlFragment...................................................................................................
