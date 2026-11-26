@@ -29,7 +29,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetComparatorNameListTest implements ListTesting2<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
@@ -43,33 +42,6 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     private final static SpreadsheetComparatorName DATE1 = SpreadsheetComparatorName.DATE;
 
     private final static SpreadsheetComparatorName NUMBER2 = SpreadsheetComparatorName.NUMBER;
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetComparatorNameList.with(null)
-        );
-    }
-
-    @Test
-    public void testWithDoesntDoubleWrap() {
-        final SpreadsheetComparatorNameList list = this.createList();
-        assertSame(
-            list,
-            SpreadsheetComparatorNameList.with(list)
-        );
-    }
-
-    @Test
-    public void testWithEmpty() {
-        assertSame(
-            SpreadsheetComparatorNameList.EMPTY,
-            SpreadsheetComparatorNameList.with(
-                Lists.empty()
-            )
-        );
-    }
 
     // list.............................................................................................................
 
@@ -140,7 +112,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
 
     @Override
     public SpreadsheetComparatorNameList createList() {
-        return SpreadsheetComparatorNameList.with(
+        return new SpreadsheetComparatorNameList(
             Lists.of(
                 DATE1,
                 NUMBER2
@@ -177,7 +149,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testParseName() {
         this.parseStringAndCheck(
             "day-of-month",
-            SpreadsheetComparatorNameList.with(
+            new SpreadsheetComparatorNameList(
                 Lists.of(
                     SpreadsheetComparatorName.DAY_OF_MONTH
                 )
@@ -189,7 +161,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testParseNameCommaName() {
         this.parseStringAndCheck(
             "day-of-month,year",
-            SpreadsheetComparatorNameList.with(
+            new SpreadsheetComparatorNameList(
                 Lists.of(
                     SpreadsheetComparatorName.DAY_OF_MONTH,
                     SpreadsheetComparatorName.YEAR
@@ -202,7 +174,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testParseSpaceNameSpaceCommaName() {
         this.parseStringAndCheck(
             " day-of-month ,year",
-            SpreadsheetComparatorNameList.with(
+            new SpreadsheetComparatorNameList(
                 Lists.of(
                     SpreadsheetComparatorName.DAY_OF_MONTH,
                     SpreadsheetComparatorName.YEAR
@@ -253,7 +225,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     @Test
     public void testFirstOrEmptyWhenEmpty() {
         this.firstOrEmptyAndCheck(
-            SpreadsheetComparatorNameList.with(
+            new SpreadsheetComparatorNameList(
                 Lists.empty()
             )
         );
@@ -264,7 +236,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         final SpreadsheetComparatorName first = SpreadsheetComparatorName.DATE;
 
         this.firstOrEmptyAndCheck(
-            SpreadsheetComparatorNameList.with(
+            new SpreadsheetComparatorNameList(
                 Lists.of(
                     first,
                     SpreadsheetComparatorName.YEAR
