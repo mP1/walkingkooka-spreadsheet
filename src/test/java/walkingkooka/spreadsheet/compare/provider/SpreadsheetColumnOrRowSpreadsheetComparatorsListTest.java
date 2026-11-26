@@ -40,7 +40,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testDoesntDoubleWrap() {
+    public void testWithSpreadsheetColumnOrRowSpreadsheetComparatorsList() {
         final SpreadsheetColumnOrRowSpreadsheetComparatorsList list = this.createList();
         assertSame(
             list,
