@@ -258,7 +258,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     }
 
     @Test
-    public void testDoesntDoubleWrap() {
+    public void testWithSpreadsheetColumnOrRowSpreadsheetComparatorNamesListDoesntWrap() {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList list = this.createList();
         assertSame(
             list,
