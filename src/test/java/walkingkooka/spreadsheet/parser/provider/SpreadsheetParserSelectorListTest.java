@@ -18,17 +18,17 @@
 package walkingkooka.spreadsheet.parser.provider;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.EmptyTextException;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringLikeList;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -44,31 +44,6 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetParserSelectorList.fromStringLikeList(null)
-        );
-    }
-
-
-    @Test
-    public void testFromStringLikeListWithNullElementFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetParserSelectorList.fromStringLikeList(
-                StringList.EMPTY.concat(PARSER_SELECTOR.text())
-                    .concat(null)
-                    .concat(DIFFERENT_PARSER_SELECTOR.text()
-                    )
-            )
-        );
-    }
-
-    @Test
-    public void testFromStringLikeListWithEmptyStringFails() {
-        assertThrows(
-            EmptyTextException.class,
-            () -> SpreadsheetParserSelectorList.fromStringLikeList(
-                StringList.EMPTY.concat(PARSER_SELECTOR.text())
-                    .concat("")
-            )
         );
     }
 
@@ -90,25 +65,39 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
         );
     }
 
-    private void fromStringLikeListAndCheck(final CsvStringList csvStringList,
+    @Test
+    public void testFromStringLikeListWithNotEmptyListIncludesNull() {
+        this.fromStringLikeListAndCheck(
+            StringList.EMPTY.concat(PARSER_SELECTOR.text())
+                .concat(null)
+                .concat(DIFFERENT_PARSER_SELECTOR.text()),
+            SpreadsheetParserSelectorList.EMPTY.concat(PARSER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_PARSER_SELECTOR)
+        );
+    }
+
+    @Test
+    public void testFromStringLikeListWithNotEmptyListIncludesEmptyString() {
+        this.fromStringLikeListAndCheck(
+            StringList.EMPTY.concat(PARSER_SELECTOR.text())
+                .concat("")
+                .concat(DIFFERENT_PARSER_SELECTOR.text()),
+            SpreadsheetParserSelectorList.EMPTY.concat(PARSER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_PARSER_SELECTOR)
+        );
+    }
+
+    private void fromStringLikeListAndCheck(final StringLikeList stringLikeList,
                                             final SpreadsheetParserSelectorList expected) {
         this.checkEquals(
             expected,
-            SpreadsheetParserSelectorList.fromStringLikeList(csvStringList)
+            SpreadsheetParserSelectorList.fromStringLikeList(stringLikeList)
         );
     }
 
     // setElements......................................................................................................
-
-    @Test
-    public void testSetElementsWithNullElementFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetParserSelectorList.EMPTY.setElements(
-                Arrays.asList((SpreadsheetParserSelector) null)
-            )
-        );
-    }
 
     @Test
     public void testSetElementsWithDifferent() {
@@ -131,6 +120,21 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
             ),
             Lists.empty(),
             SpreadsheetParserSelectorList.EMPTY
+        );
+    }
+
+    @Test
+    public void testSetElementsWithDifferentListIncludesNull() {
+        final List<SpreadsheetParserSelector> list = Lists.of(
+            null,
+            DIFFERENT_PARSER_SELECTOR
+        );
+        this.setElementsAndCheck(
+            new SpreadsheetParserSelectorList(
+                Lists.of(PARSER_SELECTOR)
+            ),
+            list,
+            new SpreadsheetParserSelectorList(list)
         );
     }
 
@@ -159,6 +163,18 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
         );
     }
 
+    @Test
+    public void testCsvStringListWithNotEmptyListIncludesNull() {
+        this.csvStringListAndCheck(
+            SpreadsheetParserSelectorList.EMPTY.concat(PARSER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_PARSER_SELECTOR),
+            "\"parser-selector-111\"\n" +
+                "\n" +
+                "\"different-parser-selector-222\""
+        );
+    }
+
     // HasTsvStringList.................................................................................................
 
     @Test
@@ -179,6 +195,18 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
         );
     }
 
+    @Test
+    public void testTsvStringListWithNotEmptyIncludesNull() {
+        this.tsvStringListAndCheck(
+            SpreadsheetParserSelectorList.EMPTY.concat(PARSER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_PARSER_SELECTOR),
+            "\"parser-selector-111\"\n" +
+                "\n" +
+                "\"different-parser-selector-222\""
+        );
+    }
+
     @Override
     public SpreadsheetParserSelectorList createHasCsvStringListTsvStringList() {
         return this.createList();
@@ -190,8 +218,9 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
     public void testMarshall() {
         this.marshallAndCheck(
             SpreadsheetParserSelectorList.EMPTY.concat(PARSER_SELECTOR)
+                .concat(null)
                 .concat(DIFFERENT_PARSER_SELECTOR),
-            "\"parser-selector-111,different-parser-selector-222\""
+            "\"parser-selector-111,,different-parser-selector-222\""
         );
     }
 
