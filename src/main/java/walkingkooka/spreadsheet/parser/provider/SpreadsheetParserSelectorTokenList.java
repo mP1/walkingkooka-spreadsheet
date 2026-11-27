@@ -86,30 +86,44 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     }
 
     @Override
-    public SpreadsheetParserSelectorTokenList setElements(final Collection<SpreadsheetParserSelectorToken> tokens) {
-        Objects.requireNonNull(tokens, "tokens");
+    public SpreadsheetParserSelectorTokenList setElements(final Collection<SpreadsheetParserSelectorToken> collection) {
+        final SpreadsheetParserSelectorTokenList spreadsheetParserSelectorTokenList;
 
-        SpreadsheetParserSelectorTokenList spreadsheetParserSelectorTokens;
-
-        if (tokens instanceof SpreadsheetParserSelectorTokenList) {
-            spreadsheetParserSelectorTokens = (SpreadsheetParserSelectorTokenList) tokens;
+        if (collection instanceof SpreadsheetParserSelectorTokenList) {
+            spreadsheetParserSelectorTokenList = (SpreadsheetParserSelectorTokenList) collection;
         } else {
-            final List<SpreadsheetParserSelectorToken> copy = Lists.array();
-            for (final SpreadsheetParserSelectorToken token : tokens) {
-                copy.add(
-                    Objects.requireNonNull(token, "Includes null token")
-                );
-            }
+            Objects.requireNonNull(collection, "spreadsheetParserSelectorTokens");
 
-            spreadsheetParserSelectorTokens =
-                copy.isEmpty() ?
-                    EMPTY :
-                    copy.equals(this) ?
-                        this :
-                        new SpreadsheetParserSelectorTokenList(copy);
+            final List<SpreadsheetParserSelectorToken> copy = Lists.array();
+            for (final SpreadsheetParserSelectorToken token : collection) {
+                this.elementCheck(token);
+                copy.add(token);
+            }
+            spreadsheetParserSelectorTokenList = this.equals(copy) ?
+                this :
+                this.replaceSpreadsheetParserSelectorTokens(copy);
         }
 
-        return spreadsheetParserSelectorTokens;
+        return spreadsheetParserSelectorTokenList;
+    }
+
+    @Override
+    public SpreadsheetParserSelectorTokenList subList(final int from,
+                                                      final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceSpreadsheetParserSelectorTokens(
+                this.tokens.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private SpreadsheetParserSelectorTokenList replaceSpreadsheetParserSelectorTokens(final List<SpreadsheetParserSelectorToken> spreadsheetParserSelectorTokens) {
+        return spreadsheetParserSelectorTokens.isEmpty() ?
+            EMPTY :
+            new SpreadsheetParserSelectorTokenList(spreadsheetParserSelectorTokens);
     }
 
     // json.............................................................................................................

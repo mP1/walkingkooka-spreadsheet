@@ -68,6 +68,80 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         );
     }
 
+    // subList..........................................................................................................
+
+    private final static SpreadsheetViewportNavigation NAVIGATION1 = SpreadsheetViewportNavigation.scrollDown(1);
+
+    private final static SpreadsheetViewportNavigation NAVIGATION2 = SpreadsheetViewportNavigation.scrollDown(2);
+
+    private final static SpreadsheetViewportNavigation NAVIGATION3 = SpreadsheetViewportNavigation.scrollDown(3);
+
+    private final static SpreadsheetViewportNavigation NAVIGATION4 = SpreadsheetViewportNavigation.scrollDown(4);
+
+    private final static SpreadsheetViewportNavigation NAVIGATION5 = SpreadsheetViewportNavigation.scrollDown(5);
+    
+    private final static List<SpreadsheetViewportNavigation> ELEMENTS = Lists.of(
+        NAVIGATION1,
+        NAVIGATION2,
+        NAVIGATION3,
+        NAVIGATION4,
+        NAVIGATION5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetViewportNavigationList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetViewportNavigationList(
+                Lists.of(
+                    NAVIGATION1,
+                    NAVIGATION2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetViewportNavigationList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetViewportNavigationList(
+                Lists.of(
+                    NAVIGATION3,
+                    NAVIGATION4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetViewportNavigationList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetViewportNavigationList(
+                Lists.of(
+                    NAVIGATION3,
+                    NAVIGATION4
+                )
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetViewportNavigationList createList() {
+        return SpreadsheetViewportNavigationList.EMPTY;
+    }
+
     // parse............................................................................................................
 
     @Override
@@ -305,11 +379,6 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Override
     public SpreadsheetViewportNavigationList parseString(final String text) {
         return SpreadsheetViewportNavigationList.parse(text);
-    }
-
-    @Override
-    public SpreadsheetViewportNavigationList createList() {
-        return SpreadsheetViewportNavigationList.EMPTY;
     }
 
     // HasTextTesting...................................................................................................

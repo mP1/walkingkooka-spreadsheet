@@ -82,34 +82,45 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
     }
 
     @Override
-    public SpreadsheetFormatterSampleList setElements(final Collection<SpreadsheetFormatterSample> samples) {
-        Objects.requireNonNull(samples, "samples");
+    public SpreadsheetFormatterSampleList setElements(final Collection<SpreadsheetFormatterSample> spreadsheetFormatterSamples) {
+        final SpreadsheetFormatterSampleList spreadsheetFormatterSampleList;
 
-        SpreadsheetFormatterSampleList spreadsheetFormatterSampleList;
-
-        if (samples instanceof SpreadsheetFormatterSampleList) {
-            spreadsheetFormatterSampleList = (SpreadsheetFormatterSampleList) samples;
+        if (spreadsheetFormatterSamples instanceof SpreadsheetFormatterSampleList) {
+            spreadsheetFormatterSampleList = (SpreadsheetFormatterSampleList) spreadsheetFormatterSamples;
         } else {
+            Objects.requireNonNull(spreadsheetFormatterSamples, "spreadsheetFormatterSamples");
+
             final List<SpreadsheetFormatterSample> copy = Lists.array();
-            for (final SpreadsheetFormatterSample sample : samples) {
-                copy.add(
-                    Objects.requireNonNull(sample, "includes null sample")
-                );
+            for (final SpreadsheetFormatterSample each : spreadsheetFormatterSamples) {
+                this.elementCheck(each);
+                copy.add(each);
             }
 
-            switch (copy.size()) {
-                case 0:
-                    spreadsheetFormatterSampleList = EMPTY;
-                    break;
-                default:
-                    spreadsheetFormatterSampleList = this.equals(copy) ?
-                        this :
-                        new SpreadsheetFormatterSampleList(copy);
-                    break;
-            }
+            spreadsheetFormatterSampleList = this.equals(copy) ?
+                this :
+                this.replaceSpreadsheetFormatterSamples(copy);
         }
 
         return spreadsheetFormatterSampleList;
+    }
+
+    @Override
+    public SpreadsheetFormatterSampleList subList(final int from,
+                                                  final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceSpreadsheetFormatterSamples(
+                this.samples.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private SpreadsheetFormatterSampleList replaceSpreadsheetFormatterSamples(final List<SpreadsheetFormatterSample> spreadsheetFormatterSamples) {
+        return spreadsheetFormatterSamples.isEmpty() ?
+            EMPTY :
+            new SpreadsheetFormatterSampleList(spreadsheetFormatterSamples);
     }
 
     // json.............................................................................................................

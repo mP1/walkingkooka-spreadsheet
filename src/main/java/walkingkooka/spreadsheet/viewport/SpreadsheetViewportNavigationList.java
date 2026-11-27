@@ -86,7 +86,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         Lists.empty()
     );
 
-    private SpreadsheetViewportNavigationList(final List<SpreadsheetViewportNavigation> list) {
+    // @VisibleForTesting
+    SpreadsheetViewportNavigationList(final List<SpreadsheetViewportNavigation> list) {
         this.list = list;
     }
 
@@ -101,33 +102,50 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     @Override
-    public void elementCheck(final SpreadsheetViewportNavigation navigation) {
-        Objects.requireNonNull(navigation, "navigation");
+    public void elementCheck(final SpreadsheetViewportNavigation spreadsheetViewportNavigation) {
+        Objects.requireNonNull(spreadsheetViewportNavigation, "Includes null SpreadsheetViewportNavigation");
     }
 
     @Override
-    public SpreadsheetViewportNavigationList setElements(final Collection<SpreadsheetViewportNavigation> navigations) {
+    public SpreadsheetViewportNavigationList setElements(final Collection<SpreadsheetViewportNavigation> collection) {
         final SpreadsheetViewportNavigationList spreadsheetViewportNavigationList;
 
-        if(navigations instanceof SpreadsheetViewportNavigationList) {
-            spreadsheetViewportNavigationList = (SpreadsheetViewportNavigationList) navigations;
+        if (collection instanceof SpreadsheetViewportNavigationList) {
+            spreadsheetViewportNavigationList = (SpreadsheetViewportNavigationList) collection;
         } else {
-            Objects.requireNonNull(navigations, "navigations");
+            Objects.requireNonNull(collection, "spreadsheetViewportNavigations");
 
             final List<SpreadsheetViewportNavigation> copy = Lists.array();
-            for(final SpreadsheetViewportNavigation spreadsheetViewportNavigation : navigations) {
+            for (final SpreadsheetViewportNavigation spreadsheetViewportNavigation : collection) {
                 this.elementCheck(spreadsheetViewportNavigation);
                 copy.add(spreadsheetViewportNavigation);
             }
 
-            spreadsheetViewportNavigationList = copy.isEmpty() ?
-                EMPTY :
-                this.list.equals(copy) ?
-                    this :
-                    new SpreadsheetViewportNavigationList(copy);
+            spreadsheetViewportNavigationList = this.equals(copy) ?
+                this :
+                this.replaceSpreadsheetViewportNavigations(copy);
         }
 
         return spreadsheetViewportNavigationList;
+    }
+
+    @Override
+    public SpreadsheetViewportNavigationList subList(final int from,
+                                                     final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceSpreadsheetViewportNavigations(
+                this.list.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private SpreadsheetViewportNavigationList replaceSpreadsheetViewportNavigations(final List<SpreadsheetViewportNavigation> spreadsheetViewportNavigations) {
+        return spreadsheetViewportNavigations.isEmpty() ?
+            EMPTY :
+            new SpreadsheetViewportNavigationList(spreadsheetViewportNavigations);
     }
 
     private final List<SpreadsheetViewportNavigation> list;

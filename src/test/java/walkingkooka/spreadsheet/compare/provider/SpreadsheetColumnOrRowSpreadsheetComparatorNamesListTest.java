@@ -36,6 +36,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -335,6 +336,100 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         this.getMessageAndCheck(
             thrown,
             "Includes null names"
+        );
+    }
+
+    // subList..........................................................................................................
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparatorNames NAMES1 = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+        SpreadsheetSelection.parseRow("1"),
+        Lists.of(
+            SpreadsheetComparatorName.TEXT
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparatorNames NAMES2 = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+        SpreadsheetSelection.parseRow("2"),
+        Lists.of(
+            SpreadsheetComparatorName.TEXT
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparatorNames NAMES3 = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+        SpreadsheetSelection.parseRow("3"),
+        Lists.of(
+            SpreadsheetComparatorName.TEXT
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparatorNames NAMES4 = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+        SpreadsheetSelection.parseRow("4"),
+        Lists.of(
+            SpreadsheetComparatorName.TEXT
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparatorNames NAMES5 = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+        SpreadsheetSelection.parseRow("5"),
+        Lists.of(
+            SpreadsheetComparatorName.TEXT
+        )
+    );
+    
+    private final static List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> ELEMENTS = Lists.of(
+        NAMES1,
+        NAMES2,
+        NAMES3,
+        NAMES4,
+        NAMES5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(
+                Lists.of(
+                    NAMES1,
+                    NAMES2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(
+                Lists.of(
+                    NAMES3,
+                    NAMES4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(
+                Lists.of(
+                    NAMES3,
+                    NAMES4
+                )
+            )
         );
     }
 

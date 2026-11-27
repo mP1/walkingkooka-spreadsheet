@@ -37,7 +37,8 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
     HasText {
 
-    static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
+    static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows,
+                                                                 final SpreadsheetColumnOrRowSpreadsheetComparatorsList setter) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorsList spreadsheetColumnOrRowSpreadsheetComparatorsList;
 
         if (columnOrRows instanceof SpreadsheetColumnOrRowSpreadsheetComparatorsList) {
@@ -51,7 +52,7 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
             int i = 0;
 
             for (final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators : columnOrRows) {
-                Objects.requireNonNull(columnOrRowComparators, "Includes null comparator");
+                elementNullCheck(columnOrRowComparators);
 
                 final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();
                 if (null == first) {
@@ -74,17 +75,19 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
                 copy.add(columnOrRowComparators);
             }
 
-            if(copy.isEmpty()) {
+            if (copy.isEmpty()) {
                 throw new IllegalArgumentException("Empty list");
             }
 
-            spreadsheetColumnOrRowSpreadsheetComparatorsList = new SpreadsheetColumnOrRowSpreadsheetComparatorsList(copy);
+            spreadsheetColumnOrRowSpreadsheetComparatorsList = copy.equals(setter) ?
+                setter :
+                new SpreadsheetColumnOrRowSpreadsheetComparatorsList(copy);
         }
 
         return spreadsheetColumnOrRowSpreadsheetComparatorsList;
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparatorsList(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
+    SpreadsheetColumnOrRowSpreadsheetComparatorsList(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
         super();
         this.comparators = comparators;
     }
@@ -105,15 +108,32 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
 
     @Override
     public void elementCheck(final SpreadsheetColumnOrRowSpreadsheetComparators comparators) {
-        Objects.requireNonNull(comparators, "comparators");
+        elementNullCheck(comparators);
+    }
+
+    private static SpreadsheetColumnOrRowSpreadsheetComparators elementNullCheck(final SpreadsheetColumnOrRowSpreadsheetComparators comparators) {
+        return Objects.requireNonNull(comparators, "Includes null names");
     }
 
     @Override
-    public SpreadsheetColumnOrRowSpreadsheetComparatorsList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
-        final SpreadsheetColumnOrRowSpreadsheetComparatorsList copy = with(comparators);
-        return this.equals(copy) ?
+    public SpreadsheetColumnOrRowSpreadsheetComparatorsList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> spreadsheetColumnOrRowSpreadsheetComparators) {
+        return with(
+            spreadsheetColumnOrRowSpreadsheetComparators,
+            this
+        );
+    }
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparatorsList subList(final int from,
+                                                                    final int to) {
+        return 0 == from && this.size() == to ?
             this :
-            copy;
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(
+                this.comparators.subList(
+                    from,
+                    to
+                )
+            );
     }
 
     // HasText..........................................................................................................

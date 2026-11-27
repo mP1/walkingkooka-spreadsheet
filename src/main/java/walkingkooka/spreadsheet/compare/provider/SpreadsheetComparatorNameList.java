@@ -86,29 +86,46 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     }
 
     @Override
-    public SpreadsheetComparatorNameList setElements(final Collection<SpreadsheetComparatorName> names) {
+    public SpreadsheetComparatorNameList setElements(final Collection<SpreadsheetComparatorName> spreadsheetComparatorNames) {
         final SpreadsheetComparatorNameList spreadsheetComparatorNameList;
 
-        if (names instanceof SpreadsheetComparatorNameList) {
-            spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) names;
+        if (spreadsheetComparatorNames instanceof SpreadsheetComparatorNameList) {
+            spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) spreadsheetComparatorNames;
         } else {
-            Objects.requireNonNull(names, "names");
+            Objects.requireNonNull(spreadsheetComparatorNames, "spreadsheetComparatorNames");
 
             final List<SpreadsheetComparatorName> copy = Lists.array();
-            for (final SpreadsheetComparatorName name : names) {
-                copy.add(
-                    Objects.requireNonNull(name, "includes null name")
-                );
+
+            for(final SpreadsheetComparatorName spreadsheetComparatorName : spreadsheetComparatorNames) {
+                this.elementCheck(spreadsheetComparatorName);
+                copy.add(spreadsheetComparatorName);
             }
 
-            spreadsheetComparatorNameList = copy.isEmpty() ?
-                EMPTY :
-                this.equals(copy) ?
-                    this :
-                    new SpreadsheetComparatorNameList(copy);
+            spreadsheetComparatorNameList = this.equals(copy) ?
+                this :
+                this.replaceSpreadsheetComparatorNames(copy);
         }
 
         return spreadsheetComparatorNameList;
+    }
+
+    @Override
+    public SpreadsheetComparatorNameList subList(final int from,
+                                                 final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceSpreadsheetComparatorNames(
+                this.names.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private SpreadsheetComparatorNameList replaceSpreadsheetComparatorNames(final List<SpreadsheetComparatorName> spreadsheetComparatorNames) {
+        return spreadsheetComparatorNames.isEmpty() ?
+            EMPTY :
+            new SpreadsheetComparatorNameList(spreadsheetComparatorNames);
     }
 
     // HasUrlFragment...................................................................................................

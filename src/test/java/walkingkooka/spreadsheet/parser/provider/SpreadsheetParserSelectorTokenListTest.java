@@ -27,6 +27,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,20 +38,38 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     JsonNodeMarshallerTesting<SpreadsheetParserSelectorTokenList>,
     ThrowableTesting {
 
-    private final static SpreadsheetParserSelectorToken COMPONENT1 = SpreadsheetParserSelectorToken.with(
-        "label1",
-        "text1",
+    private final static SpreadsheetParserSelectorToken TOKEN1 = SpreadsheetParserSelectorToken.with(
+        "label111",
+        "text111",
         Lists.of(
             SpreadsheetParserSelectorTokenAlternative.with(
-                "alternative-label-1",
-                "alternative-text-1"
+                "alternative-label-111",
+                "alternative-text-111"
             )
         )
     );
 
-    private final static SpreadsheetParserSelectorToken COMPONENT2 = SpreadsheetParserSelectorToken.with(
-        "label1",
-        "text1",
+    private final static SpreadsheetParserSelectorToken TOKEN2 = SpreadsheetParserSelectorToken.with(
+        "label222",
+        "text222",
+        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
+    );
+
+    private final static SpreadsheetParserSelectorToken TOKEN3 = SpreadsheetParserSelectorToken.with(
+        "label333",
+        "text333",
+        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
+    );
+
+    private final static SpreadsheetParserSelectorToken TOKEN4 = SpreadsheetParserSelectorToken.with(
+        "label444",
+        "text444",
+        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
+    );
+
+    private final static SpreadsheetParserSelectorToken TOKEN5 = SpreadsheetParserSelectorToken.with(
+        "label555",
+        "text555",
         SpreadsheetParserSelectorToken.NO_ALTERNATIVES
     );
 
@@ -58,7 +78,7 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
         this.getAndCheck(
             this.createList(),
             0, // index
-            COMPONENT1 // expected
+            TOKEN1 // expected
         );
     }
 
@@ -67,7 +87,7 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
         this.getAndCheck(
             this.createList(),
             1, // index
-            COMPONENT2 // expected
+            TOKEN2 // expected
         );
     }
 
@@ -76,7 +96,7 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
         this.setFails(
             this.createList(),
             0, // index
-            COMPONENT1 // expected
+            TOKEN1 // expected
         );
     }
 
@@ -116,23 +136,82 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
             () -> this.createList()
                 .setElements(
                     Lists.of(
-                        COMPONENT1,
+                        TOKEN1,
                         null
                     )
                 )
         );
         this.getMessageAndCheck(
             thrown,
-            "Includes null token"
+            "token"
         );
     }
 
+    // subList..........................................................................................................
+
+    private final static List<SpreadsheetParserSelectorToken> ELEMENTS = Lists.of(
+        TOKEN1,
+        TOKEN2,
+        TOKEN3,
+        TOKEN4,
+        TOKEN5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetParserSelectorTokenList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetParserSelectorTokenList(
+                Lists.of(
+                    TOKEN1,
+                    TOKEN2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetParserSelectorTokenList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetParserSelectorTokenList(
+                Lists.of(
+                    TOKEN3,
+                    TOKEN4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetParserSelectorTokenList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetParserSelectorTokenList(
+                Lists.of(
+                    TOKEN3,
+                    TOKEN4
+                )
+            )
+        );
+    }
+    
     @Override
     public SpreadsheetParserSelectorTokenList createList() {
         return new SpreadsheetParserSelectorTokenList(
             Lists.of(
-                COMPONENT1,
-                COMPONENT2
+                TOKEN1,
+                TOKEN2
             )
         );
     }
@@ -145,18 +224,18 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
             this.createList(),
             "[\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\",\n" +
+                "    \"label\": \"label111\",\n" +
+                "    \"text\": \"text111\",\n" +
                 "    \"alternatives\": [\n" +
                 "      {\n" +
-                "        \"label\": \"alternative-label-1\",\n" +
-                "        \"text\": \"alternative-text-1\"\n" +
+                "        \"label\": \"alternative-label-111\",\n" +
+                "        \"text\": \"alternative-text-111\"\n" +
                 "      }\n" +
                 "    ]\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\"\n" +
+                "    \"label\": \"label222\",\n" +
+                "    \"text\": \"text222\"\n" +
                 "  }\n" +
                 "]"
         );
@@ -167,18 +246,18 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
         this.unmarshallAndCheck(
             "[\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\",\n" +
+                "    \"label\": \"label111\",\n" +
+                "    \"text\": \"text111\",\n" +
                 "    \"alternatives\": [\n" +
                 "      {\n" +
-                "        \"label\": \"alternative-label-1\",\n" +
-                "        \"text\": \"alternative-text-1\"\n" +
+                "        \"label\": \"alternative-label-111\",\n" +
+                "        \"text\": \"alternative-text-111\"\n" +
                 "      }\n" +
                 "    ]\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\"\n" +
+                "    \"label\": \"label222\",\n" +
+                "    \"text\": \"text222\"\n" +
                 "  }\n" +
                 "]",
             this.createList()
@@ -212,7 +291,7 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     public void testFirstOrEmptyWhenNotEmpty() {
         this.firstOrEmptyAndCheck(
             this.createList(),
-            COMPONENT1
+            TOKEN1
         );
     }
 

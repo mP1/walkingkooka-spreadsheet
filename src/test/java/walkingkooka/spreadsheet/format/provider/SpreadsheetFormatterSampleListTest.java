@@ -23,11 +23,12 @@ import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.reflect.ThrowableTesting;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextNode;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -39,17 +40,35 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     ThrowableTesting {
 
     private final static SpreadsheetFormatterSample SAMPLE1 = SpreadsheetFormatterSample.with(
-        "label1",
-        SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy").spreadsheetFormatterSelector(),
-        TextNode.text("31/12/1999")
+        "label111",
+        SpreadsheetFormatterSelector.parse("test-formatter-111"),
+        TextNode.text("111")
     );
 
     private final static SpreadsheetFormatterSample SAMPLE2 = SpreadsheetFormatterSample.with(
-        "label1",
-        SpreadsheetPattern.parseTimeFormatPattern("hh/mm").spreadsheetFormatterSelector(),
-        TextNode.text("12/58")
+        "label222",
+        SpreadsheetFormatterSelector.parse("test-formatter-222"),
+        TextNode.text("222")
     );
 
+    private final static SpreadsheetFormatterSample SAMPLE3 = SpreadsheetFormatterSample.with(
+        "label333",
+        SpreadsheetFormatterSelector.parse("test-formatter-333"),
+        TextNode.text("333")
+    );
+
+    private final static SpreadsheetFormatterSample SAMPLE4 = SpreadsheetFormatterSample.with(
+        "label444",
+        SpreadsheetFormatterSelector.parse("test-formatter-444"),
+        TextNode.text("444")
+    );
+
+    private final static SpreadsheetFormatterSample SAMPLE5 = SpreadsheetFormatterSample.with(
+        "label555",
+        SpreadsheetFormatterSelector.parse("test-formatter-555"),
+        TextNode.text("555")
+    );
+    
     @Test
     public void testGet() {
         this.getAndCheck(
@@ -121,10 +140,69 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
         );
         this.getMessageAndCheck(
             thrown,
-            "includes null sample"
+            "sample"
         );
     }
 
+    // subList..........................................................................................................
+
+    private final static List<SpreadsheetFormatterSample> ELEMENTS = Lists.of(
+        SAMPLE1,
+        SAMPLE2,
+        SAMPLE3,
+        SAMPLE4,
+        SAMPLE5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSampleList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetFormatterSampleList(
+                Lists.of(
+                    SAMPLE1,
+                    SAMPLE2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSampleList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetFormatterSampleList(
+                Lists.of(
+                    SAMPLE3,
+                    SAMPLE4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSampleList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetFormatterSampleList(
+                Lists.of(
+                    SAMPLE3,
+                    SAMPLE4
+                )
+            )
+        );
+    }
+    
     @Override
     public SpreadsheetFormatterSampleList createList() {
         return new SpreadsheetFormatterSampleList(
@@ -143,19 +221,19 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
             this.createList(),
             "[\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"date dd/mm/yyyy\",\n" +
+                "    \"label\": \"label111\",\n" +
+                "    \"selector\": \"test-formatter-111\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
-                "      \"value\": \"31/12/1999\"\n" +
+                "      \"value\": \"111\"\n" +
                 "    }\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"time hh/mm\",\n" +
+                "    \"label\": \"label222\",\n" +
+                "    \"selector\": \"test-formatter-222\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
-                "      \"value\": \"12/58\"\n" +
+                "      \"value\": \"222\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "]"
@@ -167,19 +245,19 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
         this.unmarshallAndCheck(
             "[\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"date dd/mm/yyyy\",\n" +
+                "    \"label\": \"label111\",\n" +
+                "    \"selector\": \"test-formatter-111\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
-                "      \"value\": \"31/12/1999\"\n" +
+                "      \"value\": \"111\"\n" +
                 "    }\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"time hh/mm\",\n" +
+                "    \"label\": \"label222\",\n" +
+                "    \"selector\": \"test-formatter-222\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
-                "      \"value\": \"12/58\"\n" +
+                "      \"value\": \"222\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "]",
