@@ -22,6 +22,7 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringLikeList;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -34,7 +35,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * A {@link List} that holds non-null {@link SpreadsheetParserSelector spreadsheetParserSelector}.
+ * A {@link List} that holds nullable {@link SpreadsheetParserSelector spreadsheetParserSelector}.
  */
 public final class SpreadsheetParserSelectorList extends AbstractList<SpreadsheetParserSelector>
     implements ImmutableListDefaults<SpreadsheetParserSelectorList, SpreadsheetParserSelector>,
@@ -45,8 +46,11 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
 
         return EMPTY.setElements(
             stringLikeList.stream()
-                .map(SpreadsheetParserSelector::parse)
-                .collect(Collectors.toList())
+                .map(
+                    (final String string) -> CharSequences.isNullOrEmpty(string) ?
+                    null :
+                    SpreadsheetParserSelector.parse(string)
+                ).collect(Collectors.toList())
         );
     }
 
@@ -100,7 +104,7 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
 
     @Override
     public void elementCheck(final SpreadsheetParserSelector spreadsheetParserSelector) {
-        Objects.requireNonNull(spreadsheetParserSelector, "spreadsheetParserSelector");
+        // allow null
     }
 
     private final List<SpreadsheetParserSelector> list;
@@ -114,7 +118,9 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
     public CsvStringList csvStringList() {
         return CsvStringList.makeCsvStringList(
             this.list,
-            SpreadsheetParserSelector::text
+            (final SpreadsheetParserSelector selector) -> null != selector ?
+                selector.text() :
+                ""
         );
     }
 
