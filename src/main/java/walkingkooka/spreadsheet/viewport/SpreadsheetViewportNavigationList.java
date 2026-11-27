@@ -107,26 +107,14 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     @Override
-    public SpreadsheetViewportNavigationList setElements(final Collection<SpreadsheetViewportNavigation> collection) {
-        final SpreadsheetViewportNavigationList spreadsheetViewportNavigationList;
-
-        if (collection instanceof SpreadsheetViewportNavigationList) {
-            spreadsheetViewportNavigationList = (SpreadsheetViewportNavigationList) collection;
-        } else {
-            Objects.requireNonNull(collection, "spreadsheetViewportNavigations");
-
-            final List<SpreadsheetViewportNavigation> copy = Lists.array();
-            for (final SpreadsheetViewportNavigation spreadsheetViewportNavigation : collection) {
-                this.elementCheck(spreadsheetViewportNavigation);
-                copy.add(spreadsheetViewportNavigation);
-            }
-
-            spreadsheetViewportNavigationList = this.equals(copy) ?
-                this :
-                this.replaceSpreadsheetViewportNavigations(copy);
-        }
-
-        return spreadsheetViewportNavigationList;
+    public SpreadsheetViewportNavigationList setElements(final Collection<SpreadsheetViewportNavigation> elements) {
+        return (SpreadsheetViewportNavigationList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetViewportNavigation> collection) -> collection instanceof SpreadsheetViewportNavigationList,
+                this::elementCheck,
+                this::replaceSpreadsheetViewportNavigations
+            );
     }
 
     @Override

@@ -82,26 +82,14 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
     }
 
     @Override
-    public SpreadsheetFormatterSampleList setElements(final Collection<SpreadsheetFormatterSample> spreadsheetFormatterSamples) {
-        final SpreadsheetFormatterSampleList spreadsheetFormatterSampleList;
-
-        if (spreadsheetFormatterSamples instanceof SpreadsheetFormatterSampleList) {
-            spreadsheetFormatterSampleList = (SpreadsheetFormatterSampleList) spreadsheetFormatterSamples;
-        } else {
-            Objects.requireNonNull(spreadsheetFormatterSamples, "spreadsheetFormatterSamples");
-
-            final List<SpreadsheetFormatterSample> copy = Lists.array();
-            for (final SpreadsheetFormatterSample each : spreadsheetFormatterSamples) {
-                this.elementCheck(each);
-                copy.add(each);
-            }
-
-            spreadsheetFormatterSampleList = this.equals(copy) ?
-                this :
-                this.replaceSpreadsheetFormatterSamples(copy);
-        }
-
-        return spreadsheetFormatterSampleList;
+    public SpreadsheetFormatterSampleList setElements(final Collection<SpreadsheetFormatterSample> elements) {
+        return (SpreadsheetFormatterSampleList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetFormatterSample> collection) -> collection instanceof SpreadsheetFormatterSampleList,
+                this::elementCheck,
+                this::replaceSpreadsheetFormatterSamples
+            );
     }
 
     @Override

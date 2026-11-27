@@ -121,26 +121,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     }
 
     @Override
-    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> collection) {
-        final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList spreadsheetColumnOrRowSpreadsheetComparatorNamesList;
-
-        if (collection instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) {
-            spreadsheetColumnOrRowSpreadsheetComparatorNamesList = (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) collection;
-        } else {
-            Objects.requireNonNull(collection, "spreadsheetColumnOrRowSpreadsheetComparatorNamesList");
-
-            final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> copy = Lists.array();
-            for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames spreadsheetColumnOrRowSpreadsheetComparatorNames : collection) {
-                this.elementCheck(spreadsheetColumnOrRowSpreadsheetComparatorNames);
-                copy.add(spreadsheetColumnOrRowSpreadsheetComparatorNames);
-            }
-
-            spreadsheetColumnOrRowSpreadsheetComparatorNamesList = this.equals(copy) ?
-                this :
-                new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(copy);
-        }
-
-        return spreadsheetColumnOrRowSpreadsheetComparatorNamesList;
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> elements) {
+        return (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> collection) -> collection instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList,
+                this::elementCheck,
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::new
+            );
     }
 
     @Override
