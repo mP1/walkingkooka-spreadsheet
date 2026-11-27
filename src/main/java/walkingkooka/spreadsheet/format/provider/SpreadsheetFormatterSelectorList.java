@@ -69,31 +69,45 @@ public final class SpreadsheetFormatterSelectorList extends AbstractList<Spreads
     }
 
     @Override
-    public SpreadsheetFormatterSelectorList setElements(final Collection<SpreadsheetFormatterSelector> collection) {
+    public SpreadsheetFormatterSelectorList setElements(final Collection<SpreadsheetFormatterSelector> spreadsheetFormatterSelectors) {
         final SpreadsheetFormatterSelectorList spreadsheetFormatterSelectorList;
 
-        if (collection instanceof SpreadsheetFormatterSelectorList) {
-            spreadsheetFormatterSelectorList = (SpreadsheetFormatterSelectorList) collection;
+        if (spreadsheetFormatterSelectors instanceof SpreadsheetFormatterSelectorList) {
+            spreadsheetFormatterSelectorList = (SpreadsheetFormatterSelectorList) spreadsheetFormatterSelectors;
         } else {
-            Objects.requireNonNull(collection, "collection");
+            Objects.requireNonNull(spreadsheetFormatterSelectors, "spreadsheetFormatterSelectors");
 
             final List<SpreadsheetFormatterSelector> copy = Lists.array();
-            for (final SpreadsheetFormatterSelector spreadsheetFormatterSelector : collection) {
+            for (final SpreadsheetFormatterSelector spreadsheetFormatterSelector : spreadsheetFormatterSelectors) {
                 this.elementCheck(spreadsheetFormatterSelector);
-
                 copy.add(spreadsheetFormatterSelector);
             }
 
-            if (copy.equals(this)) {
-                spreadsheetFormatterSelectorList = this;
-            } else {
-                spreadsheetFormatterSelectorList = copy.isEmpty() ?
-                    EMPTY :
-                    new SpreadsheetFormatterSelectorList(copy);
-            }
+            spreadsheetFormatterSelectorList = this.equals(copy) ?
+                this :
+                this.replaceSpreadsheetFormatterSelectors(copy);
         }
 
         return spreadsheetFormatterSelectorList;
+    }
+
+    @Override
+    public SpreadsheetFormatterSelectorList subList(final int from,
+                                                    final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceSpreadsheetFormatterSelectors(
+                this.list.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private SpreadsheetFormatterSelectorList replaceSpreadsheetFormatterSelectors(final List<SpreadsheetFormatterSelector> spreadsheetFormatterSelectors) {
+        return spreadsheetFormatterSelectors.isEmpty() ?
+            EMPTY :
+            new SpreadsheetFormatterSelectorList(spreadsheetFormatterSelectors);
     }
 
     @Override

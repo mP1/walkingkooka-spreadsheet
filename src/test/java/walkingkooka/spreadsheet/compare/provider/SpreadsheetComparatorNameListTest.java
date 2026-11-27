@@ -29,6 +29,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetComparatorNameListTest implements ListTesting2<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
@@ -39,9 +41,15 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     JsonNodeMarshallerTesting<SpreadsheetComparatorNameList>,
     ThrowableTesting {
 
-    private final static SpreadsheetComparatorName DATE1 = SpreadsheetComparatorName.DATE;
+    private final static SpreadsheetComparatorName SPREADSHEET_COMPARATOR_NAME1 = SpreadsheetComparatorName.with("comparator-111");
 
-    private final static SpreadsheetComparatorName NUMBER2 = SpreadsheetComparatorName.NUMBER;
+    private final static SpreadsheetComparatorName SPREADSHEET_COMPARATOR_NAME2 = SpreadsheetComparatorName.with("comparator-222");
+
+    private final static SpreadsheetComparatorName SPREADSHEET_COMPARATOR_NAME3 = SpreadsheetComparatorName.with("comparator-333");
+
+    private final static SpreadsheetComparatorName SPREADSHEET_COMPARATOR_NAME4 = SpreadsheetComparatorName.with("comparator-444");
+
+    private final static SpreadsheetComparatorName SPREADSHEET_COMPARATOR_NAME5 = SpreadsheetComparatorName.with("comparator-555");
 
     // list.............................................................................................................
 
@@ -50,7 +58,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         this.getAndCheck(
             this.createList(),
             0, // index
-            DATE1 // expected
+            SPREADSHEET_COMPARATOR_NAME1 // expected
         );
     }
 
@@ -59,7 +67,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         this.getAndCheck(
             this.createList(),
             1, // index
-            NUMBER2 // expected
+            SPREADSHEET_COMPARATOR_NAME2 // expected
         );
     }
 
@@ -68,7 +76,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         this.setFails(
             this.createList(),
             0, // index
-            DATE1 // expected
+            SPREADSHEET_COMPARATOR_NAME1 // expected
         );
     }
 
@@ -93,7 +101,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     }
 
     @Test
-    public void testSetElementsIncludesNullFails() {
+    public void testSetElementsIncludesNull() {
         final NullPointerException thrown = assertThrows(
             NullPointerException.class,
             () -> this.createList()
@@ -106,16 +114,75 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         );
         this.getMessageAndCheck(
             thrown,
-            "includes null name"
+            "names"
         );
     }
 
+    // subList..........................................................................................................
+
+    private final static List<SpreadsheetComparatorName> ELEMENTS = Lists.of(
+        SPREADSHEET_COMPARATOR_NAME1,
+        SPREADSHEET_COMPARATOR_NAME2,
+        SPREADSHEET_COMPARATOR_NAME3,
+        SPREADSHEET_COMPARATOR_NAME4,
+        SPREADSHEET_COMPARATOR_NAME5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetComparatorNameList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetComparatorNameList(
+                Lists.of(
+                    SPREADSHEET_COMPARATOR_NAME1,
+                    SPREADSHEET_COMPARATOR_NAME2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetComparatorNameList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetComparatorNameList(
+                Lists.of(
+                    SPREADSHEET_COMPARATOR_NAME3,
+                    SPREADSHEET_COMPARATOR_NAME4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetComparatorNameList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetComparatorNameList(
+                Lists.of(
+                    SPREADSHEET_COMPARATOR_NAME3,
+                    SPREADSHEET_COMPARATOR_NAME4
+                )
+            )
+        );
+    }
+    
     @Override
     public SpreadsheetComparatorNameList createList() {
         return new SpreadsheetComparatorNameList(
             Lists.of(
-                DATE1,
-                NUMBER2
+                SPREADSHEET_COMPARATOR_NAME1,
+                SPREADSHEET_COMPARATOR_NAME2
             )
         );
     }
@@ -126,7 +193,7 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testHasUrlFragment() {
         this.urlFragmentAndCheck(
             this.createList(),
-            "date, number"
+            "comparator-111,%20comparator-222"
         );
     }
 
@@ -194,14 +261,14 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testMarshall() {
         this.marshallAndCheck(
             this.createList(),
-            "\"date, number\""
+            "\"comparator-111, comparator-222\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-            "\"date,number\"",
+            "\"comparator-111, comparator-222\"",
             this.createList()
         );
     }
@@ -233,16 +300,14 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
 
     @Test
     public void testFirstOrEmptyWhenNotEmpty() {
-        final SpreadsheetComparatorName first = SpreadsheetComparatorName.DATE;
-
         this.firstOrEmptyAndCheck(
             new SpreadsheetComparatorNameList(
                 Lists.of(
-                    first,
-                    SpreadsheetComparatorName.YEAR
+                    SPREADSHEET_COMPARATOR_NAME1,
+                    SPREADSHEET_COMPARATOR_NAME2
                 )
             ),
-            first
+            SPREADSHEET_COMPARATOR_NAME1
         );
     }
 

@@ -69,31 +69,46 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
     }
 
     @Override
-    public SpreadsheetParserSelectorList setElements(final Collection<SpreadsheetParserSelector> collection) {
+    public SpreadsheetParserSelectorList setElements(final Collection<SpreadsheetParserSelector> elements) {
         final SpreadsheetParserSelectorList spreadsheetParserSelectorList;
 
-        if (collection instanceof SpreadsheetParserSelectorList) {
-            spreadsheetParserSelectorList = (SpreadsheetParserSelectorList) collection;
+        if (elements instanceof SpreadsheetParserSelectorList) {
+            spreadsheetParserSelectorList = (SpreadsheetParserSelectorList) elements;
         } else {
-            Objects.requireNonNull(collection, "collection");
+            Objects.requireNonNull(elements, "spreadsheetParserSelectors");
 
             final List<SpreadsheetParserSelector> copy = Lists.array();
-            for (final SpreadsheetParserSelector spreadsheetParserSelector : collection) {
-                this.elementCheck(spreadsheetParserSelector);
 
-                copy.add(spreadsheetParserSelector);
+            for(final SpreadsheetParserSelector each : elements) {
+                this.elementCheck(each);
+                copy.add(each);
             }
 
-            if (copy.equals(this)) {
-                spreadsheetParserSelectorList = this;
-            } else {
-                spreadsheetParserSelectorList = copy.isEmpty() ?
-                    EMPTY :
-                    new SpreadsheetParserSelectorList(copy);
-            }
+            spreadsheetParserSelectorList = this.equals(copy) ?
+                this :
+                this.replaceSpreadsheetParserSelectors(copy);
         }
 
         return spreadsheetParserSelectorList;
+    }
+
+    @Override
+    public SpreadsheetParserSelectorList subList(final int from,
+                                                 final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceSpreadsheetParserSelectors(
+                this.list.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private SpreadsheetParserSelectorList replaceSpreadsheetParserSelectors(final List<SpreadsheetParserSelector> spreadsheetParserSelectors) {
+        return spreadsheetParserSelectors.isEmpty() ?
+            EMPTY :
+            new SpreadsheetParserSelectorList(spreadsheetParserSelectors);
     }
 
     @Override

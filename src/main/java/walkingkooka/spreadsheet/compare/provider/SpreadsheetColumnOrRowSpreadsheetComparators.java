@@ -43,7 +43,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
      * are for either {@link walkingkooka.spreadsheet.reference.SpreadsheetColumnReference} or {@link walkingkooka.spreadsheet.reference.SpreadsheetRowReference}.
      */
     public static List<SpreadsheetColumnOrRowSpreadsheetComparators> list(final List<SpreadsheetColumnOrRowSpreadsheetComparators> list) {
-        return SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(list);
+        return SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(
+            list,
+            null // creating not setting
+        );
     }
 
     /**

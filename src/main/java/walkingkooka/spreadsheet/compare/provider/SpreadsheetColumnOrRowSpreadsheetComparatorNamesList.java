@@ -98,7 +98,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
         return spreadsheetColumnOrRowSpreadsheetComparatorNamesList;
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators) {
+    // @VisibleForTesting
+    SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators) {
         this.comparators = comparators;
     }
 
@@ -113,6 +114,47 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     }
 
     private final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators;
+
+    @Override
+    public void elementCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames names) {
+        Objects.requireNonNull(names, "Includes null names");
+    }
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> collection) {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList spreadsheetColumnOrRowSpreadsheetComparatorNamesList;
+
+        if (collection instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) {
+            spreadsheetColumnOrRowSpreadsheetComparatorNamesList = (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) collection;
+        } else {
+            Objects.requireNonNull(collection, "spreadsheetColumnOrRowSpreadsheetComparatorNamesList");
+
+            final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> copy = Lists.array();
+            for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames spreadsheetColumnOrRowSpreadsheetComparatorNames : collection) {
+                this.elementCheck(spreadsheetColumnOrRowSpreadsheetComparatorNames);
+                copy.add(spreadsheetColumnOrRowSpreadsheetComparatorNames);
+            }
+
+            spreadsheetColumnOrRowSpreadsheetComparatorNamesList = this.equals(copy) ?
+                this :
+                new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(copy);
+        }
+
+        return spreadsheetColumnOrRowSpreadsheetComparatorNamesList;
+    }
+
+    @Override
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList subList(final int from,
+                                                                        final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNamesList(
+                this.comparators.subList(
+                    from,
+                    to
+                )
+            );
+    }
 
     // HasText..........................................................................................................
 
@@ -167,20 +209,5 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     @Override
     public UrlFragment urlFragment() {
         return UrlFragment.with(this.text());
-    }
-
-    // ImmutableListDefaults............................................................................................
-
-    @Override
-    public void elementCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames names) {
-        Objects.requireNonNull(names, "Includes null names");
-    }
-
-    @Override
-    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
-        final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copy = with(names);
-        return this.equals(copy) ?
-            this :
-            copy;
     }
 }

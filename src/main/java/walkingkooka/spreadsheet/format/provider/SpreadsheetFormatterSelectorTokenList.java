@@ -83,34 +83,49 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
 
     @Override
     public void elementCheck(final SpreadsheetFormatterSelectorToken token) {
-        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(token, "Includes null token");
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTokenList setElements(final Collection<SpreadsheetFormatterSelectorToken> tokens) {
-        Objects.requireNonNull(tokens, "tokens");
+    public SpreadsheetFormatterSelectorTokenList setElements(final Collection<SpreadsheetFormatterSelectorToken> collection) {
+        final SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokenList;
 
-        SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokens;
-
-        if (tokens instanceof SpreadsheetFormatterSelectorTokenList) {
-            spreadsheetFormatterSelectorTokens = (SpreadsheetFormatterSelectorTokenList) tokens;
+        if (collection instanceof SpreadsheetFormatterSelectorTokenList) {
+            spreadsheetFormatterSelectorTokenList = (SpreadsheetFormatterSelectorTokenList) collection;
         } else {
+            Objects.requireNonNull(collection, "spreadsheetFormatterSelectorTokens");
+
             final List<SpreadsheetFormatterSelectorToken> copy = Lists.array();
-            for (final SpreadsheetFormatterSelectorToken token : tokens) {
-                copy.add(
-                    Objects.requireNonNull(token, "Includes null token")
-                );
+            for (final SpreadsheetFormatterSelectorToken each : collection) {
+                this.elementCheck(each);
+                copy.add(each);
             }
 
-            spreadsheetFormatterSelectorTokens =
-                copy.isEmpty() ?
-                    EMPTY :
-                    copy.equals(this.tokens) ?
-                        this :
-                        new SpreadsheetFormatterSelectorTokenList(copy);
+            spreadsheetFormatterSelectorTokenList = this.equals(copy) ?
+                this :
+                this.replaceSpreadsheetFormatterSelectorTokens(copy);
         }
 
-        return spreadsheetFormatterSelectorTokens;
+        return spreadsheetFormatterSelectorTokenList;
+    }
+
+    @Override
+    public SpreadsheetFormatterSelectorTokenList subList(final int from,
+                                                         final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceSpreadsheetFormatterSelectorTokens(
+                this.tokens.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private SpreadsheetFormatterSelectorTokenList replaceSpreadsheetFormatterSelectorTokens(final List<SpreadsheetFormatterSelectorToken> spreadsheetFormatterSelectorTokens) {
+        return spreadsheetFormatterSelectorTokens.isEmpty() ?
+            EMPTY :
+            new SpreadsheetFormatterSelectorTokenList(spreadsheetFormatterSelectorTokens);
     }
 
     // json.............................................................................................................

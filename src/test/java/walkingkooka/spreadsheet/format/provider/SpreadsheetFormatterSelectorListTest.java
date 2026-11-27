@@ -29,7 +29,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -38,6 +38,12 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
     HasOptionalSpreadsheetFormatterSelectorTesting,
     HasSpreadsheetCellTesting,
     JsonNodeMarshallerTesting<SpreadsheetFormatterSelectorList> {
+
+    private final static SpreadsheetFormatterSelector SPREADSHEET_FORMATTER_SELECTOR1 = FORMATTER_SELECTOR;
+    private final static SpreadsheetFormatterSelector SPREADSHEET_FORMATTER_SELECTOR2 = DIFFERENT_FORMATTER_SELECTOR;
+    private final static SpreadsheetFormatterSelector SPREADSHEET_FORMATTER_SELECTOR3 = SpreadsheetFormatterSelector.parse("test-spreadsheet-formatter-333");
+    private final static SpreadsheetFormatterSelector SPREADSHEET_FORMATTER_SELECTOR4 = SpreadsheetFormatterSelector.parse("test-spreadsheet-formatter-444");
+    private final static SpreadsheetFormatterSelector SPREADSHEET_FORMATTER_SELECTOR5 = SpreadsheetFormatterSelector.parse("test-spreadsheet-formatter-555");
 
     // fromStringLikeList................................................................................................
 
@@ -100,24 +106,17 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
         );
     }
 
-    // concat...........................................................................................................
-
-    @Test
-    public void testConcatWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetFormatterSelectorList.EMPTY.concat(null)
-        );
-    }
-
     // setElements......................................................................................................
 
     @Test
-    public void testSetElementsWithNullElementFails() {
+    public void testSetElementsWithListIncludesNullElementFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterSelectorList.EMPTY.setElements(
-                Arrays.asList((SpreadsheetFormatterSelector) null)
+                Lists.of(
+                    null,
+                    FORMATTER_SELECTOR
+                )
             )
         );
     }
@@ -146,6 +145,65 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
         );
     }
 
+    // subList..........................................................................................................
+
+    private final static List<SpreadsheetFormatterSelector> ELEMENTS = Lists.of(
+        SPREADSHEET_FORMATTER_SELECTOR1,
+        SPREADSHEET_FORMATTER_SELECTOR2,
+        SPREADSHEET_FORMATTER_SELECTOR3,
+        SPREADSHEET_FORMATTER_SELECTOR4,
+        SPREADSHEET_FORMATTER_SELECTOR5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSelectorList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetFormatterSelectorList(
+                Lists.of(
+                    SPREADSHEET_FORMATTER_SELECTOR1,
+                    SPREADSHEET_FORMATTER_SELECTOR2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSelectorList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetFormatterSelectorList(
+                Lists.of(
+                    SPREADSHEET_FORMATTER_SELECTOR3,
+                    SPREADSHEET_FORMATTER_SELECTOR4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSelectorList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetFormatterSelectorList(
+                Lists.of(
+                    SPREADSHEET_FORMATTER_SELECTOR3,
+                    SPREADSHEET_FORMATTER_SELECTOR4
+                )
+            )
+        );
+    }
+    
     @Override
     public SpreadsheetFormatterSelectorList createList() {
         return SpreadsheetFormatterSelectorList.EMPTY;

@@ -27,6 +27,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,20 +38,38 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
     JsonNodeMarshallerTesting<SpreadsheetFormatterSelectorTokenList>,
     ThrowableTesting {
 
-    private final static SpreadsheetFormatterSelectorToken COMPONENT1 = SpreadsheetFormatterSelectorToken.with(
-        "label1",
-        "text1",
+    private final static SpreadsheetFormatterSelectorToken TOKEN1 = SpreadsheetFormatterSelectorToken.with(
+        "label111",
+        "text111",
         Lists.of(
             SpreadsheetFormatterSelectorTokenAlternative.with(
-                "alternative-label-1",
-                "alternative-text-1"
+                "alternative-label-111",
+                "alternative-text-111"
             )
         )
     );
 
-    private final static SpreadsheetFormatterSelectorToken COMPONENT2 = SpreadsheetFormatterSelectorToken.with(
-        "label1",
-        "text1",
+    private final static SpreadsheetFormatterSelectorToken TOKEN2 = SpreadsheetFormatterSelectorToken.with(
+        "label222",
+        "text222",
+        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+    );
+
+    private final static SpreadsheetFormatterSelectorToken TOKEN3 = SpreadsheetFormatterSelectorToken.with(
+        "label333",
+        "text333",
+        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+    );
+
+    private final static SpreadsheetFormatterSelectorToken TOKEN4 = SpreadsheetFormatterSelectorToken.with(
+        "label444",
+        "text444",
+        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+    );
+
+    private final static SpreadsheetFormatterSelectorToken TOKEN5 = SpreadsheetFormatterSelectorToken.with(
+        "label555",
+        "text555",
         SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
     );
 
@@ -58,7 +78,7 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         this.getAndCheck(
             this.createList(),
             0, // index
-            COMPONENT1 // expected
+            TOKEN1 // expected
         );
     }
 
@@ -67,7 +87,7 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         this.getAndCheck(
             this.createList(),
             1, // index
-            COMPONENT2 // expected
+            TOKEN2 // expected
         );
     }
 
@@ -76,7 +96,7 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         this.setFails(
             this.createList(),
             0, // index
-            COMPONENT1 // expected
+            TOKEN1 // expected
         );
     }
 
@@ -107,7 +127,7 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
             () -> this.createList()
                 .setElements(
                     Lists.of(
-                        COMPONENT1,
+                        TOKEN1,
                         null
                     )
                 )
@@ -115,6 +135,65 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         this.getMessageAndCheck(
             thrown,
             "Includes null token"
+        );
+    }
+
+    // subList..........................................................................................................
+
+    private final static List<SpreadsheetFormatterSelectorToken> ELEMENTS = Lists.of(
+        TOKEN1,
+        TOKEN2,
+        TOKEN3,
+        TOKEN4,
+        TOKEN5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSelectorTokenList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetFormatterSelectorTokenList(
+                Lists.of(
+                    TOKEN1,
+                    TOKEN2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSelectorTokenList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetFormatterSelectorTokenList(
+                Lists.of(
+                    TOKEN3,
+                    TOKEN4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetFormatterSelectorTokenList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetFormatterSelectorTokenList(
+                Lists.of(
+                    TOKEN3,
+                    TOKEN4
+                )
+            )
         );
     }
 
@@ -131,8 +210,8 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
     public SpreadsheetFormatterSelectorTokenList createList() {
         return new SpreadsheetFormatterSelectorTokenList(
             Lists.of(
-                COMPONENT1,
-                COMPONENT2
+                TOKEN1,
+                TOKEN2
             )
         );
     }
@@ -145,18 +224,18 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
             this.createList(),
             "[\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\",\n" +
+                "    \"label\": \"label111\",\n" +
+                "    \"text\": \"text111\",\n" +
                 "    \"alternatives\": [\n" +
                 "      {\n" +
-                "        \"label\": \"alternative-label-1\",\n" +
-                "        \"text\": \"alternative-text-1\"\n" +
+                "        \"label\": \"alternative-label-111\",\n" +
+                "        \"text\": \"alternative-text-111\"\n" +
                 "      }\n" +
                 "    ]\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\"\n" +
+                "    \"label\": \"label222\",\n" +
+                "    \"text\": \"text222\"\n" +
                 "  }\n" +
                 "]"
         );
@@ -167,18 +246,18 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         this.unmarshallAndCheck(
             "[\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\",\n" +
+                "    \"label\": \"label111\",\n" +
+                "    \"text\": \"text111\",\n" +
                 "    \"alternatives\": [\n" +
                 "      {\n" +
-                "        \"label\": \"alternative-label-1\",\n" +
-                "        \"text\": \"alternative-text-1\"\n" +
+                "        \"label\": \"alternative-label-111\",\n" +
+                "        \"text\": \"alternative-text-111\"\n" +
                 "      }\n" +
                 "    ]\n" +
                 "  },\n" +
                 "  {\n" +
-                "    \"label\": \"label1\",\n" +
-                "    \"text\": \"text1\"\n" +
+                "    \"label\": \"label222\",\n" +
+                "    \"text\": \"text222\"\n" +
                 "  }\n" +
                 "]",
             this.createList()
@@ -212,7 +291,7 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
     public void testFirstOrEmptyWhenNotEmpty() {
         this.firstOrEmptyAndCheck(
             this.createList(),
-            COMPONENT1
+            TOKEN1
         );
     }
 

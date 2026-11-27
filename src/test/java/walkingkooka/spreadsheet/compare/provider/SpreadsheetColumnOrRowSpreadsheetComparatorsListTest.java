@@ -29,6 +29,8 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasTextTesting;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -44,7 +46,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
         final SpreadsheetColumnOrRowSpreadsheetComparatorsList list = this.createList();
         assertSame(
             list,
-            SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(list)
+            SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(
+                list,
+                null
+            )
         );
     }
 
@@ -137,7 +142,121 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
         );
         this.getMessageAndCheck(
             thrown,
-            "Includes null comparator"
+            "Includes null names"
+        );
+    }
+
+    // subList..........................................................................................................
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparators COMPARATORS1 = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+        SpreadsheetSelection.parseRow("1"),
+        Lists.of(
+            SpreadsheetComparators.customList(
+                Lists.of(
+                    "111"
+                )
+            )
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparators COMPARATORS2 = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+        SpreadsheetSelection.parseRow("2"),
+        Lists.of(
+            SpreadsheetComparators.customList(
+                Lists.of(
+                    "222"
+                )
+            )
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparators COMPARATORS3 = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+        SpreadsheetSelection.parseRow("3"),
+        Lists.of(
+            SpreadsheetComparators.customList(
+                Lists.of(
+                    "333"
+                )
+            )
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparators COMPARATORS4 = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+        SpreadsheetSelection.parseRow("4"),
+        Lists.of(
+            SpreadsheetComparators.customList(
+                Lists.of(
+                    "444"
+                )
+            )
+        )
+    );
+
+    private final static SpreadsheetColumnOrRowSpreadsheetComparators COMPARATORS5 = SpreadsheetColumnOrRowSpreadsheetComparators.with(
+        SpreadsheetSelection.parseRow("5"),
+        Lists.of(
+            SpreadsheetComparators.customList(
+                Lists.of(
+                    "555"
+                )
+            )
+        )
+    );
+
+    private final static List<SpreadsheetColumnOrRowSpreadsheetComparators> ELEMENTS = Lists.of(
+        COMPARATORS1,
+        COMPARATORS2,
+        COMPARATORS3,
+        COMPARATORS4,
+        COMPARATORS5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(ELEMENTS),
+            0,
+            2,
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(
+                Lists.of(
+                    COMPARATORS1,
+                    COMPARATORS2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(ELEMENTS),
+            2,
+            4,
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(
+                Lists.of(
+                    COMPARATORS3,
+                    COMPARATORS4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(
+                Lists.of(
+                    COMPARATORS3,
+                    COMPARATORS4
+                )
+            )
         );
     }
 
@@ -170,7 +289,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                     text,
                     SpreadsheetComparatorProviders.spreadsheetComparators(),
                     PROVIDER_CONTEXT
-                )
+                ),
+                null // creating not setting
             ),
             text
         );
@@ -193,26 +313,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
 
     @Test
     public void testFirstOrEmptyWhenNotEmpty() {
-        final SpreadsheetColumnOrRowSpreadsheetComparators first = SpreadsheetColumnOrRowSpreadsheetComparators.with(
-            SpreadsheetSelection.A1.column(),
-            Lists.of(
-                SpreadsheetComparators.text()
-            )
-        );
-
         this.firstOrEmptyAndCheck(
-            SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(
+            new SpreadsheetColumnOrRowSpreadsheetComparatorsList(
                 Lists.of(
-                    first,
-                    SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                        SpreadsheetSelection.parseColumn("B"),
-                        Lists.of(
-                            SpreadsheetComparators.date()
-                        )
-                    )
+                    COMPARATORS1,
+                    COMPARATORS2
                 )
             ),
-            first
+            COMPARATORS1
         );
     }
 

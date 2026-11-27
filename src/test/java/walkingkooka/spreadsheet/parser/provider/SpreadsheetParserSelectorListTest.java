@@ -98,16 +98,6 @@ public final class SpreadsheetParserSelectorListTest implements ImmutableListTes
         );
     }
 
-    // concat...........................................................................................................
-
-    @Test
-    public void testConcatWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetParserSelectorList.EMPTY.concat(null)
-        );
-    }
-
     // setElements......................................................................................................
 
     @Test
