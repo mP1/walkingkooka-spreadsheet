@@ -69,26 +69,14 @@ public final class SpreadsheetFormatterSelectorList extends AbstractList<Spreads
     }
 
     @Override
-    public SpreadsheetFormatterSelectorList setElements(final Collection<SpreadsheetFormatterSelector> spreadsheetFormatterSelectors) {
-        final SpreadsheetFormatterSelectorList spreadsheetFormatterSelectorList;
-
-        if (spreadsheetFormatterSelectors instanceof SpreadsheetFormatterSelectorList) {
-            spreadsheetFormatterSelectorList = (SpreadsheetFormatterSelectorList) spreadsheetFormatterSelectors;
-        } else {
-            Objects.requireNonNull(spreadsheetFormatterSelectors, "spreadsheetFormatterSelectors");
-
-            final List<SpreadsheetFormatterSelector> copy = Lists.array();
-            for (final SpreadsheetFormatterSelector spreadsheetFormatterSelector : spreadsheetFormatterSelectors) {
-                this.elementCheck(spreadsheetFormatterSelector);
-                copy.add(spreadsheetFormatterSelector);
-            }
-
-            spreadsheetFormatterSelectorList = this.equals(copy) ?
-                this :
-                this.replaceSpreadsheetFormatterSelectors(copy);
-        }
-
-        return spreadsheetFormatterSelectorList;
+    public SpreadsheetFormatterSelectorList setElements(final Collection<SpreadsheetFormatterSelector> elements) {
+        return (SpreadsheetFormatterSelectorList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetFormatterSelector> collection) -> collection instanceof SpreadsheetFormatterSelectorList,
+                this::elementCheck,
+                this::replaceSpreadsheetFormatterSelectors
+            );
     }
 
     @Override

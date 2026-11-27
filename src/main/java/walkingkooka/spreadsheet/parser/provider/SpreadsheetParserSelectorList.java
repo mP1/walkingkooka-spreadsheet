@@ -70,26 +70,13 @@ public final class SpreadsheetParserSelectorList extends AbstractList<Spreadshee
 
     @Override
     public SpreadsheetParserSelectorList setElements(final Collection<SpreadsheetParserSelector> elements) {
-        final SpreadsheetParserSelectorList spreadsheetParserSelectorList;
-
-        if (elements instanceof SpreadsheetParserSelectorList) {
-            spreadsheetParserSelectorList = (SpreadsheetParserSelectorList) elements;
-        } else {
-            Objects.requireNonNull(elements, "spreadsheetParserSelectors");
-
-            final List<SpreadsheetParserSelector> copy = Lists.array();
-
-            for(final SpreadsheetParserSelector each : elements) {
-                this.elementCheck(each);
-                copy.add(each);
-            }
-
-            spreadsheetParserSelectorList = this.equals(copy) ?
-                this :
-                this.replaceSpreadsheetParserSelectors(copy);
-        }
-
-        return spreadsheetParserSelectorList;
+        return (SpreadsheetParserSelectorList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetParserSelector> collection) -> collection instanceof SpreadsheetParserSelectorList,
+                this::elementCheck,
+                this::replaceSpreadsheetParserSelectors
+            );
     }
 
     @Override

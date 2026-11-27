@@ -87,26 +87,14 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTokenList setElements(final Collection<SpreadsheetFormatterSelectorToken> collection) {
-        final SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokenList;
-
-        if (collection instanceof SpreadsheetFormatterSelectorTokenList) {
-            spreadsheetFormatterSelectorTokenList = (SpreadsheetFormatterSelectorTokenList) collection;
-        } else {
-            Objects.requireNonNull(collection, "spreadsheetFormatterSelectorTokens");
-
-            final List<SpreadsheetFormatterSelectorToken> copy = Lists.array();
-            for (final SpreadsheetFormatterSelectorToken each : collection) {
-                this.elementCheck(each);
-                copy.add(each);
-            }
-
-            spreadsheetFormatterSelectorTokenList = this.equals(copy) ?
-                this :
-                this.replaceSpreadsheetFormatterSelectorTokens(copy);
-        }
-
-        return spreadsheetFormatterSelectorTokenList;
+    public SpreadsheetFormatterSelectorTokenList setElements(final Collection<SpreadsheetFormatterSelectorToken> elements) {
+        return (SpreadsheetFormatterSelectorTokenList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetFormatterSelectorToken> collection) -> collection instanceof SpreadsheetFormatterSelectorTokenList,
+                this::elementCheck,
+                this::replaceSpreadsheetFormatterSelectorTokens
+            );
     }
 
     @Override

@@ -86,27 +86,14 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     }
 
     @Override
-    public SpreadsheetComparatorNameList setElements(final Collection<SpreadsheetComparatorName> spreadsheetComparatorNames) {
-        final SpreadsheetComparatorNameList spreadsheetComparatorNameList;
-
-        if (spreadsheetComparatorNames instanceof SpreadsheetComparatorNameList) {
-            spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) spreadsheetComparatorNames;
-        } else {
-            Objects.requireNonNull(spreadsheetComparatorNames, "spreadsheetComparatorNames");
-
-            final List<SpreadsheetComparatorName> copy = Lists.array();
-
-            for(final SpreadsheetComparatorName spreadsheetComparatorName : spreadsheetComparatorNames) {
-                this.elementCheck(spreadsheetComparatorName);
-                copy.add(spreadsheetComparatorName);
-            }
-
-            spreadsheetComparatorNameList = this.equals(copy) ?
-                this :
-                this.replaceSpreadsheetComparatorNames(copy);
-        }
-
-        return spreadsheetComparatorNameList;
+    public SpreadsheetComparatorNameList setElements(final Collection<SpreadsheetComparatorName> elements) {
+        return (SpreadsheetComparatorNameList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetComparatorName> collection) -> collection instanceof SpreadsheetComparatorNameList,
+                this::elementCheck,
+                this::replaceSpreadsheetComparatorNames
+            );
     }
 
     @Override

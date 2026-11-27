@@ -86,25 +86,14 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     }
 
     @Override
-    public SpreadsheetParserSelectorTokenList setElements(final Collection<SpreadsheetParserSelectorToken> collection) {
-        final SpreadsheetParserSelectorTokenList spreadsheetParserSelectorTokenList;
-
-        if (collection instanceof SpreadsheetParserSelectorTokenList) {
-            spreadsheetParserSelectorTokenList = (SpreadsheetParserSelectorTokenList) collection;
-        } else {
-            Objects.requireNonNull(collection, "spreadsheetParserSelectorTokens");
-
-            final List<SpreadsheetParserSelectorToken> copy = Lists.array();
-            for (final SpreadsheetParserSelectorToken token : collection) {
-                this.elementCheck(token);
-                copy.add(token);
-            }
-            spreadsheetParserSelectorTokenList = this.equals(copy) ?
-                this :
-                this.replaceSpreadsheetParserSelectorTokens(copy);
-        }
-
-        return spreadsheetParserSelectorTokenList;
+    public SpreadsheetParserSelectorTokenList setElements(final Collection<SpreadsheetParserSelectorToken> elements) {
+        return (SpreadsheetParserSelectorTokenList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<SpreadsheetParserSelectorToken> collection) -> collection instanceof SpreadsheetParserSelectorTokenList,
+                this::elementCheck,
+                this::replaceSpreadsheetParserSelectorTokens
+            );
     }
 
     @Override
