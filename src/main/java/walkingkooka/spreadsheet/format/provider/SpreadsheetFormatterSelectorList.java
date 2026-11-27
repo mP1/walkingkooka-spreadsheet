@@ -22,6 +22,7 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringLikeList;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -34,7 +35,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * A {@link List} that holds non-null {@link SpreadsheetFormatterSelector spreadsheetFormatterSelector}.
+ * A {@link List} that holds nullable {@link SpreadsheetFormatterSelector spreadsheetFormatterSelector}.
  */
 public final class SpreadsheetFormatterSelectorList extends AbstractList<SpreadsheetFormatterSelector>
     implements ImmutableListDefaults<SpreadsheetFormatterSelectorList, SpreadsheetFormatterSelector>,
@@ -45,8 +46,11 @@ public final class SpreadsheetFormatterSelectorList extends AbstractList<Spreads
 
         return EMPTY.setElements(
             stringLikeList.stream()
-                .map(SpreadsheetFormatterSelector::parse)
-                .collect(Collectors.toList())
+                .map(
+                    (final String string) -> CharSequences.isNullOrEmpty(string) ?
+                        null :
+                        SpreadsheetFormatterSelector.parse(string)
+                ).collect(Collectors.toList())
         );
     }
 
@@ -100,7 +104,7 @@ public final class SpreadsheetFormatterSelectorList extends AbstractList<Spreads
 
     @Override
     public void elementCheck(final SpreadsheetFormatterSelector spreadsheetFormatterSelector) {
-        Objects.requireNonNull(spreadsheetFormatterSelector, "spreadsheetFormatterSelector");
+        // null allowed
     }
 
     private final List<SpreadsheetFormatterSelector> list;
@@ -114,7 +118,9 @@ public final class SpreadsheetFormatterSelectorList extends AbstractList<Spreads
     public CsvStringList csvStringList() {
         return CsvStringList.makeCsvStringList(
             this.list,
-            SpreadsheetFormatterSelector::text
+            (final SpreadsheetFormatterSelector selector) -> null != selector ?
+                selector.text() :
+                ""
         );
     }
 

@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.EmptyTextException;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringLikeList;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -48,35 +48,10 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
     // fromStringLikeList................................................................................................
 
     @Test
-    public void testFromStringLikeListWithNullFails() {
+    public void testFromStringLikeListWithNullStringLikeListFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetFormatterSelectorList.fromStringLikeList(null)
-        );
-    }
-
-
-    @Test
-    public void testFromStringLikeListWithNullElementFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetFormatterSelectorList.fromStringLikeList(
-                StringList.EMPTY.concat(FORMATTER_SELECTOR.text())
-                    .concat(null)
-                    .concat(DIFFERENT_FORMATTER_SELECTOR.text()
-                    )
-            )
-        );
-    }
-
-    @Test
-    public void testFromStringLikeListWithEmptyStringFails() {
-        assertThrows(
-            EmptyTextException.class,
-            () -> SpreadsheetFormatterSelectorList.fromStringLikeList(
-                StringList.EMPTY.concat(FORMATTER_SELECTOR.text())
-                    .concat("")
-            )
         );
     }
 
@@ -98,26 +73,52 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
         );
     }
 
-    private void fromStringLikeListAndCheck(final CsvStringList csvStringList,
+    @Test
+    public void testFromStringLikeListWithNotEmptyIncludesNull() {
+        this.fromStringLikeListAndCheck(
+            StringList.EMPTY.concat(FORMATTER_SELECTOR.text())
+                .concat(null)
+                .concat(DIFFERENT_FORMATTER_SELECTOR.text()),
+            SpreadsheetFormatterSelectorList.EMPTY.concat(FORMATTER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_FORMATTER_SELECTOR)
+        );
+    }
+
+    @Test
+    public void testFromStringLikeListWithNotEmptyIncludesEmptyString() {
+        this.fromStringLikeListAndCheck(
+            StringList.EMPTY.concat(FORMATTER_SELECTOR.text())
+                .concat("")
+                .concat(DIFFERENT_FORMATTER_SELECTOR.text()),
+            SpreadsheetFormatterSelectorList.EMPTY.concat(FORMATTER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_FORMATTER_SELECTOR)
+        );
+    }
+
+    private void fromStringLikeListAndCheck(final StringLikeList stringLikeList,
                                             final SpreadsheetFormatterSelectorList expected) {
         this.checkEquals(
             expected,
-            SpreadsheetFormatterSelectorList.fromStringLikeList(csvStringList)
+            SpreadsheetFormatterSelectorList.fromStringLikeList(stringLikeList)
         );
     }
 
     // setElements......................................................................................................
 
     @Test
-    public void testSetElementsWithListIncludesNullElementFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetFormatterSelectorList.EMPTY.setElements(
-                Lists.of(
-                    null,
-                    FORMATTER_SELECTOR
-                )
-            )
+    public void testSetElementsWithListIncludesNullElement() {
+        final List<SpreadsheetFormatterSelector> list = Lists.of(
+            null,
+            DIFFERENT_FORMATTER_SELECTOR
+        );
+        this.setElementsAndCheck(
+            new SpreadsheetFormatterSelectorList(
+                Lists.of(FORMATTER_SELECTOR)
+            ),
+            list,
+            new SpreadsheetFormatterSelectorList(list)
         );
     }
 
@@ -229,6 +230,18 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
         );
     }
 
+    @Test
+    public void testCsvStringListWithNotEmptyListIncludesNull() {
+        this.csvStringListAndCheck(
+            SpreadsheetFormatterSelectorList.EMPTY.concat(FORMATTER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_FORMATTER_SELECTOR),
+            "\"formatter-selector-111\"\n" +
+                "\n" +
+                "\"different-formatter-selector-222\""
+        );
+    }
+
     // HasTsvStringList.................................................................................................
 
     @Test
@@ -260,8 +273,9 @@ public final class SpreadsheetFormatterSelectorListTest implements ImmutableList
     public void testMarshall() {
         this.marshallAndCheck(
             SpreadsheetFormatterSelectorList.EMPTY.concat(FORMATTER_SELECTOR)
+                .concat(null)
                 .concat(DIFFERENT_FORMATTER_SELECTOR),
-            "\"formatter-selector-111,different-formatter-selector-222\""
+            "\"formatter-selector-111,,different-formatter-selector-222\""
         );
     }
 
