@@ -22,6 +22,7 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 
 import java.util.AbstractList;
 import java.util.Collection;
@@ -34,7 +35,8 @@ import java.util.Objects;
  */
 public final class SpreadsheetFormulaList extends AbstractList<SpreadsheetFormula>
     implements ImmutableListDefaults<SpreadsheetFormulaList, SpreadsheetFormula>,
-    HasCsvStringListTsvStringList {
+    HasCsvStringListTsvStringList,
+    HasText {
 
     /**
      * Empty singleton
@@ -121,5 +123,13 @@ public final class SpreadsheetFormulaList extends AbstractList<SpreadsheetFormul
             this.formulas,
             (final String string) -> CharSequences.nullToEmpty(string).toString()
         );
+    }
+
+    // HasText..........................................................................................................
+
+    @Override
+    public String text() {
+        return this.csvStringList()
+            .text();
     }
 }

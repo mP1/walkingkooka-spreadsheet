@@ -22,12 +22,14 @@ import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.text.HasTextTesting;
 
 import java.util.List;
 
 public final class SpreadsheetFormulaListTest implements ImmutableListTesting<SpreadsheetFormulaList, SpreadsheetFormula>,
     IteratorTesting,
-    HasCsvStringListTsvStringListTesting2<SpreadsheetFormulaList> {
+    HasCsvStringListTsvStringListTesting2<SpreadsheetFormulaList>,
+    HasTextTesting {
 
     private final static SpreadsheetFormula SPREADSHEET_FORMULA1 = SpreadsheetFormula.EMPTY.setText("111");
 
@@ -304,6 +306,30 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
     @Override
     public SpreadsheetFormulaList createHasCsvStringListTsvStringList() {
         return this.createList();
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck(
+            SpreadsheetFormulaList.EMPTY.setElements(ELEMENTS),
+            "111,222,333,444,555"
+        );
+    }
+
+    @Test
+    public void testTextIncludesNull() {
+        this.textAndCheck(
+            SpreadsheetFormulaList.EMPTY.setElements(
+                Lists.of(
+                    SPREADSHEET_FORMULA1,
+                    null,
+                    SPREADSHEET_FORMULA3
+                )
+            ),
+            "111,,333"
+        );
     }
 
     // class............................................................................................................
