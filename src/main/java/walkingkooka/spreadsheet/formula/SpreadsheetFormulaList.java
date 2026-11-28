@@ -22,8 +22,13 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringLikeList;
+import walkingkooka.collect.list.StringList;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractList;
 import java.util.Collection;
@@ -137,5 +142,30 @@ public final class SpreadsheetFormulaList extends AbstractList<SpreadsheetFormul
     public String text() {
         return this.csvStringList()
             .text();
+    }
+
+    // json.............................................................................................................
+
+    static SpreadsheetFormulaList unmarshall(final JsonNode node,
+                                             final JsonNodeUnmarshallContext context) {
+        return new SpreadsheetFormulaList(
+            context.unmarshall(
+                node,
+                StringList.class
+            )
+        );
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return context.marshall(this.formulas);
+    }
+
+    static {
+        JsonNodeContext.register(
+            JsonNodeContext.computeTypeName(SpreadsheetFormulaList.class),
+            SpreadsheetFormulaList::unmarshall,
+            SpreadsheetFormulaList::marshall,
+            SpreadsheetFormulaList.class
+        );
     }
 }
