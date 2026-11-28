@@ -19,13 +19,15 @@ package walkingkooka.spreadsheet.formula;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.iterator.IteratorTesting;
+import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
 
 public final class SpreadsheetFormulaListTest implements ImmutableListTesting<SpreadsheetFormulaList, SpreadsheetFormula>,
-    IteratorTesting {
+    IteratorTesting,
+    HasCsvStringListTsvStringListTesting2<SpreadsheetFormulaList> {
 
     private final static SpreadsheetFormula SPREADSHEET_FORMULA1 = SpreadsheetFormula.EMPTY.setText("111");
 
@@ -249,6 +251,59 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
             SpreadsheetFormulaList.EMPTY.setElements(ELEMENTS),
             "[\"111\", \"222\", \"333\", \"444\", \"555\"]"
         );
+    }
+
+    // HasCsvStringList.................................................................................................
+
+    @Test
+    public void testCsvStringList() {
+        this.csvStringListAndCheck(
+            SpreadsheetFormulaList.EMPTY.setElements(ELEMENTS),
+            "111,222,333,444,555"
+        );
+    }
+
+    @Test
+    public void testCsvStringListIncludesNull() {
+        this.csvStringListAndCheck(
+            SpreadsheetFormulaList.EMPTY.setElements(
+                Lists.of(
+                    SPREADSHEET_FORMULA1,
+                    null,
+                    SPREADSHEET_FORMULA3
+                )
+            ),
+            "111,,333"
+        );
+    }
+
+    // HasTsvStringList.................................................................................................
+
+    @Test
+    public void testTsvStringList() {
+        this.tsvStringListAndCheck(
+            SpreadsheetFormulaList.EMPTY.setElements(ELEMENTS),
+            "111\t222\t333\t444\t555"
+        );
+    }
+
+    @Test
+    public void testTsvStringListIncludesNull() {
+        this.tsvStringListAndCheck(
+            SpreadsheetFormulaList.EMPTY.setElements(
+                Lists.of(
+                    SPREADSHEET_FORMULA1,
+                    null,
+                    SPREADSHEET_FORMULA3
+                )
+            ),
+            "111\t\t333"
+        );
+    }
+
+    @Override
+    public SpreadsheetFormulaList createHasCsvStringListTsvStringList() {
+        return this.createList();
     }
 
     // class............................................................................................................
