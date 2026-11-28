@@ -21,6 +21,7 @@ import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringLikeList;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 
@@ -43,6 +44,11 @@ public final class SpreadsheetFormulaList extends AbstractList<SpreadsheetFormul
      */
     public final static SpreadsheetFormulaList EMPTY = new SpreadsheetFormulaList(Lists.empty());
 
+    public static SpreadsheetFormulaList fromStringLikeList(final StringLikeList strings) {
+        return new SpreadsheetFormulaList(
+            Objects.requireNonNull(strings, "strings")
+        );
+    }
     // @VisibleForTesting
     SpreadsheetFormulaList(final List<String> formulas) {
         super();

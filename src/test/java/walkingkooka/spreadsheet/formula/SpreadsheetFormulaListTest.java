@@ -22,9 +22,13 @@ import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringLikeList;
+import walkingkooka.collect.list.StringList;
 import walkingkooka.text.HasTextTesting;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaListTest implements ImmutableListTesting<SpreadsheetFormulaList, SpreadsheetFormula>,
     IteratorTesting,
@@ -332,6 +336,67 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
         );
     }
 
+    // fromStringLikeList...............................................................................................
+
+    @Test
+    public void testFromStringLikeListWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetFormulaList.fromStringLikeList(null)
+        );
+    }
+
+    @Test
+    public void testFromStringLikeListWithEmpty() {
+        this.fromStringLikeList(
+            StringList.EMPTY,
+            SpreadsheetFormulaList.EMPTY
+        );
+    }
+
+    @Test
+    public void testFromStringLikeListWithNotEmpty() {
+        this.fromStringLikeList(
+            StringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
+                .concat(SPREADSHEET_FORMULA2.text()),
+            SpreadsheetFormulaList.EMPTY.concat(SPREADSHEET_FORMULA1)
+                .concat(SPREADSHEET_FORMULA2)
+        );
+    }
+
+    @Test
+    public void testFromStringLikeListWithNotEmptyWithNull() {
+        this.fromStringLikeList(
+            StringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
+                .concat(null)
+                .concat(SPREADSHEET_FORMULA2.text()),
+            SpreadsheetFormulaList.EMPTY.concat(SPREADSHEET_FORMULA1)
+                .concat(null)
+                .concat(SPREADSHEET_FORMULA2)
+        );
+    }
+
+    @Test
+    public void testFromStringLikeListWithNotEmptyWithEmpty() {
+        this.fromStringLikeList(
+            StringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
+                .concat("")
+                .concat(SPREADSHEET_FORMULA2.text()),
+            SpreadsheetFormulaList.EMPTY.concat(SPREADSHEET_FORMULA1)
+                .concat(SpreadsheetFormula.EMPTY)
+                .concat(SPREADSHEET_FORMULA2)
+        );
+    }
+
+    private void fromStringLikeList(final StringLikeList strings,
+                                    final SpreadsheetFormulaList expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetFormulaList.fromStringLikeList(strings),
+            strings::toString
+        );
+    }
+    
     // class............................................................................................................
 
     @Override
