@@ -62,7 +62,7 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
     }
 
     @Test
-    public void testGetEMptyString() {
+    public void testGetEmptyString() {
         this.getAndCheck(
             new SpreadsheetFormulaList(
                 Lists.of(
