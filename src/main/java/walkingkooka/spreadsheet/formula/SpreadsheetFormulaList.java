@@ -17,8 +17,11 @@
 
 package walkingkooka.spreadsheet.formula;
 
+import walkingkooka.collect.list.CsvStringList;
+import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.text.CharSequences;
 
 import java.util.AbstractList;
 import java.util.Collection;
@@ -30,7 +33,8 @@ import java.util.Objects;
  * The returned {@link SpreadsheetFormula} will only have text all other properties will be absent.
  */
 public final class SpreadsheetFormulaList extends AbstractList<SpreadsheetFormula>
-    implements ImmutableListDefaults<SpreadsheetFormulaList, SpreadsheetFormula> {
+    implements ImmutableListDefaults<SpreadsheetFormulaList, SpreadsheetFormula>,
+    HasCsvStringListTsvStringList {
 
     /**
      * Empty singleton
@@ -107,5 +111,15 @@ public final class SpreadsheetFormulaList extends AbstractList<SpreadsheetFormul
     @Override
     public void elementCheck(final SpreadsheetFormula spreadsheetFormula) {
         // allow nulls
+    }
+
+    // HasCsvStringListTsvStringList....................................................................................
+
+    @Override
+    public CsvStringList csvStringList() {
+        return CsvStringList.makeCsvStringList(
+            this.formulas,
+            (final String string) -> CharSequences.nullToEmpty(string).toString()
+        );
     }
 }
