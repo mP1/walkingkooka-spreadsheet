@@ -25,6 +25,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringLikeList;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
@@ -33,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaListTest implements ImmutableListTesting<SpreadsheetFormulaList, SpreadsheetFormula>,
     IteratorTesting,
     HasCsvStringListTsvStringListTesting2<SpreadsheetFormulaList>,
-    HasTextTesting {
+    HasTextTesting,
+    JsonNodeMarshallerTesting<SpreadsheetFormulaList> {
 
     private final static SpreadsheetFormula SPREADSHEET_FORMULA1 = SpreadsheetFormula.EMPTY.setText("111");
 
@@ -396,7 +400,41 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
             strings::toString
         );
     }
-    
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+            this.createJsonNodeMarshallingValue(),
+            "[\n" +
+                "  \"111\",\n" +
+                "  \"222\",\n" +
+                "  \"333\",\n" +
+                "  \"444\",\n" +
+                "  \"555\",\n" +
+                "  null,\n" +
+                "  \"\"\n" +
+                "]"
+        );
+    }
+
+    @Override
+    public SpreadsheetFormulaList unmarshall(final JsonNode jsonNode,
+                                             final JsonNodeUnmarshallContext jsonNodeUnmarshallContext) {
+        return SpreadsheetFormulaList.unmarshall(
+            jsonNode,
+            jsonNodeUnmarshallContext
+        );
+    }
+
+    @Override
+    public SpreadsheetFormulaList createJsonNodeMarshallingValue() {
+        return SpreadsheetFormulaList.EMPTY.setElements(ELEMENTS)
+            .concat(null)
+            .concat(SpreadsheetFormula.EMPTY);
+    }
+
     // class............................................................................................................
 
     @Override

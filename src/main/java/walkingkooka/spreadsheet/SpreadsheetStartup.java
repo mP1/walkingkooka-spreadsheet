@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToke
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorTokenAlternative;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorTokenList;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaList;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterInfo;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterInfoSet;
@@ -250,6 +251,8 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
         SpreadsheetId.with(1);
 
         SpreadsheetMetadata.EMPTY.id();
+
+        SpreadsheetFormulaList.EMPTY.size();
     }
 
     public static void init() {
