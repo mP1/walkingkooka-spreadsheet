@@ -19,11 +19,10 @@ package walkingkooka.spreadsheet.formula;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.iterator.IteratorTesting;
+import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.list.StringLikeList;
-import walkingkooka.collect.list.StringList;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -340,28 +339,28 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
         );
     }
 
-    // fromStringLikeList...............................................................................................
+    // fromCsvStringList...............................................................................................
 
     @Test
-    public void testFromStringLikeListWithNullFails() {
+    public void testFromCsvStringListWithNullFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetFormulaList.fromStringLikeList(null)
+            () -> SpreadsheetFormulaList.fromCsvStringList(null)
         );
     }
 
     @Test
-    public void testFromStringLikeListWithEmpty() {
-        this.fromStringLikeList(
-            StringList.EMPTY,
+    public void testFromCsvStringListWithEmpty() {
+        this.fromCsvStringList(
+            CsvStringList.EMPTY,
             SpreadsheetFormulaList.EMPTY
         );
     }
 
     @Test
-    public void testFromStringLikeListWithNotEmpty() {
-        this.fromStringLikeList(
-            StringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
+    public void testFromCsvStringListWithNotEmpty() {
+        this.fromCsvStringList(
+            CsvStringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
                 .concat(SPREADSHEET_FORMULA2.text()),
             SpreadsheetFormulaList.EMPTY.concat(SPREADSHEET_FORMULA1)
                 .concat(SPREADSHEET_FORMULA2)
@@ -369,21 +368,9 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
     }
 
     @Test
-    public void testFromStringLikeListWithNotEmptyWithNull() {
-        this.fromStringLikeList(
-            StringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
-                .concat(null)
-                .concat(SPREADSHEET_FORMULA2.text()),
-            SpreadsheetFormulaList.EMPTY.concat(SPREADSHEET_FORMULA1)
-                .concat(null)
-                .concat(SPREADSHEET_FORMULA2)
-        );
-    }
-
-    @Test
-    public void testFromStringLikeListWithNotEmptyWithEmpty() {
-        this.fromStringLikeList(
-            StringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
+    public void testFromCsvStringListWithNotEmptyWithEmpty() {
+        this.fromCsvStringList(
+            CsvStringList.EMPTY.concat(SPREADSHEET_FORMULA1.text())
                 .concat("")
                 .concat(SPREADSHEET_FORMULA2.text()),
             SpreadsheetFormulaList.EMPTY.concat(SPREADSHEET_FORMULA1)
@@ -392,11 +379,11 @@ public final class SpreadsheetFormulaListTest implements ImmutableListTesting<Sp
         );
     }
 
-    private void fromStringLikeList(final StringLikeList strings,
-                                    final SpreadsheetFormulaList expected) {
+    private void fromCsvStringList(final CsvStringList strings,
+                                   final SpreadsheetFormulaList expected) {
         this.checkEquals(
             expected,
-            SpreadsheetFormulaList.fromStringLikeList(strings),
+            SpreadsheetFormulaList.fromCsvStringList(strings),
             strings::toString
         );
     }
